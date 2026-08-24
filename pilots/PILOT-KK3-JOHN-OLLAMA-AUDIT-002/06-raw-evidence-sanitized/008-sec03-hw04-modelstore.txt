@@ -1,0 +1,29 @@
+uid=999(ollama) gid=988(ollama) groups=988(ollama),44(video),993(render)
+===
+ls: cannot access '/usr/share/ollama/.ollama': Permission denied
+ls: cannot access '/usr/share/ollama/.ollama/models': Permission denied
+ls: cannot access '/usr/share/ollama/.ollama/models/manifests': Permission denied
+ls: cannot access '/usr/share/ollama/.ollama/models/blobs': Permission denied
+drwxr-x--- 4 ollama ollama 4096 Aug 14 05:19 /usr/share/ollama
+===
+stat: cannot statx '/usr/share/ollama/.ollama/models': Permission denied
+stat: cannot statx '/usr/share/ollama/.ollama/models/manifests': Permission denied
+stat: cannot statx '/usr/share/ollama/.ollama/models/blobs': Permission denied
+===
+f: /usr/share/ollama/.ollama/models
+drwxr-xr-x root   root   /
+drwxr-xr-x root   root   usr
+drwxr-xr-x root   root   share
+drwxr-x--- ollama ollama ollama
+                          .ollama - Permission denied
+===
+ls: cannot access '/usr/share/ollama/.ollama/models/blobs': Permission denied
+===
+===
+NAME        TYPE   SIZE FSTYPE MOUNTPOINTS ROTA MODEL
+nvme1n1     disk 476.9G                       0 ADATA LEGEND 700
+nvme0n1     disk 931.5G                       0 WD Green SN3000 1TB
+├─nvme0n1p1 part     1G vfat   /boot/efi      0 
+└─nvme0n1p2 part 930.5G ext4   /              0 
+===
+df: /usr/share/ollama/.ollama/models: Permission denied

@@ -1,0 +1,17 @@
+hxs-4
+2026-08-24T10:32:57+00:00
+    inet 192.168.50.203/24 brd 192.168.50.255 scope global eno1
+SSH_PEER=192.168.50.204 34398 192.168.50.203 22
+ Static hostname: hxs-4
+       Icon name: computer-desktop
+         Chassis: desktop 🖥️
+      Machine ID: a3244b92b98448ad83da8ecad6511889
+         Boot ID: 5acd15ab9d124f4185b37408d455fb62
+Operating System: Ubuntu 24.04.4 LTS
+          Kernel: Linux 7.0.0-28-generic
+    Architecture: x86-64
+ Hardware Vendor: iBUYPOWER
+  Hardware Model: Intel_R_ Core_TM_ i7-14700F
+Firmware Version: 1820
+   Firmware Date: Thu 2025-05-15
+    Firmware Age: 1y 3month 1w 2d

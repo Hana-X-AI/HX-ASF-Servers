@@ -1,0 +1,144 @@
+Aug 23 11:45:49 hxs-4 ollama[349093]: compat tensor transform: op=concat sources tensor=v.blk.17.attn_qkv.weight bytes=7962624 duration_ms=1.882 total_ops=38 total_bytes=161256960 total_ms=46.076
+Aug 23 11:45:49 hxs-4 ollama[349093]: compat tensor transform: op=concat sources tensor=v.blk.17.attn_qkv.bias bytes=13824 duration_ms=0.028 total_ops=39 total_bytes=161270784 total_ms=46.104
+Aug 23 11:45:49 hxs-4 ollama[349093]: compat tensor transform: op=concat sources tensor=v.blk.18.attn_qkv.weight bytes=7962624 duration_ms=1.894 total_ops=40 total_bytes=169233408 total_ms=47.998
+Aug 23 11:45:49 hxs-4 ollama[349093]: compat tensor transform: op=concat sources tensor=v.blk.18.attn_qkv.bias bytes=13824 duration_ms=0.025 total_ops=41 total_bytes=169247232 total_ms=48.023
+Aug 23 11:45:49 hxs-4 ollama[349093]: compat tensor transform: op=concat sources tensor=v.blk.19.attn_qkv.weight bytes=7962624 duration_ms=1.884 total_ops=42 total_bytes=177209856 total_ms=49.907
+Aug 23 11:45:49 hxs-4 ollama[349093]: compat tensor transform: op=concat sources tensor=v.blk.19.attn_qkv.bias bytes=13824 duration_ms=0.025 total_ops=43 total_bytes=177223680 total_ms=49.932
+Aug 23 11:45:49 hxs-4 ollama[349093]: compat tensor transform: op=concat sources tensor=v.blk.20.attn_qkv.weight bytes=7962624 duration_ms=1.890 total_ops=44 total_bytes=185186304 total_ms=51.822
+Aug 23 11:45:49 hxs-4 ollama[349093]: compat tensor transform: op=concat sources tensor=v.blk.20.attn_qkv.bias bytes=13824 duration_ms=0.025 total_ops=45 total_bytes=185200128 total_ms=51.846
+Aug 23 11:45:49 hxs-4 ollama[349093]: compat tensor transform: op=concat sources tensor=v.blk.21.attn_qkv.weight bytes=7962624 duration_ms=1.880 total_ops=46 total_bytes=193162752 total_ms=53.726
+Aug 23 11:45:49 hxs-4 ollama[349093]: compat tensor transform: op=concat sources tensor=v.blk.21.attn_qkv.bias bytes=13824 duration_ms=0.024 total_ops=47 total_bytes=193176576 total_ms=53.751
+Aug 23 11:45:49 hxs-4 ollama[349093]: compat tensor transform: op=concat sources tensor=v.blk.22.attn_qkv.weight bytes=7962624 duration_ms=1.898 total_ops=48 total_bytes=201139200 total_ms=55.649
+Aug 23 11:45:49 hxs-4 ollama[349093]: compat tensor transform: op=concat sources tensor=v.blk.22.attn_qkv.bias bytes=13824 duration_ms=0.024 total_ops=49 total_bytes=201153024 total_ms=55.673
+Aug 23 11:45:49 hxs-4 ollama[349093]: compat tensor transform: op=concat sources tensor=v.blk.23.attn_qkv.weight bytes=7962624 duration_ms=1.917 total_ops=50 total_bytes=209115648 total_ms=57.590
+Aug 23 11:45:49 hxs-4 ollama[349093]: compat tensor transform: op=concat sources tensor=v.blk.23.attn_qkv.bias bytes=13824 duration_ms=0.024 total_ops=51 total_bytes=209129472 total_ms=57.614
+Aug 23 11:45:49 hxs-4 ollama[349093]: compat tensor transform: op=concat sources tensor=v.blk.24.attn_qkv.weight bytes=7962624 duration_ms=1.888 total_ops=52 total_bytes=217092096 total_ms=59.502
+Aug 23 11:45:49 hxs-4 ollama[349093]: compat tensor transform: op=concat sources tensor=v.blk.24.attn_qkv.bias bytes=13824 duration_ms=0.034 total_ops=53 total_bytes=217105920 total_ms=59.536
+Aug 23 11:45:49 hxs-4 ollama[349093]: compat tensor transform: op=concat sources tensor=v.blk.25.attn_qkv.weight bytes=7962624 duration_ms=1.910 total_ops=54 total_bytes=225068544 total_ms=61.446
+Aug 23 11:45:49 hxs-4 ollama[349093]: compat tensor transform: op=concat sources tensor=v.blk.25.attn_qkv.bias bytes=13824 duration_ms=0.024 total_ops=55 total_bytes=225082368 total_ms=61.470
+Aug 23 11:45:49 hxs-4 ollama[349093]: compat tensor transform: op=concat sources tensor=v.blk.26.attn_qkv.weight bytes=7962624 duration_ms=1.895 total_ops=56 total_bytes=233044992 total_ms=63.364
+Aug 23 11:45:49 hxs-4 ollama[349093]: compat tensor transform: op=concat sources tensor=v.blk.26.attn_qkv.bias bytes=13824 duration_ms=0.024 total_ops=57 total_bytes=233058816 total_ms=63.388
+Aug 23 11:45:49 hxs-4 ollama[349093]: get_dummy_batch: warmup with image size = 1472 x 1472
+Aug 23 11:45:49 hxs-4 ollama[349093]: get_dummy_batch: warmup with image size = 1472 x 1472
+Aug 23 11:45:49 hxs-4 ollama[349093]: ggml_backend_cuda_buffer_type_alloc_buffer: allocating 4657.81 MiB on device 0: cudaMalloc failed: out of memory
+Aug 23 11:45:49 hxs-4 ollama[349093]: ggml_gallocr_reserve_n_impl: failed to allocate CUDA0 buffer of size 4884066560
+Aug 23 11:45:49 hxs-4 ollama[349093]: reserve_compute_meta: graph splits = 1, nodes = 877
+Aug 23 11:45:49 hxs-4 ollama[349093]: warmup: flash attention is disabled
+Aug 23 11:45:49 hxs-4 ollama[349093]: srv    load_model: loaded multimodal model, '/usr/share/ollama/.ollama/models/blobs/sha256-dec52a44569a2a25341c4e4d3fee25846eed4f6f0b936278e3a3c900bb99d37c'
+Aug 23 11:45:49 hxs-4 ollama[349093]: cmn  common_conte: the context does not support partial sequence removal
+Aug 23 11:45:49 hxs-4 ollama[349093]: srv    load_model: speculative decoding will use checkpoints
+Aug 23 11:45:49 hxs-4 ollama[349093]: srv    load_model: initializing, n_slots = 1, n_ctx_slot = 4096, kv_unified = 'false'
+Aug 23 11:45:49 hxs-4 ollama[349093]: spec common_specu: no implementations specified for speculative decoding
+Aug 23 11:45:49 hxs-4 ollama[349093]: slot   load_model: id  0 | task -1 | new slot, n_ctx = 4096
+Aug 23 11:45:49 hxs-4 ollama[349093]: srv    load_model: prompt cache is enabled, size limit: 8192 MiB
+Aug 23 11:45:49 hxs-4 ollama[349093]: srv    load_model: use `--cache-ram 0` to disable the prompt cache
+Aug 23 11:45:49 hxs-4 ollama[349093]: srv    load_model: for more info see https://github.com/ggml-org/llama.cpp/pull/16391
+Aug 23 11:45:49 hxs-4 ollama[349093]: srv    load_model: context checkpoints enabled, max = 32, min spacing = 8192
+Aug 23 11:45:49 hxs-4 ollama[349093]: srv          init: idle slots will be saved to prompt cache upon starting a new task
+Aug 23 11:45:49 hxs-4 ollama[349093]: srv          init: init: chat template, example_format: '<|im_start|>system
+Aug 23 11:45:49 hxs-4 ollama[349093]: You are a helpful assistant<|im_end|>
+Aug 23 11:45:49 hxs-4 ollama[349093]: <|im_start|>user
+Aug 23 11:45:49 hxs-4 ollama[349093]: Hello<|im_end|>
+Aug 23 11:45:49 hxs-4 ollama[349093]: <|im_start|>assistant
+Aug 23 11:45:49 hxs-4 ollama[349093]: Hi there<|im_end|>
+Aug 23 11:45:49 hxs-4 ollama[349093]: <|im_start|>user
+Aug 23 11:45:49 hxs-4 ollama[349093]: How are you?<|im_end|>
+Aug 23 11:45:49 hxs-4 ollama[349093]: <|im_start|>assistant
+Aug 23 11:45:49 hxs-4 ollama[349093]: '
+Aug 23 11:45:49 hxs-4 ollama[349093]: srv          init: init: chat template, thinking = 0
+Aug 23 11:45:49 hxs-4 ollama[349093]: srv  llama_server: model loaded
+Aug 23 11:45:49 hxs-4 ollama[349093]: srv  llama_server: listening on http://127.0.0.1:38483
+Aug 23 11:45:49 hxs-4 ollama[349093]: srv  update_slots: all slots are idle
+Aug 23 11:45:49 hxs-4 ollama[349093]: time=2026-08-23T11:45:49.917Z level=INFO source=llama_server.go:1360 msg="llama-server started in 5.77 seconds"
+Aug 23 11:45:49 hxs-4 ollama[349093]: time=2026-08-23T11:45:49.970Z level=INFO source=images.go:373 msg="template selection" model=registry.ollama.ai/library/qwen3.5:9b-q4_K_M selected=renderer_parser renderer=qwen3.5 parser=qwen3.5 go_template=null chat_template="[tools thinking completion vision]" harmony=null renderer_parser="[completion vision tools thinking]"
+Aug 23 11:45:49 hxs-4 ollama[349093]: time=2026-08-23T11:45:49.970Z level=INFO source=sched.go:728 msg="loaded runners" count=1
+Aug 23 11:45:49 hxs-4 ollama[349093]: time=2026-08-23T11:45:49.970Z level=INFO source=llama_server.go:1293 msg="waiting for llama-server to start responding"
+Aug 23 11:45:49 hxs-4 ollama[349093]: time=2026-08-23T11:45:49.970Z level=INFO source=llama_server.go:1360 msg="llama-server started in 5.82 seconds"
+Aug 23 11:45:49 hxs-4 ollama[349093]: srv  server_strea: conv_id= (empty=1)
+Aug 23 11:45:49 hxs-4 ollama[349093]: slot get_availabl: id  0 | task -1 |  - skipping, slot is empty
+Aug 23 11:45:49 hxs-4 ollama[349093]: slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = -1
+Aug 23 11:45:49 hxs-4 ollama[349093]: srv  get_availabl: updating prompt cache
+Aug 23 11:45:49 hxs-4 ollama[349093]: srv          load:  - looking for better prompt, base f_keep = -1.000, f_sim = 0.000
+Aug 23 11:45:49 hxs-4 ollama[349093]: srv        update:  - cache state: 0 prompts, 0.000 MiB (limits: 8192.000 MiB, 4096 tokens, 8589934592 est)
+Aug 23 11:45:49 hxs-4 ollama[349093]: srv  get_availabl: prompt cache update took 0.01 ms
+Aug 23 11:45:49 hxs-4 ollama[349093]: slot launch_slot_: id  0 | task -1 | sampler chain: logits -> penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> top-p -> ?min-p -> ?xtc -> ?temp-ext -> dist
+Aug 23 11:45:49 hxs-4 ollama[349093]: slot launch_slot_: id  0 | task -1 | sampler params:
+Aug 23 11:45:49 hxs-4 ollama[349093]:         repeat_last_n = 64, repeat_penalty = 1.100, frequency_penalty = 0.000, presence_penalty = 1.500
+Aug 23 11:45:49 hxs-4 ollama[349093]:         dry_multiplier = 0.000, dry_base = 1.750, dry_allowed_length = 2, dry_penalty_last_n = 64
+Aug 23 11:45:49 hxs-4 ollama[349093]:         top_k = 20, top_p = 0.950, min_p = 0.000, xtc_probability = 0.000, xtc_threshold = 0.100, typical_p = 1.000, top_n_sigma = -1.000, temp = 1.000
+Aug 23 11:45:49 hxs-4 ollama[349093]:         mirostat = 0, mirostat_lr = 0.100, mirostat_ent = 5.000, adaptive_target = -1.000, adaptive_decay = 0.900
+Aug 23 11:45:49 hxs-4 ollama[349093]: slot launch_slot_: id  0 | task 0 | processing task, is_child = 0
+Aug 23 11:45:49 hxs-4 ollama[349093]: slot   operator(): id  0 | task 0 | new prompt, n_ctx_slot = 4096, n_keep = 4, task.n_tokens = 51
+Aug 23 11:45:49 hxs-4 ollama[349093]: slot   operator(): id  0 | task 0 | cached n_tokens = 0, memory_seq_rm [0, end)
+Aug 23 11:45:50 hxs-4 ollama[349093]: slot   operator(): id  0 | task 0 | cached n_tokens = 47, memory_seq_rm [47, end)
+Aug 23 11:45:50 hxs-4 ollama[349093]: slot init_sampler: id  0 | task 0 | init sampler, took 0.04 ms, tokens: text = 51, total = 51
+Aug 23 11:45:50 hxs-4 ollama[349093]: slot create_check: id  0 | task 0 | created context checkpoint 1 of 32 (pos_min = 46, pos_max = 46, n_tokens = 47, size = 50.251 MiB)
+Aug 23 11:45:57 hxs-4 ollama[349093]: slot print_timing: id  0 | task 0 | n_decoded =    100, tg =  17.57 t/s, tg_3s =  17.57 t/s
+Aug 23 11:45:57 hxs-4 ollama[349093]: slot print_timing: id  0 | task 0 | prompt eval time =    1587.34 ms /    51 tokens (   31.12 ms per token,    32.13 tokens per second)
+Aug 23 11:45:57 hxs-4 ollama[349093]: slot print_timing: id  0 | task 0 |        eval time =    6100.51 ms /   128 tokens (   47.66 ms per token,    20.98 tokens per second)
+Aug 23 11:45:57 hxs-4 ollama[349093]: slot print_timing: id  0 | task 0 |       total time =    7687.85 ms /   179 tokens
+Aug 23 11:45:57 hxs-4 ollama[349093]: slot print_timing: id  0 | task 0 |    graphs reused =        127
+Aug 23 11:45:57 hxs-4 ollama[349093]: slot      release: id  0 | task 0 | stop processing: n_tokens = 178, truncated = 0
+Aug 23 11:45:57 hxs-4 ollama[349093]: srv  update_slots: all slots are idle
+Aug 23 11:45:57 hxs-4 ollama[349093]: [GIN] 2026/08/23 - 11:45:57 | 200 | 16.791449207s |       127.0.0.1 | POST     "/api/chat"
+Aug 23 11:46:10 hxs-4 systemd[1]: Stopping ollama.service - Ollama Service...
+Aug 23 11:46:10 hxs-4 ollama[349093]: srv    operator(): operator(): cleaning up before exit...
+Aug 23 11:46:10 hxs-4 systemd[1]: ollama.service: Deactivated successfully.
+Aug 23 11:46:10 hxs-4 systemd[1]: Stopped ollama.service - Ollama Service.
+Aug 23 11:46:10 hxs-4 systemd[1]: ollama.service: Consumed 51.419s CPU time, 1.5G memory peak, 0B memory swap peak.
+Aug 23 11:46:10 hxs-4 systemd[1]: Started ollama.service - Ollama Service.
+Aug 23 11:46:10 hxs-4 ollama[349591]: time=2026-08-23T11:46:10.548Z level=INFO source=routes.go:1933 msg="server config" env="map[CUDA_VISIBLE_DEVICES:GPU-cc758e31-d23b-3c53-bee6-dae3299a6f11 GGML_VK_VISIBLE_DEVICES:999 GPU_DEVICE_ORDINAL: HIP_VISIBLE_DEVICES: HSA_OVERRIDE_GFX_VERSION: HTTPS_PROXY: HTTP_PROXY: LLAMA_ARG_FIT: LLAMA_ARG_FIT_TARGET: NO_PROXY: OLLAMA_CONTEXT_LENGTH:65536 OLLAMA_DEBUG:INFO OLLAMA_DEBUG_LOG_REQUESTS:false OLLAMA_EDITOR: OLLAMA_FLASH_ATTENTION:false OLLAMA_GO_TEMPLATE:true OLLAMA_GPU_OVERHEAD:0 OLLAMA_HOST:http://127.0.0.1:11434 OLLAMA_IGPU_ENABLE: OLLAMA_KEEP_ALIVE:5m0s OLLAMA_KV_CACHE_TYPE: OLLAMA_LLM_LIBRARY: OLLAMA_LOAD_TIMEOUT:5m0s OLLAMA_MAX_LOADED_MODELS:1 OLLAMA_MAX_QUEUE:512 OLLAMA_MAX_TRANSFER_STREAMS:4 OLLAMA_MODELS:/usr/share/ollama/.ollama/models OLLAMA_NOHISTORY:false OLLAMA_NOPRUNE:false OLLAMA_NO_CLOUD:true OLLAMA_NUM_PARALLEL:1 OLLAMA_ORIGINS:[http://localhost https://localhost http://localhost:* https://localhost:* http://127.0.0.1 https://127.0.0.1 http://127.0.0.1:* https://127.0.0.1:* http://0.0.0.0 https://0.0.0.0 http://0.0.0.0:* https://0.0.0.0:* app://* file://* tauri://* vscode-webview://* vscode-file://*] OLLAMA_REMOTES:[ollama.com] OLLAMA_SCHED_SPREAD:false OLLAMA_VULKAN:false ROCR_VISIBLE_DEVICES: http_proxy: https_proxy: no_proxy:]"
+Aug 23 11:46:10 hxs-4 ollama[349591]: time=2026-08-23T11:46:10.548Z level=INFO source=routes.go:1935 msg="Ollama cloud disabled: true"
+Aug 23 11:46:10 hxs-4 ollama[349591]: time=2026-08-23T11:46:10.548Z level=INFO source=images.go:911 msg="total blobs: 4"
+Aug 23 11:46:10 hxs-4 ollama[349591]: time=2026-08-23T11:46:10.548Z level=INFO source=images.go:918 msg="total unused blobs removed: 0"
+Aug 23 11:46:10 hxs-4 ollama[349591]: time=2026-08-23T11:46:10.548Z level=INFO source=routes.go:1990 msg="Listening on 127.0.0.1:11434 (version 0.32.9)"
+Aug 23 11:46:10 hxs-4 ollama[349591]: time=2026-08-23T11:46:10.548Z level=INFO source=model_recommendations.go:177 msg="model recommendations cache sleep scheduled" wait=4h31m25.243342386s consecutive_failures=0
+Aug 23 11:46:10 hxs-4 ollama[349591]: time=2026-08-23T11:46:10.548Z level=INFO source=runner.go:60 msg="discovering available GPUs..."
+Aug 23 11:46:10 hxs-4 ollama[349591]: time=2026-08-23T11:46:10.549Z level=WARN source=runner.go:722 msg="user overrode visible devices" CUDA_VISIBLE_DEVICES=GPU-cc758e31-d23b-3c53-bee6-dae3299a6f11
+Aug 23 11:46:10 hxs-4 ollama[349591]: time=2026-08-23T11:46:10.549Z level=WARN source=runner.go:722 msg="user overrode visible devices" GGML_VK_VISIBLE_DEVICES=999
+Aug 23 11:46:10 hxs-4 ollama[349591]: time=2026-08-23T11:46:10.549Z level=WARN source=runner.go:726 msg="if GPUs are not correctly discovered, unset and try again"
+Aug 23 11:46:10 hxs-4 ollama[349591]: time=2026-08-23T11:46:10.549Z level=INFO source=model_list_cache.go:112 msg="model list cache hydration complete" models=1 failures=0 elapsed=982.536µs
+Aug 23 11:46:49 hxs-4 ollama[349591]: time=2026-08-23T11:46:49.084Z level=INFO source=types.go:32 msg="inference compute" id=0 filter_id=GPU-cc758e31-d23b-3c53-bee6-dae3299a6f11 library=CUDA compute=12.0 name=CUDA0 description="NVIDIA GeForce RTX 5060" libdirs=ollama,cuda_v13 driver=13.0 pci_id=0000:07:00.0 type=discrete total="7.5 GiB" available="7.4 GiB"
+Aug 23 11:46:49 hxs-4 ollama[349591]: time=2026-08-23T11:46:49.084Z level=INFO source=routes.go:2040 msg="vram-based default context" total_vram="7.5 GiB" default_num_ctx=4096
+Aug 23 11:46:49 hxs-4 ollama[349591]: [GIN] 2026/08/23 - 11:46:49 | 200 |      30.896µs |       127.0.0.1 | GET      "/api/version"
+Aug 23 11:46:49 hxs-4 ollama[349591]: [GIN] 2026/08/23 - 11:46:49 | 200 |       19.54µs |       127.0.0.1 | GET      "/api/version"
+Aug 23 13:54:17 hxs-4 ollama[349591]: [GIN] 2026/08/23 - 13:54:17 | 200 |     639.076µs |       127.0.0.1 | GET      "/api/tags"
+Aug 23 16:17:35 hxs-4 ollama[349591]: time=2026-08-23T16:17:35.792Z level=INFO source=model_recommendations.go:177 msg="model recommendations cache sleep scheduled" wait=4h19m31.396147357s consecutive_failures=0
+Aug 23 20:37:07 hxs-4 ollama[349591]: time=2026-08-23T20:37:07.211Z level=INFO source=model_recommendations.go:177 msg="model recommendations cache sleep scheduled" wait=3h18m28.252922393s consecutive_failures=0
+Aug 23 23:55:35 hxs-4 ollama[349591]: time=2026-08-23T23:55:35.563Z level=INFO source=model_recommendations.go:177 msg="model recommendations cache sleep scheduled" wait=4h27m7.347420924s consecutive_failures=0
+Aug 24 04:22:42 hxs-4 ollama[349591]: time=2026-08-24T04:22:42.912Z level=INFO source=model_recommendations.go:177 msg="model recommendations cache sleep scheduled" wait=4h42m39.614751642s consecutive_failures=0
+Aug 24 09:05:22 hxs-4 ollama[349591]: time=2026-08-24T09:05:22.527Z level=INFO source=model_recommendations.go:177 msg="model recommendations cache sleep scheduled" wait=4h34m1.04532245s consecutive_failures=0
+Aug 24 10:18:48 hxs-4 ollama[349591]: [GIN] 2026/08/24 - 10:18:48 | 200 |      38.872µs |       127.0.0.1 | GET      "/api/version"
+Aug 24 10:18:48 hxs-4 ollama[349591]: [GIN] 2026/08/24 - 10:18:48 | 200 |      27.732µs |       127.0.0.1 | GET      "/api/version"
+Aug 24 10:33:30 hxs-4 ollama[349591]: [GIN] 2026/08/24 - 10:33:30 | 200 |      65.182µs |       127.0.0.1 | GET      "/api/version"
+Aug 24 10:34:21 hxs-4 ollama[349591]: [GIN] 2026/08/24 - 10:34:21 | 200 |     367.871µs |       127.0.0.1 | GET      "/api/version"
+Aug 24 10:34:21 hxs-4 ollama[349591]: [GIN] 2026/08/24 - 10:34:21 | 200 |     456.568µs |       127.0.0.1 | GET      "/api/tags"
+Aug 24 10:34:21 hxs-4 ollama[349591]: [GIN] 2026/08/24 - 10:34:21 | 200 |     155.191µs |       127.0.0.1 | GET      "/api/ps"
+Aug 24 10:34:21 hxs-4 ollama[349591]: [GIN] 2026/08/24 - 10:34:21 | 200 |      48.546µs |       127.0.0.1 | HEAD     "/"
+Aug 24 10:34:21 hxs-4 ollama[349591]: [GIN] 2026/08/24 - 10:34:21 | 200 |     340.916µs |       127.0.0.1 | GET      "/api/tags"
+Aug 24 10:34:21 hxs-4 ollama[349591]: [GIN] 2026/08/24 - 10:34:21 | 200 |      17.502µs |       127.0.0.1 | HEAD     "/"
+Aug 24 10:34:21 hxs-4 ollama[349591]: [GIN] 2026/08/24 - 10:34:21 | 200 |       8.656µs |       127.0.0.1 | GET      "/api/ps"
+journal-u-exit=0
+===
+Aug 17 22:47:10 hxs-4 kernel: r8169 0000:05:00.0 eth0: RTL8168h/8111h, bc:fc:e7:3e:10:66, XID 541, IRQ 157
+Aug 17 22:47:10 hxs-4 kernel: nvidia: loading out-of-tree module taints kernel.
+Aug 17 22:47:10 hxs-4 kernel: nvidia: module verification failed: signature and/or required key missing - tainting kernel
+Aug 17 22:47:10 hxs-4 kernel: nvidia-nvlink: Nvlink Core is being initialized, major device number 234
+Aug 17 22:47:10 hxs-4 kernel: nvidia 0000:01:00.0: vgaarb: VGA decodes changed: olddecodes=io+mem,decodes=none:owns=none
+Aug 17 22:47:10 hxs-4 kernel: nvidia 0000:07:00.0: vgaarb: VGA decodes changed: olddecodes=io+mem,decodes=none:owns=none
+Aug 17 22:47:10 hxs-4 kernel: NVRM: loading NVIDIA UNIX Open Kernel Module for x86_64  580.173.02  Release Build  (dvs-builder@U22-I3-AK02-24-4)  Tue Jun 23 08:17:01 UTC 2026
+Aug 17 22:47:10 hxs-4 kernel: nvidia-modeset: Loading NVIDIA UNIX Open Kernel Mode Setting Driver for x86_64  580.173.02  Release Build  (dvs-builder@U22-I3-AK02-24-4)  Tue Jun 23 08:03:36 UTC 2026
+Aug 17 22:47:10 hxs-4 kernel: [drm] [nvidia-drm] [GPU ID 0x00000100] Loading driver
+Aug 17 22:47:10 hxs-4 kernel: [drm] Initialized nvidia-drm 0.0.0 for 0000:01:00.0 on minor 0
+Aug 17 22:47:10 hxs-4 kernel: [drm] [nvidia-drm] [GPU ID 0x00000700] Loading driver
+Aug 17 22:47:10 hxs-4 kernel: [drm] Initialized nvidia-drm 0.0.0 for 0000:07:00.0 on minor 1
+Aug 17 22:47:10 hxs-4 kernel: input: HDA NVidia HDMI/DP,pcm=3 as /devices/pci0000:00/0000:00:1c.4/0000:07:00.1/sound/card2/input13
+Aug 17 22:47:10 hxs-4 kernel: input: HDA NVidia HDMI/DP,pcm=7 as /devices/pci0000:00/0000:00:1c.4/0000:07:00.1/sound/card2/input14
+Aug 17 22:47:10 hxs-4 kernel: input: HDA NVidia HDMI/DP,pcm=8 as /devices/pci0000:00/0000:00:1c.4/0000:07:00.1/sound/card2/input15
+Aug 17 22:47:10 hxs-4 kernel: input: HDA NVidia HDMI/DP,pcm=9 as /devices/pci0000:00/0000:00:1c.4/0000:07:00.1/sound/card2/input16
+Aug 17 22:47:10 hxs-4 kernel: input: HDA NVidia HDMI/DP,pcm=3 as /devices/pci0000:00/0000:00:01.0/0000:01:00.1/sound/card1/input4
+Aug 17 22:47:10 hxs-4 kernel: input: HDA NVidia HDMI/DP,pcm=7 as /devices/pci0000:00/0000:00:01.0/0000:01:00.1/sound/card1/input5
+Aug 17 22:47:10 hxs-4 kernel: input: HDA NVidia HDMI/DP,pcm=8 as /devices/pci0000:00/0000:00:01.0/0000:01:00.1/sound/card1/input6
+Aug 17 22:47:10 hxs-4 kernel: input: HDA NVidia HDMI/DP,pcm=9 as /devices/pci0000:00/0000:00:01.0/0000:01:00.1/sound/card1/input7
+Aug 23 10:53:09 hxs-4 kernel: nvidia 0000:07:00.0: Using 39-bit DMA addresses
+journal-k-exit=0

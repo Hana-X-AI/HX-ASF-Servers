@@ -1,0 +1,40 @@
+context_packet:
+  goal_id: "GOAL-OLLAMA-AUDIT-HXS4-001"
+  goal_version: 1
+  work_order_id: "WO-OLLAMA-AUDIT-HXS4-001"
+  session_id: "john-initial-20260824-02"
+  role: "producer (operational audit agent: John)"
+  objective: >-
+    Read-only audit of the live Ollama runtime on hxs-4: version reconciliation,
+    effective configuration, model inventory and residency, GPU alignment,
+    network exposure, material performance risks, and recommendation-only
+    remediation guidance, with a complete sanitized evidence package.
+  controlling_sources:
+    - "agents/john/profile.md (read first)"
+    - "pilots/PILOT-KK3-JOHN-OLLAMA-AUDIT-002/plan.md (delta) and base plan 001 (audit matrix, guardrails, report structure)"
+    - "/opt/tkv-local/ollama"
+    - "agents/ roster"
+  target_identity: "hxs-4 (192.168.50.203); verify hostname and peer IP before probes"
+  preflight_evidence: "2026-08-24: ollama 0.32.9 /usr/local/bin/ollama, service active, API 0.32.9, RTX 5060 Ti + RTX 5060 present"
+  acceptance_criteria: "SC-01..SC-09 (base contract), SC-10 (version reconciliation), SC-11 (roster check)"
+  known_failures: []
+  constraints:
+    - "strictly read-only and non-disruptive"
+    - "every command logged in the extended command-log schema"
+    - "secrets redacted (REDACTED); the SSH credential is never printed or stored"
+  prohibited_actions:
+    - "systemctl state changes; kill/pkill; ollama pull|rm|create|cp|run|stop; installers/package managers"
+    - "fio/stress/cache-dropping/load generators; reboot/shutdown/driver reload/GPU reset"
+    - "any write to service/system/model/network/firewall/proxy state; uncertain side effects"
+  evidence_required:
+    - "03-john-knowledge-review-receipt.md (before any audit probe)"
+    - "04-audit-test-plan.md"
+    - "05-command-log.md"
+    - "06-raw-evidence-sanitized/"
+    - "07-audit-report.md"
+    - "08-john-validation-summary.md"
+  budget:
+    sessions: 1
+    transient_retry: 1
+  expected_response_schema: "agent_result per goal-setting guidance section 14"
+  escalation_target: "Kimi-K3"

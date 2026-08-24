@@ -111,10 +111,10 @@ server records contract, never silently rewritten.
 
 ## Approval discipline
 
-Before asking the owner for approval, first ask whether the step truly requires it.
-Default to automatic for: read-only checks and pre-flights, staging files and
-evidence, routine commits and pushes of validated work to the established
-repository, and steps already inside an authorized goal's scope. Still escalate:
-destructive or irreversible actions, governance changes, new external or shared
-state, scope expansion, and any escalation trigger in the Kimi-K3 profile. When in
+The factory's goal is automation. At every gate, ask: are the ratified rules,
+process, and audit trail in place for this step? If yes, proceed — approval is
+pre-granted. Halt and escalate only when a step has potential for serious harm to
+the codebase or the infrastructure, or could bring work to a halt or cause serious
+system downtime. Destructive or irreversible actions, governance changes, new
+external shared state, and scope expansion count as serious-harm potential. When in
 doubt, act reversibly and report rather than pause.

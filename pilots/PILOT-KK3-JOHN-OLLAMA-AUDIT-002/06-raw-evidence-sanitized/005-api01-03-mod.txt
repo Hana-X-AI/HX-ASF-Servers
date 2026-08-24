@@ -1,0 +1,11 @@
+{"version":"0.32.9"}
+HTTP=200 time=0.001746s
+===
+{"models":[{"name":"qwen3.5:9b-q4_K_M","model":"qwen3.5:9b-q4_K_M","modified_at":"2026-08-14T05:23:50.883639269Z","size":6594474711,"digest":"6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7","details":{"parent_model":"","format":"gguf","family":"qwen35","families":["qwen35"],"parameter_size":"9.7B","quantization_level":"Q4_K_M","context_length":262144,"embedding_length":4096},"capabilities":["vision","completion","tools","thinking"]}]}
+===
+{"models":[]}
+===
+NAME                 ID              SIZE      MODIFIED    
+qwen3.5:9b-q4_K_M    6488c96fa5fa    6.6 GB    10 days ago    
+===
+NAME    ID    SIZE    PROCESSOR    CONTEXT    UNTIL 

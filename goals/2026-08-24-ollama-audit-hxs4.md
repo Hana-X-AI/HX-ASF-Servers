@@ -2,7 +2,7 @@
 
 - Goal ID: 2026-08-24-ollama-audit-hxs4 (this file's name)
 - Version: 1
-- Status: draft — staged, awaiting Agent-Zero authorization
+- Status: done — PASS (owner accepted 2026-08-24T12:50Z)
 - Owner: Agent-Zero
 - Created: 2026-08-24
 - Human authority: Agent-Zero

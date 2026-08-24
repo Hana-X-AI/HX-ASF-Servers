@@ -1,0 +1,68 @@
+/usr/local/bin/ollama
+===
+ollama version is 0.32.9
+===
+● ollama.service - Ollama Service
+     Loaded: loaded (/etc/systemd/system/ollama.service; enabled; preset: enabled)
+    Drop-In: /etc/systemd/system/ollama.service.d
+             └─hx-commissioning.conf
+     Active: active (running) since Sun 2026-08-23 11:46:10 UTC; 22h ago
+   Main PID: 349591 (ollama)
+      Tasks: 17 (limit: 34707)
+     Memory: 13.5M (peak: 315.5M)
+        CPU: 39.676s
+     CGroup: /system.slice/ollama.service
+             └─349591 /usr/local/bin/ollama serve
+
+Aug 23 11:46:49 hxs-4 ollama[349591]: [GIN] 2026/08/23 - 11:46:49 | 200 |       19.54µs |       127.0.0.1 | GET      "/api/version"
+Aug 23 13:54:17 hxs-4 ollama[349591]: [GIN] 2026/08/23 - 13:54:17 | 200 |     639.076µs |       127.0.0.1 | GET      "/api/tags"
+Aug 23 16:17:35 hxs-4 ollama[349591]: time=2026-08-23T16:17:35.792Z level=INFO source=model_recommendations.go:177 msg="model recommendations cache sleep scheduled" wait=4h19m31.396147357s consecutive_failures=0
+Aug 23 20:37:07 hxs-4 ollama[349591]: time=2026-08-23T20:37:07.211Z level=INFO source=model_recommendations.go:177 msg="model recommendations cache sleep scheduled" wait=3h18m28.252922393s consecutive_failures=0
+Aug 23 23:55:35 hxs-4 ollama[349591]: time=2026-08-23T23:55:35.563Z level=INFO source=model_recommendations.go:177 msg="model recommendations cache sleep scheduled" wait=4h27m7.347420924s consecutive_failures=0
+Aug 24 04:22:42 hxs-4 ollama[349591]: time=2026-08-24T04:22:42.912Z level=INFO source=model_recommendations.go:177 msg="model recommendations cache sleep scheduled" wait=4h42m39.614751642s consecutive_failures=0
+Aug 24 09:05:22 hxs-4 ollama[349591]: time=2026-08-24T09:05:22.527Z level=INFO source=model_recommendations.go:177 msg="model recommendations cache sleep scheduled" wait=4h34m1.04532245s consecutive_failures=0
+Aug 24 10:18:48 hxs-4 ollama[349591]: [GIN] 2026/08/24 - 10:18:48 | 200 |      38.872µs |       127.0.0.1 | GET      "/api/version"
+Aug 24 10:18:48 hxs-4 ollama[349591]: [GIN] 2026/08/24 - 10:18:48 | 200 |      27.732µs |       127.0.0.1 | GET      "/api/version"
+Aug 24 10:33:30 hxs-4 ollama[349591]: [GIN] 2026/08/24 - 10:33:30 | 200 |      65.182µs |       127.0.0.1 | GET      "/api/version"
+status-exit=0
+===
+# /etc/systemd/system/ollama.service
+[Unit]
+Description=Ollama Service
+After=network-online.target
+
+[Service]
+ExecStart=/usr/local/bin/ollama serve
+User=ollama
+Group=ollama
+Restart=always
+RestartSec=3
+Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin"
+
+[Install]
+WantedBy=default.target
+
+# /etc/systemd/system/ollama.service.d/hx-commissioning.conf
+# HX commissioning override - conservative, loopback only.
+# GPU isolation is MANDATORY. hxs-4 has an asymmetric pair (16 GB + 8 GB).
+# CUDA_VISIBLE_DEVICES alone is NOT sufficient: the Vulkan backend enumerates
+# devices independently and re-exposed the excluded 16 GB card. Vulkan is disabled.
+[Service]
+Environment="CUDA_VISIBLE_DEVICES=GPU-cc758e31-d23b-3c53-bee6-dae3299a6f11"
+Environment="GGML_VK_VISIBLE_DEVICES=999"
+Environment="OLLAMA_VULKAN=0"
+Environment="OLLAMA_CONTEXT_LENGTH=65536"
+Environment="OLLAMA_NUM_PARALLEL=1"
+Environment="OLLAMA_MAX_LOADED_MODELS=1"
+Environment="OLLAMA_NO_CLOUD=1"
+===
+MainPID=349591
+ExecStart={ path=/usr/local/bin/ollama ; argv[]=/usr/local/bin/ollama serve ; ignore_errors=no ; start_time=[Sun 2026-08-23 11:46:10 UTC] ; stop_time=[n/a] ; pid=349591 ; code=(null) ; status=0/0 }
+Environment=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin CUDA_VISIBLE_DEVICES=GPU-cc758e31-d23b-3c53-bee6-dae3299a6f11 GGML_VK_VISIBLE_DEVICES=999 OLLAMA_VULKAN=0 OLLAMA_CONTEXT_LENGTH=65536 OLLAMA_NUM_PARALLEL=1 OLLAMA_MAX_LOADED_MODELS=1 OLLAMA_NO_CLOUD=1
+User=ollama
+Group=ollama
+ActiveState=active
+SubState=running
+FragmentPath=/etc/systemd/system/ollama.service
+DropInPaths=/etc/systemd/system/ollama.service.d/hx-commissioning.conf
+UnitFileState=enabled

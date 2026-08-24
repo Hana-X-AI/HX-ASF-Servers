@@ -1,0 +1,36 @@
+work_order:
+  task_id: "WO-OLLAMA-AUDIT-HXS4-001"
+  parent_goal: "GOAL-OLLAMA-AUDIT-HXS4-001"
+  goal_version: 1
+  assigned_agent: "John (profile-briefed sub-agent)"
+  objective: "Conduct the authorized read-only audit of the live Ollama runtime on hxs-4 (192.168.50.203) and submit the complete sanitized evidence package."
+  authoritative_inputs:
+    - "agents/john/profile.md"
+    - "pilots/PILOT-KK3-JOHN-OLLAMA-AUDIT-002/plan.md (delta) and base plan 001"
+    - "/opt/tkv-local/ollama (knowledge authority)"
+    - "agents/ roster (John is the current Ollama specialist; craig is archived history)"
+  required_knowledge_review:
+    - "Roster check first: agents/"
+    - "Review task-relevant authority, baselines, runbooks, tests in /opt/tkv-local/ollama"
+    - "FAIL-CLOSED: authority/baseline NOT ESTABLISHED -> Task May Proceed: NO -> BLOCKED"
+    - "Submit 03-john-knowledge-review-receipt.md"
+  execution_path: "John session runs on hxs-5; reaches hxs-4 via SSH hxsa@192.168.50.203 (owner-provided credential at /home/hxsa/opt/local-tkv/agent-zero-docs/ssh-info.md, askpass pattern; never print or store the secret)"
+  permitted_tools:
+    - "SSH read-only session to hxs-4"
+    - "passive Linux and systemd inspection"
+    - "read-only Ollama CLI and local API queries on hxs-4"
+    - "passive NVIDIA and journal inspection"
+  prohibited_actions:
+    - "all base-plan out-of-scope actions; any command with uncertain side effects"
+  deliverables:
+    - "03-john-knowledge-review-receipt.md"
+    - "04-audit-test-plan.md"
+    - "05-command-log.md (extended schema)"
+    - "06-raw-evidence-sanitized/"
+    - "07-audit-report.md"
+    - "08-john-validation-summary.md"
+  evidence_root: "pilots/PILOT-KK3-JOHN-OLLAMA-AUDIT-002/"
+  budgets:
+    sessions: 1 (correction only on governor authorization)
+    transient_retry: 1
+  escalation_target: "Kimi-K3"

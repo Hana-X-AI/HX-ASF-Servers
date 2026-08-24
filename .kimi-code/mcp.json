@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "mobbin": {
+      "url": "https://api.mobbin.com/mcp",
+      "enabled": false,
+      "_note": "Design-reference MCP (search_screens, search_flows, search_sections). Requires Mobbin Pro+ account. Enable and run /mcp-config login mobbin in a new session to complete OAuth. Staged 2026-08-24 for the design-reference pilot."
+    }
+  }
+}

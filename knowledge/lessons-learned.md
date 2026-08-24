@@ -5,6 +5,10 @@ because of it (a convention, a checklist, a KDD, or nothing).
 
 ## Entries
 
+- 2026-08-24 — a provided doc (`ox-alpha.md`) carried a live-looking API key under a
+  false redaction note — **scan every provided document for credentials before
+  adoption or use.** Change: secret scan is part of the adoption gate; key flagged
+  to the owner for revocation and replacement.
 - 2026-08-24 — John burned time chasing "craig", a superseded Claude Code-era
   specialist profile left at the top level of `/opt/tkv-local/ollama` — **the
   roster is `agents/`, not the knowledge vault.** Teammates and capabilities are
