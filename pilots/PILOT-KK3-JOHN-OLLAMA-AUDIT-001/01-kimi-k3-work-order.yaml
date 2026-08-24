@@ -28,7 +28,7 @@ work_order:
     - "08-john-validation-summary.md"
   evidence_root: "pilots/PILOT-KK3-JOHN-OLLAMA-AUDIT-001/"
   budgets:
-    sessions: 1 (correction session only on governor authorization)
-    transient_retry: 1 (read-only commands only)
+    sessions: 1  # correction session only on governor authorization
+    transient_retry: 1  # read-only commands only
   rollback_or_containment: "not applicable (read-only); quarantine on integrity concern"
   escalation_target: "Kimi-K3"

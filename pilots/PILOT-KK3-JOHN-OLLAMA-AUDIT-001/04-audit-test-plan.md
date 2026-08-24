@@ -44,7 +44,7 @@ Deviation from B1/B2 is recorded as a **finding** (drift since 2026-08-12), not 
 
 | Test ID | Property | Exact probe | Expected (basis) | Pass rule |
 | --- | --- | --- | --- | --- |
-| HW-01 | CPU topology | `lscpu` | i5-7500, 1 socket, 4 cores, 4 threads, no SMT, VT-x (B1) | PASS: matches B1 |
+| HW-01 | CPU topology | `lscpu` | i5-7500, 1 socket, 4 cores, 4 threads, no SMT (B1); VT-x: NOT ESTABLISHED (no virtualization line in captured lscpu evidence) | PASS: matches B1 |
 | HW-02 | NUMA | `lscpu` NUMA fields; `command -v numactl && numactl --hardware` | 1 NUMA node (B1); `numactl` likely absent — install nothing | PASS: node count established; absent numactl recorded, not a failure |
 | HW-03 | RAM/swap | `free -h`; `swapon --show`; `grep -E 'MemTotal\|MemAvailable\|SwapTotal\|SwapFree' /proc/meminfo` | ~31 GiB usable, file-backed swap (B1) | PASS: captured and consistent |
 | HW-04 | Model storage | `lsblk -o NAME,TYPE,SIZE,FSTYPE,MOUNTPOINTS,ROTA,MODEL`; `findmnt -T / -o TARGET,SOURCE,FSTYPE,SIZE,USED,AVAIL,USE%`; `df -hT`; candidate paths `ls -ld ~/.ollama /usr/share/ollama 2>&1`; effective `OLLAMA_MODELS` via env scan (SVC-04) | Single NVMe, ext4 root, no dedicated model store, no `OLLAMA_MODELS` (B1) | PASS: storage layout established; model-store presence/absence recorded |

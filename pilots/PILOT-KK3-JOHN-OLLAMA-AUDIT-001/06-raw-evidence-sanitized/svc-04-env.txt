@@ -2,7 +2,7 @@
 Captured: 2026-08-24T09:43:43+00:00 — local session, no SSH
 
 --- $ grep -rn 'OLLAMA_' /etc/environment /etc/profile.d/ ~/.bashrc ~/.profile ~/.config/environment.d/ ---
-[exit=2]
+[exit=2 — partial coverage. Correction note 2026-08-24: per-path verification shows /etc/environment, /etc/profile.d/, ~/.bashrc, and ~/.profile exist and were scanned with no matches; ~/.config/environment.d/ does not exist, which caused exit 2. Coverage is complete for existing paths, incomplete only for the nonexistent path]
 
 --- $ env | grep -i ollama ---
 [exit=1]
@@ -11,5 +11,5 @@ Captured: 2026-08-24T09:43:43+00:00 — local session, no SSH
 -- No entries --
 [exit=0]
 
---- $ ps aux | grep -i ollama (excluding grep) ---
+--- $ ps aux | grep -i ollama | grep -v grep ---
 [exit=1]

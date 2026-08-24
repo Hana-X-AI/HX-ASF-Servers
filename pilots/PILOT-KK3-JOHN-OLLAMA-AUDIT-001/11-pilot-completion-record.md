@@ -6,10 +6,12 @@ Pilot ID: PILOT-KK3-JOHN-OLLAMA-AUDIT-001
 Goal ID/Version: GOAL-OLLAMA-AUDIT-HXS5-001 v1
 Agent Zero Authority: readiness gate granted 2026-08-24T09:26Z
 John Session(s): john-initial-20260824-01 (single session, zero corrections)
-Kimi-K3 State Transitions: 7 recorded (09-kimi-k3-state-log.md)
+Kimi-K3 State Transitions: 10 recorded (09-kimi-k3-state-log.md)
 Technical Audit Status: 24 PASS / 0 FAIL / 0 BLOCKED / 5 NOT RUN (justified)
-Process Acceptance Matrix: PROC-01..PROC-10 all satisfied (gate checks in
-  10-kimi-k3-quality-gate-decision.md)
+Process Acceptance Matrix: PROC-01..PROC-10 satisfied except the G1 knowledge-gate
+  control (no ratified hxs-5 Ollama baseline), reclassified by the owner as
+  FAILED/BLOCKED at 2026-08-24T10:05Z; the evidence-gate PASS is recorded
+  separately in 10-kimi-k3-quality-gate-decision.md
 Evidence Package Identity/Hash: sha256sums.txt (22 artifacts, frozen at gate)
 Failed/Blocked/Not-Run Tests: HW-05, GPU-02, GPU-04, MOD-02, MOD-03 (NOT RUN,
   all justified; none can hide a live compliance failure because the component
@@ -22,7 +24,7 @@ Residual Risks: point-in-time snapshot; environment scan scope; kernel journal
 Human Decisions Required: D1 (Ollama intent for hxs-5), D2 (NGINX role routing),
   plus owner acceptance of this record
 Process Learning Findings: 12-process-learning-record.md
-Final Status: GATE PASSED — PENDING OWNER ACCEPTANCE
+Pre-acceptance status: GATE PASSED — PENDING OWNER ACCEPTANCE
 ```
 
 Per the goal file verifier note, a final `PASS — PILOT PROCESS AND AUDIT EVIDENCE

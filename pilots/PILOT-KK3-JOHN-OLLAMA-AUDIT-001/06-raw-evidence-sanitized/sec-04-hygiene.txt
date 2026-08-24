@@ -2,10 +2,10 @@
 Captured: 2026-08-24T09:44:32+00:00 — local session, no SSH
 Scope: all retained evidence files in 06-raw-evidence-sanitized/ (this scan excludes its own output file)
 
---- $ grep -rniE 'token|passwd|password|secret|api[_-]?key|bearer|private.key|BEGIN.*PRIVATE' (evidence dir) ---
-/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-KK3-JOHN-OLLAMA-AUDIT-001/06-raw-evidence-sanitized/api-01-probes.txt:26:--- $ getent passwd ollama ---
-/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-KK3-JOHN-OLLAMA-AUDIT-001/06-raw-evidence-sanitized/kr-01-knowledge-survey.txt:50:/opt/tkv-local/ollama/ollama-main/tokenizer
-[exit=0] (1 = no matches = clean)
+--- $ grep -rniE 'token|passwd|password|secret|api[_-]?key|bearer|private.key|BEGIN.*PRIVATE' 06-raw-evidence-sanitized/ --exclude='sec-04-hygiene.txt' ---
+pilots/PILOT-KK3-JOHN-OLLAMA-AUDIT-001/06-raw-evidence-sanitized/api-01-probes.txt:26:--- $ getent passwd ollama ---
+pilots/PILOT-KK3-JOHN-OLLAMA-AUDIT-001/06-raw-evidence-sanitized/kr-01-knowledge-survey.txt:50:/opt/tkv-local/ollama/ollama-main/tokenizer
+[exit=0 — matches found and reviewed: two benign matches (command string `getent passwd ollama`, vault path `…/tokenizer`); no secret values retained]
 
 --- file inventory ---
 total 56

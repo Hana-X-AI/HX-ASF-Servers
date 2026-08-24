@@ -5,7 +5,10 @@
 - John sessions: 1 (initial); correction sessions: 0; transient retries: 0
 - Commands logged: 23 (all read-only); refused/prohibited: recorded in log
 - Tests: 29 defined before execution; 24 PASS, 0 FAIL, 0 BLOCKED, 5 NOT RUN
-- Gate outcome: PASS on first pass, zero corrections required
+- Quality gate: PASS (evidence quality; first pass, zero corrections).
+- Pilot completion: FAIL (owner decision 2026-08-24T10:05Z) — reasons: the target
+  was invalid (Ollama is not assigned to hxs-5) and the knowledge-review block at
+  G1 (no ratified baseline) that should have stopped execution was missing.
 - Wall time: knowledge review receipt 09:35Z; evidence submitted 09:44Z; gate
   decision 09:55Z
 

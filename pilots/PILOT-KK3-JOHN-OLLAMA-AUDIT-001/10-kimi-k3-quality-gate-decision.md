@@ -38,3 +38,12 @@ Decision Timestamp: 2026-08-24T09:55Z
 | Budget limits | 1 session, 0 corrections, 0 retries | Within limits (plan section 5) |
 | Report structure | Section 13 headings present, recommendation plan under `NOT AUTHORIZED FOR EXECUTION` banner | Complete (SC-07) |
 | Governor plane separation | Governor ran zero audit probes; John session dispatched per plan section 2.1 | Preserved (SC-08, PROC-02) |
+
+## Post-hoc reclassification (owner decision, 2026-08-24T10:05Z)
+
+The knowledge gate is reclassified as a blocking knowledge-review failure: G1 (no
+ratified Ollama baseline exists for hxs-5) made the audit target invalid at intake.
+The authorized transition recorded above is reclassified from
+`PASSED -> PILOT_COMPLETE` to `BLOCKED`. The evidence-quality evaluation remains
+PASS as recorded — it certifies package quality only, not objective fitness. Final
+pilot outcome: FAIL (see 11-pilot-completion-record.md).

@@ -42,8 +42,8 @@
 | Storage | Single KIOXIA 238.5 GB NVMe; ext4 root 232.6 G, 6-7 % used (14.9 G); no dedicated model store; `~/.ollama`, `/usr/share/ollama`, `/var/lib/ollama` all absent | `hw-04-storage.txt` |
 | Service identity | No `ollama.service` unit, fragment, drop-in, user, or group | `svc-01-unit.txt`, `api-01-probes.txt` |
 | Listener | No `:11434`. Listeners: tcp/22 sshd (all interfaces), tcp+udp/53 systemd-resolved stub (loopback), loopback-only dev tooling (`code-110a328ea5` pids 9054/11437; `MainThread` pids 11468/9169) | `svc-03-listener.txt` |
-| Effective Ollama config | Every tunable `NOT SET`: no `OLLAMA_HOST`, `OLLAMA_MODELS`, context, parallelism, queue, FlashAttention, KV-cache, keep-alive, backend, proxy, cloud, debug, or origins configuration anywhere (env files, shell profiles, systemd, process env) | `svc-04-env.txt`, `svc-01-unit.txt` |
-| Model inventory / residency | None pulled, none loaded: no binary (`ollama list`/`ollama ps` exit 127), no API (`/api/tags`, `/api/ps` connection refused), no store directories | `id-04-ollama-identities.txt`, `api-01-probes.txt` |
+| Effective Ollama config | Every tunable `NOT SET` in scanned locations (`/etc/environment`, `/etc/profile.d/`, hxsa shell profiles, process env): no `OLLAMA_HOST`, `OLLAMA_MODELS`, context, parallelism, queue, FlashAttention, KV-cache, keep-alive, backend, proxy, cloud, debug, or origins configuration; other local accounts not scanned (see R-2) | `svc-04-env.txt`, `svc-01-unit.txt` |
+| Model inventory / residency | None pulled, none loaded: no binary (`ollama list`/`ollama ps` exit 127), no API (`/api/tags`, `/api/ps` connection refused), no store directories in scanned paths (`~/.ollama`, `/usr/share/ollama`, `/var/lib/ollama`) | `id-04-ollama-identities.txt`, `api-01-probes.txt` |
 | Ollama journal | `journalctl -u ollama`: no entries | `svc-04-env.txt` |
 
 ## 4. Audit test matrix

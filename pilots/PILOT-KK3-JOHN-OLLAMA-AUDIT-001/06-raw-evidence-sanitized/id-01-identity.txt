@@ -8,8 +8,8 @@ hxs-5
  Static hostname: hxs-5
        Icon name: computer-desktop
          Chassis: desktop 🖥️
-      Machine ID: b5bf3ee8892545f1b5d15d830021b4e9
-         Boot ID: eebdd2e54eec41f88015d941863858c6
+      Machine ID: REDACTED (stable host identifier, withheld in sanitized copy)
+         Boot ID: REDACTED (withheld in sanitized copy)
 Operating System: Ubuntu 24.04.4 LTS
           Kernel: Linux 7.0.0-30-generic
     Architecture: x86-64
@@ -32,7 +32,7 @@ Firmware Version: P21 Ver. 02.15
        valid_lft forever preferred_lft forever
 
 --- id (executor) ---
-uid=1000(hxsa) gid=1000(hxsa) groups=1000(hxsa),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),101(lxd)
+uid=1000(hxsa) gid=1000(hxsa) groups=REDACTED (privileged group detail withheld in sanitized copy)
 
 --- cat /etc/os-release ---
 PRETTY_NAME="Ubuntu 24.04.4 LTS"
