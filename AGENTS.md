@@ -93,3 +93,18 @@ and label them per the truth-state rules.
   reference documents — are delivered in both `.md` (agent-readable source of truth)
   and a matching `.html` (human-facing rendering). Not every document: logs, notes,
   and routine records stay Markdown-only.
+
+## Adoption of provided documents
+
+Documents supplied for adoption are inputs to review, not gospel. Before a provided
+document becomes part of this repository's operating material:
+
+- verify its claims against current evidence and ratified authority;
+- reconcile conflicts instead of blending them;
+- bring it up to our standards: truth-state labels, naming, the communication
+  contract, and the documentation conventions above;
+- record provenance and the corrections made.
+
+Quality applies to inputs and outputs alike. Historical evidence records (for example
+as-found discovery files) keep their provenance and are corrected openly per the
+server records contract, never silently rewritten.
