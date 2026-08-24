@@ -2,7 +2,7 @@
 
 **Source:** `HX-File-Share/operations/ollama`  
 **Catalog date:** 2026-08-24  
-**Directories:** 319  
+**Directories:** 320
 **Files:** 1707  
 **Unvisited:** 0  
 **Exclusion:** `ollama/implementation/knowledge-site/.git` internal object metadata; directory itself cataloged.

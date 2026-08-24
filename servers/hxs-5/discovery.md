@@ -57,7 +57,7 @@ The target address, account and privilege state were taken from
 | /dev/nvme0n1p2 | partition of nvme0n1 | not applicable | partition | 237.4 GB | ext4 | / |
 
 - Root filesystem usage: 4.7 percent of 232.64 GB
-- **Single storage device**, with no additional unallocated drive. Across the complete fleet this is the pattern for every small form factor host, hxs-5 through hxs-15; only the four GPU hosts carry unallocated capacity
+- **Single storage device**, with no additional storage device. Across the complete fleet this is the pattern for every small form factor host, hxs-5 through hxs-15; only the four GPU hosts carry unallocated capacity
 - LVM: no physical volumes, volume groups or logical volumes present
 - RAID: no active arrays
 - SMART detail: unavailable, smartctl is not installed
@@ -95,12 +95,12 @@ The target address, account and privilege state were taken from
 - CPU: 4 physical cores and 4 threads in a single socket, single NUMA domain, no SMT. Kaby Lake desktop silicon from 2017. **The smallest core count in the fleet**, shared with hxs-9 through hxs-15
 - Memory: 32 GB across 2 slots, non-ECC, DDR4 at 2400 MT/s
 - GPU: none. Integrated Intel HD Graphics 630 only, suitable for console output rather than compute
-- Storage: a single 238.5 GB NVMe device carrying the operating system, 4.7 percent used. **No spare capacity and no second device**
+- Storage: a single 238.5 GB NVMe device carrying the operating system, 4.7 percent used. **No additional storage device**
 - Network: single active 1 Gb/s copper link, single interface
 - Constraints / notable characteristics:
   - this is a small form factor desktop-mini chassis, not a server, and its 65 W power envelope limits expansion
   - no discrete GPU and no PCIe expansion capability in this chassis class
-  - a single storage device with no redundancy and no spare capacity for data or model storage
+  - a single storage device with no redundancy or additional device dedicated to data or model storage
   - a single network interface, so no link redundancy
   - memory is non-ECC
   - no baseboard management controller or out-of-band management interface was observed

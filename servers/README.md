@@ -7,7 +7,7 @@ registry row.
 - `SERVER-REGISTRY.md` — fleet-level source of truth for discovery status and
   owner-assigned roles.
 - `hxs-N/discovery.md` — as-found evidence per server. Imported 2026-08-24 from
-  `/opt/tkv-local/servers`; records dated 2026-08-13.
+  `/opt/tkv-local/servers`; records dated 2026-08-11 through 2026-08-13.
 - `_templates/` — discovery and configuration record templates.
 - `AGENTS.md` — the server records contract governing this directory.
 

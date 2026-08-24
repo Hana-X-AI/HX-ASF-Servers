@@ -7,6 +7,7 @@ resolution note, never by deleting.
 
 | Date | Item | Owner | Next action |
 | ---- | ---- | ----- | ----------- |
+| 2026-08-24 | Draft HX file-naming convention (no tool-name prefixes such as `codex_`) and apply it to new files going forward | Kimi-K3 | Draft convention, record it in the repo conventions, then rename existing non-conforming files, e.g. `agents/john/codex_20260824_0205_ollama-directory-reconnaissance-inventory.md` |
 
 ## Closed
 

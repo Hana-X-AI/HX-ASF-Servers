@@ -3,13 +3,13 @@
 **Phase:** 1
 **Discovery date:** 2026-08-12
 
-All values below are direct server evidence collected read-only over SSH using the project
-collector. No package was installed, no driver loaded or changed, and no configuration
-modified. The collector ran with passwordless sudo, so no fact was skipped for lack of
-privilege.
+## Evidence Sources
 
-The target address, account and privilege state were taken from
-`servers/hxs-14/pre-work-results.md` rather than discovered by probing.
+- **Direct server measurements:** hardware, local operating-system, storage, interface and software state collected read-only over SSH by the project collector. No package was installed, no driver loaded or changed and no configuration modified. The collector ran with passwordless sudo
+- **Pre-work context:** target address, account, privilege and preparation state from `servers/hxs-14/pre-work-results.md`, not from collector probing
+- **Router-side DNS:** DNS-record observations cited with act-001 came from router-side records, not from the target server
+- **Owner statements:** owner-confirmed fleet statements are identified as such and are not collector measurements
+- **Derived context:** fleet comparisons, superlatives and interpretations combine measured facts with other server records; they are not direct measurements from hxs-14
 
 ## Identity
 - Hostname: hxs-14
@@ -57,8 +57,8 @@ The target address, account and privilege state were taken from
 | /dev/nvme0n1p2 | partition of nvme0n1 | not applicable | partition | 237.4 GB | ext4 | / |
 
 - Root filesystem usage: 4.7 percent of 232.64 GB
-- **The storage device is an aftermarket iDsonix unit**, the same brand found in hxs-11 and hxs-15 and unlike the KIOXIA, Toshiba, Intel, SK hynix and Western Digital drives elsewhere in the fleet. The original drive appears to have been replaced
-- Single storage device, with no additional unallocated drive
+- **The collector identified the storage device as an aftermarket iDsonix unit.** Original-drive replacement history is unavailable from collected evidence
+- Single storage device, with no additional storage device
 - LVM: no physical volumes, volume groups or logical volumes present
 - RAID: no active arrays
 - SMART detail: unavailable, smartctl is not installed
@@ -100,9 +100,9 @@ The target address, account and privilege state were taken from
 - Network: single active 1 Gb/s copper link, single interface
 - Constraints / notable characteristics:
   - **32 package updates are pending, including one security update.** hxs-5, hxs-6 and hxs-15 are in the same state; hxs-7 through hxs-13 were brought to 0 pending during preparation
-  - the storage device is an aftermarket replacement rather than the original vendor part, so its endurance and firmware history are not known from vendor records
+  - the collector identified an aftermarket iDsonix unit; replacement history, endurance and firmware history are unavailable from collected evidence
   - a small form factor desktop-mini chassis with a 65 W power envelope, no discrete GPU and no PCIe expansion capability
-  - a single storage device with no redundancy and no spare capacity
+  - a single storage device with no redundancy or additional storage device
   - a single network interface, so no link redundancy
   - memory is non-ECC, and runs dual channel
   - no baseboard management controller or out-of-band management interface was observed

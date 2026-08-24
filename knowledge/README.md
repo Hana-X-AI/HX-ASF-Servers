@@ -22,6 +22,7 @@ Every infrastructure fact here carries a label: `TARGET-STATE`, `AS-BUILT`,
 
 ## Writing conventions
 
-- Plain Markdown, lowercase filenames.
+- Plain Markdown. Filenames are lowercase except for the required uppercase
+  `KDD-NNNN` prefix on decision files.
 - Date every entry (YYYY-MM-DD).
 - Reference goals and KDDs by their codes (`KDD-0003`), not by retelling them.

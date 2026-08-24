@@ -51,11 +51,11 @@ Automation must not populate or infer:
 - `Workload / Model`;
 - manual approval decisions.
 
-### future server implementation phase — configuration
+### owner-authorized server implementation — configuration
 
-Do not create or modify a server's `configuration.md` until the owner authorizes the future server implementation phase.
+Do not create or modify a server's `configuration.md` until the owner authorizes the server implementation phase.
 
-When that phase is legitimately authorized:
+When that owner-authorized phase begins:
 
 - copy the approved role/workload from `SERVER-REGISTRY.md`;
 - configure only the approved role;
@@ -87,7 +87,7 @@ For Phase 1 records, use the established project workflow as applicable:
 
 A server discovery record should not be treated as complete until required facts are present or explicitly documented as unavailable.
 
-For Phase 2 records, validate the configured role using the approved role-specific workflow and record the result without altering the historical discovery record.
+For owner-authorized server implementation records, validate the configured role using the approved role-specific workflow and record the result without altering the historical discovery record.
 
 ## child dox index
 

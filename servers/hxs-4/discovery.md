@@ -131,7 +131,8 @@ the as-found record remains intact.
 ## Capability Summary
 - CPU: 20 physical cores and 28 threads in a single socket, hybrid performance and efficiency core topology, single NUMA domain
 - Memory: 32 GB across 2 of 4 populated slots, non-ECC, DDR5 at 5600 MT/s. This is the smallest memory configuration of the four GPU hosts. Across the complete fleet, hxs-6, hxs-7 and hxs-8 are smaller at 16 GB
-- GPU: 2 discrete NVIDIA GB206 devices with 16311 MiB and 8151 MiB of VRAM, 24462 MiB combined, both measured from kernel reporting. Both are bound to the open-source nouveau driver and initialized successfully, so no CUDA runtime exists in the as-found state
+- GPU (as found): 2 discrete NVIDIA GB206 devices with 16311 MiB and 8151 MiB of VRAM, 24462 MiB combined, both measured from kernel reporting. Both were bound to the open-source nouveau driver and initialized successfully, so no CUDA runtime was available
+- GPU (validated current state, 2026-08-12): the NVIDIA driver binds both devices, an NVIDIA GeForce RTX 5060 Ti with 16311 MiB and an NVIDIA GeForce RTX 5060 with 8151 MiB; the driver reports CUDA support up to 13.0. Installed CUDA Toolkit/runtime: unavailable from collected evidence
 - Storage: 931.5 GB NVMe in use for the operating system at 1.2 percent, plus a 476.9 GB NVMe installed but entirely unallocated. Total installed storage is roughly 1.4 TB, the smallest of the four GPU hosts. Across the complete fleet the small form factor hosts carry less still, at a single 238.5 GB or 476.9 GB device
 - Network: single active 1 Gb/s copper link
 - Constraints / notable characteristics:

@@ -58,7 +58,7 @@ The target address, account and privilege state were taken from
 | /dev/nvme0n1p2 | partition of nvme0n1 | not applicable | partition | 237.4 GB | ext4 | / |
 
 - Root filesystem usage: 3.1 percent of 232.64 GB
-- Single storage device, with no additional unallocated drive
+- Single storage device, with no additional storage device
 - LVM: no physical volumes, volume groups or logical volumes present
 - RAID: no active arrays
 - SMART detail: unavailable, smartctl is not installed
@@ -101,7 +101,7 @@ The target address, account and privilege state were taken from
 - Constraints / notable characteristics:
   - **memory runs in single channel**, one populated slot of two, which halves available memory bandwidth relative to a matched pair
   - a small form factor desktop-mini chassis with no discrete GPU and no PCIe expansion capability
-  - a single storage device with no redundancy and no spare capacity
+  - a single storage device with no redundancy or additional storage device
   - memory is non-ECC
   - no baseboard management controller or out-of-band management interface was observed
   - Secure Boot is enabled. Loading an unsigned or DKMS-built kernel module would require signing and key enrolment, or Secure Boot to be disabled

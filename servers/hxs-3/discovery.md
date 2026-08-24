@@ -50,9 +50,9 @@ of privilege.
 - Driver: nouveau, open-source, bound to both GPUs and initialized successfully on each. The proprietary NVIDIA driver is not installed, `nvidia-smi` is absent, and no nvidia, cuda or libcuda package is present
 - CUDA availability: none in the as-found state
 - UUIDs: unavailable. GPU UUIDs are reported by `nvidia-smi`, which requires the proprietary driver
-- PCIe link, 0000:02:00.0: negotiated x8; device maximum 32.0 GT/s at width x16
-- PCIe link, 0000:03:00.0: negotiated x8; device maximum 32.0 GT/s at width x16
-- PCIe bandwidth, kernel-reported: 63.008 Gb/s available per card, limited by an 8.0 GT/s x8 link, against 504.112 Gb/s that the cards could reach on a 32.0 GT/s x16 link. The X99 platform is PCIe Gen3, so Gen5 speeds are not attainable here regardless of slot
+- PCIe link, 0000:02:00.0: negotiated 2.5 GT/s at width x8; device maximum 32.0 GT/s at width x16
+- PCIe link, 0000:03:00.0: negotiated 2.5 GT/s at width x8; device maximum 32.0 GT/s at width x16
+- PCIe bandwidth at the observed idle-state link: 16.0 Gb/s per card at 2.5 GT/s x8. The X99 platform's Gen3 x8 ceiling is 63.008 Gb/s, against 504.112 Gb/s that the cards could reach on a 32.0 GT/s x16 link; Gen5 speeds are not attainable here regardless of slot
 - PCI resource pressure: the kernel could not assign SR-IOV virtual-function BARs on either card, reporting `VF BAR 2 ... can't assign; no space` and `VF BAR 4 ... can't assign; no space`, and a bridge-window expansion to `0x24000000` also failed. PCI reallocation was automatically enabled. The primary BARs were assigned successfully and both GPUs work, so this pressure is not fatal, but it confirms the 32-bit MMIO region is tight with Above 4G Decoding disabled
 - No other accelerator devices detected
 
@@ -118,14 +118,15 @@ the as-found record remains intact.
 ## Capability Summary
 - CPU: 8 physical cores and 16 threads in a single socket, single NUMA domain. Haswell-generation desktop silicon
 - Memory: 66 GB across 8 populated slots, non-ECC, 2133 MT/s
-- GPU: 2 discrete NVIDIA GB206 devices, PNY 196e:143e, with 16311 MiB each and 32622 MiB combined, measured from kernel reporting. Both are bound to the open-source nouveau driver and initialize successfully, so no CUDA runtime exists in the as-found state and CUDA-dependent inference software cannot run without a driver change
+- GPU (as found): 2 discrete NVIDIA GB206 devices, PNY 196e:143e, with 16311 MiB each and 32622 MiB combined, measured from kernel reporting. Both were bound to the open-source nouveau driver and initialized successfully, so no CUDA runtime was available
+- GPU (validated current state, 2026-08-12): both devices are NVIDIA GeForce RTX 5060 Ti GPUs bound to the NVIDIA driver, with 16311 MiB each, 32622 MiB combined; the driver reports CUDA support up to 13.0. Installed CUDA Toolkit/runtime: unavailable from collected evidence
 - Storage: 3.6 TB NVMe in use for the operating system, plus a 1.8 TB SATA SSD installed but entirely unallocated
 - Network: single active 1 Gb/s copper link
 - Constraints / notable characteristics:
   - platform firmware dates from 2016-06-13, roughly ten years before discovery
   - the GPU is connected at x8 against a device maximum of x16, so it has half the host bandwidth the card supports
   - the negotiated link speed of 2.5 GT/s against a 32.0 GT/s maximum is consistent with idle power management but has not been confirmed under load
-  - both GPUs run at PCIe x8 rather than their x16 maximum, and the X99 platform is Gen3, so each card reaches 63.008 Gb/s against the 504.112 Gb/s the hardware could support on a modern host. This is a platform ceiling, not a fault
+  - both GPUs run at PCIe x8 rather than their x16 maximum. The observed idle-state bandwidth is 16.0 Gb/s per card; the X99 Gen3 x8 platform ceiling is 63.008 Gb/s against the 504.112 Gb/s the hardware could support on a modern host
   - Above 4G Decoding is disabled, which leaves the 32-bit MMIO region tight enough that SR-IOV virtual-function BARs cannot be assigned. Both GPUs still initialize and work
   - the host cannot name its own GPU; the installed PCI ID database does not contain 10de:2d04
   - memory is non-ECC and no system serial is programmed

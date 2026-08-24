@@ -121,12 +121,13 @@ HX-introduced change, recorded separately here so the as-found record remains in
 ## Capability Summary
 - CPU: 8 physical cores and 16 threads in a single socket, single NUMA domain. Haswell-generation desktop silicon
 - Memory: 66 GB across 8 populated slots, non-ECC, 2133 MT/s
-- GPU: 2 discrete NVIDIA devices with PCI ID 10de:2d04. Neither has a driver bound, so no CUDA runtime exists and VRAM cannot be read from the as-found state. Both are connected at PCIe 8.0 GT/s x8, which is the maximum width their slots provide
+- GPU (as found): 2 discrete NVIDIA devices with PCI ID 10de:2d04. Neither had a driver bound, so no CUDA runtime was available and VRAM could not be read. Both were connected at PCIe 8.0 GT/s x8, the maximum width their slots provide
+- GPU (validated current state, 2026-08-12): both devices are NVIDIA GeForce RTX 5060 Ti GPUs bound to the NVIDIA driver, with 16311 MiB each, 32622 MiB combined; the driver reports CUDA support up to 13.0. Installed CUDA Toolkit/runtime: unavailable from collected evidence
 - Storage: 3.6 TB NVMe in use for the operating system, plus two 596.2 GB rotational drives installed but entirely unallocated
 - Network: single active 1 Gb/s copper link
 - Constraints / notable characteristics:
   - platform firmware dates from 2016-06-13, roughly ten years before discovery
-  - no driver is bound to either GPU, so the hardware is present but unusable in the as-found state
+  - as found, no driver was bound to either GPU, so the hardware was present but unusable until the validated NVIDIA driver installation
   - the host cannot name its own GPUs; the installed PCI ID database does not contain 10de:2d04
   - memory is non-ECC and no system serial is programmed
   - no baseboard management controller or out-of-band management interface was observed

@@ -3,13 +3,13 @@
 **Phase:** 1
 **Discovery date:** 2026-08-12
 
-All values below are direct server evidence collected read-only over SSH using the project
-collector. No package was installed, no driver loaded or changed, and no configuration
-modified. The collector ran with passwordless sudo, so no fact was skipped for lack of
-privilege.
+## Evidence Sources
 
-The target address, account and privilege state were taken from
-`servers/hxs-8/pre-work-results.md` rather than discovered by probing.
+- **Direct server measurements:** hardware, local operating-system, storage, interface and software state collected read-only over SSH by the project collector. No package was installed, no driver loaded or changed and no configuration modified. The collector ran with passwordless sudo
+- **Pre-work context:** target address, account, privilege and preparation state from `servers/hxs-8/pre-work-results.md`, not from collector probing
+- **Router-side DNS:** DNS-record observations cited with act-001 came from router-side records, not from the target server
+- **Owner statements:** owner-confirmed fleet statements are identified as such and are not collector measurements
+- **Derived context:** fleet comparisons, superlatives and interpretations combine measured facts with other server records; they are not direct measurements from hxs-8
 
 ## Identity
 - Hostname: hxs-8

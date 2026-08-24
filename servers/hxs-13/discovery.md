@@ -58,7 +58,7 @@ The target address, account and privilege state were taken from
 
 - Root filesystem usage: 4.7 percent of 232.64 GB
 - **The operating system runs from a SATA-attached SSD, not NVMe.** Every other small form factor host in the fleet boots from an NVMe device. Capacity is the same at 238.5 GB, but the interface is slower
-- Single storage device, with no additional unallocated drive
+- Single storage device, with no additional storage device
 - LVM: no physical volumes, volume groups or logical volumes present
 - RAID: no active arrays
 - SMART detail: unavailable, smartctl is not installed
@@ -102,7 +102,7 @@ The target address, account and privilege state were taken from
   - despite carrying the same EliteDesk 800 G3 DM 65W model name as five other hosts, this unit is a different build: Skylake i5-6500 rather than Kaby Lake i5-7500, HD Graphics 530 rather than 630, memory at 2133 rather than 2400 MT/s, and SATA rather than NVMe storage
   - storage is SATA-attached, so sustained sequential throughput is materially lower than the NVMe-equipped hosts
   - a small form factor desktop-mini chassis with a 65 W power envelope, no discrete GPU and no PCIe expansion capability
-  - a single storage device with no redundancy and no spare capacity
+  - a single storage device with no redundancy or additional storage device
   - a single network interface, so no link redundancy
   - memory is non-ECC, and runs dual channel
   - no baseboard management controller or out-of-band management interface was observed

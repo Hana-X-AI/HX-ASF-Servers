@@ -2,7 +2,7 @@
 
 ## Skills and trigger words
 
-Nine owner-installed skills govern how work is done in this repository. They live in
+Ten owner-installed skills govern how work is done in this repository. They live in
 `.kimi-code/skills/` (project scope) and also at user scope in `~/.kimi-code/skills/`.
 
 - **be-great** — owner trigger: **"be great"**. Exhaustive, evidence-first investigation:
@@ -83,3 +83,13 @@ there using the **be-great** skill (evidence-first investigation) before acting.
 Its contents are reference material, not current truth: verify versions, state, and
 applicability against the live environment before converting them into configuration,
 and label them per the truth-state rules.
+
+## Documentation conventions
+
+- Use workflow diagrams (process flow, dataflow) in documentation where they make a
+  process or relationship materially easier for a human to read. Default format:
+  Mermaid in Markdown, rendered in the HTML output.
+- Major documents — specs, designs, READMEs, and other human-facing decision or
+  reference documents — are delivered in both `.md` (agent-readable source of truth)
+  and a matching `.html` (human-facing rendering). Not every document: logs, notes,
+  and routine records stay Markdown-only.

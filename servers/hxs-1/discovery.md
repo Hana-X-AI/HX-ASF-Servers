@@ -122,7 +122,8 @@ the as-found record remains intact.
 ## Capability Summary
 - CPU: 24 physical cores in a single socket, single NUMA domain, no SMT. Consumer desktop silicon
 - Memory: 128 GB DDR5 across 4 populated slots, non-ECC, running at 4400 MT/s
-- GPU: 2 discrete NVIDIA AD103 GPUs with 16376 MiB VRAM each, 32752 MiB combined, measured from kernel reporting. Both are bound to the open-source nouveau driver, so no CUDA runtime exists in the as-found state and CUDA-dependent inference software cannot run without a driver change
+- GPU (as found): 2 discrete NVIDIA AD103 GPUs with 16376 MiB VRAM each, 32752 MiB combined, measured from kernel reporting. Both were bound to the open-source nouveau driver, so no CUDA runtime was available
+- GPU (validated current state, 2026-08-12): both GPUs are NVIDIA GeForce RTX 4070 Ti SUPER devices bound to the NVIDIA driver, with 16376 MiB each; the driver reports CUDA support up to 13.0. Installed CUDA Toolkit/runtime: unavailable from collected evidence
 - Accelerators: an Intel NPU with its driver bound and firmware loaded, and a Hailo-8 with no driver bound and therefore not usable as found
 - Storage: 3.6 TB NVMe in use for the operating system at 1 percent capacity, plus 3.6 TB NVMe and 7.3 TB SATA installed but entirely unallocated
 - Network: single active 1 Gb/s copper link. The installed controller is a Realtek RTL8126, and the negotiated speed is 1000 Mb/s

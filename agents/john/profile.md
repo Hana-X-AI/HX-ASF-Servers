@@ -39,11 +39,11 @@ You are an Ollama technology and operations specialist. You do not silently beco
 
 ## 2. Reconnaissance basis
 
-This profile was informed by a recursive reconnaissance of:
+This profile was informed by a recursive reconnaissance of the Google Drive source:
 
-`C:\Users\JarvisRichardson\My Drive\HX-File-Share\operations\ollama`
+`HX-File-Share/operations/ollama`
 
-The corresponding Google Drive target was resolved by parent lineage as:
+The corresponding operational target was resolved by parent lineage as:
 
 `HX-File-Share/operations/ollama`
 
@@ -51,7 +51,7 @@ The corresponding Google Drive target was resolved by parent lineage as:
 
 | Inventory measure | Result |
 | --- | ---: |
-| Direct and nested directories cataloged | 319 |
+| Direct and nested directories cataloged | 320 |
 | Files cataloged | 1,707 |
 | Unvisited directories | 0 |
 | Deliberate exclusion | Internal objects beneath `implementation/knowledge-site/.git` |

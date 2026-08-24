@@ -59,7 +59,7 @@ The target address, account and privilege state were taken from
 | /dev/nvme0n1p2 | partition of nvme0n1 | not applicable | partition | 237.4 GB | ext4 | / |
 
 - Root filesystem usage: 3.0 percent of 232.64 GB
-- **Single storage device**, with no additional unallocated drive
+- **Single storage device**, with no additional storage device
 - LVM: no physical volumes, volume groups or logical volumes present
 - RAID: no active arrays
 - SMART detail: unavailable, smartctl is not installed
@@ -97,12 +97,12 @@ The target address, account and privilege state were taken from
 - CPU: 6 physical cores and 6 threads in a single socket, single NUMA domain, no SMT. Coffee Lake low power desktop silicon
 - Memory: 15.9 GB across 2 slots, non-ECC, DDR4 at 2667 MT/s. Smallest in the fleet, tied with hxs-7 and hxs-8
 - GPU: none. Integrated Intel UHD Graphics 630 only, suitable for console output rather than compute
-- Storage: a single 238.5 GB NVMe device carrying the operating system, 3.0 percent used. No spare capacity and no second device
+- Storage: a single 238.5 GB NVMe device carrying the operating system, 3.0 percent used. No additional storage device
 - Network: single active 1 Gb/s copper link, single interface
 - Constraints / notable characteristics:
   - a small form factor desktop-mini chassis with a 35 W power envelope, which limits both expansion and sustained load
   - no discrete GPU and no PCIe expansion capability in this chassis class
-  - a single storage device with no redundancy and no spare capacity for data or model storage
+  - a single storage device with no redundancy or additional device dedicated to data or model storage
   - a single network interface, so no link redundancy
   - memory is non-ECC and totals 15.9 GB, the least of any host in the fleet, tied with hxs-7 and hxs-8
   - no baseboard management controller or out-of-band management interface was observed

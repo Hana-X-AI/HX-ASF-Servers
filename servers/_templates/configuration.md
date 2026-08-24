@@ -1,12 +1,12 @@
 ﻿# `<server-name>` — Configured State
 
-**Phase:** 2
+**Phase:** Owner-authorized server implementation
 **Configuration date:**
 **Assigned role:**
 **Primary workload / model:**
 **Approved by:**
 
-Copy the assigned role and approved workload/model from `SERVER-REGISTRY.md`; this record does not assign them. `Approved by` is the person who approved the Phase 2 configuration for the role already assigned in the registry.
+Copy the assigned role and approved workload/model from `SERVER-REGISTRY.md`; this record does not assign them. `Approved by` is the person who approved the owner-authorized server implementation for the role already assigned in the registry.
 
 ## Discovery Reference
 

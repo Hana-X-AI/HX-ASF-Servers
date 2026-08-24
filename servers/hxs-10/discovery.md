@@ -57,7 +57,7 @@ The target address, account and privilege state were taken from
 | /dev/nvme0n1p2 | partition of nvme0n1 | not applicable | partition | 237.4 GB | ext4 | / |
 
 - Root filesystem usage: 5 percent of 233 GB, 11 GB used, 210 GB available, per `df`
-- Single storage device, with no additional unallocated drive
+- Single storage device, with no additional storage device
 - LVM: no physical volumes, volume groups or logical volumes present
 - RAID: no active arrays
 - SMART detail: unavailable, smartctl is not installed
@@ -99,7 +99,7 @@ The target address, account and privilege state were taken from
 - Network: single active 1 Gb/s copper link, single interface
 - Constraints / notable characteristics:
   - a small form factor desktop-mini chassis with a 65 W power envelope, no discrete GPU and no PCIe expansion capability
-  - a single storage device with no redundancy and no spare capacity
+  - a single storage device with no redundancy or additional storage device
   - a single network interface, so no link redundancy
   - memory is non-ECC, and runs dual channel
   - no baseboard management controller or out-of-band management interface was observed
