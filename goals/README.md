@@ -14,7 +14,12 @@ order: scope, completion contract, and evidence requirements in one place.
 
 ## Conventions
 
-- One file per goal: `goals/<YYYY-MM-DD>-<short-slug>.md`
+- One file per goal: `goals/<YYYY-MM-DD>-<short-slug>.md`; the file name is the
+  Goal ID (KDD-0002).
 - Status values: `draft`, `approved`, `in-progress`, `blocked`, `done`, `abandoned`
+- `goals/` is the designated durable work-state system; GitHub Projects is deferred
+  (KDD-0002).
+- The full goal contract model (Goal Contract, work orders, fresh sessions, gates)
+  lives in `agents/kimi-k3/goal-setting-guidance.md`.
 - Link decisions to `knowledge/decisions/KDD-NNNN-*` files.
 - Link affected servers to `servers/<hostname>/` once that tree exists.
