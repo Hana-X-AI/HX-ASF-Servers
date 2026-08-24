@@ -17,6 +17,7 @@ Current roster:
 | --- | --- | --- | --- |
 | kimi-k3 | horizontal (control plane) | active — Phase M | Goal decomposition, agent commissioning, evidence gates, recovery, escalation; bounded direct execution under section 2.3 |
 | john | vertical | active | Ollama install/config/audit/troubleshoot on Linux, test-first, evidence packages |
+| rick | vertical | active | Ubuntu Server OS plane: packages, systemd, Netplan, SSH/sudo, firewall, storage, kernel/drivers, backup/recovery |
 
 ## Two lane types
 
