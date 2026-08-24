@@ -108,3 +108,13 @@ document becomes part of this repository's operating material:
 Quality applies to inputs and outputs alike. Historical evidence records (for example
 as-found discovery files) keep their provenance and are corrected openly per the
 server records contract, never silently rewritten.
+
+## Approval discipline
+
+Before asking the owner for approval, first ask whether the step truly requires it.
+Default to automatic for: read-only checks and pre-flights, staging files and
+evidence, routine commits and pushes of validated work to the established
+repository, and steps already inside an authorized goal's scope. Still escalate:
+destructive or irreversible actions, governance changes, new external or shared
+state, scope expansion, and any escalation trigger in the Kimi-K3 profile. When in
+doubt, act reversibly and report rather than pause.

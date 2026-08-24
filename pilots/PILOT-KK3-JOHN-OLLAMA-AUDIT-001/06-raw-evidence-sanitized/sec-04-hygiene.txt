@@ -1,0 +1,24 @@
+=== SEC-04 SECRET HYGIENE SCAN — session john-initial-20260824-01 ===
+Captured: 2026-08-24T09:44:32+00:00 — local session, no SSH
+Scope: all retained evidence files in 06-raw-evidence-sanitized/ (this scan excludes its own output file)
+
+--- $ grep -rniE 'token|passwd|password|secret|api[_-]?key|bearer|private.key|BEGIN.*PRIVATE' (evidence dir) ---
+/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-KK3-JOHN-OLLAMA-AUDIT-001/06-raw-evidence-sanitized/api-01-probes.txt:26:--- $ getent passwd ollama ---
+/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-KK3-JOHN-OLLAMA-AUDIT-001/06-raw-evidence-sanitized/kr-01-knowledge-survey.txt:50:/opt/tkv-local/ollama/ollama-main/tokenizer
+[exit=0] (1 = no matches = clean)
+
+--- file inventory ---
+total 56
+drwxrwxr-x 2 hxsa hxsa 4096 Aug 24 09:44 .
+drwxrwxr-x 3 hxsa hxsa 4096 Aug 24 09:40 ..
+-rw-rw-r-- 1 hxsa hxsa  918 Aug 24 09:44 api-01-probes.txt
+-rw-rw-r-- 1 hxsa hxsa  645 Aug 24 09:42 gpu-01-inventory.txt
+-rw-rw-r-- 1 hxsa hxsa 3933 Aug 24 09:42 hw-01-cpu.txt
+-rw-rw-r-- 1 hxsa hxsa 1529 Aug 24 09:42 hw-04-storage.txt
+-rw-rw-r-- 1 hxsa hxsa 2841 Aug 24 09:41 id-01-identity.txt
+-rw-rw-r-- 1 hxsa hxsa  989 Aug 24 09:41 id-04-ollama-identities.txt
+-rw-rw-r-- 1 hxsa hxsa 4920 Aug 24 09:36 kr-01-knowledge-survey.txt
+-rw-rw-r-- 1 hxsa hxsa  728 Aug 24 09:44 sec-04-hygiene.txt
+-rw-rw-r-- 1 hxsa hxsa  634 Aug 24 09:43 svc-01-unit.txt
+-rw-rw-r-- 1 hxsa hxsa 1572 Aug 24 09:43 svc-03-listener.txt
+-rw-rw-r-- 1 hxsa hxsa  431 Aug 24 09:43 svc-04-env.txt

@@ -1,0 +1,34 @@
+work_order:
+  task_id: "WO-OLLAMA-AUDIT-HXS5-001"
+  parent_goal: "GOAL-OLLAMA-AUDIT-HXS5-001"
+  goal_version: 1
+  assigned_agent: "John (profile-briefed sub-agent, plan section 2.1)"
+  objective: "Conduct the authorized read-only hxs-5 audit and submit the complete sanitized evidence package."
+  authoritative_inputs:
+    - "agents/john/profile.md"
+    - "goals/2026-08-24-ollama-audit-hxs5.md (GOAL-OLLAMA-AUDIT-HXS5-001 v1)"
+    - "hxsa@hxs-5:/opt/tkv-local/ollama"
+  required_knowledge_review:
+    - "Review all task-relevant authority, baselines, runbooks, tests, and blockers in /opt/tkv-local/ollama"
+    - "Submit John's mandatory Knowledge Review Receipt (03-john-knowledge-review-receipt.md)"
+  permitted_tools:
+    - "local read-only shell on hxs-5 (execution is local; no SSH required)"
+    - "passive Linux and systemd inspection"
+    - "read-only Ollama CLI and local API queries"
+    - "passive NVIDIA and journal inspection"
+  prohibited_actions:
+    - "all Goal Contract out-of-scope actions (plan section 4)"
+    - "any command whose side effects are uncertain"
+  deliverables:
+    - "03-john-knowledge-review-receipt.md"
+    - "04-audit-test-plan.md"
+    - "05-command-log.md (extended schema, plan section 12.1)"
+    - "06-raw-evidence-sanitized/ (sanitized raw outputs)"
+    - "07-audit-report.md (structure per plan section 13)"
+    - "08-john-validation-summary.md"
+  evidence_root: "pilots/PILOT-KK3-JOHN-OLLAMA-AUDIT-001/"
+  budgets:
+    sessions: 1 (correction session only on governor authorization)
+    transient_retry: 1 (read-only commands only)
+  rollback_or_containment: "not applicable (read-only); quarantine on integrity concern"
+  escalation_target: "Kimi-K3"

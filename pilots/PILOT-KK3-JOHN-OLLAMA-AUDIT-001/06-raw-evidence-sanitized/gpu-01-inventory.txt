@@ -1,0 +1,21 @@
+=== GPU-01/GPU-02/GPU-03 GPU + DRIVER HEALTH — session john-initial-20260824-01 ===
+Captured: 2026-08-24T09:42:48+00:00 — local session, no SSH
+
+--- $ command -v nvidia-smi ---
+[exit=1]
+
+--- $ nvidia-smi -L ---
+/bin/bash: line 5: nvidia-smi: command not found
+[exit=127]
+
+--- $ lspci -nn | grep -Ei 'vga|3d|display' ---
+00:02.0 VGA compatible controller [0300]: Intel Corporation HD Graphics 630 [8086:5912] (rev 04)
+[exit=0]
+
+--- $ journalctl -k --no-pager | grep -Ei 'NVRM|Xid|nvidia|oom' | tail -50 ---
+[exit=0]
+
+--- $ findmnt -T /opt/tkv-local -o TARGET,SOURCE,FSTYPE ---
+TARGET SOURCE         FSTYPE
+/      /dev/nvme0n1p2 ext4
+[exit=0]

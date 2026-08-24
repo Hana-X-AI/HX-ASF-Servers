@@ -1,0 +1,24 @@
+=== SVC-01/SVC-02 SYSTEMD UNIT + WIRING — session john-initial-20260824-01 ===
+Captured: 2026-08-24T09:43:07+00:00 — local session, no SSH
+
+--- $ systemctl status ollama --no-pager ---
+Unit ollama.service could not be found.
+[exit=4]
+
+--- $ systemctl cat ollama ---
+No files found for ollama.service.
+[exit=1]
+
+--- $ systemctl list-unit-files --no-pager | grep -i ollama ---
+[exit=1]
+
+--- $ systemctl list-units --all --no-pager | grep -i ollama ---
+[exit=1]
+
+--- $ systemctl show ollama -p ExecStart -p User -p Group -p Environment -p FragmentPath -p DropInPaths ---
+Environment=
+User=
+Group=
+FragmentPath=
+DropInPaths=
+[exit=0]

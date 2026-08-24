@@ -1,0 +1,33 @@
+=== ID-04 OLLAMA IDENTITIES + API-01 — session john-initial-20260824-01 ===
+Captured: 2026-08-24T09:41:46+00:00 — local session, no SSH
+
+--- $ command -v ollama ---
+[exit=1]
+
+--- $ ollama --version ---
+environment: line 4: ollama: command not found
+[exit=127]
+
+--- $ dpkg -l | grep -i ollama ---
+[exit=1]
+
+--- $ snap list ---
+No snaps are installed yet. Try 'snap install hello-world'.
+[exit=0]
+
+--- $ snap list | grep -i ollama ---
+[exit=1]
+
+--- $ ls -la /usr/local/bin/ollama /usr/bin/ollama /opt/ollama ---
+ls: cannot access '/usr/local/bin/ollama': No such file or directory
+ls: cannot access '/usr/bin/ollama': No such file or directory
+ls: cannot access '/opt/ollama': No such file or directory
+[exit=2]
+
+--- $ systemctl show ollama -p ExecStart -p FragmentPath ---
+FragmentPath=
+[exit=0]
+
+--- $ curl -fsS --connect-timeout 2 --max-time 10 http://127.0.0.1:11434/api/version ---
+curl: (7) Failed to connect to 127.0.0.1 port 11434 after 0 ms: Couldn't connect to server
+[exit=7]

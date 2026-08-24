@@ -1,0 +1,43 @@
+context_packet:
+  goal_id: "GOAL-OLLAMA-AUDIT-HXS5-001"
+  goal_version: 1
+  work_order_id: "WO-OLLAMA-AUDIT-HXS5-001"
+  session_id: "john-initial-20260824-01"
+  role: "producer (operational audit agent: John)"
+  objective: >-
+    Read-only, non-disruptive audit of the Ollama runtime, hardware alignment,
+    deployed-model configuration, network exposure, resource posture, and material
+    performance risks on hxs-5, plus recommendation-only remediation guidance and a
+    complete sanitized evidence package.
+  controlling_sources:
+    - "agents/john/profile.md (read first: startup protocol, test-first, evidence, sanitization, escalation)"
+    - "pilots/PILOT-KK3-JOHN-OLLAMA-AUDIT-001/plan.md (goal contract, audit matrix, guardrails, report structure)"
+    - "/opt/tkv-local/ollama (knowledge authority)"
+  target_identity: "hxs-5 (192.168.50.204); execution is local on the target — verify hostname and local IP before probes"
+  relevant_prior_artifacts: []
+  acceptance_criteria: "SC-01..SC-09 per goals/2026-08-24-ollama-audit-hxs5.md"
+  known_failures: []
+  constraints:
+    - "strictly read-only and non-disruptive"
+    - "every command recorded in the extended command-log schema"
+    - "secrets and sensitive content redacted (REDACTED)"
+  prohibited_actions:
+    - "systemctl restart|stop|start|reload|enable|disable|edit"
+    - "kill/pkill; ollama pull|rm|create|cp|run|stop; installers or package managers"
+    - "fio, stress tools, cache-dropping, load generators; reboot/shutdown/driver reload/GPU reset"
+    - "any write to service, system, model, network, firewall, or proxy state"
+    - "any command with uncertain side effects"
+  permitted_tools:
+    - "passive Linux/systemd inspection; read-only Ollama CLI and local API queries; passive NVIDIA/journal inspection"
+  evidence_required:
+    - "03-john-knowledge-review-receipt.md (before any audit probe)"
+    - "04-audit-test-plan.md"
+    - "05-command-log.md"
+    - "06-raw-evidence-sanitized/"
+    - "07-audit-report.md"
+    - "08-john-validation-summary.md"
+  budget:
+    sessions: 1
+    transient_retry: 1
+  expected_response_schema: "agent_result per goal-setting guidance section 14"
+  escalation_target: "Kimi-K3"

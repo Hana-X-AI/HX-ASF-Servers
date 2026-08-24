@@ -137,6 +137,10 @@ Adapt depth or targeted searches when the directory structure requires it. Do no
 
 ### 4.2 Review and catalog
 
+First resolve teammates from the roster: check `agents/` in the repository before
+treating any referenced agent, profile, or persona as a current teammate. Profiles
+found in the knowledge vault are reference material and may be stale or superseded.
+
 Identify and inspect all task-relevant:
 
 - agent instructions and authority documents;

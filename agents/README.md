@@ -3,6 +3,14 @@
 Specialist agents work in lanes. This directory holds one lane per agent:
 `agents/<agent-name>/`, starting from `_template/charter.md`.
 
+## The roster
+
+`agents/` is the agent roster. Before treating any referenced agent, profile, or
+persona as a current teammate, check this directory first: the charters here are
+the authority on who exists and what they can do. Profiles found in the knowledge
+vault (`/opt/tkv-local`) are reference material only and may be stale or
+superseded.
+
 ## Two lane types
 
 - **Horizontal** — one domain, across the whole project. Examples: security,

@@ -1,0 +1,30 @@
+=== API-02/API-03/MOD + SEC-02/SEC-03 — session john-initial-20260824-01 ===
+Captured: 2026-08-24T09:44:08+00:00 — local session, no SSH
+
+--- $ curl -fsS --connect-timeout 2 --max-time 10 http://127.0.0.1:11434/api/tags ---
+curl: (7) Failed to connect to 127.0.0.1 port 11434 after 0 ms: Couldn't connect to server
+[exit=7]
+
+--- $ curl -fsS --connect-timeout 2 --max-time 10 http://127.0.0.1:11434/api/ps ---
+curl: (7) Failed to connect to 127.0.0.1 port 11434 after 0 ms: Couldn't connect to server
+[exit=7]
+
+--- $ ollama list ---
+/bin/bash: line 6: ollama: command not found
+[exit=127]
+
+--- $ ollama ps ---
+/bin/bash: line 7: ollama: command not found
+[exit=127]
+
+--- $ systemctl list-units --type=service --state=running --no-pager | grep -Ei 'nginx|haproxy|caddy|traefik|ollama' ---
+[exit=1]
+
+--- $ command -v nginx ---
+[exit=1]
+
+--- $ getent passwd ollama ---
+[exit=2]
+
+--- $ getent group ollama ---
+[exit=2]

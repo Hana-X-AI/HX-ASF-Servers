@@ -1,0 +1,23 @@
+=== SVC-03/SEC-01 LISTENER MAP — session john-initial-20260824-01 ===
+Captured: 2026-08-24T09:43:22+00:00 — local session, no SSH
+
+--- $ sudo -n ss -lntp ---
+State  Recv-Q Send-Q Local Address:Port  Peer Address:PortProcess                                               
+LISTEN 0      128        127.0.0.1:43079      0.0.0.0:*    users:(("code-110a328ea5",pid=9054,fd=12))           
+LISTEN 0      4096   127.0.0.53%lo:53         0.0.0.0:*    users:(("systemd-resolve",pid=578,fd=15))            
+LISTEN 0      4096      127.0.0.54:53         0.0.0.0:*    users:(("systemd-resolve",pid=578,fd=17))            
+LISTEN 0      128        127.0.0.1:45555      0.0.0.0:*    users:(("code-110a328ea5",pid=11437,fd=9))           
+LISTEN 0      511        127.0.0.1:36829      0.0.0.0:*    users:(("MainThread",pid=11468,fd=37))               
+LISTEN 0      4096         0.0.0.0:22         0.0.0.0:*    users:(("sshd",pid=834,fd=3),("systemd",pid=1,fd=92))
+LISTEN 0      511        127.0.0.1:37435      0.0.0.0:*    users:(("MainThread",pid=9169,fd=36))                
+LISTEN 0      4096            [::]:22            [::]:*    users:(("sshd",pid=834,fd=4),("systemd",pid=1,fd=93))
+[exit=0]
+
+--- $ ss -lnt | grep -E ':11434' ---
+[exit=1]
+
+--- $ sudo -n ss -lnup ---
+State  Recv-Q Send-Q Local Address:Port Peer Address:PortProcess                                   
+UNCONN 0      0         127.0.0.54:53        0.0.0.0:*    users:(("systemd-resolve",pid=578,fd=16))
+UNCONN 0      0      127.0.0.53%lo:53        0.0.0.0:*    users:(("systemd-resolve",pid=578,fd=14))
+[exit=0]

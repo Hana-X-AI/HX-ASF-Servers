@@ -1,0 +1,98 @@
+=== KR-01 KNOWLEDGE SURVEY — session john-initial-20260824-01 ===
+Captured: 2026-08-24T09:36:22+00:00 (local session on hxs-5, no SSH)
+Source: /opt/tkv-local/ollama (read-only)
+
+=== Directory existence ===
+DIR EXISTS: /opt/tkv-local/ollama
+
+=== Top-level directories (maxdepth 2) ===
+/opt/tkv-local/ollama
+/opt/tkv-local/ollama/implementation
+/opt/tkv-local/ollama/implementation/archive
+/opt/tkv-local/ollama/implementation/docs
+/opt/tkv-local/ollama/implementation/hx-ai-infrastructure-roadmap
+/opt/tkv-local/ollama/implementation/hx-design-artifacts
+/opt/tkv-local/ollama/implementation/knowledge-site
+/opt/tkv-local/ollama/ollama-main
+/opt/tkv-local/ollama/ollama-main/agent
+/opt/tkv-local/ollama/ollama-main/anthropic
+/opt/tkv-local/ollama/ollama-main/api
+/opt/tkv-local/ollama/ollama-main/app
+/opt/tkv-local/ollama/ollama-main/auth
+/opt/tkv-local/ollama/ollama-main/cmake
+/opt/tkv-local/ollama/ollama-main/cmd
+/opt/tkv-local/ollama/ollama-main/convert
+/opt/tkv-local/ollama/ollama-main/discover
+/opt/tkv-local/ollama/ollama-main/docs
+/opt/tkv-local/ollama/ollama-main/envconfig
+/opt/tkv-local/ollama/ollama-main/format
+/opt/tkv-local/ollama/ollama-main/fs
+/opt/tkv-local/ollama/ollama-main/.github
+/opt/tkv-local/ollama/ollama-main/harmony
+/opt/tkv-local/ollama/ollama-main/integration
+/opt/tkv-local/ollama/ollama-main/internal
+/opt/tkv-local/ollama/ollama-main/llama
+/opt/tkv-local/ollama/ollama-main/llm
+/opt/tkv-local/ollama/ollama-main/logutil
+/opt/tkv-local/ollama/ollama-main/manifest
+/opt/tkv-local/ollama/ollama-main/middleware
+/opt/tkv-local/ollama/ollama-main/ml
+/opt/tkv-local/ollama/ollama-main/model
+/opt/tkv-local/ollama/ollama-main/openai
+/opt/tkv-local/ollama/ollama-main/parser
+/opt/tkv-local/ollama/ollama-main/progress
+/opt/tkv-local/ollama/ollama-main/readline
+/opt/tkv-local/ollama/ollama-main/runner
+/opt/tkv-local/ollama/ollama-main/scripts
+/opt/tkv-local/ollama/ollama-main/server
+/opt/tkv-local/ollama/ollama-main/template
+/opt/tkv-local/ollama/ollama-main/thinking
+/opt/tkv-local/ollama/ollama-main/tokenizer
+/opt/tkv-local/ollama/ollama-main/tools
+/opt/tkv-local/ollama/ollama-main/types
+/opt/tkv-local/ollama/ollama-main/version
+/opt/tkv-local/ollama/ollama-main/x
+/opt/tkv-local/ollama/research
+
+=== Top-level files ===
+/opt/tkv-local/ollama/chatgpt_20260818_1217_hx-ai-infrastructure-document-packet.zip
+/opt/tkv-local/ollama/codex_20260817_1524_hx-qwen38-27b-ollama-deployment-deep-dive.html
+/opt/tkv-local/ollama/codex_20260818_1115_hx-ai-platform-bootstrap-and-directive-recon.html
+/opt/tkv-local/ollama/craig-ollama-specialist.md
+/opt/tkv-local/ollama/hx-craig-hxs4-ollama-audit-and-remediation-claude-code-prompt_gpt-5.6-sol_20260815_0228.html
+/opt/tkv-local/ollama/hx-ollama-reconnaissance-and-agent-craig-hxs4-audit_gpt-5.6-sol_20260815_0228.html
+
+=== ollama-main version identity ===
+--- version/version.go ---
+package version
+
+var Version string = "0.0.0"
+--- git metadata check ---
+fatal: not a git repository (or any of the parent directories): .git
+--- snapshot identity per prior material (craig-ollama-specialist.md lines 126-127) ---
+3. the current approved upgrade candidate/current stable release.
+
+Do not use `main` behavior to explain an older installed runtime.
+
+The supplied source archive used to design this audit corresponds to:
+- archive SHA-256: `e7d05dd02814e8bedd7d99b5ee8110c27d356c6ad5997f15c4690e4d5abc6851`
+- source commit: `39df91c9826b3c0c83677f75cd230d8848d287c3`
+- release identity: Ollama `v0.32.11`
+
+The previously commissioned hxs-4 runtime was Ollama `0.32.9`.
+
+
+=== SERVER-REGISTRY hxs-5 row ===
+42:| hxs-5 | hxs-5.hx.local.arpa | 192.168.50.204 | Intel Core i5-7500, 4c/4t | 32 GB DDR4 non-ECC | none, Intel HD 630 integrated only | 238.5 GB NVMe root, sole device | COMPLETE | Edge / ingress | NGINX | READY |
+
+=== Approved-version pins found in corpus ===
+12:| Ollama | `v0.32.14`, commit `d67ad83426633195089509347ffd4fe795120198` |
+24:The exact model manifest requires Ollama `0.32.12` or newer. `v0.32.14` is the current stable release verified on 2026-08-18. An 8K context is the smallest deliberate working envelope selected for MVP-1; larger-context work remains outside this gate.
+
+=== hxs-5 discovery: Ollama/GPU absence statements ===
+44:- **No discrete GPU detected.** This is consistent with the owner-confirmed fleet statement that servers 5 through 15 carry no discrete GPU
+46:- VRAM: not applicable. Integrated graphics share system memory and no discrete GPU is present
+49:- CUDA availability: none. No NVIDIA hardware and no NVIDIA, CUDA or libcuda package installed
+91:- No NVIDIA, CUDA, ROCm, Docker, containerd, podman, Ollama or vLLM packages are installed
+102:  - no discrete GPU and no PCIe expansion capability in this chassis class
+116:- No expected-hardware counts were declared for this host. The owner-confirmed fleet statement that servers 5 through 15 carry no discrete GPU is consistent with what was found

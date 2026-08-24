@@ -1,0 +1,15 @@
+=== SVC-04/SVC-05 ENV + JOURNAL — session john-initial-20260824-01 ===
+Captured: 2026-08-24T09:43:43+00:00 — local session, no SSH
+
+--- $ grep -rn 'OLLAMA_' /etc/environment /etc/profile.d/ ~/.bashrc ~/.profile ~/.config/environment.d/ ---
+[exit=2]
+
+--- $ env | grep -i ollama ---
+[exit=1]
+
+--- $ journalctl -u ollama -n 200 --no-pager ---
+-- No entries --
+[exit=0]
+
+--- $ ps aux | grep -i ollama (excluding grep) ---
+[exit=1]
