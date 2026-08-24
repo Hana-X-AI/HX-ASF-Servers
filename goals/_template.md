@@ -28,6 +28,7 @@
 
 ## Execution controls
 
+- Pre-flight (intake existence check): <registry role consistency + one cheap probe result, or "not required — this goal creates the component">
 - Active charters reviewed (Phase M): <list checked; qualified agent available: YES | NO>
 - Maximum iterations / retries:
 - Time / token limits:

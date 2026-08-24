@@ -11,6 +11,13 @@ the authority on who exists and what they can do. Profiles found in the knowledg
 vault (`/opt/tkv-local`) are reference material only and may be stale or
 superseded.
 
+Current roster:
+
+| Agent | Lane | Status | Capabilities |
+| --- | --- | --- | --- |
+| kimi-k3 | horizontal (control plane) | active — Phase M | Goal decomposition, agent commissioning, evidence gates, recovery, escalation; bounded direct execution under section 2.3 |
+| john | vertical | active | Ollama install/config/audit/troubleshoot on Linux, test-first, evidence packages |
+
 ## Two lane types
 
 - **Horizontal** — one domain, across the whole project. Examples: security,
