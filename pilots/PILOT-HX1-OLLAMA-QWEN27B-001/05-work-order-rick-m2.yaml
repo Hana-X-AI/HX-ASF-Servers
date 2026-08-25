@@ -1,0 +1,51 @@
+work_order:
+  task_id: "WO-HX1-RICK-M2-001"
+  parent_goal: "GOAL-HX1-QWEN38-001"
+  goal_file: "goals/2026-08-24-hx1-ollama-qwen38-27b.md"
+  milestone: "M2 — OS readiness, one approved low-risk change, and risk-categorized handoff"
+  assigned_agent: "rick (profile-briefed sub-agent)"
+  objective: "Establish hxs-1 OS readiness for the Ollama install per plan section 7: validate driver and OS posture read-only, execute the single approved change (suspend disable), and deliver the signed risk-categorized handoff for Esme so Gate 1 can be evaluated."
+  owner_decisions_2026-08-24:
+    - "D1: model volume = root ext4; no storage changes; validate default Ollama model path capacity and ownership expectations"
+    - "D2: Secure Boot stays disabled, now and always (standing directive in AGENTS.md); record state, never enable"
+    - "D3: retain-and-validate NVIDIA driver 580.173.02; no driver change"
+    - "D4: M2 approved — proceed under this work order"
+  authoritative_inputs:
+    - "agents/rick/profile.md (read first; full profile protocol applies)"
+    - "pilots/PILOT-HX1-OLLAMA-QWEN27B-001/plan.md (sections 2.2, 3, 4, 5.2, 7)"
+    - "pilots/PILOT-HX1-OLLAMA-QWEN27B-001/03-rick-tkv-receipt.md (M1 receipt; re-verify TKV per profile section 5 — review is per task, not per milestone)"
+    - "pilots/PILOT-HX1-OLLAMA-QWEN27B-001/04-rick-inventory.txt (M1 immutable baseline)"
+    - "/opt/tkv-local/ubuntu"
+  execution_path: "Same as M1: session runs on hxs-5; reach hxs-1 (192.168.50.200) via SSH hxsa@192.168.50.200 using the owner-provided credential at /home/hxsa/opt/local-tkv/agent-zero-docs/ssh-info.md (askpass pattern; never print, log, or store the secret; delete any askpass helper at task end)"
+  scope_read_only_validate:
+    - "Driver health (D3): nvidia-smi, NVRM/Xid scan in kernel journal, dkms status, driver package origin and holds"
+    - "Acceleration branch (R-003): confirm no ROCm or conflicting acceleration stack is present"
+    - "PCIe topology/link width-speed and per-GPU power/thermal baseline (plan 5.2, R-017)"
+    - "GPU device nodes (/dev/nvidia*) permissions and the render/video group model, as the basis for the future ollama service-user access check (R-014); the ollama user is created by Esme's installer at M4 — do not create users"
+    - "Time sync, DNS, storage mount ordering, network-online behavior, firewall state and persistence (plan 7.1 item 7)"
+    - "CPU governor, memory/swap, hugepage, memlock, and swappiness baselines (plan 7.2: measure and report only)"
+    - "Model volume (D1, R-013): root ext4 capacity; default Ollama model path /usr/share/ollama/.ollama/models — expected ownership and capacity posture; no storage changes"
+    - "Current ulimits / file-descriptor posture for the future service (plan 7.2; no change)"
+  scope_authorized_change_exactly_one:
+    - "Disable suspend/hibernate per plan 7.1 item 6 (approved via D4): systemctl mask suspend.target hibernate.target hybrid-sleep.target suspend-then-hibernate.target. Capture before/after state, unified-diff-equivalent evidence, validation that all sleep targets are masked, and the exact inverse procedure (unmask). Reversible; no reboot required."
+  prohibited_actions:
+    - "any reboot (each reboot is individually owner-approved; none in M2)"
+    - "driver, kernel, DKMS, or bootloader changes"
+    - "storage, partition, filesystem, or mount changes"
+    - "package installs, removals, or upgrades"
+    - "sysctl, hugepages, memlock, swappiness, CPU governor, or NVIDIA persistence-mode changes (baseline and RECOMMENDATION only)"
+    - "firewall rule changes (state validation only)"
+    - "enabling Secure Boot (standing directive D2)"
+    - "ROCm installation or any second acceleration stack"
+    - "user/group creation or permission mutation (analysis only)"
+    - "anything outside this work order — use profile section 14 escalation"
+  sudo_note: "Prefer unprivileged probes. sudo is permitted only where a read-only probe requires it and for the authorized mask change; if sudo prompts for a password, use the askpass pattern (sudo -A) — the secret is never printed, logged, or stored. If sudo cannot be used under these constraints, do not improvise: record the exact proposed commands in the handoff as PROPOSED and continue read-only."
+  deliverables (into pilots/PILOT-HX1-OLLAMA-QWEN27B-001/):
+    - "07-rick-os-readiness.md — readiness per plan 7.4 checklist with labeled evidence (plan 2.2), baseline telemetry, the suspend-disable change artifacts (before/after, diff, validation, rollback), and test report per profile section 12"
+    - "08-rick-risk-handoff.md — signed risk-categorized handoff to Esme per plan 7.1 item 10: values, files, commands, evidence paths, risks, rollback; dispositions for R-002, R-003, R-004, R-005, R-013, R-014, R-015, R-016, R-017 and any new risks found"
+  budgets:
+    sessions: 1
+    transient_retry: 1
+  stop_conditions: "safety concern, authority ambiguity, unexpected host state, failed mandatory validation, or need to exceed this scope — stop, preserve evidence, and escalate to Kimi-K3 with the profile section 14 packet"
+  rollback_or_containment: "the suspend mask is self-inverse (unmask); all other scope is read-only"
+  escalation_target: "Kimi-K3"

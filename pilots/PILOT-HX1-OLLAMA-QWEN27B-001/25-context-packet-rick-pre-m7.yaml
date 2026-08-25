@@ -1,0 +1,39 @@
+context_packet:
+  goal_id: "GOAL-HX1-QWEN38-001"
+  goal_version: 1
+  work_order_id: "WO-HX1-RICK-PREM7-001"
+  session_id: "rick-prem7-20260825-01"
+  role: "producer (Ubuntu specialist: rick)"
+  milestone: "Pre-M7 OS-plane closure: Wi-Fi disable + A01 §7 readiness + NVRM review"
+  objective: >-
+    Close the OS plane before the M7 soak and reboot cycles: execute the
+    owner-directed Wi-Fi disable safely, sign the Amendment A01 §7 confirmation
+    that host-readiness controls remain valid for the frozen Ollama 0.32.15
+    build, and classify the disclosed NVRM assertions — with M7's boot path
+    verified sane and unchanged.
+  controlling_sources:
+    - "agents/rick/profile.md (read first)"
+    - "pilots/PILOT-HX1-OLLAMA-QWEN27B-001/24-work-order-rick-pre-m7.yaml"
+    - "pilots/PILOT-HX1-OLLAMA-QWEN27B-001/amendment-A01-qwen38-baseline.md (§7)"
+    - "pilots/PILOT-HX1-OLLAMA-QWEN27B-001/08-rick-risk-handoff.md"
+    - "pilots/PILOT-HX1-OLLAMA-QWEN27B-001/12-esme-m4-install-evidence.md"
+    - "/opt/tkv-local/ubuntu"
+  target_identity: "hxs-1 (192.168.50.200) from hxs-5; verify hostname and peer IP first"
+  current_state: "M6 decided 2026-08-25: 131,072 frozen conditional on M7 (23-kk3-m6-capacity-decision.md); host at the frozen 32K baseline (digest db2c6206…f645510); Ollama 0.32.15 active+enabled with preload unit; sleep targets masked since M2; uptime continuous since 08-17; D7 closed (planned maintenance)"
+  owner_decisions:
+    - "Wi-Fi disabled on hxs-1 (2026-08-25); nothing beyond it"
+    - "D1 root ext4; D2 Secure Boot never; D3 driver retained"
+  constraints:
+    - "exactly one mutation: the Wi-Fi disable, and only after proving it is not the management path"
+    - "no reboot; no driver/kernel/storage/package/firewall changes; no permission changes (record only)"
+    - "secrets never logged (REDACTED)"
+    - "evidence labeled FACT / AUTHORITY / UPSTREAM / INFERENCE / RECOMMENDATION (plan 2.2)"
+  evidence_required:
+    - "26-rick-pre-m7-readiness.md"
+  budget:
+    sessions: 1
+    transient_retry: 1
+  expected_response_schema: "agent_result per goal-setting guidance section 14"
+  escalation_target: "Kimi-K3"
+
+superseded_note: "2026-08-25 — the M6 v1 freeze referenced in current_state is superseded by Revision 2 (23-kk3-m6-capacity-decision.md): the 65,536 operating profile governs M7; 128K is qualified for explicit selection. This packet otherwise stands as the dispatch-time record. (Correction recorded per review finding.)"

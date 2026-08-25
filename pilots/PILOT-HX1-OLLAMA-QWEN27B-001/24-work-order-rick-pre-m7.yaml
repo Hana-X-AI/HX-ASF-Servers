@@ -1,0 +1,37 @@
+work_order:
+  task_id: "WO-HX1-RICK-PREM7-001"
+  parent_goal: "GOAL-HX1-QWEN38-001"
+  goal_file: "goals/2026-08-24-hx1-ollama-qwen38-27b.md"
+  milestone: "Pre-M7 — owner-directed Wi-Fi disable, A01 §7 frozen-build readiness confirmation, NVRM assertion review"
+  assigned_agent: "rick (profile-briefed sub-agent)"
+  objective: "Close the remaining OS-plane items before the M7 soak and reboot cycles: disable Wi-Fi per the owner directive, confirm the host-readiness controls remain valid for the frozen Ollama build (Amendment A01 §7), and review the disclosed NVRM assertions — so M7 starts from a clean, signed OS plane."
+  owner_decisions:
+    - "Wi-Fi on hxs-1 is to be disabled (owner directive 2026-08-25); no future-hardening proposals beyond this"
+    - "D7 closed: the 08-17 carrier loss was planned maintenance — verify wait-online state only, no remediation"
+    - "D1: model volume is root ext4; D2: Secure Boot stays disabled; D3: driver 580.173.02 retained"
+  authoritative_inputs:
+    - "agents/rick/profile.md (read first; full profile protocol applies)"
+    - "pilots/PILOT-HX1-OLLAMA-QWEN27B-001/plan.md (sections 7, 9.2)"
+    - "pilots/PILOT-HX1-OLLAMA-QWEN27B-001/amendment-A01-qwen38-baseline.md (section 7, acceptance conditions)"
+    - "pilots/PILOT-HX1-OLLAMA-QWEN27B-001/08-rick-risk-handoff.md (your M2 handoff)"
+    - "pilots/PILOT-HX1-OLLAMA-QWEN27B-001/12-esme-m4-install-evidence.md (ollama user/unit as installed)"
+    - "/opt/tkv-local/ubuntu"
+  execution_path: "Same as M2: session on hxs-5; hxs-1 (192.168.50.200) via SSH hxsa@192.168.50.200, askpass pattern per /home/hxsa/opt/local-tkv/agent-zero-docs/ssh-info.md; never print, log, or store the secret; delete helpers at task end; verify hostname/peer IP first."
+  scope_authorized:
+    - "TKV review receipt per profile section 5 (per task)"
+    - "A01 §7 readiness confirmation for the frozen build (Ollama 0.32.15, ollama system user): the ollama service user's GPU device access works as installed (record the /dev/nvidia* permission model and that the service is proven running under it — no permission changes; the world-rw state is recorded, NOT modified); model directory /usr/share/ollama/.ollama/models ownership and capacity posture per D1; systemd unit User/Group as installed; signed statement that the M2 host-readiness controls remain valid for this build"
+    - "Wi-Fi disable (the ONE authorized mutation): identify what manages Wi-Fi on hxs-1 (NetworkManager / netplan / wpa_supplicant / rfkill); FIRST prove Wi-Fi is not the active management path — no default route over Wi-Fi, no active session over Wi-Fi, Ethernet carries management; if Wi-Fi is in active use, STOP and escalate, do not improvise; then disable via the most reversible bounded method for the identified owner (e.g., rfkill block + disable of the managing service/connection as appropriate), validate the radio is off and Ethernet/management unaffected, and document the exact inverse"
+    - "NVRM assertion review: journal scan for the F-E3 (first-probe) and F-M5B-2 (runner-teardown, 18 lines) iovaspace assertions and any Xid; classify as monitor-only or escalate with evidence; check current kernel ring buffer for recurrence"
+    - "Pre-M7 boot-path sanity (read-only): current systemd-networkd-wait-online state (D7 closed — state only, no remediation); sleep targets still masked; failed-unit inventory; uptime/no-reboot confirmation"
+  prohibited_actions:
+    - "any reboot; driver, kernel, or DKMS changes; storage changes; package installs/removals; firewall changes; any network change other than the single authorized Wi-Fi disable; permission/group changes (record only); Ollama/service configuration (Esme's plane)"
+    - "disabling Wi-Fi while it carries any active route or session — that is a STOP condition, not a workaround opportunity"
+    - "exceeding this scope — profile section 14 escalation"
+  deliverables (into pilots/PILOT-HX1-OLLAMA-QWEN27B-001/):
+    - "26-rick-pre-m7-readiness.md — knowledge receipt; A01 §7 signed readiness confirmation (with the R-014 access-model evidence); Wi-Fi disable change artifacts (before/after, method, validation, exact inverse); NVRM/Xid review with classification; boot-path sanity results; test report and command log per profile section 12"
+  budgets:
+    sessions: 1
+    transient_retry: 1
+  stop_conditions: "Wi-Fi found carrying active routes/sessions; unexpected host state; inability to establish the management-path proof; any failed mandatory validation — stop, preserve evidence, escalate to Kimi-K3"
+  rollback_or_containment: "the Wi-Fi disable is self-inverse (documented exact inverse); all other scope is read-only"
+  escalation_target: "Kimi-K3"

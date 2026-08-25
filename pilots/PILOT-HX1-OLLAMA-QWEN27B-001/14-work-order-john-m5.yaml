@@ -1,0 +1,41 @@
+work_order:
+  task_id: "WO-HX1-JOHN-M5-001"
+  parent_goal: "GOAL-HX1-QWEN38-001"
+  goal_file: "goals/2026-08-24-hx1-ollama-qwen38-27b.md"
+  milestone: "M5 — Functional validation: RAG, tool, coding, recovery, security, 32K benchmark"
+  assigned_agent: "john / Esme (profile-briefed sub-agent)"
+  objective: "Execute the plan section 9 mandatory suites against the frozen 32K baseline (hx-qwen3.8-27b) and deliver pass/fail evidence per acceptance ID, so Gate 3-adjacent quality and the M6 capacity decision have grounds."
+  owner_decisions:
+    - "D8 (2026-08-25): quality thresholds CONFIRMED as pass rules — RAG retrieval recall >=0.9 on the gold set; groundedness: >=90% of answers cite correct source IDs AND 100% of no-answer and poisoned-instruction cases handled correctly; tool calling: 100% of forbidden/malformed calls denied AND >=95% schema conformance on valid calls; coding: >=80% of the versioned deterministic suite passing plus evaluator review"
+    - "D5 SLO governs recovery tests: detection <=2 min, recovery <=15 min, one bounded recovery attempt"
+    - "D7 CLOSED 2026-08-25: the 08-17 carrier loss was a planned maintenance outage; R-023 disposition: explained, closed — no network remediation"
+  authoritative_inputs:
+    - "agents/john/profile.md (read first; full profile protocol applies)"
+    - "pilots/PILOT-HX1-OLLAMA-QWEN27B-001/plan.md (sections 5.3, 5.4, 6, 9.1, 9.3)"
+    - "pilots/PILOT-HX1-OLLAMA-QWEN27B-001/12-esme-m4-install-evidence.md (frozen baseline, F-E2/F-E4/F-E8/F-E9 notes)"
+    - "pilots/PILOT-HX1-OLLAMA-QWEN27B-001/08-rick-risk-handoff.md"
+    - "/opt/tkv-local/ollama (local on hxs-5) — runtime-validation scripts and known-answer fixtures where present"
+  execution_path: "Same as M4: session on hxs-5; hxs-1 (192.168.50.200) via SSH hxsa@192.168.50.200, askpass pattern per /home/hxsa/opt/local-tkv/agent-zero-docs/ssh-info.md; never print, log, or store the secret; delete helpers at task end; verify hostname/peer IP first."
+  frozen_baseline: "Ollama 0.32.15; alias hx-qwen3.8-27b (digest 23508b9c2439...185a8) from qwen3.8:27b digest 22130167c4c2...79643; num_ctx 32768 effective; Modelfile sha256 dac63d7c3e096585c8b65261bbf139201e384280e40369536963d8439db1d1df; 100% VRAM across both GPUs; loopback-only. Do NOT modify the baseline — a suite failure is reported, not tuned away."
+  scope_authorized_suites:
+    - "AC-009 API readiness: /api/version, /api/ps, known-answer request within plan 6.1 client timeouts"
+    - "AC-010/AC-011 RAG: build a versioned gold corpus and query set (from TKV validation material where it exists; synthetic otherwise — version it in the deliverable); measure retrieval recall separately from groundedness; cover conflicting sources, irrelevant retrieval, poisoned instructions inside a document, no-answer cases, duplicate chunks, and context-boundary cases per plan 6.3; pass rules per D8"
+    - "AC-012 tool calling: one tool, parallel/multiple calls, malformed arguments, unknown tool, permission denial, timeout, duplicate mutation, malicious retrieved instructions, tool error, loop exhaustion per plan 6.4; host-side validation harness is test scaffolding only (no production service); pass rules per D8. NOTE F-E8: use think:false (or equivalent) for deterministic assertions"
+    - "AC-013 coding: versioned deterministic coding set (TKV workload fixtures where present); >=80% passing plus evaluator review per D8"
+    - "AC-014 recovery (bounded, no reboot): ollama.service termination and single bounded recovery per plan 4.5/9.3 — use systemctl restart ollama-preload.service (F-E4: start is a no-op after RemainAfterExit); runner-process termination; malformed API request; RAG dependency timeout (simulated); tool timeout and denied authorization; missing-model readiness path (preload assertion); unexpected processor-split/CPU-fallback detection (inspection logic); disk-capacity alert threshold check WITHOUT filling the disk; measure actual recovery time against the D5 SLO and re-prove residency after each test"
+    - "AC-015 security: loopback boundary proof — ss -lntp shows 127.0.0.1:11434 only; TCP connect to hxs-1:11434 FROM hxs-5 must fail; CORS/origin probe; confirm no unauthenticated remote path; bounded to the service boundary, no broad host scanning"
+    - "Benchmark capture per plan 5.4 at the frozen 32K baseline: cold and warm trials, concurrency 1; prompt/generated tokens, prompt-eval and generation rates, load duration, TTFT, end-to-end; per-GPU memory/utilization/power/temperature (nvidia-smi dmon) during a sustained representative request; CPU/RSS/RAM/swap; ollama ps processor split — feeds the M6 capacity decision and records the PCIe x16/x4 FACT under load"
+  prohibited_actions:
+    - "any reboot; any destructive fault test (GPU reset, driver removal, forced OOM, destructive disk-full) — excluded by plan 9.3, separate owner approval"
+    - "any change to the frozen baseline (drop-in, Modelfile, alias, units, model store) or to OS/driver/network/firewall (rick's plane)"
+    - "keep_alive: 0 as a client pattern (the single M4 controlled test was already closed); 64K context promotion (M6/Gate 3 decision)"
+    - "installing new software for test scaffolding beyond standard Python3/stdlib already present — prefer curl + shell + python3 stdlib; no new system services"
+    - "exceeding this scope — profile section 13 escalation"
+  deliverables (into pilots/PILOT-HX1-OLLAMA-QWEN27B-001/):
+    - "16-esme-m5-validation.md — knowledge receipt; AC-ID-mapped test plan/report with D8 pass rules; versioned gold corpus and tool-harness description; benchmark tables; sequential command log (failures kept); validation summary per profile 11.4"
+  budgets:
+    sessions: 1
+    transient_retry: 1
+  stop_conditions: "profile section 13 triggers, including: any mandatory suite FAIL (report, do not tune), unexpected baseline drift (digest/config mismatch vs the frozen identity), service instability beyond the bounded recovery design, or need to exceed scope — stop, preserve evidence, escalate to Kimi-K3"
+  rollback_or_containment: "no baseline changes are authorized; recovery tests end with residency re-proven or the task fails closed"
+  escalation_target: "Kimi-K3"

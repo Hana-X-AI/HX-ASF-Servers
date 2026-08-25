@@ -1,0 +1,42 @@
+context_packet:
+  goal_id: "GOAL-HX1-QWEN38-001"
+  goal_version: 1
+  work_order_id: "WO-HX1-JOHN-M4-001"
+  session_id: "john-m4-20260825-01"
+  role: "producer (Ollama specialist: john / Esme)"
+  milestone: "M4 — Ollama baseline: install, model freeze, 32K, preload, rollback"
+  objective: >-
+    Stand up the approved Ollama baseline on hxs-1: reviewed install, frozen
+    qwen3.8:27b identity, pilot alias hx-qwen3.8-27b at num_ctx 32768, loopback-only
+    service with the hx1 drop-in and boot preload unit, API/model/GPU proof, and a
+    rollback guide — so Gate 2 (32K baseline stable) can be evaluated.
+  controlling_sources:
+    - "agents/john/profile.md (read first)"
+    - "pilots/PILOT-HX1-OLLAMA-QWEN27B-001/plan.md (sections 2.2, 4, 5, 6.5, 10)"
+    - "pilots/PILOT-HX1-OLLAMA-QWEN27B-001/10-work-order-john-m4.yaml"
+    - "pilots/PILOT-HX1-OLLAMA-QWEN27B-001/08-rick-risk-handoff.md (validate first; signed 2026-08-25T00:15Z)"
+    - "pilots/PILOT-HX1-OLLAMA-QWEN27B-001/07-rick-os-readiness.md"
+    - "/opt/tkv-local/ollama (local on hxs-5)"
+  target_identity: "hxs-1 (192.168.50.200) from hxs-5; verify hostname and peer IP before any mutation"
+  host_baseline: "M1/M2 verified: Ultra 9 285K; 125 GiB RAM + 8 GiB swap; 2x RTX 4070 Ti SUPER 16376 MiB (GPU-2ace9bfc-3a2d-f5b9-d270-82d043f8a7b7, GPU-d675a1cd-7d3d-0903-3b1b-7d95f321a0a9); driver 580.173.02 on kernel 7.0.0-28 (7.0.0-30 pending at next reboot — DKMS pre-built); Secure Boot disabled (never enable); sleep targets masked; root ext4 3.4T free; no Ollama present"
+  owner_decisions:
+    - "KDD-0004: model is exactly qwen3.8:27b (GGUF, non-MLX)"
+    - "D1: root ext4 model volume; no storage changes"
+    - "D5: SLO — detection <=2 min, recovery <=15 min, one bounded recovery attempt; record actual durations"
+    - "D6: OLLAMA_NO_CLOUD=1 confirmed"
+  constraints:
+    - "loopback-only API; no exposure; no network/firewall changes"
+    - "no reboot; no driver/kernel/OS changes (rick's plane)"
+    - "secrets and credential material never logged (REDACTED)"
+    - "evidence labeled FACT / AUTHORITY / UPSTREAM / INFERENCE / RECOMMENDATION (plan 2.2)"
+    - "Modelfile num_ctx is the effective-context contract; verify via /api/ps and logs (plan 4.2 rule 2, PILOT-002)"
+  prohibited_actions:
+    - "any mutation outside the work order scope; unreviewed installer execution; non-approved tags; 64K promotion; reboot"
+  evidence_required:
+    - "12-esme-m4-install-evidence.md"
+    - "13-esme-rollback.md"
+  budget:
+    sessions: 1
+    transient_retry: 1
+  expected_response_schema: "agent_result per goal-setting guidance section 14"
+  escalation_target: "Kimi-K3"

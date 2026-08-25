@@ -1,0 +1,39 @@
+work_order:
+  task_id: "WO-HX1-JOHN-M6B-001"
+  parent_goal: "GOAL-HX1-QWEN38-001"
+  goal_file: "goals/2026-08-24-hx1-ollama-qwen38-27b.md"
+  milestone: "M6b — owner-ratified context profiles: named aliases, 64K operating default, preload/monitoring repoint"
+  assigned_agent: "john / Esme (profile-briefed sub-agent)"
+  objective: "Implement the owner's 2026-08-25 profile disposition on hxs-1: create the three profile-named aliases from the frozen Phase A Modelfiles, make hx-qwen3.8-27b-64k the always-on operating profile (preload + monitoring identity + drop-in consistency), retire the ambiguous bare alias, and re-prove residency at the operating profile."
+  owner_decisions:
+    - "2026-08-25 profile disposition (23-kk3-m6-capacity-decision.md Revision 2): 32K frozen recovery/reference baseline; 64K preferred operating profile; 128K qualified extended-context profile — explicitly selected; 256K unproven, out of pilot"
+    - "Aliases exactly: hx-qwen3.8-27b-32k, hx-qwen3.8-27b-64k, hx-qwen3.8-27b-128k"
+    - "128K harness requirements ratified (plan 6.1): first-content timeout 240 s initial; total timeout sized for ingest+reasoning+generation; progress telemetry; admission control; warm/cold latency tracked separately — record as ratified requirements; no client build in this milestone"
+    - "Precision rule for all claims: the ladder proves no measured accuracy regression in the needle test and D8 suites — not immunity across every workload"
+  authoritative_inputs:
+    - "agents/john/profile.md (read first)"
+    - "pilots/PILOT-HX1-OLLAMA-QWEN27B-001/23-kk3-m6-capacity-decision.md (Revision 2 — governing)"
+    - "pilots/PILOT-HX1-OLLAMA-QWEN27B-001/19-esme-m5b-amendment-conformance.md (Phase A 32K Modelfile, byte-exact)"
+    - "pilots/PILOT-HX1-OLLAMA-QWEN27B-001/22-esme-m6-capacity-ladder.md (versioned 64K and 128K Modelfiles, byte-exact; frozen stage digests)"
+    - "/opt/tkv-local/ollama (local on hxs-5)"
+  execution_path: "Same as prior milestones: session on hxs-5; hxs-1 (192.168.50.200) via SSH hxsa@192.168.50.200, askpass pattern per /home/hxsa/opt/local-tkv/agent-zero-docs/ssh-info.md; never print, log, or store the secret; delete helpers at task end; verify hostname/peer IP first."
+  frozen_references: "Phase A 32K alias digest db2c62060efe...f645510 (Modelfile sha256 4869ce80...3165e); 64K stage digest 766cd946...8cc99d8a; 128K stage digest 94b83a1e...0dad0260; base qwen3.8:27b 22130167c4c2...79643. Byte-exact Modelfiles per the evidence files — any digest mismatch on re-creation is DRIFT: stop and escalate."
+  scope_authorized:
+    - "TKV review receipt per profile section 4"
+    - "Drift check first: base digest and current resident identity match the frozen references"
+    - "Create the three profile aliases from the byte-exact versioned Modelfiles: hx-qwen3.8-27b-32k (num_ctx 32768), hx-qwen3.8-27b-64k (num_ctx 65536), hx-qwen3.8-27b-128k (num_ctx 131072) — Phase A content otherwise unchanged (no sampling); verify each created digest equals its frozen reference"
+    - "Repoint the preload contract to the operating profile: update /usr/local/libexec/hx-ollama-preload exact model and /api/ps assertion to hx-qwen3.8-27b-64k (versioned edit, shell lint via -n, manual non-reboot test); update /etc/systemd/system/ollama.service.d/hx1.conf OLLAMA_CONTEXT_LENGTH=65536 for operator consistency (Modelfile remains the effective contract); daemon-reload"
+    - "Retire the bare alias: after the three profile aliases verify, ollama rm hx-qwen3.8-27b (tags only; blobs and the base tag are NOT deleted) — eliminates the naming ambiguity the owner flagged; record the inverse (re-create from the 32K Modelfile)"
+    - "Switch to the operating profile: restart ollama, controlled unload + poll /api/ps to empty (F-M5B-1/F-M6-2), restart ollama-preload (not start — F-E4), then prove: /api/ps shows hx-qwen3.8-27b-64k with digest 766cd946...8cc99d8a, context_length 65536, size_vram == size, both GPUs; known-answer + AC-009 quick re-proof; journal clean"
+  prohibited_actions:
+    - "any soak, reboot, or M7 activity; any sampling parameter; any new model pull or base-tag/blob deletion; OS/driver/network/firewall changes (rick's plane); vision inputs; keep_alive:0 as a client pattern (the controlled digest-swap unload is authorized and required)"
+    - "changing the frozen evidence or the 32K recovery baseline's Modelfile content"
+    - "exceeding this scope — profile section 13 escalation"
+  deliverables (into pilots/PILOT-HX1-OLLAMA-QWEN27B-001/):
+    - "29-esme-m6b-profiles.md — knowledge receipt; drift check; the three alias creations with digest verifications vs frozen references; preload/drop-in diffs (versioned); bare-alias retirement + inverse; operating-profile residency proof; AC-009 quick re-proof; ratified 128K harness requirements recorded (no client build); command log; profile 11.4 validation summary"
+  budgets:
+    sessions: 1
+    transient_retry: 1
+  stop_conditions: "digest mismatch (drift); preload test failure after repoint; residency not proven at the operating profile; unexpected state — stop, preserve evidence, escalate to Kimi-K3"
+  rollback_or_containment: "restore prior preload script and hx1.conf from the versioned diffs; re-create the bare alias from the 32K Modelfile; all steps reversible"
+  escalation_target: "Kimi-K3"

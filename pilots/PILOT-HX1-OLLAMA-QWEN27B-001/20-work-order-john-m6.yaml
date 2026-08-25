@@ -1,0 +1,38 @@
+work_order:
+  task_id: "WO-HX1-JOHN-M6-001"
+  parent_goal: "GOAL-HX1-QWEN38-001"
+  goal_file: "goals/2026-08-24-hx1-ollama-qwen38-27b.md"
+  milestone: "M6 capacity ladder — 65,536 and 131,072 qualification runs (owner-directed)"
+  assigned_agent: "john / Esme (profile-briefed sub-agent)"
+  objective: "Execute the context capacity ladder beyond the 32K baseline: qualify 65,536 and the owner-directed 131,072 stage with versioned configuration changes, capacity proofs, full capacity-dependent quality suites, and benchmark captures — producing the complete results matrix for the KK3 M6 freeze decision. Test all; show results."
+  owner_decisions:
+    - "2026-08-25 (Alert 1 EAM): 131,072 (128K) is added to the M6 capacity decision — test all stages and show results; this is the A01 4.3 owner-approved extended experiment"
+    - "A01: Phase A native sampling only; no sampling parameters at any stage"
+    - "D8 thresholds are the quality pass rules at every stage"
+    - "Plan 4.2 rule 3: retain f16 KV cache; q8_0 may be trialed ONLY if f16 memory pressure blocks a stage, and then with the accuracy suite re-run under q8_0"
+  prerequisite: "M5b PASSED — Phase A alias frozen per 19-esme-m5b-amendment-conformance.md. Read that file first for the frozen digest, Phase A Modelfile hash, reasoning-control findings, and fixture references. If M5b did not pass, do not start; escalate."
+  authoritative_inputs:
+    - "agents/john/profile.md (read first)"
+    - "pilots/PILOT-HX1-OLLAMA-QWEN27B-001/plan.md (sections 4.2, 5.3, 5.4 — 5.3 includes the 2026-08-25 owner-directive note)"
+    - "pilots/PILOT-HX1-OLLAMA-QWEN27B-001/amendment-A01-qwen38-baseline.md (section 4.3 context policy)"
+    - "pilots/PILOT-HX1-OLLAMA-QWEN27B-001/19-esme-m5b-amendment-conformance.md (frozen Phase A baseline + fixtures)"
+    - "pilots/PILOT-HX1-OLLAMA-QWEN27B-001/16-esme-m5-validation.md (versioned fixtures: gold corpus v1.0.0, tool harness, coding set v1.0.0)"
+    - "/opt/tkv-local/ollama (local on hxs-5)"
+  execution_path: "Same as prior milestones: session on hxs-5; hxs-1 (192.168.50.200) via SSH hxsa@192.168.50.200, askpass pattern per /home/hxsa/opt/local-tkv/agent-zero-docs/ssh-info.md; never print, log, or store the secret; delete helpers at task end; verify hostname/peer IP first."
+  stage_procedure_per_stage: "For each stage context C in [65536, then 131072]: (1) versioned config change — new Modelfile (Phase A + PARAMETER num_ctx C, nothing else changed), sha256, ollama create hx-qwen3.8-27b, new alias digest recorded; update /etc/systemd/system/ollama.service.d/hx1.conf OLLAMA_CONTEXT_LENGTH to C for operator consistency (Modelfile remains the effective contract per PILOT-002); daemon-reload; restart ollama then ollama-preload (restart, not start — F-E4); controlled unload (keep_alive:0) and preload reload — F-M5B-1: ollama create plus restart alone does NOT swap the served digest; (2) capacity proof — /api/ps shows the NEW stage alias digest and effective context C, size_vram == size (100% GPU, zero CPU fallback), near-boundary needle probe at ~95% of C with done_reason stop and no truncation, journal scan (no Xid/OOM), per-GPU allocation; (3) if f16 OOMs or forces fallback: record the f16 failure plainly, THEN optionally trial OLLAMA_KV_CACHE_TYPE=q8_0 as a labeled fallback (drop-in change, versioned) with the full accuracy suite re-run under q8_0; (4) quality re-run — the D8 suites (AC-010/011/012/013) with the unchanged versioned fixtures; AC-009 quick re-proof; (5) benchmark capture per plan 5.4 — cold/warm, prefill at several depths up to ~95% of C, gen rate, TTFT, per-GPU dmon telemetry, RAM/swap, processor split; (6) stage verdict: CAPACITY PASS/FAIL + QUALITY PASS/FAIL + numbers. Stages are sequential: a CAPACITY FAIL at 65536 ends the ladder (131,072 not attempted); a QUALITY FAIL does not stop the ladder — record it and proceed, the M6 decision weighs all evidence."
+  end_state: "After the last stage, restore the accepted baseline exactly: Phase A Modelfile at num_ctx 32768 (M5b-frozen hash), hx1.conf restored to OLLAMA_CONTEXT_LENGTH=32768 and OLLAMA_KV_CACHE_TYPE=f16, daemon-reload, restart ollama + preload, controlled unload + preload reload (F-M5B-1), full residency re-proof (alias, M5b-frozen Phase A digest, 32768, 100% GPU, Forever). hxs-1 ends in the accepted state regardless of ladder outcome."
+  prohibited_actions:
+    - "any context above 131,072 (262K native and 1M claims are reference-only per A01 4.3); any sampling parameter; any MLX variant"
+    - "masking a capacity failure by increasing swap, consuming all RAM, or accepting unapproved CPU fallback (plan 5.3)"
+    - "reboot; OS/driver/network/firewall changes; vision inputs; keep_alive:0 as a client pattern (the controlled per-stage digest-swap unload is authorized and required per F-M5B-1)"
+    - "soak or long-idle tests (M7 scope); changing the frozen 32K acceptance evidence"
+    - "tuning away a failure — record and proceed per the stage rules"
+    - "exceeding this scope — profile section 13 escalation"
+  deliverables (into pilots/PILOT-HX1-OLLAMA-QWEN27B-001/):
+    - "22-esme-m6-capacity-ladder.md — knowledge receipt; per-stage: versioned config diffs (Modelfile + drop-in, sha256, alias digests), capacity proof, quality suite verdicts vs D8, benchmark tables, f16/q8_0 disposition; consolidated results matrix across 32768/65536/131072; end-state restoration proof; command log; profile 11.4 validation summary"
+  budgets:
+    sessions: 1
+    transient_retry: 1
+  stop_conditions: "prerequisite unmet (M5b not passed); base-artifact digest drift; instability beyond bounded recovery; a capacity failure that cannot be honestly recorded (e.g., hidden offload); end-state restoration failure — stop, preserve evidence, escalate to Kimi-K3"
+  rollback_or_containment: "end_state restoration is the rollback; every stage change is a versioned, reversible config change"
+  escalation_target: "Kimi-K3"

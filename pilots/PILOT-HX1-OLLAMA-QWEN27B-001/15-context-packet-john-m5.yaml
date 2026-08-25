@@ -1,0 +1,36 @@
+context_packet:
+  goal_id: "GOAL-HX1-QWEN38-001"
+  goal_version: 1
+  work_order_id: "WO-HX1-JOHN-M5-001"
+  session_id: "john-m5-20260825-01"
+  role: "producer (Ollama specialist: john / Esme)"
+  milestone: "M5 — Functional validation at the frozen 32K baseline"
+  objective: >-
+    Prove the pilot workloads on hx-qwen3.8-27b: RAG retrieval and groundedness,
+    tool-calling protocol, coding, bounded recovery, and the loopback security
+    boundary, plus the plan 5.4 benchmark capture — all against the D8-confirmed
+    thresholds, without touching the frozen baseline.
+  controlling_sources:
+    - "agents/john/profile.md (read first)"
+    - "pilots/PILOT-HX1-OLLAMA-QWEN27B-001/plan.md (sections 5.3, 5.4, 6, 9.1, 9.3)"
+    - "pilots/PILOT-HX1-OLLAMA-QWEN27B-001/14-work-order-john-m5.yaml"
+    - "pilots/PILOT-HX1-OLLAMA-QWEN27B-001/12-esme-m4-install-evidence.md"
+    - "/opt/tkv-local/ollama (local on hxs-5)"
+  target_identity: "hxs-1 (192.168.50.200) from hxs-5; verify hostname and peer IP first"
+  baseline_ref: "M4 frozen state per 12-esme-m4-install-evidence.md; service and preload units enabled; model resident Forever at num_ctx 32768, 100% VRAM, both GPUs"
+  owner_decisions:
+    - "D8: quality thresholds confirmed (recall >=0.9; groundedness >=90% citations + 100% no-answer/poison handling; tools 100% denial + >=95% conformance; coding >=80% + evaluator)"
+    - "D5: SLO detection <=2 min, recovery <=15 min, one bounded attempt"
+    - "D7 closed: 08-17 carrier loss was planned maintenance"
+  constraints:
+    - "frozen baseline is read-only — report failures, never tune them away"
+    - "no reboot; no destructive fault tests; no OS/driver/network changes"
+    - "secrets never logged (REDACTED); synthetic prompts only for request-logging tests"
+    - "evidence labeled FACT / AUTHORITY / UPSTREAM / INFERENCE / RECOMMENDATION (plan 2.2)"
+  evidence_required:
+    - "16-esme-m5-validation.md"
+  budget:
+    sessions: 1
+    transient_retry: 1
+  expected_response_schema: "agent_result per goal-setting guidance section 14"
+  escalation_target: "Kimi-K3"

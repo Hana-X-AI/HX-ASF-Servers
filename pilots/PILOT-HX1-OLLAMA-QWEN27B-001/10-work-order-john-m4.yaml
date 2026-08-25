@@ -1,0 +1,51 @@
+work_order:
+  task_id: "WO-HX1-JOHN-M4-001"
+  parent_goal: "GOAL-HX1-QWEN38-001"
+  goal_file: "goals/2026-08-24-hx1-ollama-qwen38-27b.md"
+  milestone: "M4 — Ollama install, model freeze, 32K baseline, preload, rollback"
+  assigned_agent: "john / Esme (profile-briefed sub-agent)"
+  objective: "Install and pin Ollama on hxs-1, pull and freeze the approved model identity, create the pilot alias at num_ctx 32768, apply the systemd drop-in and boot preload unit, prove API/model/GPU state at the 32K baseline, and deliver the rollback guide — per plan sections 4, 5, 6.5, and 10."
+  owner_decisions:
+    - "KDD-0004: approved model is exactly qwen3.8:27b (GGUF, non-MLX); no other tag, no MLX variant"
+    - "D1: model volume = root ext4; default Ollama model store stays on the root filesystem; no storage changes"
+    - "D5 (2026-08-25): readiness SLO confirmed — failure detection <=2 min, automated recovery <=15 min, one bounded recovery attempt per incident; record actual load/preload durations and flag if this SLO is not credible"
+    - "D6 (2026-08-25): OLLAMA_NO_CLOUD=1 confirmed"
+    - "Rick handoff context: D2 Secure Boot stays disabled; D3 driver 580.173.02 retained (rick's plane — do not touch)"
+  authoritative_inputs:
+    - "agents/john/profile.md (read first; full profile protocol applies)"
+    - "pilots/PILOT-HX1-OLLAMA-QWEN27B-001/plan.md (sections 2.2, 4, 5, 6.5, 10)"
+    - "pilots/PILOT-HX1-OLLAMA-QWEN27B-001/08-rick-risk-handoff.md (VALIDATE FIRST per plan 10.1 step 1; stop if any critical risk is open)"
+    - "pilots/PILOT-HX1-OLLAMA-QWEN27B-001/07-rick-os-readiness.md (OS baselines, GPU UUIDs, PCIe note)"
+    - "/opt/tkv-local/ollama (LOCAL on hxs-5 where this session runs — the profile's remote path resolves locally here)"
+  execution_path: "Session runs on hxs-5; target is hxs-1 (192.168.50.200) via SSH hxsa@192.168.50.200 using the owner-provided credential at /home/hxsa/opt/local-tkv/agent-zero-docs/ssh-info.md (askpass pattern; never print, log, or store the secret; delete any askpass helper at task end). Verify hostname and peer IP before any mutation."
+  scope_authorized:
+    - "TKV review per profile section 4 (local /opt/tkv-local/ollama); produce the receipt"
+    - "Pre-install baseline per profile 6.2 and plan 10.1 step 2 (no Ollama present expected)"
+    - "Installer review per plan 10.1 step 3 and profile 7.1: download the official installer, authenticate, hash, inspect, and compare against the TKV (scripts/install.sh, docs/linux.mdx) BEFORE execution; never blind-pipe; if authenticity cannot be established, stop BLOCKED"
+    - "Install Ollama for Linux; record exact binary/server versions (reconcile against the TKV snapshot identity per profile section 9); verify the created ollama service user, group, and systemd unit against rick's R-014 handoff expectations"
+    - "Confirm loopback-only bind (127.0.0.1:11434) BEFORE any model pull; prove with ss and /api/version"
+    - "Pull exactly qwen3.8:27b; record ollama show, /api/tags digest, quantization, size, license, and storage delta (D1: root ext4)"
+    - "Create the pilot Modelfile verbatim per plan section 6.5 (num_ctx 32768 and the listed sampling parameters and SYSTEM prompt), sha256 it, create alias hx-qwen3.8-27b, and ollama show the alias"
+    - "Apply systemd drop-in /etc/systemd/system/ollama.service.d/hx1.conf per plan section 4.2 with exact GPU UUIDs GPU-2ace9bfc-3a2d-f5b9-d270-82d043f8a7b7 and GPU-d675a1cd-7d3d-0903-3b1b-7d95f321a0a9: OLLAMA_HOST=127.0.0.1:11434, KEEP_ALIVE=-1, MAX_LOADED_MODELS=1, NUM_PARALLEL=1, CONTEXT_LENGTH=32768, FLASH_ATTENTION=1, KV_CACHE_TYPE=f16, NO_CLOUD=1, CUDA_VISIBLE_DEVICES=<both UUIDs>, Restart=always, RestartSec=3, TimeoutStartSec=300, LimitNOFILE=65535; daemon-reload, enable --now, inspect effective state (plan 4.2 commands); NOTE plan 4.2 rule 2 (PILOT-002): the Modelfile num_ctx is the effective contract — verify effective context via /api/ps and startup logs, not the variable"
+    - "Install /usr/local/libexec/hx-ollama-preload and its unit per plan section 4.3 (exact model hx-qwen3.8-27b, bounded retry, hard timeout, /api/ps assertion, no credentials); shell-lint the script; enable the unit only after a manual non-reboot test passes"
+    - "Smoke and residency evidence at the 32K baseline: 8,192-context smoke; cold start (one controlled unload via keep_alive:0 is permitted as a TEST action only, immediately followed by preload-script reload and residency re-proof); warm known-answer generation; one bounded long-context probe near 32768 using TKV fixtures if available; /api/ps showing exact model, effective num_ctx 32768, and processor split; nvidia-smi per-GPU allocation on BOTH GPUs (model exceeds single-GPU VRAM — record the split; note rick's PCIe x4/x16 FACT without judging it); journal scan (no Xid/OOM); ~6-minute idle check proving KEEP_ALIVE=-1 holds residency past the default 5-minute eviction"
+    - "Rollback guide per plan section 10.2 (prior state: no Ollama; units, drop-in, model store, exact inverse steps)"
+  prohibited_actions:
+    - "any reboot (each reboot is individually owner-approved; none in M4)"
+    - "driver, kernel, DKMS, or OS-package changes (rick's plane); changing rick's sleep-target masks or any OS configuration"
+    - "any bind beyond 127.0.0.1:11434; firewall, proxy, DNS, or network changes"
+    - "any model tag other than qwen3.8:27b; any MLX variant; any fine-tuning"
+    - "OLLAMA_NUM_GPU or OLLAMA_GPU_LAYERS (not supported); promotion to 65536 context (Gate 3 decision, not M4)"
+    - "client patterns that send keep_alive: 0 (single controlled test unload excepted, as above)"
+    - "storage topology changes or model-data deletion; user/group changes beyond what the reviewed installer itself creates"
+    - "Ansible; ROCm; exposing the API; exceeding this scope — use profile section 13 escalation"
+  sudo_note: "sudo on hxs-1 only where the install and unit operations require it; if sudo prompts, use the askpass pattern; the secret is never printed, logged, or stored. The Ollama installer must not silently become GPU-driver or OS-package authority (profile 7.1) — inspect what it installs."
+  deliverables (into pilots/PILOT-HX1-OLLAMA-QWEN27B-001/):
+    - "12-esme-m4-install-evidence.md — knowledge receipt, test plan and report (profile 11.1), configuration files with diffs (11.2), sequential command log (11.3), validation summary (11.4): installer provenance and hashes, exact versions, service/user/unit proof, loopback proof, frozen model identity (tag, digest, quantization, size, license, Modelfile sha256), drop-in and preload unit full text, smoke/residency/GPU-placement evidence, preload and load durations against the D5 SLO"
+    - "13-esme-rollback.md — rollback guide per plan 10.2 with exact inverse procedures and preserved pre-change artifacts"
+  budgets:
+    sessions: 1
+    transient_retry: 1
+  stop_conditions: "profile section 13 triggers, explicitly including: installer authenticity failure, digest/provenance mismatch on the pulled model, any open critical risk found in rick's handoff, OOM or unexpected CPU fallback at the 32K baseline, GPU discovery failure — stop, preserve state and evidence, escalate to Kimi-K3"
+  rollback_or_containment: "13-esme-rollback.md governs; pre-change state is 'no Ollama installed'"
+  escalation_target: "Kimi-K3"

@@ -1,0 +1,44 @@
+work_order:
+  task_id: "WO-HX1-JOHN-M5B-001"
+  parent_goal: "GOAL-HX1-QWEN38-001"
+  goal_file: "goals/2026-08-24-hx1-ollama-qwen38-27b.md"
+  milestone: "M5b — Amendment A01 conformance: Phase A alias, reasoning-control probes, D8 quality re-run"
+  assigned_agent: "john / Esme (profile-briefed sub-agent)"
+  objective: "Bring the pilot into conformance with Amendment A01: rebuild the alias to the A01 Phase A native-behavior Modelfile, re-freeze identity, capability-probe Ollama's actual reasoning controls, and re-run the D8 quality suites on the Phase A alias for acceptance."
+  owner_decisions:
+    - "A01 adopted 2026-08-25 (amendment-A01-qwen38-baseline.md); plan 6.5 superseded by A01 4.2"
+    - "D8 quality thresholds remain the pass rules (confirmed 2026-08-25)"
+    - "M5 results (16-esme-m5-validation.md) are labeled the sampled-profile data point and Phase-B comparison — NOT acceptance evidence; M5b produces the acceptance evidence"
+  authoritative_inputs:
+    - "agents/john/profile.md (read first)"
+    - "pilots/PILOT-HX1-OLLAMA-QWEN27B-001/amendment-A01-qwen38-baseline.md (sections 4.1, 4.2, 5, 6, 7 — governing document)"
+    - "pilots/PILOT-HX1-OLLAMA-QWEN27B-001/16-esme-m5-validation.md (M5 fixtures: gold corpus v1.0.0 sha256 04943d79...cbb834, tool harness, coding set v1.0.0 — reuse them)"
+    - "pilots/PILOT-HX1-OLLAMA-QWEN27B-001/12-esme-m4-install-evidence.md"
+    - "/opt/tkv-local/ollama (local on hxs-5)"
+  execution_path: "Same as M4/M5: session on hxs-5; hxs-1 (192.168.50.200) via SSH hxsa@192.168.50.200, askpass pattern per /home/hxsa/opt/local-tkv/agent-zero-docs/ssh-info.md; never print, log, or store the secret (note F-M5-1: mind stdin sequencing); delete helpers at task end; verify hostname/peer IP first."
+  scope_authorized:
+    - "TKV review receipt per profile section 4"
+    - "Base-artifact drift check FIRST: qwen3.8:27b digest must still be 22130167c4c2...79643 — if drifted, STOP (A01 amendment rule) and escalate"
+    - "Complete the A01 4.1.3 identity record: ollama show --modelfile qwen3.8:27b (upstream template), full parameters, capabilities, license, version, timestamp"
+    - "Rebuild the alias: create the A01 4.2 Phase A Modelfile VERBATIM (FROM qwen3.8:27b, PARAMETER num_ctx 32768, the A01 SYSTEM prompt, NO sampling parameters, no num_predict); sha256 the Modelfile; ollama create hx-qwen3.8-27b -f ./Modelfile; ollama show the alias; freeze the new alias digest. Label the M4 alias digest 23508b9c2439...185a8 and Modelfile hash dac63d7c...d1df SUPERSEDED — history labeled, never rewritten"
+    - "Reload and re-prove residency: systemctl restart ollama-preload.service (F-E4: restart, not start); /api/ps shows hx-qwen3.8-27b with the NEW digest, context_length 32768, size_vram == size; nvidia-smi both GPUs; journal clean. No unit or drop-in changes are needed or permitted (references are by alias name)"
+    - "A01 5.1 reasoning and thinking probes through the actual API: (a) thinking baseline — raw request/response metadata, repeatable behavior, final-answer parsing intact; (b) reasoning-control A/B cases for each control Ollama exposes (reasoning_effort values, preserve_thinking, think flag) — each recorded as HONORED or UNSUPPORTED with evidence; NEVER infer parity from upstream docs; (c) multi-turn preservation — fixed task split across turns with a fresh-session control, no context leakage, completion not degraded"
+    - "A01 5.1 environment-feedback cases: tool returns error, partial result, and changed state — model replans within a bounded retry budget and stops at the convergence/escalation threshold (harness owns the budget per A01 5.2)"
+    - "Re-run the D8 quality suites on the Phase A alias with the M5 versioned fixtures unchanged: AC-010 retrieval recall >=0.9; AC-011 groundedness >=90% citations + 100% no-answer/poison handling; AC-012 100% forbidden/malformed denied + >=95% schema conformance; AC-013 coding >=80% + evaluator review. AC-009 quick re-proof only; AC-014/015 stand from M5 (sampling-independent) — do not redo the recovery drills"
+    - "Bounded Phase A benchmark note (feeds M6): warm generation rate, prefill at ~11K and ~31K tokens, TTFT — native defaults with thinking ON; present beside the M5 think:false numbers as a comparison table; label Phase A baseline, not a Phase B A/B trial"
+    - "Thinking-retention boundary (A01 5.2): thinking content is not stored as a retained audit artifact; document the handling applied to any thinking content in test logs"
+    - "Vision boundary (A01 5.3/7): document the BF16 vision projector's presence in the artifact; verify no image inputs were exercised; vision remains out of the baseline"
+  prohibited_actions:
+    - "any sampling PARAMETER in the Phase A Modelfile or client defaults (that is the point of A01); any unsupported field placed in a Modelfile or request"
+    - "any change to units, drop-in, preload script, base tag, OS, driver, network, or firewall; any reboot; enabling or exercising vision inputs"
+    - "re-running AC-014 bounded-fault recovery drills (M5 evidence stands)"
+    - "tuning away a suite failure — a FAIL on Phase A is reported, and Phase B sampling is a separate KK3/owner decision"
+    - "exceeding this scope — profile section 13 escalation"
+  deliverables (into pilots/PILOT-HX1-OLLAMA-QWEN27B-001/):
+    - "19-esme-m5b-amendment-conformance.md — knowledge receipt; drift check; A01 4.1.3 identity record incl. upstream template; Phase A Modelfile + sha256 + new frozen alias digest (with supersession labels); residency re-proof; reasoning-control probe matrix (HONORED/UNSUPPORTED with evidence); thinking-baseline and multi-turn results; environment-feedback results; D8 suite re-run verdicts per AC ID; Phase A vs M5 benchmark comparison; thinking-retention and vision boundary statements; command log; profile 11.4 validation summary"
+  budgets:
+    sessions: 1
+    transient_retry: 1
+  stop_conditions: "base-artifact digest drift; alias rebuild or residency re-proof failure; any mandatory D8 suite FAIL on Phase A; reasoning-control behavior that cannot be established from evidence or version-matched source — stop, preserve evidence, escalate to Kimi-K3"
+  rollback_or_containment: "alias rollback = re-create from the M4 Modelfile (hash dac63d7c...d1df, preserved in 12-esme-m4-install-evidence.md) if Phase A must be reverted; no other state changes authorized"
+  escalation_target: "Kimi-K3"

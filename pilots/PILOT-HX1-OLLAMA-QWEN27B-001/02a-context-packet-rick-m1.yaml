@@ -1,0 +1,32 @@
+context_packet:
+  goal_id: "GOAL-HX1-QWEN38-001"
+  goal_version: 1
+  work_order_id: "WO-HX1-RICK-M1-001"
+  session_id: "rick-m1-20260824-01"
+  role: "producer (Ubuntu specialist: rick)"
+  milestone: "M1 — TKV review + immutable inventory (read-only)"
+  objective: >-
+    Establish the Ubuntu knowledge receipt for /opt/tkv-local/ubuntu and capture
+    the immutable pre-change inventory of hxs-1 so Gate 0 (authority and hardware
+    known) can be evaluated.
+  controlling_sources:
+    - "agents/rick/profile.md (read first)"
+    - "pilots/PILOT-HX1-OLLAMA-QWEN27B-001/plan.md"
+    - "/opt/tkv-local/ubuntu (ubuntu.com-main corpus)"
+    - "agents/ roster (rick=you, john/Esme=Ollama, kimi-k3=governor)"
+  target_identity: "hxs-1 (192.168.50.200); verify hostname and peer IP before probes"
+  preflight_evidence: "2026-08-24: hxs-1 up; 2x RTX 4070 Ti SUPER; 125 GiB RAM; driver 580.173.02; no ollama; 3.4 TB free"
+  constraints:
+    - "strictly read-only on hxs-1"
+    - "secrets and credential material never logged (REDACTED)"
+    - "inventory output timestamped and sanitized"
+  prohibited_actions:
+    - "any mutation; package installs; service changes; reboot"
+  evidence_required:
+    - "03-rick-tkv-receipt.md"
+    - "04-rick-inventory.txt"
+  budget:
+    sessions: 1
+    transient_retry: 1
+  expected_response_schema: "agent_result per goal-setting guidance section 14"
+  escalation_target: "Kimi-K3"

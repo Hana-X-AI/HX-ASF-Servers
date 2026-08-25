@@ -1,0 +1,39 @@
+context_packet:
+  goal_id: "GOAL-HX1-QWEN38-001"
+  goal_version: 1
+  work_order_id: "WO-HX1-JOHN-M7A-001"
+  session_id: "john-m7a-20260825-01"
+  role: "producer (Ollama specialist: john / Esme)"
+  milestone: "M7a — three cold-reboot recovery cycles (AC-007) + first-boot verifications"
+  objective: >-
+    Prove the pilot's unattended boot recovery at the frozen 64K operating
+    profile: three consecutive cold reboots, each returning hx-qwen3.8-27b-64k to
+    ready state with no human intervention, evidence per plan 9.2 — plus the
+    first-boot checks (kernel 7.0.0-30 transition + driver re-proof, Wi-Fi
+    persistence, wait-online, masks).
+  controlling_sources:
+    - "agents/john/profile.md (read first)"
+    - "pilots/PILOT-HX1-OLLAMA-QWEN27B-001/31-work-order-john-m7a.yaml"
+    - "pilots/PILOT-HX1-OLLAMA-QWEN27B-001/plan.md (4.4, 4.5, 9.2)"
+    - "pilots/PILOT-HX1-OLLAMA-QWEN27B-001/29-esme-m6b-profiles.md"
+    - "pilots/PILOT-HX1-OLLAMA-QWEN27B-001/26-rick-pre-m7-readiness.md"
+    - "knowledge/catalog/retrieval-packages/2026-08-25-hxs1-m7-package.md"
+    - "/opt/tkv-local/ollama (local on hxs-5)"
+  target_identity: "hxs-1 (192.168.50.200) from hxs-5; verify hostname/peer IP first; SSH drops each reboot — bounded reconnect, escalate if not back in 15 minutes"
+  current_state: "frozen 64K operating profile resident (digest 766cd946…8cc99d8a, ctx 65536, 100% GPU, Forever); units enabled, NRestarts=0; Wi-Fi rfkill soft-blocked; sleep masks x4; kernel 7.0.0-28 running, 7.0.0-30 staged with DKMS pre-built; uptime ~7d since 08-17"
+  owner_authorizations:
+    - "3 cold reboots pre-approved, window 2026-08-25T06:29Z–08:29Z (state log row 40); NO fourth reboot"
+    - "soak DELAYED (owner); BIOS untouched (owner's personal pending task)"
+    - ".220 client identified as the owner — F-M6-3 closed; his past traffic is not a contaminant concern for these cycles"
+  constraints:
+    - "no config changes — diagnosis read-only, fixes escalate first"
+    - "no driver/kernel/DKMS work — driver failure means STOP and escalate for rick"
+    - "secrets never logged (REDACTED); evidence per cycle ID"
+    - "NVRM triggers (26-rick): any Xid, assertions outside runner lifecycle, growing leftover-mapping counts — escalate"
+  evidence_required:
+    - "30-esme-m7a-reboot-cycles.md"
+  budget:
+    sessions: 1
+    transient_retry: 1
+  expected_response_schema: "agent_result per goal-setting guidance section 14"
+  escalation_target: "Kimi-K3"

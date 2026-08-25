@@ -5,9 +5,9 @@
 | Field | Value |
 |---|---|
 | Project | `PILOT-HX1-OLLAMA-QWEN27B-001` |
-| Version | 1.0-draft |
+| Version | 1.0 (ratified 2026-08-24; A01 adopted 2026-08-25) |
 | Date | 2026-08-24 |
-| Status | **ADOPTED 2026-08-24 with amendments (KDD-0004) — M0 authorization pending** |
+| Status | **ADOPTED 2026-08-24 with amendments (KDD-0004; A01 adopted 2026-08-25) — M0 authorized 2026-08-24; in execution** |
 | Human authority | Agent Zero |
 | Control plane | KK3 Meta-Agent (kimi-k3) |
 | Ollama specialist | John-Ollama (operational call sign: Esme; roster name `john`) |
@@ -331,7 +331,10 @@ No `OLLAMA_NUM_GPU` or `OLLAMA_GPU_LAYERS` directive is allowed in the accepted 
 | Smoke | 8,192 | Model loads; API and GPU paths work |
 | Baseline | 32,768 | RAG/coding/tool suite passes without OOM or unexpected CPU offload |
 | Target | 65,536 | Same suite plus soak; quality benefit justifies memory cost |
-| Above target | Not authorized | Separate capacity and quality decision required |
+| Extended | 131,072 | RESOLVED 2026-08-25 (owner, `23-kk3-m6-capacity-decision.md` Revision 2): qualified extended-context profile — explicitly selected, not the default; f16 retained |
+| Above extended | Not authorized | Separate capacity and quality decision required; 262K native and 1M claims are reference-only per A01 4.3 |
+
+> Update 2026-08-25 (owner directive, "Alert 1" EAM): 131,072 (128K) is added to the M6 capacity decision — test all stages and show results. This satisfies A01 §4.3's "separate owner-approved experiment" requirement for the extended stage. **Resolution 2026-08-25 (owner):** the ladder passed at both stages; per Revision 2 of `23-kk3-m6-capacity-decision.md`, the single ratified rule governing M6, M7, and final acceptance is — 32K recovery baseline, 64K operating default, 128K qualified extended profile by explicit selection. The experiment-only interpretation is closed. (Correction recorded 2026-08-25.)
 
 If 64K causes OOM or material CPU offload, retain 32K. Do not mask a capacity failure by increasing swap or consuming all RAM.
 
@@ -381,6 +384,8 @@ http://127.0.0.1:11434
 
 Client defaults are **[TO BE CONFIRMED by workload tests]**: connect timeout 5 seconds; read/inference timeout 900 seconds; bounded retry only for safe/idempotent failures. The RAG client must not send `keep_alive: 0`.
 
+**Confirmed and extended by owner directive 2026-08-25 (128K profile):** first-content timeout 240 s initially for the 128K profile (cold deep ingest measured ≈158 s); total request timeout sized for ingest + reasoning + generation; progress telemetry required so slow ingestion is not misclassified as a hang; admission control preventing concurrent deep-context requests from consuming the remaining VRAM margin (server side: `OLLAMA_NUM_PARALLEL=1`, `OLLAMA_MAX_LOADED_MODELS=1`); warm-cache and cold-cache latency tracked separately.
+
 ### 6.2 Network boundary
 
 Ollama’s local API does not provide native authentication. Keep it on loopback when the RAG/agent gateway is local. For remote clients, place an approved authenticated TLS reverse proxy or gateway in front of Ollama and enforce host firewall/VLAN source allowlists. Direct `0.0.0.0:11434` exposure is prohibited.
@@ -420,6 +425,8 @@ Required controls:
 Tests must cover one tool, parallel/multiple calls, malformed arguments, unknown tool, permission denial, timeout, duplicate mutation, malicious retrieved instructions, tool error, and loop exhaustion.
 
 ### 6.5 Proposed Modelfile — Esme deliverable
+
+> **Superseded by Amendment A01 (adopted 2026-08-25, `amendment-A01-qwen38-baseline.md` §4.2):** the pilot alias is built as Phase A — `FROM qwen3.8:27b`, `PARAMETER num_ctx 32768`, and the A01 SYSTEM prompt, with **no sampling parameters** (native upstream behavior baseline). Sampling changes only through controlled A/B trials (A01 Phase B). The Modelfile and command blocks below are **non-executable historical content retained for provenance** — do not run them; they must not be used for new aliases. (Correction recorded 2026-08-25.)
 
 ```text
 FROM qwen3.8:27b

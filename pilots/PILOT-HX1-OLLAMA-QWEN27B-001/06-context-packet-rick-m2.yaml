@@ -1,0 +1,42 @@
+context_packet:
+  goal_id: "GOAL-HX1-QWEN38-001"
+  goal_version: 1
+  work_order_id: "WO-HX1-RICK-M2-001"
+  session_id: "rick-m2-20260824-01"
+  role: "producer (Ubuntu specialist: rick)"
+  milestone: "M2 — OS readiness + risk handoff (one approved low-risk change)"
+  objective: >-
+    Prove hxs-1 OS readiness for the Ollama installation: validate the retained
+    NVIDIA driver and OS posture read-only, capture baselines, execute the single
+    approved change (mask suspend targets), and deliver the signed risk-categorized
+    handoff so Gate 1 (driver and host ready) can be evaluated and Esme can
+    proceed at M4.
+  controlling_sources:
+    - "agents/rick/profile.md (read first)"
+    - "pilots/PILOT-HX1-OLLAMA-QWEN27B-001/plan.md (sections 2.2, 3, 4, 5.2, 7)"
+    - "pilots/PILOT-HX1-OLLAMA-QWEN27B-001/05-work-order-rick-m2.yaml"
+    - "pilots/PILOT-HX1-OLLAMA-QWEN27B-001/03-rick-tkv-receipt.md"
+    - "pilots/PILOT-HX1-OLLAMA-QWEN27B-001/04-rick-inventory.txt"
+    - "/opt/tkv-local/ubuntu (ubuntu.com-main corpus)"
+  target_identity: "hxs-1 (192.168.50.200); verify hostname and peer IP before probes"
+  m1_baseline: "2026-08-24 PASS: Ultra 9 285K 24C/24T; 125 GiB RAM + 8 GiB swap; 2x RTX 4070 Ti SUPER 16376 MiB (GPU-2ace9bfc-3a2d-f5b9-d270-82d043f8a7b7, GPU-d675a1cd-7d3d-0903-3b1b-7d95f321a0a9); driver 580.173.02 on HWE kernel 7.0.0-28; Secure Boot disabled; root ext4 3.4T free; no Ollama; no unexpected listeners"
+  owner_decisions:
+    - "D1: root ext4 for models (no storage changes)"
+    - "D2: Secure Boot stays disabled, now and always (standing, AGENTS.md)"
+    - "D3: retain-and-validate driver 580.173.02 (same family as hxs-4)"
+    - "D4: M2 approved 2026-08-24; suspend disable authorized as the single change"
+  constraints:
+    - "read-only except the single authorized suspend-target mask"
+    - "no reboot; no driver, kernel, storage, package, firewall, or user changes"
+    - "secrets and credential material never logged (REDACTED)"
+    - "evidence labeled FACT / AUTHORITY / UPSTREAM / INFERENCE / RECOMMENDATION (plan 2.2)"
+  prohibited_actions:
+    - "any mutation beyond the suspend-target mask; package installs; service changes other than the mask; reboot"
+  evidence_required:
+    - "07-rick-os-readiness.md"
+    - "08-rick-risk-handoff.md"
+  budget:
+    sessions: 1
+    transient_retry: 1
+  expected_response_schema: "agent_result per goal-setting guidance section 14"
+  escalation_target: "Kimi-K3"
