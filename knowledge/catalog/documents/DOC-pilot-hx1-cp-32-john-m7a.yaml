@@ -1,0 +1,47 @@
+document:
+  id: "DOC-pilot-hx1-cp-32-john-m7a"
+  title: "32-context-packet-john-m7a.yaml — context packet for WO-HX1-JOHN-M7A-001 (session john-m7a-20260825-01)"
+  type: "context-packet"
+  declared_purpose: "Session-binding packet for the M7a john/Esme dispatch: controlling sources (john profile, WO-31, plan §4.4/4.5/9.2, 29-esme-m6b-profiles frozen operating profile, 26-rick-pre-m7-readiness, Carol's M7 retrieval package knowledge/catalog/retrieval-packages/2026-08-25-hxs1-m7-package.md, /opt/tkv-local/ollama local on hxs-5); current state (frozen 64K profile resident digest 766cd946…8cc99d8a ctx 65536 Forever; units enabled NRestarts=0; Wi-Fi rfkill soft-blocked; sleep masks ×4; kernel 7.0.0-28 running with 7.0.0-30 staged, DKMS pre-built); owner authorizations (3 cold reboots pre-approved 06:29Z–08:29Z window per state log row 40, NO fourth reboot; soak DELAYED; BIOS untouched; F-M6-3 CLOSED — the .220 client was the owner); constraints (no config changes — diagnosis read-only; no driver/kernel/DKMS work — driver failure means STOP and escalate for rick; secrets never logged; NVRM triggers per 26-rick: any Xid, assertions outside runner lifecycle, growing leftover-mapping counts); evidence required: 30-esme-m7a-reboot-cycles.md."
+  source:
+    author: "Kimi-K3 (governor)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/32-context-packet-john-m7a.yaml"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T07:10:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: [hxs-1, hxs-5]
+    fqdns: []
+    services: [ollama.service, ollama-preload.service]
+    agents: [john, kimi-k3, carol]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+  version: ""
+  status: "adopted"
+  authority_level: "delegated-contract"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "kimi-k3"
+      note: "state log row 41 (2026-08-25T06:31Z); record sha256 matches the row-41 proof hash exactly"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-wo-31-john-m7a"
+      note: "paired work order"
+    - predicate: "references"
+      target: "knowledge/catalog/retrieval-packages/2026-08-25-hxs1-m7-package.md"
+      note: "Carol's M7 retrieval bundle named as a controlling source — first catalog-produced package consumed by an operational dispatch"
+  validation:
+    validated_at: "2026-08-25T20:15:00Z"
+    freshness: "current"
+    review_due: "not applicable — discharged (M7a complete, state log row 42)"
+  sha256: "a2aa29c995049d640269cd85111830e3ee7da9c7a2f12b825def17149de04639"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/32-context-packet-john-m7a.yaml"
+notes:
+  assigned_agent_call_sign: "Esme = john (pilot call sign, not a roster entry)"
+  corrections_batch6: "status active → adopted (batch 6, T4): M7a complete (state log row 42) — matches the other seven completed context-packet records, all adopted. review_due and all other fields preserved. Source file unchanged — record sha256 re-verified 2026-08-25T20:15Z."

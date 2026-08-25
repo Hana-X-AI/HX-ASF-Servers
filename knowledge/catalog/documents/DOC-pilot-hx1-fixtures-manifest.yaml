@@ -1,0 +1,47 @@
+document:
+  id: "DOC-pilot-hx1-fixtures-manifest"
+  title: "fixtures/sha256sums.txt — pilot validation-fixture integrity manifest"
+  type: "evidence"
+  declared_purpose: "SHA-256 manifest for the ten repo-resident validation fixtures (bench.py, bench_m6.py, coding_suite.py, fixtures_corpus.py, needle_probe.py, probes.py, q16_rerun.py, rag_suite.py, test_fixtures.py, tool_suite.py) adopted into the pilot (state log rows 21, 24, and 36); versioned fixtures for M6/M7 and future re-runs. Regenerated after the fixer session (row 36: 6/6 defect findings FIXED, test_fixtures.py regression battery 9/9 PASS, q16_rerun sys.path repointed to the versioned fixtures dir, evidence-dir makedirs added). Verified against the files at re-validation: 10/10 OK."
+  source:
+    author: "john / Esme (fixtures), adopted by Kimi-K3 (D-M5B-1)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/fixtures/sha256sums.txt"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T04:50:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: [hxs-1]
+    fqdns: []
+    services: [ollama.service]
+    agents: [john, kimi-k3]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+  version: "post-batch-7 (batch-7 fixer + governor residual tool_suite fix; manifest regenerated 2026-08-25T20:58Z, 10 files)"
+  status: "active"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "evidences"
+      target: "pilots/PILOT-HX1-OLLAMA-QWEN27B-001/fixtures/ (10 harness files incl. test_fixtures.py)"
+      note: "integrity pins; sha256sum -c passed 10/10 at re-validation 2026-08-25T21:24Z (10/10 at 19:27Z, 08:35Z and 05:45Z, 9/9 at run-1 ingestion 04:50Z)"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-state-log"
+      note: "row 21 (initial adoption, hash 3204614a…), row 24 (M6 additions, hash 38a9ac24…), row 36 (fixer session, hash 5daa36e0…), row 44 (review batch 4: coding_suite FAIL-CLOSED sandbox hardening + evidence-path fixes, manifest regenerated, hash 2e634cf9…); post-row-47 batch-5 fixer changes + governor R1 path fixes, manifest regenerated 2026-08-25T19:18Z (hash e1039d41…); batch-7 fixer + governor residual tool_suite fix, manifest regenerated 2026-08-25T20:58Z (hash 8638e1da… = current file; state-log row pending) — supersession chain intact"
+  validation:
+    validated_at: "2026-08-25T21:24:00Z"
+    freshness: "current"
+    review_due: "on any fixture change (manifest must be re-issued and state-logged)"
+  sha256: "8638e1daf423e1efe2e48d543eb0aba21c1e350d97fdacf4b02d16091288693e"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/fixtures/sha256sums.txt"
+notes:
+  hash_history: "3204614a… (row 21, 7 files) → 38a9ac24… (row 24, 9 files) → 5daa36e0… (row 36, 10 files) → 2e634cf9… (row 44, 10 files) → e1039d41… (batch-5 fixer + governor R1 path fixes, manifest regenerated 2026-08-25T19:18Z, 10 files) → 8638e1da… (batch-7 fixer + governor residual tool_suite fix, manifest regenerated 2026-08-25T20:58Z, 10 files, current). sha256sum -c re-run 2026-08-25T21:24Z: 10/10 OK against the current fixture files."
+  corrections_batch5: "F-B5-2 RESOLVED per governor disposition: batch-5 fixer changes plus governor R1 path fixes; sha256sums.txt regenerated 2026-08-25T19:18Z. Verified at re-validation: sha256sum -c 10/10 OK; test_fixtures.py regression battery now 29 tests (was 9/9 at row 36). sha256 2e634cf9… → e1039d41…."
+  corrections_batch7: "Batch-7 fixer + governor residual, all verified against current file content 2026-08-25T21:24Z. Fixer: (1) MODEL parameterization — explicit required alias per run (bench_m6.py argv, no silent default) + require_model preflight via fixtures_corpus; (2) bench_m6 deadline ordering; (3) coding_suite sudo-escalated bounded teardown; (4) canonical_json full grading-contract coverage — new canonical corpus hash 215607bd12dd…, old 913e31c58b… preserved as q[:4]-coverage historical reference in the test_fixtures.py pins (NEW_HASH/OLD_HASH, lines ~618-622); (5) shared think-tag helper strip_think_tags in fixtures_corpus.py, used by probes.py, needle_probe.py, rag_suite.py, q16_rerun.py (sanitized before grading/persist, A01 5.2); (6) rag_suite [NEEDLE] citation gate (CITE_RE recognizes [NEEDLE]; code alone insufficient — a recognized source ID must be cited). Governor residual: tool_suite.py wired to the shared helper at the trace/final persistence points (trace entries strip_think_tags(...)[:400], final strip_think_tags(...)). Regression battery now 57 tests (was 29 at batch-5). Manifest regenerated 2026-08-25T20:58Z; sha256 e1039d41… → 8638e1da…; sha256sum -c 10/10 OK. State-log row pending per convention."
+  canonical_fixtures_dir: "The versioned repo fixtures dir (pilots/PILOT-HX1-OLLAMA-QWEN27B-001/fixtures/) is CANONICAL — confirmed by the row-36 q16_rerun sys.path repoint. The earlier scratch copy at /tmp/esme-m5b/harness is STALE scratch; deliberately not cataloged."
+  missing_metadata: "FLAG: the manifest file itself still carries no header metadata (no date, author, scope line) after regeneration — context is established only via state log rows 21/24/36. Cosmetic; integrity function unaffected. Individual fixture .py files are not cataloged (covered by this manifest record; scope limit)."

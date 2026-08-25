@@ -1,0 +1,43 @@
+document:
+  id: "DOC-tkv-hxs2-driver-results"
+  title: "/opt/tkv-local/servers/hxs-2/driver-results.md — hxs-2 driver results (capture date 2026-08-12)"
+  type: "driver-results"
+  declared_purpose: "Raw terminal capture of the post-directive NVIDIA driver validation on hxs-2 (2026-08-12, owner-approved Phase 1 exception per governance/policy/nvidia-driver-install-directive.md): Ubuntu 24.04.4 LTS kernel 7.0.0-28 login banner and driver validation output, preserved verbatim (headerless raw capture, acceptable per the server records README evidence rules)."
+  source:
+    author: "HX project (Claude Code era); collected read-only over SSH / human preparation record"
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/servers/hxs-2/driver-results.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T05:55:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: [hxs-2]
+    fqdns: [hxs-2.hx.local.arpa]
+    services: []
+    agents: []
+    repositories: [tkv-local]
+    environments: [fleet]
+  version: "capture date 2026-08-12"
+  status: "historical"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "describes"
+      target: "hxs-2 (hxs-2.hx.local.arpa, 192.168.50.201)"
+      note: "preserved per the server records contract; verify against the live host before operational use"
+    - predicate: "references"
+      target: "DOC-tkv-server-registry"
+      note: "fleet registry row for hxs-2"
+  validation:
+    validated_at: "2026-08-25T20:15:00Z"
+    freshness: "historical"
+    review_due: "historical record — no review cycle; cross-check before any operational use"
+  sha256: "8fcb7da3962bc8964ef7b15e43c6d433cf7e69e88d4893f51561a072661892e3"
+  canonical_location: "/opt/tkv-local/servers/hxs-2/driver-results.md"
+notes:
+  corrections_batch6: "authority_level historical-as-found → agent-evidence (batch 6, T10h): this is a POST-directive validation capture (post-change evidence, 2026-08-12, per the record's own declared_purpose), not an as-found discovery record — the evidence authority value per the schema enum applies. status/freshness stay historical (point-in-time capture); pre-work-results records are genuinely as-found and were NOT touched."

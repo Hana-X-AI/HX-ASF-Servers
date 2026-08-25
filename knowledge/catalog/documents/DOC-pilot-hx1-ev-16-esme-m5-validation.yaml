@@ -1,0 +1,47 @@
+document:
+  id: "DOC-pilot-hx1-ev-16-esme-m5-validation"
+  title: "16-esme-m5-validation.md — Esme M5 functional validation (7/7 AC suites PASS on the sampled-profile alias; labeled comparison evidence)"
+  type: "evidence"
+  declared_purpose: "M5 validation evidence (report ESME-M5-VALIDATION-001): knowledge receipt (12 corpus files), AC-ID-mapped results under D8 thresholds — AC-009 API readiness, AC-010 retrieval recall 1.000, AC-011 groundedness 100% + no-answer/poison 100%, AC-012 tools 24/24 conformant + 100% forbidden/malformed denied, AC-013 coding 10/10, AC-014 recovery 49.8s vs 900s SLO, AC-015 loopback refused remotely — plus plan §5.4 32K benchmarks (think:false deterministic mode, F-E8) and versioned fixtures (gold corpus v1.0.0, tool harness, coding set v1.0.0). Discloses F-M5-1 (secret-handling incident, contained <1 min, disclosed) and F-M5-2 (hxsa NOPASSWD sudo observation)."
+  source:
+    author: "john / Esme (session john-m5-20260825-01)"
+    provided_by: "john via Kimi-K3 gate"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/16-esme-m5-validation.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T04:50:00Z"
+  owner: "john"
+  applies_to:
+    hosts: [hxs-1]
+    fqdns: []
+    services: [ollama.service, ollama-preload.service]
+    agents: [john]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+  version: ""
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "evidences"
+      target: "M5 complete (labeled) — state log row 17"
+      note: "per A01: harness/recovery/security/benchmark evidence + Phase-B comparison point — NOT acceptance evidence (acceptance is DOC-pilot-hx1-ev-19-esme-m5b-conformance)"
+    - predicate: "produced_by"
+      target: "john"
+      note: "under DOC-pilot-hx1-wo-14-john-m5"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-ev-19-esme-m5b-conformance"
+      note: "M5b reused its versioned fixtures unchanged for the Phase A acceptance re-run"
+    - predicate: "risks"
+      target: "F-M5-1 secret-handling incident (contained, disclosed); F-M5-2 hxsa NOPASSWD sudo (ALL:ALL) — recorded, no action per owner no-hardening stance"
+      note: "state log row 17"
+  validation:
+    validated_at: "2026-08-25T04:50:00Z"
+    freshness: "current"
+    review_due: "at M8 unified evidence index"
+  sha256: "8de3e756fe48d47b6892a5f988eea70fd78ec826dc62009f3d967273d7b1f6c3"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/16-esme-m5-validation.md"

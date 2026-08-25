@@ -1,0 +1,38 @@
+document:
+  id: "DOC-kdd-0000-template"
+  title: "KDD-0000 — Key Decision Document template"
+  type: "contract"
+  declared_purpose: "Template for Key Decision Documents: date, status (proposed/ratified/superseded/rejected), decider, related goals, context, options, decision, consequences. KDDs are numbered in order and never renumbered."
+  source:
+    author: "Kimi-K3 / owner (repository governance)"
+    provided_by: "Agent Zero"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0000-template.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T04:50:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: [kimi-k3]
+    repositories: [HX-ASF-Servers]
+    environments: [fleet]
+  version: ""
+  status: "adopted"
+  authority_level: "ratified-governance"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "governs"
+      target: "knowledge/decisions/KDD-NNNN-*.md"
+      note: "one file per decision; never renumber"
+  validation:
+    validated_at: "2026-08-25T04:50:00Z"
+    freshness: "current"
+    review_due: "on convention change"
+  sha256: "30c9e906000d2c62c48c1da23cbc80590507dc7d35201c6d429facff116f6abb"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0000-template.md"

@@ -1,0 +1,38 @@
+document:
+  id: "DOC-tkv-skills-adoption-plan-html"
+  title: "hx-agent-skills-adoption-plan_gpt-5.6-sol_20260813_1735.html — HX-Infrastructure Agent Skills Integration & Migration Brief"
+  type: "plan"
+  declared_purpose: "GPT-5.6-sol produced integration and migration brief (HTML render, 2026-08-13) for adopting an agent-skills layer into HX-Infrastructure — the design companion to the owner's 2026-08-13 hooks-and-skills implementation prompt."
+  source:
+    author: "ChatGPT GPT-5.6-sol (consultant artifact)"
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/skills/hx-agent-skills-adoption-plan_gpt-5.6-sol_20260813_1735.html"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T06:00:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: []
+    repositories: [tkv-local, HX-Infrastructure (archived predecessor)]
+    environments: [fleet]
+  version: "2026-08-13"
+  status: "historical"
+  authority_level: "historical-as-found"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "references"
+      target: "DOC-tkv-skills-hooks-implementation-prompt"
+      note: "design brief behind the owner's implementation tasking of the same date"
+  validation:
+    validated_at: "2026-08-25T08:15:00Z"
+    freshness: "historical"
+    review_due: "historical record — no review cycle"
+  sha256: "418a38382d1749d5855d394e683541481f09a5703c27e4dec05999914a73edab"
+  canonical_location: "/opt/tkv-local/skills/hx-agent-skills-adoption-plan_gpt-5.6-sol_20260813_1735.html"

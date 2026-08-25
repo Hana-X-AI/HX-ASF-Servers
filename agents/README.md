@@ -9,7 +9,10 @@ Specialist agents work in lanes. This directory holds one lane per agent:
 persona as a current teammate, check this directory first: the charters here are
 the authority on who exists and what they can do. Profiles found in the knowledge
 vault (`/opt/tkv-local`) are reference material only and may be stale or
-superseded.
+superseded. Precedence when sources disagree: the roster and charters in this
+directory outrank any vault profile; within an agent's lane, the charter defines
+existence and scope, and its linked `profile.md` is the operating contract.
+(Precedence rule made explicit 2026-08-25.)
 
 Current roster:
 
@@ -18,6 +21,7 @@ Current roster:
 | kimi-k3 | horizontal (control plane) | active — Phase M | Goal decomposition, agent commissioning, evidence gates, recovery, escalation; bounded direct execution under section 2.3 |
 | john | vertical | active | Ollama install/config/audit/troubleshoot on Linux, test-first, evidence packages |
 | rick | vertical | active | Ubuntu Server OS plane: packages, systemd, Netplan, SSH/sudo, firewall, storage, kernel/drivers, backup/recovery |
+| carol | horizontal (documentation) | active — bounded persistent role (owner-registered 2026-08-25) | Knowledge stewardship: catalog at `knowledge/catalog/`, classification, relationships, retrieval packages, freshness, catalog receipts completing handoffs |
 
 ## Two lane types
 

@@ -1,0 +1,46 @@
+document:
+  id: "DOC-tkv-hxinfra-archive"
+  title: "/opt/tkv-local/ollama/implementation/archive/HX-Infrastructure-main/ — archived HX-Infrastructure repository snapshot (316 files): predecessor governance, server records, hooks, and operations knowledge"
+  type: "corpus"
+  declared_purpose: "Frozen snapshot of the predecessor HX-Infrastructure repository preserved inside the ollama tree's implementation/archive: AGENTS.md routing contract, CLAUDE.md, GOALS-AND-OBJECTIVES.md, INFRASTRUCTURE-CONTRACT.md, SERVER-REGISTRY.md, governance/ (policy, operations, logs, reports, schemas, design, site), servers/ per-host records, services/, tools/, tests/, start-up/, conversations/, .claude hooks/skills and claude-hooks. This is where the governance/... paths referenced by live discovery records resolve: the operational content was later migrated to the top-level /opt/tkv-local trees (servers/, dns-fqdn/, skills/, file-share/, and the source-snapshot trees); this archive is the historical original."
+  source:
+    author: "HX project (Claude Code era, HX-Infrastructure repository)"
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/ollama/implementation/archive/HX-Infrastructure-main"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T06:10:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: []
+    repositories: [tkv-local, HX-Infrastructure (archived predecessor)]
+    environments: [fleet]
+  version: ""
+  status: "historical"
+  authority_level: "historical-as-found"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "references"
+      target: "DOC-tkv-ollama-hx-research"
+      note: "physically contained within the ollama tree (implementation/archive/) — catalog containment resolves to DOC-tkv-ollama-hx-research since the 2026-08-25 C5 partition"
+    - predicate: "describes"
+      target: "governance/policy/nvidia-driver-install-directive.md resolution"
+      note: "servers/hxs-1/discovery.md's referenced governance path lives here now — tasking question answered"
+  validation:
+    validated_at: "2026-08-25T20:15:00Z"
+    freshness: "historical"
+    review_due: "historical record — no review cycle"
+  sha256: "858deccbb11df3b3c2df28a8042570db60e7efcc42f32b9d59564e5e1a7aaa55"
+  canonical_location: "/opt/tkv-local/ollama/implementation/archive/HX-Infrastructure-main"
+notes:
+  checksum_method: "sha256 = digest of the sorted relative-path file manifest (316 files, names only, .git internals excluded from the manifest and from cataloging), NOT content hashes; regenerated 2026-08-25; directory canonical_location preserved. Method text consolidated wholly here per batch-6 (T10g) — the sha256 field now carries only the bare 64-char digest. Covered by the corpus manifest re-hash scheduled 2026-09-24 (run-1 follow-up)."
+  upstream_provenance: "upstream URL/commit: unavailable — tree is not a git checkout (no .git metadata present); unpacked archive snapshot"
+  supersession_note: "This archive is superseded BY the top-level /opt/tkv-local trees for operational content: it is the historical original; live copies migrated to /opt/tkv-local top-level trees (servers/, dns-fqdn/, skills/, file-share/) and HX-ASF-Servers governance. (Prose note, not a relation — corrected 2026-08-25 per governor batch C4: the previous 'supersedes' relation had inverted semantics and an unresolvable target.)"
+  corrections_batch6: "sha256 field now carries ONLY the bare 64-char digest 858deccb… (batch 6, T10g); the 'manifest-sha256 (…)' method text moved wholly into notes.checksum_method (previously split across both — consolidated). Digest value unchanged; manifest semantics unchanged; no content change to the archived tree (historical record)."

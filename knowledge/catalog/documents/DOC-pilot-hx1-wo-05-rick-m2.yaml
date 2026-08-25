@@ -1,0 +1,47 @@
+document:
+  id: "DOC-pilot-hx1-wo-05-rick-m2"
+  title: "05-work-order-rick-m2.yaml — WO-HX1-RICK-M2-001 (M2: OS readiness, one approved change, risk handoff)"
+  type: "work-order"
+  declared_purpose: "Delegated contract commissioning rick (session rick-m2-20260824-01) to prove hxs-1 OS readiness per plan §7: read-only validation plus exactly one authorized mutation (mask four sleep targets, D4), owner decisions D1–D4 embedded; deliverables 07-rick-os-readiness.md and 08-rick-risk-handoff.md."
+  source:
+    author: "Kimi-K3 (governor)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/05-work-order-rick-m2.yaml"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T04:50:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: [hxs-1, hxs-5]
+    fqdns: []
+    services: [suspend.target, hibernate.target, hybrid-sleep.target, suspend-then-hibernate.target]
+    agents: [rick, kimi-k3]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+  version: ""
+  status: "adopted"
+  authority_level: "delegated-contract"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "kimi-k3"
+      note: "issued at state log row 7 (2026-08-25T00:04Z); hash matches row 7 record"
+    - predicate: "governs"
+      target: "DOC-pilot-hx1-ev-07-rick-os-readiness"
+      note: "paired deliverable (13/13 tests PASS)"
+    - predicate: "governs"
+      target: "DOC-pilot-hx1-ev-08-rick-risk-handoff"
+      note: "paired deliverable (signed 2026-08-25T00:15Z)"
+    - predicate: "depends_on"
+      target: "DOC-protected-ssh-info-hxs1"
+      note: "askpass execution path; sudo -A only where a read-only probe requires it and for the authorized mask"
+  validation:
+    validated_at: "2026-08-25T04:50:00Z"
+    freshness: "current"
+    review_due: "not applicable — discharged contract (M2 complete, Gate 1 PASSED row 9)"
+  sha256: "ae668fc46165bc3afcf2d67419888289f2343fbf369e942358ebfd5ffdfbe875"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/05-work-order-rick-m2.yaml"

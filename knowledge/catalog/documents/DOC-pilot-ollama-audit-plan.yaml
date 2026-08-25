@@ -1,0 +1,47 @@
+document:
+  id: "DOC-pilot-ollama-audit-plan"
+  title: "PILOT-KK3-JOHN-OLLAMA-AUDIT-001 plan.md — Kimi-K3 and John Ollama audit process pilot plan (read-only, hxs-5)"
+  type: "plan"
+  declared_purpose: "Dual-objective pilot plan: (1) reproducible, evidence-backed, strictly read-only audit of the Ollama runtime, hardware alignment, deployed-model configuration, network exposure, resource posture, and material performance risks on hxs-5 with recommendation-only remediation; (2) process proof that Kimi-K3 governed john through a bounded Goal Contract (fresh session, evidence gates) without doing operational work. Carries the Phase M dispatch model (§2.1), evidence root (§12), stop conditions (§16), process learning record (§18), Agent Zero readiness gate (§19), standing directive (§20). Document status header: pilot-ready / Ready for Agent Zero authorization (front matter date 2026-08-23, last_updated 2026-08-24); adopted with four amendments per KDD-0003. Execution completed 2026-08-24 (readiness gate granted 09:26Z; 24 PASS / 0 FAIL / 0 BLOCKED / 5 NOT RUN justified; 11-pilot-completion-record.md)."
+  source:
+    author: "hx-cos (front matter) / adopted and amended per KDD-0003"
+    provided_by: "Agent Zero"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-KK3-JOHN-OLLAMA-AUDIT-001/plan.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T19:08:00Z"
+  owner: "Agent Zero (human authority); Kimi-K3 (control plane)"
+  applies_to:
+    hosts: [hxs-5]
+    fqdns: []
+    services: [ollama.service]
+    agents: [kimi-k3, john]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+  version: "1.0 (date 2026-08-23, last_updated 2026-08-24)"
+  status: "adopted"
+  authority_level: "ratified-governance"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "governs"
+      target: "PILOT-KK3-JOHN-OLLAMA-AUDIT-001 (all gates and artifacts 00–12)"
+      note: "readiness gate §19; stop conditions §16; evidence root §12 = pilot directory"
+    - predicate: "depends_on"
+      target: "DOC-kdd-0003-ollama-audit-pilot"
+      note: "adoption authority — adopted with four recorded amendments 2026-08-24"
+    - predicate: "references"
+      target: "DOC-goal-ollama-audit-hxs5"
+      note: "goal file goals/2026-08-24-ollama-audit-hxs5.md (Goal ID = file name, KDD-0002)"
+    - predicate: "references"
+      target: "/home/hxsa/opt/local-tkv/agent-zero-docs/pilots/audit-pilot.md"
+      note: "source (501 lines, SHA-256 41eb175c…), unmodified historical input"
+  validation:
+    validated_at: "2026-08-25T19:08:00Z"
+    freshness: "current"
+    review_due: "pilot executed 2026-08-24 — review only if the audit is re-run or superseded"
+  sha256: "cee88c119317a572e4253abda24d5e738c38e6c097c2cde2d940b7e35ea6580b"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-KK3-JOHN-OLLAMA-AUDIT-001/plan.md"

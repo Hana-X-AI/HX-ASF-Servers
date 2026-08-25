@@ -1,0 +1,40 @@
+document:
+  id: "DOC-knowledge-readme"
+  title: "knowledge/README.md — knowledge home conventions and truth-state labels"
+  type: "contract"
+  declared_purpose: "Defines what lives in knowledge/ (KDDs, catalog/ — the second brain: Carol's provenance-backed document catalog, issues.md, lessons-learned.md), the truth-state label rules (TARGET-STATE, AS-BUILT, DISCOVERED, PROPOSED, LEGACY), and writing conventions (plain Markdown, dated entries, reference by codes)."
+  source:
+    author: "Kimi-K3 / owner (repository governance)"
+    provided_by: "Agent Zero"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/knowledge/README.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T04:50:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: [kimi-k3, john, rick, carol]
+    repositories: [HX-ASF-Servers]
+    environments: [fleet]
+  version: ""
+  status: "active"
+  authority_level: "ratified-governance"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "governs"
+      target: "knowledge/ directory"
+      note: "label rules: design docs are TARGET-STATE not evidence; DISCOVERED needs evidence + date; LEGACY is rationale only"
+  validation:
+    validated_at: "2026-08-25T05:45:00Z"
+    freshness: "current"
+    review_due: "on convention change"
+  sha256: "b33a65e8eaff8318ffd2ed1c49565830322bfd75159292c23b634458c559955b"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/knowledge/README.md"
+notes:
+  hash_history: "71805b0a… (2026-08-25T04:50Z, run 1) → b33a65e8… (2026-08-25T05:45Z, run 2). Change: catalog/ bullet added to the what-lives-where list (second brain pointer). Expected churn flagged by CAT-02 (state log row 37)."

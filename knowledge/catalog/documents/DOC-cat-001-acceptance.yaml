@@ -1,0 +1,49 @@
+document:
+  id: "DOC-cat-001-acceptance"
+  title: "CAT-001 — Catalog acceptance battery (governor-owned verification suite for knowledge/catalog/)"
+  type: "contract"
+  declared_purpose: "Verifies that the catalog is alive: mechanical checks CAT-01..08 (schema conformance, checksum integrity, index consistency, relation integrity, secret boundary, receipt completeness, path resolution, relation-target hygiene), known-answer retrieval set CAT-10..15 (hostname/IP, Phase A hash and supersession, driver posture, Wi-Fi state, baseline tag and approver, PCIe topology caveat), and judgment checks CAT-20..22 (freshness audit, conflict preservation, retrieval-package economy). Run after every major ingestion; results logged to the governing log."
+  inferred_value: "INFERENCE: the standing proof surface for the second brain; CAT-22 is the token-economy measurement the retrieval packages are measured against."
+  source:
+    author: "Kimi-K3 (governor)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/knowledge/catalog/tests/cat-001-acceptance.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T05:45:00Z"
+  owner: "Kimi-K3 (verification); Carol does not modify this file, she must pass it"
+  applies_to:
+    hosts: [hxs-1]
+    fqdns: []
+    services: []
+    agents: [carol, kimi-k3]
+    repositories: [HX-ASF-Servers]
+    environments: [fleet, pilot]
+  version: ""
+  status: "active"
+  authority_level: "delegated-contract"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "governs"
+      target: "knowledge/catalog/ (all records, index, receipts)"
+      note: "standing rule: a catalog that cannot pass CAT-10..15 from its own records is not yet a brain; failure triggers flags, correction run, re-test"
+    - predicate: "references"
+      target: "DOC-agent-carol-profile"
+      note: "Carol's obligations: freshness labels, conflict preservation, protected-resource handling, receipts"
+    - predicate: "references"
+      target: "DOC-hx-second-brain-framework"
+      note: "framework's golden-question and context-savings proposals are partially operationalized here (CAT-10..15, CAT-22) — framework itself is not ratified"
+  validation:
+    validated_at: "2026-08-25T21:02:00Z"
+    freshness: "current"
+    review_due: "on governor revision"
+  sha256: "a4fde5200c0d56c643f596e5c477ac819937b73f19b768661f4b9db214fbfefb"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/knowledge/catalog/tests/cat-001-acceptance.md"
+notes:
+  first_run_result: "Executed against Carol run 1 at state log row 37 (2026-08-25T05:36Z): mechanical 62/62 PASS, known-answer CAT-10..15 ALL PASS; CAT-02 flagged 5 living documents drifted post-ingestion (expected churn — re-validated in Carol run 2, receipt 2026-08-25T0612Z-carol-tkv-sweep-and-ingest.md); CAT-02 needs a directory rule for corpus records (battery refinement queued to Kimi-K3)."
+  hash_history: "cb215d13… (2026-08-25T05:45Z, run 2) → ba7fed58… (2026-08-25T07:10Z, this run). Change: governor applied the queued CAT-02 directory rule for corpus records (state log row 39 flag fix, file mtime 06:21:22Z) — the row-37 refinement is no longer pending."
+  corrections_batch7: "F-B6-3 re-validation: the governor extended the battery — CAT-07 (canonical_location path resolution) and CAT-08 (relation-target hygiene: DOC-id targets for cataloged artifacts) added; CAT-02 extended to exempt withheld-digest protected-resource records (the F-B6-5 resolution, governor-stated); CAT-05 extended to forbid credential-derived verifiers. All four verified present 2026-08-25. Re-hashed ba7fed58… -> a4fde520…. declared_purpose mechanical family updated CAT-01..06 -> CAT-01..08 with the two new check names."

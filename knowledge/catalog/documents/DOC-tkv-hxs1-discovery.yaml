@@ -1,0 +1,46 @@
+document:
+  id: "DOC-tkv-hxs1-discovery"
+  title: "/opt/tkv-local/servers/hxs-1/discovery.md — hxs-1 as-found discovery (2026-08-11, Phase 1, COMPLETE)"
+  type: "discovery"
+  declared_purpose: "Historical as-found record of hxs-1 (2026-08-11, read-only over SSH): identity (MSI PRO Z890-P WIFI, BIOS 1.A80, Secure Boot disabled), Core Ultra 9 285K 24c/24t, 128 GB DDR5 non-ECC, 2x RTX 4070 Ti SUPER 16376 MiB each (nouveau as found; PCIe 02:00.0 x16, 81:00.0 x4 of max x16), Intel iGPU/NPU, Hailo-8 (no driver), storage (3.6 TB NVMe root + 3.6 TB NVMe + 7.3 TB SATA unallocated), network (enp131s0 192.168.50.200), Ubuntu 24.04.4 LTS kernel 7.0.0-28, 34 packages upgradable at discovery, no NVIDIA/CUDA/Docker/Ollama as found. Includes the separately-sectioned post-directive driver validation (2026-08-12, owner-approved Phase 1 exception): nvidia-driver-580-server-open 580.173.02, both GPUs bound to nvidia, VRAM confirmed matching nouveau figures."
+  source:
+    author: "HX project discovery (Claude Code era), collected read-only over SSH"
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/servers/hxs-1/discovery.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T04:50:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: [hxs-1]
+    fqdns: [hxs-1.hx.local.arpa]
+    services: [ssh.socket, ufw.service]
+    agents: []
+    repositories: [tkv-local]
+    environments: [fleet]
+  version: "Discovery date 2026-08-11; post-directive section 2026-08-12"
+  status: "historical"
+  authority_level: "historical-as-found"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "describes"
+      target: "hxs-1 as found 2026-08-11"
+      note: "preserved per server records contract; never rewritten for later configuration — verify against live host before operational use"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-ev-07-rick-os-readiness"
+      note: "pilot M2 (2026-08-25) re-confirmed the PCIe x16/x4 link widths this record captured 2026-08-11 — provenance correction recorded at state log row 27 (M2 'new FACT' relabeled 're-confirmed'); records agree, no factual conflict"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-ev-04-rick-inventory"
+      note: "pilot M1 immutable inventory (2026-08-24) matches this record on all material points (state log row 27)"
+  validation:
+    validated_at: "2026-08-25T08:20:00Z"
+    freshness: "historical"
+    review_due: "historical record — no review cycle; cross-check before any operational use"
+  sha256: "c83a9f2889328c65198f173ea01985d28ea2c708160145cb5c39584892698748"
+  canonical_location: "/opt/tkv-local/servers/hxs-1/discovery.md"
+notes:
+  staleness_detail: "FLAG F-DISC-1: mutable-state lines are stale against later events — '34 packages upgradable' (2026-08-11; by 2026-08-25 kernel 7.0.0-30 is staged reboot-pending per pilot M2/pre-M7 evidence); 'no Ollama installed' (Ollama 0.32.15 installed at M4, 2026-08-25); Wi-Fi state DOWN-but-enabled (soft-blocked 2026-08-25 pre-M7). The as-found record REMAINS VALID as historical-as-found; these are later changes, not errors. Link-speed note: discovery shows 2.5 GT/s negotiated (idle power management) while M2 shows Gen4 — width (x16/x4) is the stable structural fact; speed varies with power state. No contradiction."

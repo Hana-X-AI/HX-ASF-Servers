@@ -1,0 +1,47 @@
+document:
+  id: "DOC-pilot-hx1-cp-28-john-m6b"
+  title: "28-context-packet-john-m6b.yaml — context packet for WO-HX1-JOHN-M6B-001 (session john-m6b-20260825-01)"
+  type: "context-packet"
+  declared_purpose: "Session-binding packet for the M6b john/Esme dispatch: controlling sources (john profile, WO-27, 23-kk3-m6-capacity-decision.md Revision 2, 19 M5b evidence, 22 M6 evidence, ollama corpus), current state (host at frozen 32K Phase A baseline digest db2c6206…; ladder digests 766cd946…/94b83a1e…), owner decisions (profile disposition 32K recovery / 64K operating / 128K extended-selected; 128K harness requirements ratified; precision rule for accuracy claims), constraints (Phase A only, digest equality or STOP, no reboot/soak/new pulls/blob deletion), evidence required (29-esme-m6b-profiles.md)."
+  source:
+    author: "Kimi-K3 (governor)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/28-context-packet-john-m6b.yaml"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T05:20:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: [hxs-1, hxs-5]
+    fqdns: []
+    services: [ollama.service, ollama-preload.service]
+    agents: [john, kimi-k3]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+  version: ""
+  status: "adopted"
+  authority_level: "delegated-contract"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "kimi-k3"
+      note: "state log row 31 (2026-08-25T04:57Z); hash matches; arrived mid-ingestion and was cataloged in the same run"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-wo-27-john-m6b"
+      note: "paired work order"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-decision-23-m6-capacity"
+      note: "Revision 2 governing"
+  validation:
+    validated_at: "2026-08-25T20:15:00Z"
+    freshness: "current"
+    review_due: "not applicable — discharged (M6b complete, state log row 34)"
+  sha256: "96cf3f5341d3af9d914b49e4820639c0ee600090aea0b0d6bcd5b9a715c4c5ec"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/28-context-packet-john-m6b.yaml"
+notes:
+  assigned_agent_call_sign: "Esme = john (pilot call sign, not a roster entry)"
+  corrections_batch6: "status active → adopted (batch 6, T4): M6b complete (state log row 34) — matches the other seven completed context-packet records, all adopted. review_due and all other fields preserved. Source file unchanged — record sha256 re-verified 2026-08-25T20:15Z."

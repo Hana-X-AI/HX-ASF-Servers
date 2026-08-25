@@ -1,0 +1,62 @@
+# Catalog record schema — governed by agents/carol/profile.md section 3.
+# One file per document: knowledge/catalog/documents/DOC-<slug>.yaml
+
+schema:
+  version: 1
+  record: document
+  fields:
+    id: {required: true, rule: "DOC-<kebab-case-slug>, stable, never reused"}
+    title: {required: true}
+    type:
+      required: true
+      enum: [discovery, driver-results, pre-work, registry, contract, goal, plan,
+             amendment, work-order, context-packet, evidence, decision, profile,
+             charter, roster, runbook, corpus, protected-resource, other]
+    declared_purpose: {required: true, note: "what the document says it is for"}
+    inferred_value: {required: false, note: "MUST be labeled INFERENCE"}
+    source:
+      required: true
+      fields: {author: string, provided_by: string, origin: string, ingestion_date: iso8601, section: "optional — heading, line range, or §whole-document when no subsection applies (added 2026-08-25)"}
+    owner: {required: true}
+    applies_to:
+      required: false
+      fields: {hosts: list, fqdns: list, services: list, agents: list, repositories: list, environments: list}
+    version: {required: false}
+    status: {required: true, enum: [draft, adopted, active, superseded, historical, rejected]}
+    authority_level:
+      required: true
+      enum: [owner-directive, ratified-governance, delegated-contract, agent-evidence,
+             upstream-reference, historical-as-found]
+    supersedes: {required: false, note: "list of DOC ids"}
+    superseded_by: {required: false, note: "list of DOC ids"}
+    rejection_reason: {required: "when status=rejected"}
+    security:
+      required: true
+      fields:
+        classification: {enum: [internal, sensitive, protected]}
+        access_restrictions: string
+        contains_secret_values: {type: boolean, note: "if true: never quote; see profile section 6"}
+    relations:
+      required: false
+      item:
+        predicate: {enum: [describes, configures, decides, evidences, governs, references,
+                           depends_on, risks, produced_by, supersedes, superseded_by, contains,
+                           assesses]}
+        target: {note: "DOC id, host, service, model, or free entity name"}
+        note: string
+    validation:
+      required: true
+      fields:
+        validated_at: iso8601
+        freshness: {enum: [current, aging, stale, superseded, historical]}
+        review_due: {note: "ISO date or event trigger"}
+    sha256: {required: true, note: "checksum of the source artifact"}
+    canonical_location: {required: true, note: "authoritative path, may be outside the repo"}
+
+index:
+  location: knowledge/catalog/index.yaml
+  line_fields: [id, title, type, authority_level, freshness, canonical_location]
+
+receipts:
+  location: knowledge/catalog/receipts/
+  naming: "<UTC timestamp>-carol-<action>-<slug>.md"

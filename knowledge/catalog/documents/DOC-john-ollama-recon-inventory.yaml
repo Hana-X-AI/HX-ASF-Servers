@@ -1,0 +1,44 @@
+document:
+  id: "DOC-john-ollama-recon-inventory"
+  title: "codex_20260824_0205_ollama-directory-reconnaissance-inventory.md — Ollama directory reconnaissance inventory (320 directories, 1707 files)"
+  type: "evidence"
+  declared_purpose: "Point-in-time reconnaissance inventory of the Ollama knowledge directory (source HX-File-Share/operations/ollama; catalog date 2026-08-24): 320 directories, 1707 files, zero unvisited. Sections: extension composition table, full directory catalog, full file catalog with MIME types and byte sizes. Sole exclusion: ollama/implementation/knowledge-site/.git internal object metadata (the directory itself is cataloged). Cited as foundational evidence by john's charter (DOC-agent-john-charter)."
+  source:
+    author: "Codex (reconnaissance session 2026-08-24 02:05, agent-zero-docs)"
+    provided_by: "Agent Zero"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/agents/john/codex_20260824_0205_ollama-directory-reconnaissance-inventory.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T19:08:00Z"
+  owner: "Agent Zero; john (assigned consumer)"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: [ollama.service]
+    agents: [john]
+    repositories: [HX-ASF-Servers]
+    environments: [fleet, pilot]
+  version: "catalog date 2026-08-24"
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "evidences"
+      target: "Ollama knowledge directory as-found state 2026-08-24 (HX-File-Share/operations/ollama)"
+      note: "foundational evidence cited by john's charter; filenames in the inventory's ollama/research/ catalog match the vault tree /opt/tkv-local/ollama/research/ (spot-checked 2026-08-25)"
+    - predicate: "describes"
+      target: "DOC-tkv-corpus-ollama"
+      note: "inventory spans the whole ollama tree: the upstream snapshot (this record) plus the HX research/implementation material (DOC-tkv-ollama-hx-research)"
+    - predicate: "produced_by"
+      target: "Codex reconnaissance session 2026-08-24 (codex_20260824_0205)"
+      note: "recon artifact preserved unchanged in john's lane directory"
+  validation:
+    validated_at: "2026-08-25T19:08:00Z"
+    freshness: "current"
+    review_due: "not applicable — immutable as-found capture; re-run recon if the ollama directory materially changes"
+  sha256: "4d4975fbb73cf3e239ee3af9b7653d7e9c0c0e1b1f642ed77c2158cc127237e1"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/john/codex_20260824_0205_ollama-directory-reconnaissance-inventory.md"

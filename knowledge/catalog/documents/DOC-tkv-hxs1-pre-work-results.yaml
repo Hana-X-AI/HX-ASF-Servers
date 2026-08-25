@@ -1,0 +1,41 @@
+document:
+  id: "DOC-tkv-hxs1-pre-work-results"
+  title: "/opt/tkv-local/servers/hxs-1/pre-work-results.md — declared gap: no pre-work record captured for hxs-1"
+  type: "pre-work"
+  declared_purpose: "Standing declaration that NO pre-work record was captured for hxs-1: the server was the fleet pilot, discovered 2026-08-11 before the human-pre-discovery-checklist existed; the file exists so the directory carries the same file set as every other server and states the gap plainly. Declared hardware table: not recorded — predates the checklist. Points to the Claude-Opus-5 discovery retrospective (governance/reports/claude-code/) as the record of how hxs-1 was prepared and why the checklist exists. States the absence does not affect discovery.md, which is complete on its own terms. Raw terminal output: none retained."
+  source:
+    author: "HX project (gap declaration)"
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/servers/hxs-1/pre-work-results.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T04:50:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: [hxs-1]
+    fqdns: [hxs-1.hx.local.arpa]
+    services: []
+    agents: []
+    repositories: [tkv-local]
+    environments: [fleet]
+  version: ""
+  status: "adopted"
+  authority_level: "historical-as-found"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "describes"
+      target: "hxs-1 pre-discovery preparation gap (declared, accepted)"
+      note: "FLAG F-PRE-1 confirmed: the gap is deliberate and documented, not an oversight; retrospective at governance/reports/claude-code/Claude-Opus-5_2026-08-11_223342_hxs-1-pilot-discovery-retrospective.md (not cataloged — out of scope)"
+    - predicate: "references"
+      target: "DOC-tkv-hxs1-discovery"
+      note: "discovery.md stands complete on its own terms despite the missing pre-work record"
+  validation:
+    validated_at: "2026-08-25T08:15:00Z"
+    freshness: "historical"
+    review_due: "standing declaration — review only if the checklist policy changes"
+  sha256: "e16fa64dc18597e7c5e647fac53aab90179f98ca3a94647922fcd099a2721ccf"
+  canonical_location: "/opt/tkv-local/servers/hxs-1/pre-work-results.md"

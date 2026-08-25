@@ -1,0 +1,38 @@
+document:
+  id: "DOC-tkv-servers-template-discovery"
+  title: "/opt/tkv-local/servers/_templates/discovery.md — server discovery record template"
+  type: "contract"
+  declared_purpose: "Blank Phase 1 discovery template (`<server-name>` — Discovery): identity, hardware, network, OS sections to be collected read-only."
+  source:
+    author: "HX project (server records contract)"
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/servers/_templates/discovery.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T05:55:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: []
+    repositories: [tkv-local]
+    environments: [fleet]
+  version: ""
+  status: "active"
+  authority_level: "ratified-governance"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "governs"
+      target: "per-host discovery.md records under /opt/tkv-local/servers/"
+      note: "blank form mandated by the server records contract (DOC-tkv-servers-records-contract)"
+  validation:
+    validated_at: "2026-08-25T05:55:00Z"
+    freshness: "current"
+    review_due: "on server records contract change"
+  sha256: "7fe3ded0f10e86c191b54d0ddab2da8c079fc601e061bb8a4f86d3ba92045202"
+  canonical_location: "/opt/tkv-local/servers/_templates/discovery.md"

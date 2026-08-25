@@ -1,0 +1,41 @@
+document:
+  id: "DOC-tkv-skills-hooks-implementation-prompt"
+  title: "owner_2026-08-13_hx-hooks-and-skills-implementation-prompt.md — implement the approved HX hooks and skills architecture (Claude Code tasking)"
+  type: "work-order"
+  declared_purpose: "Owner tasking prompt to Claude Code inside the canonical HX-Infrastructure repository: operationalize two already-researched, reviewed, and approved governance improvements — the HX Claude Code hook layer and the HX-native agent skills layer — with design and implementation guidance at referenced paths."
+  source:
+    author: "Agent Zero (owner prompt)"
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/skills/owner_2026-08-13_hx-hooks-and-skills-implementation-prompt.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T06:00:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: []
+    repositories: [tkv-local, HX-Infrastructure (archived predecessor)]
+    environments: [fleet]
+  version: "2026-08-13"
+  status: "historical"
+  authority_level: "owner-directive"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "governs"
+      target: "HX hooks and skills layer (Claude Code era implementation)"
+      note: "the approved origin of the factory's hooks/skills mechanism — ancestor of the current .kimi-code/skills trigger model"
+    - predicate: "references"
+      target: "DOC-tkv-corpus-agent-skills"
+      note: "addyosmani/agent-skills snapshot; skills/agent-skills-main is a byte-identical nested duplicate (diff -rq clean, 184 files)"
+  validation:
+    validated_at: "2026-08-25T08:15:00Z"
+    freshness: "historical"
+    review_due: "historical record — no review cycle"
+  sha256: "4604fb09317acd29951d9fac48744a5da180592edffdda6e6a4a14626be6b00b"
+  canonical_location: "/opt/tkv-local/skills/owner_2026-08-13_hx-hooks-and-skills-implementation-prompt.md"

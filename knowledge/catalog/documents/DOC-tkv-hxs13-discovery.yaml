@@ -1,0 +1,44 @@
+document:
+  id: "DOC-tkv-hxs13-discovery"
+  title: "/opt/tkv-local/servers/hxs-13/discovery.md — hxs-13 discovery (Discovery date 2026-08-12)"
+  type: "discovery"
+  declared_purpose: "Historical as-found Phase 1 discovery record of hxs-13 (2026-08-12, read-only over SSH via the project collector with passwordless sudo; no packages installed, no driver loaded or changed, no configuration modified; facts unobtainable from the as-found state marked unavailable with reason): identity, hardware, network (hxs-13.hx.local.arpa, 192.168.50.212), OS as found."
+  source:
+    author: "HX project (Claude Code era); collected read-only over SSH / human preparation record"
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/servers/hxs-13/discovery.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T05:55:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: [hxs-13]
+    fqdns: [hxs-13.hx.local.arpa]
+    services: []
+    agents: []
+    repositories: [tkv-local]
+    environments: [fleet]
+  version: "Discovery date 2026-08-12"
+  status: "historical"
+  authority_level: "historical-as-found"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "describes"
+      target: "hxs-13 (hxs-13.hx.local.arpa, 192.168.50.212)"
+      note: "preserved per the server records contract; verify against the live host before operational use"
+    - predicate: "depends_on"
+      target: "DOC-tkv-hxs13-pre-work-results"
+      note: "discovery states the target address, account, and privilege state were taken from pre-work-results.md rather than probed"
+    - predicate: "references"
+      target: "DOC-tkv-server-registry"
+      note: "fleet registry row for hxs-13"
+  validation:
+    validated_at: "2026-08-25T05:55:00Z"
+    freshness: "historical"
+    review_due: "historical record — no review cycle; cross-check before any operational use"
+  sha256: "372d9a8440165b1680b2c7f6e79a6fdb36dc5ec755f4e9af9f771a51474f40be"
+  canonical_location: "/opt/tkv-local/servers/hxs-13/discovery.md"

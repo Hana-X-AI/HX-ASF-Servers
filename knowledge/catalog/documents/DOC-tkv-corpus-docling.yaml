@@ -1,0 +1,44 @@
+document:
+  id: "DOC-tkv-corpus-docling"
+  title: "/opt/tkv-local/docling — HX evaluation-only tree (no upstream snapshot) (1 files)"
+  type: "corpus"
+  declared_purpose: "HX evaluation-only tree (no upstream snapshot): hx-granite-docling-reconnaissance-report (ChatGPT GPT-5-6, 2026-08-15) — reconnaissance on Docling (document parsing) with Granite."
+  source:
+    author: "UNRESOLVED — conflicting claims preserved: (a) upstream project; (b) HX consultant evaluation (see declared_purpose). No verifiable upstream URL/commit exists (tree is not a git checkout); escalated to Kimi-K3 (batch 7, F-B6-6 residual debt; standing flag F-B6-1 — governor: unresolved is the designed truth state)."
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/docling"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T06:12:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: []
+    repositories: [tkv-local]
+    environments: [fleet]
+  version: ""
+  status: "historical"
+  authority_level: "historical-as-found"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "references"
+      target: "TKV source-snapshot corpus (owner-directed sweep, state log row 32)"
+      note: "1 files excluding .git internals; deep per-file cataloging on demand via retrieval packages"
+  validation:
+    validated_at: "2026-08-25T21:02:00Z"
+    freshness: "historical"
+    review_due: "2026-09-24 (corpus manifest re-hash) or on any corpus update"
+  sha256: "8d529db41ba92048d5ab7af978b2a4610c954401eaa1d63db195f1ac5215a81b"
+  canonical_location: "/opt/tkv-local/docling"
+notes:
+  checksum_method: "sha256 = digest of the sorted relative-path file manifest (1 files, names only), NOT content hashes; regenerated 2026-08-25; directory canonical_location preserved. Manifest re-hash scheduled 2026-09-24 (run-1 follow-up) stands. .git internals excluded from the manifest and from cataloging. Form alignment batch 7 (F-B6-6, hxinfra-archive reference form): method/scope/count text consolidated wholly into notes.checksum_method; the sha256 field now carries ONLY the bare 64-char digest; digest VALUE unchanged (names-only manifest retained until a future content-sensitive migration)."
+  upstream_provenance: "upstream URL/commit: unavailable — tree is not a git checkout (no .git metadata present); unpacked archive snapshot"
+  context: "Single-document tree. The migration-method policy (DOC-tkv-gov-policy-repository-migration-pattern) was frozen from a Docling MCP distillation pilot — related history."
+  truth_state: "unverified local snapshot; upstream URL/commit missing — escalated (batch 7, F-B6-6; standing flag F-B6-1)"
+  corrections_batch7: "F-B6-6(a) APPLIED (governor disposition): legacy ambiguous author line replaced with the batch-6 T8 treatment — BOTH claims preserved explicitly as UNRESOLVED; notes.truth_state marker added. authority_level was already historical-as-found; status/freshness historical — unchanged. Same run: sha256 form-aligned to the bare digest (F-B6-6(b)); value unchanged."

@@ -1,0 +1,50 @@
+document:
+  id: "DOC-pilot-hx1-wo-24-rick-pre-m7"
+  title: "24-work-order-rick-pre-m7.yaml — WO-HX1-RICK-PREM7-001 (pre-M7: Wi-Fi disable, A01 §7 readiness, NVRM review)"
+  type: "work-order"
+  declared_purpose: "Delegated contract commissioning rick (session rick-prem7-20260825-01) to close the OS plane before M7: disable Wi-Fi per owner directive (only after proving it is not the management path — STOP otherwise), sign the A01 §7 confirmation that M2 host-readiness controls remain valid for the frozen Ollama 0.32.15 build, review/classify the disclosed NVRM iovaspace assertions, and verify boot-path sanity read-only; deliverable 26-rick-pre-m7-readiness.md."
+  source:
+    author: "Kimi-K3 (governor)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/24-work-order-rick-pre-m7.yaml"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T04:50:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: [hxs-1, hxs-5]
+    fqdns: []
+    services: [systemd-rfkill, wpa_supplicant, ollama.service]
+    agents: [rick, kimi-k3]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+  version: ""
+  status: "adopted"
+  authority_level: "delegated-contract"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "kimi-k3"
+      note: "issued at state log row 26 (2026-08-25T04:22Z); hash matches row 26 record"
+    - predicate: "governs"
+      target: "DOC-pilot-hx1-ev-26-rick-pre-m7-readiness"
+      note: "paired deliverable (12/12 PASS) — handoff CLOSED by Carol's run-1 receipt (state log row 29 opened, row 35 closed; receipt 2026-08-25T0455Z-carol-first-ingestion.md)"
+    - predicate: "depends_on"
+      target: "DOC-pilot-hx1-decision-23-m6-capacity"
+      note: "M7 entry conditions set by the M6 decision"
+    - predicate: "depends_on"
+      target: "DOC-protected-ssh-info-hxs1"
+      note: "askpass execution path"
+  validation:
+    validated_at: "2026-08-25T20:15:00Z"
+    freshness: "current"
+    review_due: "not applicable — handoff CLOSED (state log row 35, receipt 2026-08-25T0455Z-carol-first-ingestion.md; pre-M7 complete row 29)"
+  sha256: "c547e01bf4c3e76195b93d0ae2bb42cd3ac2eab5d6314f3fe56e196ddf98f20d"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/24-work-order-rick-pre-m7.yaml"
+notes:
+  rev2_context: "Issued under the M6 v1 freeze. Revision 2 (2026-08-25, after execution) changed the M7 objective: M7 now validates the always-on 65,536 operating profile plus profile-switch mechanics (fallback 32K recovery). The pre-M7 OS-plane scope of this work order is unaffected; its paired context packet 25 carries the appended superseded_note."
+  corrections_batch6: "Handoff reconciliation (batch 6, T5): the governs→ev-26 note and review_due still said OPEN. Both handoffs were CLOSED by Carol's run-1 receipt — state log rows 29/34 opened, row 35 closed (receipt 2026-08-25T0455Z-carol-first-ingestion.md: 'this receipt CLOSES the open handoffs at rows 29 (rick pre-M7) and 34 (Esme M6b)'). Corrected openly with that provenance; unrelated dependencies and validation fields untouched except validated_at; source file unchanged — record sha256 re-verified 2026-08-25T20:15Z."

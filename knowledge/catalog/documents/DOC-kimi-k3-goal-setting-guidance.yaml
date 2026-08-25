@@ -1,0 +1,44 @@
+document:
+  id: "DOC-kimi-k3-goal-setting-guidance"
+  title: "agents/kimi-k3/goal-setting-guidance.md — Kimi-K3 goal-setting and agent invocation guidance (ratified adoption per KDD-0002)"
+  type: "runbook"
+  declared_purpose: "Adopted live operating guidance for the control plane: how Kimi-K3 uses goals to commission and govern operational agents — outcome contracts (result, rationale, boundaries, success conditions, evidence, budgets, rollback/escalation), goal-ID mapping (goal file name = Goal ID), goals/ as the designated durable work-state system (GitHub Projects deferred-optional), fresh bounded agent sessions, and independent evidence-based quality gates. Status in file: Ratified 2026-08-24 with amendments (KDD-0002)."
+  source:
+    author: "Codex (agent-zero-docs source codex_20260824_1112) / adopted and amended by Kimi-K3 per KDD-0002"
+    provided_by: "Agent Zero"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/agents/kimi-k3/goal-setting-guidance.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T19:08:00Z"
+  owner: "Agent Zero (ratification); Kimi-K3 (governing agent)"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: [kimi-k3]
+    repositories: [HX-ASF-Servers]
+    environments: [fleet, pilot]
+  version: "ratified adoption of the 2026-08-24 source (KDD-0002 amendments: Phase M operation §4.3, durable-state designation §10, status correction, goal-ID mapping, Appendix A provenance)"
+  status: "adopted"
+  authority_level: "ratified-governance"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "depends_on"
+      target: "DOC-kdd-0002-goal-setting-guidance"
+      note: "adoption authority — ratified 2026-08-24 with amendments; goals/ designated durable state"
+    - predicate: "governs"
+      target: "goals/ goal files"
+      note: "goal file name (<YYYY-MM-DD>-<slug>.md) is the Goal ID; contract format defined here"
+    - predicate: "references"
+      target: "/home/hxsa/opt/local-tkv/agent-zero-docs/goals/codex_20260824_1112_kimi-k3_goal-setting-and-agent-invocation-guidance.md"
+      note: "source (735 lines, SHA-256 8c7e1397…), unmodified historical input"
+  validation:
+    validated_at: "2026-08-25T19:08:00Z"
+    freshness: "current"
+    review_due: "on owner decision to change the goal-setting or work-state system"
+  sha256: "d5c2739c56f7f7333ddd24e5f10d1f02f8a4845e448d1422fa9622fa8e531959"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/kimi-k3/goal-setting-guidance.md"

@@ -1,0 +1,46 @@
+document:
+  id: "DOC-hx1-qwen-pilot-origin-codex-20260824-1945"
+  title: "codex_20260824_1945_hx-1-ollama-qwen-27b-pilot-project.md — original Codex pilot project source of the HX-1 Qwen pilot (agent-zero-docs)"
+  type: "plan"
+  declared_purpose: "The original Codex-drafted HX-1 Ollama Qwen 27B pilot project document (drafted 2026-08-24 19:45, pre-execution; 767 lines), owner-supplied to the factory as an unmodified historical input. Source of the adopted pilot plan: pilots/PILOT-HX1-OLLAMA-QWEN27B-001/plan.md was adopted from this document and amended per KDD-0004 (lineage recorded in the plan record's source.author line and in KDD-0004's ratified adoption)."
+  source:
+    author: "Codex (agent-zero-docs pipeline)"
+    provided_by: "Agent Zero"
+    origin: "/home/hxsa/opt/local-tkv/agent-zero-docs/pilots/qwen/codex_20260824_1945_hx-1-ollama-qwen-27b-pilot-project.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T20:15:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: [hxs-1]
+    fqdns: []
+    services: [ollama.service]
+    agents: [kimi-k3, john, rick]
+    repositories: []
+    environments: [pilot]
+  version: ""
+  status: "historical"
+  authority_level: "historical-as-found"
+  supersedes: []
+  superseded_by: [DOC-pilot-hx1-plan]
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond owner docs directory access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "Codex session 2026-08-24 19:45 (agent-zero-docs/pilots/qwen/)"
+      note: "drafted before KDD-0004 ratification (2026-08-24) and before pilot execution (M0 and later milestones)"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-plan"
+      note: "adopted operational copy in the repo — adopted AND AMENDED per KDD-0004 (not a verbatim adoption; KDD-0004 records the amendment set: executive decision rewrite with live tag evidence, Phase M dispatch note, host table populated, PILOT-002 context-length evidence note, open-decisions table); content-level diff NOT performed at ingestion"
+    - predicate: "references"
+      target: "DOC-kdd-0004-hx1-qwen-pilot-adoption"
+      note: "ratified decision adopting the plan derived from this source; KDD-0004 records this document as its 767-line unmodified historical input (provenance repointed to this record in batch 6)"
+  validation:
+    validated_at: "2026-08-25T20:15:00Z"
+    freshness: "historical"
+    review_due: "historical source — operational authority is the adopted repo plan"
+  sha256: "cbe90fb04fbe16e17aecfc2e175ec49b0fea0b477113021063d76ac8058342b7"
+  canonical_location: "/home/hxsa/opt/local-tkv/agent-zero-docs/pilots/qwen/codex_20260824_1945_hx-1-ollama-qwen-27b-pilot-project.md"
+notes:
+  adoption_lineage: "Adopted-origin per the owner-docs origin convention (cf. DOC-a01-origin-codex-20260824-2125). Lineage evidence: DOC-pilot-hx1-plan source.author ('Codex (source pilot doc codex_20260824_1945) / adopted and amended per KDD-0004') and DOC-kdd-0004's ratified adoption record. superseded_by expresses the authority handoff to the adopted repo plan, not content identity (the adoption included KDD-0004 amendments)."

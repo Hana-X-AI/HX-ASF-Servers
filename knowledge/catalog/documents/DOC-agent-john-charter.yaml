@@ -1,0 +1,46 @@
+document:
+  id: "DOC-agent-john-charter"
+  title: "Agent charter — john (Ollama engineer, vertical lane; pilot call sign Esme)"
+  type: "charter"
+  declared_purpose: "One-page authority on john's mission (Ollama install/config/audit/troubleshoot on Linux, hxs-5 as primary reference host), ownership, non-ownership (no GPU driver installs, no reboots, no LAN exposure), inputs, outputs, escalation."
+  source:
+    author: "Codex (agent-zero-docs) / adopted by Agent Zero"
+    provided_by: "Agent Zero"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/agents/john/charter.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T04:50:00Z"
+  owner: "john (lane); Agent Zero (ratification)"
+  applies_to:
+    hosts: [hxs-1, hxs-5]
+    fqdns: []
+    services: [ollama.service]
+    agents: [john]
+    repositories: [HX-ASF-Servers]
+    environments: [fleet, pilot]
+  version: ""
+  status: "active"
+  authority_level: "ratified-governance"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "references"
+      target: "DOC-agent-john-profile"
+      note: "full operating contract"
+    - predicate: "references"
+      target: "DOC-tkv-corpus-ollama"
+      note: "john's assigned knowledge source per profile §4 startup protocol"
+    - predicate: "references"
+      target: "DOC-john-ollama-recon-inventory"
+      note: "foundational evidence cited by charter; cataloged 2026-08-25 (corrections batch 5)"
+  validation:
+    validated_at: "2026-08-25T19:08:00Z"
+    freshness: "current"
+    review_due: "on owner sign-off of charter change"
+  sha256: "b1cbdb29f251efcaf3c042a0a50f887dc70407844ad35690592ebe935b55d3d7"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/john/charter.md"
+notes:
+  corrections_batch5: "2026-08-25 corrections batch 5: recon artifact cataloged as DOC-john-ollama-recon-inventory; references relation repointed from raw path to the DOC id and the 'NOT cataloged — follow-up' language removed. source.section backfilled (§whole-document); validated_at refreshed. Source file unchanged (sha256 stands from run 1)."

@@ -1,0 +1,43 @@
+document:
+  id: "DOC-tkv-jcode-hx-evaluation"
+  title: "/opt/tkv-local/jcode (HX side) — HX evaluation material for jcode"
+  type: "corpus"
+  declared_purpose: "HX evaluation material sharing the /opt/tkv-local/jcode wrapper tree, partitioned out of DOC-tkv-corpus-jcode 2026-08-25 (governor batch C6): hx-jcode-aggressive-pilot-claude-code-prompt_gpt-5.6-sol_20260814_0115.html and hx-jcode-pilot-architecture-and-aggressive-evaluation-plan_gpt-5.6-sol_20260814_0115.html (GPT-5.6-sol, 2026-08-14). HX consultant work product — NOT upstream jcode authority."
+  inferred_value: "INFERENCE: historical pilot-design value — the aggressive-pilot architecture/evaluation plan documents a considered-but-unratified jcode pilot; verify status before any reuse."
+  source:
+    author: "GPT-5.6-sol (HX consultant evaluation)"
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/jcode (excluding jcode-master)"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T08:00:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: []
+    repositories: [tkv-local]
+    environments: [fleet]
+  version: "evaluation wave 2026-08-14"
+  status: "historical"
+  authority_level: "historical-as-found"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "describes"
+      target: "DOC-tkv-corpus-jcode"
+      note: "HX pilot design/evaluation of the upstream jcode snapshot; evaluation content is consultant work, not upstream authority (partition C6)"
+  validation:
+    validated_at: "2026-08-25T21:02:00Z"
+    freshness: "historical"
+    review_due: "2026-09-24 (corpus manifest re-hash) or on any corpus update"
+  sha256: "f098bb7182e826c8667e3c7ef4ae649530d80588f29d68eb329251a2c2757333"
+  canonical_location: "/opt/tkv-local/jcode"
+notes:
+  partition_scope: "Record covers /opt/tkv-local/jcode EXCLUDING the jcode-master upstream snapshot (cataloged as DOC-tkv-corpus-jcode). Manifest computed with jcode-master and .git paths pruned."
+  checksum_method: "sha256 = digest of a CONTENT-SENSITIVE manifest (regenerated 2026-08-25, batch 7): for every in-scope file one line '<sha256 of file contents>  <relative-path>' (sha256sum two-space text format), lines sorted byte-wise (LC_ALL=C) by relative path, the manifest text (trailing newline) digested — per-file content hashing makes content changes detectable, unlike the prior names-only manifest. Scope preserved: /opt/tkv-local/jcode EXCLUDING the jcode-master upstream snapshot and .git internals (see partition_scope; 2 files). Supersedes the prior names-only manifest digest 98d5c2d51294cb3e48da90afa18ae203731334cf25a40a1563b2c12f2ad10df5 (form-aligned per F-B6-6(b), then replaced same run per the batch-7 content-sensitive finding). Directory canonical_location preserved."
+  upstream_provenance: "upstream URL/commit: not applicable — HX-side material."

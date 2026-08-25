@@ -1,0 +1,50 @@
+document:
+  id: "DOC-pilot-hx1-ev-19-esme-m5b-conformance"
+  title: "19-esme-m5b-amendment-conformance.md — Esme M5b A01 conformance (Phase A alias frozen; D8 re-run ALL PASS; 32K acceptance evidence)"
+  type: "evidence"
+  declared_purpose: "M5b A01-conformance evidence: base-artifact drift check (NO DRIFT), A01 §4.1.3 identity record incl. upstream template, Phase A alias rebuild — Modelfile sha256 4869ce80b9d8e3517f7765f5f08661897c18156bfabbe458f5cd59ca9f83165e, new frozen alias digest db2c62060efe…f645510 (M4 identities labeled SUPERSEDED) — residency re-proof (ctx 32768, 100% VRAM, Forever), reasoning-control matrix (think flag/levels HONORED; native reasoning_effort and preserve_thinking UNSUPPORTED/silently ignored; OpenAI-compat reasoning_effort HONORED; multi-turn preservation client-echo-dependent — closes A01-R02), environment-feedback cases, D8 re-run ALL PASS at native defaults (coding 9/10 with parse_kv contract mismatch disclosed, not tuned), Phase A benchmarks ~52–53 tok/s thinking-ON, thinking-retention and vision boundary statements."
+  source:
+    author: "john / Esme (session john-m5b-20260825-01)"
+    provided_by: "john via Kimi-K3 gate"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/19-esme-m5b-amendment-conformance.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T04:50:00Z"
+  owner: "john"
+  applies_to:
+    hosts: [hxs-1]
+    fqdns: []
+    services: [ollama.service, ollama-preload.service]
+    agents: [john]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+  version: ""
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "evidences"
+      target: "M5b complete / 32K acceptance per A01 — state log row 20"
+      note: "prerequisite for M6 (WO-20)"
+    - predicate: "produced_by"
+      target: "john"
+      note: "under DOC-pilot-hx1-wo-17-john-m5b"
+    - predicate: "supersedes"
+      target: "Modelfile sha256 dac63d7c…d1df (plan §6.5 build, recorded in DOC-pilot-hx1-ev-12-esme-m4-install)"
+      note: "VERIFIED: supersession table in §4 labels M4 Modelfile hash and alias digest 23508b9c…185a8 SUPERSEDED 2026-08-25; Phase A hash 4869ce80…83165e and digest db2c6206…f645510 CURRENT — history labeled, never rewritten"
+    - predicate: "decides"
+      target: "A01-R02 closed: native reasoning_effort/preserve_thinking UNSUPPORTED through Ollama API (silently ignored)"
+      note: "capability-probe matrix with evidence; no parity assumed"
+    - predicate: "risks"
+      target: "F-M5B-1 (ollama create + restart alone does not swap served digest — controlled unload required); F-M5B-2 (NVRM iovaspace assertions, 18 lines — to rick queue, monitor-only)"
+      note: "F-M5B-1 drove the WO-20 amendment (state log row 22)"
+  validation:
+    validated_at: "2026-08-25T04:50:00Z"
+    freshness: "current"
+    review_due: "at M8 unified evidence index"
+  sha256: "379d31e03baac3fb7cab7af80df31879e2a75c30969279d6fb1de2246f844859"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/19-esme-m5b-amendment-conformance.md"

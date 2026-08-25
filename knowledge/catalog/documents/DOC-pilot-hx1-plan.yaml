@@ -1,0 +1,54 @@
+document:
+  id: "DOC-pilot-hx1-plan"
+  title: "PILOT-HX1-OLLAMA-QWEN27B-001 plan.md — HX-1 Ollama Qwen 27B pilot project plan"
+  type: "plan"
+  declared_purpose: "Production-grade pilot plan (776 lines): roles and evidence contract (§2), host specs (§3), always-on configuration (§4), dual-GPU strategy and context ladder (§5), RAG/tool contracts and Modelfile (§6), rick OS requirements and risk register R-001..R-022 (§7), milestones M0–M8 with hold points (§8), acceptance criteria AC-001..AC-017 (§9), install/rollback/handoff runbook (§10), KK3 synthesis protocol (§11), open decisions (§12), references (§13). Status: ADOPTED 2026-08-24 with amendments (KDD-0004; A01 adopted 2026-08-25) — M0 authorized, in execution."
+  source:
+    author: "Codex (source pilot doc codex_20260824_1945) / adopted and amended per KDD-0004"
+    provided_by: "Agent Zero"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/plan.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T04:50:00Z"
+  owner: "Agent Zero (human authority); Kimi-K3 (control plane)"
+  applies_to:
+    hosts: [hxs-1]
+    fqdns: [hxs-1.hx.local.arpa]
+    services: [ollama.service, ollama-preload.service]
+    agents: [kimi-k3, john, rick]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+  version: "1.0 (ratified 2026-08-24; A01 adopted 2026-08-25)"
+  status: "active"
+  authority_level: "ratified-governance"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "governs"
+      target: "PILOT-HX1-OLLAMA-QWEN27B-001 (all milestones and gates)"
+      note: "milestone table §8; acceptance matrix §9.1"
+    - predicate: "depends_on"
+      target: "DOC-kdd-0004-hx1-qwen-pilot-adoption"
+      note: "adoption authority and baseline decision qwen3.8:27b"
+    - predicate: "references"
+      target: "DOC-tkv-server-registry"
+      note: "hxs-1 ratified role: Deep reasoning & synthesis — Qwen 3.8 27B"
+    - predicate: "risks"
+      target: "risk register R-001..R-022 (§7.3) plus A01-R01..R08 (adopted via A01 §6)"
+      note: "owner-assigned mitigations per row"
+    - predicate: "superseded_by"
+      target: "DOC-pilot-hx1-amendment-a01"
+      note: "§6.5 only — all other plan sections remain governed by the plan (scoped supersession corrected 2026-08-25 per governor batch C1; plan status stays active)"
+  validation:
+    validated_at: "2026-08-25T21:02:00Z"
+    freshness: "current"
+    review_due: "at pilot close (M8)"
+  sha256: "a9a3baf619fb8fe8bd70c624b39c8eef0ca39a3ee253a5f2dde3ebc0bb4e4687"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/plan.md"
+notes:
+  supersession_granularity: "superseded_by DOC-pilot-hx1-amendment-a01 applies to §6.5 ONLY (in-place banner verified at plan.md §6.5; A01 adoption header 'Plan impact'). All other A01 supersession-matrix rows were already reconciled in plan text by the KDD-0004 adoption amendments. The plan document as a whole remains ACTIVE."
+  context_rule_current: "RESOLVED 2026-08-25 (owner, 23-kk3-m6-capacity-decision.md Revision 2): the single ratified rule governing M6, M7, and final acceptance is 32K recovery baseline / 64K operating default / 128K qualified extended profile by explicit selection. Plan §5.3 Extended row and update note carry this resolution; the experiment-only interpretation is closed. §6.5 legacy Modelfile and command blocks are marked non-executable historical provenance (do not run). Corrections applied in the 2026-08-25 review batch (state log row 33); earlier hash a59f04d0… superseded by review-batch edit."
+  corrections_batch7: "F-B6-3 re-validation: the governor ratified the plan version field — the source document table now reads Version 1.0 (ratified 2026-08-24; A01 adopted 2026-08-25), verified; record version updated to match (was 1.0-draft (adopted with amendments)). Re-hashed 0d740a49… -> a9a3baf6…. All other fields re-checked — unchanged; declared_purpose status wording already matches the source Status line."

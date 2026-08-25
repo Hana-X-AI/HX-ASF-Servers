@@ -1,0 +1,52 @@
+document:
+  id: "DOC-assessment-hx-second-brain-guidance-001-review"
+  title: "2026-08-25-hx-second-brain-guidance-001-review.md — governor assessment of hx-second-brain-guidance-001 (Kimi-K3, for owner review)"
+  type: "evidence"
+  declared_purpose: "Governor assessment of hx-second-brain-guidance-001 (v1.0.0-draft; owner request 'review it, be great'): executive verdict (confirmatory, not directive — nine of the ten §10 first-build proofs already operate as the Carol catalog, the tenth proven accidentally in the 2026-08-25 outage), near-term concepts to adopt N1–N5, conflicts/gaps C1–C7, deferrals D1–D7, recommendations R1–R6 with sequence, explicit non-recommendations, and a confidence statement. Status of the document: governor analysis for owner review — no implementation authorized or performed by it."
+  inferred_value: "INFERENCE: R2 (suitable_for_execution gate on retrieval packages) and R5 (fresh-agent resumption as a milestone close-out gate) are the items that would change this lane's own profile/process if owner-approved — track as lane-affecting; R1 would ratify (KDD candidate) the catalog's canonical home as knowledge/catalog/ in the repo."
+  source:
+    author: "Kimi-K3 (governor), at owner request"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/knowledge/assessments/2026-08-25-hx-second-brain-guidance-001-review.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T21:02:00Z"
+  owner: "Agent Zero (decision authority for R1–R3); Kimi-K3 (author; R4–R5 governor-executable on approval)"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: [kimi-k3, carol]
+    repositories: [HX-ASF-Servers]
+    environments: [fleet]
+  version: "2026-08-25"
+  status: "active"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "references"
+      target: "DOC-hx-second-brain-framework"
+      note: "ASSESSES (enum-nearest predicate 'references'; 'assesses' is not a schema v1 predicate — flagged for governor schema consideration): the assessment's subject document (hx-second-brain-guidance-001 v1.0.0-draft, 1,093 lines); verdict confirmatory-not-directive; owner disposition on the subject: STRATEGIC REFERENCE, NOT ratified for implementation (2026-08-25, state log row 35)"
+    - predicate: "references"
+      target: "DOC-cat-001-acceptance"
+      note: "assessment §4/§13 cite the CAT battery (CAT-10..15 golden questions, CAT-22 19× retrieval economy) as the operationalized proof surface; R3 recommends owner ratification of CAT-10..15 as the golden-question corpus (closes gap G-04)"
+    - predicate: "references"
+      target: "DOC-agent-carol-profile"
+      note: "R2 (owner approval, then Carol-profile edit): add 'suitable_for_execution' plus freshness/conflict summary to the retrieval-package template (profile §5); the profile/charter were verified as ratified-implementation evidence for the assessment"
+    - predicate: "governs"
+      target: "open recommendations R1–R6 (2026-08-25 second-brain assessment)"
+      note: "R1 (owner decision): ratify the as-built split — knowledge/catalog/ in the repo is the canonical Second Brain home, /opt/tkv-local is referenced source corpus (KDD candidate). R2 (owner approval, then Carol-profile edit): suitable_for_execution gate on retrieval packages. R3 (owner ratification): CAT-10..15 as the golden-question corpus. R4 (governor adoption, zero build): keep the §6 tool rubric + tool decision record as the required instrument for any future tool decision. R5 (governor process): add fresh-agent resumption evidence to milestone close-out criteria, starting at M8. R6 (deferred, tracked): G-05 retention/classification schedule before any sensitive-corpus ingestion; G-07 formal independent-validator role at M8/next goal"
+  validation:
+    validated_at: "2026-08-25T21:02:00Z"
+    freshness: "current"
+    review_due: "on owner disposition of R1–R6 (R1–R3 are owner calls) or on subject-document revision"
+  sha256: "28bd73490c077bc87b3655892d34ba465d11b23002bf10d0424416d4cfc47e60"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/knowledge/assessments/2026-08-25-hx-second-brain-guidance-001-review.md"
+notes:
+  standing_verification_item: "C3 chronology anomaly on the SUBJECT document (claimed prepared_at 2026-08-25T06:52-04:00 postdates file mtime 05:25Z, ingestion 05:45Z, sweep receipt 0612Z; sha256 matches the ingested file) — escalated, unresolved; provenance metadata, not content (carried on DOC-hx-second-brain-framework as C15)."
+  adoption_posture: "Assessment §10 non-recommendations bind retrievers: do NOT ratify the subject document as a whole, build the pattern library / /opt/tkv-local schemas tree / Knowledge Request/Packet services / any index now, reopen the catalog's repo home, adopt DeepSeek Harness or any named tool on the subject's say-so, or treat its community examples as evidence of need. DEFERRED-BY-OWNER context on the DeepSeek Harness corpus recorded at DOC-tkv-corpus-deepseek-harness."
+  cataloging_context: "First record cataloged from knowledge/assessments/ (delivered 2026-08-25). Type judged 'evidence' (governor analysis supplied for owner review; recommendations R1–R6 are OPEN, not decisions — the decision types do not apply). Authority agent-evidence per the Kimi-K3-authored-record convention (cf. DOC-knowledge-lessons-learned); the owner-disposition content it cites is recorded with its own provenance."

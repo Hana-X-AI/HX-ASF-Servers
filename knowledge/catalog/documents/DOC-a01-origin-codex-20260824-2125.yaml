@@ -1,0 +1,41 @@
+document:
+  id: "DOC-a01-origin-codex-20260824-2125"
+  title: "codex_20260824_2125_hx-1-ollama-pilot-qwen3.8-amendment.md — original source of Amendment A01 (agent-zero-docs)"
+  type: "amendment"
+  declared_purpose: "The original Codex-drafted amendment (drafted 2026-08-24 21:25, pre-execution, before KDD-0004 execution and milestones M1–M4) proposing the Qwen3.8-27B baseline, two-phase Modelfile strategy, context policy, reasoning/tool qualification addendum, risk deltas, and amended acceptance conditions for the HX-1 Ollama pilot. Owner-supplied to the factory and adopted 2026-08-25 as pilots/PILOT-HX1-OLLAMA-QWEN27B-001/amendment-A01-qwen38-baseline.md."
+  source:
+    author: "Codex (agent-zero-docs pipeline)"
+    provided_by: "Agent Zero"
+    origin: "/home/hxsa/opt/local-tkv/agent-zero-docs/qwen/codex_20260824_2125_hx-1-ollama-pilot-qwen3.8-amendment.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T04:50:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: [hxs-1]
+    fqdns: []
+    services: [ollama.service]
+    agents: [kimi-k3, john, rick]
+    repositories: []
+    environments: [pilot]
+  version: "1.0-draft (as supplied)"
+  status: "historical"
+  authority_level: "historical-as-found"
+  supersedes: []
+  superseded_by: [DOC-pilot-hx1-amendment-a01]
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond owner docs directory access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "Codex session 2026-08-24 21:25 (agent-zero-docs/qwen/)"
+      note: "drafted before KDD-0004 execution and M1–M4; adoption header on the repo copy records the reconciliation"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-amendment-a01"
+      note: "canonical operational copy in the repo — body VERIFIED verbatim by diff (2026-08-25) except one cosmetic markdown separator-cell in the §4.3 context-policy table (|---|---|---:| adopted vs |---|---:|---| source); no content difference. The adoption header's 'verbatim' claim is accurate at content level."
+  validation:
+    validated_at: "2026-08-25T04:50:00Z"
+    freshness: "historical"
+    review_due: "historical source — operational authority is the adopted repo copy"
+  sha256: "1e3551c502930002eed2812995a6f9eafcb98033793e72c330b88dd3bb5e0eb9"
+  canonical_location: "/home/hxsa/opt/local-tkv/agent-zero-docs/qwen/codex_20260824_2125_hx-1-ollama-pilot-qwen3.8-amendment.md"

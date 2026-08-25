@@ -1,0 +1,41 @@
+document:
+  id: "DOC-agent-kimi-k3-charter"
+  title: "Agent charter — kimi-k3 (factory meta-agent, horizontal control plane, Phase M)"
+  type: "charter"
+  declared_purpose: "One-page authority on kimi-k3's mission (goal decomposition, agent commissioning, evidence gates, recovery, escalation; bounded direct execution under profile §2.3 in Phase M), ownership, non-ownership, inputs, outputs, escalation to Agent Zero. Adopted per KDD-0001."
+  source:
+    author: "Codex (agent-zero-docs) / ratified with corrections per KDD-0001"
+    provided_by: "Agent Zero"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/agents/kimi-k3/charter.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T04:50:00Z"
+  owner: "Kimi-K3 (lane); Agent Zero (ratification)"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: [kimi-k3]
+    repositories: [HX-ASF-Servers]
+    environments: [fleet, pilot]
+  version: ""
+  status: "active"
+  authority_level: "ratified-governance"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "references"
+      target: "DOC-agent-kimi-k3-profile"
+      note: "full operating contract"
+    - predicate: "depends_on"
+      target: "DOC-kdd-0001-kimi-k3-meta-agent"
+      note: "phased activation (M/A/C) ratified here"
+  validation:
+    validated_at: "2026-08-25T04:50:00Z"
+    freshness: "current"
+    review_due: "on phase transition (new KDD required per transition)"
+  sha256: "377e9eed954d121877b9547c51f9c68661e1cc54b226aa0c43cea9b313a0faf0"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/kimi-k3/charter.md"

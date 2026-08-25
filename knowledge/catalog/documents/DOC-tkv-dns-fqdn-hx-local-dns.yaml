@@ -1,0 +1,44 @@
+document:
+  id: "DOC-tkv-dns-fqdn-hx-local-dns"
+  title: "/opt/tkv-local/dns-fqdn/hx-local-dns-and-fqdn-access.md — HX local DNS and FQDN access (router dnsmasq, hx.local.arpa)"
+  type: "runbook"
+  declared_purpose: "Persistent source of truth for local server DNS on the HX network so every server is reachable by FQDN: router HX-Router (192.168.50.1) running dnsmasq, local domain hx.local.arpa, primary LAN DHCP disabled, clients must use 192.168.50.1 as DNS; persistent files /jffs/hx-hosts (source of truth), /jffs/hx-dns-load.sh (loader), with runtime destination on the router."
+  inferred_value: "INFERENCE: the authoritative DNS/FQDN reference underlying the per-host FQDNs used across all server records and pilot work."
+  source:
+    author: "HX project (Claude Code era)"
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/dns-fqdn/hx-local-dns-and-fqdn-access.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T06:00:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: []
+    fqdns: [hx.local.arpa]
+    services: [dnsmasq]
+    agents: []
+    repositories: [tkv-local]
+    environments: [fleet]
+  version: ""
+  status: "active"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "configures"
+      target: "HX-Router (192.168.50.1) dnsmasq — hx.local.arpa name service"
+      note: "declared persistent source of truth; consistent with repo DOC-knowledge-network (which records the 2026-08-24 NXDOMAIN-after-router-restart incident and same-morning recovery)"
+    - predicate: "references"
+      target: "DOC-knowledge-network"
+      note: "repo-side runbook for the same FQDN system; both carry the same freshness caveat"
+  validation:
+    validated_at: "2026-08-25T06:00:00Z"
+    freshness: "aging"
+    review_due: "2026-09-01 (aligned with DOC-knowledge-network FQDN recheck)"
+  sha256: "9b8fc44b84bc69b44fc4e4aa88157c264f14a4611cd18a4bf5ade3d279aa63e9"
+  canonical_location: "/opt/tkv-local/dns-fqdn/hx-local-dns-and-fqdn-access.md"
+notes:
+  freshness_detail: "Source-of-truth role is declared in the document itself; not independently re-verified against the router since 2026-08-24 (router-restart NXDOMAIN incident recovered same morning per DOC-knowledge-network). Labeled aging, matching that record."

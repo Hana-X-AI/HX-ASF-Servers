@@ -1,0 +1,43 @@
+document:
+  id: "DOC-tkv-hxs3-driver-results"
+  title: "/opt/tkv-local/servers/hxs-3/driver-results.md — hxs-3 driver results (capture date 2026-08-12)"
+  type: "driver-results"
+  declared_purpose: "Raw terminal capture of the post-directive NVIDIA driver validation on hxs-3 (2026-08-12, owner-approved Phase 1 exception per governance/policy/nvidia-driver-install-directive.md): Ubuntu 24.04.4 LTS kernel 7.0.0-28 login banner and driver validation output, preserved verbatim (headerless raw capture, acceptable per the server records README evidence rules)."
+  source:
+    author: "HX project (Claude Code era); collected read-only over SSH / human preparation record"
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/servers/hxs-3/driver-results.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T05:55:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: [hxs-3]
+    fqdns: [hxs-3.hx.local.arpa]
+    services: []
+    agents: []
+    repositories: [tkv-local]
+    environments: [fleet]
+  version: "capture date 2026-08-12"
+  status: "historical"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "describes"
+      target: "hxs-3 (hxs-3.hx.local.arpa, 192.168.50.202)"
+      note: "preserved per the server records contract; verify against the live host before operational use"
+    - predicate: "references"
+      target: "DOC-tkv-server-registry"
+      note: "fleet registry row for hxs-3"
+  validation:
+    validated_at: "2026-08-25T20:15:00Z"
+    freshness: "historical"
+    review_due: "historical record — no review cycle; cross-check before any operational use"
+  sha256: "eabfffc40e90c2114d78f01b7d0c66f5a4139e13664ca21d5d2d5df51321055c"
+  canonical_location: "/opt/tkv-local/servers/hxs-3/driver-results.md"
+notes:
+  corrections_batch6: "authority_level historical-as-found → agent-evidence (batch 6, T10h, sibling check of DOC-tkv-hxs2-driver-results): same misclassification — POST-directive validation capture (post-change evidence, 2026-08-12), not as-found. Applied consistently with hxs-2/hxs-4. status/freshness stay historical (point-in-time capture)."

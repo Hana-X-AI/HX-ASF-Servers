@@ -1,0 +1,61 @@
+document:
+  id: "DOC-pilot-hx1-wo-31-john-m7a"
+  title: "31-work-order-john-m7a.yaml — WO-HX1-JOHN-M7A-001 (M7a: three OS-initiated reboot recovery cycles at the 64K operating profile, AC-007 + first-boot verifications)"
+  type: "work-order"
+  declared_purpose: "Delegated contract commissioning john/Esme (session john-m7a-20260825-01) to prove unattended boot recovery: three consecutive OS-initiated reboots of hxs-1 (no BMC present; a literal power-cycle is owner-assisted and out of scope), each returning the hx-qwen3.8-27b-64k operating profile (digest 766cd946…8cc99d8a, ctx 65536, 100% GPU, Forever) to ready state without human intervention, per-cycle evidence per plan §9.2 — plus first-boot verifications (kernel 7.0.0-28→7.0.0-30 transition, driver re-proof on the running kernel, Wi-Fi rfkill persistence, wait-online state, sleep masks ×4). Owner authorizations: all three reboots PRE-APPROVED in the window 2026-08-25T06:29Z–08:29Z (state log row 40), a FOURTH reboot NOT authorized; soak owner-DELAYED (M7b); BIOS untouched. Prohibited: any config change (diagnosis read-only, fixes escalate first), driver/kernel/DKMS work, keep_alive:0 client pattern, touching frozen evidence. Stop conditions: driver/GPU failure, preload failure after bounded retry, any Xid, SSH not back in 15 min, host not reaching frozen ready state. Deliverable: 30-esme-m7a-reboot-cycles.md (completed PASS — TASK COMPLETE, state log row 42; cataloged this run)."
+  source:
+    author: "Kimi-K3 (governor)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/31-work-order-john-m7a.yaml"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T07:10:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: [hxs-1, hxs-5]
+    fqdns: []
+    services: [ollama.service, ollama-preload.service]
+    agents: [john, kimi-k3]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+  version: ""
+  status: "adopted"
+  authority_level: "delegated-contract"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "kimi-k3"
+      note: "issued at state log row 41 (2026-08-25T06:31Z); record sha256 matches the row-41 proof hash exactly"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-cp-32-john-m7a"
+      note: "paired context packet (session john-m7a-20260825-01)"
+    - predicate: "depends_on"
+      target: "DOC-goal-hx1-ollama-qwen38-27b"
+      note: "parent goal GOAL-HX1-QWEN38-001; milestone M7a closes AC-007"
+    - predicate: "depends_on"
+      target: "DOC-pilot-hx1-ev-29-esme-m6b-profiles"
+      note: "frozen 64K operating profile is the recovery target identity"
+    - predicate: "depends_on"
+      target: "DOC-pilot-hx1-ev-26-rick-pre-m7-readiness"
+      note: "boot-path state, NVRM escalation triggers, Wi-Fi persistence mechanism"
+    - predicate: "governs"
+      target: "DOC-pilot-hx1-ev-30-esme-m7a-reboot-cycles"
+      note: "paired deliverable (PASS — TASK COMPLETE, state log row 42); handoff CLOSED by this run's receipt"
+    - predicate: "depends_on"
+      target: "DOC-protected-ssh-info-hxs1"
+      note: "askpass execution path (hxs-5 → hxs-1); secret never printed, logged, or stored"
+  validation:
+    validated_at: "2026-08-25T20:15:00Z"
+    freshness: "current"
+    review_due: "not applicable — discharged contract (M7a complete, state log row 42)"
+  sha256: "f89ad651dad8b191cd64fe2e3a1afeda31993eee538f31c6f2a992cf1a769c02"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/31-work-order-john-m7a.yaml"
+notes:
+  window_execution: "All three reboots executed inside the owner window (06:43:05Z / 06:47:03Z / 06:49:41Z of 06:29Z–08:29Z); 3 of 3 authorized reboots used, 0 additional; 0 of 1 transient retry used; no stop condition triggered."
+  assigned_agent_call_sign: "Esme = john (pilot call sign, not a roster entry)"
+  revalidation: "Re-hashed 2026-08-25T08:35Z after the governor appended terminology_note to the source WO (state log row 44: reboot terminology corrected — cycles are OS-initiated reboots, no BMC present, literal power-cycle owner-assisted and out of scope). New hash f89ad651… matches the row-44 record exactly (74acdfaf… superseded)."
+  corrections_batch6: "Terminology alignment (batch 6, T6): record title and declared_purpose still said 'cold-reboot recovery cycles' / 'cold reboots' — aligned to the batch-4 source correction (state log row 44): three OS-initiated reboot recovery cycles; no BMC present; literal power-cycle is owner-assisted and out of scope. AC-007 STAYS PASS — the owner pre-approved the three OS-initiated reboots as the M7a procedure (state log rows 40–42, goal SC-04); this correction is terminology precision, NOT a reopening of acceptance. Any finding reading that reopens AC-007 is REJECTED. Record sha256 f89ad651… re-verified against the source 2026-08-25T20:15Z (source unchanged)."

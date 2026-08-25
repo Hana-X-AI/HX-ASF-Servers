@@ -1,0 +1,38 @@
+document:
+  id: "DOC-tkv-fs-proposed-agent-roster"
+  title: "/opt/tkv-local/file-share/hx-infrastructure-proposed-technology-agent-roster_chatgpt-gpt-5-6_20260815_2129.html — HX Proposed Technology Agent Roster (ChatGPT GPT-5-6, 2026-08-15)"
+  type: "other"
+  declared_purpose: "Consultant-proposed technology agent roster for HX-Infrastructure (HTML render, 2026-08-15) — a proposal input to the agent team design, not a ratified roster."
+  source:
+    author: "HX project (Claude/Codex era) or named consultant model"
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/file-share/hx-infrastructure-proposed-technology-agent-roster_chatgpt-gpt-5-6_20260815_2129.html"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T06:05:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: []
+    repositories: [tkv-local]
+    environments: [fleet]
+  version: ""
+  status: "draft"
+  authority_level: "historical-as-found"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "references"
+      target: "DOC-agents-roster-readme"
+      note: "proposal ancestor; the ratified roster and lane model live in agents/README.md"
+  validation:
+    validated_at: "2026-08-25T06:05:00Z"
+    freshness: "historical"
+    review_due: "historical record — no review cycle"
+  sha256: "cb916e7789981db57b4294c715bb31b80131d51746e4ed184973c181fa52bdae"
+  canonical_location: "/opt/tkv-local/file-share/hx-infrastructure-proposed-technology-agent-roster_chatgpt-gpt-5-6_20260815_2129.html"

@@ -1,0 +1,60 @@
+document:
+  id: "DOC-pilot-hx1-ev-30-esme-m7a-reboot-cycles"
+  title: "30-esme-m7a-reboot-cycles.md — Esme M7a three cold-reboot recovery cycles at the 64K operating profile (AC-007 PASS 3/3)"
+  type: "evidence"
+  declared_purpose: "M7a acceptance evidence (report ESME-M7A-REBOOT-CYCLES-001, plan §9.2 ×3): three consecutive owner-pre-approved cold reboots of hxs-1 (06:43:05Z / 06:47:03Z / 06:49:41Z, all inside the 06:29Z–08:29Z window; 3 of 3 authorized used, no fourth), each returning the frozen 64K operating profile (hx-qwen3.8-27b-64k:latest, digest 766cd946…8cc99d8a, ctx 65,536, size_vram == size == 20,463,789,012 B, Forever) to ready state with ZERO human intervention — boot→ready 60 s deterministic ×3 (15× under the 900 s D5 recovery SLO), issue→ready 81–82 s, known-answer warm inference 391 in ~1 s with sub-ms load_duration every cycle (no model reload), units enabled/active NRestarts=0, 0 Xid / 0 OOM per boot, NVRM assertions confined to runner-start windows (rick's escalation triggers not fired), loopback-only bind preserved. First-boot verification block: kernel transitioned 7.0.0-28 → 7.0.0-30-generic at cycle 1 (pre-staged, DKMS pre-built); driver 580.173.02 re-proven on the running kernel (nvidia-smi full + DKMS installed for both kernels — no driver work needed, none done); Wi-Fi rfkill1 soft-block persistence empirically confirmed across 3 boots (systemd-rfkill restore); systemd-networkd-wait-online D7 residue cleared at cycle 1 (0 failed units); sleep masks ×4 intact; swap 0 B. Corrections/disclosures: F-M7A-1 (rick save-file digit corrected 0→1, mechanism conclusion upheld), F-M7A-2 (watchdog WARN pair deterministic per cold load — expected-class monitoring recommendation), D-M7A-1 (own SSH wrapper BatchMode defect, corrected pre-evidence, target untouched). AC-007 PASS; completion PASS — TASK COMPLETE (signed john/Esme 2026-08-25T06:52Z)."
+  inferred_value: "INFERENCE: the 60 s boot→ready is dominated by the ~50 s cold runner load of the 19.06 GiB resident set (report §5, labeled INFERENCE there); identical-to-the-second timing across 3 cycles makes cold-boot recovery time a plannable constant for hxs-1 monitoring and SLO math."
+  source:
+    author: "john / Esme (session john-m7a-20260825-01)"
+    provided_by: "john via Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/30-esme-m7a-reboot-cycles.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T07:10:00Z"
+  owner: "john"
+  applies_to:
+    hosts: [hxs-1, hxs-5]
+    fqdns: []
+    services: [ollama.service, ollama-preload.service, systemd-rfkill, systemd-networkd-wait-online.service]
+    agents: [john]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+  version: ""
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "evidences"
+      target: "AC-007 — unattended boot recovery on hxs-1 (goal SC / plan §9.2; state log row 42)"
+      note: "PASS 3/3: frozen 64K operating profile returns to ready autonomously every cycle; boot→ready 60 s ×3 = 15× under the D5 900 s recovery SLO"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-ev-29-esme-m6b-profiles"
+      note: "frozen 64K operating profile verified byte-identical after every cycle: digest 766cd9469fb47c42890616880772f2647fcfe4656b7550e5cc37ab186cc99d8a, ctx 65,536, size_vram == size, Forever"
+    - predicate: "produced_by"
+      target: "DOC-pilot-hx1-wo-31-john-m7a"
+      note: "WO-HX1-JOHN-M7A-001 with context packet DOC-pilot-hx1-cp-32-john-m7a; session john-m7a-20260825-01"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-ev-26-rick-pre-m7-readiness"
+      note: "F-M7A-1 correction (§8, FACT): rick §4.4 quotes the systemd-rfkill wlan save file (/var/lib/systemd/rfkill/pci-0000:82:00.0:wlan) as containing 0 — verified content is 1 (file stores the soft value; 1 = soft-blocked), never re-saved after rick's session (mtime 2026-08-25 04:32:16). His mechanism conclusion (soft-block persists across boots) is CORRECT and now empirically confirmed ×3 (FB3); only the quoted digit was wrong. Source preserved unchanged per the server records contract. Also: rick's NVRM escalation triggers evaluated every cycle — none fired; MONITOR-ONLY classification holds"
+    - predicate: "risks"
+      target: "F-M7A-2 — llama-server GPU discovery watchdog WARN pair (runner.go:584 / llama_server.go:130, F-E2 class) now deterministic once per cold load (06:44:18 / 06:48:14 / 06:50:52)"
+      note: "RECOMMENDATION to Kimi-K3 (not executed, out of scope): monitors treat ONE watchdog-WARN pair inside the boot load window as expected-class; escalate only if it repeats, appears outside a load event, or coincides with failed/slow readiness"
+    - predicate: "references"
+      target: "DOC-tkv-corpus-ollama"
+      note: "knowledge-review receipt §1: TKV snapshot (v0.32.11-era) predates installed 0.32.15 — aging reference; keep_alive/context/ps-field semantics cited are version-independent; carried qwen3.8-renderer gap unchanged"
+  validation:
+    validated_at: "2026-08-25T21:02:00Z"
+    freshness: "current"
+    review_due: "at M7b soak (AC-008/AC-016, owner-delayed) and the M8 evidence index"
+  sha256: "53dae07c1b517028d9082cdf3c34e6421f3ec4110d9a89671af0750fcc0e57ce"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/30-esme-m7a-reboot-cycles.md"
+notes:
+  sanitization: "Report attests a grep -F sweep of all evidence files against the SSH secret (no match); askpass helper, secret copy, and wrappers deleted at task end (deletion verified); no thinking content retained (A01 §5.2). Sanitized per-cycle evidence retained transiently at hxs-5:/tmp/.esme-m7a/evidence/ (volatile /tmp; this deliverable is the record)."
+  kernel_transition: "Running kernel is now 7.0.0-30-generic (transitioned at cycle 1; FB1). DKMS nvidia/580.173.02 installed for both 7.0.0-28 and 7.0.0-30. The wait-online D7 residue (failed since 08-17) cleared at cycle 1 as predicted — systemctl --failed = 0 units."
+  open_items: "F-M7A-2 monitoring-guidance recommendation routed to Kimi-K3 (no config change authorized or made); 24h soak + idle-residency (AC-008/AC-016, M7b) remain owner-delayed; R-024 AER not re-scanned this session (rick's plane, zero in his last window)."
+  revalidation: "Re-hashed 2026-08-25T08:35Z (4cba8db8… superseded): review batch 2 corrections per state log row 43 (autonomy wording scoped to post-reboot, line 146; rollback statement scoped app/config vs kernel — 7.0.0-28 GRUB recovery path named; transient-retry budget clarified: governor task retries vs preload in-band curl retries) plus the batch-4 terminology bullet (OS-initiated reboot recovery, no BMC, literal power-cycle owner-assisted out of scope). Record fields re-checked against the corrected source — no field changes required."
+  corrections_batch7: "F-B6-3 re-validation: the governor appended a security-process exception note (verified at source line 156): step 2 transient extraction of the SSH secret to a 0600 temp file under /tmp/.esme-m7a deviates from the ratified read-at-execution askpass pattern; containment held (0600/0700 volatile workspace, deletion verified step 21, grep -F sweep no match, no remote copies); recorded as a security-process exception; rotation rejected per owner standing decision (same class as F-M5-1). Re-hashed 41736b4b… -> 53dae07c…. Record fields re-checked — no changes required."

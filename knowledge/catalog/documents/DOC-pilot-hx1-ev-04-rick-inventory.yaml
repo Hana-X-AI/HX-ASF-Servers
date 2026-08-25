@@ -1,0 +1,44 @@
+document:
+  id: "DOC-pilot-hx1-ev-04-rick-inventory"
+  title: "04-rick-inventory.txt — hxs-1 immutable pre-change inventory (M1, read-only, 2026-08-24T23:38Z)"
+  type: "evidence"
+  declared_purpose: "Immutable pre-change inventory of hxs-1 per plan §3.1 command set plus Gate 0/1 additions: identity (hostname, Boot ID ef98be76…8099, Machine ID REDACTED), Ubuntu 24.04.4 LTS, kernel 7.0.0-28, Ultra 9 285K, 125 GiB RAM + swap, both RTX 4070 Ti SUPER with UUIDs, driver 580.173.02, storage, listeners, Secure Boot disabled, nvidia-smi topo/power. Timestamped, sanitized, captured over SSH by unprivileged hxsa."
+  source:
+    author: "rick (session rick-m1-20260824-01)"
+    provided_by: "rick via Kimi-K3 gate"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/04-rick-inventory.txt"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T04:50:00Z"
+  owner: "rick"
+  applies_to:
+    hosts: [hxs-1]
+    fqdns: []
+    services: []
+    agents: [rick]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+  version: ""
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "evidences"
+      target: "Gate 0 baseline — state log rows 3–4"
+      note: "M1 immutable baseline; Boot ID reused by M2/pre-M7 to prove no-reboot"
+    - predicate: "produced_by"
+      target: "rick"
+      note: "under DOC-pilot-hx1-wo-01-rick-m1"
+    - predicate: "describes"
+      target: "hxs-1 pre-change state 2026-08-24"
+      note: "pre-Ollama; cross-checks against DOC-tkv-hxs1-discovery (as-found 2026-08-11) — consistent"
+  validation:
+    validated_at: "2026-08-25T04:50:00Z"
+    freshness: "current"
+    review_due: "not applicable — immutable baseline record"
+  sha256: "81fce754532224c08821b666bfe9fed3e39a5fc30aec468315690df07fdf3e21"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/04-rick-inventory.txt"

@@ -1,0 +1,47 @@
+document:
+  id: "DOC-pilot-hx1-wo-01-rick-m1"
+  title: "01-work-order-rick-m1.yaml — WO-HX1-RICK-M1-001 (M1: TKV review + immutable inventory, read-only)"
+  type: "work-order"
+  declared_purpose: "Delegated contract commissioning rick (profile-briefed sub-agent, session rick-m1-20260824-01) to complete the Ubuntu TKV review with receipt and capture the immutable pre-change inventory of hxs-1 read-only; deliverables 03-rick-tkv-receipt.md and 04-rick-inventory.txt; budgets 1 session + 1 transient retry."
+  source:
+    author: "Kimi-K3 (governor)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/01-work-order-rick-m1.yaml"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T04:50:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: [hxs-1, hxs-5]
+    fqdns: []
+    services: []
+    agents: [rick, kimi-k3]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+  version: ""
+  status: "adopted"
+  authority_level: "delegated-contract"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "kimi-k3"
+      note: "issued at state log row 2 (2026-08-24T23:35Z); hash matches row 2 record"
+    - predicate: "governs"
+      target: "DOC-pilot-hx1-ev-03-rick-tkv-receipt"
+      note: "paired deliverable (Task May Proceed: YES)"
+    - predicate: "governs"
+      target: "DOC-pilot-hx1-ev-04-rick-inventory"
+      note: "paired deliverable (immutable inventory per plan §3.1)"
+    - predicate: "depends_on"
+      target: "DOC-protected-ssh-info-hxs1"
+      note: "execution path: SSH hxsa@192.168.50.200 via owner-provided credential, askpass pattern; secret never printed/logged/stored"
+  validation:
+    validated_at: "2026-08-25T04:50:00Z"
+    freshness: "current"
+    review_due: "not applicable — discharged contract (M1 complete, Gate 0 PASSED row 4)"
+  sha256: "c6c32003d9222087ca7c25caa3090c3b6fb8b243fc863bddb65a7e2b03d5cd34"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/01-work-order-rick-m1.yaml"

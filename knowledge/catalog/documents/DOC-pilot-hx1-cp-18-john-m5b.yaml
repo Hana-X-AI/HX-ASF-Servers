@@ -1,0 +1,46 @@
+document:
+  id: "DOC-pilot-hx1-cp-18-john-m5b"
+  title: "18-context-packet-john-m5b.yaml — context packet for WO-HX1-JOHN-M5B-001 (session john-m5b-20260825-01)"
+  type: "context-packet"
+  declared_purpose: "Session-binding packet for the M5b john/Esme dispatch: controlling sources (john profile, amendment A01 governing, WO-17, 16 M5 fixtures, 12 M4 evidence, ollama corpus), current-state summary (M5 PASS labeled sampled-profile), owner decisions (A01 adopted; plan §6.5 superseded; D8 pass rules; M5 = comparison, M5b = acceptance), Phase A verbatim constraint, drift-check-first stop rule, thinking-content handling, evidence required (19)."
+  source:
+    author: "Kimi-K3 (governor)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/18-context-packet-john-m5b.yaml"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T04:50:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: [hxs-1, hxs-5]
+    fqdns: []
+    services: [ollama.service]
+    agents: [john, kimi-k3]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+  version: ""
+  status: "adopted"
+  authority_level: "delegated-contract"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "kimi-k3"
+      note: "state log row 18; hash matches"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-wo-17-john-m5b"
+      note: "paired work order"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-amendment-a01"
+      note: "governing document for the session"
+  validation:
+    validated_at: "2026-08-25T04:50:00Z"
+    freshness: "current"
+    review_due: "not applicable — discharged (M5b complete)"
+  sha256: "16f8eb862fc17dfb86518e027bda9efd1fecc6e560898884ac62a17c5db178b0"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/18-context-packet-john-m5b.yaml"
+notes:
+  assigned_agent_call_sign: "Esme = john (pilot call sign, not a roster entry)"

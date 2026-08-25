@@ -1,0 +1,45 @@
+document:
+  id: "DOC-tkv-corpus-omniroute"
+  title: "/opt/tkv-local/OmniRoute/OmniRoute-release-v3.8.50 — upstream source snapshot of OmniRoute (release v3.8.50)"
+  type: "corpus"
+  declared_purpose: "Upstream source snapshot of OmniRoute release v3.8.50 (LLM routing gateway with dashboard). Verified 2026-08-25 against OmniRoute-release-v3.8.50/README.md (OmniRoute dashboard imagery header) and the presence of its own AGENTS.md/CLAUDE.md. Scope narrowed 2026-08-25 (governor batch C6): the HX evaluation material sharing the wrapper tree is cataloged as DOC-tkv-omniroute-hx-evaluation."
+  source:
+    author: "upstream project (OmniRoute); mirrored into /opt/tkv-local by Agent Zero"
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/OmniRoute/OmniRoute-release-v3.8.50"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T06:12:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: []
+    repositories: [tkv-local]
+    environments: [fleet]
+  version: "v3.8.50"
+  status: "adopted"
+  authority_level: "upstream-reference"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "references"
+      target: "TKV source-snapshot corpus (owner-directed sweep, state log row 32)"
+      note: "11,590 files excluding .git internals; deep per-file cataloging on demand via retrieval packages"
+    - predicate: "references"
+      target: "DOC-tkv-omniroute-hx-evaluation"
+      note: "sibling record for the HX evaluation material in the wrapper tree (partitioned 2026-08-25, C6); HX evaluation is NOT upstream authority"
+  validation:
+    validated_at: "2026-08-25T21:02:00Z"
+    freshness: "current"
+    review_due: "2026-09-24 (corpus manifest re-hash) or on any corpus update"
+  sha256: "1fdb6f3600e4091a751b71cfeb897f2a6a081f2b7657bfd859948b4530e894ac"
+  canonical_location: "/opt/tkv-local/OmniRoute/OmniRoute-release-v3.8.50"
+notes:
+  checksum_method: "sha256 = digest of the sorted relative-path file manifest (11590 files, names only), NOT content hashes; regenerated 2026-08-25 (scope narrowed to the upstream subtree per C6; earlier wrapper-tree manifest 5d980711… covered 11,594 files); directory canonical_location preserved. Manifest re-hash scheduled 2026-09-24 (run-1 follow-up) stands. .git internals excluded from the manifest and from cataloging. Form alignment batch 7 (F-B6-6, hxinfra-archive reference form): method/scope/count text consolidated wholly into notes.checksum_method; the sha256 field now carries ONLY the bare 64-char digest; digest VALUE unchanged (names-only manifest retained until a future content-sensitive migration)."
+  upstream_provenance: "upstream URL/commit: unavailable — tree is not a git checkout (no .git metadata present); unpacked archive snapshot"
+  verification: "C6 verification 2026-08-25: wrapper tree contains OmniRoute-release-v3.8.50 + four hx-omniroute HTML documents (matches the pre-split record's claim); upstream identity per OmniRoute-release-v3.8.50/README.md."

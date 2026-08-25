@@ -118,3 +118,31 @@ the codebase or the infrastructure, or could bring work to a halt or cause serio
 system downtime. Destructive or irreversible actions, governance changes, new
 external shared state, and scope expansion count as serious-harm potential. When in
 doubt, act reversibly and report rather than pause.
+
+## Infrastructure posture directives
+
+- Secure Boot stays disabled on HX hosts, now and always — do not enable it
+  (owner directive, 2026-08-24).
+
+## Documentation governance and knowledge stewardship
+
+Owner amendment, 2026-08-25. **Carol** (`agents/carol/`) is the factory's
+documentation and knowledge steward — a **bounded persistent role** (owner-registered
+2026-08-25): knowledge-only, writes scoped to `knowledge/catalog/`, no sub-agent
+dispatch, no host probes; persistent through her catalog, session-based execution.
+The catalog is the start of
+a second brain for the whole HX team, humans and agents (owner, 2026-08-25).
+
+- Every supplied or produced document gets a recorded disposition in the catalog —
+  none is treated as an unstructured attachment, silently ignored, or left
+  uncataloged.
+- Originals are preserved unchanged; the catalog describes and connects. Provenance
+  to source document and section is mandatory; conflicts are preserved,
+  authority-ranked, and escalated — never guess-resolved. No secret values in the
+  catalog (existence, owner, retrieval mechanism only).
+- Kimi-K3 consults the catalog before assigning work and cites consulted records in
+  context packets. Agents return new reusable facts and artifacts after execution.
+- A material handoff is **incomplete without Carol's catalog receipt**, referenced
+  in the governing log.
+- Governing principle: retrieve before investigating; reuse before recomputing;
+  verify before trusting; catalog before closing.

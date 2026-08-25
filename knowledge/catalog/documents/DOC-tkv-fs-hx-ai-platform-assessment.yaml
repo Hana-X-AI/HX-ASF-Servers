@@ -1,0 +1,38 @@
+document:
+  id: "DOC-tkv-fs-hx-ai-platform-assessment"
+  title: "/opt/tkv-local/file-share/hx-meta-agent_openai-codex_20260821_1130_hx-ai-platform-deep-repository-assessment.md — Codex deep repository assessment of HX-Ai-Platform (PASS; HOLD FOR GOVERNANCE RECONCILIATION, NOT OPERATIONALLY READY)"
+  type: "evidence"
+  declared_purpose: "Point-in-time (2026-08-21) Codex deep assessment of the HX-Ai-Platform repository: review truth state PASS with a strong, unusually testable governance foundation (workflow, evidence boundaries, receipt checks, negative tests, clean-clone reproduction), but disposition HOLD FOR GOVERNANCE RECONCILIATION — NOT OPERATIONALLY READY; not yet an AI platform implementation."
+  source:
+    author: "HX project (Claude/Codex era) or named consultant model"
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/file-share/hx-meta-agent_openai-codex_20260821_1130_hx-ai-platform-deep-repository-assessment.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T06:05:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: []
+    repositories: [tkv-local]
+    environments: [fleet]
+  version: ""
+  status: "historical"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "evidences"
+      target: "HX-Ai-Platform repository (external to HX-ASF-Servers)"
+      note: "governance-foundation verdict PASS, operational readiness HELD as of 2026-08-21 — re-assess before citing as current"
+  validation:
+    validated_at: "2026-08-25T06:05:00Z"
+    freshness: "historical"
+    review_due: "historical record — no review cycle"
+  sha256: "3cb572aa430fa833878b5834c5c96159673fc9602b12dce19a4d2b50dd9a989e"
+  canonical_location: "/opt/tkv-local/file-share/hx-meta-agent_openai-codex_20260821_1130_hx-ai-platform-deep-repository-assessment.md"

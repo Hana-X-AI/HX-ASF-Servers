@@ -1,0 +1,40 @@
+document:
+  id: "DOC-tkv-fs-tech-stack"
+  title: "/opt/tkv-local/file-share/tech-stack/ — Proposed technology stack document set (2026-08-15) (4 files)"
+  type: "corpus"
+  declared_purpose: "Proposed technology stack document set (2026-08-15): chatgpt-gpt-5-6 proposed technology stack (plain and with-diagrams renders), stack diagrams, and the hx-infrastructure-enterprise-architecture-specification.html."
+  source:
+    author: "HX project (Claude/Codex era) or named consultant model"
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/file-share/tech-stack"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T06:05:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: []
+    repositories: [tkv-local]
+    environments: [fleet]
+  version: ""
+  status: "historical"
+  authority_level: "historical-as-found"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "describes"
+      target: "HX-Infrastructure era document exchange and staging area"
+      note: "bulk collection; catalog at directory level per sweep scope rules — deep per-file cataloging on demand via retrieval packages"
+  validation:
+    validated_at: "2026-08-25T06:05:00Z"
+    freshness: "historical"
+    review_due: "historical record — no review cycle"
+  sha256: "DIRECTORY-RECORD — see notes.checksum_limitation"
+  canonical_location: "/opt/tkv-local/file-share/tech-stack"
+notes:
+  checksum_limitation: "Directory-level corpus record: no content sha256 (directory canonical_location). Covered by the corpus manifest re-hash scheduled 2026-09-24 (run-1 follow-up)."

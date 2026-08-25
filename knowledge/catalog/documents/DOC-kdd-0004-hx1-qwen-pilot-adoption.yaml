@@ -1,0 +1,46 @@
+document:
+  id: "DOC-kdd-0004-hx1-qwen-pilot-adoption"
+  title: "KDD-0004 — Adopt the HX-1 Qwen pilot with qwen3.8:27b as the approved baseline"
+  type: "decision"
+  declared_purpose: "Ratified decision (2026-08-24, decider Agent-Zero): adopt pilots/PILOT-HX1-OLLAMA-QWEN27B-001/plan.md with qwen3.8:27b (non-MLX, GGUF) as approved baseline, with recorded amendments (executive decision rewritten with live tag evidence, Phase M dispatch note, host table populated, PILOT-002 context-length evidence note, open-decisions table). Execution (M0) NOT authorized by this KDD; each cold reboot individually approved."
+  source:
+    author: "Kimi-K3 (review and record); decider Agent-Zero"
+    provided_by: "Agent Zero"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0004-hx1-qwen-pilot-adoption.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T04:50:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: [hxs-1]
+    fqdns: [hxs-1.hx.local.arpa]
+    services: [ollama.service]
+    agents: [kimi-k3, john, rick]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+  version: ""
+  status: "active"
+  authority_level: "ratified-governance"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "decides"
+      target: "qwen3.8:27b (non-MLX, GGUF) as pilot baseline"
+      note: "qwen3.5:27b rejected (deviates from ratified registry workload); fallback candidate if blocking defect found — switching requires KK3 gate"
+    - predicate: "governs"
+      target: "DOC-pilot-hx1-plan"
+      note: "adoption amendments applied to plan text; aligns plan with SERVER-REGISTRY hxs-1 role without registry amendment"
+    - predicate: "references"
+      target: "DOC-hx1-qwen-pilot-origin-codex-20260824-1945"
+      note: "source (767 lines, SHA-256 cbe90fb0…), unmodified historical input — cataloged 2026-08-25 (batch 6) as DOC-hx1-qwen-pilot-origin-codex-20260824-1945"
+  validation:
+    validated_at: "2026-08-25T20:15:00Z"
+    freshness: "current"
+    review_due: "at pilot close (M8)"
+  sha256: "3b88d51ed7d048320fdc0bdbfe8283a71961facca252f59f4138a8a1bfb22e38"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0004-hx1-qwen-pilot-adoption.md"
+notes:
+  corrections_batch6: "references relation repointed from the raw source path to the newly cataloged DOC-hx1-qwen-pilot-origin-codex-20260824-1945 (batch 6, T1); 'not cataloged this run' wording dropped; provenance (767 lines, SHA-256 cbe90fb0…) preserved. Source file unchanged — record sha256 re-verified 2026-08-25T20:15Z."

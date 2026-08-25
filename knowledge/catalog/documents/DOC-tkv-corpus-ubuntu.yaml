@@ -1,0 +1,46 @@
+document:
+  id: "DOC-tkv-corpus-ubuntu"
+  title: "/opt/tkv-local/ubuntu — Ubuntu knowledge corpus (ubuntu.com-main web-application tree)"
+  type: "corpus"
+  declared_purpose: "Rick's assigned knowledge source per agents/rick/charter.md ('Knowledge source: /opt/tkv-local/ubuntu (corpus: ubuntu.com-main), reviewed per profile §5 before every task'). Content: Canonical's ubuntu.com web application tree (Flask/Jinja per its own AGENTS.md) — used for release data (releases.yaml: 24.04.4 current, 26.04 latest LTS; 24.04 lifecycle per the live Canonical release-cycle page, fetch 2026-08-25, https://ubuntu.com/about/release-cycle — the current authority: standard security maintenance through May 2029; Expanded security maintenance May 2034; Break/bug support May 2034; Legacy add-on May 2039. The mirrored releases.yaml line 48 field 'eol: April 2029' is imprecise against the live page — one-month conflict RESOLVED: the live Canonical page outranks the mirrored webapp field; see notes.lifecycle_claim), release-cycle/EOL pages, security feeds (OVAL/OSV/VEX/CVEs/notices), certified-hardware catalogue, and server pages. Recorded limitation (rick M1/M2/pre-M7 receipts): it is NOT the Ubuntu OS source tree and holds no NVIDIA-driver, suspend, time-sync, firewall, rfkill, or wait-online runbook — those areas fall to the profile §4 authority order (work order → live host evidence → release-matched package/man-page behavior → current official sources)."
+  inferred_value: "INFERENCE: adequate as release/security-metadata reference for 24.04 LTS hosts; inadequate as an operations runbook — the per-task receipts already compensate via the authority order."
+  source:
+    author: "Canonical (ubuntu.com project); mirrored into /opt/tkv-local by Agent Zero"
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/ubuntu"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T04:50:00Z"
+  owner: "Agent Zero (vault); rick (assigned consumer)"
+  applies_to:
+    hosts: [hxs-1]
+    fqdns: []
+    services: []
+    agents: [rick]
+    repositories: [tkv-local]
+    environments: [fleet, pilot]
+  version: "ubuntu.com-main snapshot (2,127 files at ingestion)"
+  status: "active"
+  authority_level: "upstream-reference"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "governs"
+      target: "rick's per-task knowledge reviews (03, 07, 26 receipts)"
+      note: "corpus reviewed per rick profile §5 before every task; gap recorded in every receipt"
+    - predicate: "describes"
+      target: "Ubuntu 24.04 LTS release/security/certified metadata"
+      note: "reference material, not current truth — verify against live environment before use (AGENTS.md TKV rule)"
+  validation:
+    validated_at: "2026-08-25T21:02:00Z"
+    freshness: "current"
+    review_due: "2026-09-24 or on any corpus update (re-hash manifest)"
+  sha256: "962683e00f34dbd4ea308d28398dc2e846ae83342b7de28bc5e976a5d1d8ca98"
+  canonical_location: "/opt/tkv-local/ubuntu"
+notes:
+  lifecycle_claim: "C8 RESOLVED 2026-08-25 (governor verification). Current authority — live Canonical release-cycle page, fetch 2026-08-25, https://ubuntu.com/about/release-cycle: Ubuntu 24.04 LTS standard security maintenance through May 2029; Expanded security maintenance May 2034; Break/bug support May 2034; Legacy add-on May 2039. Rick profile Appendix B (May 2029) CONFIRMED accurate against the live page. Preserved conflicting claim, verbatim with provenance: corpus releases.yaml line 48 — eol 'April 2029' (imprecise mirrored webapp field). Resolution: the live Canonical page outranks the mirrored corpus field per the AGENTS.md TKV rule (mirrored reference material is not current truth). The review batch's asserted dates (May 31 2029 / April 2039) remain unrecorded — unverified review data, also imprecise against the live page."
+  corpus_scope: "Directory corpus — no content hashing performed this run (scope limit: do not recurse into thousands of files). The manifest hash covers the sorted file-name list as a change-detection baseline, not content integrity."
+  checksum_method: "sha256 = digest of the sorted file-name list manifest (2127 files, names only, captured 2026-08-25T04:49Z), NOT content hashes — change-detection baseline, not content integrity; directory canonical_location preserved. Form alignment batch 7 (F-B6-6): method/count text consolidated wholly into notes.checksum_method; the sha256 field carries ONLY the bare 64-char digest; digest VALUE unchanged."

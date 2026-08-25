@@ -1,0 +1,44 @@
+document:
+  id: "DOC-agent-rick-profile"
+  title: "Agent profile — rick (full operating contract)"
+  type: "profile"
+  declared_purpose: "Full operating contract for rick: startup protocol (TKV survey per §5), authority order (§4), test-first lifecycle, sanitization (§11), evidence package format (§12), escalation packet (§14), final gate (§20). Governs all rick sessions including pilot work orders 01/05/24."
+  source:
+    author: "Codex (agent-zero-docs) / adopted by Agent Zero"
+    provided_by: "Agent Zero"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/agents/rick/profile.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T04:50:00Z"
+  owner: "rick (lane); Agent Zero (ratification)"
+  applies_to:
+    hosts: [hxs-1]
+    fqdns: []
+    services: [systemd]
+    agents: [rick]
+    repositories: [HX-ASF-Servers]
+    environments: [fleet, pilot]
+  version: ""
+  status: "active"
+  authority_level: "ratified-governance"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "governs"
+      target: "DOC-pilot-hx1-ev-07-rick-os-readiness"
+      note: "M2 evidence produced under this profile (§12 format)"
+    - predicate: "governs"
+      target: "DOC-pilot-hx1-ev-26-rick-pre-m7-readiness"
+      note: "pre-M7 evidence produced under this profile"
+    - predicate: "references"
+      target: "DOC-tkv-corpus-ubuntu"
+      note: "standing knowledge source"
+  validation:
+    validated_at: "2026-08-25T04:50:00Z"
+    freshness: "current"
+    review_due: "on owner amendment"
+  sha256: "0a663e830f8d168ebd0655371337712a3017adc83ccf8492a58ee6e0255f65e1"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/rick/profile.md"

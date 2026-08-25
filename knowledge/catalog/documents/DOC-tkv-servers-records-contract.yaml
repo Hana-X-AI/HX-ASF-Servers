@@ -1,0 +1,44 @@
+document:
+  id: "DOC-tkv-servers-records-contract"
+  title: "/opt/tkv-local/servers/AGENTS.md — server records contract (Phase 1 discovery, registry sync, Phase 2 configuration rules)"
+  type: "contract"
+  declared_purpose: "Local rules for server discovery and configuration records in /opt/tkv-local/servers: Phase 1 is discovery and documentation only (record as-found facts, mark unavailable facts, never invent, never assign roles); SERVER-REGISTRY.md is fleet-level source of truth for lifecycle and manual role assignment (automation synchronizes factual fields only, never roles/workloads/approvals); configuration.md only in the owner-authorized implementation phase; work guidance (no credentials in records; templates; no per-server child AGENTS.md)."
+  source:
+    author: "HX project (owner governance, Claude Code era)"
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/servers/AGENTS.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T04:50:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: [hxs-1, hxs-2, hxs-3, hxs-4, hxs-5, hxs-6, hxs-7, hxs-8, hxs-9, hxs-10, hxs-11, hxs-12, hxs-13, hxs-14, hxs-15]
+    fqdns: []
+    services: []
+    agents: []
+    repositories: [tkv-local]
+    environments: [fleet]
+  version: ""
+  status: "active"
+  authority_level: "ratified-governance"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "governs"
+      target: "DOC-tkv-hxs1-discovery"
+      note: "discovery.md answers 'what was this server when HX found it'; preserved as historical as-found evidence once accepted"
+    - predicate: "governs"
+      target: "DOC-tkv-server-registry"
+      note: "registry synchronization rules; roles entered only after manual review and approval"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-state-log"
+      note: "state log rows 27–28: per-host TKV records added to controlling sources for all future work orders; hxs-1/configuration.md proposed for M8 (owner-approved, owner-gated phase)"
+  validation:
+    validated_at: "2026-08-25T04:50:00Z"
+    freshness: "current"
+    review_due: "at M8 (hxs-1/configuration.md creation) or on contract change"
+  sha256: "cbe2e6b5f8cf6c7328ec66224b7ce7be1492b84da391b702954f472c29b03b47"
+  canonical_location: "/opt/tkv-local/servers/AGENTS.md"

@@ -1,0 +1,52 @@
+document:
+  id: "DOC-tkv-gov-policy-nvidia-driver-install-directive"
+  title: "/opt/tkv-local/ollama/implementation/archive/HX-Infrastructure-main/governance/policy/nvidia-driver-install-directive.md — archived HX-Infrastructure governance policy: nvidia-driver-install-directive"
+  type: "contract"
+  declared_purpose: "NVIDIA Driver Install Directive — scope: install and validate the NVIDIA driver on the stated hosts (hxs-2 and hxs-3); the owner-approved Phase 1 exception behind the per-host driver-results terminal captures."
+  source:
+    author: "HX project (Claude Code era, HX-Infrastructure repository)"
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/ollama/implementation/archive/HX-Infrastructure-main/governance/policy/nvidia-driver-install-directive.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T06:10:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: [hxs-2, hxs-3]
+    fqdns: []
+    services: []
+    agents: []
+    repositories: [tkv-local, HX-Infrastructure (archived predecessor)]
+    environments: [fleet]
+  version: ""
+  status: "historical"
+  authority_level: "historical-as-found"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "governs"
+      target: "HX-Infrastructure repository (archived) — historical policy"
+      note: "predecessor-repo governance; current factory governance lives in HX-ASF-Servers AGENTS.md — cross-check before applying any rule"
+    - predicate: "governs"
+      target: "DOC-tkv-hxs2-driver-results"
+      note: "post-directive validation capture inside the directive's stated scope (hxs-2/hxs-3), 2026-08-12"
+    - predicate: "governs"
+      target: "DOC-tkv-hxs3-driver-results"
+      note: "post-directive validation capture inside the directive's stated scope (hxs-2/hxs-3), 2026-08-12"
+    - predicate: "references"
+      target: "DOC-tkv-hxs1-driver-results"
+      note: "cross-reference: owner-approved Phase 1 exception BEYOND the directive's stated hxs-2/hxs-3 scope — hxs-1 discovery records the extension openly; related evidence, not governed scope"
+    - predicate: "references"
+      target: "DOC-tkv-hxs4-driver-results"
+      note: "cross-reference: sibling post-directive validation capture (2026-08-12) outside the directive's stated hxs-2/hxs-3 scope; related evidence, not governed scope"
+  validation:
+    validated_at: "2026-08-25T20:15:00Z"
+    freshness: "historical"
+    review_due: "historical record — no review cycle"
+  sha256: "a37b2d90b19bdeccaf8abac0105465707d2e709b82e98e4c0f5aad73ab59abdc"
+  canonical_location: "/opt/tkv-local/ollama/implementation/archive/HX-Infrastructure-main/governance/policy/nvidia-driver-install-directive.md"
+notes:
+  corrections_batch6: "governs relation restructured (batch 6, T10f): the single governs edge 'DOC-tkv-hxs1-driver-results (and hxs-2/3/4 driver-results)' mixed in-scope and out-of-scope hosts. governs now targets ONLY DOC-tkv-hxs2-driver-results and DOC-tkv-hxs3-driver-results — the directive's stated scope (verified in declared_purpose and batch-4 C9). hxs-1/hxs-4 driver-results moved to references relations with cross-reference notes (related evidence outside the governed scope; hxs-1 = separately recorded owner-approved exception per C9). Side effect: the prose-suffixed relation target flagged pre-existing in batch-34 (F-B34-4) is resolved here. The first governs relation (HX-Infrastructure repository) is untouched."

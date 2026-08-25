@@ -1,0 +1,41 @@
+document:
+  id: "DOC-tkv-hxs4-pre-work-results"
+  title: "/opt/tkv-local/servers/hxs-4/pre-work-results.md — hxs-4 pre work results (pre-discovery preparation (2026-08, Phase 1))"
+  type: "pre-work"
+  declared_purpose: "Human preparation record for hxs-4 completed before discovery ran: summary block (server hxs-4, IP 192.168.50.203, FQDN hxs-4.hx.local.arpa, admin account hxsa) followed by verbatim-preserved raw terminal evidence (declared hardware and pre-discovery checks); only the summary was added."
+  source:
+    author: "HX project (Claude Code era); collected read-only over SSH / human preparation record"
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/servers/hxs-4/pre-work-results.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T05:55:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: [hxs-4]
+    fqdns: [hxs-4.hx.local.arpa]
+    services: []
+    agents: []
+    repositories: [tkv-local]
+    environments: [fleet]
+  version: "pre-discovery preparation (2026-08, Phase 1)"
+  status: "historical"
+  authority_level: "historical-as-found"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "describes"
+      target: "hxs-4 (hxs-4.hx.local.arpa, 192.168.50.203)"
+      note: "preserved per the server records contract; verify against the live host before operational use"
+    - predicate: "references"
+      target: "DOC-tkv-server-registry"
+      note: "fleet registry row for hxs-4"
+  validation:
+    validated_at: "2026-08-25T08:20:00Z"
+    freshness: "historical"
+    review_due: "historical record — no review cycle; cross-check before any operational use"
+  sha256: "f74f1f8ad14b43fd01ccaeb8dde47af2031f1b135bdb022fe797a3efb5de0e0b"
+  canonical_location: "/opt/tkv-local/servers/hxs-4/pre-work-results.md"

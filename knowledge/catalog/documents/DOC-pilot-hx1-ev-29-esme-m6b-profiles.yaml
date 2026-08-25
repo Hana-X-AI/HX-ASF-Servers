@@ -1,0 +1,52 @@
+document:
+  id: "DOC-pilot-hx1-ev-29-esme-m6b-profiles"
+  title: "29-esme-m6b-profiles.md — Esme M6b context profiles: named aliases + 64K operating default (PASS — TASK COMPLETE)"
+  type: "evidence"
+  declared_purpose: "M6b evidence (report ESME-M6B-PROFILES-001): knowledge receipt (incl. manifest/manifest.go proof that ollama rm is tags-only when layers are shared — the bare-alias retirement safety basis), drift check 10/10 vs frozen references, three profile aliases created from byte-exact Phase A Modelfiles with digest equality (hx-qwen3.8-27b-32k db2c6206…f645510 recovery baseline; hx-qwen3.8-27b-64k 766cd946…8cc99d8a operating default; hx-qwen3.8-27b-128k 94b83a1e…0dad0260 qualified extended), preload contract repointed to the 64K profile (script MODEL line; hx1.conf OLLAMA_CONTEXT_LENGTH=65536, deployed file byte-identical to the M6 stage-1 drop-in), bare alias hx-qwen3.8-27b retired (tags only), operating-profile residency proven (ctx 65536, 100% GPU 20,463,789,012 B, Forever, both GPUs 11,502+11,888 MiB), AC-009 re-proof, journal clean. Discloses F-M6B-1 (Requires= propagation preloads the operating profile during restarts — expected class), F-M6B-2 (own hx1.conf construction truncation caught pre-deployment by frozen-hash cross-check), F-M6B-3 (journal-count banner artifact)."
+  source:
+    author: "john / Esme (session john-m6b-20260825-01)"
+    provided_by: "john via Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/29-esme-m6b-profiles.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T05:25:00Z"
+  owner: "john"
+  applies_to:
+    hosts: [hxs-1]
+    fqdns: []
+    services: [ollama.service, ollama-preload.service]
+    agents: [john]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+  version: ""
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "evidences"
+      target: "M6b complete — state log row 34 (handoff OPEN pending Carol's catalog receipt — this run)"
+      note: "PASS — TASK COMPLETE; end state is the ratified 64K operating profile, resident and proven"
+    - predicate: "produced_by"
+      target: "john"
+      note: "under DOC-pilot-hx1-wo-27-john-m6b"
+    - predicate: "configures"
+      target: "hxs-1 ollama-preload.service + hx1.conf at the 64K operating profile"
+      note: "preload MODEL=hx-qwen3.8-27b-64k; OLLAMA_CONTEXT_LENGTH=65536 (operator consistency; Modelfile remains the effective contract per PILOT-002)"
+    - predicate: "supersedes"
+      target: "bare alias hx-qwen3.8-27b (retired, tags only; blobs/base preserved)"
+      note: "implements Rev-2's A01 §4.4 bare-alias supersession; inverse = re-create from the 32K Modelfile (deterministic digest)"
+    - predicate: "risks"
+      target: "F-M6B-1 preload auto-load during service restarts (expected class — monitors should not alert); F-M6-3 foreign sessions idle (M7 exclusive window stands)"
+      note: "carried findings F-E2/F-E6/NVRM class/F-M6-5 KV math/parse_kv fixture defect recorded in §13"
+  validation:
+    validated_at: "2026-08-25T05:25:00Z"
+    freshness: "current"
+    review_due: "at M7 (validates the always-on 64K operating profile; 128K profile-switch mechanics are M7 evidence) and M8 evidence index"
+  sha256: "cfc17d93f65acdc20027178cfb5eb0b9dda161ef0e8338d31b5d095217dd3f69"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/29-esme-m6b-profiles.md"
+notes:
+  ingestion_provenance: "Arrived mid-ingestion (M6b executed 2026-08-25T05:00–05:12Z; state log row 34 at 05:16Z). Cataloged in the same run; this receipt satisfies row 34's handoff condition together with row 29's (26-rick-pre-m7-readiness.md)."

@@ -1,0 +1,38 @@
+document:
+  id: "DOC-tkv-skills-claude-code-prompt-html"
+  title: "hx-agent-skills-claude-code-prompt_gpt-5.6-sol_20260813_1735.html — Claude Code Prompt: HX Agent Skills Integration"
+  type: "other"
+  declared_purpose: "GPT-5.6-sol produced Claude Code execution prompt (HTML render, 2026-08-13) for the HX agent-skills integration — the prompt-side companion to the adoption/migration brief of the same date."
+  source:
+    author: "ChatGPT GPT-5.6-sol (consultant artifact)"
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/skills/hx-agent-skills-claude-code-prompt_gpt-5.6-sol_20260813_1735.html"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T06:00:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: []
+    repositories: [tkv-local]
+    environments: [fleet]
+  version: "2026-08-13"
+  status: "historical"
+  authority_level: "historical-as-found"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "references"
+      target: "DOC-tkv-skills-adoption-plan-html"
+      note: "prompt companion to the same-day adoption brief"
+  validation:
+    validated_at: "2026-08-25T06:00:00Z"
+    freshness: "historical"
+    review_due: "historical record — no review cycle"
+  sha256: "3a304d614ada058d656c55b6e66bef18a4a67520effb756dd47f7aefbd6262e3"
+  canonical_location: "/opt/tkv-local/skills/hx-agent-skills-claude-code-prompt_gpt-5.6-sol_20260813_1735.html"

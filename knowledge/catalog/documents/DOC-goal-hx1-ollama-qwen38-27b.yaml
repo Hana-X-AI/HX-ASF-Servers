@@ -1,0 +1,50 @@
+document:
+  id: "DOC-goal-hx1-ollama-qwen38-27b"
+  title: "Goal 2026-08-24-hx1-ollama-qwen38-27b — deploy and validate qwen3.8:27b on hxs-1 via Ollama (mutating pilot)"
+  type: "goal"
+  declared_purpose: "Durable work-state record (Goal ID = file name, KDD-0002): intent, scope, success conditions SC-01..SC-09 with evidence contracts, execution controls, HITL checkpoints, and links. Status in file (updated 2026-08-25): in-progress — M7a PASS 2026-08-25 (AC-007 3/3 cold reboots, 60 s boot-to-ready ×3, kernel 7.0.0-30 + driver re-proven); M7b soak delayed per owner."
+  source:
+    author: "Kimi-K3 (goal record) / Agent Zero (authorization)"
+    provided_by: "Agent Zero"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/goals/2026-08-24-hx1-ollama-qwen38-27b.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T04:50:00Z"
+  owner: "Agent Zero (human authority); Kimi-K3 (governor)"
+  applies_to:
+    hosts: [hxs-1]
+    fqdns: [hxs-1.hx.local.arpa]
+    services: [ollama.service, ollama-preload.service]
+    agents: [kimi-k3, john, rick]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+  version: "1"
+  status: "active"
+  authority_level: "ratified-governance"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "governs"
+      target: "DOC-pilot-hx1-plan"
+      note: "full plan at pilots/PILOT-HX1-OLLAMA-QWEN27B-001/plan.md"
+    - predicate: "depends_on"
+      target: "DOC-kdd-0004-hx1-qwen-pilot-adoption"
+      note: "model baseline qwen3.8:27b (non-MLX, GGUF) ratified here; M3 model-identity HITL satisfied by KDD-0004"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-amendment-a01"
+      note: "A01 adopted 2026-08-25 — plan §6.5 superseded; M5b conformance queued"
+    - predicate: "references"
+      target: "DOC-tkv-server-registry"
+      note: "target identity hxs-1 192.168.50.200, role Deep reasoning & synthesis"
+  validation:
+    validated_at: "2026-08-25T19:27:00Z"
+    freshness: "current"
+    review_due: "at goal close (M8 owner sign-off)"
+  sha256: "daba7e86ebdf4909de1ded5ecde33e47067a1108998127a59f6b5592c214321d"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/goals/2026-08-24-hx1-ollama-qwen38-27b.md"
+notes:
+  hash_history: "69f6193d… (2026-08-25T05:20Z, run 1) → 091daccd… (2026-08-25T05:45Z, run 2) → 7f85657f… (2026-08-25T07:10Z, M7a ingest run) → daba7e86… (2026-08-25T19:27Z, batch-5 re-validation). Change: status line now records M7a PASS (AC-007 3/3, 60 s boot-to-ready ×3, kernel 7.0.0-30 + driver re-proven) and M7b soak owner-delayed. Expected living-document churn flagged by CAT-02 (state log row 37)."
+  corrections_batch5: "F-B5-2 RESOLVED per governor disposition: drift is reference-additions only — the status line now cites evidence 30-esme-m7a-reboot-cycles.md and state log rows 40–42/47, and SC-03 now cites 23-kk3-m6-capacity-decision.md Revision 2 (three ratified profiles: 32K recovery baseline, 64K operating default, 128K qualified extended — selected). Verified against current file; declared_purpose paraphrase remains accurate."

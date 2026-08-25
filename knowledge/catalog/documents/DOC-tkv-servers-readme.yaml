@@ -1,0 +1,38 @@
+document:
+  id: "DOC-tkv-servers-readme"
+  title: "/opt/tkv-local/servers/README.md — server records file set and preservation rules"
+  type: "contract"
+  declared_purpose: "Defines the per-server file set (pre-work-results.md and discovery.md for every discovered server; driver-results.md only where an approved driver directive ran; configuration.md in Phase 2 only) and the preservation rules: never rewrite discovery.md for later configuration (separate section or driver-results.md); raw terminal output in pre-work-results.md is evidence, preserved byte for byte; take IPs from SERVER-REGISTRY.md, not terminal pastes."
+  source:
+    author: "HX project (owner governance, Claude Code era)"
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/servers/README.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T04:50:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: [hxs-1, hxs-2, hxs-3, hxs-4, hxs-5, hxs-6, hxs-7, hxs-8, hxs-9, hxs-10, hxs-11, hxs-12, hxs-13, hxs-14, hxs-15]
+    fqdns: []
+    services: []
+    agents: []
+    repositories: [tkv-local]
+    environments: [fleet]
+  version: ""
+  status: "active"
+  authority_level: "ratified-governance"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "governs"
+      target: "/opt/tkv-local/servers/<hostname>/ file sets"
+      note: "naming/layout rules referenced to governance/policy/documentation-standards.md — cataloged as DOC-tkv-gov-policy-documentation-standards"
+  validation:
+    validated_at: "2026-08-25T08:10:00Z"
+    freshness: "current"
+    review_due: "on contract change"
+  sha256: "74d171b63d60d8b6bd4feb921af3654073cf332d997e2f535792bc83e5753816"
+  canonical_location: "/opt/tkv-local/servers/README.md"

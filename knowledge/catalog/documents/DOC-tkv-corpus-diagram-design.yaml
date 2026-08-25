@@ -1,0 +1,44 @@
+document:
+  id: "DOC-tkv-corpus-diagram-design"
+  title: "/opt/tkv-local/diagram-design — Evaluation wrapper (321 files)"
+  type: "corpus"
+  declared_purpose: "Evaluation wrapper: diagram-design-main upstream snapshot ('Editorial diagrams your designer won't hate', cathrynlavery) plus hx-diagram-design reconnaissance report (Codex, 2026-08-15)."
+  source:
+    author: "UNRESOLVED — conflicting claims preserved: (a) upstream project; (b) HX consultant evaluation (see declared_purpose). No verifiable upstream URL/commit exists (tree is not a git checkout); escalated to Kimi-K3 (batch 7, F-B6-6 residual debt; standing flag F-B6-1 — governor: unresolved is the designed truth state)."
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/diagram-design"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T06:12:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: []
+    repositories: [tkv-local]
+    environments: [fleet]
+  version: ""
+  status: "adopted"
+  authority_level: "historical-as-found"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "references"
+      target: "TKV source-snapshot corpus (owner-directed sweep, state log row 32)"
+      note: "321 files excluding .git internals; deep per-file cataloging on demand via retrieval packages"
+  validation:
+    validated_at: "2026-08-25T21:02:00Z"
+    freshness: "historical"
+    review_due: "2026-09-24 (corpus manifest re-hash) or on any corpus update"
+  sha256: "97f02f80aa0a3feba0fc7074bf9306e06435fdd658c538595731387c2fc2e7fc"
+  canonical_location: "/opt/tkv-local/diagram-design"
+notes:
+  checksum_method: "sha256 = digest of the sorted relative-path file manifest (321 files, names only), NOT content hashes; regenerated 2026-08-25; directory canonical_location preserved. Manifest re-hash scheduled 2026-09-24 (run-1 follow-up) stands. .git internals excluded from the manifest and from cataloging. Form alignment batch 7 (F-B6-6, hxinfra-archive reference form): method/scope/count text consolidated wholly into notes.checksum_method; the sha256 field now carries ONLY the bare 64-char digest; digest VALUE unchanged (names-only manifest retained until a future content-sensitive migration)."
+  upstream_provenance: "upstream URL/commit: unavailable — tree is not a git checkout (no .git metadata present); unpacked archive snapshot"
+  corrections_batch6: "validation.freshness current → historical (batch 6, T9): 'current' was unsupported — evidence is README/local-manifest only; no immutable upstream release/commit exists (tree is not a git checkout). Local-snapshot truth state per the batch-4 wrapper convention (sap C7 reclassification; harness-research pattern; the C6 HX-evaluation splits entered at historical). validated_at, review_due, checksum, and provenance notes preserved unchanged per the governor disposition."
+  truth_state: "unverified local snapshot; upstream URL/commit missing — escalated (batch 7, F-B6-6; standing flag F-B6-1)"
+  corrections_batch7: "F-B6-6(a) APPLIED (governor disposition): legacy ambiguous author line replaced with the batch-6 T8 treatment — BOTH claims preserved explicitly as UNRESOLVED (no verifiable upstream URL/commit; tree is not a git checkout); authority_level upstream-reference -> historical-as-found per the unverified-local-snapshot convention; notes.truth_state marker added. freshness stays historical (batch-6 T9); status adopted unchanged — outside this disposition scope (flagged to the governor: the F-B6-2 task-1 family moved to status historical; these six did not). Same run: sha256 form-aligned to the bare digest (F-B6-6(b)); value unchanged."

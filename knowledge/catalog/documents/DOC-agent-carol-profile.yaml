@@ -1,0 +1,47 @@
+document:
+  id: "DOC-agent-carol-profile"
+  title: "Agent profile — carol (full operating contract; governs knowledge/catalog/)"
+  type: "profile"
+  declared_purpose: "Full operating contract for carol: catalog store layout, record schema (§3), responsibilities (§4), retrieval packages (§5), security boundary (§6), catalog receipts (§7), handoff integration (§8), truth and conflict rules (§9), working procedure (§10), standing directives (§11). Ratified by owner amendment 2026-08-25."
+  source:
+    author: "Kimi-K3 (drafting/instantiation) / ratified by Agent Zero owner amendment 2026-08-25"
+    provided_by: "Agent Zero"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/agents/carol/profile.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T04:50:00Z"
+  owner: "carol (lane); Agent Zero (ratification)"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: [carol, kimi-k3]
+    repositories: [HX-ASF-Servers]
+    environments: [fleet]
+  version: "ratified 2026-08-25"
+  status: "active"
+  authority_level: "ratified-governance"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "governs"
+      target: "knowledge/catalog/ (schema.yaml, index.yaml, documents/, receipts/)"
+      note: "this profile is the catalog's governing contract; schema.yaml defers to §3"
+    - predicate: "depends_on"
+      target: "DOC-repo-governance-agents-md"
+      note: "owner amendment 2026-08-25 (Documentation Governance and Knowledge Stewardship)"
+  validation:
+    validated_at: "2026-08-25T21:24:00Z"
+    freshness: "current"
+    review_due: "on owner amendment"
+  sha256: "cf027c04329a199ba524479630c75bb4885b678b6b9fffadf3994a1e09e57adf"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/carol/profile.md"
+notes:
+  review_batch_update: "2026-08-25 review batch (state log row 33): receipt filename pattern fixed to <timestamp>-carol-<action>-<slug>.md; status enum gained 'rejected' and the schema gained the 'charter' type and rejection_reason. This run's receipt name complies."
+  hash_history: "94e894a5… (run 1, 04:50Z) → 77384cfe… (row-33 review batch, validated 05:20Z) → 0d9ebdab… (2026-08-25T07:10Z) → 179946e3… (2026-08-25T08:35Z, batch-34 correction run) → 25eac583… (2026-08-25T19:27Z, batch-5 re-validation) → ca8bb59c… (2026-08-25T21:02Z, batch-7 re-validation) → cf027c04… (2026-08-25T21:24Z, final re-validation). Latest change: governor predicate-enum extension — 'assesses' added to the §3 record template relation-predicate comment (F-B7-1 resolution, see predicate_enum_extension note). Declared_purpose re-verified against current content — unchanged."
+  corrections_batch5: "F-B5-1 RESOLVED per governor disposition: the post-restore sha256 mismatch is fully explained by governor review-batch-5 edits per review findings — motivational slogan removed (line 34) and Mermaid handoff workflow added to §8. Verified against current file content (no slogan present; §8 mermaid flowchart present). No unknown actor involved."
+  corrections_batch7: "F-B6-3 re-validation (governor drift, dispositioned batch 7): the governor added the charter type to the §3 record template type comment (verified present 2026-08-25). Re-hashed 25eac583… -> ca8bb59c…. Record fields re-checked against the current source — no field changes required; declared_purpose already covers the §3 template content."
+  predicate_enum_extension: "F-B7-1 RESOLVED by governor 2026-08-25T21:21Z: 'assesses' added to the relation-predicate enum — both in knowledge/catalog/schema.yaml (schema v1, predicate enum) and mirrored in this profile's §3 record template predicate comment (verified present in both at re-validation 2026-08-25T21:24Z). Flag origin: batch-7 run — DOC-assessment-hx-second-brain-guidance-001-review had to use enum-nearest 'references' with an inline ASSESSES note because 'assesses' was not a schema v1 predicate. Re-hashed ca8bb59c… -> cf027c04…. No other profile content changed."

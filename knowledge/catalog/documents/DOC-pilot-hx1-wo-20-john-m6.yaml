@@ -1,0 +1,49 @@
+document:
+  id: "DOC-pilot-hx1-wo-20-john-m6"
+  title: "20-work-order-john-m6.yaml — WO-HX1-JOHN-M6-001 (M6: 65,536 and 131,072 capacity ladder, owner-directed)"
+  type: "work-order"
+  declared_purpose: "Delegated contract commissioning john/Esme (session john-m6-20260825-01) to qualify the 65,536 and owner-directed 131,072 context stages: versioned config changes per stage, capacity proofs (no OOM, no unapproved CPU fallback, needle at ~95%), full D8 quality re-runs, plan §5.4 benchmarks, and exact end-state restoration to the M5b-frozen 32K baseline; deliverable 22-esme-m6-capacity-ladder.md. Amended 2026-08-25 with the F-M5B-1 controlled-unload step (state log row 22)."
+  source:
+    author: "Kimi-K3 (governor)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/20-work-order-john-m6.yaml"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T04:50:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: [hxs-1, hxs-5]
+    fqdns: []
+    services: [ollama.service, ollama-preload.service]
+    agents: [john, kimi-k3]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+  version: "amended (F-M5B-1 controlled-unload step; state log row 22)"
+  status: "adopted"
+  authority_level: "delegated-contract"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "kimi-k3"
+      note: "prepared row 19 (hash dd1e8e59…), amended and dispatched row 22 (hash d3b82a5c… = current file); chain intact"
+    - predicate: "depends_on"
+      target: "DOC-pilot-hx1-ev-19-esme-m5b-conformance"
+      note: "prerequisite: M5b PASSED (Phase A frozen baseline + fixtures)"
+    - predicate: "governs"
+      target: "DOC-pilot-hx1-ev-22-esme-m6-capacity-ladder"
+      note: "paired deliverable feeding the KK3 M6 freeze decision"
+    - predicate: "depends_on"
+      target: "DOC-protected-ssh-info-hxs1"
+      note: "askpass execution path"
+  validation:
+    validated_at: "2026-08-25T04:50:00Z"
+    freshness: "current"
+    review_due: "not applicable — discharged contract (M6 complete row 24; decision row 25)"
+  sha256: "d3b82a5c7fc002ce06b54908346b5a1e8866c9455199c5c9a89c4dd736bf9147"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/20-work-order-john-m6.yaml"
+notes:
+  assigned_agent_call_sign: "Esme = john (pilot call sign, not a roster entry)"

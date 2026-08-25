@@ -1,0 +1,46 @@
+document:
+  id: "DOC-pilot-hx1-cp-11-john-m4"
+  title: "11-context-packet-john-m4.yaml — context packet for WO-HX1-JOHN-M4-001 (session john-m4-20260825-01)"
+  type: "context-packet"
+  declared_purpose: "Session-binding packet for the M4 john/Esme dispatch: controlling sources (john profile, plan §§2.2/4/5/6.5/10, WO-10, 08 risk handoff, 07 readiness, ollama corpus), host baseline (incl. kernel 7.0.0-30 pending at next reboot, DKMS pre-built), owner decisions KDD-0004/D1/D5/D6, loopback-only constraint, PILOT-002 num_ctx contract note, evidence required (12, 13)."
+  source:
+    author: "Kimi-K3 (governor)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/11-context-packet-john-m4.yaml"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T04:50:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: [hxs-1, hxs-5]
+    fqdns: []
+    services: [ollama.service]
+    agents: [john, kimi-k3]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+  version: ""
+  status: "adopted"
+  authority_level: "delegated-contract"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "kimi-k3"
+      note: "state log row 11; hash matches"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-wo-10-john-m4"
+      note: "paired work order"
+    - predicate: "references"
+      target: "DOC-tkv-corpus-ollama"
+      note: "controlling source (local on hxs-5)"
+  validation:
+    validated_at: "2026-08-25T04:50:00Z"
+    freshness: "current"
+    review_due: "not applicable — discharged (M4 complete)"
+  sha256: "3c8f46230ccb5807a9651f855bb436f0e64452d0556e907e7c652bd4777a5e7d"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/11-context-packet-john-m4.yaml"
+notes:
+  assigned_agent_call_sign: "Esme = john (pilot call sign, not a roster entry)"

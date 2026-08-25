@@ -1,0 +1,43 @@
+document:
+  id: "DOC-tkv-gitdiagram-hx-evaluation"
+  title: "/opt/tkv-local/gitdiagram (HX side) — HX evaluation material for GitDiagram"
+  type: "corpus"
+  declared_purpose: "HX evaluation material sharing the /opt/tkv-local/gitdiagram wrapper tree, partitioned out of DOC-tkv-corpus-gitdiagram 2026-08-25 (governor batch C6): hx-gitdiagram-reconnaissance-report_codex_20260815_0424.html (Codex, 2026-08-15). HX consultant work product — NOT upstream GitDiagram authority."
+  inferred_value: "INFERENCE: background value only — a single reconnaissance report from the 2026-08 evaluation wave; no pilot or deployment decision cites it in the catalog."
+  source:
+    author: "Codex (HX consultant evaluation)"
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/gitdiagram (excluding gitdiagram-main)"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T08:00:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: []
+    repositories: [tkv-local]
+    environments: [fleet]
+  version: "evaluation wave 2026-08-15"
+  status: "historical"
+  authority_level: "historical-as-found"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "describes"
+      target: "DOC-tkv-corpus-gitdiagram"
+      note: "HX reconnaissance on the upstream GitDiagram snapshot; evaluation content is consultant work, not upstream authority (partition C6)"
+  validation:
+    validated_at: "2026-08-25T21:02:00Z"
+    freshness: "historical"
+    review_due: "2026-09-24 (corpus manifest re-hash) or on any corpus update"
+  sha256: "fbfd8ec608c25705fa4318e2275906cabf3dba9d253f3390ab1da9a4c2c12a56"
+  canonical_location: "/opt/tkv-local/gitdiagram"
+notes:
+  partition_scope: "Record covers /opt/tkv-local/gitdiagram EXCLUDING the gitdiagram-main upstream snapshot (cataloged as DOC-tkv-corpus-gitdiagram). Manifest computed with gitdiagram-main and .git paths pruned."
+  checksum_method: "sha256 = digest of the sorted relative-path file manifest (1 files, names only), NOT content hashes; regenerated 2026-08-25; directory canonical_location preserved. Form alignment batch 7 (F-B6-6, hxinfra-archive reference form): method/scope/count text consolidated wholly into notes.checksum_method; the sha256 field now carries ONLY the bare 64-char digest; digest VALUE unchanged (names-only manifest retained until a future content-sensitive migration)."
+  upstream_provenance: "upstream URL/commit: not applicable — HX-side material."

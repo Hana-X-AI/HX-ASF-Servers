@@ -1,0 +1,41 @@
+document:
+  id: "DOC-knowledge-issues"
+  title: "knowledge/issues.md — open issues and action items"
+  type: "other"
+  declared_purpose: "Single-file register of open issues/action items (newest first, dated, closed with resolution note). Open at ingestion: HX file-naming convention draft (Kimi-K3); D1 OmniRoute remote-consumption mechanism (Agent-Zero, open since 2026-08-14); D2 Ollama source baseline for hxs-4 (corpus 0.32.11 vs installed 0.32.9); D3 default-context contract (OLLAMA_CONTEXT_LENGTH inert vs num_ctx)."
+  source:
+    author: "Kimi-K3 (register keeper)"
+    provided_by: "Agent Zero"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/knowledge/issues.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T04:50:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: [hxs-4]
+    fqdns: []
+    services: [ollama.service]
+    agents: [kimi-k3]
+    repositories: [HX-ASF-Servers]
+    environments: [fleet]
+  version: ""
+  status: "active"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "risks"
+      target: "hxs-4 Ollama network exposure"
+      note: "D1 must be decided before any exposure of hxs-4 Ollama (PILOT-002 lineage)"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-plan"
+      note: "D3 context-contract issue is cited by plan §4.2 rule 2 (Modelfile num_ctx is the contract)"
+  validation:
+    validated_at: "2026-08-25T04:50:00Z"
+    freshness: "current"
+    review_due: "2026-09-01 or on item change"
+  sha256: "6b22c6a6f02a8751c510b5da6b9ab63cca74a427fe888b560e1c5dbc3894a213"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/knowledge/issues.md"

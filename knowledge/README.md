@@ -7,6 +7,8 @@ or lesson matters beyond one conversation, it lives here.
 
 - `decisions/KDD-NNNN-<slug>.md` — Key Decision Documents, one per decision, numbered
   in order. Never renumber.
+- `catalog/` — the second brain: Carol's provenance-backed document catalog
+  (records, index, receipts). See `catalog/README.md`.
 - `issues.md` — open issues and action items. One file until it hurts.
 - `lessons-learned.md` — what we learned and what changes because of it.
 

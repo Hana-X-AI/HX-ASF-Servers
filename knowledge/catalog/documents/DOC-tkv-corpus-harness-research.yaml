@@ -1,0 +1,46 @@
+document:
+  id: "DOC-tkv-corpus-harness-research"
+  title: "/opt/tkv-local/Harness — HX research/evaluation collection on agentic SDLC and DeepSeek Harness (NOT an upstream snapshot) (31 files)"
+  type: "corpus"
+  declared_purpose: "Verified file inventory (directory listing re-verified 2026-08-25; 31 files): 'An AI led SDLC Building.md', 'Building an Agentic SDLC on Amazon.md', 'What Is DeepSeek Harness.md', 'Quick-Notes.md', 'Quick-Notes-2.md', 'DeepSeek-Harness.md', 'DeepSeek-Harness.txt', 'codex_20260816_1242_hx-agentic-sdlc-strategic-pivot-report.html', 'deepseek_harness_research_analysis.html', 'hx-agentic-sdlc-harness-engineering-holistic-p0-directive-codex-gpt-5-2026-08-16-1742.html', 'hx-agentic-sdlc-recovered-sources-recon_codex_20260816_2205.html', 'hx-deepseek-harness-recon-codex-gpt-5-2026-08-16-1559.html', plus subdirectories Implementation/, skill-6a7f8b4273b48191be98fea3e26e9f80/, skill-6a7f913b08dc8191b441b061f171ca1f/."
+  inferred_value: "INFERENCE: an HX research/evaluation collection on agentic SDLC and DeepSeek Harness — collection purpose interpreted from filenames (no declaring README in the tree); not an upstream snapshot (no upstream source tree present in the verified inventory)."
+  source:
+    author: "UNRESOLVED — conflicting claims preserved: (a) upstream project; (b) HX consultant evaluation (see declared_purpose). No verifiable upstream URL/commit exists (tree is not a git checkout); escalated to Kimi-K3 (batch 7, F-B6-6 residual debt; standing flag F-B6-1 — governor: unresolved is the designed truth state)."
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/Harness"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T06:12:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: []
+    repositories: [tkv-local]
+    environments: [fleet]
+  version: ""
+  status: "historical"
+  authority_level: "historical-as-found"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "references"
+      target: "TKV source-snapshot corpus (owner-directed sweep, state log row 32)"
+      note: "31 files excluding .git internals; deep per-file cataloging on demand via retrieval packages"
+  validation:
+    validated_at: "2026-08-25T21:02:00Z"
+    freshness: "historical"
+    review_due: "2026-09-24 (corpus manifest re-hash) or on any corpus update"
+  sha256: "5b8d658c7a101331a6c70398f9ffe1762716ba9480cc746c42124254096a3124"
+  canonical_location: "/opt/tkv-local/Harness"
+notes:
+  checksum_method: "sha256 = digest of the sorted relative-path file manifest (31 files, names only), NOT content hashes; regenerated 2026-08-25; directory canonical_location preserved. Manifest re-hash scheduled 2026-09-24 (run-1 follow-up) stands. .git internals excluded from the manifest and from cataloging. Form alignment batch 7 (F-B6-6, hxinfra-archive reference form): method/scope/count text consolidated wholly into notes.checksum_method; the sha256 field now carries ONLY the bare 64-char digest; digest VALUE unchanged (names-only manifest retained until a future content-sensitive migration)."
+  upstream_provenance: "upstream URL/commit: unavailable — tree is not a git checkout (no .git metadata present); unpacked archive snapshot"
+  context: "Purpose partly INFERENCE (no root README): an HX research folder backing the DeepSeek Harness evaluation."
+  corrections_batch6: "declared_purpose restricted to the verified file inventory (batch 6, T10d; directory listing re-verified 2026-08-25 — 31 files, 12 top-level documents + 3 subdirectories, matching the manifest count). The collection-purpose interpretation ('HX research/evaluation collection on agentic SDLC and DeepSeek Harness, not an upstream snapshot') moved to inferred_value with the INFERENCE label per the truth-state convention. notes.context preserved unchanged."
+  truth_state: "unverified local snapshot; upstream URL/commit missing — escalated (batch 7, F-B6-6; standing flag F-B6-1)"
+  corrections_batch7: "F-B6-6(a) APPLIED (governor disposition): legacy ambiguous author line replaced with the batch-6 T8 treatment — BOTH claims preserved explicitly as UNRESOLVED; notes.truth_state marker added. authority_level was already historical-as-found; status/freshness historical — unchanged. Same run: sha256 form-aligned to the bare digest (F-B6-6(b)); value unchanged."

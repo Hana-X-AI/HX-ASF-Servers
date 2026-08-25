@@ -1,0 +1,38 @@
+document:
+  id: "DOC-tkv-gov-policy-risk-acceptances"
+  title: "/opt/tkv-local/ollama/implementation/archive/HX-Infrastructure-main/governance/policy/risk-acceptances.md — archived HX-Infrastructure governance policy: risk-acceptances"
+  type: "contract"
+  declared_purpose: "Risk acceptances register — records risks that remain present but are explicitly accepted for a limited scope and duration; an accepted risk is not resolved; defines the register's status values."
+  source:
+    author: "HX project (Claude Code era, HX-Infrastructure repository)"
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/ollama/implementation/archive/HX-Infrastructure-main/governance/policy/risk-acceptances.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T06:10:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: []
+    repositories: [tkv-local, HX-Infrastructure (archived predecessor)]
+    environments: [fleet]
+  version: ""
+  status: "historical"
+  authority_level: "historical-as-found"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "governs"
+      target: "HX-Infrastructure repository (archived) — historical policy"
+      note: "predecessor-repo governance; current factory governance lives in HX-ASF-Servers AGENTS.md — cross-check before applying any rule"
+  validation:
+    validated_at: "2026-08-25T06:10:00Z"
+    freshness: "historical"
+    review_due: "historical record — no review cycle"
+  sha256: "c8a73207d41ff95c7a9829ccbd0794f4119c59fdb186b7ea22231be94fc00f02"
+  canonical_location: "/opt/tkv-local/ollama/implementation/archive/HX-Infrastructure-main/governance/policy/risk-acceptances.md"

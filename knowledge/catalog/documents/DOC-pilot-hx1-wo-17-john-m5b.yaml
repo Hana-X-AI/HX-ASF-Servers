@@ -1,0 +1,52 @@
+document:
+  id: "DOC-pilot-hx1-wo-17-john-m5b"
+  title: "17-work-order-john-m5b.yaml — WO-HX1-JOHN-M5B-001 (M5b: Amendment A01 conformance)"
+  type: "work-order"
+  declared_purpose: "Delegated contract commissioning john/Esme (session john-m5b-20260825-01) to bring the pilot into A01 conformance: rebuild alias hx-qwen3.8-27b to the A01 §4.2 Phase A Modelfile verbatim (no sampling parameters), re-freeze identity, label the M4 alias digest and Modelfile hash SUPERSEDED, capability-probe Ollama's actual reasoning controls (HONORED/UNSUPPORTED, never inferred), and re-run the D8 quality suites for acceptance; deliverable 19-esme-m5b-amendment-conformance.md."
+  source:
+    author: "Kimi-K3 (governor)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/17-work-order-john-m5b.yaml"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T04:50:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: [hxs-1, hxs-5]
+    fqdns: []
+    services: [ollama.service, ollama-preload.service]
+    agents: [john, kimi-k3]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+  version: ""
+  status: "adopted"
+  authority_level: "delegated-contract"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "kimi-k3"
+      note: "issued at state log row 18 (2026-08-25T02:08Z); hash matches row 18 record"
+    - predicate: "depends_on"
+      target: "DOC-pilot-hx1-amendment-a01"
+      note: "governing document (A01 §4.1, §4.2, §5, §6, §7)"
+    - predicate: "governs"
+      target: "DOC-pilot-hx1-ev-19-esme-m5b-conformance"
+      note: "paired deliverable — the pilot's 32K ACCEPTANCE evidence per A01"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-ev-16-esme-m5-validation"
+      note: "M5 fixtures reused unchanged; M5 results = sampled-profile comparison, NOT acceptance"
+    - predicate: "depends_on"
+      target: "DOC-protected-ssh-info-hxs1"
+      note: "askpass execution path; F-M5-1 stdin-sequencing note embedded"
+  validation:
+    validated_at: "2026-08-25T04:50:00Z"
+    freshness: "current"
+    review_due: "not applicable — discharged contract (M5b complete row 20)"
+  sha256: "1c91030bb8c0c231fb4c325d12970bc1bdc1f752974372c294052ae0edf7c830"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/17-work-order-john-m5b.yaml"
+notes:
+  assigned_agent_call_sign: "Esme = john (pilot call sign, not a roster entry)"

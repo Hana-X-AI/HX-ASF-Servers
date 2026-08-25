@@ -1,0 +1,50 @@
+document:
+  id: "DOC-tkv-ollama-hx-research"
+  title: "/opt/tkv-local/ollama (HX side) — HX research syntheses, runtime-validation fixtures, deployment implementation, and historical host reports inside the ollama tree"
+  type: "corpus"
+  declared_purpose: "HX-side material sharing the /opt/tkv-local/ollama tree, partitioned out of DOC-tkv-corpus-ollama 2026-08-25 (governor batch C5): research/ hx-research syntheses (2026-08-17, claude-opus-5: qwen38-27b serving/capability fit, quantization ladder and artifact resolution, inference performance third-party, CUDA driver runtime requirements hxs-1, hxs-1 model storage architecture); implementation/ deployment implementation (docs/, hx-design-artifacts/, hx-ai-infrastructure-roadmap/, knowledge-site/, hx-sdd-cicd-process.md, and archive/HX-Infrastructure-main carrying the tests/ai-runtime fixtures and acceptance contract); top-level document packets (codex 2026-08-17 qwen38-27b deployment deep-dive, codex 2026-08-18 platform bootstrap/directive recon, chatgpt 2026-08-18 infrastructure document packet zip). This material is HX consultant/agent work — NOT upstream Ollama authority."
+  inferred_value: "INFERENCE: primary value is as cross-check and deployment-history material for the hxs-1 pilot; the ai-runtime fixtures and acceptance contract are consumed as validation references in john's M4/M5 receipts (agent-evidence usage), while the research syntheses are historical consultant output to be verified against live evidence before reuse."
+  source:
+    author: "HX research synthesis and deployment work (Claude Code era: claude-opus-5, codex, chatgpt consultants); mirrored into /opt/tkv-local by Agent Zero"
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/ollama (research/, implementation/, top-level packets — excluding ollama-main)"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T07:55:00Z"
+  owner: "Agent Zero (vault); john (assigned consumer)"
+  applies_to:
+    hosts: [hxs-1, hxs-5]
+    fqdns: []
+    services: [ollama.service]
+    agents: [john]
+    repositories: [tkv-local]
+    environments: [fleet, pilot]
+  version: "research syntheses 2026-08-17; implementation/archive = Claude Code era snapshot"
+  status: "historical"
+  authority_level: "historical-as-found"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "describes"
+      target: "DOC-tkv-corpus-ollama"
+      note: "the HX research syntheses and deployment implementation evaluate and operate on the upstream ollama-main snapshot; local research is NOT upstream authority (partition C5)"
+    - predicate: "contains"
+      target: "DOC-tkv-hxinfra-archive"
+      note: "the archived HX-Infrastructure repository snapshot physically lives in this subtree at implementation/archive/HX-Infrastructure-main (predicate 'contains' beyond schema enum, per governor C5 disposition)"
+    - predicate: "evidences"
+      target: "john M4/M5 runtime validation (12, 16, 19 receipts)"
+      note: "tests/ai-runtime fixtures and acceptance contract consumed as validation references (agent-evidence usage of historical material)"
+  validation:
+    validated_at: "2026-08-25T21:02:00Z"
+    freshness: "historical"
+    review_due: "2026-09-24 or on any corpus update (re-hash manifest)"
+  sha256: "506285a52eb063ef0d371bc78c4202a8761a997d23b5bb1ae08edad0702d1750"
+  canonical_location: "/opt/tkv-local/ollama"
+notes:
+  partition_scope: "Record covers /opt/tkv-local/ollama EXCLUDING the ollama-main upstream snapshot (cataloged as DOC-tkv-corpus-ollama). Manifest computed over the tree with ollama-main and .git paths pruned."
+  checksum_method: "sha256 = digest of a CONTENT-SENSITIVE manifest (regenerated 2026-08-25, batch 7): for every in-scope file one line '<sha256 of file contents>  <relative-path>' (sha256sum two-space text format), lines sorted byte-wise (LC_ALL=C) by relative path, the manifest text (trailing newline) digested — per-file content hashing makes content changes detectable, unlike the prior names-only manifest. Scope preserved: /opt/tkv-local/ollama EXCLUDING the ollama-main upstream snapshot and .git internals (see partition_scope; 432 files). Supersedes the prior names-only manifest digest bad24efb60d4b574d59a3dd1c785b75c40757dfa1b7aecd81bfff18c78640d13 (form-aligned per F-B6-6(b), then replaced same run per the batch-7 content-sensitive finding). Directory canonical_location preserved."
+  upstream_provenance: "upstream URL/commit: unavailable — HX-side material; no .git metadata present in these subtrees."
+  authority_caution: "Never cite this material as upstream Ollama authority; upstream claims resolve to DOC-tkv-corpus-ollama (snapshot) or live API evidence."

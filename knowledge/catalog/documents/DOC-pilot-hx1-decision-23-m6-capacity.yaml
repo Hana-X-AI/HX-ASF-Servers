@@ -1,0 +1,58 @@
+document:
+  id: "DOC-pilot-hx1-decision-23-m6-capacity"
+  title: "23-kk3-m6-capacity-decision.md — M6 capacity decision record (KK3 gate), REVISION 2: three qualified context profiles"
+  type: "decision"
+  declared_purpose: "KK3 M6 gate decision, REVISION 2 (owner directive 2026-08-25) governing: 32,768 = frozen ratified recovery/reference baseline (alias hx-qwen3.8-27b-32k); 65,536 = preferred always-on operating profile (hx-qwen3.8-27b-64k); 131,072 = qualified extended-context profile, explicitly selected, not the universal default (hx-qwen3.8-27b-128k); 262,144 still unproven and outside the pilot. Records the ladder matrix (32K needle corrected to 30,015 tok Phase A per review finding), owner-mandated precision sentence (no measured accuracy regression in the needle test and D8 suites — not blanket immunity), HX-1 == hxs-1 identity declaration, owner-ratified 128K harness requirements (240 s first-content timeout, progress telemetry, admission control, warm/cold latency split), recorded supersessions (A01 §4.3 131,072-row promoted; A01 §4.4 bare-alias identity superseded by profile-named aliases; M6 v1 single-context freeze superseded BEFORE EXECUTION), and the M7 implication (validate the always-on 64K operating profile + profile-switch mechanics; fallback 32K recovery)."
+  source:
+    author: "Kimi-K3 (governor); Revision 2 by owner directive"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/23-kk3-m6-capacity-decision.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T04:50:00Z"
+  owner: "Kimi-K3 (gate authority); Agent Zero (Revision 2 disposition)"
+  applies_to:
+    hosts: [hxs-1]
+    fqdns: []
+    services: [ollama.service, ollama-preload.service]
+    agents: [kimi-k3, john, rick]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+  version: "Revision 2 (2026-08-25, hash 1bc756cb…); v1 superseded before execution"
+  status: "active"
+  authority_level: "delegated-contract"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "decides"
+      target: "three-profile context disposition: 32K recovery / 64K operating / 128K qualified-extended (aliases hx-qwen3.8-27b-32k/-64k/-128k)"
+      note: "authority: owner directive 2026-08-25; plan §8 M6, §12; goal SC-03; A01 §4.3. v1 (freeze 131,072 conditional on M7, fallback 65,536) SUPERSEDED BEFORE EXECUTION — preserved in-file with superseded markers"
+    - predicate: "supersedes"
+      target: "A01 §4.3 131,072 'separate experiment' row and A01 §4.4 bare-alias monitoring identity"
+      note: "recorded in Rev-2 'Supersessions recorded': 131,072 promoted to qualified extended profile; preload/monitoring reference the active profile alias (default hx-qwen3.8-27b-64k)"
+    - predicate: "depends_on"
+      target: "DOC-pilot-hx1-ev-22-esme-m6-capacity-ladder"
+      note: "ladder matrix evidence (unchanged by Rev-2)"
+    - predicate: "depends_on"
+      target: "DOC-pilot-hx1-ev-19-esme-m5b-conformance"
+      note: "32K acceptance evidence (needle 30,015 tok — corrected figure)"
+    - predicate: "depends_on"
+      target: "DOC-pilot-hx1-ev-16-esme-m5-validation"
+      note: "sampled-profile comparison evidence"
+    - predicate: "governs"
+      target: "DOC-pilot-hx1-wo-27-john-m6b"
+      note: "M6b implements Rev-2: profile aliases, 64K preload/monitoring repoint, bare-alias retirement"
+    - predicate: "governs"
+      target: "M7 scope: always-on 64K operating profile validation (soak + 3 owner-approved reboots) + 128K profile-switch mechanics; fallback 32K recovery"
+      note: "supersedes the v1 M7-ratification text; exclusive-window and reboot-approval entry conditions stand"
+  validation:
+    validated_at: "2026-08-25T05:20:00Z"
+    freshness: "current"
+    review_due: "at M7 completion — operating profile confirmed or fallback to 32K recovery baseline"
+  sha256: "1bc756cbcc50f26317f0c5fac65e434987c67d098d0b6b34ae6983780439f9e9"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/23-kk3-m6-capacity-decision.md"
+notes:
+  revision_history: "v1 (freeze num_ctx 131,072 single operating context, conditional on M7; fallback 65,536) hashed 2925b26c… at first ingestion 04:50Z; Revision 2 (owner profile disposition, state log row 30, hash 7cb2dc31…) superseded v1 before execution 2026-08-25T04:57Z; review-batch correction (state log row 33) fixed the 32K needle cell to 30,015 and marked v1 Constraints/Fallback sections superseded — current hash 1bc756cb…. Chain preserved, nothing rewritten silently."

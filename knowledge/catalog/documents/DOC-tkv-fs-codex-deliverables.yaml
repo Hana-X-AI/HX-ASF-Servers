@@ -1,0 +1,40 @@
+document:
+  id: "DOC-tkv-fs-codex-deliverables"
+  title: "/opt/tkv-local/file-share/codex-deliverables/ — Canonical delivery location for Codex-created HX-Infrastructure documents (readme revision 1.3, 2026-08-19) (58 files)"
+  type: "corpus"
+  declared_purpose: "Canonical delivery location for Codex-created HX-Infrastructure documents (readme revision 1.3, 2026-08-19): core structure instantiated, document pairing enforced, owner-authorized coordination folders and shared glossary registered; codex_YYYYMMDD_HHMM naming standard; categories 00-agent-zero through 08-operations plus 99-archive, from-claude, read-first."
+  source:
+    author: "HX project (Claude/Codex era) or named consultant model"
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/file-share/codex-deliverables"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T06:05:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: []
+    repositories: [tkv-local]
+    environments: [fleet]
+  version: ""
+  status: "historical"
+  authority_level: "historical-as-found"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "describes"
+      target: "HX-Infrastructure era document exchange and staging area"
+      note: "bulk collection; catalog at directory level per sweep scope rules — deep per-file cataloging on demand via retrieval packages"
+  validation:
+    validated_at: "2026-08-25T06:05:00Z"
+    freshness: "historical"
+    review_due: "historical record — no review cycle"
+  sha256: "DIRECTORY-RECORD — see notes.checksum_limitation"
+  canonical_location: "/opt/tkv-local/file-share/codex-deliverables"
+notes:
+  checksum_limitation: "Directory-level corpus record: no content sha256 (directory canonical_location). Covered by the corpus manifest re-hash scheduled 2026-09-24 (run-1 follow-up)."

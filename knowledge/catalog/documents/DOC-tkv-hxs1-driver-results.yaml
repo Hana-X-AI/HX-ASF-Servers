@@ -1,0 +1,43 @@
+document:
+  id: "DOC-tkv-hxs1-driver-results"
+  title: "/opt/tkv-local/servers/hxs-1/driver-results.md — hxs-1 NVIDIA driver validation terminal capture (2026-08-12)"
+  type: "driver-results"
+  declared_purpose: "Raw terminal evidence of the approved post-discovery NVIDIA driver state on hxs-1 (2026-08-12 16:21Z): nvidia-smi 580.173.02 / CUDA 13.0, both RTX 4070 Ti SUPER at 0000:02:00.0 and 0000:81:00.0 with 16376 MiB each, driver binding nvidia (i915 on the Intel iGPU), module version/license, kernel log excerpt (module verification failed — expected with Secure Boot disabled; no Xid). Captured under the owner-extended driver directive (beyond its hxs-2/hxs-3 scope, recorded as approved Phase 1 exception in discovery.md)."
+  source:
+    author: "HX project (terminal capture, Claude Code era)"
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/servers/hxs-1/driver-results.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T04:50:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: [hxs-1]
+    fqdns: []
+    services: []
+    agents: []
+    repositories: [tkv-local]
+    environments: [fleet]
+  version: "captured 2026-08-12"
+  status: "historical"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "evidences"
+      target: "nvidia-driver-580-server-open 580.173.02 working on hxs-1 (2026-08-12)"
+      note: "driver retained per owner decision D3 (2026-08-24) and re-validated by pilot M2/pre-M7 through 2026-08-25 — core claim consistent with current state"
+    - predicate: "describes"
+      target: "hxs-1 GPU/driver state post-directive"
+      note: "point-in-time capture; live state may differ (kernel 7.0.0-30 staged at ingestion)"
+  validation:
+    validated_at: "2026-08-25T21:02:00Z"
+    freshness: "historical"
+    review_due: "historical record — no review cycle; verify against live host before operational use"
+  sha256: "e5793ecf4901a9658fa36c2b0b4ab643368b13016141e20b205fc3bb6804b76f"
+  canonical_location: "/opt/tkv-local/servers/hxs-1/driver-results.md"
+notes:
+  corrections_batch7: "F-B6-4 APPLIED (governor disposition): authority_level historical-as-found -> agent-evidence — VERIFIED the same post-change validation-capture class as the hxs-2/3/4 records corrected in batch-6 T10h: capture date 2026-08-12 16:21Z (source mtime 2026-08-12 16:21:53Z, same capture wave as hxs-2 16:20:58Z / hxs-3 16:19:59Z / hxs-4 16:19:00Z), taken under the owner-extended driver directive beyond its hxs-2/hxs-3 scope (approved Phase 1 exception per declared_purpose/discovery.md). status/freshness stay historical (point-in-time capture). Source sha256 re-verified unchanged (e5793ecf…)."

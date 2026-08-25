@@ -1,0 +1,51 @@
+document:
+  id: "DOC-tkv-corpus-ollama"
+  title: "/opt/tkv-local/ollama/ollama-main — upstream Ollama source snapshot (v0.32.11 per john profile version-matching rule)"
+  type: "corpus"
+  declared_purpose: "Upstream ollama-main source snapshot — John's assigned upstream knowledge source per agents/john/charter.md ('Ollama knowledge source: /opt/tkv-local/ollama, reviewed per the profile §4 startup protocol before every task'). Snapshot identified in prior material as Ollama v0.32.11, commit 39df91c9826b3c0c83677f75cd230d8848d287c3 (per john profile version-matching rule; not independently verifiable — the tree carries no .git metadata). VERSION DRIFT: installed on hxs-1 is 0.32.15; the snapshot predates the qwen3.8 model family, so empirical API evidence is the authority for qwen3.8-specific behavior. Scope narrowed 2026-08-25 (governor batch C5): this record now covers ONLY the upstream ollama-main snapshot; the HX research/implementation material sharing the tree is cataloged as DOC-tkv-ollama-hx-research."
+  inferred_value: "INFERENCE: strong for Ollama behavior/contracts at the snapshot version and for fixture shapes; known drift (0.32.11 snapshot vs 0.32.15 installed; no qwen3.8 renderer in snapshot) is recorded in every john receipt and handled by version-matched citation plus live API probes."
+  source:
+    author: "Ollama project (upstream snapshot); mirrored into /opt/tkv-local by Agent Zero"
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/ollama/ollama-main"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T04:50:00Z"
+  owner: "Agent Zero (vault); john (assigned consumer)"
+  applies_to:
+    hosts: [hxs-1, hxs-5]
+    fqdns: []
+    services: [ollama.service]
+    agents: [john]
+    repositories: [tkv-local]
+    environments: [fleet, pilot]
+  version: "CLAIMED, UNVERIFIED — ollama-main v0.32.11 snapshot (commit 39df91c9826b3c0c83677f75cd230d8848d287c3 per the john profile version-matching rule; NOT independently verifiable — the tree carries no .git metadata; deployed on hxs-1: 0.32.15)"
+  status: "active"
+  authority_level: "upstream-reference"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "governs"
+      target: "john's per-task knowledge reviews (12, 16, 19, 22 receipts)"
+      note: "corpus reviewed per john profile §4 before every task, jointly with DOC-tkv-ollama-hx-research; version gaps recorded and reconciled per receipt"
+    - predicate: "references"
+      target: "DOC-knowledge-issues"
+      note: "open issue D2: hxs-4 baseline mismatch — corpus has 0.32.11, hxs-4 installed is 0.32.9 (owner decision pending)"
+    - predicate: "references"
+      target: "DOC-tkv-ollama-hx-research"
+      note: "sibling record for the HX research/implementation material sharing the /opt/tkv-local/ollama tree (partitioned 2026-08-25, C5); local research is NOT upstream authority"
+  validation:
+    validated_at: "2026-08-25T21:02:00Z"
+    freshness: "aging"
+    review_due: "2026-09-24 or on any corpus update (re-hash manifest); snapshot-version drift vs installed 0.32.15 already disclosed in pilot receipts"
+  sha256: "d25450865340ce91e7ba80bfb1dfe98ff467b8b4ce33ffec3a89e8890da9621d"
+  canonical_location: "/opt/tkv-local/ollama/ollama-main"
+notes:
+  version_drift: "PRESERVED (C5): snapshot 0.32.11 vs deployed 0.32.15 on hxs-1; snapshot predates the qwen3.8 model family — empirical API evidence governs qwen3.8-specific behavior."
+  checksum_method: "sha256 = digest of the sorted relative-path file manifest (1272 files, names only), NOT content hashes; regenerated 2026-08-25 (scope narrowed to ollama-main per C5; earlier combined-tree manifest d0aad28b… captured 2026-08-25T04:49Z covered 1,816 files including .git internals); directory canonical_location preserved. .git internals excluded from the manifest and from cataloging. Form alignment batch 7 (F-B6-6, hxinfra-archive reference form): method/scope/count text consolidated wholly into notes.checksum_method; the sha256 field now carries ONLY the bare 64-char digest; digest VALUE unchanged (names-only manifest retained until a future content-sensitive migration)."
+  upstream_provenance: "upstream URL/commit: unavailable — tree is not a git checkout (no .git metadata present); unpacked archive snapshot. Version/commit claim rests on the john profile version-matching rule."
+  corpus_scope: "Superseded 'craig' profile files were removed from the vault top level 2026-08-24 (archived under implementation/archive/HX-Infrastructure-main/) per lessons-learned."
+  corrections_batch6: "document.version marked CLAIMED, UNVERIFIED (batch 6, T10a): the v0.32.11/commit identity rests solely on the john profile version-matching rule and cannot be independently verified (no .git metadata in the tree) — consumers must not treat it as verified. The claim text is preserved in-field with its provenance; the snapshot description (declared_purpose, version_drift note, aging freshness) is unchanged. Record structure verified before edit: the batch-4 C5 partition stands (this record covers only the upstream ollama-main snapshot; HX material lives in DOC-tkv-ollama-hx-research)."

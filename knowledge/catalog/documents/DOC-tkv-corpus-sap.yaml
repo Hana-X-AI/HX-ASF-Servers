@@ -1,0 +1,42 @@
+document:
+  id: "DOC-tkv-corpus-sap"
+  title: "/opt/tkv-local/sap — HX SAP Copilot research workspace (23,456 files)"
+  type: "corpus"
+  declared_purpose: "HX SAP Copilot research workspace: no root README declares a purpose — INFERENCE from directory names: 'HX SAP Copilot' subtree holds DIARY.md, RESUME-HERE.md, l-Research/ and Research/ research material. Largest TKV tree; content is research material, not an upstream source snapshot."
+  source:
+    author: "HX consultant research workspace (INFERENCE — no declaring README; see notes.context)"
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/sap"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T06:12:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: []
+    repositories: [tkv-local]
+    environments: [fleet]
+  version: ""
+  status: "historical"
+  authority_level: "historical-as-found"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "references"
+      target: "TKV source-snapshot corpus (owner-directed sweep, state log row 32)"
+      note: "23,456 files excluding .git internals; deep per-file cataloging on demand via retrieval packages"
+  validation:
+    validated_at: "2026-08-25T21:02:00Z"
+    freshness: "historical"
+    review_due: "2026-09-24 (corpus manifest re-hash) or on any corpus update"
+  sha256: "52ae78c931904a32d8291bd0cfafc8de7a953118de213c73aff5fdcda3cec2a3"
+  canonical_location: "/opt/tkv-local/sap"
+notes:
+  checksum_method: "sha256 = digest of the sorted relative-path file manifest (23452 files, names only), NOT content hashes; regenerated 2026-08-25; directory canonical_location preserved. Manifest re-hash scheduled 2026-09-24 (run-1 follow-up) stands. .git internals excluded from the manifest and from cataloging. Form alignment batch 7 (F-B6-6, hxinfra-archive reference form): method/scope/count text consolidated wholly into notes.checksum_method; the sha256 field now carries ONLY the bare 64-char digest; digest VALUE unchanged (names-only manifest retained until a future content-sensitive migration)."
+  upstream_provenance: "upstream URL/commit: unavailable — tree root is not a git checkout. Two nested stale .git dirs exist under 'HX SAP Copilot/': l-Research/.git is a broken worktree pointer (gitdir in a nonexistent nix-store path — git reports 'not a git repository'); Research/.git resolves HEAD 6e3218b9861db7d5c9f5dd8b7cf36c22f9a45c9a but has no origin remote. Neither yields a usable upstream URL; excluded from the manifest."
+  context: "Purpose is INFERENCE (no declaring README found at root or one level down); revisit if the owner declares the corpus intent."

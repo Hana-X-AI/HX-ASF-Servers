@@ -1,0 +1,1011 @@
+# Catalog index — fast lookup surface. Detail lives in documents/DOC-<slug>.yaml.
+# Governed by agents/carol/profile.md. Updated by Carol on every ingestion; each
+# update is proven by a receipt in receipts/.
+index:
+  schema_version: 1
+  initialized: 2026-08-25 (Carol instantiation, owner amendment)
+  updated: "2026-08-25T2124Z (final re-validation: DOC-pilot-hx1-fixtures-manifest re-hashed e1039d41… -> 8638e1da… + corrections_batch7 (batch-7 fixer MODEL parameterization / bench_m6 deadline ordering / coding_suite bounded teardown / canonical_json full coverage hash 215607bd12dd… / shared strip_think_tags / rag_suite [NEEDLE] gate + governor residual tool_suite wiring; regression battery 57 tests; state-log row pending); DOC-agent-carol-profile re-hashed ca8bb59c… -> cf027c04… + predicate-enum extension note ('assesses' added, F-B7-1 resolved by governor); DOC-assessment-hx-second-brain-guidance-001-review verified undrifted (no action); no catalog record for schema.yaml (informational); receipt receipts/2026-08-25T2124Z-carol-final-revalidation.md)"
+  document_count: 167
+  documents:
+  - id: DOC-a01-origin-codex-20260824-2125
+    title: codex_20260824_2125_hx-1-ollama-pilot-qwen3.8-amendment.md — original source of Amendment A01 (agent-zero-docs)
+    type: amendment
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /home/hxsa/opt/local-tkv/agent-zero-docs/qwen/codex_20260824_2125_hx-1-ollama-pilot-qwen3.8-amendment.md
+  - id: DOC-agent-carol-charter
+    title: Agent charter — carol (documentation and knowledge steward, horizontal lane)
+    type: charter
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/carol/charter.md
+  - id: DOC-agent-carol-profile
+    title: Agent profile — carol (full operating contract; governs knowledge/catalog/)
+    type: profile
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/carol/profile.md
+  - id: DOC-agent-john-charter
+    title: Agent charter — john (Ollama engineer, vertical lane; pilot call sign Esme)
+    type: charter
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/john/charter.md
+  - id: DOC-agent-john-profile
+    title: Agent profile — john (full operating contract)
+    type: profile
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/john/profile.md
+  - id: DOC-agent-kimi-k3-charter
+    title: Agent charter — kimi-k3 (factory meta-agent, horizontal control plane, Phase M)
+    type: charter
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/kimi-k3/charter.md
+  - id: DOC-agent-kimi-k3-profile
+    title: Agent profile — kimi-k3 (full operating contract, ratified with phased activation)
+    type: profile
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/kimi-k3/profile.md
+  - id: DOC-agent-rick-charter
+    title: Agent charter — rick (Ubuntu Server engineer, vertical lane)
+    type: charter
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/rick/charter.md
+  - id: DOC-agent-rick-profile
+    title: Agent profile — rick (full operating contract)
+    type: profile
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/rick/profile.md
+  - id: DOC-agents-roster-readme
+    title: agents/README.md — agent roster authority and lane model
+    type: roster
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/README.md
+  - id: DOC-assessment-hx-second-brain-guidance-001-review
+    title: 2026-08-25-hx-second-brain-guidance-001-review.md — governor assessment of hx-second-brain-guidance-001 (Kimi-K3, for owner review)
+    type: evidence
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/assessments/2026-08-25-hx-second-brain-guidance-001-review.md
+  - id: DOC-cat-001-acceptance
+    title: CAT-001 — Catalog acceptance battery (governor-owned verification suite for knowledge/catalog/)
+    type: contract
+    authority_level: delegated-contract
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/catalog/tests/cat-001-acceptance.md
+  - id: DOC-goal-hx1-ollama-qwen38-27b
+    title: Goal 2026-08-24-hx1-ollama-qwen38-27b — deploy and validate qwen3.8:27b on hxs-1 via Ollama (mutating pilot)
+    type: goal
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/goals/2026-08-24-hx1-ollama-qwen38-27b.md
+  - id: DOC-goal-ollama-audit-hxs5
+    title: Goal 2026-08-24-ollama-audit-hxs5 — read-only Ollama infrastructure and performance audit on hxs-5 (process pilot)
+    type: goal
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/goals/2026-08-24-ollama-audit-hxs5.md
+  - id: DOC-hx-second-brain-framework
+    title: HX Second Brain Information Guidance and Implementation Framework (hx-second-brain-guidance-001, v1.0.0-draft)
+    type: other
+    authority_level: owner-directive
+    freshness: current
+    canonical_location: /home/hxsa/opt/local-tkv/agent-zero-docs/brain-power/codex_20260825_0652_hx-second-brain-information-guidance-and-implementation-framework.md
+  - id: DOC-hx1-qwen-pilot-origin-codex-20260824-1945
+    title: codex_20260824_1945_hx-1-ollama-qwen-27b-pilot-project.md — original Codex pilot project source of the HX-1 Qwen pilot (agent-zero-docs)
+    type: plan
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /home/hxsa/opt/local-tkv/agent-zero-docs/pilots/qwen/codex_20260824_1945_hx-1-ollama-qwen-27b-pilot-project.md
+  - id: DOC-john-ollama-recon-inventory
+    title: codex_20260824_0205_ollama-directory-reconnaissance-inventory.md — Ollama directory reconnaissance inventory (320 directories, 1707 files)
+    type: evidence
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/john/codex_20260824_0205_ollama-directory-reconnaissance-inventory.md
+  - id: DOC-kdd-0000-template
+    title: KDD-0000 — Key Decision Document template
+    type: contract
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0000-template.md
+  - id: DOC-kdd-0001-kimi-k3-meta-agent
+    title: KDD-0001 — Adopt the Kimi-K3 meta-agent control model with phased activation
+    type: decision
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0001-adopt-kimi-k3-meta-agent-model.md
+  - id: DOC-kdd-0002-goal-setting-guidance
+    title: KDD-0002 — Adopt goal-setting guidance and designate goals/ as the durable state system
+    type: decision
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0002-goal-setting-guidance-and-durable-state.md
+  - id: DOC-kdd-0003-ollama-audit-pilot
+    title: KDD-0003 — Adopt the Ollama audit pilot (PILOT-KK3-JOHN-OLLAMA-AUDIT-001) with Phase M execution note
+    type: decision
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0003-ollama-audit-pilot-adoption.md
+  - id: DOC-kdd-0004-hx1-qwen-pilot-adoption
+    title: KDD-0004 — Adopt the HX-1 Qwen pilot with qwen3.8:27b as the approved baseline
+    type: decision
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0004-hx1-qwen-pilot-adoption.md
+  - id: DOC-kimi-k3-goal-setting-guidance
+    title: agents/kimi-k3/goal-setting-guidance.md — Kimi-K3 goal-setting and agent invocation guidance (ratified adoption per KDD-0002)
+    type: runbook
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/kimi-k3/goal-setting-guidance.md
+  - id: DOC-knowledge-issues
+    title: knowledge/issues.md — open issues and action items
+    type: other
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/issues.md
+  - id: DOC-knowledge-lessons-learned
+    title: knowledge/lessons-learned.md — factory process learning record
+    type: other
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/lessons-learned.md
+  - id: DOC-knowledge-network
+    title: knowledge/network.md — local DNS and FQDN access (hx.local.arpa)
+    type: runbook
+    authority_level: agent-evidence
+    freshness: aging
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/network.md
+  - id: DOC-knowledge-readme
+    title: knowledge/README.md — knowledge home conventions and truth-state labels
+    type: contract
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/README.md
+  - id: DOC-pilot-hx1-amendment-a01
+    title: Amendment A01 — Qwen3.8-27B model baseline for the HX-1 Ollama pilot (adopted, with adoption header)
+    type: amendment
+    authority_level: owner-directive
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/amendment-A01-qwen38-baseline.md
+  - id: DOC-pilot-hx1-cp-02a-rick-m1
+    title: 02a-context-packet-rick-m1.yaml — context packet for WO-HX1-RICK-M1-001 (session rick-m1-20260824-01)
+    type: context-packet
+    authority_level: delegated-contract
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/02a-context-packet-rick-m1.yaml
+  - id: DOC-pilot-hx1-cp-06-rick-m2
+    title: 06-context-packet-rick-m2.yaml — context packet for WO-HX1-RICK-M2-001 (session rick-m2-20260824-01)
+    type: context-packet
+    authority_level: delegated-contract
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/06-context-packet-rick-m2.yaml
+  - id: DOC-pilot-hx1-cp-11-john-m4
+    title: 11-context-packet-john-m4.yaml — context packet for WO-HX1-JOHN-M4-001 (session john-m4-20260825-01)
+    type: context-packet
+    authority_level: delegated-contract
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/11-context-packet-john-m4.yaml
+  - id: DOC-pilot-hx1-cp-15-john-m5
+    title: 15-context-packet-john-m5.yaml — context packet for WO-HX1-JOHN-M5-001 (session john-m5-20260825-01)
+    type: context-packet
+    authority_level: delegated-contract
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/15-context-packet-john-m5.yaml
+  - id: DOC-pilot-hx1-cp-18-john-m5b
+    title: 18-context-packet-john-m5b.yaml — context packet for WO-HX1-JOHN-M5B-001 (session john-m5b-20260825-01)
+    type: context-packet
+    authority_level: delegated-contract
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/18-context-packet-john-m5b.yaml
+  - id: DOC-pilot-hx1-cp-21-john-m6
+    title: 21-context-packet-john-m6.yaml — context packet for WO-HX1-JOHN-M6-001 (session john-m6-20260825-01)
+    type: context-packet
+    authority_level: delegated-contract
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/21-context-packet-john-m6.yaml
+  - id: DOC-pilot-hx1-cp-25-rick-pre-m7
+    title: 25-context-packet-rick-pre-m7.yaml — context packet for WO-HX1-RICK-PREM7-001 (session rick-prem7-20260825-01)
+    type: context-packet
+    authority_level: delegated-contract
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/25-context-packet-rick-pre-m7.yaml
+  - id: DOC-pilot-hx1-cp-28-john-m6b
+    title: 28-context-packet-john-m6b.yaml — context packet for WO-HX1-JOHN-M6B-001 (session john-m6b-20260825-01)
+    type: context-packet
+    authority_level: delegated-contract
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/28-context-packet-john-m6b.yaml
+  - id: DOC-pilot-hx1-cp-32-john-m7a
+    title: 32-context-packet-john-m7a.yaml — context packet for WO-HX1-JOHN-M7A-001 (session john-m7a-20260825-01)
+    type: context-packet
+    authority_level: delegated-contract
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/32-context-packet-john-m7a.yaml
+  - id: DOC-pilot-hx1-decision-23-m6-capacity
+    title: '23-kk3-m6-capacity-decision.md — M6 capacity decision record (KK3 gate), REVISION 2: three qualified context profiles'
+    type: decision
+    authority_level: delegated-contract
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/23-kk3-m6-capacity-decision.md
+  - id: DOC-pilot-hx1-ev-03-rick-tkv-receipt
+    title: '03-rick-tkv-receipt.md — rick M1 Ubuntu TKV knowledge-review receipt (Task May Proceed: YES)'
+    type: evidence
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/03-rick-tkv-receipt.md
+  - id: DOC-pilot-hx1-ev-04-rick-inventory
+    title: 04-rick-inventory.txt — hxs-1 immutable pre-change inventory (M1, read-only, 2026-08-24T23:38Z)
+    type: evidence
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/04-rick-inventory.txt
+  - id: DOC-pilot-hx1-ev-07-rick-os-readiness
+    title: 07-rick-os-readiness.md — rick M2 OS readiness report (13/13 tests PASS; plan §7.4 checklist 12/12)
+    type: evidence
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/07-rick-os-readiness.md
+  - id: DOC-pilot-hx1-ev-08-rick-risk-handoff
+    title: 08-rick-risk-handoff.md — rick→Esme signed OS risk handoff (M2→M4, signed 2026-08-25T00:15Z)
+    type: evidence
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/08-rick-risk-handoff.md
+  - id: DOC-pilot-hx1-ev-12-esme-m4-install
+    title: 12-esme-m4-install-evidence.md — Esme M4 Ollama install evidence (15/15 tests PASS; Gate 2 PASSED)
+    type: evidence
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/12-esme-m4-install-evidence.md
+  - id: DOC-pilot-hx1-ev-13-esme-rollback
+    title: 13-esme-rollback.md — Esme M4 rollback guide (layers A–D, per plan §10.2)
+    type: runbook
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/13-esme-rollback.md
+  - id: DOC-pilot-hx1-ev-16-esme-m5-validation
+    title: 16-esme-m5-validation.md — Esme M5 functional validation (7/7 AC suites PASS on the sampled-profile alias; labeled comparison evidence)
+    type: evidence
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/16-esme-m5-validation.md
+  - id: DOC-pilot-hx1-ev-19-esme-m5b-conformance
+    title: 19-esme-m5b-amendment-conformance.md — Esme M5b A01 conformance (Phase A alias frozen; D8 re-run ALL PASS; 32K acceptance evidence)
+    type: evidence
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/19-esme-m5b-amendment-conformance.md
+  - id: DOC-pilot-hx1-ev-22-esme-m6-capacity-ladder
+    title: '22-esme-m6-capacity-ladder.md — Esme M6 capacity ladder: 65,536 and 131,072 qualification evidence (CAPACITY+QUALITY PASS both rungs)'
+    type: evidence
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/22-esme-m6-capacity-ladder.md
+  - id: DOC-pilot-hx1-ev-26-rick-pre-m7-readiness
+    title: 26-rick-pre-m7-readiness.md — rick pre-M7 OS-plane readiness (12/12 PASS; A01 §7 SATISFIED; Wi-Fi disabled; NVRM monitor-only)
+    type: evidence
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/26-rick-pre-m7-readiness.md
+  - id: DOC-pilot-hx1-ev-29-esme-m6b-profiles
+    title: '29-esme-m6b-profiles.md — Esme M6b context profiles: named aliases + 64K operating default (PASS — TASK COMPLETE)'
+    type: evidence
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/29-esme-m6b-profiles.md
+  - id: DOC-pilot-hx1-ev-30-esme-m7a-reboot-cycles
+    title: '30-esme-m7a-reboot-cycles.md — Esme M7a three cold-reboot recovery cycles at the 64K operating profile (AC-007 PASS 3/3)'
+    type: evidence
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/30-esme-m7a-reboot-cycles.md
+  - id: DOC-pilot-hx1-fixtures-manifest
+    title: fixtures/sha256sums.txt — pilot validation-fixture integrity manifest
+    type: evidence
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/fixtures/sha256sums.txt
+  - id: DOC-pilot-hx1-plan
+    title: PILOT-HX1-OLLAMA-QWEN27B-001 plan.md — HX-1 Ollama Qwen 27B pilot project plan
+    type: plan
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/plan.md
+  - id: DOC-pilot-hx1-state-log
+    title: PILOT-HX1-OLLAMA-QWEN27B-001 09-state-log.md — governor state-transition log (rows 1–44 at re-validation)
+    type: other
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/09-state-log.md
+  - id: DOC-pilot-hx1-wo-01-rick-m1
+    title: '01-work-order-rick-m1.yaml — WO-HX1-RICK-M1-001 (M1: TKV review + immutable inventory, read-only)'
+    type: work-order
+    authority_level: delegated-contract
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/01-work-order-rick-m1.yaml
+  - id: DOC-pilot-hx1-wo-05-rick-m2
+    title: '05-work-order-rick-m2.yaml — WO-HX1-RICK-M2-001 (M2: OS readiness, one approved change, risk handoff)'
+    type: work-order
+    authority_level: delegated-contract
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/05-work-order-rick-m2.yaml
+  - id: DOC-pilot-hx1-wo-10-john-m4
+    title: '10-work-order-john-m4.yaml — WO-HX1-JOHN-M4-001 (M4: Ollama install, model freeze, 32K baseline, preload, rollback)'
+    type: work-order
+    authority_level: delegated-contract
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/10-work-order-john-m4.yaml
+  - id: DOC-pilot-hx1-wo-14-john-m5
+    title: '14-work-order-john-m5.yaml — WO-HX1-JOHN-M5-001 (M5: functional validation at frozen 32K baseline)'
+    type: work-order
+    authority_level: delegated-contract
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/14-work-order-john-m5.yaml
+  - id: DOC-pilot-hx1-wo-17-john-m5b
+    title: '17-work-order-john-m5b.yaml — WO-HX1-JOHN-M5B-001 (M5b: Amendment A01 conformance)'
+    type: work-order
+    authority_level: delegated-contract
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/17-work-order-john-m5b.yaml
+  - id: DOC-pilot-hx1-wo-20-john-m6
+    title: '20-work-order-john-m6.yaml — WO-HX1-JOHN-M6-001 (M6: 65,536 and 131,072 capacity ladder, owner-directed)'
+    type: work-order
+    authority_level: delegated-contract
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/20-work-order-john-m6.yaml
+  - id: DOC-pilot-hx1-wo-24-rick-pre-m7
+    title: '24-work-order-rick-pre-m7.yaml — WO-HX1-RICK-PREM7-001 (pre-M7: Wi-Fi disable, A01 §7 readiness, NVRM review)'
+    type: work-order
+    authority_level: delegated-contract
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/24-work-order-rick-pre-m7.yaml
+  - id: DOC-pilot-hx1-wo-27-john-m6b
+    title: '27-work-order-john-m6b.yaml — WO-HX1-JOHN-M6B-001 (M6b: owner-ratified context profiles — named aliases, 64K operating default, preload/monitoring repoint)'
+    type: work-order
+    authority_level: delegated-contract
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/27-work-order-john-m6b.yaml
+  - id: DOC-pilot-hx1-wo-31-john-m7a
+    title: '31-work-order-john-m7a.yaml — WO-HX1-JOHN-M7A-001 (M7a: three OS-initiated reboot recovery cycles at the 64K operating profile, AC-007 + first-boot verifications)'
+    type: work-order
+    authority_level: delegated-contract
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/31-work-order-john-m7a.yaml
+  - id: DOC-pilot-ollama-audit-plan
+    title: PILOT-KK3-JOHN-OLLAMA-AUDIT-001 plan.md — Kimi-K3 and John Ollama audit process pilot plan (read-only, hxs-5)
+    type: plan
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-KK3-JOHN-OLLAMA-AUDIT-001/plan.md
+  - id: DOC-protected-ssh-info-hxs1
+    title: ssh-info.md — protected credential resource for SSH access to hxs-1 (existence, owner, retrieval mechanism only)
+    type: protected-resource
+    authority_level: owner-directive
+    freshness: current
+    canonical_location: /home/hxsa/opt/local-tkv/agent-zero-docs/ssh-info.md
+  - id: DOC-repo-governance-agents-md
+    title: HX-ASF-Servers AGENTS.md — repository governance, skills, communication contract, stewardship
+    type: contract
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/AGENTS.md
+  - id: DOC-tkv-corpus-ag-ui
+    title: /opt/tkv-local/ag-ui-main — Upstream source snapshot of AG-UI per its README (3,505 files)
+    type: corpus
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/ag-ui-main
+  - id: DOC-tkv-corpus-agent-skills
+    title: /opt/tkv-local/agent-skills-main — Upstream snapshot of addyosmani/agent-skills per its README (184 files)
+    type: corpus
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/agent-skills-main
+  - id: DOC-tkv-corpus-agentic-design-patterns-docs
+    title: /opt/tkv-local/agentic-design-patterns-docs-main — Upstream documentation snapshot per its README (66 files)
+    type: corpus
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/agentic-design-patterns-docs-main
+  - id: DOC-tkv-corpus-ai-dev-tasks
+    title: /opt/tkv-local/ai-dev-tasks-main — Upstream snapshot of AI Dev Tasks for Cursor per its README (5 files)
+    type: corpus
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/ai-dev-tasks-main
+  - id: DOC-tkv-corpus-ai-software-factory
+    title: /opt/tkv-local/ai-software-factory-main — Upstream snapshot of ai-factory per its README (76 files)
+    type: corpus
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/ai-software-factory-main
+  - id: DOC-tkv-corpus-bench-studio
+    title: /opt/tkv-local/bench-studio-public-main — Upstream snapshot of Bench Studio per its README ('Stop renting the wrapper. Own the creative layer.') (67 files)
+    type: corpus
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/bench-studio-public-main
+  - id: DOC-tkv-corpus-bun
+    title: /opt/tkv-local/bun-main — Upstream source snapshot of Bun (per project README header) (19,036 files)
+    type: corpus
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/bun-main
+  - id: DOC-tkv-corpus-code-graph-rag
+    title: /opt/tkv-local/code-graph-rag-main — Upstream source snapshot of Code-Graph-RAG (per project README branding) (1,196 files)
+    type: corpus
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/code-graph-rag-main
+  - id: DOC-tkv-corpus-code-rag-graph
+    title: /opt/tkv-local/code-rag-graph — Evaluation wrapper (1,204 files)
+    type: corpus
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/code-rag-graph
+  - id: DOC-tkv-corpus-code-review-graph
+    title: /opt/tkv-local/code-review-graph — Evaluation wrapper (365 files)
+    type: corpus
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/code-review-graph
+  - id: DOC-tkv-corpus-copilotkit
+    title: /opt/tkv-local/CopilotKit-main — Upstream source snapshot of CopilotKit (per project README header) (20,736 files)
+    type: corpus
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/CopilotKit-main
+  - id: DOC-tkv-corpus-crawl4ai
+    title: /opt/tkv-local/crawl4ai-main — Upstream source snapshot of Crawl4AI per its README (916 files)
+    type: corpus
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/crawl4ai-main
+  - id: DOC-tkv-corpus-deepseek-harness
+    title: /opt/tkv-local/deepseek-harness-master — Upstream source snapshot of DeepSeek Harness (dsh) per its README (7,903 files)
+    type: corpus
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/deepseek-harness-master
+  - id: DOC-tkv-corpus-diagram-design
+    title: /opt/tkv-local/diagram-design — Evaluation wrapper (321 files)
+    type: corpus
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/diagram-design
+  - id: DOC-tkv-corpus-docling
+    title: /opt/tkv-local/docling — HX evaluation-only tree (no upstream snapshot) (1 files)
+    type: corpus
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/docling
+  - id: DOC-tkv-corpus-docusaurus
+    title: /opt/tkv-local/docusaurus-main — Upstream source snapshot of Docusaurus (per project README header) (4,243 files)
+    type: corpus
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/docusaurus-main
+  - id: DOC-tkv-corpus-generate-skill
+    title: /opt/tkv-local/generate_skill — The 'generate' Claude Code skill from the Bench Studio Ownership Kit per its README (3 files)
+    type: corpus
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/generate_skill
+  - id: DOC-tkv-corpus-gitdiagram
+    title: /opt/tkv-local/gitdiagram/gitdiagram-main — upstream source snapshot of GitDiagram
+    type: corpus
+    authority_level: upstream-reference
+    freshness: historical
+    canonical_location: /opt/tkv-local/gitdiagram/gitdiagram-main
+  - id: DOC-tkv-corpus-gray-matter
+    title: /opt/tkv-local/gray-matter-master — Upstream source snapshot of gray-matter per its README (113 files)
+    type: corpus
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/gray-matter-master
+  - id: DOC-tkv-corpus-harness-research
+    title: /opt/tkv-local/Harness — HX research/evaluation collection on agentic SDLC and DeepSeek Harness (NOT an upstream snapshot) (31 files)
+    type: corpus
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/Harness
+  - id: DOC-tkv-corpus-jcode
+    title: /opt/tkv-local/jcode/jcode-master — upstream source snapshot of jcode (1jehuang/jcode, MIT)
+    type: corpus
+    authority_level: upstream-reference
+    freshness: historical
+    canonical_location: /opt/tkv-local/jcode/jcode-master
+  - id: DOC-tkv-corpus-langgraph
+    title: /opt/tkv-local/langgraph/langgraph-main — upstream source snapshot of LangChain LangGraph
+    type: corpus
+    authority_level: upstream-reference
+    freshness: historical
+    canonical_location: /opt/tkv-local/langgraph/langgraph-main
+  - id: DOC-tkv-corpus-loopx
+    title: /opt/tkv-local/loopx/loopx-main — upstream source snapshot of LoopX
+    type: corpus
+    authority_level: upstream-reference
+    freshness: historical
+    canonical_location: /opt/tkv-local/loopx/loopx-main
+  - id: DOC-tkv-corpus-mdast
+    title: /opt/tkv-local/mdast-main — Upstream snapshot of mdast per its README (7 files)
+    type: corpus
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/mdast-main
+  - id: DOC-tkv-corpus-ollama
+    title: /opt/tkv-local/ollama/ollama-main — upstream Ollama source snapshot (v0.32.11 per john profile version-matching rule)
+    type: corpus
+    authority_level: upstream-reference
+    freshness: aging
+    canonical_location: /opt/tkv-local/ollama/ollama-main
+  - id: DOC-tkv-corpus-omniroute
+    title: /opt/tkv-local/OmniRoute/OmniRoute-release-v3.8.50 — upstream source snapshot of OmniRoute (release v3.8.50)
+    type: corpus
+    authority_level: upstream-reference
+    freshness: current
+    canonical_location: /opt/tkv-local/OmniRoute/OmniRoute-release-v3.8.50
+  - id: DOC-tkv-corpus-sap
+    title: /opt/tkv-local/sap — HX SAP Copilot research workspace (23,456 files)
+    type: corpus
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/sap
+  - id: DOC-tkv-corpus-skill-expert
+    title: /opt/tkv-local/skill-expert — HX evaluation-only tree (no upstream snapshot) (1 files)
+    type: corpus
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/skill-expert
+  - id: DOC-tkv-corpus-ubuntu
+    title: /opt/tkv-local/ubuntu — Ubuntu knowledge corpus (ubuntu.com-main web-application tree)
+    type: corpus
+    authority_level: upstream-reference
+    freshness: current
+    canonical_location: /opt/tkv-local/ubuntu
+  - id: DOC-tkv-corpus-ubuntu-stig-baseline
+    title: /opt/tkv-local/canonical-ubuntu-24.04-lts-stig-baseline-main — Upstream snapshot of the Canonical Ubuntu 24.04 LTS STIG InSpec profile (v1.4.0) per its README (240 files)
+    type: corpus
+    authority_level: upstream-reference
+    freshness: current
+    canonical_location: /opt/tkv-local/canonical-ubuntu-24.04-lts-stig-baseline-main
+  - id: DOC-tkv-corpus-zod
+    title: /opt/tkv-local/zod-main — Upstream source snapshot of Zod (README at packages/zod/README.md; root README is a pointer) (670 files)
+    type: corpus
+    authority_level: upstream-reference
+    freshness: current
+    canonical_location: /opt/tkv-local/zod-main
+  - id: DOC-tkv-dns-fqdn-hx-local-dns
+    title: /opt/tkv-local/dns-fqdn/hx-local-dns-and-fqdn-access.md — HX local DNS and FQDN access (router dnsmasq, hx.local.arpa)
+    type: runbook
+    authority_level: agent-evidence
+    freshness: aging
+    canonical_location: /opt/tkv-local/dns-fqdn/hx-local-dns-and-fqdn-access.md
+  - id: DOC-tkv-fs-claude-deliverables
+    title: /opt/tkv-local/file-share/claude-deliverables/ — Canonical Google-Drive-style delivery location for documents, reports, plans, prompts, data, presentations, and visuals created by Claude for the HX-Infrastructure project; enforces the claude_YYYYMMDD_HHMM_descriptive-filename naming standard; categorized 00-agent-zero through 07-presentations-and-visuals plus 99-archive, from-codex, read-first. (61 files)
+    type: corpus
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/file-share/claude-deliverables
+  - id: DOC-tkv-fs-codex-deliverables
+    title: /opt/tkv-local/file-share/codex-deliverables/ — Canonical delivery location for Codex-created HX-Infrastructure documents (readme revision 1.3, 2026-08-19) (58 files)
+    type: corpus
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/file-share/codex-deliverables
+  - id: DOC-tkv-fs-fleet-architecture-v03
+    title: /opt/tkv-local/file-share/fleet-architecture-v0.3.html — HX Fleet Architecture Candidate v0.3 (design-era candidate render)
+    type: plan
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/file-share/fleet-architecture-v0.3.html
+  - id: DOC-tkv-fs-hx-ai-platform-assessment
+    title: /opt/tkv-local/file-share/hx-meta-agent_openai-codex_20260821_1130_hx-ai-platform-deep-repository-assessment.md — Codex deep repository assessment of HX-Ai-Platform (PASS; HOLD FOR GOVERNANCE RECONCILIATION, NOT OPERATIONALLY READY)
+    type: evidence
+    authority_level: agent-evidence
+    freshness: historical
+    canonical_location: /opt/tkv-local/file-share/hx-meta-agent_openai-codex_20260821_1130_hx-ai-platform-deep-repository-assessment.md
+  - id: DOC-tkv-fs-pre-discovery-checklist
+    title: /opt/tkv-local/file-share/human-pre-discovery-checklist.md — minimum human preparation before handing an Ubuntu 24.04 server to Claude Code for Phase 1 discovery
+    type: runbook
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/file-share/human-pre-discovery-checklist.md
+  - id: DOC-tkv-fs-proposed-agent-roster
+    title: /opt/tkv-local/file-share/hx-infrastructure-proposed-technology-agent-roster_chatgpt-gpt-5-6_20260815_2129.html — HX Proposed Technology Agent Roster (ChatGPT GPT-5-6, 2026-08-15)
+    type: other
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/file-share/hx-infrastructure-proposed-technology-agent-roster_chatgpt-gpt-5-6_20260815_2129.html
+  - id: DOC-tkv-fs-readme-revision
+    title: /opt/tkv-local/file-share/readme-revision/ — Readme-revision asset set (8 files)
+    type: corpus
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/file-share/readme-revision
+  - id: DOC-tkv-fs-repository-population
+    title: /opt/tkv-local/file-share/repository-population/ — HX-Ai-Platform repository population material (34 files)
+    type: corpus
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/file-share/repository-population
+  - id: DOC-tkv-fs-respository-assets
+    title: /opt/tkv-local/file-share/respository-assets/ — Repository asset store (directory name 'respository-assets' preserved as found, sic) (46 files)
+    type: corpus
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/file-share/respository-assets
+  - id: DOC-tkv-fs-tech-stack
+    title: /opt/tkv-local/file-share/tech-stack/ — Proposed technology stack document set (2026-08-15) (4 files)
+    type: corpus
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/file-share/tech-stack
+  - id: DOC-tkv-gitdiagram-hx-evaluation
+    title: /opt/tkv-local/gitdiagram (HX side) — HX evaluation material for GitDiagram
+    type: corpus
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/gitdiagram
+  - id: DOC-tkv-gov-ops-hxs3-workload-placement
+    title: /opt/tkv-local/ollama/implementation/archive/HX-Infrastructure-main/governance/operations/hxs3-workload-placement.md — hxs-3 workload placement semantics; DS4 candidacy WITHDRAWN 2026-08-14
+    type: decision
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/ollama/implementation/archive/HX-Infrastructure-main/governance/operations/hxs3-workload-placement.md
+  - id: DOC-tkv-gov-policy-ai-runtime-acceptance-contract
+    title: '/opt/tkv-local/ollama/implementation/archive/HX-Infrastructure-main/governance/policy/ai-runtime-acceptance-contract.md — archived HX-Infrastructure governance policy: ai-runtime-acceptance-contract'
+    type: contract
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/ollama/implementation/archive/HX-Infrastructure-main/governance/policy/ai-runtime-acceptance-contract.md
+  - id: DOC-tkv-gov-policy-documentation-standards
+    title: '/opt/tkv-local/ollama/implementation/archive/HX-Infrastructure-main/governance/policy/documentation-standards.md — archived HX-Infrastructure governance policy: documentation-standards'
+    type: contract
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/ollama/implementation/archive/HX-Infrastructure-main/governance/policy/documentation-standards.md
+  - id: DOC-tkv-gov-policy-migration-method-decision
+    title: '/opt/tkv-local/ollama/implementation/archive/HX-Infrastructure-main/governance/policy/migration-method-decision.md — archived HX-Infrastructure governance policy: migration-method-decision'
+    type: contract
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/ollama/implementation/archive/HX-Infrastructure-main/governance/policy/migration-method-decision.md
+  - id: DOC-tkv-gov-policy-nvidia-driver-install-directive
+    title: '/opt/tkv-local/ollama/implementation/archive/HX-Infrastructure-main/governance/policy/nvidia-driver-install-directive.md — archived HX-Infrastructure governance policy: nvidia-driver-install-directive'
+    type: contract
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/ollama/implementation/archive/HX-Infrastructure-main/governance/policy/nvidia-driver-install-directive.md
+  - id: DOC-tkv-gov-policy-repository-migration-pattern
+    title: '/opt/tkv-local/ollama/implementation/archive/HX-Infrastructure-main/governance/policy/repository-migration-pattern.md — archived HX-Infrastructure governance policy: repository-migration-pattern'
+    type: contract
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/ollama/implementation/archive/HX-Infrastructure-main/governance/policy/repository-migration-pattern.md
+  - id: DOC-tkv-gov-policy-risk-acceptances
+    title: '/opt/tkv-local/ollama/implementation/archive/HX-Infrastructure-main/governance/policy/risk-acceptances.md — archived HX-Infrastructure governance policy: risk-acceptances'
+    type: contract
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/ollama/implementation/archive/HX-Infrastructure-main/governance/policy/risk-acceptances.md
+  - id: DOC-tkv-gov-policy-runtime-acceptance-decisions
+    title: '/opt/tkv-local/ollama/implementation/archive/HX-Infrastructure-main/governance/policy/runtime-acceptance-decisions.md — archived HX-Infrastructure governance policy: runtime-acceptance-decisions'
+    type: contract
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/ollama/implementation/archive/HX-Infrastructure-main/governance/policy/runtime-acceptance-decisions.md
+  - id: DOC-tkv-gov-policy-tooling-first-rule
+    title: '/opt/tkv-local/ollama/implementation/archive/HX-Infrastructure-main/governance/policy/tooling-first-rule.md — archived HX-Infrastructure governance policy: tooling-first-rule'
+    type: contract
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/ollama/implementation/archive/HX-Infrastructure-main/governance/policy/tooling-first-rule.md
+  - id: DOC-tkv-hxinfra-archive
+    title: '/opt/tkv-local/ollama/implementation/archive/HX-Infrastructure-main/ — archived HX-Infrastructure repository snapshot (316 files): predecessor governance, server records, hooks, and operations knowledge'
+    type: corpus
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/ollama/implementation/archive/HX-Infrastructure-main
+  - id: DOC-tkv-hxs1-discovery
+    title: /opt/tkv-local/servers/hxs-1/discovery.md — hxs-1 as-found discovery (2026-08-11, Phase 1, COMPLETE)
+    type: discovery
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/servers/hxs-1/discovery.md
+  - id: DOC-tkv-hxs1-driver-results
+    title: /opt/tkv-local/servers/hxs-1/driver-results.md — hxs-1 NVIDIA driver validation terminal capture (2026-08-12)
+    type: driver-results
+    authority_level: agent-evidence
+    freshness: historical
+    canonical_location: /opt/tkv-local/servers/hxs-1/driver-results.md
+  - id: DOC-tkv-hxs1-pre-work-results
+    title: '/opt/tkv-local/servers/hxs-1/pre-work-results.md — declared gap: no pre-work record captured for hxs-1'
+    type: pre-work
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/servers/hxs-1/pre-work-results.md
+  - id: DOC-tkv-hxs10-discovery
+    title: /opt/tkv-local/servers/hxs-10/discovery.md — hxs-10 discovery (Discovery date 2026-08-12)
+    type: discovery
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/servers/hxs-10/discovery.md
+  - id: DOC-tkv-hxs10-pre-work-results
+    title: /opt/tkv-local/servers/hxs-10/pre-work-results.md — hxs-10 pre work results (pre-discovery preparation (2026-08, Phase 1))
+    type: pre-work
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/servers/hxs-10/pre-work-results.md
+  - id: DOC-tkv-hxs11-discovery
+    title: /opt/tkv-local/servers/hxs-11/discovery.md — hxs-11 discovery (Discovery date 2026-08-12)
+    type: discovery
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/servers/hxs-11/discovery.md
+  - id: DOC-tkv-hxs11-pre-work-results
+    title: /opt/tkv-local/servers/hxs-11/pre-work-results.md — hxs-11 pre work results (pre-discovery preparation (2026-08, Phase 1))
+    type: pre-work
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/servers/hxs-11/pre-work-results.md
+  - id: DOC-tkv-hxs12-discovery
+    title: /opt/tkv-local/servers/hxs-12/discovery.md — hxs-12 discovery (Discovery date 2026-08-12)
+    type: discovery
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/servers/hxs-12/discovery.md
+  - id: DOC-tkv-hxs12-pre-work-results
+    title: /opt/tkv-local/servers/hxs-12/pre-work-results.md — hxs-12 pre work results (pre-discovery preparation (2026-08, Phase 1))
+    type: pre-work
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/servers/hxs-12/pre-work-results.md
+  - id: DOC-tkv-hxs13-discovery
+    title: /opt/tkv-local/servers/hxs-13/discovery.md — hxs-13 discovery (Discovery date 2026-08-12)
+    type: discovery
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/servers/hxs-13/discovery.md
+  - id: DOC-tkv-hxs13-pre-work-results
+    title: /opt/tkv-local/servers/hxs-13/pre-work-results.md — hxs-13 pre work results (pre-discovery preparation (2026-08, Phase 1))
+    type: pre-work
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/servers/hxs-13/pre-work-results.md
+  - id: DOC-tkv-hxs14-discovery
+    title: /opt/tkv-local/servers/hxs-14/discovery.md — hxs-14 discovery (Discovery date 2026-08-12)
+    type: discovery
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/servers/hxs-14/discovery.md
+  - id: DOC-tkv-hxs14-pre-work-results
+    title: /opt/tkv-local/servers/hxs-14/pre-work-results.md — hxs-14 pre work results (pre-discovery preparation (2026-08, Phase 1))
+    type: pre-work
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/servers/hxs-14/pre-work-results.md
+  - id: DOC-tkv-hxs15-discovery
+    title: /opt/tkv-local/servers/hxs-15/discovery.md — hxs-15 discovery (Discovery date 2026-08-13)
+    type: discovery
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/servers/hxs-15/discovery.md
+  - id: DOC-tkv-hxs15-pre-work-results
+    title: /opt/tkv-local/servers/hxs-15/pre-work-results.md — hxs-15 pre work results (pre-discovery preparation (2026-08, Phase 1))
+    type: pre-work
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/servers/hxs-15/pre-work-results.md
+  - id: DOC-tkv-hxs2-discovery
+    title: /opt/tkv-local/servers/hxs-2/discovery.md — hxs-2 discovery (Discovery date 2026-08-12)
+    type: discovery
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/servers/hxs-2/discovery.md
+  - id: DOC-tkv-hxs2-driver-results
+    title: /opt/tkv-local/servers/hxs-2/driver-results.md — hxs-2 driver results (capture date 2026-08-12)
+    type: driver-results
+    authority_level: agent-evidence
+    freshness: historical
+    canonical_location: /opt/tkv-local/servers/hxs-2/driver-results.md
+  - id: DOC-tkv-hxs2-pre-work-results
+    title: /opt/tkv-local/servers/hxs-2/pre-work-results.md — hxs-2 pre work results (pre-discovery preparation (2026-08, Phase 1))
+    type: pre-work
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/servers/hxs-2/pre-work-results.md
+  - id: DOC-tkv-hxs3-discovery
+    title: /opt/tkv-local/servers/hxs-3/discovery.md — hxs-3 discovery (Discovery date 2026-08-12)
+    type: discovery
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/servers/hxs-3/discovery.md
+  - id: DOC-tkv-hxs3-driver-results
+    title: /opt/tkv-local/servers/hxs-3/driver-results.md — hxs-3 driver results (capture date 2026-08-12)
+    type: driver-results
+    authority_level: agent-evidence
+    freshness: historical
+    canonical_location: /opt/tkv-local/servers/hxs-3/driver-results.md
+  - id: DOC-tkv-hxs3-pre-work-results
+    title: /opt/tkv-local/servers/hxs-3/pre-work-results.md — hxs-3 pre work results (pre-discovery preparation (2026-08, Phase 1))
+    type: pre-work
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/servers/hxs-3/pre-work-results.md
+  - id: DOC-tkv-hxs4-discovery
+    title: /opt/tkv-local/servers/hxs-4/discovery.md — hxs-4 discovery (Discovery date 2026-08-12)
+    type: discovery
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/servers/hxs-4/discovery.md
+  - id: DOC-tkv-hxs4-driver-results
+    title: /opt/tkv-local/servers/hxs-4/driver-results.md — hxs-4 driver results (capture date 2026-08-12)
+    type: driver-results
+    authority_level: agent-evidence
+    freshness: historical
+    canonical_location: /opt/tkv-local/servers/hxs-4/driver-results.md
+  - id: DOC-tkv-hxs4-pre-work-results
+    title: /opt/tkv-local/servers/hxs-4/pre-work-results.md — hxs-4 pre work results (pre-discovery preparation (2026-08, Phase 1))
+    type: pre-work
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/servers/hxs-4/pre-work-results.md
+  - id: DOC-tkv-hxs5-discovery
+    title: /opt/tkv-local/servers/hxs-5/discovery.md — hxs-5 discovery (Discovery date 2026-08-12)
+    type: discovery
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/servers/hxs-5/discovery.md
+  - id: DOC-tkv-hxs5-pre-work-results
+    title: /opt/tkv-local/servers/hxs-5/pre-work-results.md — hxs-5 pre work results (pre-discovery preparation (2026-08, Phase 1))
+    type: pre-work
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/servers/hxs-5/pre-work-results.md
+  - id: DOC-tkv-hxs6-discovery
+    title: /opt/tkv-local/servers/hxs-6/discovery.md — hxs-6 discovery (Discovery date 2026-08-12)
+    type: discovery
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/servers/hxs-6/discovery.md
+  - id: DOC-tkv-hxs6-pre-work-results
+    title: /opt/tkv-local/servers/hxs-6/pre-work-results.md — hxs-6 pre work results (pre-discovery preparation (2026-08, Phase 1))
+    type: pre-work
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/servers/hxs-6/pre-work-results.md
+  - id: DOC-tkv-hxs7-discovery
+    title: /opt/tkv-local/servers/hxs-7/discovery.md — hxs-7 discovery (Discovery date 2026-08-12)
+    type: discovery
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/servers/hxs-7/discovery.md
+  - id: DOC-tkv-hxs7-pre-work-results
+    title: /opt/tkv-local/servers/hxs-7/pre-work-results.md — hxs-7 pre work results (pre-discovery preparation (2026-08, Phase 1))
+    type: pre-work
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/servers/hxs-7/pre-work-results.md
+  - id: DOC-tkv-hxs8-discovery
+    title: /opt/tkv-local/servers/hxs-8/discovery.md — hxs-8 discovery (Discovery date 2026-08-12)
+    type: discovery
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/servers/hxs-8/discovery.md
+  - id: DOC-tkv-hxs8-pre-work-results
+    title: /opt/tkv-local/servers/hxs-8/pre-work-results.md — hxs-8 pre work results (pre-discovery preparation (2026-08, Phase 1))
+    type: pre-work
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/servers/hxs-8/pre-work-results.md
+  - id: DOC-tkv-hxs9-discovery
+    title: /opt/tkv-local/servers/hxs-9/discovery.md — hxs-9 discovery (Discovery date 2026-08-12)
+    type: discovery
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/servers/hxs-9/discovery.md
+  - id: DOC-tkv-hxs9-pre-work-results
+    title: /opt/tkv-local/servers/hxs-9/pre-work-results.md — hxs-9 pre work results (pre-discovery preparation (2026-08, Phase 1))
+    type: pre-work
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/servers/hxs-9/pre-work-results.md
+  - id: DOC-tkv-hxscp-pre-work-results
+    title: /opt/tkv-local/servers/hxs-cp/pre-work-results.md — hxs-cp pre work results (pre-discovery preparation (2026-08, Phase 1))
+    type: pre-work
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/servers/hxs-cp/pre-work-results.md
+  - id: DOC-tkv-jcode-hx-evaluation
+    title: /opt/tkv-local/jcode (HX side) — HX evaluation material for jcode
+    type: corpus
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/jcode
+  - id: DOC-tkv-langgraph-hx-evaluation
+    title: /opt/tkv-local/langgraph (HX side) — HX evaluation and phase-2 pilot material for LangGraph
+    type: corpus
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/langgraph
+  - id: DOC-tkv-loopx-hx-evaluation
+    title: /opt/tkv-local/loopx (HX side) — HX evaluation material for LoopX (ariadne pilot)
+    type: corpus
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/loopx
+  - id: DOC-tkv-ollama-hx-research
+    title: /opt/tkv-local/ollama (HX side) — HX research syntheses, runtime-validation fixtures, deployment implementation, and historical host reports inside the ollama tree
+    type: corpus
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/ollama
+  - id: DOC-tkv-omniroute-hx-evaluation
+    title: /opt/tkv-local/OmniRoute (HX side) — HX evaluation material for OmniRoute
+    type: corpus
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/OmniRoute
+  - id: DOC-tkv-root-readme
+    title: /opt/tkv-local/README.md — Bench Studio Ownership Kit quick start (misleading vault-root placement, FLAG F9)
+    type: other
+    authority_level: upstream-reference
+    freshness: current
+    canonical_location: /opt/tkv-local/README.md
+  - id: DOC-tkv-server-registry
+    title: /opt/tkv-local/servers/SERVER-REGISTRY.md — HX fleet registry (15 servers, roles, Phase 1 COMPLETE, Phase 2 READY)
+    type: registry
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /opt/tkv-local/servers/SERVER-REGISTRY.md
+  - id: DOC-tkv-servers-readme
+    title: /opt/tkv-local/servers/README.md — server records file set and preservation rules
+    type: contract
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /opt/tkv-local/servers/README.md
+  - id: DOC-tkv-servers-records-contract
+    title: /opt/tkv-local/servers/AGENTS.md — server records contract (Phase 1 discovery, registry sync, Phase 2 configuration rules)
+    type: contract
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /opt/tkv-local/servers/AGENTS.md
+  - id: DOC-tkv-servers-template-configuration
+    title: /opt/tkv-local/servers/_templates/configuration.md — server configuration record template
+    type: contract
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /opt/tkv-local/servers/_templates/configuration.md
+  - id: DOC-tkv-servers-template-discovery
+    title: /opt/tkv-local/servers/_templates/discovery.md — server discovery record template
+    type: contract
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /opt/tkv-local/servers/_templates/discovery.md
+  - id: DOC-tkv-skills-adoption-plan-html
+    title: hx-agent-skills-adoption-plan_gpt-5.6-sol_20260813_1735.html — HX-Infrastructure Agent Skills Integration & Migration Brief
+    type: plan
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/skills/hx-agent-skills-adoption-plan_gpt-5.6-sol_20260813_1735.html
+  - id: DOC-tkv-skills-claude-code-prompt-html
+    title: 'hx-agent-skills-claude-code-prompt_gpt-5.6-sol_20260813_1735.html — Claude Code Prompt: HX Agent Skills Integration'
+    type: other
+    authority_level: historical-as-found
+    freshness: historical
+    canonical_location: /opt/tkv-local/skills/hx-agent-skills-claude-code-prompt_gpt-5.6-sol_20260813_1735.html
+  - id: DOC-tkv-skills-hooks-implementation-prompt
+    title: owner_2026-08-13_hx-hooks-and-skills-implementation-prompt.md — implement the approved HX hooks and skills architecture (Claude Code tasking)
+    type: work-order
+    authority_level: owner-directive
+    freshness: historical
+    canonical_location: /opt/tkv-local/skills/owner_2026-08-13_hx-hooks-and-skills-implementation-prompt.md

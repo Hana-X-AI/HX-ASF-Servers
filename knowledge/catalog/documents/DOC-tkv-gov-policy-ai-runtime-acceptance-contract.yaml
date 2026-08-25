@@ -1,0 +1,38 @@
+document:
+  id: "DOC-tkv-gov-policy-ai-runtime-acceptance-contract"
+  title: "/opt/tkv-local/ollama/implementation/archive/HX-Infrastructure-main/governance/policy/ai-runtime-acceptance-contract.md — archived HX-Infrastructure governance policy: ai-runtime-acceptance-contract"
+  type: "contract"
+  declared_purpose: "HX AI Runtime Acceptance Contract — TARGET-STATE CONTRACT; engine-neutral (names no runtime, host, or model); as-built status explicitly not asserted by the document."
+  source:
+    author: "HX project (Claude Code era, HX-Infrastructure repository)"
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/ollama/implementation/archive/HX-Infrastructure-main/governance/policy/ai-runtime-acceptance-contract.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T06:10:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: []
+    repositories: [tkv-local, HX-Infrastructure (archived predecessor)]
+    environments: [fleet]
+  version: ""
+  status: "historical"
+  authority_level: "historical-as-found"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "governs"
+      target: "HX-Infrastructure repository (archived) — historical policy"
+      note: "predecessor-repo governance; current factory governance lives in HX-ASF-Servers AGENTS.md — cross-check before applying any rule"
+  validation:
+    validated_at: "2026-08-25T06:10:00Z"
+    freshness: "historical"
+    review_due: "historical record — no review cycle"
+  sha256: "cd7588802bc99a670fd3e72f7ad6054eefb397d31e04fa4490fb1c0014f18284"
+  canonical_location: "/opt/tkv-local/ollama/implementation/archive/HX-Infrastructure-main/governance/policy/ai-runtime-acceptance-contract.md"

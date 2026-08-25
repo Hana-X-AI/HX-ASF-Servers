@@ -1,0 +1,46 @@
+document:
+  id: "DOC-kdd-0002-goal-setting-guidance"
+  title: "KDD-0002 — Adopt goal-setting guidance and designate goals/ as the durable state system"
+  type: "decision"
+  declared_purpose: "Ratified decision (2026-08-24, decider Agent-Zero): adopt the goal-setting/agent-invocation guidance at agents/kimi-k3/goal-setting-guidance.md with amendments (Phase M operation §4.3, durable-state designation §10, status correction, goal-ID mapping, Appendix A provenance); goals/ files are the designated durable work-state system; GitHub Projects deferred-optional by owner decision with new KDD; goals/_template.md upgraded to the contract subset."
+  source:
+    author: "Kimi-K3 (review and record); decider Agent-Zero"
+    provided_by: "Agent Zero"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0002-goal-setting-guidance-and-durable-state.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T04:50:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: [kimi-k3]
+    repositories: [HX-ASF-Servers]
+    environments: [fleet]
+  version: ""
+  status: "active"
+  authority_level: "ratified-governance"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "decides"
+      target: "goals/ as single durable work-state authority"
+      note: "goal file name (<YYYY-MM-DD>-<slug>.md) is the Goal ID"
+    - predicate: "references"
+      target: "DOC-kimi-k3-goal-setting-guidance"
+      note: "adopted artifact; cataloged 2026-08-25 (corrections batch 5)"
+    - predicate: "references"
+      target: "/home/hxsa/opt/local-tkv/agent-zero-docs/goals/codex_20260824_1112_kimi-k3_goal-setting-and-agent-invocation-guidance.md"
+      note: "source (735 lines, SHA-256 8c7e1397…), unmodified historical input"
+  validation:
+    validated_at: "2026-08-25T19:08:00Z"
+    freshness: "current"
+    review_due: "on owner decision to change work-state system"
+  sha256: "62d52e59c2eedee97b1cd3a4bd472e5b9e61ae1272327aea2cbf38b4d29e809c"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0002-goal-setting-guidance-and-durable-state.md"
+notes:
+  corrections_batch5: "2026-08-25 corrections batch 5: adopted artifact cataloged as DOC-kimi-k3-goal-setting-guidance; references relation repointed from raw path to the DOC id and the 'NOT cataloged — follow-up' language removed. The separate local-tkv source relation (external historical input) is unchanged. source.section backfilled (§whole-document); validated_at refreshed. Source file unchanged (sha256 stands from run 1)."

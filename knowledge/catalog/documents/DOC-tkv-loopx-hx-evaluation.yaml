@@ -1,0 +1,43 @@
+document:
+  id: "DOC-tkv-loopx-hx-evaluation"
+  title: "/opt/tkv-local/loopx (HX side) — HX evaluation material for LoopX (ariadne pilot)"
+  type: "corpus"
+  declared_purpose: "HX evaluation material sharing the /opt/tkv-local/loopx wrapper tree, partitioned out of DOC-tkv-corpus-loopx 2026-08-25 (governor batch C6): ariadne-loopx-pilot.md, loopx-operational-learning-ledger.md, hx-loopx-reconnaissance-report_chatgpt-gpt-5-6_20260815_1916.html, hx-agent-ariadne-loopx-pilot-design_chatgpt-gpt-5-6_20260815_1925.html (ChatGPT GPT-5-6, 2026-08-15). HX consultant work product — NOT upstream LoopX authority."
+  inferred_value: "INFERENCE: the ariadne-loopx pilot design and operational learning ledger are the most operationally developed of the wrapper evaluations; still consultant-era work — verify against current governance before reuse."
+  source:
+    author: "ChatGPT GPT-5-6 (HX consultant evaluation)"
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/loopx (excluding loopx-main)"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T08:00:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: []
+    repositories: [tkv-local]
+    environments: [fleet]
+  version: "evaluation wave 2026-08-15"
+  status: "historical"
+  authority_level: "historical-as-found"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "describes"
+      target: "DOC-tkv-corpus-loopx"
+      note: "HX reconnaissance and ariadne pilot design on the upstream LoopX snapshot; evaluation content is consultant work, not upstream authority (partition C6)"
+  validation:
+    validated_at: "2026-08-25T21:02:00Z"
+    freshness: "historical"
+    review_due: "2026-09-24 (corpus manifest re-hash) or on any corpus update"
+  sha256: "750520ce9bc784152d385b74845679ff3d64eacd603dc2d40577fa2750c76baf"
+  canonical_location: "/opt/tkv-local/loopx"
+notes:
+  partition_scope: "Record covers /opt/tkv-local/loopx EXCLUDING the loopx-main upstream snapshot (cataloged as DOC-tkv-corpus-loopx). Manifest computed with loopx-main and .git paths pruned."
+  checksum_method: "sha256 = digest of a CONTENT-SENSITIVE manifest (regenerated 2026-08-25, batch 7): for every in-scope file one line '<sha256 of file contents>  <relative-path>' (sha256sum two-space text format), lines sorted byte-wise (LC_ALL=C) by relative path, the manifest text (trailing newline) digested — per-file content hashing makes content changes detectable, unlike the prior names-only manifest. Scope preserved: /opt/tkv-local/loopx EXCLUDING the loopx-main upstream snapshot and .git internals (see partition_scope; 4 files). Supersedes the prior names-only manifest digest b72c7801dd78385f2ff7ac39489d8ff40cc8d35cb191e62b668335b1f88319ae (form-aligned per F-B6-6(b), then replaced same run per the batch-7 content-sensitive finding). Directory canonical_location preserved."
+  upstream_provenance: "upstream URL/commit: not applicable — HX-side material."

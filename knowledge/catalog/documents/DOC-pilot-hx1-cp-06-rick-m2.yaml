@@ -1,0 +1,44 @@
+document:
+  id: "DOC-pilot-hx1-cp-06-rick-m2"
+  title: "06-context-packet-rick-m2.yaml — context packet for WO-HX1-RICK-M2-001 (session rick-m2-20260824-01)"
+  type: "context-packet"
+  declared_purpose: "Session-binding packet for the M2 rick dispatch: controlling sources (rick profile, plan §§2.2/3/4/5.2/7, WO-05, 03 receipt, 04 inventory, ubuntu corpus), M1 baseline summary, owner decisions D1–D4, single-mutation constraint (suspend-target mask), evidence required (07, 08), budget."
+  source:
+    author: "Kimi-K3 (governor)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/06-context-packet-rick-m2.yaml"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T04:50:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: [hxs-1, hxs-5]
+    fqdns: []
+    services: []
+    agents: [rick, kimi-k3]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+  version: ""
+  status: "adopted"
+  authority_level: "delegated-contract"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "kimi-k3"
+      note: "state log row 7; hash matches"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-wo-05-rick-m2"
+      note: "paired work order"
+    - predicate: "references"
+      target: "DOC-tkv-corpus-ubuntu"
+      note: "controlling source"
+  validation:
+    validated_at: "2026-08-25T04:50:00Z"
+    freshness: "current"
+    review_due: "not applicable — discharged (M2 complete)"
+  sha256: "bb08d655b77a6866643792b9e91e99511f46b8ef42d4c681c1902e3afd178f79"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/06-context-packet-rick-m2.yaml"

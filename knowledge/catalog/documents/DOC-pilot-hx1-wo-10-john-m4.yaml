@@ -1,0 +1,52 @@
+document:
+  id: "DOC-pilot-hx1-wo-10-john-m4"
+  title: "10-work-order-john-m4.yaml — WO-HX1-JOHN-M4-001 (M4: Ollama install, model freeze, 32K baseline, preload, rollback)"
+  type: "work-order"
+  declared_purpose: "Delegated contract commissioning john/Esme (session john-m4-20260825-01) to install and pin Ollama on hxs-1, pull and freeze qwen3.8:27b, create alias hx-qwen3.8-27b at num_ctx 32768 per plan §6.5, apply the hx1.conf drop-in and preload unit, prove API/model/GPU state, and deliver the rollback guide; owner decisions KDD-0004/D1/D5/D6 embedded."
+  source:
+    author: "Kimi-K3 (governor)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/10-work-order-john-m4.yaml"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T04:50:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: [hxs-1, hxs-5]
+    fqdns: []
+    services: [ollama.service, ollama-preload.service]
+    agents: [john, kimi-k3]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+  version: ""
+  status: "adopted"
+  authority_level: "delegated-contract"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "kimi-k3"
+      note: "issued at state log row 11 (2026-08-25T00:37Z); hash matches row 11 record"
+    - predicate: "governs"
+      target: "DOC-pilot-hx1-ev-12-esme-m4-install"
+      note: "paired deliverable (15/15 tests PASS)"
+    - predicate: "governs"
+      target: "DOC-pilot-hx1-ev-13-esme-rollback"
+      note: "paired deliverable (rollback layers A–D)"
+    - predicate: "depends_on"
+      target: "DOC-pilot-hx1-ev-08-rick-risk-handoff"
+      note: "VALIDATE FIRST per plan §10.1 step 1; stop if any critical risk open"
+    - predicate: "depends_on"
+      target: "DOC-protected-ssh-info-hxs1"
+      note: "askpass execution path"
+  validation:
+    validated_at: "2026-08-25T04:50:00Z"
+    freshness: "current"
+    review_due: "not applicable — discharged contract (M4 complete, Gate 2 PASSED row 13); note: its plan-§6.5 Modelfile directive was later superseded by A01 §4.2 — see DOC-pilot-hx1-wo-17-john-m5b"
+  sha256: "a99a337973bda0ac621dc53345747380af440d3827d0ce16640105ce8e72922d"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/10-work-order-john-m4.yaml"
+notes:
+  assigned_agent_call_sign: "Esme = john (pilot call sign, not a roster entry)"

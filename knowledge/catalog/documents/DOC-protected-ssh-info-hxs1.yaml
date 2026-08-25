@@ -1,0 +1,44 @@
+document:
+  id: "DOC-protected-ssh-info-hxs1"
+  title: "ssh-info.md — protected credential resource for SSH access to hxs-1 (existence, owner, retrieval mechanism only)"
+  type: "protected-resource"
+  declared_purpose: "Owner-provided SSH credential reference used by pilot execution paths to reach hxs-1 (hxsa@192.168.50.200) from hxs-5. Per every pilot work order: access uses the askpass pattern (sudo -A / SSH_ASKPASS) — the secret is never printed, logged, or stored; any askpass helper and transient secret file are deleted at task end. This record documents EXISTENCE, OWNER, and RETRIEVAL MECHANISM only. The file's contents were never read, quoted, or copied for this catalog."
+  source:
+    author: "Agent Zero"
+    provided_by: "Agent Zero"
+    origin: "/home/hxsa/opt/local-tkv/agent-zero-docs/ssh-info.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T04:50:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: [hxs-1, hxs-5]
+    fqdns: []
+    services: [ssh.socket]
+    agents: [rick, john]
+    repositories: []
+    environments: [pilot, fleet]
+  version: ""
+  status: "active"
+  authority_level: "owner-directive"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "protected"
+    access_restrictions: "owner-only content; agents retrieve at task runtime via the askpass pattern under a valid work order; never catalog, quote, print, log, or persist the value; helpers deleted at task end"
+    contains_secret_values: true
+  relations:
+    - predicate: "configures"
+      target: "SSH hxsa@192.168.50.200 execution path (askpass pattern)"
+      note: "referenced by work orders 01/05/10/14/17/20/24 execution_path fields; F-M5-1 incident (stdin sequencing) and F-M5-2 (NOPASSWD sudo path) are disclosed in 16/26 evidence docs"
+    - predicate: "governs"
+      target: "secret-handling rule: no secret values in catalog, evidence, or logs"
+      note: "profile §6 boundary; lessons-learned secret-scan adoption gate"
+  validation:
+    validated_at: "2026-08-25T20:15:00Z"
+    freshness: "current"
+    review_due: "on credential rotation by owner (re-attestation by owner, NOT re-hash — no credential-derived verifier may be stored in the catalog)"
+  sha256: "withheld — protected resource; no credential-derived verifier stored; integrity by owner attestation"
+  canonical_location: "/home/hxsa/opt/local-tkv/agent-zero-docs/ssh-info.md"
+notes:
+  security_note: "FLAG F-SEC-1 (informational): file is 53 bytes, plaintext credential material in an owner docs directory. Existence recorded per profile §6; contents never accessed. No action proposed (owner no-hardening stance recorded at state log row 17 / F-M5-2 context)."
+  corrections_batch6: "sha256 REMOVED (batch 6, T7, security-critical): the record carried a content digest of the 53-byte short-password file — a credential-derived verifier usable to confirm offline brute-force guesses. It must not remain in the catalog. Replaced with a withheld marker per the protected-resource convention; integrity is now by owner attestation, and review_due is re-attestation on owner rotation (not re-hash). The removed digest is deliberately NOT preserved in notes, hash history, or anywhere else in the catalog — not even truncated (this note intentionally carries no digest characters). Record-level change only — the source file was never read, hashed, or touched by Carol (contents never accessed, before and now)."

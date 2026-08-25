@@ -1,0 +1,38 @@
+document:
+  id: "DOC-tkv-servers-template-configuration"
+  title: "/opt/tkv-local/servers/_templates/configuration.md — server configuration record template"
+  type: "contract"
+  declared_purpose: "Blank Phase 2 configured-state template (`<server-name>` — Configured State): discovery reference, assigned role/workload copied from SERVER-REGISTRY.md (the record does not assign them), approved-by line. To be instantiated per host at Phase 2 (hxs-1's is approved for M8 per state log row 28)."
+  source:
+    author: "HX project (server records contract)"
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/servers/_templates/configuration.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T05:55:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: []
+    repositories: [tkv-local]
+    environments: [fleet]
+  version: ""
+  status: "active"
+  authority_level: "ratified-governance"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "governs"
+      target: "per-host configuration.md records under /opt/tkv-local/servers/"
+      note: "blank form mandated by the server records contract (DOC-tkv-servers-records-contract)"
+  validation:
+    validated_at: "2026-08-25T05:55:00Z"
+    freshness: "current"
+    review_due: "on server records contract change"
+  sha256: "1ca0e9a49edd520eb07b71ae668da77aa634f71c4eb855e4f864e21783635ac0"
+  canonical_location: "/opt/tkv-local/servers/_templates/configuration.md"

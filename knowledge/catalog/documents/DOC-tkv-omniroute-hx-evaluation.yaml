@@ -1,0 +1,43 @@
+document:
+  id: "DOC-tkv-omniroute-hx-evaluation"
+  title: "/opt/tkv-local/OmniRoute (HX side) — HX evaluation material for OmniRoute"
+  type: "corpus"
+  declared_purpose: "HX evaluation material sharing the /opt/tkv-local/OmniRoute wrapper tree, partitioned out of DOC-tkv-corpus-omniroute 2026-08-25 (governor batch C6): hx-omniroute-architecture-decision-litellm-replacement_gpt-5.6-sol_20260814_0031.html, hx-omniroute-claude-code-integration-prompt_gpt-5.6-sol_20260814_0031.html, hx-omniroute-current-documents-reconciliation_chatgpt-gpt-5-6_20260815_2109.html, hx-omniroute-multi-tier-agent-architecture_chatgpt-gpt-5-6_20260816_0932.html. HX consultant work product — NOT upstream OmniRoute authority."
+  inferred_value: "INFERENCE: the litellm-replacement architecture decision is the notable content — a considered routing-gateway decision from the consultant era; no ratified HX adoption of OmniRoute exists in the catalog."
+  source:
+    author: "GPT-5.6-sol and ChatGPT GPT-5-6 (HX consultant evaluation)"
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/OmniRoute (excluding OmniRoute-release-v3.8.50)"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T08:00:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: []
+    repositories: [tkv-local]
+    environments: [fleet]
+  version: "evaluation wave 2026-08-14/16"
+  status: "historical"
+  authority_level: "historical-as-found"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "describes"
+      target: "DOC-tkv-corpus-omniroute"
+      note: "HX architecture evaluation of the upstream OmniRoute snapshot; evaluation content is consultant work, not upstream authority (partition C6)"
+  validation:
+    validated_at: "2026-08-25T21:02:00Z"
+    freshness: "historical"
+    review_due: "2026-09-24 (corpus manifest re-hash) or on any corpus update"
+  sha256: "737ba78e57e1a2f8da87920f757536169039df55604b74dbc17e2826c373392a"
+  canonical_location: "/opt/tkv-local/OmniRoute"
+notes:
+  partition_scope: "Record covers /opt/tkv-local/OmniRoute EXCLUDING the OmniRoute-release-v3.8.50 upstream snapshot (cataloged as DOC-tkv-corpus-omniroute). Manifest computed with OmniRoute-release-v3.8.50 and .git paths pruned."
+  checksum_method: "sha256 = digest of a CONTENT-SENSITIVE manifest (regenerated 2026-08-25, batch 7): for every in-scope file one line '<sha256 of file contents>  <relative-path>' (sha256sum two-space text format), lines sorted byte-wise (LC_ALL=C) by relative path, the manifest text (trailing newline) digested — per-file content hashing makes content changes detectable, unlike the prior names-only manifest. Scope preserved: /opt/tkv-local/OmniRoute EXCLUDING the OmniRoute-release-v3.8.50 upstream snapshot and .git internals (see partition_scope; 4 files). Supersedes the prior names-only manifest digest de97682de96b7bcfa70ea1e2e3e4a5acef2c3f65e900600ebfa9b2838292af6e (form-aligned per F-B6-6(b), then replaced same run per the batch-7 content-sensitive finding). Directory canonical_location preserved."
+  upstream_provenance: "upstream URL/commit: not applicable — HX-side material."

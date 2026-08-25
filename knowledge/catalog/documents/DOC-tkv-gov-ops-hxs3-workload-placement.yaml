@@ -1,0 +1,41 @@
+document:
+  id: "DOC-tkv-gov-ops-hxs3-workload-placement"
+  title: "/opt/tkv-local/ollama/implementation/archive/HX-Infrastructure-main/governance/operations/hxs3-workload-placement.md — hxs-3 workload placement semantics; DS4 candidacy WITHDRAWN 2026-08-14"
+  type: "decision"
+  declared_purpose: "hxs-3 workload placement record: DS4 is no longer a candidate workload for hxs-3 — commissioning aborted, workload DEFERRED/RESEARCH with host assignment NONE; the placement semantics are retained as reusable for any future workload; hxs-3 was never modified during that work (no SSH, no install, no download, no service, no registry change) and retains its durable role; SERVER-REGISTRY.md owns durable host identity and role, this document owned workload eligibility only."
+  source:
+    author: "HX project (Claude Code era, HX-Infrastructure repository)"
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/ollama/implementation/archive/HX-Infrastructure-main/governance/operations/hxs3-workload-placement.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T06:10:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: [hxs-3]
+    fqdns: []
+    services: []
+    agents: []
+    repositories: [tkv-local, HX-Infrastructure (archived predecessor)]
+    environments: [fleet]
+  version: ""
+  status: "historical"
+  authority_level: "historical-as-found"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "decides"
+      target: "hxs-3 workload eligibility (DS4 withdrawn 2026-08-14)"
+      note: "placement semantics retained as reusable; durable role remains registry-owned"
+    - predicate: "references"
+      target: "DOC-tkv-server-registry"
+      note: "registry owns durable host identity and role per this record's own authority clause"
+  validation:
+    validated_at: "2026-08-25T08:10:00Z"
+    freshness: "historical"
+    review_due: "historical record — no review cycle"
+  sha256: "10275ef99005f7e026052d7d83474177b24b6ba39c28e02e4a1a9a57a8785bb3"
+  canonical_location: "/opt/tkv-local/ollama/implementation/archive/HX-Infrastructure-main/governance/operations/hxs3-workload-placement.md"

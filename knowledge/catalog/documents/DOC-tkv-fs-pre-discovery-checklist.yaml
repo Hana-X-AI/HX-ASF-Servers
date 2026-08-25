@@ -1,0 +1,38 @@
+document:
+  id: "DOC-tkv-fs-pre-discovery-checklist"
+  title: "/opt/tkv-local/file-share/human-pre-discovery-checklist.md — minimum human preparation before handing an Ubuntu 24.04 server to Claude Code for Phase 1 discovery"
+  type: "runbook"
+  declared_purpose: "Human-preparation checklist (scope: human preparation only; Claude performs the actual hardware, OS, storage, GPU, service, and capability discovery) run before Phase 1 discovery of each fleet server — the procedure behind the per-host pre-work-results.md records."
+  source:
+    author: "HX project (Claude/Codex era) or named consultant model"
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/file-share/human-pre-discovery-checklist.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T06:05:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: []
+    repositories: [tkv-local]
+    environments: [fleet]
+  version: ""
+  status: "historical"
+  authority_level: "historical-as-found"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "per-host pre-work-results.md records under /opt/tkv-local/servers/"
+      note: "the checklist whose execution those records evidence (e.g. DOC-tkv-hxs2-pre-work-results)"
+  validation:
+    validated_at: "2026-08-25T06:05:00Z"
+    freshness: "historical"
+    review_due: "historical record — no review cycle"
+  sha256: "671ce54bf8474cb12beca5a132beb9add0af433fc4f6658253ed933377cba37a"
+  canonical_location: "/opt/tkv-local/file-share/human-pre-discovery-checklist.md"

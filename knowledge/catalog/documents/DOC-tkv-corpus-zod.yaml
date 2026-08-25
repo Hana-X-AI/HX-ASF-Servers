@@ -1,0 +1,42 @@
+document:
+  id: "DOC-tkv-corpus-zod"
+  title: "/opt/tkv-local/zod-main — Upstream source snapshot of Zod (README at packages/zod/README.md; root README is a pointer) (670 files)"
+  type: "corpus"
+  declared_purpose: "Upstream source snapshot of Zod (README at packages/zod/README.md; root README is a pointer): TypeScript-first schema declaration and validation library."
+  source:
+    author: "upstream project (Zod, per packages/zod/README.md branding; root README is a pointer); mirrored into /opt/tkv-local by Agent Zero"
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/zod-main"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T06:12:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: []
+    repositories: [tkv-local]
+    environments: [fleet]
+  version: ""
+  status: "adopted"
+  authority_level: "upstream-reference"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "references"
+      target: "TKV source-snapshot corpus (owner-directed sweep, state log row 32)"
+      note: "670 files excluding .git internals; deep per-file cataloging on demand via retrieval packages"
+  validation:
+    validated_at: "2026-08-25T21:02:00Z"
+    freshness: "current"
+    review_due: "2026-09-24 (corpus manifest re-hash) or on any corpus update"
+  sha256: "be3f855c2e95f1ccb2707cc60f774f16f482ff754f09f8d19ac5b79ba578b5a7"
+  canonical_location: "/opt/tkv-local/zod-main"
+notes:
+  checksum_method: "sha256 = digest of the sorted relative-path file manifest (670 files, names only), NOT content hashes; regenerated 2026-08-25; directory canonical_location preserved. Manifest re-hash scheduled 2026-09-24 (run-1 follow-up) stands. .git internals excluded from the manifest and from cataloging. Form alignment batch 7 (F-B6-6, hxinfra-archive reference form): method/scope/count text consolidated wholly into notes.checksum_method; the sha256 field now carries ONLY the bare 64-char digest; digest VALUE unchanged (names-only manifest retained until a future content-sensitive migration)."
+  upstream_provenance: "upstream URL/commit: unavailable — tree is not a git checkout (no .git metadata present); unpacked archive snapshot"
+  corrections_batch6: "source.author aligned to the evidence-backed attribution (batch 6, T10b): upstream project (Zod) — verified 2026-08-25 against packages/zod/README.md (Zod logo/header, 'TypeScript-first schema validation with static type inference', @colinhacks); the root README is a pointer, as declared_purpose records. The ambiguous 'or HX consultant evaluation' alternative removed; one evidence-backed attribution per record."

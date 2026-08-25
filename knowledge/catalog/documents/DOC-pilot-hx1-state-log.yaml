@@ -1,0 +1,53 @@
+document:
+  id: "DOC-pilot-hx1-state-log"
+  title: "PILOT-HX1-OLLAMA-QWEN27B-001 09-state-log.md — governor state-transition log (rows 1–44 at re-validation)"
+  type: "other"
+  declared_purpose: "Kimi-K3 governor's sequential state log for the pilot: M0 authorization through M6b completion (row 34, 2026-08-25T05:16Z), with proof references and sha256 hashes for every commissioned artifact; owner decisions D1–D8 and the 2026-08-25 owner directives — row 19 (128K into M6), row 27 (TKV server records controlling-sources fix; x4/x16 'new FACT' relabeled 're-confirmed'), row 28 (Carol instantiation; hxs-1/configuration.md approved for M8), row 30 (three-profile disposition: 23-kk3-m6-capacity-decision.md Revision 2 — 32K recovery / 64K operating / 128K qualified-extended-selected; v1 freeze superseded BEFORE EXECUTION; A01 §4.3/§4.4 supersessions recorded; HX-1 == hxs-1 declared; 128K harness requirements ratified into plan §6.1), row 32 (TKV-wide catalog sweep directive — Carol run 2 queued), row 33 (CodeRabbit review batch: corrections to plan, 23, 25, 22, 12, 13, carol profile, schema.yaml, agents/README; fixture findings to a fixer session; F-M5-1 credential rotation SKIPPED by owner), row 34 (M6b complete, handoff OPEN pending Carol receipt), row 35 (Carol run-1 receipt referenced — CLOSES the row 29 and row 34 handoffs; HX Second Brain framework document received as STRATEGIC REFERENCE, reviewed and retained as directional context, NO implementation authorized), row 36 (fixture defects fixed 6/6 + test_fixtures.py regression battery 9/9 PASS; q16_rerun sys.path repointed from stale /tmp scratch to the versioned fixtures dir; evidence-dir makedirs; sha256sums.txt regenerated, 10 files), row 37 (CAT-001 battery vs Carol run 1: mechanical and known-answer ALL PASS; CAT-02 flagged 5 living documents drifted — re-validated in Carol run 2; CAT-02 corpus directory-rule refinement queued to Kimi-K3), row 38 (Carol registered as bounded persistent role — owner approved; bounds ratified in agents/carol/charter.md: knowledge-only lane, writes scoped to knowledge/catalog/, no sub-agent dispatch, no host probes; AGENTS.md + roster + profile updated; conformance audit at knowledge/catalog/tests/carol-bounds-001.md, run 1 audited PASS), row 39 (Carol run 2 closed — receipt 2026-08-25T0612Z: catalog 62→152 records, hx-second-brain-guidance-001 cataloged as strategic direction NOT ratified for implementation, 5 drifted living records re-validated, full /opt/tkv-local coverage 35 trees, first retrieval package 11,457 B vs 212,880 B raw = 5.4% / 19× economy CAT-22 PASS, CB-001 bounds audit PASS; governor flag fixes applied; owner-level flags: vault-root README describes Bench Studio not the vault (F2-4, owner action), duplicate/nested TKV trees), row 40 (owner answers: F-M6-3 CLOSED — the .220 client was the owner; soak AC-016 DELAYED; all three cold-reboot cycles PRE-APPROVED in a 2-hour window from 06:29Z, no fourth; BIOS note informational only; F-M5-1 credential rotation REJECTED — item closed; M7 split: M7a = 3 reboot cycles, M7b = 24h soak delayed), row 41 (M7 → M7a: 31-work-order-john-m7a.yaml sha256 74acdfaf… + 32-context-packet-john-m7a.yaml sha256 a2aa29c9…, session john-m7a-20260825-01 commissioned), row 42 (M7a COMPLETE — AC-007 PASS 3/3: 3 cold reboots in-window, zero human intervention, boot→ready 60 s deterministic ×3 = 15× under the 900 s D5 SLO, kernel 7.0.0-28→7.0.0-30 at cycle 1 with driver 580.173.02 re-proven, Wi-Fi soft-block persistence empirically confirmed ×3, wait-online residue cleared, NVRM triggers not fired, F-M7A-1 rick save-file digit corrected 0→1, F-M7A-2 watchdog WARN pair deterministic per cold load → expected-class monitoring recommendation; AC-008/AC-016 soak remain owner-delayed M7b). Rows 29 and 34 handoffs are CLOSED per row 35."
+  inferred_value: "INFERENCE: the single chronological spine of the pilot; the governing log. Rows 29/34 handoffs were closed by the run-1 receipt per row 35; rows 35–42 record the run-1/run-2 receipts, the fixture fixer session, CAT-001 results, Carol's bounded-role registration, the owner's row-40 authorizations, and M7a completion (AC-007 PASS 3/3)."
+  source:
+    author: "Kimi-K3 (governor, main session)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/09-state-log.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T04:50:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: [hxs-1]
+    fqdns: []
+    services: [ollama.service, ollama-preload.service]
+    agents: [kimi-k3, john, rick, carol]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+  version: "rows 1–44 at re-validation (living log)"
+  status: "active"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "describes"
+      target: "PILOT-HX1-OLLAMA-QWEN27B-001 full transition history (rows 1–44)"
+      note: "every commissioned artifact hash-recorded; hash chains for WO-20 (rows 19→22), fixtures manifest (rows 21→24→36→44), and WO-31 (row 41→44 terminology_note) verified intact; row-41 proof hashes match the cataloged WO-31/CP-32 records exactly; row 43 (review batch 2 dispositions: 30-esme wording fixes; carol scoped-writes allowlist) and row 44 (M7a receipt cited — handoff CLOSED; batch 4 governor fixes: coding_suite FAIL-CLOSED, schema source.section, CB-01 write-set strengthening, reboot terminology) recorded"
+    - predicate: "references"
+      target: "DOC-tkv-hxs1-discovery"
+      note: "row 27: discovery (2026-08-11) predates the pilot's PCIe x4/x16 finding — 're-confirmed' correction; per-host TKV records now controlling sources for all future work orders"
+    - predicate: "decides"
+      target: "row 30: owner profile disposition (Rev-2) supersedes the M6 v1 freeze before execution"
+      note: "see DOC-pilot-hx1-decision-23-m6-capacity"
+    - predicate: "depends_on"
+      target: "DOC-agent-carol-profile"
+      note: "rows 29 and 34 handoffs CLOSED by the run-1 catalog receipt per row 35 (receipts/2026-08-25T0455Z-carol-first-ingestion.md)"
+    - predicate: "governs"
+      target: "row 32: owner-directed TKV-wide catalog sweep (Carol run 2)"
+      note: "~90K files across 30+ top-level trees; corpus-level records per source-snapshot tree; document-level for HX-operational trees; .git excluded"
+  validation:
+    validated_at: "2026-08-25T08:35:00Z"
+    freshness: "current"
+    review_due: "each state transition (living log); final reconciliation at M8"
+  sha256: "cb5068999f1a5396f1ad63c88d3925cfd9c5f42ba0a2dcd477fabd4e2dc2fd2b"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/09-state-log.md"
+notes:
+  living_document: "This log is appended to continuously during the active pilot. Hash captured 2026-08-25T08:35Z at rows 1–44; earlier hashes: 1c821971… (rows 1–29, 04:41Z), 04984ccf… (rows 1–33, 05:00Z), 16b8fe64… (rows 1–34, 05:25Z), 76993c21… (rows 1–37, 05:45Z), 464b7934… (rows 1–42, 07:10Z). Re-hash on every re-ingestion. Expected next append: governor row citing this run's batch-34 corrections receipt."

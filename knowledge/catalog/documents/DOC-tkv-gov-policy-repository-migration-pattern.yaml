@@ -1,0 +1,38 @@
+document:
+  id: "DOC-tkv-gov-policy-repository-migration-pattern"
+  title: "/opt/tkv-local/ollama/implementation/archive/HX-Infrastructure-main/governance/policy/repository-migration-pattern.md — archived HX-Infrastructure governance policy: repository-migration-pattern"
+  type: "contract"
+  declared_purpose: "Repository migration pattern — frozen 2026-08-14 from the Docling MCP distillation pilot and accepted the same day as the repository's standard legacy-mining workflow after a second validation against LangGraph; no longer pilot machinery — future services run it directly with the same gates."
+  source:
+    author: "HX project (Claude Code era, HX-Infrastructure repository)"
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/ollama/implementation/archive/HX-Infrastructure-main/governance/policy/repository-migration-pattern.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T06:10:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: []
+    repositories: [tkv-local, HX-Infrastructure (archived predecessor)]
+    environments: [fleet]
+  version: ""
+  status: "historical"
+  authority_level: "historical-as-found"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "governs"
+      target: "HX-Infrastructure repository (archived) — historical policy"
+      note: "predecessor-repo governance; current factory governance lives in HX-ASF-Servers AGENTS.md — cross-check before applying any rule"
+  validation:
+    validated_at: "2026-08-25T06:10:00Z"
+    freshness: "historical"
+    review_due: "historical record — no review cycle"
+  sha256: "c9ae313b87e41f27fe755cf2e28b4d1b798bbe3bad86fe597876cfb518d7a151"
+  canonical_location: "/opt/tkv-local/ollama/implementation/archive/HX-Infrastructure-main/governance/policy/repository-migration-pattern.md"

@@ -1,0 +1,55 @@
+document:
+  id: "DOC-hx-second-brain-framework"
+  title: "HX Second Brain Information Guidance and Implementation Framework (hx-second-brain-guidance-001, v1.0.0-draft)"
+  type: "other"
+  declared_purpose: "Converts the four principles observed by Nate B. Jones across community Second Brain builds into an HX-specific strategy, agent operating guide, onboarding framework, reusable pattern system, tool evaluation rubric, and phased implementation plan. Central decision stated by the document: HX should build a small, tool-neutral knowledge loop first (capture, preserve, classify, connect, retrieve, act, receipt, improve), designing every artifact so agents can maintain, extend, and reuse it later. Declares two decisions required: confirm canonical knowledge root (recommended /opt/tkv-local) and ratify the pilot corpus and first capture interface."
+  inferred_value: "INFERENCE: directional blueprint the owner has chosen to retain as context. The live catalog at knowledge/catalog/ already implements its core loop (Carol, records, relations, receipts, CAT-001 golden questions, retrieval packages); treat the document as an alignment reference for future Second Brain work, NOT as tasking. Its Section 5 roadmap, pattern library, tool rubric, and Phase/always-on expansions are unratified proposals."
+  source:
+    author: "Codex (prepared 2026-08-25T06:52:00-04:00)"
+    provided_by: "Agent Zero"
+    origin: "/home/hxsa/opt/local-tkv/agent-zero-docs/brain-power/codex_20260825_0652_hx-second-brain-information-guidance-and-implementation-framework.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T05:45:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: [carol, kimi-k3]
+    repositories: [HX-ASF-Servers]
+    environments: [fleet]
+  version: "1.0.0-draft (document status: proposed-for-owner-and-kk3-ratification)"
+  status: "draft"
+  authority_level: "owner-directive"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "owner-docs tree (/home/hxsa/opt/local-tkv); no secret values observed"
+    contains_secret_values: false
+  relations:
+    - predicate: "governs"
+      target: "knowledge/catalog/ (Carol second-brain catalog)"
+      note: "directional alignment only: the catalog is the de facto vertical slice of this framework's loop; NOT ratified for implementation, so it constrains nothing beyond what ratified governance already requires"
+    - predicate: "references"
+      target: "DOC-cat-001-acceptance"
+      note: "aligns-with: the acceptance battery's known-answer set (CAT-10..15) and CAT-22 retrieval-economy check operationalize the framework's golden-question and context-savings proposals"
+    - predicate: "references"
+      target: "DOC-repo-governance-agents-md"
+      note: "aligns-with: the 2026-08-25 documentation-governance amendment (Carol institution, catalog-before-closing) is listed in the document's own source_basis"
+    - predicate: "references"
+      target: "DOC-agent-carol-profile"
+      note: "the Carol stewardship model (preserve, classify, connect, retrieve, receipts) is the HX anchor the framework builds on"
+  validation:
+    validated_at: "2026-08-25T08:25:00Z"
+    freshness: "current"
+    review_due: "on owner ratification decision (any implementation work requires explicit owner ratification first)"
+  sha256: "56f1bbf2485a5825db6d2ac62793976bd2c17485ac5acdceaf0c63d1a6402c49"
+  canonical_location: "/home/hxsa/opt/local-tkv/agent-zero-docs/brain-power/codex_20260825_0652_hx-second-brain-information-guidance-and-implementation-framework.md"
+notes:
+  authority_label: "VERBATIM owner disposition: \"owner-supplied strategic direction — reviewed and retained as directional context; NOT ratified for implementation (owner, 2026-08-25)\". Enum mapping judgment: recorded as authority_level owner-directive + status draft to keep the owner origin visible while the status and this label carry the non-ratified truth; flagged in the run receipt. Corroborated by state log row 35 (STRATEGIC REFERENCE, NO implementation authorized)."
+  provenance: "Codex-authored. Built partly on a secondary practitioner transcript (Nate B. Jones, supplied to Codex as 'Pasted markdown(7).md') — the transcript basis is SECONDARY/UNVERIFIED: not supplied to the factory, not independently checked, and the framework itself states it is not an HX authority record and mandates no named tool. Other declared bases: owner task directive 2026-08-25; the Carol governance amendment; existing HX architecture (KK3 control plane, DeepSeek Harness, bounded agents)."
+  deferred_capabilities: "Deferred-by-owner (recorded here per tasking; these are NOT work items): DeepSeek Harness build-out as execution substrate; vector/graph indexes (benchmark-triggered only, per the document's own non-actions); always-on automation (session-based first; no always-on autonomous mutation in pilot); PostgreSQL/Qdrant/Neo4j adoption explicitly listed as non-actions."
+  open_decisions_in_document: "Unratified proposals the document itself flags: G-01 canonical TKV path (/opt/tkv-local recommended, not owner-confirmed); G-02 first capture interface; G-03 pilot corpus freeze; G-04 golden-question corpus ratification (CAT-001 exists as a governor-owned battery but is not the ratified corpus the document calls for); G-05 security classification/retention schedule; G-06 storage/query technology (deliberately deferred); G-07 independent validator identity."
+  prepared_at_as_stated: "VERBATIM author-claimed timestamp: 'prepared 2026-08-25T06:52:00-04:00' (in source.author and the filename codex_20260825_0652_...). Recorded as stated; NOT rewritten by the catalog (C15)."
+  chronology_anomaly: "PROVENANCE ANOMALY (flagged in the batch-34 receipt): the claimed prepared_at 2026-08-25T06:52:00-04:00 (= 10:52:00Z) is chronologically AFTER every independent timestamp for the same artifact: file mtime on disk 2026-08-25T05:25:14Z (stat, verified 2026-08-25), catalog ingestion_date 2026-08-25T05:45:00Z, owner supply ~05:50Z, and the governing sweep receipt 2026-08-25T0612Z. The claimed time cannot be when the file was prepared as delivered; treated as an authoring-label inconsistency (likely a zone/clock mismatch in the author's timestamp), not as evidence of a later version — sha256 matches the ingested file. Escalated, not resolved."

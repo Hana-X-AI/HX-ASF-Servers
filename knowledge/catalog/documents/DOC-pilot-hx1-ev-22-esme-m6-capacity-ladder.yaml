@@ -1,0 +1,49 @@
+document:
+  id: "DOC-pilot-hx1-ev-22-esme-m6-capacity-ladder"
+  title: "22-esme-m6-capacity-ladder.md — Esme M6 capacity ladder: 65,536 and 131,072 qualification evidence (CAPACITY+QUALITY PASS both rungs)"
+  type: "evidence"
+  declared_purpose: "M6 capacity-ladder evidence (report ESME-M6-CAPACITY-LADDER-001): per-stage versioned config diffs (Modelfile + drop-in, sha256, alias digests), capacity proofs (65536 PASS f16 19.06 GiB, needle 62,255; 131072 PASS f16 21.81 GiB, needle 124,395, ~4.4 GiB headroom; 100% GPU, zero CPU fallback, swap 0, no Xid/OOM), D8 quality flat at all rungs, benchmark tables (decode, TTFT, cold prefill at depth, per-GPU dmon), KV growth exactly linear 45,056 B/token, end-state restoration to the M5b-frozen 32K baseline proven exactly, command log. Discloses F-M6-3 (foreign local client from 192.168.50.220 during stage windows — zero measurement overlap proven; raised to owner)."
+  source:
+    author: "john / Esme (session john-m6-20260825-01)"
+    provided_by: "john via Kimi-K3 gate"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/22-esme-m6-capacity-ladder.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T04:50:00Z"
+  owner: "john"
+  applies_to:
+    hosts: [hxs-1]
+    fqdns: []
+    services: [ollama.service, ollama-preload.service]
+    agents: [john]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+  version: ""
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "evidences"
+      target: "M6 complete — state log row 24"
+      note: "feeds the KK3 M6 freeze decision (DOC-pilot-hx1-decision-23-m6-capacity)"
+    - predicate: "produced_by"
+      target: "john"
+      note: "under DOC-pilot-hx1-wo-20-john-m6"
+    - predicate: "risks"
+      target: "F-M6-3 foreign local client 192.168.50.220 — M7 exclusive-window entry condition"
+      note: "zero measurement overlap proven; raised to owner; still present at pre-M7 (26 §9)"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-fixtures-manifest"
+      note: "M6 scaffolding (needle_probe.py, bench_m6.py) adopted into fixtures/ — manifest re-issued (state log row 24)"
+  validation:
+    validated_at: "2026-08-25T05:20:00Z"
+    freshness: "current"
+    review_due: "at M8 unified evidence index"
+  sha256: "d31db7b14ddab3057acd05a6eb9f502f2a79c835696ee702fd21e179c0969215"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/22-esme-m6-capacity-ladder.md"
+notes:
+  review_batch_correction: "2026-08-25 review batch (state log row 33): prefill row header corrected (first cell is cache-assisted). Earlier hash 0f92e85b… superseded by this annotation. Substance unchanged — the ladder matrix remains the Rev-2 evidence base."

@@ -1,0 +1,38 @@
+document:
+  id: "DOC-tkv-gov-policy-documentation-standards"
+  title: "/opt/tkv-local/ollama/implementation/archive/HX-Infrastructure-main/governance/policy/documentation-standards.md — archived HX-Infrastructure governance policy: documentation-standards"
+  type: "contract"
+  declared_purpose: "Documentation and file naming standards — how files in the HX-Infrastructure repository are named and where they belong; written 2026-08-13 after a structure review found three naming schemes running in parallel and fifteen server records in three different shapes."
+  source:
+    author: "HX project (Claude Code era, HX-Infrastructure repository)"
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/ollama/implementation/archive/HX-Infrastructure-main/governance/policy/documentation-standards.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T06:10:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: []
+    repositories: [tkv-local, HX-Infrastructure (archived predecessor)]
+    environments: [fleet]
+  version: ""
+  status: "historical"
+  authority_level: "historical-as-found"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "governs"
+      target: "HX-Infrastructure repository (archived) — historical policy"
+      note: "predecessor-repo governance; current factory governance lives in HX-ASF-Servers AGENTS.md — cross-check before applying any rule"
+  validation:
+    validated_at: "2026-08-25T06:10:00Z"
+    freshness: "historical"
+    review_due: "historical record — no review cycle"
+  sha256: "22cca4d71be92eaedcad2d92069af4f1556a85e9cdc44ca7a57d80ded69dfb27"
+  canonical_location: "/opt/tkv-local/ollama/implementation/archive/HX-Infrastructure-main/governance/policy/documentation-standards.md"

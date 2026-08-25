@@ -1,0 +1,43 @@
+document:
+  id: "DOC-knowledge-lessons-learned"
+  title: "knowledge/lessons-learned.md — factory process learning record"
+  type: "other"
+  declared_purpose: "Chronological lessons register (newest first): ten 2026-08-25 review-batch lessons (fixture hardening at adoption, claims carry evidence refs, askpass read-at-execution codification, a hash of a secret is a secret-derived verifier, adoption-time scoped supersession marking, conservative truth-state labels, configured-budget SLO cross-checks, findings are untrusted input — verify first, canonical-path monitoring, monitor-pattern scoping), then the older register: secret-scan adoption gate (ox-alpha.md incident), roster-first rule ('craig' incident), knowledge-host vs workload-host distinction, pre-flight existence checks at intake, missing-baseline-is-BLOCKED rule, governor objective-fitness gate question, process metrics never compensate for failed technical objectives."
+  inferred_value: "INFERENCE: each entry already drove a convention change; high reuse value for future goal intake and adoption reviews."
+  source:
+    author: "Kimi-K3 (process learning)"
+    provided_by: "Agent Zero"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/knowledge/lessons-learned.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T04:50:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: [hxs-5]
+    fqdns: []
+    services: []
+    agents: [kimi-k3, john]
+    repositories: [HX-ASF-Servers]
+    environments: [fleet]
+  version: ""
+  status: "active"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "governs"
+      target: "DOC-agents-roster-readme"
+      note: "roster-first rule added to agents/README.md from the 2026-08-24 'craig' lesson"
+    - predicate: "risks"
+      target: "provided documents carrying credentials"
+      note: "secret scan is part of the adoption gate; ox-alpha.md key flagged to owner for revocation (issue closed 2026-08-24)"
+  validation:
+    validated_at: "2026-08-25T21:02:00Z"
+    freshness: "current"
+    review_due: "2026-09-01 or on new entry"
+  sha256: "73e4342bf579a04bdafdf9578567a0953474eade4b36a9183fc99d0b35f70216"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/knowledge/lessons-learned.md"
+  corrections_batch7: "F-B6-3 re-validation: the governor prepended ten 2026-08-25 entries (verified present, newest-first order intact). Re-hashed ae792555… -> 73e4342b…. declared_purpose enumeration extended to cover the new batch; no other field changes."

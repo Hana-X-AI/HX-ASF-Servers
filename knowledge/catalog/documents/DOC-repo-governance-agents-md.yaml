@@ -1,0 +1,47 @@
+document:
+  id: "DOC-repo-governance-agents-md"
+  title: "HX-ASF-Servers AGENTS.md — repository governance, skills, communication contract, stewardship"
+  type: "contract"
+  declared_purpose: "Root operating contract for the HX-ASF-Servers repository: skill triggers, communication contract, ASD-STE100 rule, TKV truth-state rules, documentation conventions, adoption rule for provided documents, approval discipline, infrastructure posture directives (Secure Boot stays disabled), and the 2026-08-25 documentation-governance amendment instituting Carol."
+  inferred_value: "INFERENCE: highest-authority operational governance inside this repository; every agent lane inherits it."
+  source:
+    author: "Agent Zero (owner), with factory amendments"
+    provided_by: "Agent Zero"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/AGENTS.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T04:50:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: [kimi-k3, john, rick, carol]
+    repositories: [HX-ASF-Servers]
+    environments: [fleet, pilot]
+  version: "2026-08-25 amendment (Documentation Governance and Knowledge Stewardship)"
+  status: "active"
+  authority_level: "ratified-governance"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "governs"
+      target: "HX-ASF-Servers repository (all lanes)"
+      note: "includes owner directive: Secure Boot stays disabled on HX hosts (2026-08-24)"
+    - predicate: "decides"
+      target: "DOC-agent-carol-profile"
+      note: "2026-08-25 owner amendment institutes Carol and the catalog-before-closing rule"
+    - predicate: "references"
+      target: "/opt/tkv-local"
+      note: "technical knowledge base; reference material, never current truth"
+  validation:
+    validated_at: "2026-08-25T07:10:00Z"
+    freshness: "current"
+    review_due: "on next owner amendment"
+  sha256: "f5927267a663b519c024550b65e6252289cbdfa13fca6e840ec27a03b5798de3"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/AGENTS.md"
+notes:
+  hash_history: "f5c05f1d… (2026-08-25T04:50Z, run 1) → d9ad92eb… (2026-08-25T05:45Z, run 2) → f5927267… (2026-08-25T07:10Z, this run). Latest change: state log row 38 (file mtime 05:44:22Z) — Carol's bounded persistent role registration (role-bounds summary in the stewardship amendment block; skills/contract sections unchanged). Post-run-1 drift flagged by CAT-02 (state log row 37), expected living-governance churn. declared_purpose re-verified against current content: skills, communication contract, ASD-STE100 rule, TKV truth-state rules, documentation conventions, adoption rule, approval discipline, Secure Boot directive, and the 2026-08-25 stewardship amendment all present."

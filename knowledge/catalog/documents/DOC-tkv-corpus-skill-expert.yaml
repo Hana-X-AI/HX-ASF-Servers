@@ -1,0 +1,43 @@
+document:
+  id: "DOC-tkv-corpus-skill-expert"
+  title: "/opt/tkv-local/skill-expert — HX evaluation-only tree (no upstream snapshot) (1 files)"
+  type: "corpus"
+  declared_purpose: "HX evaluation-only tree (no upstream snapshot): hx-skill-expert-reconnaissance-fit-assessment (GPT-5.6-sol, 2026-08-15) — reconnaissance and fit assessment for a skill-expert capability."
+  source:
+    author: "HX consultant evaluation (GPT-5.6-sol reconnaissance and fit assessment, 2026-08-15); no upstream snapshot in tree"
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/skill-expert"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T06:12:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: []
+    repositories: [tkv-local]
+    environments: [fleet]
+  version: ""
+  status: "historical"
+  authority_level: "historical-as-found"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "references"
+      target: "TKV source-snapshot corpus (owner-directed sweep, state log row 32)"
+      note: "1 files excluding .git internals; deep per-file cataloging on demand via retrieval packages"
+  validation:
+    validated_at: "2026-08-25T21:02:00Z"
+    freshness: "historical"
+    review_due: "2026-09-24 (corpus manifest re-hash) or on any corpus update"
+  sha256: "79873d479a5391ed557a8a4e3f484db3beb10fd956c5b5dc198ceb2b356f6e23"
+  canonical_location: "/opt/tkv-local/skill-expert"
+notes:
+  checksum_method: "sha256 = digest of the sorted relative-path file manifest (1 files, names only), NOT content hashes; regenerated 2026-08-25; directory canonical_location preserved. Manifest re-hash scheduled 2026-09-24 (run-1 follow-up) stands. .git internals excluded from the manifest and from cataloging. Form alignment batch 7 (F-B6-6, hxinfra-archive reference form): method/scope/count text consolidated wholly into notes.checksum_method; the sha256 field now carries ONLY the bare 64-char digest; digest VALUE unchanged (names-only manifest retained until a future content-sensitive migration)."
+  upstream_provenance: "upstream URL/commit: unavailable — tree is not a git checkout (no .git metadata present); unpacked archive snapshot"
+  context: "Single-document tree; purpose from the document title."
+  corrections_batch6: "source.author aligned to the evidence-backed attribution (batch 6, T10b): 'HX consultant evaluation (GPT-5.6-sol, 2026-08-15); no upstream snapshot in tree' — supported by the tree's sole document (hx-skill-expert-reconnaissance-fit-assessment). The ambiguous 'upstream project or …' alternative is removed; one evidence-backed attribution per record."

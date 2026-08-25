@@ -1,0 +1,44 @@
+document:
+  id: "DOC-agent-john-profile"
+  title: "Agent profile — john (full operating contract)"
+  type: "profile"
+  declared_purpose: "Full operating contract for john: startup protocol (§4 TKV review), evidence package (§11/§12), escalation (§13), scope boundaries (§13–14), reference-host vs target-host distinction. Governs all john/Esme sessions including pilot work orders 10/14/17/20."
+  source:
+    author: "Codex (agent-zero-docs) / adopted by Agent Zero"
+    provided_by: "Agent Zero"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/agents/john/profile.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T04:50:00Z"
+  owner: "john (lane); Agent Zero (ratification)"
+  applies_to:
+    hosts: [hxs-1, hxs-5]
+    fqdns: []
+    services: [ollama.service]
+    agents: [john]
+    repositories: [HX-ASF-Servers]
+    environments: [fleet, pilot]
+  version: ""
+  status: "active"
+  authority_level: "ratified-governance"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "governs"
+      target: "DOC-pilot-hx1-ev-12-esme-m4-install"
+      note: "M4 install evidence produced under this profile"
+    - predicate: "governs"
+      target: "DOC-pilot-hx1-ev-19-esme-m5b-conformance"
+      note: "M5b A01-conformance evidence"
+    - predicate: "references"
+      target: "DOC-tkv-corpus-ollama"
+      note: "standing knowledge source (local on hxs-5)"
+  validation:
+    validated_at: "2026-08-25T04:50:00Z"
+    freshness: "current"
+    review_due: "on owner amendment"
+  sha256: "60fd5279fde15656b2dfe5edc19b55c90e1ef15ce7983ef305d3f72a22de9ae8"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/john/profile.md"

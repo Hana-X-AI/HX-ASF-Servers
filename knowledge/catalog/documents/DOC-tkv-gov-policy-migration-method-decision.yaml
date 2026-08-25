@@ -1,0 +1,41 @@
+document:
+  id: "DOC-tkv-gov-policy-migration-method-decision"
+  title: "/opt/tkv-local/ollama/implementation/archive/HX-Infrastructure-main/governance/policy/migration-method-decision.md — archived HX-Infrastructure governance policy: migration-method-decision"
+  type: "contract"
+  declared_purpose: "Migration method decision — ACCEPTED as standard 2026-08-14; governs governance/policy/repository-migration-pattern.md; human-facing companion at governance/operations/migrations/."
+  source:
+    author: "HX project (Claude Code era, HX-Infrastructure repository)"
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/ollama/implementation/archive/HX-Infrastructure-main/governance/policy/migration-method-decision.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T06:10:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: []
+    repositories: [tkv-local, HX-Infrastructure (archived predecessor)]
+    environments: [fleet]
+  version: ""
+  status: "historical"
+  authority_level: "historical-as-found"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "governs"
+      target: "HX-Infrastructure repository (archived) — historical policy"
+      note: "predecessor-repo governance; current factory governance lives in HX-ASF-Servers AGENTS.md — cross-check before applying any rule"
+    - predicate: "decides"
+      target: "DOC-tkv-gov-policy-repository-migration-pattern"
+      note: "accepted the migration pattern as standard 2026-08-14"
+  validation:
+    validated_at: "2026-08-25T06:10:00Z"
+    freshness: "historical"
+    review_due: "historical record — no review cycle"
+  sha256: "c2e92c471a7b3066d6467346c36695f71a37b17beb55db92192316b4d5246da6"
+  canonical_location: "/opt/tkv-local/ollama/implementation/archive/HX-Infrastructure-main/governance/policy/migration-method-decision.md"

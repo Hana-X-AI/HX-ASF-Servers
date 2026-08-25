@@ -1,0 +1,61 @@
+document:
+  id: "DOC-pilot-hx1-amendment-a01"
+  title: "Amendment A01 — Qwen3.8-27B model baseline for the HX-1 Ollama pilot (adopted, with adoption header)"
+  type: "amendment"
+  declared_purpose: "Amendment PILOT-HX1-OLLAMA-QWEN27B-001-A01: adopts qwen3.8:27b (non-MLX) as baseline with two-phase Modelfile strategy (§4.2 Phase A native-behavior baseline; Phase B controlled sampling), context policy (§4.3), reasoning/tool qualification addendum (§5), risk deltas A01-R01..R08 (§6), amended acceptance conditions (§7). Repo copy carries an HX-ASF-Servers adoption header recording adoption 2026-08-25 by Agent Zero, reconciliation against KDD-0004 + M1–M4, the §3/§4.2 sampling CONFLICT disposition (M5b rebuild), and plan impact."
+  source:
+    author: "Codex (drafted 2026-08-24 21:25, pre-execution) / adopted by Agent Zero 2026-08-25"
+    provided_by: "Agent Zero"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/amendment-A01-qwen38-baseline.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T04:50:00Z"
+  owner: "Agent Zero (human authority); Kimi-K3 (control plane)"
+  applies_to:
+    hosts: [hxs-1]
+    fqdns: []
+    services: [ollama.service, ollama-preload.service]
+    agents: [kimi-k3, john, rick]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+  version: "1.0-draft (adopted)"
+  status: "active"
+  authority_level: "owner-directive"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "supersedes"
+      target: "DOC-pilot-hx1-plan"
+      note: "§6.5 only — all other plan sections remain governed by the plan (verified by the in-place superseded banner in plan.md §6.5 and the adoption header 'Plan impact' line; scoped supersession corrected 2026-08-25 per governor batch C1)"
+    - predicate: "superseded_by"
+      target: "DOC-pilot-hx1-decision-23-m6-capacity"
+      note: "§4.3 'Extended experiment' (131,072) row ONLY — superseded by Revision 2 (owner three-profile disposition 2026-08-25): 131,072 = qualified extended-context profile, explicitly selected, inside pilot acceptance. Marked INLINE in the source ('Correction 2026-08-25' note under the §4.3 table; original row text preserved verbatim as the as-adopted record). NOT a whole-document supersession — all other A01 content stands."
+    - predicate: "superseded_by"
+      target: "DOC-pilot-hx1-decision-23-m6-capacity"
+      note: "§4.4 bare-alias monitoring identity (hx-qwen3.8-27b) ONLY — superseded by Revision 2's profile-named aliases (default hx-qwen3.8-27b-64k); recorded in Rev-2 'Supersessions recorded' and implemented by ev-29 (M6b, state log row 34). §4.4 NOW carries an inline supersession marker in the source (governor Correction 2026-08-25 note, verified at amendment lines ~186–194, added after batch 6); this relation and notes.rev2_supersessions remain the catalog-side record. NOT a whole-document supersession — all other A01 content stands."
+    - predicate: "produced_by"
+      target: "DOC-a01-origin-codex-20260824-2125"
+      note: "adopted from the agent-zero-docs original; body verbatim except one cosmetic markdown separator-cell difference in the §4.3 table (verified by diff 2026-08-25)"
+    - predicate: "governs"
+      target: "DOC-pilot-hx1-wo-17-john-m5b"
+      note: "M5b A01-conformance milestone (Phase A alias rebuild, reasoning-control probes, D8 re-run)"
+    - predicate: "governs"
+      target: "DOC-pilot-hx1-wo-24-rick-pre-m7"
+      note: "A01 §7 acceptance condition: rick confirms host-readiness controls remain valid for the frozen build — SATISFIED per 26-rick-pre-m7-readiness.md"
+    - predicate: "references"
+      target: "QwenLM/Qwen3.8 upstream repository and Ollama library qwen3.8:27b"
+      note: "262,144 native / 1,000,000 extended context are capability references only, NOT HX-1 targets (§4.3)"
+  validation:
+    validated_at: "2026-08-25T21:02:00Z"
+    freshness: "current"
+    review_due: "at pilot close (M8); reopen Gate 0 and issue new amendment if the resolved artifact or upstream guidance changes (§9 amendment rule)"
+  sha256: "5f9733c63fb557eb7da581e07a9079cb37d97581fecf41d4201f4b3155642a01"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/amendment-A01-qwen38-baseline.md"
+notes:
+  corrections_batch6: "Added the two missing scoped superseded_by relations → DOC-pilot-hx1-decision-23-m6-capacity Revision 2 (batch 6, T3): §4.3 'Extended experiment' (131,072) row and §4.4 bare-alias monitoring identity. Both notes carry explicit ONLY/NOT-whole-document scoping so no relation can be read as a complete-plan supersession. The pre-existing §6.5-scoped supersedes → DOC-pilot-hx1-plan (batch-4 fix C1) was verified present and left untouched. notes.rev2_supersessions (the prose record of the same facts) preserved unchanged. Source file unchanged — record sha256 9b5aeec9… re-verified 2026-08-25T20:15Z."
+  rev2_supersessions: "Two A01 provisions are superseded BY DOC-pilot-hx1-decision-23-m6-capacity Revision 2 (recorded in Rev-2 'Supersessions recorded', state log row 30): §4.3's 131,072 'separate owner-approved experiment' row — promoted to qualified extended-context profile; §4.4's bare-alias monitoring identity (hx-qwen3.8-27b) — superseded by profile-named aliases (default hx-qwen3.8-27b-64k). All other A01 content stands. As of the batch-5 governor edit the §4.3 supersession is marked INLINE in the file (Correction 2026-08-25 note under the §4.3 table; original row text retained unchanged as the as-adopted record); as of the batch-7 governor edit §4.4 is also marked INLINE in the file (Correction 2026-08-25 note at lines ~186–194, verified batch 7; original §4.4 text retained unchanged as the as-adopted record)."
+  corrections_batch5: "F-B5-2 RESOLVED per governor disposition: the only change is the §4.3 inline supersession marking — a 'Correction 2026-08-25 (review finding; provenance preserved)' note under the context-ladder table marks the Extended-experiment (131,072) row superseded by decision-23 Revision 2 (131,072 = qualified extended-context profile, explicitly selected, inside pilot acceptance); Revision 2 governs; original text preserved verbatim. Verified against current file. sha256 18ddebbe… → 9b5aeec9…."
+  corrections_batch7: "F-B6-3 re-validation: the governor added the §4.4 inline supersession marking — a Correction 2026-08-25 (review finding; provenance preserved) note marking the §4.4 bare-alias directive superseded by decision-23 Revision 2 (ratified identity hx-qwen3.8-27b-64k; commands historical, non-executable; original text retained). Verified at source lines ~186–194. Re-hashed 9b5aeec9… -> 5f9733c6…. The record two stale '§4.4 carries no inline marker' statements (relation note + notes.rev2_supersessions) corrected openly to point at the new inline marker; the ONLY/NOT-whole-document scoping is unchanged."

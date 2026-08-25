@@ -1,0 +1,46 @@
+document:
+  id: "DOC-kdd-0003-ollama-audit-pilot"
+  title: "KDD-0003 — Adopt the Ollama audit pilot (PILOT-KK3-JOHN-OLLAMA-AUDIT-001) with Phase M execution note"
+  type: "decision"
+  declared_purpose: "Ratified decision (2026-08-24, decider Agent-Zero): adopt the read-only Ollama audit pilot on hxs-5 with four recorded amendments (Phase M execution note §2.1, knowledge authority corrected to /opt/tkv-local/ollama, evidence root = pilot directory, goal file created). Execution NOT authorized by this KDD; requires the pilot's §19 readiness gate and explicit owner go."
+  source:
+    author: "Kimi-K3 (review and record); decider Agent-Zero"
+    provided_by: "Agent Zero"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0003-ollama-audit-pilot-adoption.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T04:50:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: [hxs-5]
+    fqdns: []
+    services: [ollama.service]
+    agents: [kimi-k3, john]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+  version: ""
+  status: "active"
+  authority_level: "ratified-governance"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "governs"
+      target: "DOC-pilot-ollama-audit-plan"
+      note: "adopted with four recorded amendments; execution completed 2026-08-24; cataloged 2026-08-25 (corrections batch 5)"
+    - predicate: "governs"
+      target: "DOC-goal-ollama-audit-hxs5"
+      note: "related goal file goals/2026-08-24-ollama-audit-hxs5.md (Goal ID = file name, KDD-0002); cataloged 2026-08-25 (corrections batch 5)"
+    - predicate: "references"
+      target: "/home/hxsa/opt/local-tkv/agent-zero-docs/pilots/audit-pilot.md"
+      note: "source (501 lines, SHA-256 41eb175c…), unmodified historical input"
+  validation:
+    validated_at: "2026-08-25T19:08:00Z"
+    freshness: "current"
+    review_due: "at audit-pilot execution or close"
+  sha256: "4bd0fb1569151a47c3018363989dda7edfc2339f8a20ad2f0650b0a179759fd3"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0003-ollama-audit-pilot-adoption.md"
+notes:
+  corrections_batch5: "2026-08-25 corrections batch 5: pilot plan and goal file cataloged as DOC-pilot-ollama-audit-plan and DOC-goal-ollama-audit-hxs5; the single governs relation (raw plan path, goal mentioned in note) split into two governs relations targeting the new DOC ids; 'neither cataloged this run' language removed. The local-tkv source relation is unchanged. source.section backfilled (§whole-document); validated_at refreshed. Source file unchanged (sha256 stands from run 1)."

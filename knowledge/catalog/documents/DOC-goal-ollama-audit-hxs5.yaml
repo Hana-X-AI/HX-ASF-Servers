@@ -1,0 +1,46 @@
+document:
+  id: "DOC-goal-ollama-audit-hxs5"
+  title: "Goal 2026-08-24-ollama-audit-hxs5 — read-only Ollama infrastructure and performance audit on hxs-5 (process pilot)"
+  type: "goal"
+  declared_purpose: "Durable work-state record (Goal ID = file name, KDD-0002): dual-outcome intent (technical read-only Ollama audit of hxs-5 plus process proof of goal-based, fresh-session, evidence-gated orchestration between Kimi-K3 and john), scope and target (hxs-5 192.168.50.204, service ollama; strictly read-only), success conditions SC-01..SC-09 with evidence contracts, execution controls (session/retry budgets, stop conditions per plan §16), HITL checkpoints (§19 readiness gate, escalations, completion-record acceptance), notes and links. Status in file: draft — awaiting Agent-Zero authorization (readiness gate: pilot plan section 19) — recorded as stated; the gate was subsequently granted 2026-08-24T09:26Z and the pilot executed to completion the same day (11-pilot-completion-record.md)."
+  source:
+    author: "Kimi-K3 (goal record) / Agent Zero (authorization)"
+    provided_by: "Agent Zero"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/goals/2026-08-24-ollama-audit-hxs5.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T19:08:00Z"
+  owner: "Agent Zero (human authority); Kimi-K3 (governor)"
+  applies_to:
+    hosts: [hxs-5]
+    fqdns: []
+    services: [ollama.service]
+    agents: [kimi-k3, john]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+  version: "1"
+  status: "draft"
+  authority_level: "ratified-governance"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "governs"
+      target: "DOC-pilot-ollama-audit-plan"
+      note: "full plan at pilots/PILOT-KK3-JOHN-OLLAMA-AUDIT-001/plan.md"
+    - predicate: "depends_on"
+      target: "DOC-kdd-0003-ollama-audit-pilot"
+      note: "pilot adoption; execution required the plan §19 readiness gate plus explicit owner go"
+    - predicate: "references"
+      target: "DOC-kimi-k3-goal-setting-guidance"
+      note: "goal contract format and invocation model per this guidance (goal file notes/links)"
+  validation:
+    validated_at: "2026-08-25T19:08:00Z"
+    freshness: "current"
+    review_due: "at owner acceptance of the pilot completion record"
+  sha256: "5df8ccd2120bbb1eb8929d8d511e3e2238e2f14bd8795a02043f8194babf51fd"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/goals/2026-08-24-ollama-audit-hxs5.md"
+notes:
+  status_note: "status 'draft' is the document's own status header (originals are sacred — the file was not updated after authorization). Post-document events recorded here, not in the source: readiness gate granted 2026-08-24T09:26Z; john session john-initial-20260824-01 (zero corrections); quality gate PASSED; completion record pre-acceptance status GATE PASSED — PENDING OWNER ACCEPTANCE."

@@ -1,0 +1,40 @@
+document:
+  id: "DOC-tkv-root-readme"
+  title: "/opt/tkv-local/README.md — Bench Studio Ownership Kit quick start (misleading vault-root placement, FLAG F9)"
+  type: "other"
+  declared_purpose: "Bench Studio Ownership Kit quick start — companion package for the 'Build Your Own Higgsfield' video: how_i_built_bench_studio.pdf build guide, bench_studio_technical_reference.pdf (architecture, environment variables, MCP tool contract, model routing, cost ledger, setup prompt, troubleshooting), generate_skill/ Claude Code skill, mcp_connector_setup.txt, community_teaser.md; points at the bench-studio-public GitHub repo."
+  source:
+    author: "HX project (Claude Code era, HX-Infrastructure repository)"
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/README.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T06:10:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: []
+    repositories: [tkv-local, HX-Infrastructure (archived predecessor)]
+    environments: [fleet]
+  version: ""
+  status: "active"
+  authority_level: "upstream-reference"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "describes"
+      target: "DOC-tkv-corpus-bench-studio (bench-studio-public-main) and DOC-tkv-corpus-generate-skill (generate_skill/)"
+      note: "kit readme for those trees — NOT a description of the /opt/tkv-local vault it sits at the root of"
+  validation:
+    validated_at: "2026-08-25T08:20:00Z"
+    freshness: "current"
+    review_due: "on vault-root documentation cleanup (owner action)"
+  sha256: "ac439e4a3a48af1aa0d66ba8f30ec60c34a03f57db0b271c8c5feea68d23907e"
+  canonical_location: "/opt/tkv-local/README.md"
+notes:
+  placement_flag: "FLAG (carried from run-1 F9): this README describes the Bench Studio Ownership Kit, not the TKV vault — a reader at the vault root is misled. Placement correction is an owner/governance action, not Carol's (originals are never edited); recorded openly here."

@@ -1,0 +1,46 @@
+document:
+  id: "DOC-tkv-langgraph-hx-evaluation"
+  title: "/opt/tkv-local/langgraph (HX side) — HX evaluation and phase-2 pilot material for LangGraph"
+  type: "corpus"
+  declared_purpose: "HX evaluation material sharing the /opt/tkv-local/langgraph wrapper tree, partitioned out of DOC-tkv-corpus-langgraph 2026-08-25 (governor batch C6): phase-2/ LangGraph distillation-pilot material (Claude-Opus-5, 2026-08-14: pilot brief, four decisions, decisions-applied report, pilot report, preflight blocker, review verdicts), hx-langgraph-installation-verification-claude-code-prompt_gpt-5.6-sol_20260815_0123.html, hx-langgraph-post-recon-position-and-order-dependency-decision_gpt-5.6-sol_20260815_0123.html. HX consultant work product — NOT upstream LangGraph authority."
+  inferred_value: "INFERENCE: direct relevance to factory governance — the migration-method policy (DOC-tkv-gov-policy-repository-migration-pattern) cites a LangGraph validation of the migration workflow, which resolves to this phase-2 material."
+  source:
+    author: "Claude-Opus-5 and GPT-5.6-sol (HX consultant evaluation)"
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/langgraph (excluding langgraph-main)"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T08:00:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: []
+    repositories: [tkv-local]
+    environments: [fleet]
+  version: "evaluation wave 2026-08-14/15"
+  status: "historical"
+  authority_level: "historical-as-found"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "describes"
+      target: "DOC-tkv-corpus-langgraph"
+      note: "HX evaluation/distillation pilot on the upstream LangGraph snapshot; evaluation content is consultant work, not upstream authority (partition C6)"
+    - predicate: "evidences"
+      target: "DOC-tkv-gov-policy-repository-migration-pattern"
+      note: "the migration-method policy cites a LangGraph validation of the migration workflow — that validation lives in this phase-2 material"
+  validation:
+    validated_at: "2026-08-25T21:02:00Z"
+    freshness: "historical"
+    review_due: "2026-09-24 (corpus manifest re-hash) or on any corpus update"
+  sha256: "762338a1955f5cbd631f6c74d28f612e14fb0ea7a126b20d075741f0c20e15b4"
+  canonical_location: "/opt/tkv-local/langgraph"
+notes:
+  partition_scope: "Record covers /opt/tkv-local/langgraph EXCLUDING the langgraph-main upstream snapshot (cataloged as DOC-tkv-corpus-langgraph). Manifest computed with langgraph-main and .git paths pruned."
+  checksum_method: "sha256 = digest of a CONTENT-SENSITIVE manifest (regenerated 2026-08-25, batch 7): for every in-scope file one line '<sha256 of file contents>  <relative-path>' (sha256sum two-space text format), lines sorted byte-wise (LC_ALL=C) by relative path, the manifest text (trailing newline) digested — per-file content hashing makes content changes detectable, unlike the prior names-only manifest. Scope preserved: /opt/tkv-local/langgraph EXCLUDING the langgraph-main upstream snapshot and .git internals (see partition_scope; 8 files). Supersedes the prior names-only manifest digest c09528b10d32774667d26800efb2daaa0c51e0b2f67e5752b5a42fc743e8039f (form-aligned per F-B6-6(b), then replaced same run per the batch-7 content-sensitive finding). Directory canonical_location preserved."
+  upstream_provenance: "upstream URL/commit: not applicable — HX-side material."

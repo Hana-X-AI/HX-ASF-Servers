@@ -1,0 +1,38 @@
+document:
+  id: "DOC-tkv-fs-fleet-architecture-v03"
+  title: "/opt/tkv-local/file-share/fleet-architecture-v0.3.html — HX Fleet Architecture Candidate v0.3 (design-era candidate render)"
+  type: "plan"
+  declared_purpose: "HTML render of the HX Fleet architecture candidate v0.3 from the design era — a candidate, not a ratified architecture; retained as design-history reference."
+  source:
+    author: "HX project (Claude/Codex era) or named consultant model"
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/file-share/fleet-architecture-v0.3.html"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T06:05:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: []
+    repositories: [tkv-local]
+    environments: [fleet]
+  version: ""
+  status: "draft"
+  authority_level: "historical-as-found"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "references"
+      target: "HX fleet (15 servers + hxs-cp control plane)"
+      note: "candidate architecture; the ratified fleet roles live in DOC-tkv-server-registry"
+  validation:
+    validated_at: "2026-08-25T06:05:00Z"
+    freshness: "historical"
+    review_due: "historical record — no review cycle"
+  sha256: "434e72046ba6692324568e8cb20588c19778f8d24c9e9fefe6905335575fcf55"
+  canonical_location: "/opt/tkv-local/file-share/fleet-architecture-v0.3.html"

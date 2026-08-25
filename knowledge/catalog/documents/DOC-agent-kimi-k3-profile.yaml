@@ -1,0 +1,44 @@
+document:
+  id: "DOC-agent-kimi-k3-profile"
+  title: "Agent profile — kimi-k3 (full operating contract, ratified with phased activation)"
+  type: "profile"
+  declared_purpose: "Full operating contract for the factory meta-agent: §2.1 control-plane prohibitions, §2.3 Phase M execution exception, evidence gates, HFSM state control, §7.1 prompt-only enforcement gap, §14 escalation conditions, owner-review verifier fallback in Phase M."
+  source:
+    author: "Codex first pass (agent-zero-docs, SHA-256 7c355b68…) / ratified revision by Agent Zero per KDD-0001"
+    provided_by: "Agent Zero"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/agents/kimi-k3/profile.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T04:50:00Z"
+  owner: "Kimi-K3 (lane); Agent Zero (ratification)"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: [kimi-k3, john, rick, carol]
+    repositories: [HX-ASF-Servers]
+    environments: [fleet, pilot]
+  version: "ratified revision (KDD-0001 corrections applied)"
+  status: "active"
+  authority_level: "ratified-governance"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "governs"
+      target: "PILOT-HX1-OLLAMA-QWEN27B-001 work orders 01/05/10/14/17/20/24 and context packets"
+      note: "all issued by kimi-k3 as delegated contracts under this profile"
+    - predicate: "depends_on"
+      target: "DOC-kdd-0001-kimi-k3-meta-agent"
+      note: "§2.3 phased activation ratified by this KDD"
+    - predicate: "references"
+      target: "DOC-kdd-0002-goal-setting-guidance"
+      note: "adopted guidance lives at agents/kimi-k3/goal-setting-guidance.md (not cataloged this run — out of scope)"
+  validation:
+    validated_at: "2026-08-25T04:50:00Z"
+    freshness: "current"
+    review_due: "on phase transition or owner amendment"
+  sha256: "e19ec7bc1c605f2e286d65dc31829fb4e7eb74b7e4012d799daa6cf68404dd73"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/kimi-k3/profile.md"

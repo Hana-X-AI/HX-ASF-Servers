@@ -1,0 +1,49 @@
+document:
+  id: "DOC-pilot-hx1-ev-12-esme-m4-install"
+  title: "12-esme-m4-install-evidence.md — Esme M4 Ollama install evidence (15/15 tests PASS; Gate 2 PASSED)"
+  type: "evidence"
+  declared_purpose: "M4 install evidence package (report ESME-M4-EVIDENCE-001): knowledge receipt (ollama corpus; snapshot v0.32.11 vs installed 0.32.15 reconciled, F-E7), installer provenance and hashes, Ollama 0.32.15 install, loopback-only proof, frozen model identity (qwen3.8:27b digest 22130167c4c2…79643, Q4_K_M 17.74 GB; alias hx-qwen3.8-27b digest 23508b9c2439…185a8; Modelfile per plan §6.5 sha256 dac63d7c…d1df), hx1.conf drop-in and preload unit full text, smoke/residency/GPU-placement evidence at num_ctx 32768 (100% VRAM across both GPUs), preload durations vs D5 SLO, command log, validation summary."
+  source:
+    author: "john / Esme (session john-m4-20260825-01)"
+    provided_by: "john via Kimi-K3 gate"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/12-esme-m4-install-evidence.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T04:50:00Z"
+  owner: "john"
+  applies_to:
+    hosts: [hxs-1]
+    fqdns: []
+    services: [ollama.service, ollama-preload.service]
+    agents: [john]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+  version: ""
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "evidences"
+      target: "Gate 2 (32K baseline stable) — state log rows 12–13"
+      note: "Gate 2 PASSED 2026-08-25T01:12Z"
+    - predicate: "produced_by"
+      target: "john"
+      note: "under DOC-pilot-hx1-wo-10-john-m4"
+    - predicate: "configures"
+      target: "ollama.service hx1.conf drop-in + ollama-preload.service on hxs-1"
+      note: "OLLAMA_HOST 127.0.0.1:11434, KEEP_ALIVE -1, CONTEXT_LENGTH 32768, FA on, KV f16, NO_CLOUD 1, CUDA_VISIBLE_DEVICES both UUIDs"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-ev-19-esme-m5b-conformance"
+      note: "M5b superseded this record's alias digest (23508b9c…185a8) and Modelfile hash (dac63d7c…d1df) — history labeled, not rewritten; M4 Modelfile preserved here as the alias-rollback path"
+  validation:
+    validated_at: "2026-08-25T05:20:00Z"
+    freshness: "current"
+    review_due: "at M8 unified evidence index"
+  sha256: "6f3d2d2332260a79d3884344316e44ca6c141719ff45450a4cbd15cac91a86b5"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/12-esme-m4-install-evidence.md"
+notes:
+  review_batch_correction: "2026-08-25 review batch (state log row 33): command-log concurrency annotated (model pull overlapped probes; provenance preserved). Earlier hash 4e1e17e2… superseded by this annotation. The frozen M4 identities recorded here (alias digest 23508b9c…, Modelfile dac63d7c…) remain the labeled-superseded rollback reference."

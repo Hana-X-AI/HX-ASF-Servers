@@ -1,0 +1,54 @@
+document:
+  id: "DOC-pilot-hx1-ev-26-rick-pre-m7-readiness"
+  title: "26-rick-pre-m7-readiness.md — rick pre-M7 OS-plane readiness (12/12 PASS; A01 §7 SATISFIED; Wi-Fi disabled; NVRM monitor-only)"
+  type: "evidence"
+  declared_purpose: "Pre-M7 OS-plane closure evidence: per-task TKV receipt (2,127-file corpus re-survey), A01 §7 signed confirmation that M2 host-readiness controls remain valid for the frozen Ollama 0.32.15 build (zero delta; R-014 access model proven — ollama:ollama under world-rw nodes, recorded not modified), the single authorized mutation (Wi-Fi rfkill sysfs soft-block rfkill1 after management-path proof; boot-persisted via systemd-rfkill saved state — empirical confirmation at M7 reboot 1; inverse documented), NVRM iovaspace assertions classified MONITOR-ONLY with sharpened M7 escalation triggers (F-E3 corrected to recurrent-by-design — deterministic at every runner start/teardown), AER 0 today, boot-path sanity (wait-online residue clears next boot), test report 12/12 PASS, command log, cleanup verified."
+  source:
+    author: "rick (session rick-prem7-20260825-01)"
+    provided_by: "rick via Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/26-rick-pre-m7-readiness.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T04:50:00Z"
+  owner: "rick"
+  applies_to:
+    hosts: [hxs-1]
+    fqdns: []
+    services: [systemd-rfkill, wpa_supplicant, ollama.service, systemd-networkd-wait-online.service]
+    agents: [rick]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+  version: ""
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "evidences"
+      target: "pre-M7 complete — state log row 29 (handoff OPEN pending Carol's catalog receipt — this run)"
+      note: "A01 §7 acceptance condition 2 SATISFIED (signed rick 2026-08-25T04:37Z)"
+    - predicate: "produced_by"
+      target: "rick"
+      note: "under DOC-pilot-hx1-wo-24-rick-pre-m7"
+    - predicate: "risks"
+      target: "NVRM iovaspace assertions (MONITOR-ONLY) and R-024 AER (rate 55→7→0); M7 escalate triggers set (any Xid; assertions outside runner start/teardown; mapping-leak growth; any functional symptom)"
+      note: "driver frozen per D3 — no driver action authorized"
+    - predicate: "risks"
+      target: "192.168.50.220 foreign client still present (2 SSH sessions, 3 users) — owner question open; M7 exclusive-window entry condition"
+      note: "observation only, no action — CLOSED at state log row 40 (2026-08-25T06:29Z): the .220 client was the owner (F-M6-3)"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-ev-30-esme-m7a-reboot-cycles"
+      note: "F-M7A-1 CORRECTION to this record's §4.4 (FACT, M7a §8): the systemd-rfkill wlan save file /var/lib/systemd/rfkill/pci-0000:82:00.0:wlan contains 1, not the 0 quoted here — the save file stores the soft value (1 = soft-blocked), which systemd-rfkill writes back at boot. File never re-saved after rick's session (mtime 2026-08-25 04:32:16); cross-checked against the untouched bluetooth pair. Rick's mechanism conclusion — Wi-Fi soft-block persists across boots — is CORRECT and empirically confirmed ×3 at M7a (FB3); only the quoted content digit was wrong. Corrected openly per the server records contract; the source document is preserved unchanged. Retrievers: trust the mechanism, use digit 1"
+  validation:
+    validated_at: "2026-08-25T21:02:00Z"
+    freshness: "current"
+    review_due: "M8 evidence index (the M7-reboot-1 Wi-Fi persistence confirmation this record was waiting on is SATISFIED ×3 at M7a, FB3)"
+  sha256: "16905673b63c5a9c5a7f3f3528edcd2a6cdfc4231e0537f95d9aa452b4b9bb55"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/26-rick-pre-m7-readiness.md"
+notes:
+  ingestion_provenance: "Tasking for this run stated the file did not exist yet (in flight). Verified on disk 2026-08-25T04:41Z, complete ([TASK COMPLETE — EVIDENCE ATTACHED], signed 04:37Z), and state log row 29 (04:43Z) records pre-M7 complete with the handoff awaiting this catalog receipt. Ingested in full."
+  m7a_revalidation: "2026-08-25T07:10Z (M7a ingest run): source re-hashed — UNCHANGED (bedd6466…). Record updated only to add the F-M7A-1 correction relation (above), close the .220 risk note (row 40), and mark the Wi-Fi persistence review condition satisfied. No other field touched; the source document was not edited."
+  corrections_batch7: "F-B6-3 re-validation: the governor appended a security-process exception note (verified at source line 248): step 3 transient extraction of the SSH secret to a 0600 temp file under /tmp/.rick-prem7-hx1 deviates from the ratified read-at-execution askpass pattern; containment held (0600 file in a 0700 volatile-/tmp workspace, never echoed, deletion at task end, evidence sanitized, no remote copies); recorded as a security-process exception; rotation rejected per owner standing decision (same class as F-M5-1). Re-hashed bedd6466… -> 16905673…. Record fields re-checked — no changes required."

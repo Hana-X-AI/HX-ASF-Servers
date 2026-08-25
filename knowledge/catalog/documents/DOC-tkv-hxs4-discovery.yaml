@@ -1,0 +1,41 @@
+document:
+  id: "DOC-tkv-hxs4-discovery"
+  title: "/opt/tkv-local/servers/hxs-4/discovery.md — hxs-4 discovery (Discovery date 2026-08-12)"
+  type: "discovery"
+  declared_purpose: "Historical as-found Phase 1 discovery record of hxs-4 (2026-08-12, read-only over SSH via the project collector with passwordless sudo; no packages installed, no driver loaded or changed, no configuration modified; facts unobtainable from the as-found state marked unavailable with reason): identity, hardware, network (hxs-4.hx.local.arpa, 192.168.50.203), OS as found. Owner-declared two discrete GPUs physically installed; OS enumerates two; declared and observed counts agree."
+  source:
+    author: "HX project (Claude Code era); collected read-only over SSH / human preparation record"
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/servers/hxs-4/discovery.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T05:55:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: [hxs-4]
+    fqdns: [hxs-4.hx.local.arpa]
+    services: []
+    agents: []
+    repositories: [tkv-local]
+    environments: [fleet]
+  version: "Discovery date 2026-08-12"
+  status: "historical"
+  authority_level: "historical-as-found"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "describes"
+      target: "hxs-4 (hxs-4.hx.local.arpa, 192.168.50.203)"
+      note: "preserved per the server records contract; verify against the live host before operational use"
+    - predicate: "references"
+      target: "DOC-tkv-server-registry"
+      note: "fleet registry row for hxs-4"
+  validation:
+    validated_at: "2026-08-25T08:20:00Z"
+    freshness: "historical"
+    review_due: "historical record — no review cycle; cross-check before any operational use"
+  sha256: "e88c8d6ede8c9cb04d0f11e094657936697482b81da55a75c93a9c39c0b08966"
+  canonical_location: "/opt/tkv-local/servers/hxs-4/discovery.md"

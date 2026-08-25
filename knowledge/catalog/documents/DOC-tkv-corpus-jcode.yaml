@@ -1,0 +1,46 @@
+document:
+  id: "DOC-tkv-corpus-jcode"
+  title: "/opt/tkv-local/jcode/jcode-master — upstream source snapshot of jcode (1jehuang/jcode, MIT)"
+  type: "corpus"
+  declared_purpose: "Upstream source snapshot of jcode (1jehuang/jcode, MIT-licensed). Verified 2026-08-25 against jcode-master/README.md (header: '# jcode', release/license/platform badges for 1jehuang/jcode). Scope narrowed 2026-08-25 (governor batch C6): the HX evaluation material sharing the wrapper tree is cataloged as DOC-tkv-jcode-hx-evaluation."
+  source:
+    author: "upstream project (1jehuang/jcode); mirrored into /opt/tkv-local by Agent Zero"
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/jcode/jcode-master"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T06:12:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: []
+    repositories: [tkv-local]
+    environments: [fleet]
+  version: ""
+  status: "adopted"
+  authority_level: "upstream-reference"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "references"
+      target: "TKV source-snapshot corpus (owner-directed sweep, state log row 32)"
+      note: "1,925 files excluding .git internals; deep per-file cataloging on demand via retrieval packages"
+    - predicate: "references"
+      target: "DOC-tkv-jcode-hx-evaluation"
+      note: "sibling record for the HX evaluation material in the wrapper tree (partitioned 2026-08-25, C6); HX evaluation is NOT upstream authority"
+  validation:
+    validated_at: "2026-08-25T21:02:00Z"
+    freshness: "historical"
+    review_due: "2026-09-24 (corpus manifest re-hash) or on any corpus update"
+  sha256: "839a6ac6dbeec9989761d12083715736b112cafa0a29b33a01b38eda9b02fed5"
+  canonical_location: "/opt/tkv-local/jcode/jcode-master"
+notes:
+  checksum_method: "sha256 = digest of the sorted relative-path file manifest (1925 files, names only), NOT content hashes; regenerated 2026-08-25 (scope narrowed to the upstream subtree per C6; earlier wrapper-tree manifest f955f131… covered 1,927 files); directory canonical_location preserved. Manifest re-hash scheduled 2026-09-24 (run-1 follow-up) stands. .git internals excluded from the manifest and from cataloging. Form alignment batch 7 (F-B6-6, hxinfra-archive reference form): method/scope/count text consolidated wholly into notes.checksum_method; the sha256 field now carries ONLY the bare 64-char digest; digest VALUE unchanged (names-only manifest retained until a future content-sensitive migration)."
+  upstream_provenance: "upstream URL/commit: unavailable — tree is not a git checkout (no .git metadata present); unpacked archive snapshot"
+  verification: "C6 verification 2026-08-25: wrapper tree contains jcode-master + two hx-jcode evaluation HTML documents (matches the pre-split record's claim); upstream identity per jcode-master/README.md."
+  corrections_batch6: "validation.freshness current → historical (batch 6, T9): 'current' was unsupported — evidence is README/local-manifest only; no immutable upstream release/commit exists (tree is not a git checkout). Local-snapshot truth state per the batch-4 wrapper convention (sap C7 reclassification; harness-research pattern; the C6 HX-evaluation splits entered at historical). validated_at, review_due, checksum, and provenance notes preserved unchanged per the governor disposition."
