@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<!-- Generated from pilots/PILOT-HX1-OLLAMA-QWEN27B-001/plan.md (sha256 a9a3baf619fb8fe8bd70c624b39c8eef0ca39a3ee253a5f2dde3ebc0bb4e4687) by scripts/wiki/render.py on 2026-08-25T22:28Z.
+     Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HX-1 Ollama Qwen 27B Pilot Project</title>
+<style>
+:root{color-scheme:light dark}
+body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.55;
+max-width:62rem;margin:0 auto;padding:1.5rem 2rem;color:#1a1a1a;background:#fff}
+h1,h2,h3,h4,h5,h6{line-height:1.25;margin-top:1.6em}
+h1{border-bottom:2px solid #444;padding-bottom:.3em}
+h2{border-bottom:1px solid #ccc;padding-bottom:.2em}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+code{background:#f0f0f0;padding:.1em .3em;border-radius:3px}
+pre{background:#f6f8fa;border:1px solid #ddd;border-radius:6px;padding:.8em;overflow-x:auto}
+pre code{background:none;padding:0}
+table{border-collapse:collapse;margin:1em 0;width:100%}
+th,td{border:1px solid #ccc;padding:.35em .6em;text-align:left;vertical-align:top}
+th{background:#f0f0f0}
+blockquote{border-left:4px solid #bbb;margin:1em 0;padding:.2em 1em;color:#444;background:#fafafa}
+a{color:#0645ad}
+.doc-meta{color:#666;font-size:.85em;border-bottom:1px dashed #bbb;padding-bottom:.6em;margin-bottom:1.2em}
+footer{margin-top:2.5em;border-top:1px solid #ccc;color:#666;font-size:.8em;padding-top:.8em}
+pre.mermaid{background:#fff;border:1px dashed #999}
+@media (prefers-color-scheme:dark){
+body{color:#ddd;background:#111} h1{border-color:#888} h2{border-color:#555}
+code{background:#2a2a2a} pre{background:#1b1b1b;border-color:#444}
+th{background:#222} th,td{border-color:#555} blockquote{color:#bbb;background:#191919;border-color:#666}
+a{color:#6fa8ff} .doc-meta,footer{color:#999}}
+</style>
+</head>
+<body>
+<main class="doc">
+<h1 id="hx-1-ollama-qwen-27b-pilot-project">HX-1 Ollama Qwen 27B Pilot Project</h1>
+<h2 id="document-control">Document control</h2>
+<table><thead><tr><th>Field</th><th>Value</th></tr></thead><tbody><tr><td>Project</td><td><code>PILOT-HX1-OLLAMA-QWEN27B-001</code></td></tr><tr><td>Version</td><td>1.0 (ratified 2026-08-24; A01 adopted 2026-08-25)</td></tr><tr><td>Date</td><td>2026-08-24</td></tr><tr><td>Status</td><td><strong>ADOPTED 2026-08-24 with amendments (KDD-0004; A01 adopted 2026-08-25) — M0 authorized 2026-08-24; in execution</strong></td></tr><tr><td>Human authority</td><td>Agent Zero</td></tr><tr><td>Control plane</td><td>KK3 Meta-Agent (kimi-k3)</td></tr><tr><td>Ollama specialist</td><td>John-Ollama (operational call sign: Esme; roster name <code>john</code>)</td></tr><tr><td>Ubuntu specialist</td><td>Rick-Ubuntu-Engineer-Admin (roster name <code>rick</code>)</td></tr><tr><td>Target</td><td>HX-1 (192.168.50.200), Ubuntu 24.04 LTS</td></tr><tr><td>Authoritative runtime evidence</td><td>Pre-flight captured 2026-08-24 (see section 3 host table)</td></tr></tbody></table>
+<blockquote><p>This document is a production-grade pilot plan, not evidence that HX-1 has already been configured. Every value marked <strong>[TO BE CONFIRMED]</strong> must be replaced by timestamped host evidence before implementation passes its first hold point.</p></blockquote>
+<h2 id="executive-decision-amended-at-adoption-kdd-0004">Executive decision (amended at adoption, KDD-0004)</h2>
+<p>The requested model identifiers are not valid as written. The official Ollama library does not provide <code>qwen2.5:27b</code>, and <code>qwen3:27b-mlx</code> is not an official Qwen3 tag. Verified live against the Ollama library on 2026-08-24: <code>qwen3.5:27b</code>, <code>qwen3.5:27b-mlx</code>, <code>qwen3:30b</code>, and <strong><code>qwen3.8:27b</code> all exist</strong>. The ratified SERVER-REGISTRY workload for hxs-1 is "Qwen 3.8 27B" (marked unreleased on 2026-08-13; now released). The approved pilot baseline, decided by Agent Zero on 2026-08-24, is therefore:</p>
+<pre><code class="language-text">qwen3.8:27b (non-MLX, GGUF) — APPROVED BASELINE (Agent Zero, 2026-08-24, KDD-0004)</code></pre>
+<p><code>qwen3.8:27b-mlx</code> is not the validated baseline for this Ubuntu/NVIDIA machine. A Linux MLX experiment may be conducted later as a separate compatibility benchmark; it must not silently replace the GGUF pilot. The <code>qwen3.5:27b</code> candidate from the original draft is superseded by the ratified registry workload.</p>
+<p>Two other requested controls are corrected:</p>
+<ol><li><code>OLLAMA_NUM_GPU</code> and <code>OLLAMA_GPU_LAYERS</code> are not supported Ollama server variables for balancing two GPUs. Ollama schedules model placement automatically. <code>CUDA_VISIBLE_DEVICES</code> selects the eligible GPUs; actual placement must be proven.</li></ol><ol><li>“Maximum RAM use” is not an optimization goal. The goal is maximum safe GPU residency without OOM, with system RAM retained as controlled overflow and OS headroom. CPU/RAM offload is a measured fallback, not a success condition.</li></ol>
+<hr>
+<h2 id="1-pilot-overview-and-objectives">1. Pilot overview and objectives</h2>
+<h3 id="1-1-goal">1.1 Goal</h3>
+<p>Deploy a validated Qwen 27B-class model through Ollama on HX-1 and optimize it for:</p>
+<ul><li>grounded RAG generation;</li></ul><ul><li>schema-constrained agent tool calling;</li></ul><ul><li>repository-scale coding tasks;</li></ul><ul><li>maximum measured reasoning and task accuracy, with latency secondary;</li></ul><ul><li>unattended boot recovery and continuous local availability;</li></ul><ul><li>deterministic, evidence-gated operations.</li></ul>
+<h3 id="1-2-success-criteria">1.2 Success criteria</h3>
+<p>The pilot succeeds only when all mandatory conditions are evidenced:</p>
+<ol><li>The exact model tag, digest, quantization, size, license, and Modelfile hash are frozen.</li></ol><ol><li>Both GPUs are detected, eligible, healthy, and allocated by Ollama when the selected model/context requires multi-GPU placement.</li></ol><ol><li>The selected context is the largest quality-first setting that passes capacity, accuracy, and 24-hour stability tests without OOM or unapproved CPU fallback.</li></ol><ol><li>Ollama starts automatically, the target model is preloaded after every boot, and <code>keep_alive=-1</code> retains it while the service is healthy.</li></ol><ol><li>Three consecutive cold-reboot tests return HX-1 to ready state without human intervention.</li></ol><ol><li>An idle-residency test exceeds the default five-minute unload interval and a 24-hour mixed-workload soak records no unexplained unload, restart loop, OOM, or GPU-to-CPU fallback.</li></ol><ol><li>RAG answers meet the pilot groundedness/citation threshold; tool calls pass schema, authorization, and loop-control tests.</li></ol><ol><li>The API is not exposed without an approved authentication, TLS, firewall, and source-allowlist boundary.</li></ol><ol><li>Rick and Esme submit complete, sanitized evidence packages; KK3 passes the final evidence gate; Agent Zero signs off.</li></ol>
+<h3 id="1-3-non-goals">1.3 Non-goals</h3>
+<ul><li>Guaranteed equal 50/50 GPU utilization; Ollama does not expose that contract.</li></ul><ul><li>Consuming all available RAM.</li></ul><ul><li>Production fleet rollout.</li></ul><ul><li>Fine-tuning or model training.</li></ul><ul><li>Running CUDA and ROCm stacks together.</li></ul><ul><li>Treating a successful chat response as sufficient acceptance evidence.</li></ul>
+<hr>
+<h2 id="2-agent-roles-responsibilities-and-deliverables">2. Agent roles, responsibilities, and deliverables</h2>
+<p>There are three agent roles. KK3 is the Meta-Agent; it is not a fourth operational worker.</p>
+<p><strong>Phase M execution note (KDD-0004):</strong> during Phase M, the specialists execute as profile-briefed Kimi Code sub-agents — fresh bounded sessions carrying the role profile, work order, and context packet. The KK3 governor session runs no host probes and makes no host changes itself; "prohibited" in the role table refers to the governor session under this dispatch model.</p>
+<table><thead><tr><th>Role</th><th>Owns</th><th>Required deliverables</th><th>Prohibited</th></tr></thead><tbody><tr><td><strong>KK3 — Meta-Agent</strong></td><td>Goal contract, work graph, context routing, budgets, dependency resolution, evidence gates, synthesis, escalation</td><td>Versioned plan; work orders; conflict/gap register; gate decisions; unified pilot record; sign-off packet</td><td>Shell access, host changes, installation, editing runtime configuration, generating operational evidence</td></tr><tr><td><strong>John-Ollama / Esme</strong></td><td>Ollama installation, version/digest control, model creation, API, residency, model/runtime benchmarks, RAG/tool notes</td><td>Install runbook; Modelfile; systemd Ollama/preload design; API contract; benchmark/evidence package; rollback</td><td>Ubuntu kernel/driver changes outside Rick-approved handoff; unsupported GPU-balancing claims</td></tr><tr><td><strong>Rick — Ubuntu Engineer/Admin</strong></td><td>OS inventory, TKV review, NVIDIA/AMD branch decision, driver and host readiness, systemd dependencies, hardening, OS validation</td><td>TKV receipt; OS requirements; approved host changes; risk-categorized handoff; readiness evidence; rollback procedures</td><td>Ollama/model configuration owned by Esme; unbenchmarked tuning; silent high-risk changes</td></tr></tbody></table>
+<h3 id="2-1-mandatory-tkv-gates">2.1 Mandatory TKV gates</h3>
+<p>Before operational planning, each specialist must read the authoritative knowledge location assigned to the target role. The expected locations are:</p>
+<pre><code class="language-text">Rick:  /opt/tkv-local/ubuntu       [TO BE CONFIRMED]
+Esme:  /opt/tkv-local/ollama       [TO BE CONFIRMED]</code></pre>
+<p>If the actual authority remains the previously defined remote Ollama TKV, Esme must instead use the owner-approved path. A local or remembered document may not silently substitute for the authoritative TKV.</p>
+<p>Each specialist submits:</p>
+<pre><code class="language-text">[KNOWLEDGE REVIEW COMPLETE]
+Agent: &lt;Rick|Esme&gt;
+Host: HX-1
+Source: &lt;absolute TKV path&gt;
+Reviewed At: &lt;ISO-8601&gt;
+Relevant Files: &lt;count and paths&gt;
+Applicable Requirements/Runbooks: &lt;paths&gt;
+Contradictions or Gaps: &lt;none or details&gt;
+Task May Proceed: YES|NO</code></pre>
+<h3 id="2-2-evidence-contract">2.2 Evidence contract</h3>
+<p>Every deliverable must distinguish:</p>
+<ul><li><strong>FACT:</strong> command/API evidence from HX-1;</li></ul><ul><li><strong>AUTHORITY:</strong> owner decision, approved TKV, or current governance;</li></ul><ul><li><strong>UPSTREAM:</strong> exact official documentation/version;</li></ul><ul><li><strong>INFERENCE:</strong> engineering conclusion from evidence;</li></ul><ul><li><strong>RECOMMENDATION:</strong> proposed action not yet executed.</li></ul>
+<p>Missing evidence results in <code>BLOCKED</code>, not an inferred pass. Secrets, tokens, request content, environment credentials, and private prompts must be redacted.</p>
+<hr>
+<h2 id="3-technical-specifications-hx-1">3. Technical specifications — HX-1</h2>
+<p>Historical project context suggests two RTX 4070 Ti Super 16 GB GPUs and 128 GB RAM. These remain unverified until Rick captures live evidence.</p>
+<table><thead><tr><th>Parameter</th><th>Value</th></tr></thead><tbody><tr><td>Hostname</td><td><code>hxs-1</code> (pre-flight 2026-08-24; <code>hostnamectl</code> detail at Rick inventory)</td></tr><tr><td>OS</td><td>Ubuntu 24.04 LTS <strong>[TO BE CONFIRMED: point release at Rick inventory]</strong></td></tr><tr><td>Kernel</td><td><strong>[TO BE CONFIRMED at Rick inventory]</strong></td></tr><tr><td>GPU 1</td><td>NVIDIA RTX 4070 Ti SUPER, 16 GB (confirmed 2026-08-24)</td></tr><tr><td>GPU 2</td><td>NVIDIA RTX 4070 Ti SUPER, 16 GB (confirmed 2026-08-24)</td></tr><tr><td>GPU UUIDs</td><td><code>GPU-2ace9bfc-3a2d-f5b9-d270-82d043f8a7b7</code>, <code>GPU-d675a1cd-7d3d-0903-3b1b-7d95f321a0a9</code> (confirmed 2026-08-24)</td></tr><tr><td>Total VRAM</td><td>32 GB nominal (confirmed 2026-08-24; exact MiB at Rick inventory)</td></tr><tr><td>PCIe topology/link</td><td><strong>[TO BE CONFIRMED at Rick inventory]</strong></td></tr><tr><td>System RAM</td><td>125 GiB usable (confirmed 2026-08-24; registry nominal 128 GB)</td></tr><tr><td>Swap</td><td><strong>[TO BE CONFIRMED at Rick inventory]</strong></td></tr><tr><td>CPU</td><td>Intel Core Ultra 9 285K per registry <strong>[TO BE CONFIRMED via <code>lscpu</code> at Rick inventory]</strong></td></tr><tr><td>Storage/model volume</td><td>root 3.6 TB NVMe, 3.4 TB free (confirmed 2026-08-24); model volume mount/ownership <strong>[TO BE CONFIRMED]</strong></td></tr><tr><td>NVIDIA driver</td><td>580.173.02, present and working (confirmed 2026-08-24); retain-and-validate posture</td></tr><tr><td>CUDA runtime visible to Ollama</td><td><strong>[TO BE CONFIRMED at install]</strong></td></tr><tr><td>Ollama version</td><td>Not installed (confirmed 2026-08-24); version pinned at execution</td></tr><tr><td>Proposed model</td><td><strong><code>qwen3.8:27b</code> non-MLX — APPROVED (Agent Zero, 2026-08-24, KDD-0004)</strong></td></tr><tr><td>Model digest/quantization</td><td><strong>[TO BE CONFIRMED after pull]</strong></td></tr><tr><td>Context candidates</td><td>32,768 baseline; 65,536 target <strong>[CAPACITY TEST REQUIRED]</strong></td></tr></tbody></table>
+<h3 id="3-1-rick-s-immutable-pre-change-inventory">3.1 Rick’s immutable pre-change inventory</h3>
+<pre><code class="language-bash">date --iso-8601=seconds
+hostnamectl
+cat /etc/os-release
+uname -a
+lscpu
+free -h
+swapon --show
+df -hT
+lsblk -o NAME,TYPE,SIZE,FSTYPE,MOUNTPOINTS
+lspci -nn | grep -Ei 'vga|3d|display'
+nvidia-smi -L
+nvidia-smi --query-gpu=index,uuid,name,memory.total,driver_version,pci.bus_id,pstate,temperature.gpu --format=csv
+nvidia-smi topo -m
+systemctl is-enabled ollama 2&gt;/dev/null || true
+systemctl status ollama --no-pager 2&gt;/dev/null || true
+ss -lntp</code></pre>
+<p>Output must be timestamped, sanitized, hashed, and attached to the pilot evidence index.</p>
+<hr>
+<h2 id="4-always-on-memory-resident-configuration">4. Always-on, memory-resident configuration</h2>
+<h3 id="4-1-required-semantics">4.1 Required semantics</h3>
+<p>“Always-on” means the following measurable SLO:</p>
+<ul><li>the service is enabled and supervised;</li></ul><ul><li>a separate boot-ordered preload unit loads the exact model;</li></ul><ul><li>the API reports the model resident;</li></ul><ul><li>monitoring detects absence or degradation;</li></ul><ul><li>recovery reloads the model within the approved readiness objective;</li></ul><ul><li>an alert is raised if automated recovery fails.</li></ul>
+<p><code>OLLAMA_KEEP_ALIVE=-1</code> prevents normal idle eviction while the service remains healthy. It does <strong>not</strong> load a model at boot, survive a process restart by itself, prevent OOM, or make availability absolute.</p>
+<h3 id="4-2-proposed-ollama-systemd-drop-in-esme-deliverable">4.2 Proposed Ollama systemd drop-in — Esme deliverable</h3>
+<p>Create <code>/etc/systemd/system/ollama.service.d/hx1.conf</code> only after Rick approves the GPU UUIDs and service dependency posture:</p>
+<pre><code class="language-ini">[Service]
+Environment="OLLAMA_HOST=127.0.0.1:11434"
+Environment="OLLAMA_KEEP_ALIVE=-1"
+Environment="OLLAMA_MAX_LOADED_MODELS=1"
+Environment="OLLAMA_NUM_PARALLEL=1"
+Environment="OLLAMA_CONTEXT_LENGTH=65536"
+Environment="OLLAMA_FLASH_ATTENTION=1"
+Environment="OLLAMA_KV_CACHE_TYPE=f16"
+Environment="OLLAMA_NO_CLOUD=1"
+Environment="CUDA_VISIBLE_DEVICES=GPU-UUID-1,GPU-UUID-2"
+Restart=always
+RestartSec=3
+TimeoutStartSec=300
+LimitNOFILE=65535</code></pre>
+<p>Rules:</p>
+<ol><li>Replace UUID placeholders with the exact <code>nvidia-smi -L</code> values; do not use unstable numeric indices.</li></ol><ol><li>Use <code>OLLAMA_CONTEXT_LENGTH=32768</code> for the first capacity run. Promote to 65536 only after Gate 4 passes. <strong>Evidence note (PILOT-002, hxs-4, Ollama 0.32.9):</strong> <code>OLLAMA_CONTEXT_LENGTH</code> did not change the observed default <code>num_ctx</code> (stayed 4096). The Modelfile <code>PARAMETER num_ctx</code> is the reliable contract; verify effective context via <code>/api/ps</code> and startup logs at every stage rather than assuming the drop-in variable takes effect (open issue D3).</li></ol><ol><li>Retain <code>f16</code> KV cache for the quality-first baseline. Test <code>q8_0</code> only if memory pressure blocks the accepted context, and re-run accuracy tests.</li></ol><ol><li><code>OLLAMA_NO_CLOUD=1</code> is proposed for local-only governance; owner/TKV policy must confirm it.</li></ol><ol><li>An API request with <code>keep_alive: 0</code> can override the default and unload the model; clients must prohibit it.</li></ol>
+<p>Apply and inspect:</p>
+<pre><code class="language-bash">sudo systemctl daemon-reload
+sudo systemctl enable --now ollama.service
+systemctl cat ollama.service
+systemctl show ollama.service -p Environment -p Restart -p NRestarts -p User -p Group
+systemctl is-active ollama.service
+curl -fsS --connect-timeout 2 --max-time 10 http://127.0.0.1:11434/api/version</code></pre>
+<h3 id="4-3-boot-preload-unit">4.3 Boot preload unit</h3>
+<p>Esme must provide <code>/usr/local/libexec/hx-ollama-preload</code> with bounded retry, a hard timeout, exact model name, and an <code>/api/ps</code> assertion. The conceptual request is:</p>
+<pre><code class="language-bash">curl -fsS --retry 12 --retry-all-errors --retry-delay 5 \
+  --connect-timeout 3 --max-time 900 \
+  http://127.0.0.1:11434/api/generate \
+  -H 'Content-Type: application/json' \
+  -d '{"model":"hx-qwen3.8-27b","prompt":"","stream":false,"keep_alive":-1}'</code></pre>
+<p>The script must then query <code>/api/ps</code> and fail unless the exact model is present. The proposed unit is:</p>
+<pre><code class="language-ini">[Unit]
+Description=Preload and verify HX-1 Ollama model
+After=network-online.target ollama.service
+Wants=network-online.target
+Requires=ollama.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/libexec/hx-ollama-preload
+RemainAfterExit=yes
+TimeoutStartSec=1200
+
+[Install]
+WantedBy=multi-user.target</code></pre>
+<p>Do not embed credentials in either unit. Enable after the script passes shell lint and a manual non-reboot test:</p>
+<pre><code class="language-bash">sudo systemctl daemon-reload
+sudo systemctl enable ollama-preload.service
+sudo systemctl start ollama-preload.service
+systemctl status ollama-preload.service --no-pager</code></pre>
+<h3 id="4-4-residency-verification">4.4 Residency verification</h3>
+<pre><code class="language-bash">curl -fsS http://127.0.0.1:11434/api/ps | jq .
+ollama ps
+nvidia-smi
+systemctl show ollama.service -p ActiveEnterTimestamp -p NRestarts
+journalctl -u ollama -u ollama-preload --since boot --no-pager</code></pre>
+<p>The evidence must show the target model, expected context, GPU/CPU processor split, VRAM allocation, service restart count, and preload completion. Repeat after 10 minutes idle, 1 hour idle, and throughout the 24-hour soak.</p>
+<h3 id="4-5-monitoring-and-recovery">4.5 Monitoring and recovery</h3>
+<p>Poll every 60 seconds:</p>
+<ul><li><code>/api/version</code> returns success;</li></ul><ul><li><code>/api/ps</code> contains the exact target model;</li></ul><ul><li><code>ollama.service</code> is active and its <code>NRestarts</code> has not unexpectedly increased;</li></ul><ul><li>both selected GPUs remain visible;</li></ul><ul><li>GPU Xid, OOM, thermal, disk, and service errors are absent;</li></ul><ul><li>the latest readiness probe is within the SLO.</li></ul>
+<p>Recovery sequence:</p>
+<ol><li>Mark the endpoint unready and stop routing new work.</li></ol><ol><li>Capture service, kernel, GPU, memory, disk, and <code>/api/ps</code> evidence.</li></ol><ol><li>Restart <code>ollama.service</code> once.</li></ol><ol><li>Start <code>ollama-preload.service</code> and wait for the exact readiness assertion.</li></ol><ol><li>Restore traffic only after a known-answer inference passes.</li></ol><ol><li>If recovery fails or repeats, stop retrying and escalate to Rick, Esme, and KK3.</li></ol>
+<p>No infinite restart loop is permitted. The proposed objectives are <strong>[TO BE CONFIRMED]</strong>: detection ≤2 minutes, automated recovery ≤15 minutes, one automated recovery attempt per incident.</p>
+<hr>
+<h2 id="5-dual-gpu-optimization-strategy">5. Dual-GPU optimization strategy</h2>
+<h3 id="5-1-supported-behavior">5.1 Supported behavior</h3>
+<p>Ollama evaluates available VRAM. If a model fits one GPU, it may place the model there to avoid PCIe transfer. If it does not fit one GPU, Ollama spreads it across available GPUs. The pilot can select both GPUs but cannot prescribe or promise an equal split.</p>
+<p>For the expected two 16 GB cards, a roughly 17 GB model plus KV cache will probably require both GPUs. This is an inference until proven on HX-1.</p>
+<h3 id="5-2-configuration">5.2 Configuration</h3>
+<pre><code class="language-ini">Environment="CUDA_VISIBLE_DEVICES=GPU-UUID-1,GPU-UUID-2"
+Environment="OLLAMA_MAX_LOADED_MODELS=1"
+Environment="OLLAMA_NUM_PARALLEL=1"
+Environment="OLLAMA_FLASH_ATTENTION=1"
+Environment="OLLAMA_KV_CACHE_TYPE=f16"</code></pre>
+<p>No <code>OLLAMA_NUM_GPU</code> or <code>OLLAMA_GPU_LAYERS</code> directive is allowed in the accepted configuration. No CUDA/ROCm mixture is allowed. Rick must verify PCIe topology and thermals before sustained load.</p>
+<h3 id="5-3-context-capacity-ladder">5.3 Context capacity ladder</h3>
+<table><thead><tr><th>Stage</th><th><code>num_ctx</code></th><th>Gate</th></tr></thead><tbody><tr><td>Smoke</td><td>8,192</td><td>Model loads; API and GPU paths work</td></tr><tr><td>Baseline</td><td>32,768</td><td>RAG/coding/tool suite passes without OOM or unexpected CPU offload</td></tr><tr><td>Target</td><td>65,536</td><td>Same suite plus soak; quality benefit justifies memory cost</td></tr><tr><td>Extended</td><td>131,072</td><td>RESOLVED 2026-08-25 (owner, <code>23-kk3-m6-capacity-decision.md</code> Revision 2): qualified extended-context profile — explicitly selected, not the default; f16 retained</td></tr><tr><td>Above extended</td><td>Not authorized</td><td>Separate capacity and quality decision required; 262K native and 1M claims are reference-only per A01 4.3</td></tr></tbody></table>
+<blockquote><p>Update 2026-08-25 (owner directive, "Alert 1" EAM): 131,072 (128K) is added to the M6 capacity decision — test all stages and show results. This satisfies A01 §4.3's "separate owner-approved experiment" requirement for the extended stage. <strong>Resolution 2026-08-25 (owner):</strong> the ladder passed at both stages; per Revision 2 of <code>23-kk3-m6-capacity-decision.md</code>, the single ratified rule governing M6, M7, and final acceptance is — 32K recovery baseline, 64K operating default, 128K qualified extended profile by explicit selection. The experiment-only interpretation is closed. (Correction recorded 2026-08-25.)</p></blockquote>
+<p>If 64K causes OOM or material CPU offload, retain 32K. Do not mask a capacity failure by increasing swap or consuming all RAM.</p>
+<h3 id="5-4-benchmark-protocol">5.4 Benchmark protocol</h3>
+<p>Run cold and warm trials at each authorized context with concurrency fixed at one. Capture:</p>
+<ul><li>exact model digest and settings;</li></ul><ul><li>prompt tokens, generated tokens, prompt-evaluation rate, generation rate;</li></ul><ul><li>load duration, time to first token, and end-to-end duration;</li></ul><ul><li>task correctness and evaluator scores;</li></ul><ul><li>per-GPU memory, utilization, power, clock, temperature, and throttling;</li></ul><ul><li>CPU, RSS, RAM, swap, disk I/O, and errors;</li></ul><ul><li><code>ollama ps</code> processor split and context.</li></ul>
+<p>Example evidence capture:</p>
+<pre><code class="language-bash">nvidia-smi dmon -s pucvmet -d 1
+watch -n 1 'nvidia-smi --query-gpu=uuid,memory.used,utilization.gpu,temperature.gpu,power.draw --format=csv'
+ollama ps
+journalctl -fu ollama</code></pre>
+<p>Dual-GPU acceptance means both GPUs show model allocation and meaningful compute during a sustained representative request when the model cannot fit one GPU. It does not mean mathematically equal utilization.</p>
+<hr>
+<h2 id="6-rag-pipeline-and-agent-tool-calling-integration">6. RAG pipeline and agent tool-calling integration</h2>
+<h3 id="6-1-endpoint-contract">6.1 Endpoint contract</h3>
+<table><thead><tr><th>Capability</th><th>Native endpoint</th><th>Notes</th></tr></thead><tbody><tr><td>Health/version</td><td><code>GET /api/version</code></td><td>Liveness only; not model readiness</td></tr><tr><td>Resident models</td><td><code>GET /api/ps</code></td><td>Required readiness source</td></tr><tr><td>Chat and tools</td><td><code>POST /api/chat</code></td><td>Preferred native conversation endpoint</td></tr><tr><td>Completion</td><td><code>POST /api/generate</code></td><td>Used for preload and generation</td></tr><tr><td>Model metadata</td><td><code>POST /api/show</code></td><td>Capture capability, parameters, quantization</td></tr><tr><td>OpenAI compatibility</td><td><code>/v1/chat/completions</code></td><td>Use only if client requires it</td></tr></tbody></table>
+<p>Default local base URL:</p>
+<pre><code class="language-text">http://127.0.0.1:11434</code></pre>
+<p>Client defaults are <strong>[TO BE CONFIRMED by workload tests]</strong>: connect timeout 5 seconds; read/inference timeout 900 seconds; bounded retry only for safe/idempotent failures. The RAG client must not send <code>keep_alive: 0</code>.</p>
+<p><strong>Confirmed and extended by owner directive 2026-08-25 (128K profile):</strong> first-content timeout 240 s initially for the 128K profile (cold deep ingest measured ≈158 s); total request timeout sized for ingest + reasoning + generation; progress telemetry required so slow ingestion is not misclassified as a hang; admission control preventing concurrent deep-context requests from consuming the remaining VRAM margin (server side: <code>OLLAMA_NUM_PARALLEL=1</code>, <code>OLLAMA_MAX_LOADED_MODELS=1</code>); warm-cache and cold-cache latency tracked separately.</p>
+<h3 id="6-2-network-boundary">6.2 Network boundary</h3>
+<p>Ollama’s local API does not provide native authentication. Keep it on loopback when the RAG/agent gateway is local. For remote clients, place an approved authenticated TLS reverse proxy or gateway in front of Ollama and enforce host firewall/VLAN source allowlists. Direct <code>0.0.0.0:11434</code> exposure is prohibited.</p>
+<h3 id="6-3-rag-contract">6.3 RAG contract</h3>
+<p>The 27B generator is not the embedding service. Use a separately approved embedding model and vector index. The application must:</p>
+<ol><li>normalize and version documents;</li></ol><ol><li>retrieve ranked chunks using a fixed token budget;</li></ol><ol><li>attach stable source IDs and metadata;</li></ol><ol><li>delimit retrieved content as untrusted data;</li></ol><ol><li>require citations to source IDs;</li></ol><ol><li>distinguish retrieved evidence from inference;</li></ol><ol><li>refuse or qualify answers when evidence is insufficient;</li></ol><ol><li>record retrieval and generation telemetry without leaking protected content.</li></ol>
+<p>RAG validation must measure retrieval recall/precision separately from generation groundedness. Include conflicting sources, irrelevant retrieval, poisoned instructions inside a document, no-answer cases, duplicate chunks, and context-boundary cases.</p>
+<h3 id="6-4-tool-calling-contract">6.4 Tool-calling contract</h3>
+<p>Tools are supplied as OpenAI-style function definitions with a JSON Schema. The model proposes a call; the host application validates and executes it. The model receives no shell, database, infrastructure, or network authority merely because it requested a tool.</p>
+<p>Required controls:</p>
+<ul><li>explicit tool allowlist per task;</li></ul><ul><li>strict name and JSON Schema validation;</li></ul><ul><li>authorization after validation and before execution;</li></ul><ul><li>parameter bounds and path/network restrictions;</li></ul><ul><li>idempotency keys for mutating tools;</li></ul><ul><li>tool timeout and output-size limit;</li></ul><ul><li>maximum tool-loop depth and total calls;</li></ul><ul><li>untrusted tool output isolation;</li></ul><ul><li>deterministic rejection of unknown tools or malformed arguments;</li></ul><ul><li>audit records for request, decision, execution result, and model continuation.</li></ul>
+<p>Tests must cover one tool, parallel/multiple calls, malformed arguments, unknown tool, permission denial, timeout, duplicate mutation, malicious retrieved instructions, tool error, and loop exhaustion.</p>
+<h3 id="6-5-proposed-modelfile-esme-deliverable">6.5 Proposed Modelfile — Esme deliverable</h3>
+<blockquote><p><strong>Superseded by Amendment A01 (adopted 2026-08-25, <code>amendment-A01-qwen38-baseline.md</code> §4.2):</strong> the pilot alias is built as Phase A — <code>FROM qwen3.8:27b</code>, <code>PARAMETER num_ctx 32768</code>, and the A01 SYSTEM prompt, with <strong>no sampling parameters</strong> (native upstream behavior baseline). Sampling changes only through controlled A/B trials (A01 Phase B). The Modelfile and command blocks below are <strong>non-executable historical content retained for provenance</strong> — do not run them; they must not be used for new aliases. (Correction recorded 2026-08-25.)</p></blockquote>
+<pre><code class="language-text">FROM qwen3.8:27b
+PARAMETER num_ctx 32768
+PARAMETER temperature 0.6
+PARAMETER top_p 0.95
+PARAMETER top_k 40
+PARAMETER min_p 0.0
+PARAMETER repeat_penalty 1.05
+PARAMETER repeat_last_n 256
+PARAMETER num_predict 8192
+SYSTEM """You are the HX-1 engineering model. Use retrieved evidence faithfully, distinguish evidence from inference, invoke only declared tools, never fabricate tool results, and stop when required authority or evidence is absent."""</code></pre>
+<p>Create an immutable pilot alias only after model approval:</p>
+<pre><code class="language-bash">ollama pull qwen3.8:27b
+ollama show qwen3.8:27b
+ollama create hx-qwen3.8-27b -f ./Modelfile
+ollama show hx-qwen3.8-27b
+sha256sum ./Modelfile</code></pre>
+<p>The parameters are a benchmark baseline, not universal truth. Compare at least one deterministic coding set, one RAG set, and one tool set before freezing them. Promote <code>num_ctx</code> to 65536 only through the capacity gate.</p>
+<hr>
+<h2 id="7-rick-s-ubuntu-requirements-and-risk-categorized-handoff">7. Rick’s Ubuntu requirements and risk-categorized handoff</h2>
+<h3 id="7-1-required-os-preparation">7.1 Required OS preparation</h3>
+<p>Rick must perform these steps after the TKV receipt and before Esme installs Ollama:</p>
+<ol><li>Confirm GPU vendor/model, Secure Boot state, driver branch, kernel, PCIe topology, power/thermal state, RAM, swap, storage, and free capacity.</li></ol><ol><li>Select exactly one acceleration branch. For the expected NVIDIA GPUs, use a supported NVIDIA driver path; do not install ROCm.</li></ol><ol><li>Install or retain the approved Ubuntu/NVIDIA driver using an owner-approved package source. Do not run an unreviewed remote installer.</li></ol><ol><li>Reboot if required and prove both GPUs with <code>nvidia-smi</code>; inspect kernel logs for NVRM/Xid errors.</li></ol><ol><li>Confirm the <code>ollama</code> service user can access the GPU devices and model directory without broad group or filesystem permissions.</li></ol><ol><li>Disable suspend/hibernate for the always-on server if approved; Linux suspend/resume can impair GPU discovery.</li></ol><ol><li>Confirm time sync, DNS, storage mount ordering, network-online behavior, and firewall persistence.</li></ol><ol><li>Establish CPU governor and thermal baselines before any performance change.</li></ol><ol><li>Treat hugepages, memory locking, swappiness, and kernel changes as conditional experiments. Apply only when a measured bottleneck and rollback justify them.</li></ol><ol><li>Provide Esme a signed configuration handoff containing values, files, commands, evidence paths, risks, and rollback.</li></ol>
+<h3 id="7-2-tuning-policy">7.2 Tuning policy</h3>
+<table><thead><tr><th>Setting</th><th>Pilot posture</th><th>Reason</th></tr></thead><tbody><tr><td>Hugepages</td><td><strong>Do not enable by default</strong></td><td>Can strand RAM; no general Ollama requirement established</td></tr><tr><td><code>mlock</code>/memlock</td><td><strong>Do not enable by default</strong></td><td>Can cause service/load failure and competes with OS headroom</td></tr><tr><td>Swappiness</td><td>Measure first; modest reduction only if swap activity is proven harmful</td><td>Swap is not a substitute for VRAM/RAM capacity</td></tr><tr><td>Swap removal</td><td>Prohibited without separate risk approval</td><td>Removes an OS safety valve and can increase OOM risk</td></tr><tr><td>CPU governor <code>performance</code></td><td>Conditional benchmark</td><td>Raises power/heat; benefit must be measured</td></tr><tr><td>NVIDIA persistence mode</td><td>Conditional on driver/support and reboot test</td><td>May improve readiness but requires validation</td></tr><tr><td>Kernel parameters</td><td>No blanket tuning</td><td>Each change needs a hypothesis, test, and rollback</td></tr><tr><td>File descriptor limit</td><td>65,535 proposed</td><td>Low-risk service capacity control; verify current limits</td></tr><tr><td>Automatic suspend</td><td>Disable if server policy permits</td><td>Avoid loss of GPU discovery on resume</td></tr></tbody></table>
+<h3 id="7-3-formal-os-risk-register">7.3 Formal OS risk register</h3>
+<table><thead><tr><th>Risk ID</th><th>Configuration area</th><th>Risk description</th><th>Level</th><th>Mitigation / proof</th><th>Owner</th></tr></thead><tbody><tr><td>R-001</td><td>Model identity</td><td>Requested tag is invalid/ambiguous; wrong artifact could be pulled</td><td>Critical</td><td>Gate 0 approval; capture tag, digest, quantization, license</td><td>KK3 → Esme</td></tr><tr><td>R-002</td><td>GPU drivers</td><td>Unsupported/mismatched driver prevents GPU loading or breaks after kernel update</td><td>High</td><td>Approved package source; Secure Boot check; reboot validation; pin/change record</td><td>Rick → Esme</td></tr><tr><td>R-003</td><td>CUDA/ROCm</td><td>Installing both stacks creates library/device conflicts</td><td>High</td><td>Choose NVIDIA branch after inventory; prohibit ROCm on expected hardware</td><td>Rick → Esme</td></tr><tr><td>R-004</td><td>Secure Boot</td><td>Unsigned module fails to load</td><td>High</td><td>Record state; approved MOK/module process; verify after reboot</td><td>Rick → Esme</td></tr><tr><td>R-005</td><td>Multi-GPU assumption</td><td>Visible GPUs do not guarantee both are used or balanced</td><td>High</td><td>UUID selection; <code>ollama ps</code>, <code>nvidia-smi</code>, load telemetry</td><td>Esme</td></tr><tr><td>R-006</td><td>Context capacity</td><td>64K KV cache causes OOM or CPU fallback</td><td>High</td><td>32K baseline; capacity ladder; concurrency one; promote only after soak</td><td>Esme</td></tr><tr><td>R-007</td><td>Residency</td><td>Keep-alive does not preload after restart</td><td>High</td><td>Ordered preload unit; <code>/api/ps</code> assertion; monitoring and recovery</td><td>Esme → Rick</td></tr><tr><td>R-008</td><td>API exposure</td><td>Ollama API has no local authentication</td><td>Critical</td><td>Loopback; authenticated TLS gateway for remote use; firewall tests</td><td>Rick + Esme</td></tr><tr><td>R-009</td><td>Memory locking</td><td>Overly broad memlock starves OS or prevents service start</td><td>High</td><td>Disabled by default; experiment only with evidence and rollback</td><td>Rick</td></tr><tr><td>R-010</td><td>Hugepages</td><td>Reserved pages strand RAM without proven benefit</td><td>Medium</td><td>Disabled by default; benchmark in separate change</td><td>Rick</td></tr><tr><td>R-011</td><td>Swappiness/swap</td><td>Aggressive settings cause thrash or abrupt OOM</td><td>High</td><td>Baseline counters; preserve headroom; bounded reversible change</td><td>Rick</td></tr><tr><td>R-012</td><td>CPU performance mode</td><td>Higher temperature/power causes throttling</td><td>Medium</td><td>Thermal baseline; timed benchmark; revert on no benefit</td><td>Rick</td></tr><tr><td>R-013</td><td>Storage</td><td>Model volume fills or mount is absent at service start</td><td>High</td><td>Capacity alert; mount dependency; integrity check; rollback space</td><td>Rick → Esme</td></tr><tr><td>R-014</td><td>Permissions</td><td>Broad service permissions or inaccessible GPU/model files</td><td>High</td><td>Least-privilege user; device/model path checks; no shell login</td><td>Rick</td></tr><tr><td>R-015</td><td>Boot ordering</td><td>Ollama/preload runs before GPU, storage, or network readiness</td><td>High</td><td>Explicit dependencies; three cold reboots; bounded retry</td><td>Rick + Esme</td></tr><tr><td>R-016</td><td>Suspend/resume</td><td>NVIDIA GPU discovery fails and Ollama falls back to CPU</td><td>High</td><td>Disable suspend; alert on processor split; controlled UVM recovery/reboot</td><td>Rick</td></tr><tr><td>R-017</td><td>Thermal/power</td><td>Dual-GPU soak triggers thermal or power throttling</td><td>High</td><td>Monitor power/temp/clocks; confirm PSU/cooling <strong>[TBC]</strong></td><td>Rick</td></tr><tr><td>R-018</td><td>Automatic updates</td><td>Kernel/driver/Ollama drift invalidates validated state</td><td>High</td><td>Maintenance window; version pin/change gate; post-update regression suite</td><td>KK3 + Rick + Esme</td></tr><tr><td>R-019</td><td>Tool execution</td><td>Model proposes unauthorized or malformed action</td><td>Critical</td><td>Host-side schema, allowlist, authorization, loop and timeout controls</td><td>Application owner</td></tr><tr><td>R-020</td><td>RAG injection</td><td>Retrieved content attempts to override policy or invoke tools</td><td>Critical</td><td>Treat retrieval as untrusted; injection tests; separate policy channel</td><td>Application owner</td></tr><tr><td>R-021</td><td>Evidence leakage</td><td>Logs contain prompts, secrets, tokens, or private documents</td><td>High</td><td>Redaction, access control, retention limits, sanitized evidence</td><td>All</td></tr><tr><td>R-022</td><td>Recovery loops</td><td>Repeated restart/preload cycle worsens incident</td><td>High</td><td>One bounded recovery; circuit breaker; escalation</td><td>Rick + Esme</td></tr></tbody></table>
+<h3 id="7-4-rick-readiness-checklist">7.4 Rick readiness checklist</h3>
+<ul><li>[ ] TKV receipt is complete and approved.</li></ul><ul><li>[ ] Live hardware table replaces all relevant placeholders.</li></ul><ul><li>[ ] GPU vendor branch is decided; no conflicting acceleration stack exists.</li></ul><ul><li>[ ] Both GPU UUIDs, VRAM, driver, topology, and thermals are evidenced.</li></ul><ul><li>[ ] Secure Boot/module state is evidenced.</li></ul><ul><li>[ ] Kernel logs show no unresolved GPU/Xid/OOM issue.</li></ul><ul><li>[ ] Model storage path, capacity, ownership, and boot mount are validated.</li></ul><ul><li>[ ] Service user GPU and filesystem access pass least-privilege tests.</li></ul><ul><li>[ ] Suspend policy, time sync, DNS, firewall, and boot dependencies are validated.</li></ul><ul><li>[ ] Baseline CPU/RAM/swap/storage telemetry is captured.</li></ul><ul><li>[ ] Every OS change has risk, exact diff, validation, and rollback.</li></ul><ul><li>[ ] Risk handoff is signed and transmitted to Esme.</li></ul>
+<hr>
+<h2 id="8-pilot-milestones-work-graph-and-hold-points">8. Pilot milestones, work graph, and hold points</h2>
+<pre class="mermaid">flowchart TD
+    A["Agent Zero authorizes pilot"] --&gt; B["KK3 issues goal contract"]
+    B --&gt; C["Rick: Ubuntu TKV review"]
+    C --&gt; D{"Gate 0: authority and hardware known?"}
+    D -- No --&gt; X["BLOCKED / escalate"]
+    D -- Yes --&gt; E["Rick: OS readiness + risk handoff"]
+    E --&gt; F{"Gate 1: driver and host ready?"}
+    F -- No --&gt; X
+    F -- Yes --&gt; G["Agent Zero approves exact model tag"]
+    G --&gt; H["Esme: install, pull, create, preload"]
+    H --&gt; I{"Gate 2: 32K baseline stable?"}
+    I -- No --&gt; R["One bounded correction"]
+    R --&gt; I
+    I -- Yes --&gt; J["Joint RAG/tool/GPU/recovery tests"]
+    J --&gt; K{"Gate 3: 64K justified and stable?"}
+    K -- No --&gt; L["Freeze 32K"]
+    K -- Yes --&gt; M["Freeze 64K"]
+    L --&gt; N["24-hour soak + three reboot cycles"]
+    M --&gt; N
+    N --&gt; O["KK3 evidence reconciliation"]
+    O --&gt; P{"Final gate"}
+    P -- Pass --&gt; Q["Agent Zero pilot sign-off"]
+    P -- Fail/Blocked --&gt; X</pre>
+<table><thead><tr><th>Milestone</th><th>Owner</th><th>Entry condition</th><th>Required output</th><th>Exit gate</th></tr></thead><tbody><tr><td>M0 Goal authorization</td><td>Agent Zero / KK3</td><td>Draft reviewed</td><td>Goal contract, scope, budgets</td><td>Owner approval</td></tr><tr><td>M1 TKV and inventory</td><td>Rick</td><td>M0</td><td>TKV receipt, immutable inventory</td><td>Hardware/authority known</td></tr><tr><td>M2 OS readiness</td><td>Rick</td><td>M1</td><td>OS analysis, changes, validation, risk handoff</td><td>KK3 Gate 1</td></tr><tr><td>M3 Model decision</td><td>Agent Zero / KK3</td><td>M2</td><td>Approved exact tag/digest policy</td><td>No ambiguity</td></tr><tr><td>M4 Ollama baseline</td><td>Esme</td><td>M3</td><td>Install, Modelfile, 32K model, preload, rollback</td><td>API/model/GPU proof</td></tr><tr><td>M5 Functional validation</td><td>Esme + Rick</td><td>M4</td><td>RAG, tool, coding, recovery, security results</td><td>All mandatory suites pass</td></tr><tr><td>M6 Capacity decision</td><td>KK3</td><td>M5</td><td>32K vs 64K decision record</td><td>Largest stable setting frozen</td></tr><tr><td>M7 Stability</td><td>Esme + Rick</td><td>M6</td><td>24h soak, three reboot cycles</td><td>Zero critical defects</td></tr><tr><td>M8 Synthesis/sign-off</td><td>KK3 / Agent Zero</td><td>M7</td><td>Unified evidence index and verdict</td><td>Human sign-off</td></tr></tbody></table>
+<p>Execution budget: one initial specialist run and one bounded correction per failed correctable gate. Any safety, authority, model-identity, or repeated failure escalates immediately.</p>
+<hr>
+<h2 id="9-validation-and-acceptance-criteria">9. Validation and acceptance criteria</h2>
+<h3 id="9-1-test-matrix">9.1 Test matrix</h3>
+<table><thead><tr><th>Test ID</th><th>Property</th><th>Procedure/evidence</th><th>Pass rule</th></tr></thead><tbody><tr><td>AC-001</td><td>Host identity</td><td>Section 3 inventory</td><td>All mandatory placeholders replaced</td></tr><tr><td>AC-002</td><td>Driver health</td><td><code>nvidia-smi</code>, kernel log, reboot</td><td>Two correct GPUs; no unresolved errors</td></tr><tr><td>AC-003</td><td>Model provenance</td><td><code>ollama show</code>, digest, license, Modelfile hash</td><td>Exact approved artifact frozen</td></tr><tr><td>AC-004</td><td>GPU placement</td><td><code>ollama ps</code> + synchronized per-GPU telemetry</td><td>Expected split; both allocated/active when required; no unapproved CPU fallback</td></tr><tr><td>AC-005</td><td>32K capacity</td><td>Full workload suite</td><td>No OOM/truncation; quality thresholds pass</td></tr><tr><td>AC-006</td><td>64K capacity</td><td>Same suite + soak</td><td>Passes or is explicitly rejected in favor of 32K</td></tr><tr><td>AC-007</td><td>Boot preload</td><td>Three cold reboots</td><td>Model ready without manual action each time</td></tr><tr><td>AC-008</td><td>Idle residency</td><td>Poll beyond 5 minutes and for 24h</td><td>Exact model remains resident while healthy</td></tr><tr><td>AC-009</td><td>API readiness</td><td><code>/api/version</code>, <code>/api/ps</code>, known-answer request</td><td>All pass within approved timeouts</td></tr><tr><td>AC-010</td><td>RAG retrieval</td><td>Gold corpus/query set</td><td>Thresholds <strong>[TO BE CONFIRMED]</strong> met</td></tr><tr><td>AC-011</td><td>RAG groundedness</td><td>Citation/evidence evaluator</td><td>Thresholds <strong>[TO BE CONFIRMED]</strong> met; unsupported answers handled</td></tr><tr><td>AC-012</td><td>Tool protocol</td><td>Positive/negative/adversarial suite</td><td>Valid calls execute; all forbidden calls denied</td></tr><tr><td>AC-013</td><td>Coding quality</td><td>Versioned coding benchmark + tests</td><td>Test and evaluator threshold <strong>[TBC]</strong> met</td></tr><tr><td>AC-014</td><td>Recovery</td><td>Stop service/runner; bounded recovery</td><td>Readiness restored once; evidence captured; no loop</td></tr><tr><td>AC-015</td><td>Security</td><td>Allowed/disallowed host scans and auth/TLS tests</td><td>No unauthorized direct API access</td></tr><tr><td>AC-016</td><td>Stability</td><td>24-hour mixed workload</td><td>No unexplained unload, OOM, CPU fallback, Xid, or restart loop</td></tr><tr><td>AC-017</td><td>Documentation</td><td>Artifact/evidence index audit</td><td>Complete, sanitized, reproducible, signed</td></tr></tbody></table>
+<h3 id="9-2-reboot-test">9.2 Reboot test</h3>
+<p>Repeat three times:</p>
+<ol><li>Capture pre-reboot service/model/GPU state.</li></ol><ol><li>Reboot through the approved procedure.</li></ol><ol><li>Record boot completion and readiness timestamps.</li></ol><ol><li>Verify <code>ollama</code> and <code>ollama-preload</code> enabled/active state.</li></ol><ol><li>Verify <code>/api/ps</code> contains the exact model and intended context.</li></ol><ol><li>Run a known-answer warm inference and confirm no model reload delay is reported.</li></ol><ol><li>Verify both GPUs and inspect boot/service/kernel logs.</li></ol><ol><li>Store evidence under the reboot iteration ID.</li></ol>
+<h3 id="9-3-recovery-and-fault-tests">9.3 Recovery and fault tests</h3>
+<p>In a controlled window, test:</p>
+<ul><li>Ollama service termination;</li></ul><ul><li>model runner termination;</li></ul><ul><li>malformed API request;</li></ul><ul><li>RAG dependency timeout;</li></ul><ul><li>tool timeout and denied authorization;</li></ul><ul><li>disk-capacity alert threshold without actually filling the disk;</li></ul><ul><li>missing model readiness response;</li></ul><ul><li>unexpected processor split/CPU fallback detection.</li></ul>
+<p>GPU reset, driver removal, forced OOM, and destructive disk-full tests are high risk and require separate Agent Zero approval.</p>
+<h3 id="9-4-final-definition-of-done">9.4 Final definition of done</h3>
+<ul><li>[ ] Agent Zero approved the exact model candidate.</li></ul><ul><li>[ ] Rick’s TKV receipt and OS risk handoff are complete.</li></ul><ul><li>[ ] Esme’s Ollama installation and rollback guide are complete.</li></ul><ul><li>[ ] Both GPUs are detected and their actual Ollama placement is proven.</li></ul><ul><li>[ ] The largest stable 32K/64K context is frozen with evidence.</li></ul><ul><li>[ ] Boot preload and indefinite keep-alive behavior pass three reboots and 24 hours.</li></ul><ul><li>[ ] RAG, coding, tool, recovery, and security suites pass.</li></ul><ul><li>[ ] API exposure is loopback-only or protected by an approved gateway.</li></ul><ul><li>[ ] Monitoring detects service, model, GPU, capacity, and security failures.</li></ul><ul><li>[ ] Every configuration change has an owner, risk, validation, and rollback.</li></ul><ul><li>[ ] KK3 verifies artifacts without performing operational work.</li></ul><ul><li>[ ] Agent Zero signs the pilot acceptance record.</li></ul>
+<hr>
+<h2 id="10-installation-rollback-and-handoff-runbook">10. Installation, rollback, and handoff runbook</h2>
+<h3 id="10-1-esme-installation-sequence">10.1 Esme installation sequence</h3>
+<ol><li>Validate Rick’s signed handoff and stop if any critical risk is open.</li></ol><ol><li>Capture the pre-install Ollama binary, package, service, environment, ports, model directory, and versions.</li></ol><ol><li>Inspect the current official installer or use the approved pinned package procedure from the TKV.</li></ol><ol><li>Install Ollama for Linux and verify the service account and unit.</li></ol><ol><li>Confirm loopback binding before any model pull.</li></ol><ol><li>Pull only the owner-approved tag.</li></ol><ol><li>Record <code>ollama show</code>, manifest/digest, quantization, size, license, and storage delta.</li></ol><ol><li>Create the pilot alias from the reviewed Modelfile.</li></ol><ol><li>Apply the systemd drop-in at 32K and reload systemd.</li></ol><ol><li>Install and test the preload script/unit.</li></ol><ol><li>Run smoke, residency, GPU, and functional tests.</li></ol><ol><li>Proceed to 64K only after Gate 2 approval.</li></ol>
+<p>Official convenience install command, permitted only after installer review:</p>
+<pre><code class="language-bash">curl -fsSL https://ollama.com/install.sh | sh</code></pre>
+<h3 id="10-2-rollback-requirements">10.2 Rollback requirements</h3>
+<p>Before mutation, preserve:</p>
+<ul><li>prior Ollama version and installation method;</li></ul><ul><li><code>systemctl cat ollama</code> output and drop-ins;</li></ul><ul><li>service user/group and permissions;</li></ul><ul><li>existing model list/digests;</li></ul><ul><li>model storage path and free capacity;</li></ul><ul><li>firewall/proxy rules;</li></ul><ul><li>driver/kernel state;</li></ul><ul><li>configuration hashes.</li></ul>
+<p>Rollback is triggered by unresolved GPU errors, boot failure, repeated OOM, security regression, model-integrity mismatch, unacceptable quality regression, or inability to recover within the approved budget. Roll back the smallest affected layer; do not modify governance or evidence to make the runtime appear compliant.</p>
+<h3 id="10-3-final-handoff-package">10.3 Final handoff package</h3>
+<pre><code class="language-text">hx1-pilot/
+├── 00-goal-contract/
+├── 01-tkv-receipts/
+├── 02-inventory-baseline/
+├── 03-rick-os-handoff/
+├── 04-esme-ollama-install/
+├── 05-model-and-modelfile/
+├── 06-systemd-and-preload/
+├── 07-validation-results/
+├── 08-monitoring-and-recovery/
+├── 09-risk-register/
+└── 10-kk3-final-gate/</code></pre>
+<p>Every directory must include an index listing artifact name, producer, timestamp, target host, SHA-256, sensitivity classification, and related test/requirement ID.</p>
+<hr>
+<h2 id="11-kk3-synthesis-and-decision-protocol">11. KK3 synthesis and decision protocol</h2>
+<p>KK3 accepts no narrative-only claim such as “the model is optimized” or “both GPUs are working.” It evaluates:</p>
+<ol><li>goal-contract traceability;</li></ol><ol><li>valid TKV receipts;</li></ol><ol><li>frozen model identity;</li></ol><ol><li>before/after configuration diffs;</li></ol><ol><li>command/API/test evidence;</li></ol><ol><li>risk and rollback completeness;</li></ol><ol><li>contradictory evidence;</li></ol><ol><li>acceptance-matrix coverage;</li></ol><ol><li>artifact hashes and producer attribution;</li></ol><ol><li>open owner decisions.</li></ol>
+<p>Conflicts are resolved by authority and evidence. A live fact that conflicts with TKV is not silently reconciled; KK3 blocks and presents the conflict to Agent Zero. KK3 may request one bounded evidence correction but may not connect to HX-1 or repair the work itself.</p>
+<p>Final states:</p>
+<pre><code class="language-text">PASSED
+PASSED WITH EXPLICIT EXCEPTIONS
+BLOCKED — OWNER DECISION REQUIRED
+FAILED — ROLLBACK REQUIRED
+QUARANTINED — INTEGRITY OR SECURITY CONCERN</code></pre>
+<hr>
+<h2 id="12-open-decisions-before-execution">12. Open decisions before execution</h2>
+<table><thead><tr><th>Decision</th><th>Recommendation</th><th>Authority</th></tr></thead><tbody><tr><td>Exact model</td><td>RESOLVED 2026-08-24: <code>qwen3.8:27b</code> non-MLX approved (KDD-0004)</td><td>Agent Zero</td></tr><tr><td>Agent naming</td><td>RESOLVED 2026-08-24: roster names govern (<code>kimi-k3</code>, <code>john</code>, <code>rick</code>); "KK3" and "Esme" are call signs for this pilot, not new roster entries</td><td>Agent Zero</td></tr><tr><td>TKV paths</td><td>RESOLVED: <code>/opt/tkv-local/ubuntu</code> and <code>/opt/tkv-local/ollama</code> confirmed present 2026-08-24</td><td>Agent Zero / KK3</td></tr><tr><td>Context</td><td>Start 32K; test 64K; freeze largest stable</td><td>KK3 gate</td></tr><tr><td>Remote access</td><td>Keep loopback unless authenticated TLS gateway is approved</td><td>Agent Zero / security owner</td></tr><tr><td>Quality thresholds</td><td>PROPOSED defaults below; owner confirms before M5</td><td>Agent Zero / KK3</td></tr><tr><td>Readiness SLO</td><td>PROPOSED: detection ≤2 min, automated recovery ≤15 min, one automated recovery attempt per incident; owner confirms before M4</td><td>Agent Zero</td></tr></tbody></table>
+<p>Proposed quality-threshold defaults (owner to confirm or amend before M5): RAG retrieval recall ≥0.9 on the gold set; groundedness — ≥90% of answers cite correct source IDs, 100% of no-answer and poisoned-instruction cases handled correctly; tool calling — 100% of forbidden/malformed calls denied, ≥95% schema conformance on valid calls; coding — ≥80% of the versioned deterministic suite passing plus evaluator review.</p>
+<p>No host mutation begins until the exact model and TKV locations are approved.</p>
+<hr>
+<h2 id="13-references-and-provenance">13. References and provenance</h2>
+<h3 id="current-official-upstream">Current official upstream</h3>
+<ul><li><a href="https://docs.ollama.com/linux">Ollama Linux installation and systemd configuration</a></li></ul><ul><li><a href="https://docs.ollama.com/gpu">Ollama GPU hardware support and GPU selection</a></li></ul><ul><li><a href="https://docs.ollama.com/faq">Ollama FAQ: residency, concurrency, multi-GPU placement, Flash Attention, KV cache</a></li></ul><ul><li><a href="https://docs.ollama.com/context-length">Ollama context-length guidance</a></li></ul><ul><li><a href="https://docs.ollama.com/modelfile">Ollama Modelfile reference</a></li></ul><ul><li><a href="https://docs.ollama.com/capabilities/tool-calling">Ollama tool-calling capability</a></li></ul><ul><li><a href="https://docs.ollama.com/api/authentication">Ollama local API authentication behavior</a></li></ul><ul><li><a href="https://docs.ollama.com/api/ps">Ollama running-models API</a></li></ul><ul><li><a href="https://ollama.com/library/qwen2.5">Ollama Qwen2.5 model library</a></li></ul><ul><li><a href="https://ollama.com/library/qwen3">Ollama Qwen3 model library</a></li></ul><ul><li><a href="https://ollama.com/library/qwen3.8">Ollama Qwen3.8 model library</a></li></ul><ul><li><a href="https://docs.nvidia.com/datacenter/tesla/driver-installation-guide/ubuntu.html">NVIDIA Ubuntu driver installation guidance</a></li></ul>
+<h3 id="project-evidence-consulted">Project evidence consulted</h3>
+<ul><li>John — Expert Ollama Engineer agent profile, dated 2026-08-24.</li></ul><ul><li>Kimi-K3 and John Ollama Audit Process Pilot, updated 2026-08-24.</li></ul><ul><li>Current owner requirements in this pilot request.</li></ul>
+<h3 id="provenance-limits">Provenance limits</h3>
+<p>No live connection to HX-1 or its TKV was performed while drafting this document. Hardware, installed versions, service state, network state, and as-built configuration therefore remain <strong>[TO BE CONFIRMED]</strong>. The plan deliberately prevents design assumptions from being reported as runtime facts.</p>
+</main>
+<footer>Source of truth: <code>pilots/PILOT-HX1-OLLAMA-QWEN27B-001/plan.md</code> (sha256 <code>a9a3baf619fb8fe8bd70c624b39c8eef0ca39a3ee253a5f2dde3ebc0bb4e4687</code>) · rendered 2026-08-25T22:28Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true});
+</script>
+<!-- If this file is viewed offline or the CDN is blocked, Mermaid diagrams appear
+     as their source text inside dashed boxes; that source is the authoritative form. -->
+
+</body>
+</html>

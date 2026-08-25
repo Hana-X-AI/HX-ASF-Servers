@@ -1,0 +1,35 @@
+work_order:
+  task_id: "WO-HX1-JOHN-PB-001"
+  parent_goal: "GOAL-HX1-QWEN38-001"
+  goal_file: "goals/2026-08-24-hx1-ollama-qwen38-27b.md"
+  milestone: "Preload startup-budget conformance to D5 — bounded config fix (owner directive 2026-08-25 'do it now', state log rows 52-53)"
+  assigned_agent: "john / Esme (profile-briefed sub-agent)"
+  objective: >-
+    Bring the ollama-preload startup budget under the D5 recovery limit (recover <= 900 s,
+    state log rows 9-10). Verified live state 2026-08-25: ollama-preload.service runs with
+    TimeoutStartUSec=20min (1200 s — 300 s over the SLO) and the preload script's curl
+    retry budget is unbounded in the worst case (measured reality: 51-60 s boot-to-ready
+    at the 64K profile). Two named changes and nothing else: (1) reduce TimeoutStartSec
+    to a justified value <= 900 s (recommend 600 s: 10x the measured 60 s, 300 s margin
+    under D5); (2) bound the script's cumulative retry/delay budget so the total
+    worst-case is below the new TimeoutStartSec — separate the API-wait phase (bounded
+    fast probes) from the model-load call (single attempt, --max-time sized for a cold
+    64K load with margin; no retry-on-timeout), preserving the exact alias+digest
+    /api/ps assertion and the failure semantics (nonzero exit, journal message).
+  owner_authorizations:
+    - "Owner directive 2026-08-25: 'do it now' (state log row 53) — this bounded config change is approved"
+    - "NO ollama.service restart, NO reboot, NO keep_alive:0, NO model-store or frozen-identity change"
+  boundaries:
+    - "Files touched: /usr/local/libexec/hx-ollama-preload and the ollama-preload.service unit/drop-in ONLY"
+    - "Versioned change: pre/post sha256 of both files, unified diff in evidence, shellcheck clean"
+    - "Verification: one manual NON-REBOOT run of the preload script (model already resident -> fast PASS) + systemctl show TimeoutStartUSec + clean journal"
+    - "Execution path: session on hxs-5; hxs-1 (192.168.50.200) via SSH hxsa@192.168.50.200; askpass helper READS the credential at execution time (ratified pattern — NO extracted secret copy, helper deleted at task end, never printed/logged/stored); verify hostname and peer IP before any mutation; sudo -n only"
+  rollback: "Restore the pre-change file versions (hashes recorded in evidence); inverse is file copy + daemon-reload. No other state changes."
+  controlling_sources:
+    - "34-context-packet-john-preload-budget.yaml (this package)"
+    - "plan.md §4.3 (preload contract), D5 SLO (state log rows 9-10)"
+    - "29-esme-m6b-profiles.md (frozen 64K identity, preload repoint)"
+    - "amendment-A01 §4.4 (historical command text — SUPERSEDED marking; alias is -64k)"
+    - "/opt/tkv-local/servers/hxs-1/ (historical as-found, cross-check only)"
+    - "knowledge/catalog retrieval per governor packet; role TKV /opt/tkv-local/ollama"
+  deliverable: "35-esme-preload-budget.md: pre/post values, worst-case budget arithmetic vs 900 s, manual run output, shellcheck, diffs, hashes, and the Task May Proceed receipt"

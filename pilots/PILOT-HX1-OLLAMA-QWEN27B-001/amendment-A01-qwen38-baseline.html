@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<!-- Generated from pilots/PILOT-HX1-OLLAMA-QWEN27B-001/amendment-A01-qwen38-baseline.md (sha256 5f9733c63fb557eb7da581e07a9079cb37d97581fecf41d4201f4b3155642a01) by scripts/wiki/render.py on 2026-08-25T22:28Z.
+     Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Adoption header (HX-ASF-Servers)</title>
+<style>
+:root{color-scheme:light dark}
+body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.55;
+max-width:62rem;margin:0 auto;padding:1.5rem 2rem;color:#1a1a1a;background:#fff}
+h1,h2,h3,h4,h5,h6{line-height:1.25;margin-top:1.6em}
+h1{border-bottom:2px solid #444;padding-bottom:.3em}
+h2{border-bottom:1px solid #ccc;padding-bottom:.2em}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+code{background:#f0f0f0;padding:.1em .3em;border-radius:3px}
+pre{background:#f6f8fa;border:1px solid #ddd;border-radius:6px;padding:.8em;overflow-x:auto}
+pre code{background:none;padding:0}
+table{border-collapse:collapse;margin:1em 0;width:100%}
+th,td{border:1px solid #ccc;padding:.35em .6em;text-align:left;vertical-align:top}
+th{background:#f0f0f0}
+blockquote{border-left:4px solid #bbb;margin:1em 0;padding:.2em 1em;color:#444;background:#fafafa}
+a{color:#0645ad}
+.doc-meta{color:#666;font-size:.85em;border-bottom:1px dashed #bbb;padding-bottom:.6em;margin-bottom:1.2em}
+footer{margin-top:2.5em;border-top:1px solid #ccc;color:#666;font-size:.8em;padding-top:.8em}
+pre.mermaid{background:#fff;border:1px dashed #999}
+@media (prefers-color-scheme:dark){
+body{color:#ddd;background:#111} h1{border-color:#888} h2{border-color:#555}
+code{background:#2a2a2a} pre{background:#1b1b1b;border-color:#444}
+th{background:#222} th,td{border-color:#555} blockquote{color:#bbb;background:#191919;border-color:#666}
+a{color:#6fa8ff} .doc-meta,footer{color:#999}}
+</style>
+</head>
+<body>
+<main class="doc">
+<h1 id="adoption-header-hx-asf-servers">Adoption header (HX-ASF-Servers)</h1>
+<table><thead><tr><th>Field</th><th>Value</th></tr></thead><tbody><tr><td>Adopted</td><td>2026-08-25 by Agent Zero ("Amendment required and completed")</td></tr><tr><td>Source</td><td><code>/home/hxsa/opt/local-tkv/agent-zero-docs/qwen/codex_20260824_2125_hx-1-ollama-pilot-qwen3.8-amendment.md</code> (verbatim below this header)</td></tr><tr><td>Drafted</td><td>2026-08-24 21:25 — before KDD-0004 execution and milestones M1–M4</td></tr><tr><td>Reconciliation</td><td>SATISFIED by KDD-0004 + M1–M4: §1 baseline adoption and MLX rejection; §2.1 unchanged controls; §3 tag/alias/preload supersessions; §4.1 identity freeze (digest, quantization, size, license, Ollama version, Modelfile hash, capabilities recorded in 12-esme-m4-install-evidence.md); §4.3 context ladder; §4.4 preload/monitoring alias identity. CONFLICT: §3/§4.2 sampling baseline — the M4-frozen alias carries the plan §6.5 sampling values (temperature 0.6, top_p 0.95, top_k 40, min_p 0, repeat_penalty 1.05, repeat_last_n 256, num_predict 8192), which A01 supersedes with a native-behavior Phase A. Disposition: milestone M5b rebuilds the alias to the A01 Phase A Modelfile verbatim, re-freezes identity, and re-runs the D8 quality suites; in-flight M5 results are retained as harness/recovery/security/benchmark evidence and as the sampled-profile Phase-B comparison point — history is labeled, not rewritten. OPEN → M5b: §5.1 reasoning-control capability probes (<code>reasoning_effort</code>, <code>preserve_thinking</code> — no assumed parity), thinking-baseline and multi-turn preservation tests, environment-feedback cases, §5.2 thinking-retention boundary, §5.3 vision boundary verification, §4.1.3 upstream template record. QUEUED to rick's next hxs-1 session: §7 "Rick confirms the unchanged host-readiness controls remain valid for the frozen Ollama build."</td></tr><tr><td>Plan impact</td><td>plan.md §6.5 Modelfile superseded by A01 §4.2 (marked in plan.md); A01 §6 risk deltas A01-R01–R08 adopted into the pilot risk picture; §7 acceptance conditions added to the pilot's definition of done</td></tr></tbody></table>
+<hr>
+<h1 id="amendment-01-qwen3-8-27b-model-baseline-for-the-hx-1-ollama-pilot">Amendment 01 — Qwen3.8-27B Model Baseline for the HX-1 Ollama Pilot</h1>
+<h2 id="document-control">Document control</h2>
+<table><thead><tr><th>Field</th><th>Value</th></tr></thead><tbody><tr><td>Amendment ID</td><td><code>PILOT-HX1-OLLAMA-QWEN27B-001-A01</code></td></tr><tr><td>Parent document</td><td><em>HX-1 Ollama Qwen 27B Pilot Project</em>, version 1.0-draft, 2026-08-24</td></tr><tr><td>Amendment version</td><td>1.0-draft</td></tr><tr><td>Date</td><td>2026-08-24</td></tr><tr><td>Status</td><td><strong>DRAFT — PRE-EXECUTION / OWNER APPROVAL REQUIRED</strong></td></tr><tr><td>Human authority</td><td>Agent Zero</td></tr><tr><td>Control plane</td><td>KK3 Meta-Agent</td></tr><tr><td>Operational owners</td><td>John-Ollama (Esme); Rick-Ubuntu-Engineer-Admin</td></tr><tr><td>Change trigger</td><td>Official Qwen3.8 repository and Ollama <code>qwen3.8:27b</code> release</td></tr></tbody></table>
+<blockquote><p>This amendment changes model-specific guidance only. It does not constitute host configuration, deployment evidence, or pilot sign-off. The parent document remains authoritative except where this amendment explicitly supersedes it.</p></blockquote>
+<h2 id="1-amendment-decision">1. Amendment decision</h2>
+<p><strong>Amendment required.</strong> The parent pilot selected <code>qwen3.5:27b</code> as a proposed substitute because the requested model identifiers were not then validated. Official upstream sources now establish that:</p>
+<ul><li>Qwen released <strong>Qwen3.8-27B</strong>, a dense 27B vision-language model intended for coding, professional work, research, and long-horizon agentic tasks;</li></ul><ul><li>Ollama publishes the exact non-MLX tag <strong><code>qwen3.8:27b</code></strong> with vision, tools, and thinking capabilities;</li></ul><ul><li>the Ollama artifact is approximately 18 GB, Q4_K_M, and currently identifies a 27.3B language model plus a BF16 vision projector;</li></ul><ul><li>Qwen documents 262,144 native context and extension up to 1,000,000 tokens, but these are model capabilities—not proof that HX-1 can sustain those contexts under the pilot's dual-16-GB-GPU constraints.</li></ul>
+<p>Subject to Agent Zero approval and Gate 0 capability verification, the amended pilot candidate is:</p>
+<pre><code class="language-text">qwen3.8:27b (non-MLX Ollama artifact) — PROPOSED BASELINE
+local alias: hx-qwen3.8-27b</code></pre>
+<p>The amendment does <strong>not</strong> approve <code>qwen3.8:27b-mlx</code> for HX-1. MLX is an Apple-Silicon-oriented runtime path; HX-1 is an Ubuntu/NVIDIA system. The non-MLX Ollama tag is the correct baseline.</p>
+<h2 id="2-upstream-evidence-and-scope">2. Upstream evidence and scope</h2>
+<table><thead><tr><th>Evidence</th><th>Finding</th><th>Pilot effect</th></tr></thead><tbody><tr><td>QwenLM/Qwen3.8 official repository, <code>main</code>; README reviewed at blob <code>a7896ca771e13546c9eb62b67d6e65c3dba680bf</code></td><td>Qwen3.8-27B was announced 2026-08-14 and targets coding, agent execution, tool/harness compatibility, thinking control, and multimodal work</td><td>Makes Qwen3.8-27B the relevant 27B pilot candidate</td></tr><tr><td>Official Qwen model card</td><td>27B, 64 layers, native vision encoder, 262,144 native context; thinking is default; <code>reasoning_effort</code> and <code>preserve_thinking</code> are model/runtime features</td><td>Adds reasoning-mode and multimodal qualification requirements; does not authorize maximum context on HX-1</td></tr><tr><td>Official Ollama library</td><td><code>ollama run qwen3.8:27b</code>; 18 GB Q4_K_M artifact; capabilities: vision, tools, thinking</td><td>Confirms exact Ollama pull/run tag and local compatibility candidate</td></tr></tbody></table>
+<h3 id="2-1-what-is-unchanged">2.1 What is unchanged</h3>
+<p>The following parent controls remain in force:</p>
+<ul><li>KK3 delegates execution and verifies evidence; KK3 does not perform operational work.</li></ul><ul><li>Rick completes the Ubuntu/Ollama TKV review and host-readiness gate before Esme deploys.</li></ul><ul><li>Ollama determines model placement automatically; <code>OLLAMA_NUM_GPU</code> and <code>OLLAMA_GPU_LAYERS</code> must not be invented.</li></ul><ul><li><code>CUDA_VISIBLE_DEVICES</code> controls GPU eligibility, not an equal split guarantee.</li></ul><ul><li>The model must be preloaded by a boot-ordered unit and retained with <code>keep_alive=-1</code>.</li></ul><ul><li>API exposure, systemd hardening, rollback, monitoring, and evidence requirements remain unchanged.</li></ul><ul><li>The context qualification ladder remains 32K first, then 64K. Larger contexts require a separate capacity decision.</li></ul>
+<h2 id="3-supersession-matrix">3. Supersession matrix</h2>
+<table><thead><tr><th>Parent location</th><th>Original guidance</th><th>Amended guidance</th><th>Reason</th></tr></thead><tbody><tr><td>Executive decision</td><td><code>qwen3.5:27b</code> proposed baseline</td><td><code>qwen3.8:27b</code> proposed baseline</td><td>Exact official 27B Ollama tag now exists</td></tr><tr><td>Technical specifications</td><td>Proposed model <code>qwen3.5:27b</code></td><td>Proposed model <code>qwen3.8:27b</code>, non-MLX</td><td>Align with current upstream release</td></tr><tr><td>Modelfile</td><td><code>FROM qwen3.5:27b</code></td><td><code>FROM qwen3.8:27b</code></td><td>Correct base artifact</td></tr><tr><td>Local alias</td><td><code>hx-qwen3.5-27b</code></td><td><code>hx-qwen3.8-27b</code></td><td>Prevent ambiguity in service and monitoring</td></tr><tr><td>Preload payload</td><td>model <code>hx-qwen3.5-27b</code></td><td>model <code>hx-qwen3.8-27b</code></td><td>Preload exact amended alias</td></tr><tr><td>Sampling baseline</td><td>Prior fixed sampling proposal</td><td>Use upstream thinking defaults for Phase A; tune only through controlled A/B trials</td><td>Qwen3.8 publishes distinct thinking and non-thinking profiles</td></tr><tr><td>Agent qualification</td><td>Generic tool-call tests</td><td>Add thinking-control, preserved-thinking, tool-schema, environment-feedback, and loop tests</td><td>New model features affect harness behavior</td></tr><tr><td>Multimodal scope</td><td>Not part of baseline</td><td>Capability acknowledged; remains out of baseline unless separately approved</td><td>Avoid silent memory and security scope expansion</td></tr></tbody></table>
+<p>All other parent requirements survive unchanged.</p>
+<h2 id="4-amended-implementation-instructions">4. Amended implementation instructions</h2>
+<h3 id="4-1-gate-0-freeze-identity-before-deployment">4.1 Gate 0 — freeze identity before deployment</h3>
+<p><strong>Owner: Esme. Reviewer: KK3. Dependency: Rick Gate 2 host readiness.</strong></p>
+<ol><li>Confirm the approved Ollama release supports the model on HX-1.</li></ol><ol><li>Pull only the exact non-MLX tag.</li></ol><ol><li>Capture <code>ollama show</code> output, local manifest/digest evidence, artifact size, capabilities, parameters, template, license, Ollama version, and timestamp.</li></ol><ol><li>Hash the approved Modelfile and store the evidence in the pilot index.</li></ol><ol><li>Block deployment if the tag resolves to a materially different architecture, quantization, license, or capability set than reviewed.</li></ol>
+<pre><code class="language-bash">ollama --version
+ollama pull qwen3.8:27b
+ollama show qwen3.8:27b
+ollama show --modelfile qwen3.8:27b
+ollama list</code></pre>
+<p>Expected upstream characteristics—<strong>verify locally; do not treat as runtime evidence</strong>:</p>
+<pre><code class="language-text">tag:          qwen3.8:27b
+artifact:     approximately 18 GB
+quantization: Q4_K_M
+capabilities: vision, tools, thinking</code></pre>
+<h3 id="4-2-two-phase-modelfile-strategy">4.2 Two-phase Modelfile strategy</h3>
+<p>The first model alias must preserve the upstream artifact's generation behavior while applying only the context and system contract necessary for the pilot. Do not copy Qwen3.5 sampling values into Qwen3.8 without comparative evidence.</p>
+<p><strong>Phase A — native-behavior baseline</strong></p>
+<pre><code class="language-Dockerfile">FROM qwen3.8:27b
+
+PARAMETER num_ctx 32768
+
+SYSTEM """
+You are the HX-1 local engineering model. Follow the supplied task contract.
+Use retrieved evidence when provided, distinguish evidence from inference,
+emit tool calls only through the declared schema, and never claim that a tool
+ran unless a tool result is present. Stop and report a blocked condition when
+required authority or evidence is missing.
+"""</code></pre>
+<pre><code class="language-bash">ollama create hx-qwen3.8-27b -f ./Modelfile
+ollama show hx-qwen3.8-27b</code></pre>
+<p><strong>Phase B — controlled sampling qualification</strong></p>
+<p>Qwen recommends different profiles by mode:</p>
+<table><thead><tr><th>Mode</th><th>Upstream starting profile</th><th>Pilot rule</th></tr></thead><tbody><tr><td>Thinking</td><td>temperature 1.0; top_p 0.95; top_k 20; min_p 0; presence penalty 0; repetition penalty 1</td><td>Test against native Ollama defaults; adopt only if tool validity, groundedness, coding, and retry metrics improve</td></tr><tr><td>Non-thinking</td><td>temperature 0.7; top_p 0.80; top_k 20; min_p 0; presence penalty 1.5; repetition penalty 1</td><td>Treat as a separate alias/profile; never silently change the reasoning baseline</td></tr></tbody></table>
+<p>Framework parameter names and support vary. Esme must first prove which settings Ollama accepts and how they map. Unsupported fields must not be placed in a Modelfile or client request.</p>
+<h3 id="4-3-context-policy">4.3 Context policy</h3>
+<p>The model's advertised context is not HX-1's approved operating context. KV cache, multimodal projector state, parallel requests, GPU topology, and Ollama implementation determine practical capacity.</p>
+<table><thead><tr><th>Stage</th><th>Context</th><th>Decision rule</th></tr></thead><tbody><tr><td>Baseline</td><td>32,768</td><td>Mandatory first run; must pass residency, RAG, tool, coding, reboot, and soak gates</td></tr><tr><td>Target</td><td>65,536</td><td>Promote only after no OOM, no unapproved CPU fallback, acceptable accuracy, and stable dual-GPU evidence</td></tr><tr><td>Extended experiment</td><td>131,072</td><td>Separate owner-approved experiment; not pilot acceptance</td></tr><tr><td>Upstream maximum</td><td>262,144 native</td><td>Capability reference only; not a deployment target for HX-1</td></tr><tr><td>Extended model claim</td><td>up to 1,000,000</td><td>Out of scope; runtime-specific and unsuitable as an HX-1 acceptance assumption</td></tr></tbody></table>
+<blockquote><p>Correction 2026-08-25 (review finding; provenance preserved): the "Extended experiment" row above (131,072 as a separate owner-approved experiment, not pilot acceptance) is <strong>superseded</strong> by the owner's three-profile disposition (<code>23-kk3-m6-capacity-decision.md</code> Revision 2): 131,072 is a <strong>qualified extended-context profile — explicitly selected</strong>, inside pilot acceptance; 65,536 is the operating default; 32,768 the recovery baseline. The original row text is retained unchanged as the as-adopted record.</p></blockquote>
+<p>Keep <code>OLLAMA_CONTEXT_LENGTH=32768</code> through the baseline. A change to 65,536 requires a versioned configuration change and rerun of all capacity-dependent tests.</p>
+<h3 id="4-4-amended-preload-and-monitoring-identity">4.4 Amended preload and monitoring identity</h3>
+<p>Every systemd preload request, <code>/api/ps</code> assertion, readiness probe, dashboard filter, and alert must use the exact alias <code>hx-qwen3.8-27b</code>.</p>
+<pre><code class="language-bash">curl -fsS --retry 12 --retry-all-errors --retry-delay 5 \
+  --connect-timeout 3 --max-time 900 \
+  http://127.0.0.1:11434/api/generate \
+  -H 'Content-Type: application/json' \
+  -d '{"model":"hx-qwen3.8-27b","prompt":"","stream":false,"keep_alive":-1}'
+
+curl -fsS http://127.0.0.1:11434/api/ps</code></pre>
+<p>The preload script must fail if the exact alias is absent, if the server returns an error, or if readiness exceeds the approved budget. Model residence is still proven by <code>/api/ps</code> plus GPU/RAM telemetry—not by a successful health endpoint alone.</p>
+<blockquote><p>Correction 2026-08-25 (review finding; provenance preserved): this §4.4 bare-alias directive (<code>hx-qwen3.8-27b</code> in preload requests, <code>/api/ps</code> assertions, readiness probes, dashboards, alerts, and the commands above) is <strong>superseded</strong> by the owner's three-profile disposition (<code>23-kk3-m6-capacity-decision.md</code> Revision 2). The ratified operating identity is <code>hx-qwen3.8-27b-64k</code>; profile aliases <code>-32k</code>/<code>-64k</code>/<code>-128k</code> exist (M6b), and the bare alias is retired (tags only, deterministic inverse). The commands above are <strong>historical, non-executable</strong>; the live preload contract asserts the exact 64K alias and digest (<code>29-esme-m6b-profiles.md</code>). Original text retained unchanged as the as-adopted record.</p></blockquote>
+<h2 id="5-agentic-reasoning-and-tool-qualification-addendum">5. Agentic, reasoning, and tool qualification addendum</h2>
+<p>Qwen3.8's upstream claims are promising but are not acceptance evidence for the HX factory. Esme owns execution; KK3 owns the test contract and evidence decision.</p>
+<h3 id="5-1-mandatory-test-matrix">5.1 Mandatory test matrix</h3>
+<table><thead><tr><th>Test</th><th>Required evidence</th><th>Pass condition</th></tr></thead><tbody><tr><td>Thinking baseline</td><td>Raw API request/response metadata, latency, token counts, model identity</td><td>Thinking behavior is known, repeatable, and does not corrupt final-answer parsing</td></tr><tr><td>Reasoning control</td><td>A/B cases for each Ollama-supported reasoning control</td><td>Requested setting is honored or explicitly documented as unsupported; no inferred compatibility</td></tr><tr><td>Multi-turn preservation</td><td>Fixed task split across multiple turns, fresh-session control, retry counts</td><td>No context leakage; preserved reasoning improves or does not degrade task completion</td></tr><tr><td>Valid tool call</td><td>JSON Schema tool definition and captured call</td><td>Correct tool name and valid arguments; no fabricated execution result</td></tr><tr><td>Invalid/unauthorized tool</td><td>Denied tool and adversarial prompt</td><td>Model does not bypass authorization; controller rejects invalid call deterministically</td></tr><tr><td>Environment feedback</td><td>Tool returns error, partial result, and changed state</td><td>Model replans within retry budget and stops at convergence/escalation threshold</td></tr><tr><td>RAG groundedness</td><td>Frozen retrieval set, citations, answer score</td><td>Meets parent thresholds and identifies insufficient evidence</td></tr><tr><td>Coding</td><td>Frozen repository tasks, tests, static analysis, patch review</td><td>Deterministic evidence passes; no natural-language-only success claim</td></tr><tr><td>24-hour residency</td><td><code>/api/ps</code>, GPU/RAM samples, journal, restart/OOM counters</td><td>No unexplained unload, restart loop, or silent CPU fallback</td></tr></tbody></table>
+<h3 id="5-2-harness-boundary">5.2 Harness boundary</h3>
+<p>The controller—not the model—owns tool authorization, schema validation, retry count, timeouts, state transitions, and stop conditions. Qwen3.8's stronger agent execution does not justify relaxing KK3's hierarchical finite-state machine, evidence gates, or deterministic failure replay.</p>
+<p>Never store or expose hidden reasoning as a required audit artifact. Retain task inputs, tool calls, tool results, state transitions, output, deterministic telemetry, and evaluation decisions. If the runtime exposes thinking content, apply the project's data-handling and retention policy before logging it.</p>
+<h3 id="5-3-vision-is-a-controlled-extension">5.3 Vision is a controlled extension</h3>
+<p>Vision support is acknowledged but <strong>disabled as a pilot acceptance requirement</strong>. Enabling it requires:</p>
+<ol><li>an approved image/video ingestion threat model;</li></ol><ol><li>memory and latency requalification with the vision projector active;</li></ol><ol><li>content-size, MIME, origin, and decompression limits;</li></ol><ol><li>prompt-injection and document-instruction tests;</li></ol><ol><li>a separate acceptance decision.</li></ol>
+<h2 id="6-risk-register-deltas">6. Risk-register deltas</h2>
+<table><thead><tr><th>Risk ID</th><th>Area</th><th>Risk description</th><th>Level</th><th>Mitigation</th><th>Owner</th></tr></thead><tbody><tr><td>A01-R01</td><td>Release maturity</td><td>Qwen3.8/Ollama support is newly released and may change quickly</td><td>High</td><td>Freeze Ollama version, tag, digest, Modelfile hash, and test evidence; retest on any change</td><td>Esme → KK3</td></tr><tr><td>A01-R02</td><td>Runtime feature mapping</td><td><code>reasoning_effort</code> or <code>preserve_thinking</code> may not map identically through Ollama</td><td>High</td><td>Capability-probe the actual API; treat unsupported behavior explicitly; never infer parity</td><td>Esme</td></tr><tr><td>A01-R03</td><td>Context overcommit</td><td>Upstream 262K/1M claims could be misread as safe HX-1 settings</td><td>Critical</td><td>Enforce 32K→64K capacity ladder and owner gate for anything larger</td><td>KK3 / Rick / Esme</td></tr><tr><td>A01-R04</td><td>MLX mismatch</td><td>Selecting <code>-mlx</code> on Ubuntu/NVIDIA introduces an inappropriate runtime path</td><td>High</td><td>Pin non-MLX <code>qwen3.8:27b</code>; reject alias drift at Gate 0</td><td>Esme</td></tr><tr><td>A01-R05</td><td>Sampling regression</td><td>Copying older model parameters may reduce Qwen3.8 reasoning/tool quality</td><td>Medium</td><td>Native-default baseline, frozen A/B corpus, evidence-based promotion</td><td>Esme / KK3</td></tr><tr><td>A01-R06</td><td>Thinking leakage</td><td>Reasoning content may enter logs, RAG stores, or user outputs</td><td>High</td><td>Log only governed artifacts; redact/disable thinking retention where policy requires</td><td>KK3 / Esme</td></tr><tr><td>A01-R07</td><td>Vision scope expansion</td><td>Multimodal input increases memory, attack surface, and test burden</td><td>High</td><td>Keep out of baseline; require separate threat model and capacity gate</td><td>KK3 / Rick</td></tr><tr><td>A01-R08</td><td>Benchmark transfer</td><td>Vendor benchmark scores may not predict HX factory outcomes</td><td>Medium</td><td>Use factory-specific frozen tasks, deterministic graders, and failure replay</td><td>KK3</td></tr></tbody></table>
+<h2 id="7-amended-acceptance-conditions">7. Amended acceptance conditions</h2>
+<p>In addition to every surviving parent criterion, Amendment 01 passes only when:</p>
+<ul><li>[ ] Agent Zero approves <code>qwen3.8:27b</code> as the pilot candidate.</li></ul><ul><li>[ ] Rick confirms the unchanged host-readiness controls remain valid for the frozen Ollama build.</li></ul><ul><li>[ ] Esme records the resolved model digest, quantization, size, capabilities, template, parameters, license, and Ollama version.</li></ul><ul><li>[ ] All service, preload, monitoring, and test references use <code>hx-qwen3.8-27b</code>.</li></ul><ul><li>[ ] Native/default sampling is baselined before any override is accepted.</li></ul><ul><li>[ ] Ollama's actual reasoning and thinking controls are capability-tested; unsupported upstream features are recorded without workaround-by-assumption.</li></ul><ul><li>[ ] Tool-schema, unauthorized-tool, environment-feedback, RAG, coding, reboot, and 24-hour residency tests pass.</li></ul><ul><li>[ ] 32K passes before 64K is attempted; no 262K or 1M setting is treated as accepted.</li></ul><ul><li>[ ] Vision remains disabled or completes its separate security and capacity gate.</li></ul><ul><li>[ ] KK3 reconciles Amendment 01 into the final unified pilot record and Agent Zero signs off.</li></ul>
+<h2 id="8-implementation-disposition">8. Implementation disposition</h2>
+<table><thead><tr><th>Item</th><th>Disposition</th></tr></thead><tbody><tr><td>Adopt Qwen3.8-27B as candidate</td><td><strong>YES — owner approval and Gate 0 required</strong></td></tr><tr><td>Use Ollama <code>qwen3.8:27b</code></td><td><strong>YES — pin resolved digest</strong></td></tr><tr><td>Use <code>qwen3.8:27b-mlx</code> on HX-1</td><td><strong>NO</strong></td></tr><tr><td>Preserve parent OS/service/security plan</td><td><strong>YES</strong></td></tr><tr><td>Increase baseline context to 262K</td><td><strong>NO</strong></td></tr><tr><td>Qualify 64K after 32K</td><td><strong>YES</strong></td></tr><tr><td>Assume upstream reasoning controls work through Ollama</td><td><strong>NO — test actual API</strong></td></tr><tr><td>Add vision to baseline</td><td><strong>NO — separate controlled extension</strong></td></tr></tbody></table>
+<h2 id="9-references">9. References</h2>
+<ol><li><a href="https://github.com/QwenLM/Qwen3.8">QwenLM/Qwen3.8 — official repository</a></li></ol><ol><li><a href="https://huggingface.co/Qwen/Qwen3.8-27B">Qwen/Qwen3.8-27B — official model card</a></li></ol><ol><li><a href="https://ollama.com/library/qwen3.8:27b">Ollama library — qwen3.8:27b</a></li></ol>
+<hr>
+<p><strong>Amendment rule:</strong> If the resolved Ollama artifact, runtime capability report, or upstream safety/compatibility guidance changes after approval, reopen Gate 0 and issue a new amendment. Do not edit the evidence history in place.</p>
+</main>
+<footer>Source of truth: <code>pilots/PILOT-HX1-OLLAMA-QWEN27B-001/amendment-A01-qwen38-baseline.md</code> (sha256 <code>5f9733c63fb557eb7da581e07a9079cb37d97581fecf41d4201f4b3155642a01</code>) · rendered 2026-08-25T22:28Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+
+</body>
+</html>

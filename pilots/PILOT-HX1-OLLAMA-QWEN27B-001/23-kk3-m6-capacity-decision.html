@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<!-- Generated from pilots/PILOT-HX1-OLLAMA-QWEN27B-001/23-kk3-m6-capacity-decision.md (sha256 1bc756cbcc50f26317f0c5fac65e434987c67d098d0b6b34ae6983780439f9e9) by scripts/wiki/render.py on 2026-08-25T22:28Z.
+     Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M6 Capacity Decision Record — KK3 gate</title>
+<style>
+:root{color-scheme:light dark}
+body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.55;
+max-width:62rem;margin:0 auto;padding:1.5rem 2rem;color:#1a1a1a;background:#fff}
+h1,h2,h3,h4,h5,h6{line-height:1.25;margin-top:1.6em}
+h1{border-bottom:2px solid #444;padding-bottom:.3em}
+h2{border-bottom:1px solid #ccc;padding-bottom:.2em}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+code{background:#f0f0f0;padding:.1em .3em;border-radius:3px}
+pre{background:#f6f8fa;border:1px solid #ddd;border-radius:6px;padding:.8em;overflow-x:auto}
+pre code{background:none;padding:0}
+table{border-collapse:collapse;margin:1em 0;width:100%}
+th,td{border:1px solid #ccc;padding:.35em .6em;text-align:left;vertical-align:top}
+th{background:#f0f0f0}
+blockquote{border-left:4px solid #bbb;margin:1em 0;padding:.2em 1em;color:#444;background:#fafafa}
+a{color:#0645ad}
+.doc-meta{color:#666;font-size:.85em;border-bottom:1px dashed #bbb;padding-bottom:.6em;margin-bottom:1.2em}
+footer{margin-top:2.5em;border-top:1px solid #ccc;color:#666;font-size:.8em;padding-top:.8em}
+pre.mermaid{background:#fff;border:1px dashed #999}
+@media (prefers-color-scheme:dark){
+body{color:#ddd;background:#111} h1{border-color:#888} h2{border-color:#555}
+code{background:#2a2a2a} pre{background:#1b1b1b;border-color:#444}
+th{background:#222} th,td{border-color:#555} blockquote{color:#bbb;background:#191919;border-color:#666}
+a{color:#6fa8ff} .doc-meta,footer{color:#999}}
+</style>
+</head>
+<body>
+<main class="doc">
+<h1 id="m6-capacity-decision-record-kk3-gate">M6 Capacity Decision Record — KK3 gate</h1>
+<table><thead><tr><th>Field</th><th>Value</th></tr></thead><tbody><tr><td>Decision</td><td><strong>REVISION 2 (owner directive 2026-08-25) governs — see Revision 2: three qualified context profiles</strong></td></tr><tr><td>v1 (superseded)</td><td>Freeze <code>num_ctx 131,072</code> as the single operating context, conditional on M7; fallback 65,536 — superseded before execution by the owner's profile disposition</td></tr><tr><td>Authority</td><td>plan §8 M6 (KK3 gate); plan §12 context gate; owner directive 2026-08-25 (Alert 1 EAM: 128K into the decision); goal SC-03; A01 §4.3 extended-experiment owner approval</td></tr><tr><td>Decided by</td><td>Kimi-K3 (governor), 2026-08-25</td></tr><tr><td>Evidence</td><td><code>22-esme-m6-capacity-ladder.md</code> (ladder matrix), <code>19-esme-m5b-amendment-conformance.md</code> (32K acceptance), <code>16-esme-m5-validation.md</code> (sampled-profile comparison)</td></tr></tbody></table>
+<h2 id="ladder-results-all-rungs-f16-kv-phase-a-native-sampling-100-gpu-zero-cpu-fallback-swap-0">Ladder results (all rungs: f16 KV, Phase A native sampling, 100% GPU, zero CPU fallback, swap 0)</h2>
+<table><thead><tr><th>Measure</th><th>32,768 (frozen baseline)</th><th>65,536</th><th>131,072</th></tr></thead><tbody><tr><td>Resident</td><td>17.68 GiB</td><td>19.06 GiB</td><td>21.81 GiB (~4.4 GiB headroom)</td></tr><tr><td>Needle @ ~95% depth</td><td>30,015 tok (91.6%) — found, <code>stop</code> (M5b Phase A, per <code>22-esme-m6-capacity-ladder.md</code>)</td><td>62,255 tok — found, <code>stop</code></td><td>124,395 tok — found, <code>stop</code></td></tr><tr><td>D8 quality (AC-010/011/012/013)</td><td>PASS</td><td>PASS — identical</td><td>PASS — identical</td></tr><tr><td>Warm decode</td><td>51.6–53.7 tok/s</td><td>50.4–55.9 tok/s</td><td>47.5–51.6 tok/s</td></tr><tr><td>Deepest TTFT-content</td><td>17.4 s @31K</td><td>19.6 s @62K</td><td>59.6 s cache-assisted / ≈158 s cold @124K</td></tr><tr><td>Cold prefill at depth</td><td>~1,304 tok/s @31K</td><td>1,103.9 tok/s @62K</td><td>786.0 tok/s @124K</td></tr><tr><td>GPU peaks</td><td>≤64 °C, ≤197 W</td><td>≤71 °C, ≤204 W</td><td>≤74 °C, ≤206 W (of 285 W cap)</td></tr><tr><td>Xid/OOM</td><td>none</td><td>none</td><td>none</td></tr><tr><td>KV cache growth</td><td>45,056 B/token, exactly linear (f16)</td><td>—</td><td>—</td></tr></tbody></table>
+<blockquote><p>Correction 2026-08-25 (review finding): the 32K needle cell previously read 31,239 tok — that was the M5 sampled-profile measurement; the ratified Phase A baseline figure is 30,015 tok (M5b), now shown above. Source: <code>22-esme-m6-capacity-ladder.md</code> consolidated matrix.</p></blockquote>
+<h2 id="rationale">Rationale</h2>
+<ol><li>Capacity holds at every rung with deterministic, linear KV growth; 128K leaves ~4.4 GiB static headroom (residency is static: <code>OLLAMA_NUM_PARALLEL=1</code>, <code>MAX_LOADED_MODELS=1</code>).</li></ol><ol><li>Quality is flat across all rungs — the larger window costs nothing in measured accuracy and serves the pilot's repository-scale coding and RAG objectives.</li></ol><ol><li>The performance cost is confined to deep-context ingest latency; the goal ranks quality first and latency second.</li></ol><ol><li>24-hour stability and boot recovery are unproven at 128K — hence conditional on M7, with the documented fallback.</li></ol>
+<h2 id="constraints-carried-forward-revision-1-content-superseded-by-revision-2-below">Constraints carried forward — REVISION 1 content, SUPERSEDED by Revision 2 below</h2>
+<blockquote><p>The 131,072 operating directive and its fallback in this section are v1, superseded 2026-08-25 by Revision 2: M7 ratifies the always-on 65,536 operating profile; 128K is qualified for explicit selection. Items not about the operating context (262K/1M prohibition, vision-out, Phase A sampling) still stand.</p></blockquote>
+<ul><li>262,144 and 1,000,000 remain unauthorized (A01 §4.3); F-M6-5's 262K extrapolation (~29.3 GB) is inference only, untested.</li></ul><ul><li>Vision remains out of the baseline. Phase A native sampling only.</li></ul><ul><li>Configuration to ratify for M7: Phase A Modelfile at <code>num_ctx 131072</code> (stage digest <code>94b83a1e…0dad0260</code>), <code>hx1.conf</code> <code>OLLAMA_CONTEXT_LENGTH=131072</code>, <code>OLLAMA_KV_CACHE_TYPE=f16</code> — applied as a versioned change at M7 start (host currently restored to the frozen 32K baseline).</li></ul><ul><li>M7 entry conditions: rick pre-M7 session (Wi-Fi disable per owner directive, A01 §7 frozen-build readiness confirmation, NVRM assertion review); exclusive qualification window (F-M6-3 — foreign local client from 192.168.50.220 seen during M6); three individual owner reboot approvals.</li></ul>
+<h2 id="fallback-triggers-m7">Fallback triggers (M7)</h2>
+<p>Any OOM, Xid, unexplained GPU→CPU offload, unexplained unload, or restart loop attributable to the 128K configuration → revert to 65,536 and re-run the affected M7 leg (one bounded correction per plan §8).</p>
+<hr>
+<h2 id="revision-2-owner-directive-2026-08-25-three-qualified-profiles">Revision 2 — owner directive, 2026-08-25 (three qualified profiles)</h2>
+<p>The owner ratified the ladder evidence and set the architectural disposition below. Revision 1 is superseded before execution.</p>
+<h3 id="profile-dispositions">Profile dispositions</h3>
+<table><thead><tr><th>Context</th><th>Disposition</th><th>Profile alias</th></tr></thead><tbody><tr><td>32,768</td><td><strong>Frozen, ratified recovery/reference baseline</strong></td><td><code>hx-qwen3.8-27b-32k</code></td></tr><tr><td>65,536</td><td><strong>Preferred general-purpose operating profile</strong> (always-on default)</td><td><code>hx-qwen3.8-27b-64k</code></td></tr><tr><td>131,072</td><td><strong>Qualified extended-context profile</strong> — explicitly selected, not the universal default</td><td><code>hx-qwen3.8-27b-128k</code></td></tr><tr><td>262,144</td><td>Still unproven and outside the current pilot</td><td>—</td></tr></tbody></table>
+<h3 id="precision-of-the-evidence-claim-owner-mandated-wording">Precision of the evidence claim (owner-mandated wording)</h3>
+<p>The ladder evidence proves that 131,072 caused <strong>no measured accuracy regression in the needle test and the D8 suites</strong> — not that 128K can never affect accuracy across every workload. All downstream claims use this sentence's scope.</p>
+<h3 id="host-identity-declaration">Host identity declaration</h3>
+<p>HX-1 (pilot project designation) and <code>hxs-1</code> (authoritative hostname, 192.168.50.200) are the same machine. All host-scoped assertions in this package refer to <code>hxs-1</code>; the authoritative hostname is used in evidence artifacts.</p>
+<h3 id="harness-requirements-for-the-128k-profile-owner-ratified">Harness requirements for the 128K profile (owner-ratified)</h3>
+<ol><li>First-content timeout comfortably above the measured ~158 s cold deep-ingest — initially <strong>240 s</strong>; total request timeout sized for ingest + reasoning + generation.</li></ol><ol><li>Progress telemetry so slow ingestion is not misclassified as a hung model.</li></ol><ol><li>Admission control preventing concurrent deep-context requests from consuming the remaining VRAM margin (server side already serialized: <code>OLLAMA_NUM_PARALLEL=1</code>, <code>OLLAMA_MAX_LOADED_MODELS=1</code>).</li></ol><ol><li>Warm-cache and cold-cache latency tracked separately.</li></ol>
+<h3 id="supersessions-recorded">Supersessions recorded</h3>
+<ul><li>A01 §4.3's 131,072 row: promoted by the owner from "separate experiment" to qualified extended-context profile.</li></ul><ul><li>A01 §4.4's bare-alias monitoring identity (<code>hx-qwen3.8-27b</code>): superseded by the profile-named aliases; preload and monitoring assertions reference the active profile alias (default <code>hx-qwen3.8-27b-64k</code>).</li></ul><ul><li>M6 v1 single-context freeze: superseded as noted above.</li></ul>
+<h3 id="m7-implication">M7 implication</h3>
+<p>M7 (24-hour soak + three owner-approved cold reboots) validates the always-on service at the <strong>65,536 operating profile</strong> (the resident default), including boot-ordered preload of <code>hx-qwen3.8-27b-64k</code>. The 32K and 128K profiles remain qualified on the ladder evidence; profile-switch mechanics (explicit selection of the 128K profile) are verified as part of M7 evidence. Fallback if M7 shows operating-profile instability: 32K recovery baseline, per the original fallback logic.</p>
+<h3 id="evidence">Evidence</h3>
+<p>Unchanged: <code>22-esme-m6-capacity-ladder.md</code> (ladder matrix), <code>19-esme-m5b-amendment-conformance.md</code>, <code>16-esme-m5-validation.md</code>.</p>
+</main>
+<footer>Source of truth: <code>pilots/PILOT-HX1-OLLAMA-QWEN27B-001/23-kk3-m6-capacity-decision.md</code> (sha256 <code>1bc756cbcc50f26317f0c5fac65e434987c67d098d0b6b34ae6983780439f9e9</code>) · rendered 2026-08-25T22:28Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+context_packet:
+  goal_id: "GOAL-HX1-QWEN38-001"
+  goal_version: 1
+  work_order_id: "WO-HX1-JOHN-PB-001"
+  session_id: "john-pb-20260825-01"
+  role: "producer (Ollama specialist: john / Esme)"
+  milestone: "Preload startup-budget conformance to D5 (bounded, owner-directed)"
+  objective: >-
+    Reduce ollama-preload.service TimeoutStartSec from 20 min to <= 900 s with
+    justification, and bound the preload script's cumulative curl retry/delay budget
+    below it, preserving the exact alias+digest /api/ps assertion and failure
+    semantics. Versioned change with pre/post hashes and a manual non-reboot
+    verification run.
+  current_state:
+    host: "hxs-1 (192.168.50.200), Ubuntu 24.04.4 LTS, kernel 7.0.0-30-generic"
+    resident_model: "hx-qwen3.8-27b-64k:latest, digest 766cd9469fb47c42890616880772f2647fcfe4656b7550e5cc37ab186cc99d8a, size 20,463,789,012 B, 100% VRAM, ctx 65536, Forever (verified 2026-08-25 post-outage)"
+    preload_unit: "ollama-preload.service — TimeoutStartUSec=20min (verified 2026-08-25), ExecStart=/usr/local/libexec/hx-ollama-preload, last boot active 16:23:20 -> 16:24:11 (51 s)"
+    preload_script_flags: "curl -fsS --retry 12 --retry-all-errors --retry-delay 5 --connect-timeout 3 --max-time 900 (A01 §4.4 historical text; live script to be read first)"
+    slo: "D5 (owner-confirmed, state log row 10): detect <= 2 min, recover <= 15 min (900 s), one bounded attempt"
+    units: "ollama.service + ollama-preload.service both enabled/active; NRestarts=0"
+  owner_decisions:
+    - "2026-08-25 'do it now' (state log row 53) — bounded fix approved"
+    - "Three-profile disposition (23-kk3-m6-capacity-decision.md Rev 2): -64k is the operating identity; bare alias retired"
+    - "No reboot, no ollama.service restart, no hardening proposals (standing)"
+  constraints:
+    - "Loopback-only; read-only outside the two named files; secrets never printed/logged/stored; askpass helper reads at execution, deleted at task end"
+    - "Frozen evidence and fixtures untouched; no fixture runs required for this change"
+    - "One bounded correction attempt per failed correctable gate; stop conditions: unexpected service state, assertion failure after fix, any Xid"
+  evidence_requirements:
+    - "Pre/post sha256 of both files + unified diffs; shellcheck output; manual run log (exit 0, fast PASS at resident model); systemctl show TimeoutStartUSec after daemon-reload; worst-case budget arithmetic table vs 900 s; journal excerpt clean"
+  handoff:
+    - "Deliverable 35-esme-preload-budget.md goes to Carol for catalog receipt; handoff OPEN until receipt lands (state log citation)"
