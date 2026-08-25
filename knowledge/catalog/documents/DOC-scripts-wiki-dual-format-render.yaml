@@ -1,0 +1,52 @@
+document:
+  id: "DOC-scripts-wiki-dual-format-render"
+  title: "scripts/wiki/render.py + scripts/wiki/manifest.txt — dual-format Markdown-to-HTML rendering system (ratified convention Q2, implemented 2026-08-25)"
+  type: "runbook"
+  declared_purpose: "Implementation of the owner-ratified dual-format documentation convention (AGENTS.md Documentation conventions, owner answer Q2 2026-08-25, state log row 55: 'start generating web versions — docs will eventually make their way into HX-Wiki, build with that in mind'). render.py is a stdlib-only, deterministic Markdown renderer producing semantic, self-contained single-file HTML (inline CSS, heading anchors, real tables, code blocks, Mermaid carried as <pre class=\"mermaid\"> plus the mermaid.js initializer with source-visible offline fallback), structured for eventual HX-Wiki import. Each generated .html stamps the source path, full sha256, and render timestamp in a footer and an HTML comment; render.py --check verifies every stamped hash against the current source and exits 1 on drift (hash-sync guard). manifest.txt lists the repo's 29 major documents (AGENTS.md, READMEs, agent charters/profiles, goals, knowledge docs, KDD-0001..0005, the Second Brain assessment, catalog README, plan, A01, decision-23); each gets a sibling .html. Markdown stays the source of truth; HTML is never hand-edited; logs, notes, receipts, evidence files, work orders, and routine records stay Markdown-only by convention."
+  inferred_value: "INFERENCE: the --check hash-sync guard makes the derived HTML wave verifiable without cataloging it — drift between a Markdown source and its rendering is mechanically detectable, so the catalog needs exactly one disposition record (this one) for the whole dual-format system."
+  source:
+    author: "Kimi-K3 (governor; built per owner answer Q2)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/scripts/wiki/render.py"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T22:15:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: [kimi-k3]
+    repositories: [HX-ASF-Servers]
+    environments: [fleet, pilot]
+  version: ""
+  status: "active"
+  authority_level: "ratified-governance"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "governs"
+      target: "the 29 sibling .html derived renderings (one per manifest.txt entry)"
+      note: "DISPOSITION: derived artifacts, never individually cataloged — covered by this single record per governor queue (state log rows 55-56); Markdown remains the cataloged source of truth"
+    - predicate: "references"
+      target: "DOC-repo-governance-agents-md"
+      note: "ratified dual-format convention (Documentation conventions section; 'Dual-format implemented 2026-08-25 (owner ratified Q2)' line verified present at ingestion)"
+    - predicate: "references"
+      target: "scripts/wiki/manifest.txt"
+      note: "the 29-document render list (uncataloged by design — component of this system; sha256 5c233d3be13984af1368b1f44213a72f96d6dd6a158b449fa9abdfa710470e28 recorded in notes below)"
+    - predicate: "produced_by"
+      target: "kimi-k3"
+      note: "state log row 55 (2026-08-25T22:02Z): built stdlib-only per house style; 28 documents initially, +KDD-0005 = 29 at row 56; --check 29/29 in sync"
+  validation:
+    validated_at: "2026-08-25T22:15:00Z"
+    freshness: "current"
+    review_due: "on render.py or manifest.txt change (re-hash this record; derived .html files re-verify via render.py --check, not via the catalog)"
+  sha256: "a2edbfb594a5f380516a78fcce3eab106aa09b356be2e33050cbcea70e4146c2"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/scripts/wiki/render.py"
+notes:
+  record_checksum_scope: "The record sha256 is the checksum of scripts/wiki/render.py (the system's executable), per the governor-queued disposition. The manifest is hashed here: scripts/wiki/manifest.txt sha256 5c233d3be13984af1368b1f44213a72f96d6dd6a158b449fa9abdfa710470e28 (29 entries, verified at ingestion; KDD-0005 included)."
+  derived_artifacts_rule: "Sibling .html files are derived renderings of cataloged (or routine) Markdown sources. They are never separately cataloged and never hand-edited; synchronization is guarded by render.py --check (stamped source sha256 vs current source, exit 1 on drift). First wave rendered 2026-08-25; --check 29/29 OK at state log row 56."
+  usage: "render.py (render all manifest entries) | render.py FILE.md [FILE.md..] (specific files) | render.py --check (verify hash sync)."

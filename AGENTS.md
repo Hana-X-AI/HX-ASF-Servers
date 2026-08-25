@@ -93,6 +93,10 @@ and label them per the truth-state rules.
   reference documents — are delivered in both `.md` (agent-readable source of truth)
   and a matching `.html` (human-facing rendering). Not every document: logs, notes,
   and routine records stay Markdown-only.
+- Dual-format implemented 2026-08-25 (owner ratified Q2): `scripts/wiki/render.py`
+  (stdlib-only, deterministic) renders every document in `scripts/wiki/manifest.txt`
+  to a sibling `.html` — semantic, self-contained, HX-Wiki-ready; `--check` verifies
+  hash synchronization. Markdown stays the source of truth; never hand-edit HTML.
 
 ## Adoption of provided documents
 
@@ -122,7 +126,9 @@ doubt, act reversibly and report rather than pause.
 ## Infrastructure posture directives
 
 - Secure Boot stays disabled on HX hosts, now and always — do not enable it
-  (owner directive, 2026-08-24).
+  (owner directive, 2026-08-24). Confirmed by owner 2026-08-25: the directive
+  stands as written. Proposals to convert it to a scoped risk acceptance (or any
+  softening) are rejected; do not escalate them again.
 
 ## Documentation governance and knowledge stewardship
 

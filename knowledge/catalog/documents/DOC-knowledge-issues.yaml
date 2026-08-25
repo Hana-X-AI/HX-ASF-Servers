@@ -34,8 +34,10 @@ document:
       target: "DOC-pilot-hx1-plan"
       note: "D3 context-contract issue is cited by plan §4.2 rule 2 (Modelfile num_ctx is the contract)"
   validation:
-    validated_at: "2026-08-25T04:50:00Z"
+    validated_at: "2026-08-25T22:15:00Z"
     freshness: "current"
     review_due: "2026-09-01 or on item change"
-  sha256: "6b22c6a6f02a8751c510b5da6b9ab63cca74a427fe888b560e1c5dbc3894a213"
+  sha256: "9a7db8518996395ef98bc01e8c1c4e0da81410d31f7aff07540825c322d06981"
   canonical_location: "/home/hxsa/opt/HX-ASF-Servers/knowledge/issues.md"
+notes:
+  corrections_batch8: "M7b-backlog re-validation (2026-08-25T22:15Z): drift traced to the governor's owner-directed register addition (state log row 53, verified at source line 14): new open item '2026-08-25 | M7b 24-hour soak (AC-008/AC-016) — deferred to backlog by owner directive; soak evidence absent = deferred, not waived; M8 acceptance scope adjusted accordingly | Agent-Zero | Owner's word to schedule; do not raise proactively'. Legitimate governor edit. Re-hashed 6b22c6a6… -> 9a7db851…. declared_purpose 'Open at ingestion' list left as-ingested (dated snapshot); the M7b item is the register's newest open entry and is now recorded here. All other fields re-checked — unchanged."

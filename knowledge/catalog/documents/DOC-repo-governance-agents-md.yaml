@@ -37,11 +37,15 @@ document:
     - predicate: "references"
       target: "/opt/tkv-local"
       note: "technical knowledge base; reference material, never current truth"
+    - predicate: "references"
+      target: "DOC-scripts-wiki-dual-format-render"
+      note: "dual-format convention implemented 2026-08-25 (owner ratified Q2): scripts/wiki/render.py + manifest.txt, sibling .html derived renderings, --check hash-sync guard — line verified present at this re-validation"
   validation:
-    validated_at: "2026-08-25T07:10:00Z"
+    validated_at: "2026-08-25T22:15:00Z"
     freshness: "current"
     review_due: "on next owner amendment"
-  sha256: "f5927267a663b519c024550b65e6252289cbdfa13fca6e840ec27a03b5798de3"
+  sha256: "f8941618720920a15a08aa635dd62985760075c68affa68c466d50d4dcba0706"
   canonical_location: "/home/hxsa/opt/HX-ASF-Servers/AGENTS.md"
 notes:
-  hash_history: "f5c05f1d… (2026-08-25T04:50Z, run 1) → d9ad92eb… (2026-08-25T05:45Z, run 2) → f5927267… (2026-08-25T07:10Z, this run). Latest change: state log row 38 (file mtime 05:44:22Z) — Carol's bounded persistent role registration (role-bounds summary in the stewardship amendment block; skills/contract sections unchanged). Post-run-1 drift flagged by CAT-02 (state log row 37), expected living-governance churn. declared_purpose re-verified against current content: skills, communication contract, ASD-STE100 rule, TKV truth-state rules, documentation conventions, adoption rule, approval discipline, Secure Boot directive, and the 2026-08-25 stewardship amendment all present."
+  hash_history: "f5c05f1d… (2026-08-25T04:50Z, run 1) → d9ad92eb… (2026-08-25T05:45Z, run 2) → f5927267… (2026-08-25T07:10Z, row-38 role registration) → f8941618… (2026-08-25T22:15Z, this run). Latest change: two governor annotations per owner decisions (state log rows 54-56) — Q1 Secure Boot confirmation and the dual-format-implemented convention line (see corrections_batch8 note)."
+  corrections_batch8: "Q1 + dual-format re-validation (2026-08-25T22:15Z): drift traced to two governor edits, both verified present at source. (1) Q1 CLOSED (state log row 54): Infrastructure posture directives now carry 'Confirmed by owner 2026-08-25: the directive stands as written. Proposals to convert it to a scoped risk acceptance (or any softening) are rejected; do not escalate them again.' (2) Dual-format implemented (state log rows 55-56, owner ratified Q2): Documentation conventions now carry the 'Dual-format implemented 2026-08-25 (owner ratified Q2): scripts/wiki/render.py (stdlib-only, deterministic) renders every document in scripts/wiki/manifest.txt to a sibling .html … --check verifies hash synchronization. Markdown stays the source of truth; never hand-edit HTML' line. Legitimate governor edits, no unknown actor. Re-hashed f5927267… -> f8941618…; references relation added to DOC-scripts-wiki-dual-format-render (the convention's implementation record, cataloged this run). All other fields re-checked — unchanged."

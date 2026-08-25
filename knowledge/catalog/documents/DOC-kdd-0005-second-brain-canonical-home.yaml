@@ -1,0 +1,53 @@
+document:
+  id: "DOC-kdd-0005-second-brain-canonical-home"
+  title: "KDD-0005 — Second Brain canonical home is the HX-ASF-Servers repository"
+  type: "decision"
+  declared_purpose: "Ratified decision (header: Status ratified, Date 2026-08-25, Decider Agent-Zero; state log row 56, recommendation R1 of the Second Brain guidance assessment): the canonical Second Brain home is knowledge/catalog/ in the HX-ASF-Servers repository — versioned, review-gated, backed up to GitHub. /opt/tkv-local remains referenced source corpus (server records, knowledge trees) that the catalog points to, never the catalog's home. Answers the guidance document's open decision G-01 adapted: its /opt/tkv-local recommendation is rejected in favor of the as-built repo home. Forecloses any catalog migration to /opt/tkv-local and any second catalog root (the guidance document's own 'never both' rule). Revisit only if the repository's own role changes."
+  source:
+    author: "Kimi-K3 (record); decider Agent-Zero"
+    provided_by: "Agent Zero"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0005-second-brain-canonical-home.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T22:15:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: [kimi-k3, carol]
+    repositories: [HX-ASF-Servers]
+    environments: [fleet]
+  version: ""
+  status: "active"
+  authority_level: "ratified-governance"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "decides"
+      target: "knowledge/catalog/ (HX-ASF-Servers) as the canonical Second Brain home"
+      note: "as-built split ratified: catalog lives in the repo (167 records at decision time); one canonical root, no second root may be created"
+    - predicate: "governs"
+      target: "knowledge/catalog/ (records, index, receipts, retrieval-packages)"
+      note: "Carol's catalog operates under this decision; any migration to /opt/tkv-local is foreclosed"
+    - predicate: "references"
+      target: "DOC-assessment-hx-second-brain-guidance-001-review"
+      note: "recommendation R1 proposed ratifying the as-built split; owner 2026-08-25: 'Why is this a question — leave this in the repo.'"
+    - predicate: "references"
+      target: "DOC-hx-second-brain-framework"
+      note: "framework gap G-01 (canonical knowledge root, recommending /opt/tkv-local) answered adapted — its recommendation rejected; framework itself remains not ratified for implementation"
+    - predicate: "references"
+      target: "/opt/tkv-local"
+      note: "remains referenced source corpus (uncataloged external tree — pointer target per this decision), never the catalog's home"
+  validation:
+    validated_at: "2026-08-25T22:15:00Z"
+    freshness: "current"
+    review_due: "only if the repository's own role changes (per the KDD's revisit clause)"
+  sha256: "5f4df0920cada3100bb43f11efff9c7e3865bc2e4fe1fe1d5b07fdc3f5fefb1c"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0005-second-brain-canonical-home.md"
+notes:
+  header_verification: "Verified at ingestion: KDD header fields read Status: ratified, Decider: Agent-Zero, Date: 2026-08-25. Record status/authority follow the established KDD record convention (KDD-0001..0004: status active, authority_level ratified-governance — 'ratified' is not a schema status enum value); the header's ratified state and decider are preserved verbatim in declared_purpose."
+  wiki_rendering: "KDD-0005 added to scripts/wiki/manifest.txt as the 29th dual-format document (state log row 56; sibling .html is a derived rendering covered by DOC-scripts-wiki-dual-format-render, never separately cataloged)."

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<!-- Generated from agents/README.md (sha256 4fc3714fe601ca8aa13d5ec19743bb3582392fd0ed5b09c96a04d8dccb80cdad) by scripts/wiki/render.py on 2026-08-25T22:28Z.
+     Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agents</title>
+<style>
+:root{color-scheme:light dark}
+body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.55;
+max-width:62rem;margin:0 auto;padding:1.5rem 2rem;color:#1a1a1a;background:#fff}
+h1,h2,h3,h4,h5,h6{line-height:1.25;margin-top:1.6em}
+h1{border-bottom:2px solid #444;padding-bottom:.3em}
+h2{border-bottom:1px solid #ccc;padding-bottom:.2em}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+code{background:#f0f0f0;padding:.1em .3em;border-radius:3px}
+pre{background:#f6f8fa;border:1px solid #ddd;border-radius:6px;padding:.8em;overflow-x:auto}
+pre code{background:none;padding:0}
+table{border-collapse:collapse;margin:1em 0;width:100%}
+th,td{border:1px solid #ccc;padding:.35em .6em;text-align:left;vertical-align:top}
+th{background:#f0f0f0}
+blockquote{border-left:4px solid #bbb;margin:1em 0;padding:.2em 1em;color:#444;background:#fafafa}
+a{color:#0645ad}
+.doc-meta{color:#666;font-size:.85em;border-bottom:1px dashed #bbb;padding-bottom:.6em;margin-bottom:1.2em}
+footer{margin-top:2.5em;border-top:1px solid #ccc;color:#666;font-size:.8em;padding-top:.8em}
+pre.mermaid{background:#fff;border:1px dashed #999}
+@media (prefers-color-scheme:dark){
+body{color:#ddd;background:#111} h1{border-color:#888} h2{border-color:#555}
+code{background:#2a2a2a} pre{background:#1b1b1b;border-color:#444}
+th{background:#222} th,td{border-color:#555} blockquote{color:#bbb;background:#191919;border-color:#666}
+a{color:#6fa8ff} .doc-meta,footer{color:#999}}
+</style>
+</head>
+<body>
+<main class="doc">
+<h1 id="agents">Agents</h1>
+<p>Specialist agents work in lanes. This directory holds one lane per agent: <code>agents/&lt;agent-name&gt;/</code>, starting from <code>_template/charter.md</code>.</p>
+<h2 id="the-roster">The roster</h2>
+<p><code>agents/</code> is the agent roster. Before treating any referenced agent, profile, or persona as a current teammate, check this directory first: the charters here are the authority on who exists and what they can do. Profiles found in the knowledge vault (<code>/opt/tkv-local</code>) are reference material only and may be stale or superseded. Precedence when sources disagree: the roster and charters in this directory outrank any vault profile; within an agent's lane, the charter defines existence and scope, and its linked <code>profile.md</code> is the operating contract. (Precedence rule made explicit 2026-08-25.)</p>
+<p>Current roster:</p>
+<table><thead><tr><th>Agent</th><th>Lane</th><th>Status</th><th>Capabilities</th></tr></thead><tbody><tr><td>kimi-k3</td><td>horizontal (control plane)</td><td>active — Phase M</td><td>Goal decomposition, agent commissioning, evidence gates, recovery, escalation; bounded direct execution under section 2.3</td></tr><tr><td>john</td><td>vertical</td><td>active</td><td>Ollama install/config/audit/troubleshoot on Linux, test-first, evidence packages</td></tr><tr><td>rick</td><td>vertical</td><td>active</td><td>Ubuntu Server OS plane: packages, systemd, Netplan, SSH/sudo, firewall, storage, kernel/drivers, backup/recovery</td></tr><tr><td>carol</td><td>horizontal (documentation)</td><td>active — bounded persistent role (owner-registered 2026-08-25)</td><td>Knowledge stewardship: catalog at <code>knowledge/catalog/</code>, classification, relationships, retrieval packages, freshness, catalog receipts completing handoffs</td></tr></tbody></table>
+<h2 id="two-lane-types">Two lane types</h2>
+<ul><li><strong>Horizontal</strong> — one domain, across the whole project. Examples: security, documentation, testing, validation.</li></ul><ul><li><strong>Vertical</strong> — one infrastructure or functional lane. Examples: a specific server role, storage, networking, GPU/compute.</li></ul>
+<p>An agent owns its lane's evidence and drafts. It does not silently rewrite governance, contracts, or another agent's lane; it escalates to the coordinator (the main Kimi session) with evidence instead.</p>
+<h2 id="adding-an-agent">Adding an agent</h2>
+<ol><li>Copy <code>_template/</code> to <code>agents/&lt;kebab-case-name&gt;/</code>.</li></ol><ol><li>Fill in the charter. Keep it to one page.</li></ol><ol><li>Get owner sign-off before the agent does scoped work.</li></ol>
+<h2 id="manual-phase">Manual phase</h2>
+<p>Agents are currently instructed per session by the coordinator. When the project moves to executable sub-agents, their definition files will live in <code>.kimi-code/agents/</code> (Kimi Code's scanned location) and link back to these charters. The charter remains the authority on what the agent owns.</p>
+</main>
+<footer>Source of truth: <code>agents/README.md</code> (sha256 <code>4fc3714fe601ca8aa13d5ec19743bb3582392fd0ed5b09c96a04d8dccb80cdad</code>) · rendered 2026-08-25T22:28Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+
+</body>
+</html>

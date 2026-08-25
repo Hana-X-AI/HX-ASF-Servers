@@ -22,6 +22,9 @@ pilot) or the governing log of the lane that requested the run.
 
 ## Known-answer retrieval set (the "is it alive" test)
 
+**CAT-10..15 are the owner-ratified golden-question corpus (2026-08-25)** — closes
+hx-second-brain-guidance-001 gap G-04.
+
 Ask the catalog. Pass = correct answer **and** correct source refs **and** correct
 freshness labels.
 

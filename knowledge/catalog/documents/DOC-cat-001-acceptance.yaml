@@ -38,12 +38,13 @@ document:
       target: "DOC-hx-second-brain-framework"
       note: "framework's golden-question and context-savings proposals are partially operationalized here (CAT-10..15, CAT-22) — framework itself is not ratified"
   validation:
-    validated_at: "2026-08-25T21:02:00Z"
+    validated_at: "2026-08-25T22:15:00Z"
     freshness: "current"
     review_due: "on governor revision"
-  sha256: "a4fde5200c0d56c643f596e5c477ac819937b73f19b768661f4b9db214fbfefb"
+  sha256: "b85797df6de766459d8476976664ad3ff5c32cd1cf31c6a375e96715d2c705fa"
   canonical_location: "/home/hxsa/opt/HX-ASF-Servers/knowledge/catalog/tests/cat-001-acceptance.md"
 notes:
   first_run_result: "Executed against Carol run 1 at state log row 37 (2026-08-25T05:36Z): mechanical 62/62 PASS, known-answer CAT-10..15 ALL PASS; CAT-02 flagged 5 living documents drifted post-ingestion (expected churn — re-validated in Carol run 2, receipt 2026-08-25T0612Z-carol-tkv-sweep-and-ingest.md); CAT-02 needs a directory rule for corpus records (battery refinement queued to Kimi-K3)."
-  hash_history: "cb215d13… (2026-08-25T05:45Z, run 2) → ba7fed58… (2026-08-25T07:10Z, this run). Change: governor applied the queued CAT-02 directory rule for corpus records (state log row 39 flag fix, file mtime 06:21:22Z) — the row-37 refinement is no longer pending."
+  hash_history: "cb215d13… (2026-08-25T05:45Z, run 2) → ba7fed58… (2026-08-25T07:10Z, CAT-02 directory rule for corpus records applied per state log row 39 flag fix — row-37 refinement closed) → a4fde520… (2026-08-25T21:02Z, batch-7 re-validation: CAT-07/CAT-08 added, CAT-02/CAT-05 extended) → b85797df… (2026-08-25T22:15Z, this run). Latest change: governor annotation per owner ratification R3 (state log row 56) — CAT-10..15 declared the owner-ratified golden-question corpus (see r3_golden_corpus note)."
   corrections_batch7: "F-B6-3 re-validation: the governor extended the battery — CAT-07 (canonical_location path resolution) and CAT-08 (relation-target hygiene: DOC-id targets for cataloged artifacts) added; CAT-02 extended to exempt withheld-digest protected-resource records (the F-B6-5 resolution, governor-stated); CAT-05 extended to forbid credential-derived verifiers. All four verified present 2026-08-25. Re-hashed ba7fed58… -> a4fde520…. declared_purpose mechanical family updated CAT-01..06 -> CAT-01..08 with the two new check names."
+  r3_golden_corpus: "R3 re-validation (owner ratified R3 2026-08-25, state log row 56): drift traced to the governor's annotation of the known-answer retrieval set — verified present at source: 'CAT-10..15 are the owner-ratified golden-question corpus (2026-08-25) — closes hx-second-brain-guidance-001 gap G-04'. Legitimate governor edit. Re-hashed a4fde520… -> b85797df…. declared_purpose already names CAT-10..15 as the known-answer retrieval set — no field change required. Effect on Carol: CAT-10..15 are now the official golden-question corpus this catalog must answer from its own records."

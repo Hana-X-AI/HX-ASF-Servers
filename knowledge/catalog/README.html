@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<!-- Generated from knowledge/catalog/README.md (sha256 ada36220163cc80d58c037aa50d6f6d2f39c457ae35c71f347566ab0ea663078) by scripts/wiki/render.py on 2026-08-25T22:28Z.
+     Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Catalog — the HX second brain</title>
+<style>
+:root{color-scheme:light dark}
+body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.55;
+max-width:62rem;margin:0 auto;padding:1.5rem 2rem;color:#1a1a1a;background:#fff}
+h1,h2,h3,h4,h5,h6{line-height:1.25;margin-top:1.6em}
+h1{border-bottom:2px solid #444;padding-bottom:.3em}
+h2{border-bottom:1px solid #ccc;padding-bottom:.2em}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+code{background:#f0f0f0;padding:.1em .3em;border-radius:3px}
+pre{background:#f6f8fa;border:1px solid #ddd;border-radius:6px;padding:.8em;overflow-x:auto}
+pre code{background:none;padding:0}
+table{border-collapse:collapse;margin:1em 0;width:100%}
+th,td{border:1px solid #ccc;padding:.35em .6em;text-align:left;vertical-align:top}
+th{background:#f0f0f0}
+blockquote{border-left:4px solid #bbb;margin:1em 0;padding:.2em 1em;color:#444;background:#fafafa}
+a{color:#0645ad}
+.doc-meta{color:#666;font-size:.85em;border-bottom:1px dashed #bbb;padding-bottom:.6em;margin-bottom:1.2em}
+footer{margin-top:2.5em;border-top:1px solid #ccc;color:#666;font-size:.8em;padding-top:.8em}
+pre.mermaid{background:#fff;border:1px dashed #999}
+@media (prefers-color-scheme:dark){
+body{color:#ddd;background:#111} h1{border-color:#888} h2{border-color:#555}
+code{background:#2a2a2a} pre{background:#1b1b1b;border-color:#444}
+th{background:#222} th,td{border-color:#555} blockquote{color:#bbb;background:#191919;border-color:#666}
+a{color:#6fa8ff} .doc-meta,footer{color:#999}}
+</style>
+</head>
+<body>
+<main class="doc">
+<h1 id="catalog-the-hx-second-brain">Catalog — the HX second brain</h1>
+<p>The start of a second brain for the whole HX team — humans and agents (owner, 2026-08-25). Stewarded by <strong>Carol</strong> (<code>agents/carol/</code>); governed by the "Documentation governance and knowledge stewardship" section of <code>AGENTS.md</code>.</p>
+<p>A question about a server, FQDN, service, configuration, dependency, or prior decision should be answerable from here — from validated, provenance-backed knowledge — without rereading the repository or repeating completed reconnaissance.</p>
+<p>Governing principle: <strong>retrieve before investigating; reuse before recomputing; verify before trusting; catalog before closing.</strong></p>
+<h2 id="what-lives-where">What lives where</h2>
+<ul><li><code>schema.yaml</code> — the document-record schema (v1). Changed only through Carol's profile governance.</li></ul><ul><li><code>index.yaml</code> — the fast lookup surface: one line per cataloged document (id, title, type, authority, freshness, location).</li></ul><ul><li><code>documents/DOC-&lt;slug&gt;.yaml</code> — one machine-readable record per cataloged document: identity, purpose, labeled inference, applies-to, authority and supersession, security classification, relationships, freshness, checksum, canonical location.</li></ul><ul><li><code>receipts/</code> — Carol's catalog receipts. Every ingestion or update produces one; a material handoff is incomplete until its receipt exists and is referenced in the governing log.</li></ul><ul><li><code>retrieval-packages/</code> — focused, provenance-tagged query answers produced per Carol's profile §5 (facts with source refs and freshness, conflicts flagged, token-bounded) instead of whole collections.</li></ul>
+<h2 id="rules-of-the-house">Rules of the house</h2>
+<ul><li>Originals are never edited. The catalog describes and connects; sources stay authoritative and unchanged.</li></ul><ul><li>Every fact traces to a source document and section. No provenance, no entry.</li></ul><ul><li>Conflicts are preserved with both claims, authority-ranked, and escalated — never guess-resolved.</li></ul><ul><li>Truth-state labels from <code>knowledge/README.md</code> apply; historical as-found records are precedent and cross-check, never current truth.</li></ul><ul><li>No secret values here — protected resources are recorded by existence, owner, and retrieval mechanism only.</li></ul>
+<h2 id="how-to-use-it">How to use it</h2>
+<ul><li><strong>Humans and agents, reading:</strong> start at <code>index.yaml</code>, follow to the document record, then to the source only if needed. If the answer isn't here, that's a catalog gap — report it.</li></ul><ul><li><strong>Kimi-K3, assigning work:</strong> consult the catalog first; cite consulted records in context packets; request a focused retrieval package from Carol instead of loading whole collections.</li></ul><ul><li><strong>Agents, closing work:</strong> return new reusable facts and artifacts; the handoff completes when Carol's receipt lands.</li></ul><ul><li><strong>Owner, supplying documents:</strong> every supplied document gets a recorded disposition — cataloged, linked, flagged, or rejected with reason.</li></ul>
+</main>
+<footer>Source of truth: <code>knowledge/catalog/README.md</code> (sha256 <code>ada36220163cc80d58c037aa50d6f6d2f39c457ae35c71f347566ab0ea663078</code>) · rendered 2026-08-25T22:28Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+
+</body>
+</html>

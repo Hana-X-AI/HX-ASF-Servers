@@ -1,0 +1,33 @@
+# HX-Wiki rendering manifest — the repo's "major documents" (dual-format convention,
+# ratified 2026-08-25 Q2). One repo-relative Markdown path per line.
+# Each gets a sibling .html via scripts/wiki/render.py. Logs, receipts, evidence
+# files, work orders, and routine records stay Markdown-only by convention.
+AGENTS.md
+README.md
+agents/README.md
+agents/rick/charter.md
+agents/rick/profile.md
+agents/john/charter.md
+agents/john/profile.md
+agents/kimi-k3/charter.md
+agents/kimi-k3/profile.md
+agents/carol/charter.md
+agents/carol/profile.md
+goals/README.md
+goals/2026-08-24-hx1-ollama-qwen38-27b.md
+goals/2026-08-24-ollama-audit-hxs4.md
+goals/2026-08-24-ollama-audit-hxs5.md
+knowledge/README.md
+knowledge/lessons-learned.md
+knowledge/issues.md
+knowledge/network.md
+knowledge/decisions/KDD-0001-adopt-kimi-k3-meta-agent-model.md
+knowledge/decisions/KDD-0002-goal-setting-guidance-and-durable-state.md
+knowledge/decisions/KDD-0003-ollama-audit-pilot-adoption.md
+knowledge/decisions/KDD-0004-hx1-qwen-pilot-adoption.md
+knowledge/decisions/KDD-0005-second-brain-canonical-home.md
+knowledge/assessments/2026-08-25-hx-second-brain-guidance-001-review.md
+knowledge/catalog/README.md
+pilots/PILOT-HX1-OLLAMA-QWEN27B-001/plan.md
+pilots/PILOT-HX1-OLLAMA-QWEN27B-001/amendment-A01-qwen38-baseline.md
+pilots/PILOT-HX1-OLLAMA-QWEN27B-001/23-kk3-m6-capacity-decision.md

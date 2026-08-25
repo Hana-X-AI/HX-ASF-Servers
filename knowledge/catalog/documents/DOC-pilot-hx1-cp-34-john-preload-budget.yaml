@@ -1,0 +1,49 @@
+document:
+  id: "DOC-pilot-hx1-cp-34-john-preload-budget"
+  title: "34-context-packet-john-preload-budget.yaml — context packet for WO-HX1-JOHN-PB-001 (session john-pb-20260825-01)"
+  type: "context-packet"
+  declared_purpose: "Session-binding packet for the preload-budget john/Esme dispatch: controlling sources (WO-33, plan.md §4.3 preload contract, D5 SLO state log rows 9-10, 29-esme-m6b-profiles frozen 64K identity, amendment-A01 §4.4 historical command text with SUPERSEDED marking, /opt/tkv-local/servers/hxs-1 historical cross-check, catalog retrieval per governor packet, role TKV /opt/tkv-local/ollama); current state (hxs-1 Ubuntu 24.04.4 kernel 7.0.0-30; resident hx-qwen3.8-27b-64k:latest digest 766cd946…8cc99d8a 100% VRAM ctx 65536 Forever; preload unit TimeoutStartUSec=20min; both units enabled/active NRestarts=0); owner decisions ('do it now' state log row 53; three-profile disposition Rev 2 — -64k is the operating identity; no reboot, no ollama.service restart, no hardening proposals); constraints (loopback-only; read-only outside the two named files; secrets never printed/logged/stored; frozen evidence and fixtures untouched; one bounded correction attempt per failed correctable gate; stop conditions: unexpected service state, assertion failure after fix, any Xid); evidence required: pre/post sha256 + diffs, shellcheck, manual run log, systemctl show TimeoutStartUSec, worst-case budget arithmetic vs 900 s, clean journal — deliverable 35-esme-preload-budget.md to Carol for catalog receipt."
+  source:
+    author: "Kimi-K3 (governor)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/34-context-packet-john-preload-budget.yaml"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T22:15:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: [hxs-1, hxs-5]
+    fqdns: []
+    services: [ollama.service, ollama-preload.service]
+    agents: [john, kimi-k3, carol]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+  version: ""
+  status: "adopted"
+  authority_level: "delegated-contract"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "kimi-k3"
+      note: "state log row 53 (2026-08-25T21:50Z); record sha256 matches the row-53 proof hash exactly"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-wo-33-john-preload-budget"
+      note: "paired work order"
+    - predicate: "depends_on"
+      target: "DOC-goal-hx1-ollama-qwen38-27b"
+      note: "goal_id GOAL-HX1-QWEN38-001, goal_version 1"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-ev-35-esme-preload-budget"
+      note: "deliverable produced under this packet (PASS — TASK COMPLETE); handoff OPEN until this run's receipt lands in the state log (packet handoff clause)"
+  validation:
+    validated_at: "2026-08-25T22:15:00Z"
+    freshness: "current"
+    review_due: "not applicable — discharged (milestone complete, deliverable 35 PASS)"
+  sha256: "994e580b915cda5fba9115a4350351b46704a1dbbcb86b0c8565b2f8efae44fe"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/34-context-packet-john-preload-budget.yaml"
+notes:
+  assigned_agent_call_sign: "Esme = john (pilot call sign, not a roster entry)"

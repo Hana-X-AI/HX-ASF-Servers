@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!-- Generated from goals/2026-08-24-ollama-audit-hxs4.md (sha256 9556f9ffabeb6a90118874294a74e6062398e6ca09595319996de4c847c9f992) by scripts/wiki/render.py on 2026-08-25T22:28Z.
+     Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Goal: Read-only Ollama infrastructure and performance audit on hxs-4</title>
+<style>
+:root{color-scheme:light dark}
+body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.55;
+max-width:62rem;margin:0 auto;padding:1.5rem 2rem;color:#1a1a1a;background:#fff}
+h1,h2,h3,h4,h5,h6{line-height:1.25;margin-top:1.6em}
+h1{border-bottom:2px solid #444;padding-bottom:.3em}
+h2{border-bottom:1px solid #ccc;padding-bottom:.2em}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+code{background:#f0f0f0;padding:.1em .3em;border-radius:3px}
+pre{background:#f6f8fa;border:1px solid #ddd;border-radius:6px;padding:.8em;overflow-x:auto}
+pre code{background:none;padding:0}
+table{border-collapse:collapse;margin:1em 0;width:100%}
+th,td{border:1px solid #ccc;padding:.35em .6em;text-align:left;vertical-align:top}
+th{background:#f0f0f0}
+blockquote{border-left:4px solid #bbb;margin:1em 0;padding:.2em 1em;color:#444;background:#fafafa}
+a{color:#0645ad}
+.doc-meta{color:#666;font-size:.85em;border-bottom:1px dashed #bbb;padding-bottom:.6em;margin-bottom:1.2em}
+footer{margin-top:2.5em;border-top:1px solid #ccc;color:#666;font-size:.8em;padding-top:.8em}
+pre.mermaid{background:#fff;border:1px dashed #999}
+@media (prefers-color-scheme:dark){
+body{color:#ddd;background:#111} h1{border-color:#888} h2{border-color:#555}
+code{background:#2a2a2a} pre{background:#1b1b1b;border-color:#444}
+th{background:#222} th,td{border-color:#555} blockquote{color:#bbb;background:#191919;border-color:#666}
+a{color:#6fa8ff} .doc-meta,footer{color:#999}}
+</style>
+</head>
+<body>
+<main class="doc">
+<h1 id="goal-read-only-ollama-infrastructure-and-performance-audit-on-hxs-4">Goal: Read-only Ollama infrastructure and performance audit on hxs-4</h1>
+<ul><li>Goal ID: 2026-08-24-ollama-audit-hxs4 (this file's name)</li></ul><ul><li>Version: 1</li></ul><ul><li>Status: done — PASS (owner accepted 2026-08-24T12:50Z)</li></ul><ul><li>Owner: Agent-Zero</li></ul><ul><li>Created: 2026-08-24</li></ul><ul><li>Human authority: Agent-Zero</li></ul><ul><li>Agent lane(s): kimi-k3 (governor), john (operational audit agent, sub-agent dispatch)</li></ul>
+<h2 id="intent">Intent</h2>
+<p>Produce a reproducible, sanitized, evidence-backed audit of the live Ollama runtime on hxs-4: version reconciliation, effective configuration, model inventory and residency, GPU alignment, network exposure, and material performance risks, plus recommendation-only remediation guidance. This is the valid-target successor of PILOT-001 (hxs-5, FAIL — invalid target; lessons in <code>knowledge/lessons-learned.md</code>).</p>
+<h2 id="scope-and-target">Scope and target</h2>
+<ul><li>Target identity: hxs-4 (192.168.50.203), service: ollama. Registry role: Retrieval &amp; AI utility — consistent with Ollama presence.</li></ul><ul><li>Baseline: <strong>pre-flight verified 2026-08-24</strong> (intake existence check): ollama 0.32.9 at <code>/usr/local/bin/ollama</code>, service active, API <code>{"version":"0.32.9"}</code>, GPUs RTX 5060 Ti + RTX 5060 present. Full baseline to be established by John's knowledge review of <code>/opt/tkv-local/ollama</code> and read-only inspection.</li></ul><ul><li>In scope: knowledge review; passive host/service/API/GPU/log inspection; installed/running version reconciliation against version-matched source; model inventory, digests, context, residency; passive performance-risk assessment; recommendation-only plan.</li></ul><ul><li>Out of scope: any mutation; restarts/reloads; model pull/create/run/unload/delete; active inference, stress, load, or saturation testing; driver/OS/Ollama installs; remediation execution; fleet-role decisions.</li></ul><ul><li>Constraints: strictly read-only; one John session, one correction session max, one transient retry max. Probes reach hxs-4 via SSH from the John session.</li></ul>
+<h2 id="success-conditions-and-evidence">Success conditions and evidence</h2>
+<p>Same SC-01..SC-09 contract as <code>goals/2026-08-24-ollama-audit-hxs5.md</code>, evaluated by the Kimi-K3 gate, with two additions:</p>
+<table><thead><tr><th>ID</th><th>Property</th><th>Measurement / procedure</th><th>Expected result</th><th>Evidence</th><th>Verifier</th></tr></thead><tbody><tr><td>SC-10</td><td>Version reconciliation</td><td>Installed CLI/server version vs version-matched source identity</td><td>Reconciled or explicitly unresolved and escalated</td><td>Audit matrix ID-04</td><td>Kimi-K3 gate</td></tr><tr><td>SC-11</td><td>Roster check first</td><td><code>agents/</code> consulted before treating referenced profiles as current teammates</td><td>John is the only current Ollama specialist; craig treated as archived history</td><td>Knowledge review receipt</td><td>Kimi-K3 gate</td></tr></tbody></table>
+<p>Verifier note: Kimi-K3 evidence gate is the evaluator. Final PASS requires a recorded Agent Zero owner-review acceptance decision with timestamp after the gate.</p>
+<h2 id="execution-controls">Execution controls</h2>
+<ul><li>Active charters reviewed (Phase M): <code>agents/john</code> (active), <code>agents/kimi-k3</code> (active). Qualified agent available: YES — john, via profile-briefed sub-agent dispatch.</li></ul><ul><li>Pre-flight (intake existence check): DONE 2026-08-24 — see Baseline above.</li></ul><ul><li>Maximum iterations / retries: 1 John session + 1 correction session; 1 transient read-only retry</li></ul><ul><li>Stop conditions: pilot plan section 16, plus the fail-closed knowledge-review rule (authority/baseline NOT ESTABLISHED -&gt; BLOCKED)</li></ul><ul><li>Rollback / containment: not applicable (read-only)</li></ul><ul><li>HITL checkpoints: authorization before execution; any section 16 escalation; completion acceptance</li></ul>
+<h2 id="notes-and-links">Notes and links</h2>
+<ul><li>KDDs: KDD-0001, KDD-0002, KDD-0003</li></ul><ul><li>Delta plan: <code>pilots/PILOT-KK3-JOHN-OLLAMA-AUDIT-002/plan.md</code></li></ul><ul><li>Base plan: <code>pilots/PILOT-KK3-JOHN-OLLAMA-AUDIT-001/plan.md</code></li></ul><ul><li>Lessons: <code>knowledge/lessons-learned.md</code> (2026-08-24 entries)</li></ul>
+</main>
+<footer>Source of truth: <code>goals/2026-08-24-ollama-audit-hxs4.md</code> (sha256 <code>9556f9ffabeb6a90118874294a74e6062398e6ca09595319996de4c847c9f992</code>) · rendered 2026-08-25T22:28Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+
+</body>
+</html>

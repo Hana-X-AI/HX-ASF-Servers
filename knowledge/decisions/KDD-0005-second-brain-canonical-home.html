@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<!-- Generated from knowledge/decisions/KDD-0005-second-brain-canonical-home.md (sha256 5f4df0920cada3100bb43f11efff9c7e3865bc2e4fe1fe1d5b07fdc3f5fefb1c) by scripts/wiki/render.py on 2026-08-25T22:28Z.
+     Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KDD-0005: Second Brain canonical home is the HX-ASF-Servers repository</title>
+<style>
+:root{color-scheme:light dark}
+body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.55;
+max-width:62rem;margin:0 auto;padding:1.5rem 2rem;color:#1a1a1a;background:#fff}
+h1,h2,h3,h4,h5,h6{line-height:1.25;margin-top:1.6em}
+h1{border-bottom:2px solid #444;padding-bottom:.3em}
+h2{border-bottom:1px solid #ccc;padding-bottom:.2em}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+code{background:#f0f0f0;padding:.1em .3em;border-radius:3px}
+pre{background:#f6f8fa;border:1px solid #ddd;border-radius:6px;padding:.8em;overflow-x:auto}
+pre code{background:none;padding:0}
+table{border-collapse:collapse;margin:1em 0;width:100%}
+th,td{border:1px solid #ccc;padding:.35em .6em;text-align:left;vertical-align:top}
+th{background:#f0f0f0}
+blockquote{border-left:4px solid #bbb;margin:1em 0;padding:.2em 1em;color:#444;background:#fafafa}
+a{color:#0645ad}
+.doc-meta{color:#666;font-size:.85em;border-bottom:1px dashed #bbb;padding-bottom:.6em;margin-bottom:1.2em}
+footer{margin-top:2.5em;border-top:1px solid #ccc;color:#666;font-size:.8em;padding-top:.8em}
+pre.mermaid{background:#fff;border:1px dashed #999}
+@media (prefers-color-scheme:dark){
+body{color:#ddd;background:#111} h1{border-color:#888} h2{border-color:#555}
+code{background:#2a2a2a} pre{background:#1b1b1b;border-color:#444}
+th{background:#222} th,td{border-color:#555} blockquote{color:#bbb;background:#191919;border-color:#666}
+a{color:#6fa8ff} .doc-meta,footer{color:#999}}
+</style>
+</head>
+<body>
+<main class="doc">
+<h1 id="kdd-0005-second-brain-canonical-home-is-the-hx-asf-servers-repository">KDD-0005: Second Brain canonical home is the HX-ASF-Servers repository</h1>
+<ul><li>Date: 2026-08-25</li></ul><ul><li>Status: ratified</li></ul><ul><li>Decider: Agent-Zero</li></ul><ul><li>Related goals: factory-wide (Second Brain / documentation governance)</li></ul>
+<h2 id="context">Context</h2>
+<p>The Second Brain guidance document (hx-second-brain-guidance-001, draft strategic reference, not ratified for implementation) flags an open decision — its G-01: canonical knowledge root, recommending <code>/opt/tkv-local</code>. As-built reality: the operating Second Brain (Carol's catalog — records, index, receipts, retrieval packages, CAT battery; 167 records as of 2026-08-25) lives at <code>knowledge/catalog/</code> inside the HX-ASF-Servers repository, which is versioned, review-gated, and backed up to GitHub (first pushed 2026-08-25). <code>/opt/tkv-local</code> is reference source corpus (server records, knowledge trees) that the catalog points to. The governor assessment (<code>knowledge/assessments/2026-08-25-hx-second-brain-guidance-001-review.md</code>, recommendation R1) proposed ratifying the as-built split. Owner, 2026-08-25: "Why is this a question — leave this in the repo."</p>
+<h2 id="options-considered">Options considered</h2>
+<ol><li>Repository as canonical home (as-built) — version control, change gates, GitHub backup, review-tool coverage; catalog records reference TKV sources by pointer.</li></ol><ol><li><code>/opt/tkv-local</code> as canonical home (guidance-document G-01 recommendation) — matches the document, but puts the brain in a reference tree without change control or review gates; migration cost for no measured benefit.</li></ol>
+<h2 id="decision">Decision</h2>
+<p>The canonical Second Brain home is <code>knowledge/catalog/</code> in the HX-ASF-Servers repository. <code>/opt/tkv-local</code> remains referenced source corpus, never the catalog's home. The guidance document's G-01 is answered adapted: its <code>/opt/tkv-local</code> recommendation is rejected in favor of the as-built repo home.</p>
+<h2 id="consequences">Consequences</h2>
+<p>Enables: change-controlled, backed-up knowledge operations; G-01 closed (adapted). Forecloses: any catalog migration to <code>/opt/tkv-local</code>; no second catalog root may be created — one canonical root, per the guidance document's own "never both" rule. Revisit only if the repository's own role changes.</p>
+</main>
+<footer>Source of truth: <code>knowledge/decisions/KDD-0005-second-brain-canonical-home.md</code> (sha256 <code>5f4df0920cada3100bb43f11efff9c7e3865bc2e4fe1fe1d5b07fdc3f5fefb1c</code>) · rendered 2026-08-25T22:28Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+
+</body>
+</html>

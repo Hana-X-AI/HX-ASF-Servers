@@ -1,0 +1,62 @@
+document:
+  id: "DOC-pilot-hx1-ev-35-esme-preload-budget"
+  title: "35-esme-preload-budget.md — Esme preload startup-budget conformance to D5 (WO-HX1-JOHN-PB-001; PASS 10/10)"
+  type: "evidence"
+  declared_purpose: "Milestone completion evidence for WO-HX1-JOHN-PB-001 (session john-pb-20260825-01, window 2026-08-25T21:51:24Z-22:00:02Z, owner directive 'do it now' state log row 53): the ollama-preload startup budget is brought under the D5 recovery SLO (recover <= 900 s, state log rows 9-10). Two named changes and nothing else: (1) ollama-preload.service TimeoutStartSec 1200 -> 600 (one-line diff; effective TimeoutStartUSec verified live 20min -> 10min after daemon-reload); (2) hx-ollama-preload script rewritten from unbounded retry machinery (old worst case 11,760 s + 30 s — ~9.8x its own unit timeout, itself 300 s over the SLO) to three bounded phases: 30 fast /api/version probes (208 s worst case) + single-attempt model load --max-time 300 no retry (300 s) + one /api/ps assertion --max-time 30 (30 s) = 538 s script worst case < 600 s unit < 900 s D5 (300 s margin). Preserved byte-exact: the alias+digest /api/ps assertion line, generate payload (keep_alive:-1, empty prompt), FAIL/OK semantics. Tests T1-T10 ALL PASS: pre-change identity == M6b-frozen hashes (zero drift), ShellCheck 0.9.0 zero findings (closes carried limitation F-E6 for this change), manual non-reboot run exit 0 in 17 ms with model resident, ollama.service undisturbed (ExecMainStartTimestamp pre==post, NRestarts=0), journal clean, zero Xid, model identity/digest unchanged. Rollback: exact inverse recorded (pre-change byte-copies + hashes retained). Completion PASS — TASK COMPLETE."
+  inferred_value: "INFERENCE: the 600 s unit value (10x the measured 60 s boot->ready, 62 s slack over the 538 s script worst case, 300 s under D5) is now the reference arithmetic for any future preload-budget change on hxs-1; a cold load slower than 300 s now fails the unit loudly (D5 'one bounded attempt' alert path) instead of silently stretching recovery past the SLO — monitors should treat that failure signature as the designed alert, not a fault to retry around."
+  source:
+    author: "john / Esme (session john-pb-20260825-01)"
+    provided_by: "john via Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/35-esme-preload-budget.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T22:15:00Z"
+  owner: "john"
+  applies_to:
+    hosts: [hxs-1, hxs-5]
+    fqdns: []
+    services: [ollama.service, ollama-preload.service]
+    agents: [john]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+  version: ""
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "evidences"
+      target: "DOC-pilot-hx1-wo-33-john-preload-budget"
+      note: "WO-HX1-JOHN-PB-001 discharged PASS — TASK COMPLETE (10/10 tests, 0 of 1 transient retries used, no stop condition triggered); preload failure budget 11,790 s -> 538 s worst case, TimeoutStartUSec 20min -> 10min verified live"
+    - predicate: "produced_by"
+      target: "DOC-pilot-hx1-cp-34-john-preload-budget"
+      note: "WO-33 + context packet CP-34; session john-pb-20260825-01; handoff OPEN until this run's receipt lands in the state log (deliverable §11)"
+    - predicate: "configures"
+      target: "ollama-preload.service"
+      note: "TimeoutStartSec 1200 -> 600 (post sha256 8ce6d9c1…fa4305); script /usr/local/libexec/hx-ollama-preload bounded phases (post sha256 95f174da…427cb7); both root:root, modes unchanged, daemon-reload applied"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-ev-29-esme-m6b-profiles"
+      note: "frozen 64K identity preserved byte-exact: alias hx-qwen3.8-27b-64k, digest 766cd946…8cc99d8a, the /api/ps assertion line carried through unchanged"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-ev-30-esme-m7a-reboot-cycles"
+      note: "sizing basis: measured boot->ready 60 s x3 (51 s this boot) -> 600 s unit = 10x margin; load --max-time 300 = 6x the ~50 s cold 64K load"
+    - predicate: "depends_on"
+      target: "DOC-protected-ssh-info-hxs1"
+      note: "ratified askpass pattern held: credential read at execution only, never printed/logged/stored; helper and volatile workspace deleted at task end; command log sanitized (§10)"
+    - predicate: "references"
+      target: "DOC-tkv-corpus-ollama"
+      note: "knowledge-review receipt §1: TKV /opt/tkv-local/ollama surveyed per profile §4; authority identified Ollama 0.32.15 (binary == server per 29/30)"
+  validation:
+    validated_at: "2026-08-25T22:15:00Z"
+    freshness: "current"
+    review_due: "at M8 evidence index; next true cold-load timing at the next reboot (bounded by --max-time 300 + TimeoutStartSec=600)"
+  sha256: "e2483015993312452ec658550184a67e44d24e9f63ab12d1f44e2f3682c53df4"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/35-esme-preload-budget.md"
+notes:
+  budget_arithmetic: "Script worst case 208 + 300 + 30 = 538 s < unit TimeoutStartSec 600 s (62 s slack) < D5 recovery SLO 900 s (300 s margin over unit; 362 s over script). Old design: 11,760 s + 30 s, systemd SIGTERM at 1200 s — 300 s over the SLO."
+  unexecuted: "True cold-load timing test impossible without reboot/model unload (both out of scope); cold behavior is bounded by --max-time 300 + TimeoutStartSec=600 instead of measured (deliverable §11)."
+  carried_risks: "None new. Carried unchanged: F-M6-1-class boot-time API race now absorbed by the 30-probe loop (vs 1 retry observed per boot in M7a); NVRM nvAssertFailedNoLog class remains MONITOR-ONLY (rick's plane, not triggered by this change)."
+  assigned_agent_call_sign: "Esme = john (pilot call sign, not a roster entry)"

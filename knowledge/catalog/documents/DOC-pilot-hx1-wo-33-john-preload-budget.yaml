@@ -1,0 +1,59 @@
+document:
+  id: "DOC-pilot-hx1-wo-33-john-preload-budget"
+  title: "33-work-order-john-preload-budget.yaml — WO-HX1-JOHN-PB-001 (preload startup-budget conformance to D5: TimeoutStartSec 20min -> <=900 s justified + bounded curl retry budget)"
+  type: "work-order"
+  declared_purpose: "Delegated contract commissioning john/Esme (session john-pb-20260825-01) to bring the ollama-preload startup budget under the D5 recovery limit (recover <= 900 s, state log rows 9-10). Verified live state at commissioning: ollama-preload.service ran with TimeoutStartUSec=20min (1200 s — 300 s over the SLO) and the preload script's curl retry budget was unbounded in the worst case (measured reality: 51-60 s boot-to-ready at the 64K profile). Two named changes and nothing else: (1) reduce TimeoutStartSec to a justified value <= 900 s (recommend 600 s: 10x the measured 60 s, 300 s margin under D5); (2) bound the script's cumulative retry/delay budget below the new TimeoutStartSec — separate API-wait (bounded fast probes) from the model-load call (single attempt, --max-time sized for a cold 64K load with margin; no retry-on-timeout), preserving the exact alias+digest /api/ps assertion and failure semantics (nonzero exit, journal message). Owner authorizations: owner directive 2026-08-25 'do it now' (state log row 53); NO ollama.service restart, NO reboot, NO keep_alive:0, NO model-store or frozen-identity change. Boundaries: the two named files only; versioned change (pre/post sha256, unified diff, shellcheck clean); one manual NON-REBOOT verification run; ratified askpass execution path (credential read at execution, never extracted). Deliverable: 35-esme-preload-budget.md (completed PASS — TASK COMPLETE; cataloged this run)."
+  source:
+    author: "Kimi-K3 (governor)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/33-work-order-john-preload-budget.yaml"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T22:15:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: [hxs-1, hxs-5]
+    fqdns: []
+    services: [ollama.service, ollama-preload.service]
+    agents: [john, kimi-k3]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+  version: ""
+  status: "adopted"
+  authority_level: "delegated-contract"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "kimi-k3"
+      note: "issued at state log row 53 (2026-08-25T21:50Z, owner directive 'do it now'); record sha256 matches the row-53 proof hash exactly"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-cp-34-john-preload-budget"
+      note: "paired context packet (session john-pb-20260825-01)"
+    - predicate: "depends_on"
+      target: "DOC-goal-hx1-ollama-qwen38-27b"
+      note: "parent goal GOAL-HX1-QWEN38-001; D5 SLO (state log rows 9-10) is the conformance target"
+    - predicate: "depends_on"
+      target: "DOC-pilot-hx1-ev-29-esme-m6b-profiles"
+      note: "frozen 64K operating identity (alias + digest assertion) is the preload contract to preserve"
+    - predicate: "depends_on"
+      target: "DOC-pilot-hx1-ev-30-esme-m7a-reboot-cycles"
+      note: "measured boot->ready 60 s x3 is the sizing basis for the 600 s recommendation"
+    - predicate: "governs"
+      target: "DOC-pilot-hx1-ev-35-esme-preload-budget"
+      note: "paired deliverable (PASS — TASK COMPLETE, 10/10 tests); handoff closes when this run's receipt lands in the state log"
+    - predicate: "depends_on"
+      target: "DOC-protected-ssh-info-hxs1"
+      note: "ratified askpass execution path (hxs-5 -> hxs-1); credential read at execution, never printed/logged/stored, helper deleted at task end"
+  validation:
+    validated_at: "2026-08-25T22:15:00Z"
+    freshness: "current"
+    review_due: "not applicable — discharged contract (milestone complete, deliverable 35 PASS)"
+  sha256: "3e9cf156887f688329011bdbe93b6ed1a42512dc7acd832bec1d17cf588e6ac8"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/33-work-order-john-preload-budget.yaml"
+notes:
+  origin_finding: "C5 from review batch 7 (state log row 52): VALID against LIVE config — TimeoutStartUSec=20min exceeds the 900 s D5 recovery limit and the curl retry budget was unbounded worst-case (old design 11,760 s + 30 s, ~9.8x its own unit timeout)."
+  assigned_agent_call_sign: "Esme = john (pilot call sign, not a roster entry)"

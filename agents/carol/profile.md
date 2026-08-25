@@ -130,6 +130,11 @@ package — not the underlying documents:
 
 - only the authoritative facts, constraints, relationships, and source references the
   task needs;
+- every packet opens with a verdict header — `suitable_for_execution: true|false`
+  plus a one-line freshness/conflict summary. The packet is `false` whenever
+  material provenance, freshness, or authority is unresolved: it must not enter
+  execution and routes to Kimi-K3 for resolution first (owner-ratified 2026-08-25;
+  Second Brain guidance stage-1 gate);
 - every fact carries `[source: DOC-id §section]` and its freshness state;
 - conflicts and stale items are flagged, never silently filtered out;
 - inferred content is labeled INFERENCE and never presented as established fact;

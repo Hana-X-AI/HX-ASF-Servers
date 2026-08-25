@@ -11,6 +11,7 @@ resolution note, never by deleting.
 | 2026-08-24 | D1: OmniRoute remote-consumption mechanism (open since 2026-08-14 per PILOT-002) | Agent-Zero | Decide the mechanism; required before any network exposure of hxs-4 Ollama |
 | 2026-08-24 | D2: Ollama source baseline for hxs-4 — corpus has 0.32.11, installed is 0.32.9 | Agent-Zero | Acquire 0.32.9-matched source or authorize a deliberate pinned upgrade |
 | 2026-08-24 | D3: default-context contract — OLLAMA_CONTEXT_LENGTH=65536 did not change observed num_ctx default of 4096 | Agent-Zero | Document the contract: num_ctx set explicitly per workload |
+| 2026-08-25 | M7b 24-hour soak (AC-008/AC-016) — deferred to backlog by owner directive; soak evidence absent = deferred, not waived; M8 acceptance scope adjusted accordingly | Agent-Zero | Owner's word to schedule; do not raise proactively |
 
 ## Closed
 

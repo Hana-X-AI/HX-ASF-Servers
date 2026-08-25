@@ -2,7 +2,7 @@ document:
   id: "DOC-goal-hx1-ollama-qwen38-27b"
   title: "Goal 2026-08-24-hx1-ollama-qwen38-27b — deploy and validate qwen3.8:27b on hxs-1 via Ollama (mutating pilot)"
   type: "goal"
-  declared_purpose: "Durable work-state record (Goal ID = file name, KDD-0002): intent, scope, success conditions SC-01..SC-09 with evidence contracts, execution controls, HITL checkpoints, and links. Status in file (updated 2026-08-25): in-progress — M7a PASS 2026-08-25 (AC-007 3/3 cold reboots, 60 s boot-to-ready ×3, kernel 7.0.0-30 + driver re-proven); M7b soak delayed per owner."
+  declared_purpose: "Durable work-state record (Goal ID = file name, KDD-0002): intent, scope, success conditions SC-01..SC-09 with evidence contracts, execution controls, HITL checkpoints, and links. Status in file (updated 2026-08-25): in-progress — M7a PASS 2026-08-25 (AC-007 3/3 cold reboots, 60 s boot-to-ready ×3, kernel 7.0.0-30 + driver re-proven); M7b soak DEFERRED to backlog per owner directive 2026-08-25 (deferred, not waived; M8 scope adjusted)."
   source:
     author: "Kimi-K3 (goal record) / Agent Zero (authorization)"
     provided_by: "Agent Zero"
@@ -40,11 +40,12 @@ document:
       target: "DOC-tkv-server-registry"
       note: "target identity hxs-1 192.168.50.200, role Deep reasoning & synthesis"
   validation:
-    validated_at: "2026-08-25T19:27:00Z"
+    validated_at: "2026-08-25T22:15:00Z"
     freshness: "current"
     review_due: "at goal close (M8 owner sign-off)"
-  sha256: "daba7e86ebdf4909de1ded5ecde33e47067a1108998127a59f6b5592c214321d"
+  sha256: "87187b16b35e5820a4ab87cdf67ebfc0a46fba1ffb7aacf597ced4001b6c9ae1"
   canonical_location: "/home/hxsa/opt/HX-ASF-Servers/goals/2026-08-24-hx1-ollama-qwen38-27b.md"
 notes:
-  hash_history: "69f6193d… (2026-08-25T05:20Z, run 1) → 091daccd… (2026-08-25T05:45Z, run 2) → 7f85657f… (2026-08-25T07:10Z, M7a ingest run) → daba7e86… (2026-08-25T19:27Z, batch-5 re-validation). Change: status line now records M7a PASS (AC-007 3/3, 60 s boot-to-ready ×3, kernel 7.0.0-30 + driver re-proven) and M7b soak owner-delayed. Expected living-document churn flagged by CAT-02 (state log row 37)."
+  hash_history: "69f6193d… (2026-08-25T05:20Z, run 1) → 091daccd… (2026-08-25T05:45Z, run 2) → 7f85657f… (2026-08-25T07:10Z, M7a ingest run) → daba7e86… (2026-08-25T19:27Z, batch-5 re-validation) → 87187b16… (2026-08-25T22:15Z, this run). Latest change: governor edit per owner directive (state log row 53) — status line now records M7b soak DEFERRED to backlog (knowledge/issues.md), AC-008/AC-016 evidence absent = deferred not waived, M8 scope adjusted. Expected living-document churn flagged by CAT-02 (state log row 37)."
   corrections_batch5: "F-B5-2 RESOLVED per governor disposition: drift is reference-additions only — the status line now cites evidence 30-esme-m7a-reboot-cycles.md and state log rows 40–42/47, and SC-03 now cites 23-kk3-m6-capacity-decision.md Revision 2 (three ratified profiles: 32K recovery baseline, 64K operating default, 128K qualified extended — selected). Verified against current file; declared_purpose paraphrase remains accurate."
+  corrections_batch8: "M7b-deferral re-validation (2026-08-25T22:15Z): drift traced to the governor's owner-directed status-line edit (state log row 53, verified at source line 5): 'M7b soak DEFERRED to backlog per owner directive 2026-08-25 (knowledge/issues.md, state log row 53): AC-008/AC-016 evidence absent — deferred, not waived; M8 scope adjusted'. Legitimate governor edit, no unknown actor. Re-hashed daba7e86… -> 87187b16…; declared_purpose status phrase updated 'delayed per owner' -> 'DEFERRED to backlog … (deferred, not waived; M8 scope adjusted)'. All other fields re-checked — unchanged."
