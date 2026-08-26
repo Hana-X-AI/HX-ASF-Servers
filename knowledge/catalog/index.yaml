@@ -5,7 +5,7 @@ index:
   schema_version: 1
   initialized: 2026-08-25 (Carol instantiation, owner amendment)
   updated: "2026-08-26T0137Z (M8 verdict wave: 2 updated — DOC-pilot-hx1-decision-36-m8-acceptance (§9 SIGNED: owner Jarvis Richardson ACCEPT 2026-08-26, verbatim 'I jarvis Richardson Accept M8', no conditions — pilot closed as PASS; status draft -> active per the unsigned-decision convention; re-hashed f334065b… -> 41d5f9de…; SC-05 deferred-by-owner stands, §7 non-authorizations unchanged) / DOC-goal-hx1-ollama-qwen38-27b (status line now COMPLETE — PASS 2026-08-26; re-hashed 87187b16… -> 8bf0c1f4…; record status active -> historical as the terminal-closed enum mapping of the document's own header, mapping + closure recorded in notes.m8_closure; freshness current, authority ratified-governance unchanged)); count unchanged (182 records); receipt receipts/2026-08-26T0137Z-carol-m8-verdict.md)"
-  document_count: 182
+  document_count: 183
   documents:
   - id: DOC-a01-origin-codex-20260824-2125
     title: codex_20260824_2125_hx-1-ollama-pilot-qwen3.8-amendment.md — original source of Amendment A01 (agent-zero-docs)

@@ -1,0 +1,47 @@
+document:
+  id: "DOC-knowledge-agent-performance"
+  title: "knowledge/agent-performance.md — agent performance ledger (p7-lite dynamic learning, MVP)"
+  type: "registry"
+  declared_purpose: "Governor-maintained accuracy ledger (owner-ratified 2026-08-26, p7-lite dynamic learning MVP): per-agent/task-type routine-accuracy scores computed from existing evidence — never estimated without a source. Drives post-gate triage tier eligibility in agents/kimi-k3/verification-checklist.md: an agent/task type below 95% routine accuracy escalates to Tier 2/3 until recovered. Seeded 2026-08-26 from pilot evidence (state log rows 7-64): john/Esme install/config 100% (15/15), validation suites 100% (7/7), capacity/profiles ~95% (1 near-miss caught pre-deploy), reboot/config cycles ~95% (1 disclosed wrapper defect, fixed); rick OS readiness/inventory ~95%+ (1 record digit, corrected openly); carol ingestion/correction ~95%+ (1 prefix self-caught pre-delivery); kimi-k3 n/a (self-scored, defects owned in lessons file). Update rules: governor appends after every milestone/handoff close; incident correlation lowers an agent/task type to Tier 2/3 temporarily with the pattern and recovery condition logged; boundary review (false-negative and false-positive rates) at each milestone close with state-log citation; first scheduled review after 5 triaged items (p7-lite pilot checkpoint)."
+  inferred_value: "INFERENCE: this ledger is the evidence input that makes p7-lite triage dynamic — tier eligibility moves on recorded accuracy rather than fixed trust, so auto-approval volume should concentrate where the ledger shows proven routine accuracy, and any sub-95% row is a standing escalation signal for the governor."
+  source:
+    author: "Kimi-K3 (governor-seeded)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/knowledge/agent-performance.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-26T02:01:37Z"
+  owner: "Kimi-K3 (governor-maintained); Agent Zero (ratification)"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: [carol, john, kimi-k3, rick]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot, fleet]
+  version: "MVP (seeded 2026-08-26)"
+  status: "active"
+  authority_level: "ratified-governance"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "references"
+      target: "DOC-agent-carol-profile"
+      note: "the ledger scores the routine task classes (re-validation, re-hash, status flip, relation touch) that profile §10 Run tiers defines for T-micro; carol ingestion/correction ~95%+ row is the basis for T0-eligible auto-approved handling of tier-0 Carol runs"
+    - predicate: "references"
+      target: "DOC-agent-kimi-k3-verification-checklist"
+      note: "checklist 'Triage after the gate' block (owner-ratified 2026-08-26, p7-lite): accuracy scores in the triage line come from this ledger; below 95% routine accuracy moves the agent/task type to Tier 2/3 until recovered; tier boundaries reviewed at every milestone close"
+    - predicate: "references"
+      target: "DOC-goal-hx1-ollama-qwen38-27b"
+      note: "seed source: ledger rows derive from this goal's pilot evidence (state log rows 7-64, milestones M1-M8), closed COMPLETE — PASS 2026-08-26 (M8 owner ACCEPT)"
+  validation:
+    validated_at: "2026-08-26T02:01:37Z"
+    freshness: "current"
+    review_due: "first scheduled review after 5 triaged items (p7-lite pilot checkpoint); re-hash this record on every ledger update"
+  sha256: "80a01e3fa6399db678c20ca493763e56c207913c3c9a273cb718b7cd6c3e8f89"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/knowledge/agent-performance.md"
+notes:
+  cataloging_context: "Type registry per schema judgment: a governor-maintained living register of agent/task accuracy scores consulted at triage time — nearest enum fit ('evidence' rejected: the ledger is derived maintained state, not one run's as-produced evidence; 'other' available but less specific). Authority ratified-governance: owner-ratified 2026-08-26 under the governor's Option A disposition. Cataloged in T-micro pilot run 1 (receipt 2026-08-26T0202Z-carol-tmicro-pilot1.md); first ingestion under the ratified run-tier rules (profile §10)."

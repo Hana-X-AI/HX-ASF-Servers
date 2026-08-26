@@ -41,10 +41,10 @@ document:
       target: "DOC-scripts-validate-py"
       note: "complement: the checklist owns the judgment steps and the literal-credential sweep that the ratified validator carries as MANUAL GATE labels (governor-only, never part of the command)"
   validation:
-    validated_at: "2026-08-26T00:25:00Z"
+    validated_at: "2026-08-26T02:01:37Z"
     freshness: "current"
     review_due: "on checklist revision (re-hash this record)"
-  sha256: "b2cbbcb67a1ff039ddb4ca97be11c1cd3b3ffd2fb45593da490022b9951bd22e"
+  sha256: "8accdfad9d15fcdc9ea985412caa6b5c985a954e3dde0f4a77ee17f4f1d02494"
   canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/kimi-k3/verification-checklist.md"
 notes:
   cataloging_context: "Type runbook per the governor's receipt-check characterization (fixed operational procedure, run per deliverable). Authority ratified-governance (UD5/U7). Sibling agents/kimi-k3/*.html files are derived renderings where manifest-listed — covered by the DOC-scripts-wiki-dual-format-render one-record disposition, never separately cataloged."
