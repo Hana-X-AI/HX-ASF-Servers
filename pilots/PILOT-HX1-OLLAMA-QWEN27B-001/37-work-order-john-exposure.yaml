@@ -1,0 +1,38 @@
+work_order:
+  task_id: "WO-HX1-JOHN-EXP-001"
+  parent_goal: "GOAL-HX1-QWEN38-001"
+  goal_file: "goals/2026-08-24-hx1-ollama-qwen38-27b.md"
+  milestone: "Post-M8 bounded change — hxs-1 fleet-scoped endpoint exposure (owner directive 2026-08-26, SC-07a)"
+  assigned_agent: "john / Esme (profile-briefed sub-agent)"
+  objective: >-
+    Take hxs-1's Ollama endpoint from loopback-only to fleet-scoped LAN access,
+    per owner directive 2026-08-26 ("the entire fleet should have access, the
+    same should be true on hxs-1 — if not fix it"). Bind Ollama to all
+    interfaces (OLLAMA_HOST=0.0.0.0 — loopback MUST keep working: preload and
+    fixtures depend on 127.0.0.1), then enforce the boundary with ufw: default
+    deny incoming, allow 22 from 192.168.50.0/24, allow 11434 from
+    192.168.50.0/24. Prove: loopback still works, LAN reachability from hxs-5,
+    ruleset exactness, frozen model identity and residency unchanged, preload
+    unit still green, boot-path unaffected (no restart of anything but the
+    ollama service itself, no reboot).
+  owner_authorizations:
+    - "Owner directive 2026-08-26 (hxs-2 goal file D2; hxs-1 goal file SC-07a) — this exposure change is approved"
+    - "Authorized mutations: ollama.service drop-in Environment (OLLAMA_HOST=0.0.0.0) + daemon-reload + ollama.service restart ONLY (preload unit re-run to re-prove); ufw ruleset + enable"
+    - "NOT authorized: reboot, preload-unit restart via reboot, any model-store/identity change, any other service change, package installs, kernel/driver changes"
+  boundaries:
+    - "Execution path: session on hxs-5; hxs-1 (192.168.50.200) via SSH hxsa@192.168.50.200; askpass helper READS the credential from the HX Fleet SSH Access Guide credential-record row at execution time — no extracted copy, helper deleted at task end; verify hostname + peer IP first; sudo -n only"
+    - "Versioned change: pre/post sha256 of every touched file + the ruleset as applied (ufw status numbered); unified diffs in evidence"
+    - "Frozen-identity guard: /api/ps before and after must show the identical resident model (hx-qwen3.8-27b-64k, digest 766cd9469fb4…, ctx 65536, 100% VRAM, Forever); any drift = stop and restore"
+    - "One bounded correction attempt; stop conditions: loopback broken after change, residency loss, any Xid, ufw locks out SSH (verify rule order BEFORE enable: 22/24 first)"
+  rollback: "Restore the pre-change drop-in (OLLAMA_HOST=127.0.0.1), daemon-reload, ollama.service restart, ufw disable (or return to prior state); byte-copies of pre-change files retained in evidence."
+  controlling_sources:
+    - "38-context-packet-john-exposure.yaml (this package)"
+    - "29-esme-m6b-profiles.md (frozen identity + preload contract); 35-esme-preload-budget.md (unit budgets)"
+    - "goal file SC-07 + SC-07a; owner directive 2026-08-26"
+    - "/opt/tkv-local/servers/hxs-1/ (historical, cross-check only)"
+  deliverable: "39-esme-hxs1-exposure-change.md: pre/post configs + diffs, ufw ruleset as applied, loopback + LAN reachability evidence (from hxs-5), residency/identity before-after proof, preload re-run output, journal excerpt, rollback inverse, Task May Proceed receipt"
+  second_brain_evaluation:
+    opportunity_identified: "yes"
+    roadmap_capability_or_pattern: "scoped-exposure change as a versioned, evidenced pattern (post-closure change management on a signed-off host)"
+    disposition: "implemented — the change lands with full provenance (SC-07a amendment, catalog re-validation at handoff)"
+    evidence_and_reasoning: "first post-closure posture change on a validated node; doing it through the work-order/evidence/receipt path proves the factory can change what it already signed without losing the trail"

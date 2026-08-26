@@ -1,0 +1,65 @@
+document:
+  id: "DOC-pilot-hxs2-wo-09-john-chatx"
+  title: "09-work-order-john-chatx.yaml — WO-HXS4-JOHN-L1-001 (Chat-X bounded alignment: pin 0.32.9 → 0.32.15 + ladder 32K/64K/128K + three-profile freeze; DISCHARGED — milestone complete)"
+  type: "work-order"
+  declared_purpose: "Delegated contract commissioning john / Esme (session john-chatx-20260826-01) for the Chat-X bounded alignment + ladder + three profiles — bring Chat-X onto the blueprint pattern, bounded: (1) align Ollama to the fleet pin 0.32.15 (from 0.32.9; blueprint consistency — the parked alignment item activated by the owner order; reversible by reinstall); (2) run a bounded capacity ladder on qwen3.5:9b-q4_K_M (6.6 GB, digest 6488c96f…): rungs 32768, 65536 (its commissioned default), 131072 — rung Modelfiles FROM the exact digest with only num_ctx varied, capacity proof per rung (resident, KV measured, needle at ~95% depth, no OOM); (3) freeze aliases hx-qwen3.5-9b-32k / -64k / -128k with per-rung digest equality, repoint the default usage reference to hx-qwen3.5-9b-64k (its already-native default), and record it all as Chat-X's profile set. NO preload/persistence unit in this milestone (Chat-X stays owner-provisioned on-demand; persistence is a separate parked owner decision). NO endpoint change (stays loopback-only per current posture). Owner authorizations: owner 2026-08-26 'complete each ladder and profile entries so they appear the same way hxs-1's did — identical pattern, same blueprint' (all LLMs 1-4); the blueprint alignment item activated by that order: version pin 0.32.15 (reversible); preload/persistence and LAN posture remain PARKED owner decisions — do NOT implement them here; NOT authorized: preload/persistence units, endpoint changes, firewall anything, sampling changes, other models, reboots. Boundaries: hxs-5 session, SSH hxsa@192.168.50.203, askpass helper READS the credential from the HX Fleet SSH Access Guide credential-record row at execution time (no extracted copy, helper deleted at task end), hostname + peer IP verified first, sudo -n only; rung Modelfiles FROM the exact digest with num_ctx the ONLY changed parameter; versioned fixtures (needle_probe.py alias-parameterized) run locally on hxs-4 against 127.0.0.1:11434; one bounded correction per failed correctable step; stop conditions: version pin breaks the service (restore 0.32.9 path and report), OOM, any Xid. Rollback: reinstall prior version path for the pin; aliases removed via ollama rm (tags only); pre-state hashes recorded. Deliverable: 10-esme-chatx-ladder-profiles.md. Second Brain evaluation: opportunity identified — ladder pattern on the lightest host, completing the fleet's four-host profile uniformity; disposition implemented."
+  inferred_value: "INFERENCE: this is the WO that closed the fleet's four-host uniformity claim — its boundaries are the instructive part: the owner kept preload/persistence and the LAN posture parked even while activating the pin, so Chat-X gained the blueprint's measured profile set without gaining a persistence or exposure contract; the later O2 amendment (owner decision, state log row 21) was executed under the resumed session as a separate provenance-carrying amendment, not smuggled into the ladder."
+  source:
+    author: "Kimi-K3 (governor)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/09-work-order-john-chatx.yaml"
+    section: "§whole-document"
+    ingestion_date: "2026-08-26T10:00:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: [hxs-4, hxs-5]
+    fqdns: []
+    services: [ollama.service]
+    agents: [john, kimi-k3]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot, fleet]
+    models: [qwen3.5:9b-q4_K_M, hx-qwen3.5-9b-32k, hx-qwen3.5-9b-64k, hx-qwen3.5-9b-128k]
+  version: ""
+  status: "adopted"
+  authority_level: "delegated-contract"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "kimi-k3"
+      note: "commissioned at the owner ladders+profiles order (hxs-2 state log row 13, 2026-08-26T07:13Z; the same order commissioned the Coder-X M6 pair 07/08 and the hxs-3 M7 pair)"
+    - predicate: "references"
+      target: "DOC-pilot-hxs2-cp-10-john-chatx"
+      note: "paired context packet (session john-chatx-20260826-01)"
+    - predicate: "depends_on"
+      target: "DOC-goal-hxs2-qwen36-coderx-backend"
+      note: "parent goal GOAL-HXS2-CODERX-001 (goal_file goals/2026-08-26-hxs2-qwen36-coderx-backend.md) — the Chat-X bounded alignment rides the same owner order as the Coder-X M6 ladder"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-ev-22-esme-m6-capacity-ladder"
+      note: "hxs-1 M6 capacity-ladder pattern (controlling source 22-esme-m6-capacity-ladder.md) — fourth validated use, on the lightest host"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-ev-29-esme-m6b-profiles"
+      note: "hxs-1 M6b three-profile freeze pattern (controlling source 29-esme-m6b-profiles.md)"
+    - predicate: "references"
+      target: "DOC-blueprint-llm-server"
+      note: "§4 + the Chat-X alignment items (controlling source); blueprint pin 0.32.15; the §8 Chat-X row gains its profile aliases from this milestone"
+    - predicate: "depends_on"
+      target: "DOC-protected-ssh-info-hxs1"
+      note: "ratified askpass execution path (hxs-5 → hxs-4); credential read at execution, never printed/logged/stored, helper deleted at task end"
+    - predicate: "governs"
+      target: "DOC-pilot-hxs2-ev-10-esme-chatx-ladder-profiles"
+      note: "DISCHARGED by the Chat-X deliverable 10-esme-chatx-ladder-profiles.md (rev 2, PASS with the disclosed A-1 32k attenuation; governor live-verified, hxs-2 state log row 22, 2026-08-26T09:50Z); executed in two windows — pin + F-CHATX-L1 blocker (07:16–07:45Z), then the owner-O2 resumption (09:15–09:41Z, row 21)"
+  validation:
+    validated_at: "2026-08-26T10:00:00Z"
+    freshness: "current"
+    review_due: "on any owner decision on the parked Chat-X items (preload/persistence, LAN posture, qualification); the L1 handoff CLOSES when this run's receipt is cited in the governing log (profile §7)"
+  sha256: "39784ee7ef3081f766b996fbccd307b0e6c2eefa3b1590a93047a65e655ba090"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/09-work-order-john-chatx.yaml"
+notes:
+  status_convention: "Cataloged POST-completion: status adopted per the discharged-contract convention — the milestone completed before ingestion (hxs-2 state log row 22, governor live-verified; two windows with the owner-O2 resumption between them)."
+  o2_amendment: "The work order as commissioned could not meet its own 100%-VRAM rung proofs under the owner-commissioned GPU isolation (F-CHATX-L1, window-1 blocker — escalated with options O1–O4). Owner decision O2 (2026-08-26, hxs-2 state log row 21) relaxed the isolation from RTX 5060-only to both GPUs via a versioned one-line hx-commissioning.conf amendment with provenance; the full ladder then ran as written. The O2 amendment is a distinct owner decision recorded in the deliverable — the WO text itself was never edited (originals are sacred)."
+  hash_crosscheck: "sha256 39784ee7ef3081f766b996fbccd307b0e6c2eefa3b1590a93047a65e655ba090 computed at ingestion (2026-08-26T10:00Z); hxs-2 state log row 13 records no WO/CP hashes for this pair — the catalog hash is the first recorded value."

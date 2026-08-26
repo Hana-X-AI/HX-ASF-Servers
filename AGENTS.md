@@ -129,6 +129,16 @@ doubt, act reversibly and report rather than pause.
   (owner directive, 2026-08-24). Confirmed by owner 2026-08-25: the directive
   stands as written. Proposals to convert it to a scoped risk acceptance (or any
   softening) are rejected; do not escalate them again.
+- **No host firewalls (ufw or equivalent) on HX hosts** (owner rule, 2026-08-26).
+  The exposure boundary is the private LAN (192.168.50.0/24) itself: services
+  bind to the LAN interface as authorized; reachability is governed by the
+  network, not by host firewall rulesets. Any prior ufw design or enablement is
+  void.
+- LLM server deployments follow the blueprint: `servers/BLUEPRINT-llm-server.md`
+  (hxs-1 proven; hxs-2 at its M8). It includes the downstream-consumer contract
+  that shapes how other ecosystem components are configured at deployment —
+  retrieve it before designing anything that consumes an HX LLM endpoint
+  (owner standing instruction, 2026-08-26).
 
 ## Documentation governance and knowledge stewardship
 

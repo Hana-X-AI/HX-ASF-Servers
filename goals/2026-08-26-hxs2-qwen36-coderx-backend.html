@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!-- Generated from goals/2026-08-26-hxs2-qwen36-coderx-backend.md (sha256 d14cf1fdfbe25e5d0ed44e6dcb691bf4189f67154c0e5aaf43c7e3c8fff22a0c) by scripts/wiki/render.py on 2026-08-26T21:55Z.
+     Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Goal: Provision the hxs-2 coding-inference backend (CoderX via Ollama, mutating pilot)</title>
+<style>
+:root{color-scheme:light dark}
+body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.55;
+max-width:62rem;margin:0 auto;padding:1.5rem 2rem;color:#1a1a1a;background:#fff}
+h1,h2,h3,h4,h5,h6{line-height:1.25;margin-top:1.6em}
+h1{border-bottom:2px solid #444;padding-bottom:.3em}
+h2{border-bottom:1px solid #ccc;padding-bottom:.2em}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+code{background:#f0f0f0;padding:.1em .3em;border-radius:3px}
+pre{background:#f6f8fa;border:1px solid #ddd;border-radius:6px;padding:.8em;overflow-x:auto}
+pre code{background:none;padding:0}
+table{border-collapse:collapse;margin:1em 0;width:100%}
+th,td{border:1px solid #ccc;padding:.35em .6em;text-align:left;vertical-align:top}
+th{background:#f0f0f0}
+blockquote{border-left:4px solid #bbb;margin:1em 0;padding:.2em 1em;color:#444;background:#fafafa}
+a{color:#0645ad}
+.doc-meta{color:#666;font-size:.85em;border-bottom:1px dashed #bbb;padding-bottom:.6em;margin-bottom:1.2em}
+footer{margin-top:2.5em;border-top:1px solid #ccc;color:#666;font-size:.8em;padding-top:.8em}
+pre.mermaid{background:#fff;border:1px dashed #999}
+@media (prefers-color-scheme:dark){
+body{color:#ddd;background:#111} h1{border-color:#888} h2{border-color:#555}
+code{background:#2a2a2a} pre{background:#1b1b1b;border-color:#444}
+th{background:#222} th,td{border-color:#555} blockquote{color:#bbb;background:#191919;border-color:#666}
+a{color:#6fa8ff} .doc-meta,footer{color:#999}}
+</style>
+</head>
+<body>
+<main class="doc">
+<h1 id="goal-provision-the-hxs-2-coding-inference-backend-coderx-via-ollama-mutating-pilot">Goal: Provision the hxs-2 coding-inference backend (CoderX via Ollama, mutating pilot)</h1>
+<ul><li>Goal ID: 2026-08-26-hxs2-qwen36-coderx-backend (this file's name)</li><li>Version: 1</li><li>Status: in-progress — M0 authorized 2026-08-26 (plan approved; D1–D8 decided and recorded; M1 COMPLETE 13/13, handoff pending Carol receipt)</li><li>Owner: Agent-Zero</li><li>Created: 2026-08-26</li><li>Human authority: Agent-Zero</li><li>Agent lane(s): kimi-k3 (governor), rick (Ubuntu OS plane), john/Esme (Ollama plane), carol (knowledge)</li><li>Plan: session plan <code>namor-karnak-nick-fury.md</code> (approved 2026-08-26); source directive <code>agent-zero-docs/pilots/hxs-2/hxs-2-deployment.md</code> (DoD re-scoped Harness-free per owner, this file §SC table)</li></ul>
+<h2 id="intent">Intent</h2>
+<p>Provision <code>hxs-2</code> as a persistent local coding-inference host using Ollama with the exact model <strong><code>mannix/qwen3.6-27b-a3b-coderx:vision-Q4_K_M</code></strong> (owner D3, registry-verified 2026-08-26), validated end to end, exposed through an authorized LAN-scoped endpoint, and registered in the HX Second Brain catalog as the discoverable backend-capability of record. DeepSeek Harness does not exist (owner-confirmed easter egg, 2026-08-26); the catalog fills the capability-registry role. Maximum measured task quality with evidence-gated, deterministic operations; the model is an inference backend, never an autonomous agent; KK3 retains orchestration.</p>
+<h2 id="scope-and-target">Scope and target</h2>
+<ul><li>Target identity: hxs-2 (192.168.50.201). Registry role: Coding.</li><li>Baseline: i7-5960X 8c/16t, 66 GB RAM, 2× RTX 5060 Ti 16,311 MiB (driver 580.173.02 validated 2026-08-12, CUDA 13.0), Ubuntu 24.04.4, kernel 7.0.0-28, 3.6 TB NVMe root, no Ollama/vLLM, ufw inactive, Wi-Fi DOWN as-found.</li><li>In scope: OS readiness, Ollama install/pin, exact-tag pull + identity freeze, preload/persistence, native-defaults baseline, coding/tool/vision/health qualification, context ladder on the exact digest, MTP A/B grid, restart + reboot recovery, scoped endpoint + boundary proof, catalog registration, consumer-proof task, configuration.md, acceptance reconciliation.</li><li>Out of scope: any DeepSeek Harness deployment or registration; fleet rollout; fine-tuning/training; the Coder sibling (a different checkpoint — deliberate non-selection, D3); exposure beyond the LAN boundary; model quality claims transferred from other models (CX-R13).</li><li>Constraints: per-milestone work orders; one bounded correction per failed correctable gate; per-cycle reboot approvals (D6); commits only with per-instance owner approval (Alert 2, 2026-08-26).</li></ul>
+<h2 id="owner-decisions">Owner decisions</h2>
+<ul><li>D1: model store per the HX-1 blueprint (root ext4) (2026-08-26).</li><li>D2: endpoint allowlist = the entire fleet 192.168.50.0/24 — AND the same fleet access must hold on hxs-1 ("if not, fix it", 2026-08-26): hxs-1's loopback-only posture is superseded by owner directive; a bounded exposure change (bind + LAN boundary + proof) was executed on hxs-1 (state log rows 71–73). <strong>No host firewall anywhere</strong> (owner rule 2026-08-26): services bind to the LAN; the private /24 itself is the boundary. Earlier ufw-based staging is void.</li><li>D3: model = <code>mannix/qwen3.6-27b-a3b-coderx:vision-Q4_K_M</code> (CoderX, top-8, REAP/DERN prune; the directive's literal <code>…-coder:</code> tag is the sibling — a different checkpoint, deliberately not selected) (2026-08-26).</li><li>D4: Wi-Fi formalized into an rfkill soft block, boot-persisted, same as hxs-1 (2026-08-26).</li><li>D5: operating context = 65,536 (64K) — decided 2026-08-26; the M6 ladder validates 32K (baked) then 64K on the exact digest before M6b freezes it.</li><li>D6: cold reboots at M7 pre-approved (per-cycle within a governor-announced window, hxs-1 precedent) (2026-08-26).</li><li>D7: DoD re-scope (Harness-free mapping) ratified 2026-08-26.</li><li>D8: vision disposition deferred by owner ("a concern for another day", 2026-08-26) — vision probes run and report evidence at M5; any shortfall's disposition is a future owner decision, not a pilot blocker.</li></ul>
+<h2 id="success-conditions-and-evidence">Success conditions and evidence</h2>
+<table><thead><tr><th>ID</th><th>Property</th><th>Measurement / procedure</th><th>Expected result</th><th>Evidence</th><th>Verifier</th></tr></thead><tbody><tr><td>SC-01</td><td>Model identity frozen</td><td>explicit tag + full local digest, capabilities, projector, template, license</td><td>Exact approved artifact recorded (vision-Q4_K_M, ~16.1 GB + ~447M CLIP, Apache-2.0)</td><td>model evidence, ollama show</td><td>KK3 gate</td></tr><tr><td>SC-02</td><td>GPU placement</td><td><code>ollama ps</code> + per-GPU telemetry under load</td><td>Both 5060 Ti allocated; no unapproved CPU fallback</td><td>GPU telemetry</td><td>KK3 gate</td></tr><tr><td>SC-03</td><td>Runtime profile</td><td>context ladder on exact digest (32K → 64K with evidence); MTP A/B grid</td><td>Operating profile frozen with capacity + latency evidence; draft_num_predict chosen at stable plateau</td><td>capacity record</td><td>KK3 gate</td></tr><tr><td>SC-04</td><td>Boot recovery</td><td>service restart + 3 cold reboots</td><td>Model resident and ready each time within budget, no manual action</td><td>reboot evidence</td><td>KK3 gate</td></tr><tr><td>SC-05</td><td>Workload quality</td><td>native-defaults coding/tool suites + vision probes + termination budget</td><td>Owner-confirmed thresholds met</td><td>suite results</td><td>KK3 gate</td></tr><tr><td>SC-06</td><td>Exposure boundary</td><td>bind config (0.0.0.0, loopback preserved), reachability from /24, refusal from non-authorized source where testable; <strong>no host firewall</strong> (owner rule 2026-08-26 — earlier ufw wording void)</td><td>Reachable inside 192.168.50.0/24; refused outside; no external interface; the LAN itself is the boundary</td><td>security evidence</td><td>KK3 gate</td></tr><tr><td>SC-07</td><td>Capability registration</td><td>catalog backend-capability record + retrieval package + consumer-proof task via work order</td><td>Record live; task completes end-to-end over the endpoint with evidence</td><td>catalog record, task evidence</td><td>KK3 gate</td></tr><tr><td>SC-08</td><td>Process</td><td>sanitized packages, Carol receipts, acceptance reconciliation</td><td>Complete packages; KK3 final gate; owner sign-off</td><td>pilot record</td><td>Agent-Zero</td></tr></tbody></table>
+<h2 id="execution-controls">Execution controls</h2>
+<ul><li>Pre-flight (intake existence check): DONE 2026-08-26 — baseline from <code>servers/hxs-2/discovery.md</code> + post-directive driver validation (records); live re-verification at M1.</li><li>Active charters reviewed: rick, john, kimi-k3, carol (all active).</li><li>Maximum iterations: 1 initial specialist run + 1 bounded correction per failed correctable gate.</li><li>Stop conditions: safety, authority, model-identity, or repeated failure — immediate escalation.</li><li>Rollback / containment: smallest affected layer (hxs-1 13-esme pattern).</li><li>HITL checkpoints: M0 authorization, Gate 0 decisions, each cold reboot, vision/threshold confirmations, final sign-off.</li></ul>
+<h2 id="notes-and-links">Notes and links</h2>
+<ul><li>KDDs: KDD-0006 (adoption). Playbook: PILOT-HX1-OLLAMA-QWEN27B-001 (pattern source; second validated use). Knowledge reference: <code>agent-zero-docs/pilots/hxs-2/codex_20260825_1917_qwen3.6-27b-a3b-coderx-agent-knowledge-reference.md</code>.</li><li>Controlling sources: <code>/opt/tkv-local/servers/hxs-2/</code> (historical as-found, cross-check), <code>/opt/tkv-local/ollama</code> (john's knowledge gate), catalog retrieval package (M1), this file's owner decisions.</li><li>Second Brain evaluation (standing directive): catalog becomes the factory's backend-capability registry (new record class, implemented M8); hxs-1 playbook promoted toward a formal pattern (second use); retrieval package at M0/M1. Harness-era registration deferred (substrate does not exist).</li></ul>
+</main>
+<footer>Source of truth: <code>goals/2026-08-26-hxs2-qwen36-coderx-backend.md</code> (sha256 <code>d14cf1fdfbe25e5d0ed44e6dcb691bf4189f67154c0e5aaf43c7e3c8fff22a0c</code>) · rendered 2026-08-26T21:55Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+
+</body>
+</html>

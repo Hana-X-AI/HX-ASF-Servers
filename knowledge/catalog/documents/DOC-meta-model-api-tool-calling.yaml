@@ -1,0 +1,61 @@
+document:
+  id: "DOC-meta-model-api-tool-calling"
+  title: "tooling.md — Meta Model API 'Tool calling' (539-line official tool-calling doc; upstream capture; the hxs-3 M6 contract-suite basis)"
+  type: "runbook"
+  declared_purpose: "Meta's official tool-calling doc (front matter: title 'Tool calling', description 'Define functions the model can invoke, execute them locally, and return results for the model to incorporate.', cms alias /model-api/docs/tool-calling; 539 lines): developer-defined tools — functions described in 'tools' and executed in the integrator's own code; the model never executes developer-defined tools itself (the built-in web_search is the server-side exception). Two developer-defined types: 'function' (name, description, JSON Schema parameters) and 'custom' (freeform text input, Responses-API-only — HTTP 400 on Chat Completions; exempt from the single-dot name rule). Definition shapes differ per endpoint: Responses uses flat top-level fields and returns function_call items in the output array (results returned as function_call_output items with call_id, with previous_response_id for server-reconstructed context); Chat Completions nests the same fields under a 'function' key, returns a tool_calls array on the assistant message (finish_reason 'tool_calls'), and takes results as 'tool' messages carrying tool_call_id. Function name rules: ^[a-zA-Z0-9_.-]+$ with AT MOST ONE DOT (two or more dots → HTTP 400); use a namespace tool for MCP/Agents-SDK-style multi-segment names. Root 'type: object' is auto-added if omitted (declaring it is still recommended). Strict flag semantics: strict defaults to FALSE — the schema is accepted as-is (a missing root type is normalized, not rejected); strict: true validates the schema against the supported strict subset (e.g. additionalProperties: false, every property in required) and returns HTTP 400 on violation — only when strict is true; REGARDLESS of strict, the model's generated arguments are not guaranteed to validate — always parse and validate arguments client-side. Guidelines include streaming argument deltas, deferred loading of large tool sets (defer_loading + tool_search), and structured output for complex arguments (see notes.contract_facts for the M6 load-bearing rules)."
+  inferred_value: "INFERENCE: the single most operationally dense of the three Meta captures for HX — its guidelines section is the written basis for the hxs-3 M6 contract suite (state log row 3): the parallel_tool_calls default-true-vs-flag nuance, the tool_choice auto-only rule, and the strict semantics are exactly the places where a harness assumption would silently diverge from the platform contract. For the local Ollama artifact each rule is a probe target (which fields Ollama honors is never assumed — request-level flag honoring is an M5/M6 compatibility probe; tool-layer sequencing is enforced KK3-side regardless)."
+  source:
+    author: "Meta (dev.meta.ai documentation)"
+    provided_by: "Agent Zero"
+    origin: "/home/hxsa/opt/local-tkv/agent-zero-docs/pilots/hxs-3/meta/tooling.md (capture of the Meta Model API docs — front-matter cms alias /model-api/docs/tool-calling)"
+    section: "§whole-document"
+    ingestion_date: "2026-08-26T05:35:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: [hxs-3]
+    fqdns: []
+    services: []
+    agents: [kimi-k3, john]
+    repositories: []
+    environments: [pilot]
+    models: [muse-glimmer:30b]
+  version: "capture as supplied 2026-08-26 (upstream page live-versioned)"
+  status: "active"
+  authority_level: "upstream-reference"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "owner-docs tree (/home/hxsa/opt/local-tkv); 'Bearer $MODEL_API_KEY' and os.environ references are placeholders, not credentials"
+    contains_secret_values: false
+  relations:
+    - predicate: "references"
+      target: "DOC-goal-hxs3-muse-glimmer-tooling"
+      note: "hxs-3 controlling-source family (owner-supplied Meta primary sources, state log row 3): the M6 tool-contract suite's upstream basis"
+    - predicate: "references"
+      target: "DOC-kdd-0007-hxs3-muse-glimmer-tooling-adoption"
+      note: "the parallel_tool_calling: false LIMIT reconciliation: this doc shows the hosted platform default is parallel TRUE with false as the limiting flag — the model-native sequential contract stands and the harness ALSO enforces it (state log row 3)"
+    - predicate: "references"
+      target: "DOC-meta-model-api-choosing-api"
+      note: "sibling capture — endpoint differences this doc calls out inline (Responses vs Chat Completions tool mechanics)"
+    - predicate: "references"
+      target: "DOC-meta-model-api-sdks"
+      note: "sibling capture — the SDK surfaces these tool calls are made through"
+    - predicate: "references"
+      target: "DOC-tkv-corpus-meta-model-cookbook"
+      note: "worked recipe implementations of these contracts (01_api_fundamentals/03_tool_calling and the 02_agent_patterns series)"
+    - predicate: "describes"
+      target: "Meta Model API tool-calling contract (function/custom tools, parallel_tool_calls, tool_choice auto-only, strict subset)"
+      note: "developer-defined tools execute client-side; built-in web_search/tool_search run server-side (hosted-only, N/A to the local artifact)"
+  validation:
+    validated_at: "2026-08-26T05:35:00Z"
+    freshness: "current"
+    review_due: "on upstream page change (live-versioned vendor doc) or at the hxs-3 M6 contract-suite authoring"
+  sha256: "c7191aa00d93c720cc0a64bcd63f9487ebcec08c81a4644a25aea5ea9fbeb1e8"
+  canonical_location: "/home/hxsa/opt/local-tkv/agent-zero-docs/pilots/hxs-3/meta/tooling.md"
+notes:
+  type_judgment: "Typed 'runbook' per dispatch: a vendor operational doc with executable request/response shapes and rules. Same typing as the sibling captures and DOC-meta-muse-glimmer-llama-cpp-guide."
+  contract_facts: "The M6 load-bearing rules (dispatch-specified, verified against the document at ingestion): (1) parallel_tool_calls — DEFAULT TRUE: the model MAY return multiple calls in tool_calls in one turn; set parallel_tool_calls: false to limit the model to one call per turn; the flag takes effect ONLY when function tools are provided (with no function tools it is accepted but has no effect, matching OpenAI); applies to both Chat Completions and the Responses API. (2) tool_choice — ONLY 'auto' (the default) is supported on both endpoints; 'none', 'required', and named function choices return HTTP 400; with 'auto' the app must handle both a tool call and a plain text response. (3) strict — schema-validation only: defaults false (schema accepted as-is; missing root type normalized); strict: true validates against the strict subset and returns HTTP 400 on violation; model-generated arguments are guided but NOT guaranteed — always self-validate. (4) max_tool_calls caps BUILT-IN tools only (minimum 1, no enforced maximum) — it does not limit client-side function-tool calls; bound those with parallel_tool_calls: false or a turn cap. (5) the full assistant message INCLUDING tool_calls must precede tool results (HTTP 400 otherwise); each result's tool_call_id/call_id must match the originating call; call_id length 1–64 chars. (6) keep tool results in the same order as their calls when building history manually (with previous_response_id the server does not enforce ordering). (7) tool-name validation applies only to the most recent assistant turn. (8) use tools/tool_choice — 'functions'/'function_call' are deprecated."
+  hxs3_relevance: "M6 contract-suite basis (hxs-3 state log row 3): the registered LIMIT parallel_tool_calling: false is model-native for Muse Glimmer (v1.1/KDD-0007); this doc's default-true-with-limiting-flag platform contract means the harness MUST ALSO enforce sequentially — (a) request-level parallel_tool_calls: false WHERE Ollama honors the field (M5/M6 compatibility probe, never assumed), (b) tool-layer sequential execution regardless (KK3-side, always). M6 suite gains: invariant proof + flag-honoring probe + tool-layer sequencing proof. Responses-API mechanics and built-in tools are N/A to the local Ollama artifact. AMENDMENT POINTER (2026-08-26, KDD-0007 + goal review finding, re-validated this run): the harness enforcement contract is now ratified as two-level — responses containing more than one tool call are rejected, accepted calls execute serially with results returned before the next selection; the request-level parallel_tool_calls flag is strictly a compatibility probe, never enforcement (see DOC-kdd-0007-hxs3-muse-glimmer-tooling-adoption notes.limit_enforcement_amendment)."
+  authority_label: "authority_level upstream-reference: Meta's own vendor documentation, owner-supplied as a pilot controlling source; verify against the live runtime — every rule here is a hosted-platform contract and a probe hypothesis for the local artifact, not HX-established fact."
+  origin_note: "Local capture supplied 2026-08-26 in the agent-zero-docs meta/ directory; dev.meta.ai returns HTTP 500 to automated access from hxs-5 (bot block — hxs-3 state log row 3), so the owner supplied it via the browser route; the .md capture carries the record sha256."

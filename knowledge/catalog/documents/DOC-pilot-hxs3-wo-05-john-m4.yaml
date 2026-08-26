@@ -1,0 +1,63 @@
+document:
+  id: "DOC-pilot-hxs3-wo-05-john-m4"
+  title: "05-work-order-john-m4.yaml — WO-HXS3-JOHN-M4-001 (hxs-3 M4: Ollama install + exact muse-glimmer:30b pull + identity freeze + D5-budget systemd)"
+  type: "work-order"
+  declared_purpose: "Delegated contract commissioning john / Esme (session john-m4-20260826-01) for hxs-3 milestone M4 — Ollama install + exact-tag pull + identity freeze + systemd with D5 budgets: install and pin Ollama 0.32.15 on hxs-3 (blueprint-consistent; Muse support floor 0.32.8 + parser boundary fix 0.32.9 both covered); pull EXACTLY muse-glimmer:30b (official library artifact, owner D3); capture the FULL identity evidence (ollama --version, list, show, show --modelfile, /api/show — LM digest, size, family, params, quantization, capabilities text/image/tools/thinking, embedded template + renderer/parser capture incl. ATEM parser presence, license, CLIP projector identity); create alias hx-muse-glimmer bound to the frozen digest (FROM-only, baked params preserved: temperature 1, top_k 64, top_p 0.95); deploy ollama.service + ollama-preload.service with D5-conformant budgets (TimeoutStartSec=600, script ≤538 s), exact alias+digest /api/ps assertion, OLLAMA_HOST=0.0.0.0 with loopback preserved, OLLAMA_NO_CLOUD=1, NUM_PARALLEL=1, MAX_LOADED_MODELS=1, NO firewall anywhere (owner rule). Owner authorizations: owner 'commission M4' 2026-08-26 (state log row 8); endpoint posture per D2 + the no-host-firewall rule (bind 0.0.0.0 from install; the /24 itself is the boundary); NOT authorized: any model other than muse-glimmer:30b, sampling/context overrides (M7 ladder's), reboots, any firewall, any other host change beyond this milestone. Boundaries: hxs-5 session, SSH hxsa@192.168.50.202, askpass helper reads the credential-record row at execution time (no extracted copy, helper deleted at task end), hostname + peer IP verified first, sudo -n only, host key pinned per rick M1 F-05 (strict check); identity guard — the local full digest is the frozen identity (manifest prefix de878ce33ad8 a cross-check only; family/template/parser ambiguity = STOP and report, never guess; drafted llama.cpp fallback is escalation-only, no improvised second serving plane); versioned change (pre/post sha256 of every config file + unified diffs); one bounded correction per failed correctable gate; stop conditions (wrong artifact family, Muse load failure, template/ATEM parser absent, GPU not visible to Ollama, service failure after bounded retry, any Xid). Rollback stops at units/config by default (model-store removal separately approved). Deliverable: 07-esme-m4-install.md (completed PASS — 19/19, zero bounded corrections used; cataloged this run). Second Brain evaluation in-file: hxs-1/hxs-2 M4 install pattern (third validated use); the identity capture and unit contracts become the Meta-X catalog spine at handoff."
+  source:
+    author: "Kimi-K3 (governor)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/05-work-order-john-m4.yaml"
+    section: "§whole-document"
+    ingestion_date: "2026-08-26T06:46:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: [hxs-3, hxs-5]
+    fqdns: []
+    services: [ollama.service, ollama-preload.service]
+    agents: [john, kimi-k3]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+    models: [muse-glimmer:30b]
+  version: ""
+  status: "adopted"
+  authority_level: "delegated-contract"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "kimi-k3"
+      note: "M4 commissioned at the owner word 'commission M4' (hxs-3 state log row 8, 2026-08-26T05:59Z); WO/CP hashes recorded in the log row (a397dabd…/c8df8769… — match this ingestion)"
+    - predicate: "references"
+      target: "DOC-pilot-hxs3-cp-06-john-m4"
+      note: "paired context packet (session john-m4-20260826-01)"
+    - predicate: "depends_on"
+      target: "DOC-goal-hxs3-muse-glimmer-tooling"
+      note: "parent goal GOAL-HXS3-MUSE-001 (goal_file goals/2026-08-26-hxs3-muse-glimmer-tooling.md); owner decisions D1–D8 are the milestone's authority (D2 endpoint scope + no firewall, D3 exact tag, D5 64K after the M7 ladder)"
+    - predicate: "governs"
+      target: "DOC-pilot-hxs3-ev-07-esme-m4-install"
+      note: "paired deliverable (PASS — TASK COMPLETE, 19/19); handoff closes when this run's receipt lands in the hxs-3 state log (row 10: M4 COMPLETE, handoff OPEN pending Carol receipt)"
+    - predicate: "references"
+      target: "DOC-hxs3-muse-glimmer-pilot-v11"
+      note: "controlling source §3.1 (artifact), §3.4 (official prompting/inference contract; ATEM; llama.cpp b10353 diagnostic floor only), §12 (Esme deliverables)"
+    - predicate: "references"
+      target: "DOC-blueprint-llm-server"
+      note: "§2/§3/§5 planes govern the install (OS, service + preload contract, exposure); §8 Meta-X row materializes from this milestone's identity freeze"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-ev-35-esme-preload-budget"
+      note: "the 35-esme D5 budget contract (208 s probes + 300 s single-attempt load + 30 s assertion = 538 s < 600 s ≤ 900 s) applied from day one"
+    - predicate: "depends_on"
+      target: "DOC-protected-ssh-info-hxs1"
+      note: "ratified askpass execution path (hxs-5 → hxs-3); credential read at execution, never printed/logged/stored, helper deleted at task end"
+  validation:
+    validated_at: "2026-08-26T06:46:00Z"
+    freshness: "current"
+    review_due: "not applicable — discharged contract (milestone complete, deliverable 07 PASS 19/19)"
+  sha256: "a397dabd350cb372938109a2ae6aea48a096b89008d364a68324244c921a14ba"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/05-work-order-john-m4.yaml"
+notes:
+  hash_crosscheck: "sha256 matches the value the governor recorded in the hxs-3 state log row 8 at commissioning (a397dabd350cb372938109a2ae6aea48a096b89008d364a68324244c921a14ba) — the cataloged file is the commissioned artifact, unmodified."
+  convention: "Typed/statused/authorized per the WO/CP convention (DOC-pilot-hxs2-wo-02-rick-m1, DOC-pilot-hxs2-wo-05-john-m4): type work-order, status adopted, authority delegated-contract, owner Kimi-K3."

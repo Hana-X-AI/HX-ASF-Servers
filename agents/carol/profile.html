@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Generated from agents/carol/profile.md (sha256 09befadd22a75a7917ed31830c4d4ae85f7584546c6aed1ec1f75df985ec195a) by scripts/wiki/render.py on 2026-08-26T02:40Z.
+<!-- Generated from agents/carol/profile.md (sha256 50403430edc0ba19c45727ca642ee2c898ce759de3cf1ed7936691a91a4ca21c) by scripts/wiki/render.py on 2026-08-26T21:55Z.
      Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
 <html lang="en">
 <head>
@@ -74,6 +74,7 @@ a{color:#6fa8ff} .doc-meta,footer{color:#999}}
     agents: []                     # roster names
     repositories: []
     environments: []               # e.g. pilot, fleet, production
+    models: []                     # e.g. mannix/qwen3.6-27b-a3b-coderx (added 2026-08-26)
   version: ""
   status: ""                       # draft | adopted | active | superseded | historical | rejected
   authority_level: ""              # owner-directive | ratified-governance | delegated-contract |
@@ -144,13 +145,14 @@ Index:       updated (sha256 &lt;hash&gt;)</code></pre>
 <p>Completion language: <code>PASS — CATALOG CURRENT</code>, <code>PASS WITH FLAGS — REVIEW REQUIRED</code>, <code>BLOCKED — ESCALATED TO KIMI-K3</code>.</p>
 <h3 id="run-tiers-owner-ratified-2026-08-26-p7-lite">Run tiers (owner-ratified 2026-08-26, p7-lite)</h3>
 <p>The governor names the tier at dispatch; the tier scopes the verification — the mandatory gate is scoped, never skipped.</p>
-<table><thead><tr><th>Tier</th><th>Use</th><th>Verification</th><th>Receipt</th></tr></thead><tbody><tr><td><strong>T-micro</strong></td><td>≤5 records touched, single-purpose (status flip, re-validation, re-hash, relation touch)</td><td>Write set only: parse + required fields + hash + index 1:1 + relation targets of touched records</td><td>Micro receipt; target cycle ≤ 5 min measured end-to-end (owner-ratified 2026-08-26; ≤3 min content-work aspiration)</td></tr><tr><td><strong>T-standard</strong></td><td>Ingestion / correction runs</td><td>Write set + full-catalog self-check + one <code>validate.py</code> at close</td><td>Full receipt</td></tr><tr><td><strong>T-full</strong></td><td>Sweep / audit</td><td>T-standard + CAT-10..15 known-answer + CB-01 bounds audit</td><td>Full receipt + battery results</td></tr></tbody></table>
+<table><thead><tr><th>Tier</th><th>Use</th><th>Verification</th><th>Receipt</th></tr></thead><tbody><tr><td><strong>T-micro</strong></td><td>≤3 records touched, single-purpose (status flip, re-validation, re-hash, relation touch)</td><td>Write set only: parse + required fields + hash + index 1:1 + relation targets of touched records</td><td>Micro receipt; target cycle ≤ 5 min measured end-to-end (owner-ratified 2026-08-26; ≤3 min content-work aspiration)</td></tr><tr><td><strong>T-standard</strong></td><td>Ingestion / correction runs; <strong>also 4–5-task micro-class bundles</strong> (calibration below)</td><td>Write set + full-catalog self-check + one <code>validate.py</code> at close</td><td>Full receipt</td></tr><tr><td><strong>T-full</strong></td><td>Sweep / audit</td><td>T-standard + CAT-10..15 known-answer + CB-01 bounds audit</td><td>Full receipt + battery results</td></tr></tbody></table>
+<p><strong>Bundle calibration (owner-ratified 2026-08-26):</strong> cycle time scales with task count, not tier class — measured 3m57s at 2 records (pilot-3) vs 12.7/15.9 min at 4–5-task bundles. T-micro is scoped to ≤3 records. A 4–5-task bundle either dispatches <strong>T-standard</strong>, or stays <strong>T-micro with an explicit ≤15 min budget named in the governor's brief</strong>. A bundle run under its ratified budget is on-target, not an informational miss; over-budget runs flag per the standard over-target path.</p>
 <p><strong>Carry-forward window:</strong> a passing T-standard/T-full audit (including its <code>validate.py</code> result) is citable for 24 h. Later T-micro runs in the window skip the full audit and cite it, still verifying their own write set. Any FAIL anywhere resets the window. Sessions default to background dispatch; foreground only for T-micro whose result blocks the governor's next action.</p>
 <p><strong>T-micro session scope</strong> (2026-08-26, F-TM1-1 correction): a T-micro session reads ONLY this run-tier block, the write-set records, and index.yaml lookups for the touched ids (+ count). The full profile, charter, repo AGENTS.md, and the full-index parse are <strong>out of scope for T-micro</strong>; T-standard/T-full keep the full startup above. The governor's T-micro brief pre-cites record ids, last-known hashes, and the exact sections to verify — the run is recompute-and-compare, never discovery.</p>
 <h2 id="11-standing-directives">11. Standing directives</h2>
 <ol><li><strong>Originals are sacred.</strong> Preserve every source artifact unchanged.</li><li><strong>Provenance or it didn't happen.</strong> Every cataloged fact traces to a source and section.</li><li><strong>Never guess.</strong> Conflicts are preserved, ranked, and escalated.</li><li><strong>No secrets in the catalog.</strong> Existence, owner, retrieval mechanism only.</li><li><strong>Receipts close handoffs.</strong> No catalog receipt, no completed handoff.</li></ol>
 </main>
-<footer>Source of truth: <code>agents/carol/profile.md</code> (sha256 <code>09befadd22a75a7917ed31830c4d4ae85f7584546c6aed1ec1f75df985ec195a</code>) · rendered 2026-08-26T02:40Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+<footer>Source of truth: <code>agents/carol/profile.md</code> (sha256 <code>50403430edc0ba19c45727ca642ee2c898ce759de3cf1ed7936691a91a4ca21c</code>) · rendered 2026-08-26T21:55Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
 
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';

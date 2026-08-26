@@ -1,0 +1,41 @@
+work_order:
+  task_id: "WO-HXS4-JOHN-L1-001"
+  parent_goal: "GOAL-HXS2-CODERX-001"
+  goal_file: "goals/2026-08-26-hxs2-qwen36-coderx-backend.md"
+  milestone: "Chat-X bounded alignment + ladder + three profiles (owner: 'each ladder… identical pattern')"
+  assigned_agent: "john / Esme (profile-briefed sub-agent)"
+  objective: >-
+    Bring Chat-X onto the blueprint pattern, bounded: (1) align Ollama to the
+    fleet pin 0.32.15 (from 0.32.9; blueprint consistency — the parked
+    alignment item, role now grown by owner order; reversible by reinstall);
+    (2) run a bounded capacity ladder on qwen3.5:9b-q4_K_M (6.6 GB, digest
+    6488c96f…): rungs 32768, 65536 (its current baked default), 131072 —
+    rung Modelfiles FROM the exact digest with only num_ctx varied, capacity
+    proof per rung (resident, KV measured, needle at ~95% depth, no OOM);
+    (3) freeze aliases hx-qwen3.5-9b-32k / -64k / -128k with per-rung digest
+    equality, repoint the default usage reference to hx-qwen3.5-9b-64k (its
+    already-native default), and record it all as Chat-X's profile set. NO
+    preload/persistence unit in this milestone (Chat-X stays owner-provisioned
+    on-demand; persistence is a separate parked owner decision). NO endpoint
+    change (stays loopback-only per current posture).
+  owner_authorizations:
+    - "Owner 2026-08-26: 'complete each ladder and profile entries so they appear the same way hxs-1's did — identical pattern, same blueprint' (all LLMs 1-4)"
+    - "Blueprint alignment item activated by that order: version pin 0.32.15 (reversible); preload/persistence and LAN posture remain PARKED owner decisions — do NOT implement them here"
+    - "NOT authorized: preload/persistence units, endpoint changes, firewall anything, sampling changes, other models, reboots"
+  boundaries:
+    - "Execution path: session on hxs-5; hxs-4 (192.168.50.203) via SSH hxsa@192.168.50.203; askpass helper READS the credential from the HX Fleet SSH Access Guide credential-record row at execution time — no extracted copy, helper deleted at task end; verify hostname + peer IP first; sudo -n only"
+    - "Identity guard: rung Modelfiles start FROM the exact digest (6488c96f…) with num_ctx as the ONLY changed parameter"
+    - "Fixtures: versioned needle_probe.py (alias-parameterized); copy needed fixtures to the target /tmp, run locally on hxs-4 against 127.0.0.1:11434"
+    - "One bounded correction per failed correctable step; stop conditions: version pin breaks the service (restore 0.32.9 path and report), OOM, any Xid"
+  rollback: "Reinstall prior version path for the pin; aliases removed via ollama rm (tags only); pre-state hashes recorded."
+  controlling_sources:
+    - "10-context-packet-john-chatx.yaml (this packet)"
+    - "hxs-1 M6 pattern: 22-esme-m6-capacity-ladder.md, 29-esme-m6b-profiles.md"
+    - "servers/BLUEPRINT-llm-server.md §4 + Chat-X alignment items; blueprint pin 0.32.15"
+    - "fixtures dir: pilots/PILOT-HX1-OLLAMA-QWEN27B-001/fixtures/"
+  deliverable: "10-esme-chatx-ladder-profiles.md: pin evidence (0.32.9 -> 0.32.15, service + model intact), per-rung capacity + KV + needle table, alias digests with equality proofs, final state (-64k as default reference), sanitized command log, Task May Proceed receipt"
+  second_brain_evaluation:
+    opportunity_identified: "yes"
+    roadmap_capability_or_pattern: "ladder pattern on the lightest host — completes the fleet's four-host profile uniformity"
+    disposition: "implemented — Chat-X's profile set and pin evidence become catalog content at handoff"
+    evidence_and_reasoning: "the blueprint's uniformity claim only means something when all four hosts carry the same shape; this is the last one"

@@ -1,0 +1,49 @@
+document:
+  id: "DOC-cicd-pipeline-doc"
+  title: "docs/cicd-pipeline.md — CI/CD pipeline human-facing documentation (p8, owner-ratified 2026-08-26; step list, lifecycle, review-fix loop, conventions, setup, deviations D1–D4)"
+  type: "runbook"
+  declared_purpose: "Human-facing documentation of the p8 CI/CD pipeline for HX-ASF-Servers (owner-ratified 2026-08-26, plan argent-groot-ant-man): the 18-step list across the gates / coderabbit-review / pr-manage jobs; the lifecycle (Mermaid flowchart: push -> gates + review + pr-manage -> required checks -> auto-merge squash into main); the review-fix loop (CodeRabbit detects on the branch diff vs main, the factory agent — Kimi-K3 / john — fixes and re-pushes, <=2 review passes per CodeRabbit guidance, remaining nits ignored deliberately; a run with no complete event fails the gate loudly); conventions (branch prefixes feature/ fix/ chore/; main is the factory's working branch — protection requires the two checks for PRs only, governor-on-main preserved; bot/CI commits carry no co-author; notifications via PR comments + check statuses); one-time setup (owner web steps for the CodeRabbit organization + Agentic API key + CODERABBIT_API_KEY repo secret + optional GitHub App; bootstrap already executed via API — allow_auto_merge, Actions workflow permissions, main branch protection); a credential note (the fine-grained PAT in the local credential store returned 401 on 2026-08-26 — revoke/replace; the classic PAT works); deviations from the p8 letter ratified with the plan — D1 factory agent commits fixes (CodeRabbit CLI does not commit), D2 <10 min happy path holds for main pushes only (branch review gate 7–30+ min), D3 approve-and-merge = green review check + platform auto-merge, D4 gitleaks as the security scan (no dependency manifests — Dependabot N/A; CodeQL stays available as a later addition); and the standing-directive Second Brain evaluation (CI run receipts as catalogable governance-signal evidence — recommended for a future iteration, deliberately not implemented now to avoid scope expansion beyond the ratified plan)."
+  inferred_value: "INFERENCE: this is the operator/owner surface for the pipeline — the setup checklist (secret activation, optional App) and the D1–D4 ratified deviations are what a future session needs to avoid re-deriving the plan-vs-implementation deltas; the Second Brain deferral is recorded with its reasoning, so a later CI-evidence cataloging wave has an explicit, dated starting point."
+  source:
+    author: "Kimi-K3 (governor; plan p8 argent-groot-ant-man)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/docs/cicd-pipeline.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-26T20:08:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: [kimi-k3, john]
+    repositories: [HX-ASF-Servers]
+    environments: []
+    models: []
+  version: "p8 (2026-08-26)"
+  status: "active"
+  authority_level: "ratified-governance"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "describes"
+      target: "DOC-ci-cd-workflow"
+      note: "the pipeline definition this document explains (18 steps, lifecycle, gates semantics)"
+    - predicate: "references"
+      target: "DOC-coderabbit-config"
+      note: "the review configuration its setup section refers to (request_changes_workflow + finishing_touches.autofix already carried for the App day)"
+    - predicate: "produced_by"
+      target: "kimi-k3"
+      note: "p8 pipeline wave, owner-ratified 2026-08-26 (hxs-2 state log row 33)"
+  validation:
+    validated_at: "2026-08-26T20:08:00Z"
+    freshness: "current"
+    review_due: "on any pipeline behavior change (doc + record re-ingest); wiki --check guards the .html sibling continuously"
+  sha256: "6b99bae481a2655906c20737eaa3928bc9b66839ca4d12bfcba265f59673434c"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/docs/cicd-pipeline.md"
+notes:
+  dual_format: "Per the dual-format convention (owner-ratified Q2, AGENTS.md): ONE record for the Markdown source of truth; the rendered sibling docs/cicd-pipeline.html exists (render.py-managed, in scripts/wiki/manifest.txt line 42 — never hand-edit HTML) and is not separately cataloged."
+  protected_reference: "The setup section names the CODERABBIT_API_KEY repo secret and references the local credential store (fine-grained PAT 401 note) — existence and retrieval mechanism only; no secret value in the document or in this record (profile §6)."

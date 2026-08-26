@@ -1,0 +1,39 @@
+work_order:
+  task_id: "WO-HXS2-JOHN-M6-001"
+  parent_goal: "GOAL-HXS2-CODERX-001"
+  goal_file: "goals/2026-08-26-hxs2-qwen36-coderx-backend.md"
+  milestone: "M6+M6b — context ladder on the exact digest (32K/64K/128K) + three-profile freeze, hxs-1 pattern"
+  assigned_agent: "john / Esme (profile-briefed sub-agent)"
+  objective: >-
+    Run the hxs-1-shaped capacity ladder on Coder-X's exact frozen artifact
+    (ca661423d6b5…): create rung Modelfiles FROM the frozen digest with only
+    PARAMETER num_ctx varied (32768 baked baseline, 65536 operating per D5,
+    131072 extended to match the hxs-1 profile set); prove each rung (resident
+    100% VRAM, per-GPU split, KV growth f16 measured linear, needle at ~95%
+    depth found with done_reason=stop, D8-quality spot flat vs the 32K
+    baseline, no OOM/CPU fallback/Xid); then freeze the three aliases
+    hx-qwen3.6-coderx-32k / -64k / -128k with per-rung digest equality,
+    repoint preload + hx2.conf to hx-qwen3.6-coderx-64k, re-prove residency
+    (ctx 65536 effective, Forever), and leave the source tag and both other
+    aliases in-store (tags only, not loaded).
+  owner_authorizations:
+    - "Owner 2026-08-26: 'complete each ladder and profile entries so they appear the same way hxs-1's did — identical pattern, same blueprint' (state log row 11)"
+    - "D5 ratified: operating context 65,536 after the ladder; the ladder itself validates 32K then 64K then 128K on the exact digest"
+    - "NOT authorized: sampling changes, context beyond 131072, other models, reboots, model-store deletions, endpoint changes"
+  boundaries:
+    - "Execution path: session on hxs-5; hxs-2 (192.168.50.201) via SSH hxsa@192.168.50.201; askpass helper READS the credential from the HX Fleet SSH Access Guide credential-record row at execution time — no extracted copy, helper deleted at task end; verify hostname + peer IP first; sudo -n only; host key pinned (F-05)"
+    - "Identity guard: every rung Modelfile starts FROM the frozen digest artifact (ca661423d6b5…) with num_ctx as the ONLY changed parameter; baked params otherwise preserved (draft_num_predict 3, native sampling)"
+    - "Fixtures: use the versioned fixtures (needle_probe.py is alias-parameterized — pass the rung alias + a model arg per its required signature; copy needed fixtures to the target /tmp and run locally on hxs-2 against 127.0.0.1:11434)"
+    - "One bounded correction per failed correctable rung; stop conditions: OOM, unapproved CPU fallback, any Xid, needle miss at 32K or 64K (128K needle miss = extended-fail, fall back to two profiles and report — do not force it)"
+  rollback: "Preload + hx2.conf repointed back to hx-qwen3.6-coderx (one-line versioned edits); aliases removed via ollama rm (tags only — blobs and base tag intact); pre-state hashes recorded."
+  controlling_sources:
+    - "08-context-packet-john-m6.yaml (the paired context packet for this work order)"
+    - "hxs-1 M6 pattern: 22-esme-m6-capacity-ladder.md, 29-esme-m6b-profiles.md (rung procedure, digest-equality, repoint)"
+    - "goal file D5; servers/BLUEPRINT-llm-server.md §4 (context plane)"
+    - "fixtures dir: pilots/PILOT-HX1-OLLAMA-QWEN27B-001/fixtures/ (needle_probe.py, fixtures_corpus.py)"
+  deliverable: "08-esme-m6-ladder-profiles.md: per-rung capacity + KV + needle + quality table, alias digests with equality proofs, repoint diffs + hashes, final residency proof (-64k, 100% VRAM, ctx 65536, Forever), link-speed under load, sanitized command log, Task May Proceed receipt"
+  second_brain_evaluation:
+    opportunity_identified: "yes"
+    roadmap_capability_or_pattern: "hxs-1 ladder/profile pattern — second validated use (uniformity across hosts)"
+    disposition: "implemented — rung evidence and the three aliases become Coder-X's catalog context profile at handoff"
+    evidence_and_reasoning: "the whole point of the blueprint: ladders are measured once per model, never assumed — this run produces Coder-X's own numbers"

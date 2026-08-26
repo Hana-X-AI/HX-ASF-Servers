@@ -1,0 +1,70 @@
+document:
+  id: "DOC-pilot-hxs3-ev-04-rick-os-readiness"
+  title: "04-rick-hxs3-os-readiness.md — rick M1 hxs-3 OS readiness report (WO-HXS3-RICK-M1-001; 13/13 PASS; blueprint mask set exact)"
+  type: "evidence"
+  declared_purpose: "Milestone completion evidence for WO-HXS3-RICK-M1-001 (session rick-m1-20260826-01, window 2026-08-26T04:58:32Z→05:04:24Z host clock UTC, owner plan approval 2026-08-26 state log seq 1): hxs-3's OS plane is proven ready for the Muse Glimmer tooling backend — 13 defined, 13 executed, 13 PASS, 0 FAIL/BLOCKED/NOT RUN; no probe retries, no corrections (the hxs-2 dpkg-query escaping lesson pre-applied). Exactly two mutations: (a) systemctl mask of suspend/hibernate/hybrid-sleep/suspend-then-hibernate targets — the EXACT blueprint set (hybrid-sleep IS in; the hxs-2 variant NOT used; sleep.target deliberately untouched), 3-view verified (/dev/null symlinks ×4); (b) rfkill soft block of the Wi-Fi device — rfkill1 = phy0/wlp5s0 at PCI 0000:05:00.0 (MAC 58:91:cf:e7:53:74 matches discovery), no routes/sessions proven FIRST (state DOWN, 0 IPs, 0 routes, netplan no wifi stanza, NetworkManager inactive), block via sysfs state file (rfkill binary ABSENT on hxs-3 — second host confirmed, F-03), state=0 soft=1 held across an independent second session; systemd-rfkill persistence proven — the block event triggered the service, save file /var/lib/systemd/rfkill/pci-0000:05:00.0:wlan re-created with content '1' (= soft-blocked; encoding confirmed by the untouched bluetooth control pair, F-04); boot-persistence proven by mechanism + saved state, not by an observed reboot (R-01 accepted-by-design). Driver/DKMS re-proof: 580.173.02 + CUDA 13.0, both PNY RTX 5060 Ti bound nvidia, DKMS built for the running 7.0.0-30 AND 7.0.0-28; zero NVRM Xid across 8 retained boots; AER = benign capability lines only; 0 failed units; wait-online SUCCESS; root ext4 3.4 T free (1 %) — D1 headroom for the ~18 GB artifact trivial; Secure Boot disabled untouched; NO FIREWALL verified absent on all three managers (ufw inactive, nftables empty, iptables zero rules, firewalld not installed — nothing created); listeners :22 + loopback stub DNS only. Regression + independent-second-session proofs PASS; rollback inverses exact and reboot-free. Findings F-01..F-09 + R-01 recorded (see notes). Completion PASS — TASK COMPLETE; Task May Proceed: YES."
+  inferred_value: "INFERENCE: the third host proof of the 13-check readiness shape and the FIRST uniform application of the blueprint mask set — the blueprint's uniformity claim now holds on three hosts (hxs-1 → hxs-2 → hxs-3); F-03 (rfkill binary absent — sysfs is the mechanism) and F-04 (save file stores the kernel soft flag) are now two-host-confirmed fleet facts, and F-08 (timezone drift to America/Panama) means every future hxs-3 evidence timestamp must be read as EST/-05:00 unless re-derived (governor-verified, hxs-3 state log row 5)."
+  source:
+    author: "rick (session rick-m1-20260826-01)"
+    provided_by: "rick via Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/04-rick-hxs3-os-readiness.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-26T05:35:00Z"
+  owner: "rick"
+  applies_to:
+    hosts: [hxs-3, hxs-5]
+    fqdns: []
+    services: [suspend.target, hibernate.target, hybrid-sleep.target, suspend-then-hibernate.target, systemd-rfkill.service, wpa_supplicant.service]
+    agents: [rick]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+    models: [muse-glimmer:30b]
+  version: ""
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "evidences"
+      target: "DOC-pilot-hxs3-wo-02-rick-m1"
+      note: "WO-HXS3-RICK-M1-001 discharged PASS — TASK COMPLETE (13/13; zero corrections needed; no stop condition hit; auth first-try throughout)"
+    - predicate: "evidences"
+      target: "DOC-pilot-hxs3-cp-03-rick-m1"
+      note: "packet's 13-check enumeration executed verbatim; unknowns resolved (kernel -30 live, DKMS state, rfkill indices, TOFU pin, baselines)"
+    - predicate: "evidences"
+      target: "DOC-goal-hxs3-muse-glimmer-tooling"
+      note: "M1 milestone of GOAL-HXS3-MUSE-001 complete; governor live-verified at hxs-3 state log row 5 (2026-08-26T05:13Z); handoff OPEN until this run's receipt is cited (packet handoff clause)"
+    - predicate: "produced_by"
+      target: "rick"
+      note: "session rick-m1-20260826-01 from hxs-5; every session an independent fresh SSH connection (no control-master reuse)"
+    - predicate: "configures"
+      target: "hxs-3 systemd sleep targets + rfkill"
+      note: "suspend/hibernate/hybrid-sleep/suspend-then-hibernate masked ×4 (/dev/null symlinks — the exact blueprint set); rfkill1 (phy0/wlp5s0) soft-blocked via /sys/class/rfkill/rfkill1/state=0; systemd-rfkill saved blocked state (boot-persistent by mechanism — R-01)"
+    - predicate: "references"
+      target: "DOC-tkv-hxs3-discovery"
+      note: "identity corroborated against the 2026-08-12 as-found record (machine-id/MAC/IP all match; system UUID newly captured); F-01 kernel drift (7.0.0-28 → 7.0.0-30 at 2026-08-25T16:23Z, outage window) and F-08 timezone drift — live host is the authority; discovery stays historical as-found (superseded on those two points only)"
+    - predicate: "depends_on"
+      target: "DOC-protected-ssh-info-hxs1"
+      note: "ratified askpass pattern held: credential read at execution only, helper + volatile workspace deleted at task end; credential-row shape check by field-length probe only — NO disclosure incident this session (the hxs-2 M1 lesson pre-applied)"
+    - predicate: "risks"
+      target: "R-01 (boot-persistence of both mutations proven by systemd semantics + saved state, not by an observed reboot)"
+      note: "accepted-by-design (reboots not authorized at M1; D6 pre-approves the M8 cold-reboot cycles); first reboot spot-check: is-enabled ×4 expect masked + rfkill state expect 0"
+    - predicate: "evidences"
+      target: "DOC-backend-meta-x"
+      note: "Meta-X registration support: hxs-3 OS plane ready at M1 — the planned capability's host foundation (endpoint install at M4)"
+  validation:
+    validated_at: "2026-08-26T06:05:00Z"
+    freshness: "current"
+    review_due: "at M2/M8 evidence index; R-01 spot check at the first authorized reboot"
+  sha256: "f2f77c4d9dd9d280134f5d7bb1f1c675e886c0477785042c8420c96a8a28d8c9"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/04-rick-hxs3-os-readiness.md"
+notes:
+  findings_register: "F-01 (drift, resolved): kernel 7.0.0-28 → 7.0.0-30 since as-found; host rebooted 2026-08-25 16:23 UTC (same outage window class as hxs-1/hxs-2/hxs-5); driver stack live-proven on -30, DKMS built for -30 and -28. F-02 (note): DKMS not built for 7.0.0-29 (superseded intermediate image; matters only if -29 ever manually booted). F-03 (mechanism): rfkill binary ABSENT on hxs-3 (second host confirmed after hxs-2) — the sysfs state file is the block/unblock mechanism. F-04 (confirmed semantics): systemd-rfkill save file stores the kernel soft flag (1 = blocked), confirmed by the bluetooth control pair; service ran 13 times across the journal. F-05 (D-record): TOFU host-key pin — no prior known_hosts pin for 192.168.50.202 existed on hxs-5; first connection accept-new per the owner-authorized work order, identity corroborated vs discovery machine-id/MAC/IP; ED25519 fingerprint SHA256:R/3mdfv7J0Fajo8yryT7JB6B4EoBm47W2rLX+siHEog recorded in evidence §2 (public by design) — future hxs-3 tasks pin StrictHostKeyChecking=yes; a mismatch must halt the session. F-06 (observation): wpa_supplicant enabled+active with no configured network; rendered moot by the rfkill block; RECOMMENDATION (not executed): formal disablement under a future authorized service change. F-07 (record-only): routine package upgrades pending; no installs authorized. F-08 (drift, record-only): timezone Etc/UTC → America/Panama (EST, -0500) since discovery; clock synchronized, NTP active, RTC in UTC — hxs-3 evidence timestamps are EST/-05:00 (governor-verified, state log row 5: 'record in evidence rules'); discovery superseded on this point. F-09 (record-only): stale rfkill save file /var/lib/systemd/rfkill/pci-0000:04:00.0:wlan (content 0, dated 2026-08-12) — no device at that PCI address; harmless leftover, untouched."
+  sanitization_disclosure: "§11 (profile §11 honesty): the credential-row shape check on hxs-5 used an awk field probe returning field count and a masked label only; the value was never printed, logged, written to any file, or repeated — NO disclosure incident occurred this session (the hxs-2 M1 mis-scoped-mask lesson pre-applied). Catalog handling per profile §6: no secret value is quoted or stored anywhere in the catalog."
+  source_correction: "OPEN CORRECTION in the source (2026-08-26, post-signature, governor review finding — corrected openly with provenance inline, per the server records contract; mtime 05:49:59Z): the §11 sanitization paragraph originally retained a credential-derived value_len metric; it was REMOVED from the evidence (masked-value metrics of the secret do not belong in retained evidence even without the value; it was also inaccurate), and the §11 'no hashes' claim was refined to 'no secrets, secret-derived hashes, tokens, or user data' — distinguishing the intentionally retained PUBLIC SSH host-key fingerprint (by design non-secret, not credential-derived) from secret-derived hashes. Remaining content unchanged. This record's findings_register and declared_purpose are unaffected (they never carried the metric); the sanitization_disclosure note above reflects the corrected text. Hash chain: 0f0cab7a… (first ingestion pass 2026-08-26T05:28Z) → f2f77c4d… (corrected source, re-hashed at close 06:02Z)."
+  second_brain: "In-file evaluation: OS-readiness checklist, THIRD validated host use (hxs-1 → hxs-2 → hxs-3); blueprint mask set applied uniformly for the first time; disposition implemented — checklist, F-03 (binary-absent sysfs mechanism, two hosts), F-04 (save-file encoding), and the F-05 pin become catalog content at handoff (this record)."
+  mask_set_note: "First uniform blueprint-set application: suspend/hibernate/hybrid-sleep/suspend-then-hibernate masked, sleep.target deliberately untouched — the hxs-2 divergence (sleep in, hybrid-sleep out; hxs-2 state log row 6) was pre-applied as a lesson, not repeated; hxs-2 alignment remains queued to rick's next hxs-2 session."

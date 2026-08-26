@@ -1,12 +1,12 @@
 document:
   id: "DOC-tkv-corpus-omniroute"
-  title: "/opt/tkv-local/OmniRoute/OmniRoute-release-v3.8.50 — upstream source snapshot of OmniRoute (release v3.8.50)"
+  title: "/opt/tkv-local/OmniRoute-release-v3.8.51 — upstream source snapshot of OmniRoute (release v3.8.51)"
   type: "corpus"
-  declared_purpose: "Upstream source snapshot of OmniRoute release v3.8.50 (LLM routing gateway with dashboard). Verified 2026-08-25 against OmniRoute-release-v3.8.50/README.md (OmniRoute dashboard imagery header) and the presence of its own AGENTS.md/CLAUDE.md. Scope narrowed 2026-08-25 (governor batch C6): the HX evaluation material sharing the wrapper tree is cataloged as DOC-tkv-omniroute-hx-evaluation."
+  declared_purpose: "Upstream source snapshot of OmniRoute release v3.8.51 (LLM routing gateway with dashboard). Verified 2026-08-26 against OmniRoute-release-v3.8.51/package.json (\"version\": \"3.8.51\"), README.md (OmniRoute dashboard imagery header), and the presence of its own AGENTS.md/CLAUDE.md. Scope narrowed 2026-08-25 (governor batch C6): the HX evaluation material sharing the wrapper tree is cataloged as DOC-tkv-omniroute-hx-evaluation. Provenance: owner-lane reorg 2026-08-26 18:55–18:58Z (hxs-2 log row 30) — /opt/tkv-local/OmniRoute renamed OmniRoute_old/, new top-level /opt/tkv-local/OmniRoute-release-v3.8.51/ created, v3.8.50 removed from the top level; record retargeted same day (Carol T-micro, F-M5C-1); prior digest and path preserved in notes as history."
   source:
     author: "upstream project (OmniRoute); mirrored into /opt/tkv-local by Agent Zero"
     provided_by: "Agent Zero"
-    origin: "/opt/tkv-local/OmniRoute/OmniRoute-release-v3.8.50"
+    origin: "/opt/tkv-local/OmniRoute-release-v3.8.51"
     section: "§whole-document"
     ingestion_date: "2026-08-25T06:12:00Z"
   owner: "Agent Zero"
@@ -17,7 +17,7 @@ document:
     agents: []
     repositories: [tkv-local]
     environments: [fleet]
-  version: "v3.8.50"
+  version: "v3.8.51"
   status: "adopted"
   authority_level: "upstream-reference"
   supersedes: []
@@ -29,17 +29,18 @@ document:
   relations:
     - predicate: "references"
       target: "TKV source-snapshot corpus (owner-directed sweep, state log row 32)"
-      note: "11,590 files excluding .git internals; deep per-file cataloging on demand via retrieval packages"
+      note: "13,098 files excluding .git internals (v3.8.51 top-level tree, 2026-08-26); deep per-file cataloging on demand via retrieval packages"
     - predicate: "references"
       target: "DOC-tkv-omniroute-hx-evaluation"
-      note: "sibling record for the HX evaluation material in the wrapper tree (partitioned 2026-08-25, C6); HX evaluation is NOT upstream authority"
+      note: "sibling record for the HX evaluation material in the OmniRoute_old wrapper tree (partitioned 2026-08-25, C6); HX evaluation is NOT upstream authority"
   validation:
-    validated_at: "2026-08-25T21:02:00Z"
+    validated_at: "2026-08-26T20:08:00Z"
     freshness: "current"
     review_due: "2026-09-24 (corpus manifest re-hash) or on any corpus update"
-  sha256: "1fdb6f3600e4091a751b71cfeb897f2a6a081f2b7657bfd859948b4530e894ac"
-  canonical_location: "/opt/tkv-local/OmniRoute/OmniRoute-release-v3.8.50"
+  sha256: "c5a65089935284a2c245612ece37c27e7cebfee39cd09e163a5d4ff5c48c6fc3"
+  canonical_location: "/opt/tkv-local/OmniRoute-release-v3.8.51"
 notes:
-  checksum_method: "sha256 = digest of the sorted relative-path file manifest (11590 files, names only), NOT content hashes; regenerated 2026-08-25 (scope narrowed to the upstream subtree per C6; earlier wrapper-tree manifest 5d980711… covered 11,594 files); directory canonical_location preserved. Manifest re-hash scheduled 2026-09-24 (run-1 follow-up) stands. .git internals excluded from the manifest and from cataloging. Form alignment batch 7 (F-B6-6, hxinfra-archive reference form): method/scope/count text consolidated wholly into notes.checksum_method; the sha256 field now carries ONLY the bare 64-char digest; digest VALUE unchanged (names-only manifest retained until a future content-sensitive migration)."
+  checksum_method: "sha256 = digest of the sorted relative-path file manifest (13,098 files in the v3.8.51 tree, names only), NOT content hashes; regenerated 2026-08-26 on the retargeted top-level tree (paths relative to the tree root without './' prefix, LC_ALL=C sort, manifest text digested). Method reproduction verified 2026-08-26: the identical pipeline reproduces the prior v3.8.50 digest 1fdb6f36… exactly on the surviving backup copy (see reorg_history). Earlier history: regenerated 2026-08-25 (scope narrowed to the upstream subtree per C6; earlier wrapper-tree manifest 5d980711… covered 11,594 files); the v3.8.50 subtree manifest covered 11,590 files at /opt/tkv-local/OmniRoute/OmniRoute-release-v3.8.50. Manifest re-hash scheduled 2026-09-24 (run-1 follow-up) stands. .git internals excluded from the manifest and from cataloging. Form alignment batch 7 (F-B6-6, hxinfra-archive reference form): method/scope/count text consolidated wholly into notes.checksum_method; the sha256 field carries ONLY the bare 64-char digest (names-only manifest retained until a future content-sensitive migration)."
   upstream_provenance: "upstream URL/commit: unavailable — tree is not a git checkout (no .git metadata present); unpacked archive snapshot"
-  verification: "C6 verification 2026-08-25: wrapper tree contains OmniRoute-release-v3.8.50 + four hx-omniroute HTML documents (matches the pre-split record's claim); upstream identity per OmniRoute-release-v3.8.50/README.md."
+  verification: "2026-08-26 retarget verification: top-level /opt/tkv-local/OmniRoute-release-v3.8.51 carries package.json \"version\": \"3.8.51\", the README.md OmniRoute dashboard imagery header, and its own AGENTS.md/CLAUDE.md. Prior C6 verification 2026-08-25: wrapper tree contained OmniRoute-release-v3.8.50 + four hx-omniroute HTML documents (matches the pre-split record's claim)."
+  reorg_history: "Owner-lane reorg 2026-08-26 18:55–18:58Z (governor-verified, hxs-2 log row 30): /opt/tkv-local/OmniRoute renamed OmniRoute_old/; new top-level /opt/tkv-local/OmniRoute-release-v3.8.51/; v3.8.50 removed from the top level. Prior canonical_location /opt/tkv-local/OmniRoute/OmniRoute-release-v3.8.50 and prior sha256 1fdb6f3600e4091a751b71cfeb897f2a6a081f2b7657bfd859948b4530e894ac (11,590 files) preserved here as history. 2026-08-26 findings: a byte-identical nested copy exists at OmniRoute_old/OmniRoute-release-v3.8.51 (historical duplicate — NOT cataloged separately per the governor brief); the removed v3.8.50 tree survives as OmniRoute_old/.OmniRoute-release-v3.8.50-replacement-backup (names-only manifest, 11,590 files, reproduces the prior digest 1fdb6f36… exactly — identity confirmed; existence reported to the governor, not cataloged by Carol). F1 DISPOSITION (governor, hxs-2 state log row 32, 2026-08-26T20:00Z): the surviving v3.8.50 backup at /opt/tkv-local/OmniRoute_old/.OmniRoute-release-v3.8.50-replacement-backup is LEFT IN PLACE as the owner's safety copy — NOT separately cataloged; its existence + identity proof are recorded here only (identity confirmed by Carol's receipt 2026-08-26T1957Z-carol-tmicro-omniroute-reingest.md, F1). F2 disposition (same row): the nested OmniRoute_old/OmniRoute-release-v3.8.51 duplicate is names-manifest-identical to the top-level v3.8.51 — noted, not cataloged."

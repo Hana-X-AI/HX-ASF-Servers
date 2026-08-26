@@ -21,7 +21,10 @@ when the required checks are green. No manual approval gates anywhere.
 5. Unit tests — fixtures regression suite (`fixtures/test_fixtures.py`).
 6. Unit tests — wiki renderer suite (`scripts/wiki/test_render.py`).
 7. Build validation — wiki HTML in sync (`scripts/wiki/render.py --check`).
-8. Catalog validation (`scripts/validate.py`).
+8. Catalog validation (`scripts/validate.py --ci` — portable mode: every catalog
+   check runs, except CAT-07's canonical_location *existence* probe, which is
+   anchored to the governor host by design — repo home plus `/opt/tkv-local` —
+   and stays a local-only check in the full mode).
 9. Security scan — gitleaks over the pushed commit range, redacted.
 
 **Job `coderabbit-review`** — non-`main` pushes only:
@@ -85,7 +88,9 @@ Owner (web):
    over-limit). US region is the default (`--region eu` for EU accounts).
 2. Generate an **Agentic API key** (app.coderabbit.ai → Settings → API Keys).
 3. Add it as repo secret **`CODERABBIT_API_KEY`** (GitHub → repo → Settings →
-   Secrets and variables → Actions).
+   Secrets and variables → Actions). The workflow also accepts a
+   `CODERABBIT_API_KEY_2` fallback name (the repo currently carries the key
+   under that name, 2026-08-26).
 4. Optional: install the CodeRabbit GitHub App for PR-native review threads and
    Autofix (`.coderabbit.yaml` already carries `request_changes_workflow` and
    `finishing_touches.autofix` for that day; Autofix needs a Pro plan).

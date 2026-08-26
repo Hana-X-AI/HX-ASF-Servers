@@ -1,0 +1,71 @@
+document:
+  id: "DOC-pilot-hxs3-wo-08-john-m7"
+  title: "08-work-order-john-m7.yaml — WO-HXS3-JOHN-M7-001 (hxs-3 M7: context ladder 32K/64K/128K on the exact digest + three-profile freeze, hxs-1 pattern; DISCHARGED — milestone complete)"
+  type: "work-order"
+  declared_purpose: "Delegated contract commissioning john / Esme (session john-m7-20260826-01) for hxs-3 milestone M7 — run the hxs-1-shaped capacity ladder on Meta-X's exact frozen artifact (de878ce33ad8…): BEFORE creating any rung, verify that hx-muse-glimmer:latest references the expected frozen digest and frozen layers (ollama show + manifest-layer comparison — the governor's pre-execution FROM-verification amendment, review batch 11), then create rung Modelfiles with FROM set to that alias (or the complete local blob path from ollama show --modelfile — resolvable either way, never a bare digest), num_ctx the ONLY changed parameter, model/projector/template/parser/baked parameters otherwise preserved (32768 current VRAM-default baseline, 65536 operating per D5, 131072 extended — the artifact's own max context); prove each rung (resident 100% VRAM, per-GPU split, KV growth f16 measured linear, needle at ~95% depth found with done_reason=stop, D8-quality spot flat vs baseline, no OOM/CPU fallback/Xid, link speed under load captured); then freeze the three aliases hx-muse-glimmer-32k / -64k / -128k with per-rung digest equality, repoint preload + drop-in to hx-muse-glimmer-64k, re-prove residency (ctx 65536 effective, Forever), and leave the source tag and both other aliases in-store (tags only). Owner authorizations: owner 2026-08-26 'complete each ladder and profile entries so they appear the same way hxs-1's did — identical pattern, same blueprint'; D5 ratified (operating context 65,536 after the ladder — ladder validates 32K then 64K then 128K on the exact digest); NOT authorized: sampling changes, context beyond 131072, other models, reboots, model-store deletions, endpoint changes, a second serving plane. Boundaries: hxs-5 session, SSH hxsa@192.168.50.202, askpass helper READS the credential from the HX Fleet SSH Access Guide credential-record row at execution time (no extracted copy, helper deleted at task end), hostname + peer IP verified first, sudo -n only, host key pinned (F-05); identity guard — every rung Modelfile starts FROM the frozen digest artifact with num_ctx the ONLY changed parameter, baked params otherwise preserved (temperature 1, top_k 64, top_p 0.95), the embedded Muse template never modified; fixtures versioned needle_probe.py (alias-parameterized — rung alias + required model arg), copied to the target /tmp and run locally on hxs-3 against 127.0.0.1:11434; dense-model VRAM watch (17.8 GB weights + 1.92B projector + KV — measured per rung); stop conditions OOM, unapproved CPU fallback, any Xid, needle miss at 32K or 64K (128K miss = extended-fail, fall back to two profiles and report — do not force it). Rollback: preload + drop-in repointed back to hx-muse-glimmer (one-line versioned edits), aliases removed via ollama rm (tags only), pre-state hashes recorded. Deliverable: 09-esme-m7-ladder-profiles.md (per-rung capacity + KV + needle + quality table, alias digests with equality proofs, repoint diffs + hashes, final residency proof at -64k, link-speed under load, sanitized command log, Task May Proceed receipt). Second Brain evaluation in-file (hxs-1 ladder/profile pattern — third validated use, uniformity claim on the dense model; disposition implemented — rung evidence and the three aliases become Meta-X's catalog context profile at handoff)."
+  inferred_value: "INFERENCE: this is the capacity gate the D5 64K operating decision stands on — the dense ~29.6B model on x8-wired links is the blueprint's hardest capacity case so far, so its ladder numbers must be measured here and never transferred from another host; the pre-execution FROM-verification clause is the fleet's guardrail against rung-identity drift (no rung may silently rebind to a moved tag)."
+  source:
+    author: "Kimi-K3 (governor)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/08-work-order-john-m7.yaml"
+    section: "§whole-document"
+    ingestion_date: "2026-08-26T07:47:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: [hxs-3, hxs-5]
+    fqdns: []
+    services: [ollama.service, ollama-preload.service]
+    agents: [john, kimi-k3]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+    models: [muse-glimmer:30b, hx-muse-glimmer]
+  version: ""
+  status: "adopted"
+  authority_level: "delegated-contract"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "kimi-k3"
+      note: "M7 commissioned at the owner ladders+profiles order (hxs-3 state log row 11, 2026-08-26T07:13Z; the same owner order commissioned the hxs-2 M6 + Chat-X ladders — hxs-2 state log row 13)"
+    - predicate: "references"
+      target: "DOC-pilot-hxs3-cp-09-john-m7"
+      note: "paired context packet (session john-m7-20260826-01)"
+    - predicate: "depends_on"
+      target: "DOC-goal-hxs3-muse-glimmer-tooling"
+      note: "parent goal GOAL-HXS3-MUSE-001 (goal_file goals/2026-08-26-hxs3-muse-glimmer-tooling.md); owner decisions D1–D8 are the milestone's authority (D3 frozen identity, D5 64K operating after the ladder, D8 quality spot per rung)"
+    - predicate: "references"
+      target: "DOC-pilot-hxs3-ev-07-esme-m4-install"
+      note: "identity + baseline basis: frozen digest de878ce33ad8…64c1, alias hx-muse-glimmer 472ad84e752d…ad99, ctx 32768 VRAM-default (F-J2), residency 17,839,465,428 B 100% VRAM both GPUs, x8 link ceiling quantified (F-J7 — carried as this ladder's capacity variable)"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-ev-22-esme-m6-capacity-ladder"
+      note: "hxs-1 M6 capacity-ladder pattern (controlling source 22-esme-m6-capacity-ladder.md) — third validated use, on the dense model"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-ev-29-esme-m6b-profiles"
+      note: "hxs-1 M6b three-profile freeze pattern (controlling source 29-esme-m6b-profiles.md): alias set with digest equality + preload repoint to the 64k profile"
+    - predicate: "references"
+      target: "DOC-blueprint-llm-server"
+      note: "§4 governs the profile/alias plane (controlling source); the §8 Meta-X row gains its profile aliases from this milestone ('profiles at M7')"
+    - predicate: "references"
+      target: "DOC-hxs3-muse-glimmer-pilot-v11"
+      note: "controlling source §10 (context behavior)"
+    - predicate: "depends_on"
+      target: "DOC-protected-ssh-info-hxs1"
+      note: "ratified askpass execution path (hxs-5 → hxs-3); credential read at execution, never printed/logged/stored, helper deleted at task end"
+    - predicate: "governs"
+      target: "DOC-pilot-hxs3-ev-09-esme-m7-ladder-profiles"
+      note: "DISCHARGED by the M7 deliverable 09-esme-m7-ladder-profiles.md (PASS — all three rungs + freeze + repoint; governor live-verified, hxs-3 state log row 14, 2026-08-26T08:15Z); the governs edge deferred at the in-execution cataloging is added here at the flip"
+  validation:
+    validated_at: "2026-08-26T10:00:00Z"
+    freshness: "current"
+    review_due: "at the next hxs-3 milestone evidence landing (M5 reasoning mapping probes); the M7 handoff CLOSES when this run's receipt is cited in the hxs-3 state log (profile §7)"
+  sha256: "3ab05c29579541bb1397d48c190ba4dc8c6330ea7999af1b87b13452adf3570c"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/08-work-order-john-m7.yaml"
+notes:
+  status_convention: "FIRST in-execution WO/CP cataloging: status active per the in-execution convention for a commissioned-not-complete milestone (commissioned 2026-08-26T07:13Z, hxs-3 state log row 11; session john-m7-20260826-01 in flight at cataloging). FLIPPED to adopted 2026-08-26T10:00Z (this run): the M7 deliverable landed and is cataloged (DOC-pilot-hxs3-ev-09-esme-m7-ladder-profiles; governor live-verified, hxs-3 state log row 14) — the discharged-contract convention now applies; the governs edge deferred at cataloging is added. Record sha256 re-verified UNCHANGED at the flip (3ab05c29… == live file)."
+  from_verification_amendment: "The WO's FROM-verification clause was AMENDED PRE-EXECUTION by the governor (review batch 11 — hxs-2 state log row 16, hxs-3 state log row 13): the objective now requires verifying hx-muse-glimmer:latest -> the expected frozen digest + frozen layers (ollama show + manifest-layer comparison) BEFORE creating any rung, with FROM set to the alias (or the complete local blob path — never a bare digest) and model/projector/template/parser/baked parameters preserved. VERIFIED PRESENT in the cataloged artifact (objective block); the cataloged file is the amended pre-execution version."
+  hash_crosscheck: "sha256 3ab05c29579541bb1397d48c190ba4dc8c6330ea7999af1b87b13452adf3570c computed at ingestion (2026-08-26T07:47Z); hxs-3 state log row 11 records no WO/CP hashes for this milestone (unlike the M4 row 8 pattern) — the catalog hash is the first recorded value."

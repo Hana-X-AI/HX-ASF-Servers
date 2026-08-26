@@ -1,0 +1,56 @@
+document:
+  id: "DOC-hxs2-coderx-knowledge-reference"
+  title: "codex_20260825_1917_qwen3.6-27b-a3b-coderx-agent-knowledge-reference.md — CoderX model knowledge and operating reference (876 lines, agent-zero-docs)"
+  type: "runbook"
+  declared_purpose: "Codex-authored agent knowledge and operating reference (front matter: schema_version 1.0, document id doc:hx:model:qwen3.6-27b-a3b-coderx, document_type model-knowledge-reference, version 1.0.0, status 'source-verified-hx-runtime-validation-required', prepared_by codex, prepared_at 2026-08-25T19:17:00-05:00, owner Agent Zero): 'Give HX agents a precise, actionable basis for selecting, deploying, registering, testing, tuning, and governing Qwen3.6-27B-A3B-CoderX through Ollama and DeepSeek Harness.' HX disposition (§1): CONDITIONAL SPECIALIST CANDIDATE — DEVELOPMENT/STAGING QUALIFICATION REQUIRED; the model enters HX as an inference backend capability, never an autonomous sub-agent; KK3 owns orchestration. Evidence labels used throughout: VERIFIED UPSTREAM / PUBLISHER-REPORTED / HX DECISION / HX VALIDATION REQUIRED / UNKNOWN (§2.2); the document's own authority order (§2.1) ranks current Agent Zero decisions and live HX evidence above its content. Covers model identity (base Qwen/Qwen3.6-35B-A3B; 184/256 experts retained, top-8 routing; Apache-2.0; explicit text and vision tags; advertised 256K vs baked 32K context), architecture/derivation (REAP/DERN prune), vision clarification (attached Coder mmproj on vision-* tags only — separate qualification), published evaluation interpretation (Q6_K basis — no cross-quant transfer), workload selection, quantization ladder, sampling/reasoning profiles, MTP speculative decoding (draft_num_predict 3 default; exact-host A/B), acquisition/identity capture, runtime verification, tool-calling and long-horizon coding qualification, Harness registration model, residency, risks CX-R01..R13, and an acceptance checklist."
+  inferred_value: "INFERENCE: the pilot's controlling model-knowledge gate — the goal file names it as the knowledge reference and its protocols (acquisition §12, runtime verification §13, tool qualification §14, coding qualification §15, residency §17, acceptance §19) are the measurement basis for the goal's SC-01..SC-06 evidence contracts. Its Harness-era sections (§16 registration model, front-matter services deepseek-harness/omniroute, agent 'neo') describe a substrate verified nonexistent (KDD-0006); the registration intent maps onto the catalog backend-capability record. All performance/deployment claims remain HX VALIDATION REQUIRED until proven on the exact local digest."
+  source:
+    author: "Codex (agent-zero-docs pipeline)"
+    provided_by: "Agent Zero"
+    origin: "/home/hxsa/opt/local-tkv/agent-zero-docs/pilots/hxs-2/codex_20260825_1917_qwen3.6-27b-a3b-coderx-agent-knowledge-reference.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-26T03:26:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: [hxs-2]
+    fqdns: []
+    services: [ollama.service]
+    models: [mannix/qwen3.6-27b-a3b-coderx]
+    agents: [kimi-k3, rick, john, carol]
+    repositories: []
+    environments: [pilot]
+  version: "1.0.0 (document status: source-verified-hx-runtime-validation-required)"
+  status: "adopted"
+  authority_level: "owner-directive"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "owner-docs tree (/home/hxsa/opt/local-tkv); no secret values observed"
+    contains_secret_values: false
+  relations:
+    - predicate: "governs"
+      target: "DOC-goal-hxs2-qwen36-coderx-backend"
+      note: "named controlling knowledge reference in the goal's Notes and links; its qualification protocols are the pilot's measurement basis — subordinate to the goal's owner decisions per the document's own authority order (§2.1)"
+    - predicate: "references"
+      target: "DOC-kdd-0006-hxs2-coderx-backend-adoption"
+      note: "identity evidence behind D3: CoderX (top-8, REAP/DERN redistribution prune) vs the Coder sibling (top-10, pure expert-selection prune) — different checkpoints; the KDD's Harness-free closure supersedes-in-effect this document's §16 registration model (substrate verified nonexistent)"
+    - predicate: "describes"
+      target: "mannix/qwen3.6-27b-a3b-coderx (model family; deployment identity = explicit tag + full local digest)"
+      note: "base Qwen/Qwen3.6-35B-A3B; ~27B class (Ollama reports 26.2B), ~3B active; 184/256 experts, top-8 routing; Apache-2.0; sibling of mannix/qwen3.6-27b-a3b-coder (deliberately not selected, D3)"
+    - predicate: "produced_by"
+      target: "Codex session 2026-08-25 19:17 (agent-zero-docs/pilots/hxs-2/)"
+      note: "prepared 2026-08-25T19:17:00-05:00 per front matter and filename; no HX host was accessed or changed in its preparation (§23)"
+  validation:
+    validated_at: "2026-08-26T03:26:00Z"
+    freshness: "current"
+    review_due: "document's own triggers: Ollama tag digest change, creator model card change, Ollama runtime upgrade, Harness provider-contract change (inoperative — substrate nonexistent), HX host/GPU topology change; plus live validation at pilot M1"
+  sha256: "2d34264f021eee0508c7930471e7f9fc87888eff387469355ac8695b07dfa918"
+  canonical_location: "/home/hxsa/opt/local-tkv/agent-zero-docs/pilots/hxs-2/codex_20260825_1917_qwen3.6-27b-a3b-coderx-agent-knowledge-reference.md"
+notes:
+  type_judgment: "Typed 'runbook' (dispatch offered corpus|runbook per judgment): a single 876-line operating-knowledge document whose spine is executable procedure — acquisition/identity capture §12, runtime verification §13, tool-calling qualification §14, long-horizon coding qualification §15, residency §17, acceptance checklist §19. 'corpus' in this catalog denotes directory trees/collections (all 30+ corpus records); a single document would break that pattern."
+  authority_label: "Owner-supplied Codex reference adopted as the pilot's controlling model knowledge: recorded authority_level owner-directive + status adopted per the owner-supplied codex-reference convention (cf. DOC-hx-second-brain-framework notes.authority_label). The label covers the owner's act of designating this the controlling reference; the CONTENT carries its own truth classes (§2.2 evidence labels) and its HX claims remain HX VALIDATION REQUIRED until live proof on the exact digest — never cite its PUBLISHER-REPORTED results as HX-established fact."
+  section_map: "876 lines. §1 Executive directive (L72; 1.1 agent decision L80, 1.2 non-negotiable use rule L100) — §2 Source authority and evidence state (L104) — §3 Model identity (L126; 3.1 terminology correction L148) — §4 Architecture and derivation (L152) — §5 Critical vision clarification (L176) — §6 Published evaluation and correct interpretation (L202) — §7 Workload selection (L254) — §8 Quantization ladder (L287) — §9 Sampling and reasoning profiles (L326) — §10 Context behavior (L365) — §11 MTP speculative decoding (L397) — §12 Ollama acquisition and identity capture (L437) — §13 Runtime verification (L483) — §14 Tool-calling qualification (L534) — §15 Long-horizon coding qualification (L565) — §16 DeepSeek Harness registration (L599 — Harness-era, substrate verified nonexistent per KDD-0006) — §17 Always-on residency, when commissioned (L661) — §18 Risks and controls CX-R01..R13 (L691) — §19 Acceptance checklist (L709) — §20 Agent quick reference / MODEL KNOWLEDGE RECEIPT (L753) — §21 Embedded catalog record (L779) — §22 Provenance and references (L833) — §23 Current limits (L855) — Ratification and catalog closure table, all rows PENDING at ingestion (L866)."
+  embedded_catalog_record: "§21 offers a catalog_record ('Carol may ingest or adapt this record without changing the source document'): ingested/adapted as THIS record — its truth_classes map to the evidence-label note above; its entity list (model/host/service/agent names) maps to applies_to and relations; its 'registered-with deepseek-harness' edge is inoperative (substrate verified nonexistent) and is carried instead by the KDD-0006 references edge. §20's MODEL KNOWLEDGE RECEIPT block and the § closing Ratification table ('Carol [CATALOG RECEIPT PENDING]') are satisfied in fact by this catalog record + the run receipt; the source table itself is not edited (originals are sacred)."
+  html_sibling: "A derived .html sibling exists in the same directory (codex_20260825_1917_qwen3.6-27b-a3b-coderx-agent-knowledge-reference.html); covered by this one record per the dispatch brief — the .md is the authoritative artifact and carries the record sha256."
+  volatility: "Document declares volatility high (front matter): public tags and documentation change; a digest, model-card, Ollama, or Harness change triggers review (§23). Re-hash on any owner re-supply."

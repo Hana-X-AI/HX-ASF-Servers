@@ -1,0 +1,71 @@
+document:
+  id: "DOC-pilot-hx1-ev-39-esme-exposure-change"
+  title: "39-esme-hxs1-exposure-change.md — Esme hxs-1 fleet-scoped endpoint exposure change (WO-HX1-JOHN-EXP-001, SC-07a; PASS T1-T10)"
+  type: "evidence"
+  declared_purpose: "Post-M8 bounded-change evidence for WO-HX1-JOHN-EXP-001 (session john-exp-20260826-01, window 2026-08-26T03:22:49Z-03:39Z, owner directive 2026-08-26): hxs-1's Ollama endpoint moved from loopback-only to fleet-scoped LAN access. Two mutations: (1) hx1.conf one-line diff OLLAMA_HOST=127.0.0.1:11434 -> 0.0.0.0 (bare IP -> effective 0.0.0.0:11434 per envconfig Host() source-matched behavior; installed sha256 163003b1… -> f732f9db…; daemon-reload + ollama.service restart ONLY, no reboot); (2) ufw inactive -> active with exactly [1] 22/tcp <- 192.168.50.0/24, [2] 11434/tcp <- 192.168.50.0/24, default deny incoming (order verified two ways before enable) — EXECUTED THEN REVERTED SAME DAY per the owner no-host-firewall rule (hxs-1 state log row 73; see notes). Tests T1-T10 ALL PASS: loopback API survives (0.32.15), listener *:11434, frozen-identity guard byte-identical pre/post (name/digest/size/size_vram=20,463,789,012/ctx 65536/details — expires_at sentinel move recorded, not a guard field), ruleset exact + SSH-first order, fresh SSH post-enable, LAN reachability hxs-5 -> 192.168.50.200:11434 = 0.32.15, preload re-run rc=0 (auto 48 s cold + explicit 0.03 s, OK resident), journal zero error-level + Xid=0 (NVRM chatter window-confined, precedent-proven benign), file-integrity diff exactness (frozen witnesses unchanged: preload unit 8ce6d9c1…, script 95f174da…), NRestarts 0 pre/post. Reachability matrix 5/5 executed rows PASS; negative-boundary probe NOT RUN (no authorized out-of-subnet host — ruleset-evidenced limitation). Rollback inverse byte-exact (embedded pre-change copy; < 90 s, no reboot; nothing irreversible). Disclosures F-EXP-1 (contained) and F-EXP-2 (mitigated) recorded — see notes. Completion PASS — TASK COMPLETE."
+  inferred_value: "INFERENCE: this is the factory's first post-closure posture change on a signed-off host executed through the full work-order/evidence/receipt path — the SC-07a amendment -> WO-37/CP-38 -> evidence -> catalog re-validation chain is now the proven pattern for changing what was already signed without losing the trail. The frozen-witness technique (preload unit + script hashes asserted unchanged alongside the one-line authorized diff) is the reusable guard for any future one-file change on a frozen host."
+  source:
+    author: "john / Esme (session john-exp-20260826-01)"
+    provided_by: "john via Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/39-esme-hxs1-exposure-change.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-26T04:10:00Z"
+  owner: "john"
+  applies_to:
+    hosts: [hxs-1, hxs-5]
+    fqdns: []
+    services: [ollama.service, ollama-preload.service, ufw.service]
+    agents: [john]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot, fleet]
+    models: [hx-qwen3.8-27b-64k]
+  version: ""
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "evidences"
+      target: "DOC-pilot-hx1-wo-37-john-exposure"
+      note: "WO-HX1-JOHN-EXP-001 discharged PASS — TASK COMPLETE (T1-T10, one bounded correction attempt unused, no stop condition hit); governor live-verified at hxs-1 state log row 72 (LAN curl, numbered ruleset, /api/ps identity)"
+    - predicate: "evidences"
+      target: "DOC-pilot-hx1-cp-38-john-exposure"
+      note: "packet evidence requirements executed: pre/post hashes + diffs, ruleset as applied, reachability matrix, journal excerpt, NRestarts accounting; handoff OPEN until this run's receipt is cited in 09-state-log.md (deliverable §15)"
+    - predicate: "produced_by"
+      target: "john"
+      note: "session john-exp-20260826-01 from hxs-5; askpass helper read-at-execution, deleted at task end (deletion verified)"
+    - predicate: "configures"
+      target: "ollama.service (hxs-1)"
+      note: "drop-in /etc/systemd/system/ollama.service.d/hx1.conf: OLLAMA_HOST 127.0.0.1:11434 -> 0.0.0.0 (effective 0.0.0.0:11434 incl. loopback); sha256 163003b1…58d96c2 -> f732f9db…e9116144; all other environment lines byte-identical"
+    - predicate: "references"
+      target: "DOC-goal-hx1-ollama-qwen38-27b"
+      note: "SC-07a amendment is the posture authority; this evidence is its satisfaction record (fleet-scoped LAN, loopback preserved, boundary = the private LAN itself)"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-ev-16-esme-m5-validation"
+      note: "SUPERSEDES-IN-EFFECT note: the M5/M8 loopback-only posture is superseded for operations from 2026-08-26 (SC-07a) — 16-esme stands as HISTORICAL POSTURE EVIDENCE (the posture at sign-off, 36-kk3 §SC-07 unchanged); the document itself is NOT superseded (no supersedes edge per the SC-07a amendment's own wording)"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-ev-29-esme-m6b-profiles"
+      note: "frozen 64K identity preserved byte-exact through the change (alias hx-qwen3.8-27b-64k, digest 766cd946…8cc99d8a, ctx 65536, 100% VRAM, Forever)"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-ev-35-esme-preload-budget"
+      note: "frozen witnesses held: preload unit 8ce6d9c1… + script 95f174da… unchanged; preload re-run inside the 538 s script / 600 s unit budgets"
+    - predicate: "depends_on"
+      target: "DOC-protected-ssh-info-hxs1"
+      note: "F-EXP-1: ratified askpass pattern used for ALL authentication after the contained transcript echo; no credential value in any file, evidence, or this catalog (profile §6)"
+  validation:
+    validated_at: "2026-08-26T04:10:00Z"
+    freshness: "current"
+    review_due: "posture superseded-element review only if the owner firewall rule changes; negative-boundary probe when an authorized out-of-subnet host exists"
+  sha256: "db78c20bcfd94ef878b06e366708a329841b167d98feecc7cdb0ff3a44a6f617"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/39-esme-hxs1-exposure-change.md"
+notes:
+  disclosure_f_exp_1: "Secret-handling incident — CONTAINED, disclosed (deliverable §10): ~03:24Z a structure-probe awk mask on the credential record was too narrow and one credential-table row was echoed once into the session transcript; containment within ~1 minute (retained task log sanitized to REDACTED + swept); no command line, remote file, evidence file, or the deliverable carries the value. Residual: the value persists in the harness's own session transcripts (wire.jsonl — pre-existing exposure predating this task, 3 occurrences in one older session file; not edited by the agent, live runtime state outside evidence scope). Governor counts this as the FOURTH transcript-class exposure (hxs-1 state log row 72); rotation recommendation pending with the owner — the guide's 'Required owner security action' conflicts with the owner's standing no-rotation call, which governs (conflict preserved per profile §9, escalated outside the catalog lane). Catalog handling per profile §6: no secret value quoted or stored."
+  disclosure_f_exp_2: "Evidence gap — MITIGATED, disclosed: pre-mutation sha256 of /etc/ufw/* not captured before staging (the work-order pre-state requirement for ufw was 'status numbered', which WAS captured: inactive). Mitigation: post-stage user.rules content proves the pre-state ruleset was empty (exactly the two added tuples; user6.rules untouched until enable; /etc/default/ufw stock). Rollback unaffected (rollback = ufw disable -> the captured inactive state)."
+  superseded_element: "The ufw enablement executed by this change (§6) was REVERTED the same day: owner rule 2026-08-26 'No host firewalls (ufw or equivalent) on HX hosts' (hxs-1 state log row 73 — ufw disabled and verified inactive; reachability re-verified loopback + LAN + SSH). The exposure itself (mutation 1, OLLAMA_HOST=0.0.0.0 with loopback preserved) is UNCHANGED and is the enduring posture: boundary = the private LAN 192.168.50.0/24 itself (SC-07a; blueprint §5; AGENTS.md posture directives). The ruleset content in §6.1/§6.2 is preserved as the as-applied record of the reverted interim state."
+  nvrm_baseline: "63 NVRM lines confined to the runner-restart window 03:33:58-03:34:36Z (iovaspaceDestruct / nvAssertFailedNoLog class) — identical signatures at this boot's driver-load on the signed-off configuration; recorded so future Xid/NVRM scans baseline correctly; Xid=0."
+  second_brain: "In-file evaluation: scoped-exposure change as a versioned, evidenced pattern (first post-closure posture change on a signed-off host); disposition implemented — full provenance trail SC-07a -> WO-37/CP-38 -> this evidence -> catalog re-validation at handoff (this record)."
+  assigned_agent_call_sign: "Esme = john (pilot call sign, not a roster entry)"

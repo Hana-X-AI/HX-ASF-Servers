@@ -1,0 +1,62 @@
+document:
+  id: "DOC-pilot-hxs2-ev-13-esme-websearch-enable"
+  title: "13-esme-websearch-enable.md — Esme (john) fleet web-search enablement: OLLAMA_NO_CLOUD removal on hxs-1/2/3/4 (PASS — TASK COMPLETE)"
+  type: "evidence"
+  declared_purpose: "Fleet-change evidence (report ESME-FLEET-WS-001, session john-ws-20260826-01, window 07:23Z → 08:15Z): exactly one line — Environment=\"OLLAMA_NO_CLOUD=1\" — removed from the ollama.service drop-in on each of hxs-1 (hx1.conf), hxs-2 (hx2.conf), hxs-3 (hx3.conf), hxs-4 (hx-commissioning.conf), with daemon-reload + ollama.service-ONLY restart per host (no reboots; no other unit touched). Owner decision 2026-08-26 ('Enable Ollama Cloud web search', hxs-2 log row 14; hxs-3 log row 12; hxs-1 log row 78 cross-ref) SUPERSEDES the ratified NO_CLOUD posture for the web-search class; remote inference + :cloud models remain unused by policy. Drop-in hash chains (pre → post): hxs-1 f732f9db…e9116144 → e7cd403b…f64ed3; hxs-2 234da7c5…f7d903afa (the M6-repointed drop-in) → 36083e96…aa4b13c; hxs-3 238189e0…7bd63655 (the M7-repointed drop-in) → 07824e4e…c3e7d5; hxs-4 9d90a991…471bb3 → f78de229…45e41 (later amended again by the Chat-X O2 session to 9d1d024c…). Identity guards ALL PASS: hxs-1 hx-qwen3.8-27b-64k byte-identical (digest 766cd9469fb4…, 20,463,789,012 B 100% VRAM, ctx 65536, Forever); hxs-2 hx-qwen3.6-coderx-64k guard-fields identical (ec9ebe08a824…, ctx 65536, Forever — one explained variance: /api/ps absolute size differs by runner batch flags -b512 verification-load vs -b2048 frozen pin, journal-proven, F-M6-7 class); hxs-3 hx-muse-glimmer-64k byte-identical (9dffb015db40…, 18,376,336,340 B, ctx 65536, Forever); hxs-4 model list intact (qwen3.5:9b-q4_K_M 6488c96fa5fa…), /api/ps empty (on-demand), loopback-only. Effective Environment per host: ONLY OLLAMA_NO_CLOUD removed; NRestarts=0 ×4; zero NEW Xid (hxs-2's pre-existing Xid 31 documented in 08-esme-m6-escalation-xid31.md); journals clean (only carried-class watchdog WARNs + hxs-4 ACPI chatter, both precedent-proven). Reachability: loopback 200 ×4; LAN 200 from hxs-5 on hxs-1/2/3; hxs-4 LAN refused (posture parked). Pre-signin web-search availability state per host: 403 'ollama cloud is disabled: web search is unavailable' (policy.go DisabledError) → 401 {\"error\":\"Unauthorized\"} — the CONFIG GATE IS OPEN on all four; web search activates only after the owner's per-host ollama signin (URL flow, his ollama.com account; per-host connect URLs captured in the source §8 — each host signs in INDIVIDUALLY, per-host ed25519 keys present since install, untouched); each host logged 'Ollama cloud disabled: false' at its post-change start. OLLAMA_AGENT_DISABLE_WEBSEARCH verified UNSET everywhere (never set by anyone — agent web search allowed). No stop condition triggered on any host; zero restores; zero corrections consumed. Fleet-final re-sweep 08:13–08:15Z: POST drop-in hashes still in force, 0 NO_CLOUD tokens, all active, resident/list states as above. Completion: PASS — TASK COMPLETE. STATE FLIP 2026-08-26T18:42Z (hxs-2 state log row 27, governor live-verified): the owner's per-host ollama signin is COMPLETE on all four hosts (each reports \"already signed in as user 'AgentZero'\"); smoke POST /api/experimental/web_search {\"query\":\"hx-availability-probe\",\"max_results\":1} → HTTP 200 with structured results ×4 (403 disabled → 401 pre-signin → 200 active); server.json ABSENT ×4 post-signin (~hxsa and /usr/share/ollama) — web search ACTIVE fleet-wide. O1 enforcement posture unchanged: cloud models and remote inference remain unused by policy; only the web-search class is active."
+  source:
+    author: "john / Esme (session john-ws-20260826-01)"
+    provided_by: "john via Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/13-esme-websearch-enable.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-26T10:00:00Z"
+  owner: "john"
+  applies_to:
+    hosts: [hxs-1, hxs-2, hxs-3, hxs-4]
+    fqdns: []
+    services: [ollama.service]
+    agents: [john]
+    repositories: [HX-ASF-Servers]
+    environments: [fleet, pilot]
+    models: [hx-qwen3.8-27b-64k, hx-qwen3.6-coderx-64k, hx-muse-glimmer-64k, qwen3.5:9b-q4_K_M]
+  version: ""
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "evidences"
+      target: "DOC-pilot-hxs2-wo-11-john-websearch"
+      note: "WO-FLEET-JOHN-WS-001 DISCHARGED — T0–T10 PASS on all four hosts, zero corrections, zero restores; web search ENABLED fleet-wide at the config layer (hxs-2 state log row 20, 2026-08-26T09:13Z; handoff OPEN until this run's receipt is cited in the governing logs)"
+    - predicate: "evidences"
+      target: "DOC-pilot-hxs2-cp-12-john-websearch"
+      note: "the packet's evidence contract satisfied per host: drop-in pre/post sha256 + diff, restart result, before-after identity block, reachability, NRestarts, journal excerpt, the pre-signin availability observation, and the exact ollama signin instruction for the owner"
+    - predicate: "evidences"
+      target: "DOC-goal-hxs2-qwen36-coderx-backend"
+      note: "the owner 2026-08-26 web-search decision discharged fleet-wide: NO_CLOUD superseded for the web-search class (owner-decision-first, config-second); cloud models/remote inference remain unused by policy"
+    - predicate: "produced_by"
+      target: "john"
+      note: "under DOC-pilot-hxs2-wo-11-john-websearch; executed from hxs-5 via the ratified askpass path (helper + wrappers + volatile workspace deleted at task end, verified); per-host quiescence gates against the three parallel ladder sessions"
+    - predicate: "configures"
+      target: "hxs-1/hxs-2/hxs-3/hxs-4 ollama.service drop-ins (hx1.conf / hx2.conf / hx3.conf / hx-commissioning.conf)"
+      note: "exactly one line removed per host (OLLAMA_NO_CLOUD=1) + daemon-reload + ollama.service-only restart; versioned pre/post sha256 + unified diffs; byte-copy rollback inverse retained per host"
+    - predicate: "references"
+      target: "DOC-pilot-hxs2-ev-08-esme-m6-escalation-xid31"
+      note: "hxs-2's pre-existing Xid 31 (05:46:59Z) is documented + escalated there; this change's stop condition was any NEW Xid in its own windows (zero occurred) — the pre-existing one is reported, not concealed"
+    - predicate: "risks"
+      target: "owner per-host ollama signin (×4) — activation gate DISCHARGED 2026-08-26T18:42Z (hxs-2 state log row 27)"
+      note: "403→401 means the config gate is OPEN, NOT that web search is active: activation completes only after the owner links each host's ed25519 key to his ollama.com account (per-host connect URLs in the source §8); downstream consumers must not mistake 'config gate open' for 'web search active'. RESOLVED 2026-08-26T18:42Z (hxs-2 state log row 27, governor live-verified): owner signin complete ×4 ('already signed in as user AgentZero'), smoke POST /api/experimental/web_search → HTTP 200 with structured results ×4, server.json ABSENT ×4 post-signin — web search ACTIVE fleet-wide; O1 posture unchanged (cloud models/remote inference remain unused by policy)"
+  validation:
+    validated_at: "2026-08-26T18:50:00Z"
+    freshness: "current"
+    review_due: "sign-in review trigger DISCHARGED 2026-08-26T18:42Z (hxs-2 state log row 27: signin ×4 as AgentZero, 401 → 200 with structured results ×4, server.json absent ×4 — fleet posture re-validated ACTIVE); next review at any future cloud-state change (the server.json inspection rule remains in force per row 27) or posture reversal; rollback inverse remains live"
+  sha256: "1fd491118aecbe50ceb318ed65077eca72a447c5634e5aa4aacadb303510ef4c"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/13-esme-websearch-enable.md"
+notes:
+  rollback_inverse: "Per host (< 90 s each, no reboot): restore the drop-in from the embedded PRE byte-copy (hxs-1 f732f9db…e9116144, hxs-2 234da7c5…f7d903afa, hxs-3 238189e0…7bd63655, hxs-4 9d90a991…471bb3 — full contents embedded in the source §4.1/§5.1/§6.1/§7.1) via sudo install 0644 root:root → daemon-reload → restart ollama.service; verify sha256 == PRE, OLLAMA_NO_CLOUD=1 in the effective environment, the web-search probe returns 403, and the identity block matches the pre-state. Rollback does not un-register keys (nothing was registered — sign-in is the owner's pending step; if he has since signed in, ollama signout per host precedes posture restoration). UPDATE 2026-08-26T18:42Z (hxs-2 state log row 27): the contingency is now actual — the owner HAS signed in on all four hosts (as AgentZero), so any rollback now begins with ollama signout per host before posture restoration."
+  concurrency_record: "Executed alongside three parallel ladder sessions with per-host quiescence gates (no parallel POST traffic, stable ActiveEnterTimestamp + drop-in mtime, GPUs idle, remote sha re-verified == PRE at the install moment): hxs-4 changed 07:47:09Z (after the Chat-X pin landed 07:38:16Z — version untouched per the packet), hxs-3 07:59:23Z (after the M7 repoint quiesced), hxs-2 08:09:28Z (in the M6 quiescent end-state window). The packet's hxs-2/hxs-3 resident-state expectations (bare aliases, ctx 32768) were legitimately advanced by the ladder sessions to the D5 -64k profiles BEFORE these changes landed — recorded as FACT with cause; the identity guards compared pre/post WITHIN this session's own windows against the live states."
+  capability_class: "New catalog capability class (per the source's Second Brain evaluation): 'fleet posture change (bounded, guarded)' — posture changes land in the same versioned/evidenced path as installs, recorded owner-decision-first (log rows), config-second (this document), catalog-third (this receipt wave). Owner gate DISCHARGED 2026-08-26T18:42Z (hxs-2 state log row 27): per-host ollama signin complete ×4 (as AgentZero), smoke 200 ×4, server.json absent ×4 — web search ACTIVE fleet-wide; the class's first instance is fully closed."
+  sanitization: "No secret value was printed, logged, or stored (sanitization confirmed in the source); the askpass value never left the SSH authentication channel; the probe query string is synthetic; the sign-in URLs embed each host's PUBLIC key only (public material). Catalog stores no credential material (profile §6)."

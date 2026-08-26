@@ -52,8 +52,11 @@ jobs:
       - name: Build validation — wiki HTML in sync
         run: python3 scripts/wiki/render.py --check
 
+      - name: Install PyYAML (validate.py dependency)
+        run: python3 -m pip install -q pyyaml
+
       - name: Catalog validation
-        run: python3 scripts/validate.py
+        run: python3 scripts/validate.py --ci
 
       - name: Security scan — secrets in the pushed range
         env:

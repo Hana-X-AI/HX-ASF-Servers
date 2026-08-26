@@ -1,0 +1,79 @@
+document:
+  id: "DOC-pilot-hxs3-ev-07-esme-m4-install"
+  title: "07-esme-m4-install.md — Esme (john) M4 hxs-3 Ollama install + exact muse-glimmer:30b pull + identity freeze + D5-budget systemd (WO-HXS3-JOHN-M4-001; 19/19 PASS)"
+  type: "evidence"
+  declared_purpose: "Milestone completion evidence for WO-HXS3-JOHN-M4-001 (report ESME-HXS3-M4-INSTALL-001, session john-m4-20260826-01, window 2026-08-26T06:00Z→06:28Z, owner 'commission M4' state log row 8): hxs-3's Ollama plane is installed, pinned, identity-frozen, and resident at blueprint budgets — 19 tests defined (T0a–T18), 19 executed, 19 PASS, 0 FAIL/BLOCKED/NOT RUN; stop conditions none hit; bounded corrections 0 of 1 used (hxs-2 F-J2/F-J3 lessons pre-applied). FACTS: Ollama 0.32.15 pinned-installed (binary == server; installer sha256 25f64b81…82c9f byte-identical to the TKV-reviewed baseline; upstream latest v0.33.0 observed and deliberately NOT taken — F-J4; installer's driver/apt logic confirmed skipped). FROZEN IDENTITY (the local full digest is authoritative): muse-glimmer:30b @ digest de878ce33ad81d060001db1469a02eebe4d86f0ad58cfe52dc062fdcbe4464c1 (reference prefix de878ce33ad8 MATCH — registry state has not advanced; on-disk manifest == digest); size 18,157,010,252 B fully accounted (16,756,681,056 LM + 1,400,328,928 projector + 42 params + 226 config); gguf / family muse-glimmer — correct artifact family; DENSE 27.9B (general.parameter_count 27,854,794,240), 52 blocks; Q4_K_M (file_type 15); model max context 131,072; capabilities completion, vision, tools, thinking; GQA 32 heads / 2 KV heads, sliding window 2048, embedding 6656, tokenizer gpt2 (pre: llama4); template {{ .Prompt }}; RENDERER glimmer / PARSER glimmer with the ATEM tool-parser PRESENT (version-matched TKV source model/parsers/glimmer.go carries the ATEM tokens; requires 0.32.8 — pin covers it plus the 0.32.9 parser boundary fix); baked parameters verbatim (temperature 1, top_k 64, top_p 0.95 — NO num_ctx baked; zero overrides added anywhere); CLIP projector 'Muse Glimmer Hf' 1,920,942,592 params (1.92B) Q4_K_M, has_vision_encoder true; license publisher-declared Apache-2.0 (F-J3: no license blob in the pulled manifest). Alias hx-muse-glimmer created FROM-only and BLOB-BOUND to the frozen artifact @ digest 472ad84e752d0319b65d6fcd862c26c3850cc408b6b9430046db31250994ad99 (three-way binding proof: manifest layer equality ordered+set, show field-for-field, alias config blob identity). Service plane: hx3.conf four-value drop-in (OLLAMA_HOST=0.0.0.0 loopback preserved, OLLAMA_NO_CLOUD=1, OLLAMA_NUM_PARALLEL=1, OLLAMA_MAX_LOADED_MODELS=1); preload script + unit (D5 budgets: 208+300+30=538 s script < 600 s unit ≤ 900 s SLO; shellcheck 0.9.0 clean); first cold load via the preload unit 42.5 s (F-J6). Residency (re-verified 6+ min post-pin): exact alias + exact frozen digest, size == size_vram 17,839,465,428 B = 100% VRAM across BOTH 5060 Ti (GPU0 10,170 + GPU1 8,908 MiB), context_length 32768 = Ollama 0.32.15 VRAM-based default — NOT baked, NOT an HX override (F-J2, journal-proven; the M7 ladder owns the move to 64K per D5), expires Forever (keep_alive=-1). Journal health: no error-level entries; F-J1 watchdog class (llama-server GPU-discovery watchdog timeout at first runner build — hxs-1 F-E2 / hxs-2 F-J1 class, MONITOR) retried and succeeded; Xid=0 all boots; OOM=0; NRestarts=0. Reachability: 127.0.0.1 AND hxs-5 → 192.168.50.202:11434 /api/version both answer 0.32.15; wildcard bind with loopback preserved; NO host firewall (owner rule — none created, none exists). LINK-SPEED ANSWER (row-2 PCIe caveat, T17): idle Gen1 = ASPM downshift; under smoke-inference load BOTH links train to Gen3 8.0 GT/s (their max) while width stays x8 against the x16 device max — the x8 wiring is the hard ceiling, speed ramps fully (F-J7, carried as the M7 ladder's capacity variable). Smoke inference known-answer PASS: 17 × 23 = 391 exact (HTTP 200, 41.47 s; think:false honored — F-J5; reasoning mapping remains M5 scope per D8)."
+  inferred_value: "INFERENCE: this is the identity anchor for the entire Meta-X capability — the frozen digest pair (base de878ce33ad8…64c1 + alias 472ad84e752d…ad99) and the blob-binding proof are what every later hxs-3 milestone (M5 quality/reasoning mapping, M6 ATEM contract suite, M7 context ladder, M8 reboots + sign-off) must re-verify against; the 42.5 s cold load inside the 538 s budget is the first hxs-3 data point for the D5 recovery SLO, and the Gen3-under-load / x8-wired finding quantifies the capacity variable the M7 ladder must carry."
+  source:
+    author: "john / Esme (session john-m4-20260826-01)"
+    provided_by: "john via Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/07-esme-m4-install.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-26T06:46:00Z"
+  owner: "john"
+  applies_to:
+    hosts: [hxs-3, hxs-5]
+    fqdns: []
+    services: [ollama.service, ollama-preload.service]
+    agents: [john]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+    models: [muse-glimmer:30b, hx-muse-glimmer]
+  version: ""
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "evidences"
+      target: "DOC-pilot-hxs3-wo-05-john-m4"
+      note: "WO-HXS3-JOHN-M4-001 discharged PASS — TASK COMPLETE (19/19; zero bounded corrections used; no stop condition hit)"
+    - predicate: "evidences"
+      target: "DOC-pilot-hxs3-cp-06-john-m4"
+      note: "packet's evidence requirements executed in full (FULL identity capture set incl. template/renderer/parser + ATEM presence + CLIP projector, alias binding proof, unit hashes/diffs, shellcheck, preload first run, link-speed-under-load telemetry, reachability matrix)"
+    - predicate: "evidences"
+      target: "DOC-goal-hxs3-muse-glimmer-tooling"
+      note: "M4 milestone of GOAL-HXS3-MUSE-001 complete; governor live-verified at hxs-3 state log row 10 (2026-08-26T06:40Z); handoff OPEN until this run's receipt is cited (packet handoff clause)"
+    - predicate: "evidences"
+      target: "DOC-backend-meta-x"
+      note: "the Meta-X backend-capability registration's content basis, materialized this run: frozen digest pair, capabilities completion/vision/tools/thinking, ATEM parser present, CLIP 1.92B, residency 100% VRAM both GPUs, ctx 32768 VRAM-default (F-J2), pin 0.32.15, D5 budgets, endpoint LIVE (candidate until M8)"
+    - predicate: "produced_by"
+      target: "john"
+      note: "session john-m4-20260826-01 from hxs-5; independent SSH sessions; StrictHostKeyChecking=yes against the pinned F-05 host key"
+    - predicate: "configures"
+      target: "hxs-3 Ollama service plane + model store"
+      note: "Ollama 0.32.15 (user ollama, upstream unit); hx3.conf four-value drop-in; preload script + unit (D5 budgets); muse-glimmer:30b pulled + identity-frozen; alias hx-muse-glimmer created; root ext4 storage delta 14 G → 33 G used (D1)"
+    - predicate: "references"
+      target: "DOC-hxs3-muse-glimmer-pilot-v11"
+      note: "§3.1 artifact record matched (52 blocks, projector), §3.4 official contract (ATEM; llama.cpp b10353 diagnostic floor only — fallback not needed), §12 deliverable shape"
+    - predicate: "references"
+      target: "DOC-pilot-hxs2-ev-07-esme-m4-install"
+      note: "hxs-2 M4 install/pull/identity/alias/units pattern — THIRD validated use (hxs-1 → hxs-2 → hxs-3); hxs-2 F-J2 code-span-unwrap and F-J3 install -D lessons pre-applied (zero corrections consumed)"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-ev-35-esme-preload-budget"
+      note: "the 35-esme D5 budget contract (538 s < 600 s ≤ 900 s) conformed from day one; first cold load 42.5 s ≪ 538 s"
+    - predicate: "references"
+      target: "DOC-blueprint-llm-server"
+      note: "§2/§3/§5 planes executed (OS untouched, service + preload contract, exposure wildcard + loopback, no firewall); §8 Meta-X row's planned facts now proven"
+    - predicate: "references"
+      target: "DOC-tkv-hxs3-discovery"
+      note: "identity corroborated against the 2026-08-12 as-found record (machine-id/UUID/MAC all match); live host is the authority"
+    - predicate: "depends_on"
+      target: "DOC-protected-ssh-info-hxs1"
+      note: "ratified askpass pattern held: credential read at execution only (markdown code-span unwrapped — hxs-2 F-J2 lesson pre-applied), helper + volatile workspace deleted at task end — no credential material in any file, evidence artifact, or this catalog"
+  validation:
+    validated_at: "2026-08-26T07:47:00Z"
+    freshness: "current"
+    review_due: "at M5/M6 evidence index; F-J1 watchdog class monitored at M5/M7 (hxs-1 F-E2 precedent); F-J2 ctx default + F-J7 x8 capacity variable carried to the M7 ladder"
+  sha256: "78844ccbdd7048d788eed6319457ecc5b0fd6da9e02c33724ac4ba1d8a21a4d1"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/07-esme-m4-install.md"
+notes:
+  findings_register: "F-J1 (carried class, MONITOR): llama-server GPU-discovery watchdog timeout during the first runner build (06:21:17–06:21:19Z) — same class as hxs-1 F-E2 and hxs-2 F-J1; retried and succeeded, load completed 100% GPU; inside the 42.5 s first-run measurement, wide inside the D5 budget; watch at M5/M7. F-J2 (record — ctx provenance): no num_ctx baked in the tag; effective context_length 32768 is Ollama 0.32.15's VRAM-based default (journal 'vram-based default context … default_num_ctx=32768', 30.9 GiB total VRAM) — deterministic for this hardware+model, not an HX override; the M7 ladder owns context changes (D5 64K operating only after the ladder). F-J3 (record): no license blob in the pulled manifest; license identity is publisher-declared Apache-2.0 (same class as hxs-2 F-J5). F-J4 (decision record): upstream latest v0.33.0 observed (state log row 7) and deliberately not taken; pinned 0.32.15 (fleet-validated; upgrade path = a future versioned work order). F-J5 (record): think:false honored at request level for the smoke turn; operating reasoning default unchanged — D8/reasoning_strength mapping probes remain M5 scope. F-J6 (record): first cold load via the preload unit = 42.5 s wall (page-cache cold); 42.5 s ≪ 538 s script worst case < 600 s unit ≤ 900 s SLO. F-J7 (record): link telemetry — Gen3 under load on both cards (idle Gen1 = ASPM downshift); x8 width against x16 device max is the hard wiring ceiling (row-2 caveat answered under load); carried as the M7 ladder's capacity variable."
+  sanitization_disclosure: "§12 (profile §11 honesty): no secret value was printed, logged, stored, or placed on any command line; the askpass helper (deleted at task end with the volatile workspace) read the credential-record row at execution time only. Catalog handling per profile §6: no secret value is quoted or stored anywhere in the catalog. The document does carry the intentionally retained PUBLIC host-key fingerprint (rick M1 F-05) — public key material, not a secret."
+  second_brain: "In-file evaluation: hxs-1/hxs-2 M4 install pattern (third validated use) + the Meta-X capability record; disposition implemented — the identity freeze (frozen digest pair + blob-binding proof + renderer/parser/projector identity) and the unit contracts become the Meta-X catalog spine at handoff (this record + DOC-backend-meta-x, identity filled this run). Recorded divergences (facts, not defects): VRAM-default ctx 32768 vs hxs-2's baked 32768; x8 link width vs hxs-2."
+  naming_correction: "Record-text correction (batch 11, 2026-08-26T07:47Z): the service-plane description now carries the full OLLAMA_-prefixed variable names — OLLAMA_NO_CLOUD=1, OLLAMA_NUM_PARALLEL=1, OLLAMA_MAX_LOADED_MODELS (OLLAMA_HOST was already prefixed) — matching the deployed hx3.conf drop-in semantics. Record text only: the source evidence document is untouched (originals are sacred; record sha256 unchanged and re-verified against the live file this run)."
+  web_search_in_flight: "A fleet web-search enablement is IN FLIGHT (owner decision 2026-08-26 — hxs-3 state log row 12, hxs-2 state log rows 14–15; 11-work-order-john-websearch.yaml + 12-context-packet-john-websearch.yaml, session john-ws-20260826-01) that REMOVES OLLAMA_NO_CLOUD from each host's ollama.service drop-in for the web-search class (cloud models/remote inference remain unused by policy; per-host ollama signin is the owner's interactive step) — the next re-validation after that session lands will update the value state recorded here."

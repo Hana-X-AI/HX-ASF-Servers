@@ -1,0 +1,69 @@
+document:
+  id: "DOC-pilot-hxs3-ev-09-esme-m7-ladder-profiles"
+  title: "09-esme-m7-ladder-profiles.md — Esme (john) M7 context ladder + three-profile freeze on Meta-X (hxs-3) (PASS — TASK COMPLETE)"
+  type: "evidence"
+  declared_purpose: "M7 evidence (report ESME-M7-LADDER-PROFILES-001, session john-m7-20260826-01, window 07:20Z → 07:58Z): drift check 11/11 vs M4 frozen references (NO DRIFT); three rung Modelfiles FROM the frozen artifact (muse-glimmer:30b, digest in each header) with exactly one added line — PARAMETER num_ctx; ALL THREE RUNGS CAPACITY PASS — 32K (resident 17,112,131,172 B, 100% VRAM, needle 31,145 tok = 95.05% stop+found), 64K (17,380,566,628 B, needle 62,264 tok = 95.00% stop+found), 128K (17,917,437,540 B, needle 124,525 tok = 95.00% stop+found — the extended-fail fallback NOT triggered); 53/53 layers GPU every rung; 3 known-answer spot checks FLAT across rungs (391/30492/366, thinking ON, programmatic content comparison); zero Xid/OOM/err-level/CPU fallback all window. KV growth f16 EXACTLY linear: headline 13,312 B/token (journal llama_kv_cache buffers, two independent depth pairs; GQA 2 KV heads × 128 k/v-length across the full-attention layer set) + constant 97.5 MiB second cache; the /api/ps total-size slope 8,192 B/token reported separately and labeled (scheduler compute-buffer apportioning). Alias freeze with per-rung digest equality: hx-muse-glimmer-32k 09c4f825…836e, -64k 9dffb015db40…e7da, -128k 17fe5b80…e85b — on-disk manifest sha256 == digest per alias; config/projector/weights blobs IDENTICAL to the frozen artifact; only the params blob differs and only in num_ctx (dumped verbatim). Repoint per D5: preload MODEL/DIGEST → hx-muse-glimmer-64k (sha256 d37dc30f…fd84 → b1798130…fe08); hx3.conf + OLLAMA_CONTEXT_LENGTH=65536 operator-consistency + stale comment sweep (b4f98c2f…627c → 238189e0…3655); switch sequence incl. manual non-reboot functional test (M4 gate) + F-E4 restart-not-start. Operating-profile residency: hx-muse-glimmer-64k @ 9dffb015db40…, ctx 65536 effective, size==size_vram 18,376,336,340 B 100% VRAM, Forever, GPU0 10,618 + GPU1 9,388 MiB (~12.3 GiB headroom). Link-speed answer (row-2 PCIe caveat): idle Gen1 = ASPM downshift; under prefill Gen3 8.0 GT/s MAX on both GPUs at every rung; the x8 wiring (vs x16 device max) is the hard ceiling; peaks ~180 W / ≤82 °C, no throttle. Disclosed: F-M7-1 (digest-qualified FROM rejected), one needle calibration probe (23.0 tok/line class; no re-runs); shellcheck unavailable (carried F-E6 class — sh/bash/dash -n + manual functional test carried the gate). Completion PASS — TASK COMPLETE."
+  source:
+    author: "john / Esme (session john-m7-20260826-01)"
+    provided_by: "john via Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/09-esme-m7-ladder-profiles.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-26T10:00:00Z"
+  owner: "john"
+  applies_to:
+    hosts: [hxs-3, hxs-5]
+    fqdns: []
+    services: [ollama.service, ollama-preload.service]
+    agents: [john]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+    models: [muse-glimmer:30b, hx-muse-glimmer, hx-muse-glimmer-32k, hx-muse-glimmer-64k, hx-muse-glimmer-128k]
+  version: ""
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "evidences"
+      target: "DOC-pilot-hxs3-wo-08-john-m7"
+      note: "WO-HXS3-JOHN-M7-001 DISCHARGED — every mandatory test at all three rungs + freeze + repoint PASS; M7 COMPLETE, governor live-verified (hxs-3 state log row 14, 2026-08-26T08:15Z; handoff OPEN until this run's receipt is cited)"
+    - predicate: "evidences"
+      target: "DOC-pilot-hxs3-cp-09-john-m7"
+      note: "the packet's evidence contract satisfied: per-rung /api/ps + per-GPU MiB + KV two-depth derivation + fixture-valid needle JSON + 3 flat spot checks + link speed under load (the row-2 x8 caveat answered) + journal scans"
+    - predicate: "evidences"
+      target: "DOC-goal-hxs3-muse-glimmer-tooling"
+      note: "owner decision D5 discharged: the 64K operating context validated on the exact digest and frozen as the hx-muse-glimmer-64k operating profile, resident Forever; hxs-1 ladder/profile pattern — third validated use (uniformity holds on the dense model on x8 links, the blueprint's hardest capacity case so far)"
+    - predicate: "produced_by"
+      target: "john"
+      note: "under DOC-pilot-hxs3-wo-08-john-m7; executed from hxs-5 via the ratified askpass path (helper deleted at task end); hxs-3 evidence timestamps America/Panama (EST/-05:00) per F-08"
+    - predicate: "configures"
+      target: "hxs-3 ollama-preload.service + ollama.service.d/hx3.conf at the 64K operating profile"
+      note: "preload MODEL=hx-muse-glimmer-64k DIGEST=9dffb015db40…e7da; hx3.conf + OLLAMA_CONTEXT_LENGTH=65536 (operator-consistency; the alias Modelfile num_ctx remains the effective contract); versioned edits, rollback inverse recorded"
+    - predicate: "references"
+      target: "DOC-pilot-hxs3-ev-07-esme-m4-install"
+      note: "identity + baseline basis: the drift check compared against the M4 frozen references (digest de878ce33ad8…64c1, alias 472ad84e…ad99, config hashes) — all MATCH, no drift"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-ev-22-esme-m6-capacity-ladder"
+      note: "hxs-1 M6 capacity-ladder pattern — third validated use; F-M6-2 poll-to-empty unload discipline carried (empty at poll 1)"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-ev-29-esme-m6b-profiles"
+      note: "hxs-1 M6b three-profile freeze pattern: alias digest equality + preload/drop-in repoint to the 64k profile"
+    - predicate: "risks"
+      target: "F-M7-1 (FROM model:tag@sha256 unsupported by 0.32.15 create)"
+      note: "the first -32k create with FROM muse-glimmer:30b@sha256:de878ce33ad8… returned 400 'invalid model name' (version-matched Name struct has no digest part); binding achieved via the frozen local tag + post-create manifest layer equality + params-blob dumps (the triple identity proof) — RECOMMENDATION to KK3: record this syntax limitation for future 'FROM the exact digest' work orders on 0.32.15"
+  validation:
+    validated_at: "2026-08-26T10:00:00Z"
+    freshness: "current"
+    review_due: "at M5 (reasoning_strength mapping probes against the resident -64k profile) and the M8 sign-off; F-M7-1 recorded for future FROM-the-exact-digest work orders on 0.32.15"
+  sha256: "e50bce87ee6b79c4156ddf237b2f91cd417d0217c3e0adef63294ec93b9d60a3"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/09-esme-m7-ladder-profiles.md"
+notes:
+  findings_register: "F-M7-1 (FACT, disclosed deviation): FROM model:tag@sha256:… rejected by 0.32.15 create (400 invalid model name; Name carries no digest part — source-verified); the identity guarantee was achieved via the frozen local tag (on-disk manifest sha256 == digest) + post-create manifest-layer equality + params-blob verbatim dumps — the triple identity proof; syntax-only deviation, guarantee met and proven. F-M7-2 (FACT): scheduler size scales with OLLAMA_CONTEXT_LENGTH (+995,769,712 B at identical n_ctx 65536 once the env override is set — compute-buffer + second-cache sizing); the rung table reports no-env-override sizing, 18,376,336,340 B is the operating-state planning figure; capacity conclusions unchanged. F-M7-3 (FACT): the VRAM-default path reserves more than explicit num_ctx at the same n_ctx (M4 bare alias 17,839,465,428 B vs -32k rung 17,112,131,172 B at 32768; −727,334,256 B) — future comparisons must use like-for-like paths. F-M7-4 (FACT): KV coefficient 13,312 B/token f16 exactly linear + constant 97.5 MiB second cache; scheduler total-size slope 8,192 B/token labeled separately. Carried untouched: F-E2 discovery watchdog; NVRM teardown-assertion class (rick's plane, monitor only); kbifInitLtr LTR notes; F-E6-class shellcheck unavailability. No stop condition triggered; no escalation required."
+  kv_coefficient: "Meta-X KV = 13,312 B/token f16 (headline, journal KV buffers; exactly linear across two depth pairs) + constant 97.5 MiB second cache (the sliding-window layer set); the densest fleet case fits comfortably — 128K f16 under load 20,424 MiB of 32,622 MiB (≈11.9 GiB headroom), zero offload at every rung."
+  profile_set: "Meta-X three-profile set (frozen 2026-08-26, needle-proven): hx-muse-glimmer-32k 09c4f825ac2f59381953d5ecdabe0fe10d35e83eb7c35fde749269eb1b58836e (baseline), hx-muse-glimmer-64k 9dffb015db409f44713b7c5a9ab5413e140c41eb4e72eac7ca753ce1b99de7da (OPERATING — resident, ctx 65536 effective, Forever), hx-muse-glimmer-128k 17fe5b80483897687c04b8f847d03c8fc893b3312a3e408879b45b003ed2e85b (extended, qualified — needle found at 95.00% on the artifact's own max context; not the default); source tag muse-glimmer:30b de878ce33ad8…64c1 + M4 working alias hx-muse-glimmer 472ad84e…ad99 in-store (tags only)."
+  link_answer: "Row-2 PCIe caveat ANSWERED for the dense model: idle Gen1 = ASPM downshift; under prefill load Gen3 8.0 GT/s (= driver-reported max) on both GPUs at every rung; width stays x8 vs x16 device max — the x8 wiring is the hard ceiling, no drift across the ladder; ≤180 W / ≤82 °C sustained 128K prefill, SM util 100% prefill phases, no throttle events."
+  sanitization: "No secrets, tokens, cookies, private prompts, user data, or thinking content in the source (thinking stripped immediately, counts only per A01 §5.2); all prompts synthetic; askpass helper + wrappers + pinned known_hosts deleted at task end (verified); remote scratch removed; transient sanitized evidence at hxs-5:/tmp/esme-m7/evidence (volatile — the source document carries the record)."

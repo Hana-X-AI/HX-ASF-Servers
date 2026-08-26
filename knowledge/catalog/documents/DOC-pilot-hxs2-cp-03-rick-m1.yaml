@@ -1,0 +1,57 @@
+document:
+  id: "DOC-pilot-hxs2-cp-03-rick-m1"
+  title: "03-context-packet-rick-m1.yaml — context packet for WO-HXS2-RICK-M1-001 (session rick-m1-20260826-01)"
+  type: "context-packet"
+  declared_purpose: "Session-binding packet for the hxs-2 M1 rick dispatch: goal binding (GOAL-HXS2-CODERX-001 v1), current state (hxs-2 192.168.50.201, Ubuntu 24.04.4 LTS, kernel 7.0.0-28-generic as-found 2026-08-12 with 're-verify live' instruction; i7-5960X 8c/16t, 66 GB non-ECC + 8 GB swap; 2x RTX 5060 Ti 16311 MiB, driver 580.173.02 nvidia-driver-580-server-open validated 2026-08-12, CUDA 13.0; 3.6 TB NVMe ext4 root model store per D1, 2x 596.2 GB SATA idle; eno1 192.168.50.201/24 gw/dns 192.168.50.1, enp6s0 DOWN, wlp5s0 DOWN as-found; SSH :22 active, ufw INACTIVE, no Ollama/vLLM/Docker, Secure Boot disabled), unknowns to resolve (DKMS current state, wait-online, AER/NVRM baselines, failed units, rfkill indices, kernel-update availability record-only), owner decisions D1-D4 + standing Secure Boot directive, constraints (read-only except the two authorized mutations; evidence sanitized, masked-value probes only; historical TKV records are cross-check never current truth), the 13-check evidence enumeration + staged-ufw content (document only: default deny incoming, allow 22 and 11434 from 192.168.50.0/24, enablement explicitly deferred to M8), consulted records (DOC-tkv-hxs2-discovery/driver-results/pre-work-results; hxs-1 M1/M2 readiness artifacts 03,04,07,08,26 as pattern reference), and the handoff clause (deliverable to Carol; OPEN until the receipt is cited in the state log)."
+  source:
+    author: "Kimi-K3 (governor)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/03-context-packet-rick-m1.yaml"
+    section: "§whole-document"
+    ingestion_date: "2026-08-26T04:10:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: [hxs-2, hxs-5]
+    fqdns: []
+    services: [sleep.target, suspend.target, hibernate.target, suspend-then-hibernate.target, systemd-rfkill.service, ufw.service]
+    agents: [rick, kimi-k3, carol]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+    models: [mannix/qwen3.6-27b-a3b-coderx:vision-Q4_K_M]
+  version: ""
+  status: "adopted"
+  authority_level: "delegated-contract"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "kimi-k3"
+      note: "issued with WO-HXS2-RICK-M1-001 at M1 commissioning (hxs-2 state log rows 1-2)"
+    - predicate: "references"
+      target: "DOC-pilot-hxs2-wo-02-rick-m1"
+      note: "paired work order"
+    - predicate: "depends_on"
+      target: "DOC-goal-hxs2-qwen36-coderx-backend"
+      note: "goal_id GOAL-HXS2-CODERX-001, goal_version 1"
+    - predicate: "references"
+      target: "DOC-pilot-hxs2-ev-04-rick-os-readiness"
+      note: "deliverable produced under this packet (PASS — TASK COMPLETE, 13/13); handoff OPEN until this run's receipt lands in the state log (packet handoff clause)"
+    - predicate: "references"
+      target: "DOC-tkv-hxs2-driver-results"
+      note: "consulted record (with DOC-tkv-hxs2-discovery / DOC-tkv-hxs2-pre-work-results) — historical cross-check only"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-ev-07-rick-os-readiness"
+      note: "hxs-1 M1/M2 readiness pattern reference (artifacts 03,04,07,08,26)"
+  validation:
+    validated_at: "2026-08-26T04:10:00Z"
+    freshness: "current"
+    review_due: "not applicable — discharged (milestone complete, deliverable 04 PASS)"
+  sha256: "3965a50173941edb3650b5b9866bd3d0080bc2e003cbf84c4d1005d8d9828885"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/03-context-packet-rick-m1.yaml"
+notes:
+  superseded_element: "The staged-ufw packet content (evidence_requirements item: 'Staged ufw ruleset (document only)… enablement explicitly deferred to M8') is VOID per the owner no-host-firewall rule 2026-08-26 (hxs-2 state log row 5; AGENTS.md posture directives; blueprint §5). The packet otherwise stands as the discharged session contract."
+  kernel_drift_anticipated: "Packet current_state named kernel 7.0.0-28-generic (as-found 2026-08-12) with the explicit instruction 're-verify live' — the live host ran 7.0.0-30 (evidence F-01); the packet's own rule ('the live host is the authority') covered the drift."

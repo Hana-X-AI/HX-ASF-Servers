@@ -1,0 +1,64 @@
+document:
+  id: "DOC-pilot-hxs2-wo-11-john-websearch"
+  title: "11-work-order-john-websearch.yaml — WO-FLEET-JOHN-WS-001 (fleet change: enable Ollama Cloud web search on all four hosts — NO_CLOUD removal; DISCHARGED — complete)"
+  type: "work-order"
+  declared_purpose: "Delegated contract commissioning john / Esme (session john-ws-20260826-01) for the fleet change 'Enable Ollama Cloud web search on all four hosts' (owner decision 2026-08-26): remove OLLAMA_NO_CLOUD=1 from each host's ollama.service drop-in (versioned one-line change per host), daemon-reload, restart ollama.service ONLY, and re-verify: frozen model identity and residency byte-identical pre/post on hxs-1 (hx-qwen3.8-27b-64k), hxs-2 (hx-qwen3.6-coderx), hxs-3 (hx-muse-glimmer); model list intact on hxs-4 (qwen3.5:9b-q4_K_M); reachability (loopback on all four; LAN from hxs-5 on hxs-1/2/3); journal clean, zero Xid, NRestarts accounted. Enable nothing else: no cloud models, no remote inference, no endpoint changes, no firewall. Confirm the agent web-search flag OLLAMA_AGENT_DISABLE_WEBSEARCH is unset (agent web search allowed). Document for the owner the remaining interactive step: per-host ollama signin (URL flow, his ollama.com account) — web search activates after sign-in; verify and report the pre-signin availability state per host. Owner authorizations: owner decision 2026-08-26 'Enable Ollama Cloud web search' on all four hosts (hxs-3 log row 12; hxs-1 log row 78) — supersedes the ratified NO_CLOUD posture for the web-search class; explicitly NOT authorized: pulling or running any :cloud model, remote inference, endpoint/firewall changes, reboots, any other service changes. Boundaries: hxs-5 session, per host via SSH hxsa@<ip> (192.168.50.200/201/202/203); askpass helper READS the credential from the HX Fleet SSH Access Guide credential-record row at execution time (no extracted copy, helper deleted at task end); hostname + peer IP verified per host; sudo -n only; host keys pinned (hxs-1 known; hxs-2/3 F-05; hxs-4 TOFU-with-corroboration if unpinned); frozen-identity guard per host (any drift = stop and restore that host's drop-in); versioned change (pre/post sha256 + unified diff in evidence); one bounded correction per failed host; stop conditions: service fails to return, identity drift, any Xid. Rollback: restore the OLLAMA_NO_CLOUD=1 line per host drop-in (byte-copies retained in evidence), daemon-reload, service restart. Deliverable: 13-esme-websearch-enable.md. Second Brain evaluation: opportunity identified — uniform bounded fleet change (four hosts, one shape) with identity guards (the SC-07a pattern generalized); disposition implemented."
+  inferred_value: "INFERENCE: this is the fleet's first four-host posture change executed as one bounded contract — its real content is the guard discipline (per-host quiescence gates against three parallel ladder sessions, byte-copies before every edit, identity guards pre/post within its own windows), which is what lets a posture supersession land while three ladders were mutating the same hosts' configs."
+  source:
+    author: "Kimi-K3 (governor)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/11-work-order-john-websearch.yaml"
+    section: "§whole-document"
+    ingestion_date: "2026-08-26T10:00:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: [hxs-1, hxs-2, hxs-3, hxs-4, hxs-5]
+    fqdns: []
+    services: [ollama.service]
+    agents: [john, kimi-k3]
+    repositories: [HX-ASF-Servers]
+    environments: [fleet, pilot]
+    models: [hx-qwen3.8-27b-64k, hx-qwen3.6-coderx-64k, hx-muse-glimmer-64k, qwen3.5:9b-q4_K_M]
+  version: ""
+  status: "adopted"
+  authority_level: "delegated-contract"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "kimi-k3"
+      note: "commissioned at the owner web-search decision (hxs-2 state log rows 14–15, 2026-08-26T07:19Z/07:21Z; hxs-3 log row 12; hxs-1 log row 78 cross-ref); WO/CP sha256 recorded at row 15 per the hxs-1 pattern"
+    - predicate: "references"
+      target: "DOC-pilot-hxs2-cp-12-john-websearch"
+      note: "paired context packet (session john-ws-20260826-01)"
+    - predicate: "depends_on"
+      target: "DOC-goal-hxs2-qwen36-coderx-backend"
+      note: "parent goal GOAL-HXS2-CODERX-001 (goal_file goals/2026-08-26-hxs2-qwen36-coderx-backend.md) — the fleet change rides this pilot's governing log"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-ev-35-esme-preload-budget"
+      note: "hxs-1 unit contracts (controlling source 35-esme-preload-budget.md) — the preload auto-rerun contract behind the residency-return test (T10)"
+    - predicate: "references"
+      target: "DOC-pilot-hxs2-ev-07-esme-m4-install"
+      note: "hxs-2 M4 unit contracts (controlling source): hx2.conf + preload with the exact alias+digest /api/ps assertion"
+    - predicate: "references"
+      target: "DOC-pilot-hxs3-ev-07-esme-m4-install"
+      note: "hxs-3 M4 unit contracts (controlling source): hx3.conf + preload with the exact alias+digest /api/ps assertion"
+    - predicate: "depends_on"
+      target: "DOC-protected-ssh-info-hxs1"
+      note: "ratified askpass execution path (hxs-5 → the four hosts); credential read at execution, never printed/logged/stored, helper deleted at task end"
+    - predicate: "governs"
+      target: "DOC-pilot-hxs2-ev-13-esme-websearch-enable"
+      note: "DISCHARGED by the fleet deliverable 13-esme-websearch-enable.md (PASS — zero corrections, zero restores, identity guards ALL PASS on all four hosts; hxs-2 state log row 20, 2026-08-26T09:13Z; handoff OPEN until this run's receipt is cited)"
+  validation:
+    validated_at: "2026-08-26T18:50:00Z"
+    freshness: "current"
+    review_due: "owner per-host ollama signin COMPLETED 2026-08-26T18:42Z (hxs-2 state log row 27: signin ×4 as AgentZero, smoke POST /api/experimental/web_search → HTTP 200 with structured results ×4, server.json absent ×4 — the remaining activation gate is CLOSED, web search ACTIVE fleet-wide; O1 posture unchanged); the WS handoff CLOSES when this wave's receipt is cited in the governing logs (profile §7)"
+  sha256: "7659d94802c01ba761a2b4779056624793330320662eec37629f3243354bbc9e"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/11-work-order-john-websearch.yaml"
+notes:
+  status_convention: "Cataloged POST-completion: status adopted per the discharged-contract convention — the fleet change completed before ingestion (hxs-2 state log row 20)."
+  hash_crosscheck: "sha256 7659d94802c01ba761a2b4779056624793330320662eec37629f3243354bbc9e == the value recorded at commissioning (hxs-2 state log row 15, 2026-08-26T07:21Z) — MATCH (hash-recorded per the hxs-1 pattern)."

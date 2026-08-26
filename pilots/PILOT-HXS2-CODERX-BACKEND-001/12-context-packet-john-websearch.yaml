@@ -1,0 +1,31 @@
+context_packet:
+  goal_id: "GOAL-HXS2-CODERX-001"
+  goal_version: 1
+  work_order_id: "WO-FLEET-JOHN-WS-001"
+  session_id: "john-ws-20260826-01"
+  role: "producer (Ollama specialist: john / Esme)"
+  milestone: "Fleet web-search enablement (NO_CLOUD removal, four hosts)"
+  objective: >-
+    Remove OLLAMA_NO_CLOUD=1 from each host's ollama.service drop-in, restart
+    each ollama.service, and re-prove identity, residency, and reachability on
+    all four hosts — with the owner's sign-in step documented as the remaining
+    activation gate.
+  current_state:
+    hxs_1: "192.168.50.200 — Ollama 0.32.15, resident hx-qwen3.8-27b-64k (digest 766cd9469fb4…, 20,463,789,012 B, 100% VRAM, ctx 65536, Forever); drop-in hx1.conf carries OLLAMA_NO_CLOUD=1"
+    hxs_2: "192.168.50.201 — Ollama 0.32.15, resident hx-qwen3.6-coderx (alias digest 1d297a6a093f…, 17,602,392,879 B, 100% VRAM, ctx 32768, Forever); drop-in carries OLLAMA_NO_CLOUD=1"
+    hxs_3: "192.168.50.202 — Ollama 0.32.15, resident hx-muse-glimmer (alias digest 472ad84e752d…, 17,839,465,428 B, 100% VRAM, ctx 32768, Forever); drop-in carries OLLAMA_NO_CLOUD=1"
+    hxs_4: "192.168.50.203 — Ollama 0.32.9 (alignment to 0.32.15 running in parallel session john-chatx-20260826-01 — DO NOT touch the version here; if the pin has landed when you arrive, work with whatever version is live), model qwen3.5:9b-q4_K_M resident-on-demand, loopback-only; unit environment carries OLLAMA_NO_CLOUD=1"
+    flag_state: "OLLAMA_AGENT_DISABLE_WEBSEARCH must be UNSET everywhere (agent web search allowed) — verify, never set it"
+  owner_decisions:
+    - "2026-08-26: web search ENABLED fleet-wide (NO_CLOUD removed); remote inference + :cloud models remain unused by policy; per-host ollama signin = owner's interactive step after this change"
+  constraints:
+    - "One-line removal per host + restart + re-verify ONLY. No version changes (hxs-4's pin is another session's), no endpoint changes, no firewall, no reboots, no cloud models, no remote inference"
+    - "Secrets never printed/logged/stored; askpass helper reads at execution, deleted at task end; evidence sanitized"
+    - "hxs-4 loopback posture unchanged (its LAN posture is a separate parked owner decision)"
+  evidence_requirements:
+    - "Per host: drop-in pre/post sha256 + diff, restart result, /api/ps or list before-after identity block, reachability (loopback all; LAN hxs-1/2/3 from hxs-5), NRestarts, journal excerpt (no Xid/errors), the pre-signin web-search availability observation, and the exact `ollama signin` instruction for the owner"
+  consulted_records:
+    - "35-esme-preload-budget.md; hxs-2/hxs-3 M4 install evidence (07-esme each); Chat-X verification facts (hxs-1 log row 76)"
+  handoff:
+    - "Deliverable 13-esme-websearch-enable.md goes to Carol for catalog receipt; handoff OPEN until the receipt is cited in the governing logs"
+  second_brain_evaluation: "Per the work order — uniform bounded fleet change with identity guards"

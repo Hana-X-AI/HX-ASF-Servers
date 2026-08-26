@@ -1,0 +1,63 @@
+document:
+  id: "DOC-backend-coder-x"
+  title: "Backend-capability record — Coder-X (hxs-2, 192.168.50.201:11434; mannix/qwen3.6-27b-a3b-coderx:vision-Q4_K_M; operating hx-qwen3.6-coderx-64k (M6); status CANDIDATE until M8)"
+  type: "registry"
+  declared_purpose: "Fleet backend-capability registration per servers/BLUEPRINT-llm-server.md §8 (registration schema: endpoint, exact tag + digest, capabilities, runtime profile, health/evidence contracts, owner). call_sign 'Coder-X' (owner fleet call-sign directive 2026-08-26; the X in a call-sign is ALWAYS capital) = hxs-2 (192.168.50.201), the fleet coding-inference backend (Qwen3.6-27B-A3B CoderX, MoE top-8/184-expert checkpoint). Endpoint http://192.168.50.201:11434 (LIVE since M4 2026-08-26T04:44Z — OLLAMA_HOST=0.0.0.0 wildcard bind with loopback preserved; reachable only from 192.168.50.0/24, no service-layer auth, no host firewall per the owner rule; reachability proven loopback + LAN from hxs-5). Model mannix/qwen3.6-27b-a3b-coderx:vision-Q4_K_M, frozen digest ca661423d6b51ebeaca999f22cfc0f30c0851b2a6f328b2737bd8cb6eb90c1df (M4 identity freeze; reference prefix ca661423d6b5 cross-check MATCH). Working alias hx-qwen3.6-coderx, digest 1d297a6a093f7858da9a96e39950b6e7581118708b6121182a811a1f3bf21ba5 (FROM-only Modelfile, blob-bound to the frozen artifact — three-way binding proof); model reference is alias-only. M6 profile set COMPLETE 2026-08-26 (WO-HXS2-JOHN-M6-001, 08-esme-m6-ladder-profiles PASS, governor live-verified hxs-2 state log row 18): OPERATING alias hx-qwen3.6-coderx-64k (frozen ec9ebe08a824…, resident 17,815,411,094 B 100% VRAM, ctx 65536 effective, Forever per D5); three aliases all frozen 2026-08-26 and needle-proven — hx-qwen3.6-coderx-32k 1d297a6a… (baseline, byte-identical to the M4 bare alias; needle 31,133 tok 95.01%), hx-qwen3.6-coderx-64k ec9ebe08… (operating; needle 62,203 tok 94.9%), hx-qwen3.6-coderx-128k 86a55171… (extended; needle 124,421 tok 94.9%); preload + hx2.conf repointed to -64k (+OLLAMA_CONTEXT_LENGTH=65536). Capabilities: completion; tools; thinking; vision PRESENT in the artifact (446.57M-param F16 CLIP projector, qwen3vl_merger) but DEFERRED per owner D8 — probes report evidence at M5, any shortfall's disposition is a future owner decision; vision is NOT a qualified capability. Runtime profile: ctx 32768 baked in the tag (num_ctx 32768, draft_num_predict 3, native sampling preserved — zero overrides); 64K operating context DISCHARGED at M6 2026-08-26 (owner D5 — ladder PASS on the exact digest; ctx 65536 effective via the resident -64k profile). Runtime: Ollama 0.32.15 pinned (blueprint-host proven version; upstream 0.33.0 deliberately not taken, F-J4). Health/evidence contracts: ollama-preload.service + bounded-phase preload script asserting exact alias + frozen digest in /api/ps (script worst case 538 s < TimeoutStartSec=600 ≤ 900 s D5 SLO); both units enabled; resident hx-qwen3.6-coderx-64k 17,815,411,094 B 100% VRAM across both RTX 5060 Ti, Forever (post-M6; the M4-era 17,602,392,879 B figure was the bare-alias 32k load). Limits: serialized admission (OLLAMA_NUM_PARALLEL=1, OLLAMA_MAX_LOADED_MODELS=1). Owner: Agent-Zero. Status CANDIDATE until the hxs-2 M8 sign-off."
+  inferred_value: "INFERENCE: the candidate entry still earns its keep before M8 — the endpoint is live and the identity is frozen at M4, so any consumer design work (gateway routing, agent presets) can already resolve Coder-X against verified facts, with the candidate status honestly signaling that M5–M8 qualification evidence is still outstanding."
+  source:
+    author: "Agent Zero (fleet capability call-sign directive 2026-08-26); Carol (record synthesis per the blueprint §8 registration schema)"
+    provided_by: "Kimi-K3 (dispatch)"
+    origin: "servers/BLUEPRINT-llm-server.md §8 fleet capability call-signs (registration locus) + the hxs-2 M4 evidence chain cited in relations"
+    section: "§8 fleet capability call-signs — alias table row Coder-X"
+    ingestion_date: "2026-08-26T05:35:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: [hxs-2]
+    fqdns: []
+    services: [ollama.service, ollama-preload.service]
+    agents: []
+    repositories: [HX-ASF-Servers]
+    environments: [fleet, pilot]
+    models: [mannix/qwen3.6-27b-a3b-coderx:vision-Q4_K_M]
+  version: "registered 2026-08-26 (blueprint §8 alias table); capability facts as of M4 (2026-08-26)"
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "configures"
+      target: "hxs-2"
+      note: "registers hxs-2's serving capability under the Coder-X call-sign; the as-configured host record (server records contract Phase 2) is created at the M8 sign-off — until then the M4/M5+ evidence chain carries the configured state"
+    - predicate: "references"
+      target: "DOC-pilot-hxs2-ev-07-esme-m4-install"
+      note: "content basis (governor-verified, hxs-2 state log row 9): frozen identity ca661423d6b5…c1df, alias 1d297a6a09…21ba5 blob-bound, capabilities completion/vision/tools/thinking, residency 100% VRAM both GPUs, 0.32.15 pin, D5 budgets, reachability matrix"
+    - predicate: "references"
+      target: "DOC-blueprint-llm-server"
+      note: "registration locus (§8 alias table row Coder-X — now carrying the frozen profile entries 'hx-qwen3.6-coderx-64k operating (resident); -32k baseline; -128k extended (all frozen 2026-08-26, needle-proven)' + record id DOC-backend-coder-x (candidate), VERIFIED PRESENT source line 105) and the downstream-consumer contract that makes this record the resolve target"
+    - predicate: "references"
+      target: "DOC-goal-hxs2-qwen36-coderx-backend"
+      note: "parent goal GOAL-HXS2-CODERX-001; owner decisions D1–D8 govern the registered facts (D3 tag, D5 64K after the M6 ladder, D8 vision deferred)"
+    - predicate: "references"
+      target: "DOC-pilot-hxs2-ev-08-esme-m6-ladder-profiles"
+      note: "the M6 evidence behind the profile-set fill: three rungs PASS (needles 31,133/62,203/124,421 tok at 95.01/94.9/94.9% stop+found, 100% VRAM), KV 20,480 B/token f16 exactly linear (128K residency byte-exact predicted), digest-equality proofs per rung (params-blob-only delta = num_ctx), final resident -64k ctx 65536 effective Forever"
+    - predicate: "produced_by"
+      target: "owner fleet capability call-sign directive 2026-08-26"
+      note: "hxs-2 state log row 10 (2026-08-26T05:11Z): 'hxs-2 = Coder-X'; materialized in the blueprint §8 alias table; convention: the X is always capital"
+  validation:
+    validated_at: "2026-08-26T13:05:00Z"
+    freshness: "current"
+    review_due: "at each hxs-2 milestone evidence landing (M5 quality/vision probes, M7 reboots) and at the M8 sign-off (status flip to ACTIVE); on blueprint §8 amendment"
+  sha256: "51ec3d533a4bd09137fe9c2d419871d68b759fe8f48e3cbf451f2a89afe7dce1"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/servers/BLUEPRINT-llm-server.md"
+notes:
+  record_class: "backend capability (typed registry per judgment — see DOC-backend-qwen-x notes.record_class for the class rationale): one catalog registry entry per fleet call-sign; consumers resolve endpoint + profile + limits here per blueprint §8."
+  callsign_convention: "Fleet capability call-signs (owner, 2026-08-26): capability-level alias resolved through this record — never a bare Ollama tag; the X is ALWAYS capital; status candidate until the host's M8 sign-off (hxs-2 M8 pending)."
+  status_mapping: "catalog status adopted = blueprint §8 'CANDIDATE' mapping: the registration exists (owner directive 2026-08-26) and the capability facts are M4-verified, but the backend is not yet M8-signed; the record flips to status active at the hxs-2 M8 sign-off."
+  authority_basis: "authority_level agent-evidence per dispatch (candidates convention): the operative capability facts (digests, capabilities, residency, pin, budgets) trace to the governor-verified M4 agent evidence (07-esme) and will be re-proven through M5–M7; the call-sign directive itself is owner (recorded via produced_by). Matures to ratified-governance at the M8 owner sign-off (Qwen-X precedent)."
+  checksum_method: "sha256 = servers/BLUEPRINT-llm-server.md at registration-close (chain: 1c22749a… at 2026-08-26T05:28Z → 51825990… at 06:02Z after the governor's mid-run §8 Chat-X row addition — this record's own §8 row unchanged → 5062b208… at 2026-08-26T07:47Z after the §8 record-ID column completion (Chat-X cell → DOC-backend-chat-x), the Meta-X cell update, and the batch-11 Provenance 'registered' line — intermediate states ce0cabf0…/88c1b85a… per the chat-x/meta-x chains; this record's own §8 row text unchanged → df59d340… at 2026-08-26T10:00Z after the governor's §8 alias-table profile entries (SIXTH amendment — the Coder-X row gained 'hx-qwen3.6-coderx-64k operating (resident); -32k baseline; -128k extended (all frozen 2026-08-26, needle-proven)', VERIFIED PRESENT source line 105; this run's profile-set fill mirrors that row change into the record) → 51ec3d53… at 2026-08-26T13:05Z re-validated (SEVENTH amendment — review batch-12 §5 'honest enforcement shape' block, landed 2026-08-26T09:55Z per the 1045Z receipt chain df59d340… → 51ec3d53…; Coder-X row text unchanged at that step)) — the §8 alias-table row is the registration locus of this catalog-native record; per-host capability facts trace to the evidence records in relations (M4 facts to DOC-pilot-hxs2-ev-07-esme-m4-install, M6 profile-set facts to DOC-pilot-hxs2-ev-08-esme-m6-ladder-profiles). Re-hash on blueprint drift (T-micro re-validation)."
+  vision_note: "The artifact's vision capability (CLIP projector, F16, 446.57M params) is registered as PRESENT-but-DEFERRED (owner D8: 'a concern for another day' — hxs-2 state log row 2): M5 probes report evidence; qualification/disposition is a future owner decision. Consumers MUST NOT rely on Coder-X vision."
+  profile_set_m6: "2026-08-26 — M6 (WO-HXS2-JOHN-M6-001, 08-esme-m6-ladder-profiles.md PASS, governor live-verified hxs-2 state log row 18): the three-profile set is FROZEN and needle-proven — hx-qwen3.6-coderx-32k 1d297a6a093f… (baseline; BYTE-IDENTICAL to the M4 bare alias — the tag's baked num_ctx 32768 makes the M4 alias manifest the 32k profile; needle 31,133 tok 95.01%), hx-qwen3.6-coderx-64k ec9ebe08a824… (OPERATING — resident 17,815,411,094 B 100% VRAM, ctx 65536 effective, Forever per D5; needle 62,203 tok 94.9%), hx-qwen3.6-coderx-128k 86a55171dc03… (extended, qualified; needle 124,421 tok 94.9%); digest equality proven per rung (config/projector/weights blobs identical to the frozen artifact ca661423d6b5…c1df; params-blob-only delta = num_ctx); KV 20,480 B/token f16 exactly linear (128K residency byte-exact predicted); preload repointed MODEL/DIGEST → -64k, hx2.conf + OLLAMA_CONTEXT_LENGTH=65536; link gen3 x8 (=max) under load; F-M6-0 (single Xid-31, self-recovered, zero recurrence — owner RESUME ARMED row 17) + F-M6-7 (discovery-race over-report class) carried on the evidence record. The blueprint §8 Coder-X row carries the frozen entries (VERIFIED PRESENT this run, source line 105)."

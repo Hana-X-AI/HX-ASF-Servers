@@ -1,0 +1,53 @@
+document:
+  id: "DOC-meta-model-api-choosing-api"
+  title: "api.md — Meta Model API 'Choosing an API' (Responses vs Chat Completions vs Messages; upstream capture, agent-zero-docs/pilots/hxs-3/meta/)"
+  type: "runbook"
+  declared_purpose: "Meta's official API-selection doc (front matter: title 'Choosing an API — Meta Model API', description 'Compare the Responses, Chat Completions, and Messages formats on Meta Model API — same models, same auth, same cost — and pick the one your code already speaks', cms alias /model-api/docs/protocols): Model API speaks three request formats over the same models, the same bearer-token auth, and the same per-token cost. Responses API (POST /v1/responses) — the recommended default for new work: OpenAI-compatible, full feature set, cross-turn reasoning replay (stateless encrypted items or server-managed previous_response_id), search grounding, tool search, background execution, file inputs; reach for it for agentic/coding workloads where reasoning continuity across tool turns matters. Chat Completions (POST /v1/chat/completions) — the classic OpenAI messages-array endpoint; simplest drop-in; does NOT carry reasoning across turns for external keys; search grounding runs on Responses only; function-tool calling fully supported. Messages API (POST /v1/messages) — an Anthropic Messages-compatible wire format over the same inference pipeline; for Claude-oriented tools and the Anthropic SDK (base host https://api.meta.ai — the SDK appends /v1/messages); stateless, replay history client-side. Selection guidance: agent or coding workflow → Responses; existing OpenAI chat.completions code → Chat Completions, move to Responses when reasoning replay or grounding is needed; Claude Code / Anthropic SDK → Messages."
+  inferred_value: "INFERENCE: for the hxs-3 pilot this is the format-map that tells the M5/M6 contract-suite designers which upstream behaviors are format-dependent (cross-turn reasoning continuity is a Responses-API feature; Chat Completions does not carry reasoning across turns) — which of these contracts the local Ollama artifact reproduces is an M5/M6 probe question, never assumed (state log row 3 nuance registration)."
+  source:
+    author: "Meta (dev.meta.ai documentation)"
+    provided_by: "Agent Zero"
+    origin: "/home/hxsa/opt/local-tkv/agent-zero-docs/pilots/hxs-3/meta/api.md (capture of the Meta Model API docs — front-matter cms alias /model-api/docs/protocols)"
+    section: "§whole-document"
+    ingestion_date: "2026-08-26T05:35:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: [hxs-3]
+    fqdns: []
+    services: []
+    agents: [kimi-k3, john]
+    repositories: []
+    environments: [pilot]
+    models: [muse-glimmer:30b]
+  version: "capture as supplied 2026-08-26 (upstream page live-versioned)"
+  status: "active"
+  authority_level: "upstream-reference"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "owner-docs tree (/home/hxsa/opt/local-tkv)"
+    contains_secret_values: false
+  relations:
+    - predicate: "references"
+      target: "DOC-goal-hxs3-muse-glimmer-tooling"
+      note: "hxs-3 controlling-source family (owner-supplied Meta primary sources, state log row 3): informs the pilot's harness/API contract design"
+    - predicate: "references"
+      target: "DOC-meta-model-api-tool-calling"
+      note: "sibling capture — the tool-calling mechanics this doc points at (/docs/tool-calling); the M6 contract-suite basis"
+    - predicate: "references"
+      target: "DOC-meta-model-api-sdks"
+      note: "sibling capture — SDK surfaces for the three formats"
+    - predicate: "describes"
+      target: "Meta Model API request formats (Responses / Chat Completions / Messages)"
+      note: "three formats, same models/auth/cost; cross-turn reasoning replay is Responses-only (external keys); Chat Completions supports function tools fully but no reasoning continuity"
+  validation:
+    validated_at: "2026-08-26T05:35:00Z"
+    freshness: "current"
+    review_due: "on upstream page change (live-versioned vendor doc) or at the hxs-3 M5/M6 contract-suite design"
+  sha256: "7a4ac45d75b6f75f9489416f6770b606d3a9e54f4ba1289f54caa33524770335"
+  canonical_location: "/home/hxsa/opt/local-tkv/agent-zero-docs/pilots/hxs-3/meta/api.md"
+notes:
+  type_judgment: "Typed 'runbook' per dispatch: a vendor how-to/selection guide in operational form (which endpoint, which SDK, which base URL). Not 'plan' (commissions no HX work) and not 'corpus' (a single document — convention DOC-hxs2-coderx-knowledge-reference notes.type_judgment; same typing as DOC-meta-muse-glimmer-llama-cpp-guide)."
+  authority_label: "authority_level upstream-reference: Meta's own vendor documentation, owner-supplied as a pilot controlling source; verify against the live runtime before converting any statement into configuration — HX deploys the local Ollama artifact, so hosted-API behaviors are contract hypotheses for the M5/M6 probes, not HX-established fact."
+  origin_note: "Local capture supplied 2026-08-26 in the agent-zero-docs meta/ directory alongside doc-1.md and the v1.1 pilot; dev.meta.ai returns HTTP 500 to automated access from hxs-5 (bot block — hxs-3 state log row 3), so the owner supplied it via the browser route; the .md capture carries the record sha256."

@@ -1,0 +1,59 @@
+document:
+  id: "DOC-goal-hxs2-qwen36-coderx-backend"
+  title: "Goal 2026-08-26-hxs2-qwen36-coderx-backend — provision the hxs-2 coding-inference backend (CoderX via Ollama, mutating pilot)"
+  type: "goal"
+  declared_purpose: "Durable work-state record (Goal ID = file name, KDD-0002): intent (provision hxs-2 as a persistent local coding-inference host via Ollama with the exact model mannix/qwen3.6-27b-a3b-coderx:vision-Q4_K_M — owner D3, registry-verified 2026-08-26 — validated end to end, exposed through an authorized LAN-scoped endpoint, and registered in the HX Second Brain catalog as the discoverable backend-capability of record; DeepSeek Harness verified nonexistent — owner-confirmed easter egg 2026-08-26 — the catalog fills the capability-registry role), scope and target (hxs-2 192.168.50.201, registry role Coding; as-found baseline i7-5960X, 66 GB RAM, 2x RTX 5060 Ti 16,311 MiB, driver 580.173.02, Ubuntu 24.04.4, kernel 7.0.0-28, no Ollama/vLLM, ufw inactive, Wi-Fi DOWN), owner decisions D1-D8, success conditions SC-01..SC-08 with evidence contracts and KK3 gates, execution controls (1 initial specialist run + 1 bounded correction per failed correctable gate; stop conditions; smallest-layer rollback; HITL checkpoints M0/Gate 0/each cold reboot/vision/final sign-off), notes and links. Status in file: in-progress — M0 authorized 2026-08-26 (plan approved; D1–D8 decided and recorded; M1 COMPLETE 13/13, handoff pending Carol receipt). Owner decisions finalized 2026-08-26 (state log row 2): D1 model store per the HX-1 blueprint (root ext4); D2 endpoint allowlist = the entire fleet 192.168.50.0/24 AND the same fleet access must hold on hxs-1 ('if not, fix it') — hxs-1's loopback-only posture superseded by owner directive, bounded exposure change executed on hxs-1 in parallel (hxs-1 state log rows 71-73); D2 AMENDED same day (verified present at source lines 50-51): NO host firewall anywhere (owner rule 2026-08-26) — services bind to the LAN, the private /24 itself is the boundary, earlier ufw-based staging is void; no NAT port-forward; D3 CoderX as above; D4 Wi-Fi rfkill soft block boot-persisted, same as hxs-1; D5 operating context = 65,536 (64K) DECIDED 2026-08-26 — the M6 ladder validates 32K (baked) then 64K on the exact digest before M6b freezes; D6 M7 cold reboots PRE-APPROVED per-cycle within a governor-announced window (hxs-1 precedent); D7 DoD re-scope (Harness-free mapping) ratified; D8 vision disposition DEFERRED by owner ('a concern for another day') — vision probes run and report evidence at M5, any shortfall's disposition a future owner decision, not a pilot blocker."
+  source:
+    author: "Kimi-K3 (goal record) / Agent Zero (authorization)"
+    provided_by: "Agent Zero"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/goals/2026-08-26-hxs2-qwen36-coderx-backend.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-26T03:26:00Z"
+  owner: "Agent Zero (human authority); Kimi-K3 (governor)"
+  applies_to:
+    hosts: [hxs-2]
+    fqdns: [hxs-2.hx.local.arpa]
+    services: [ollama.service]
+    agents: [kimi-k3, rick, john, carol]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot, fleet]
+    models: [mannix/qwen3.6-27b-a3b-coderx:vision-Q4_K_M]
+  version: "1"
+  status: "active"
+  authority_level: "ratified-governance"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "depends_on"
+      target: "DOC-kdd-0006-hxs2-coderx-backend-adoption"
+      note: "pilot adoption (goal Notes and links: 'KDDs: KDD-0006 (adoption)'); Harness-free DoD re-scope (D7) ratified via plan approval 2026-08-26"
+    - predicate: "governs"
+      target: "DOC-pilot-hxs2-state-log"
+      note: "state log opened at M0 (row 1, 2026-08-26T03:10Z); execution per the approved session plan namor-karnak-nick-fury.md (2026-08-26 — not cataloged: not supplied)"
+    - predicate: "references"
+      target: "DOC-hxs2-deployment-directive"
+      note: "owner corrected mission directive (goal plan line: 'source directive agent-zero-docs/pilots/hxs-2/hxs-2-deployment.md'); its DeepSeek Harness registration premise resolved as verified-nonexistent (easter egg) — DoD re-scoped Harness-free per owner, this file SC table"
+    - predicate: "references"
+      target: "DOC-hxs2-coderx-knowledge-reference"
+      note: "controlling model knowledge reference named in the goal's Notes and links (876 lines); its qualification protocols are the pilot's measurement basis"
+    - predicate: "references"
+      target: "DOC-tkv-server-registry"
+      note: "target identity hxs-2 192.168.50.201, registry role Coding"
+    - predicate: "references"
+      target: "DOC-tkv-hxs2-discovery"
+      note: "pre-flight intake baseline (goal Pre-flight: servers/hxs-2/discovery.md + post-directive driver validation); historical as-found — live re-verification at M1"
+  validation:
+    validated_at: "2026-08-26T06:31:00Z"
+    freshness: "current"
+    review_due: "each milestone gate (living goal); final reconciliation at pilot close (acceptance)"
+  sha256: "d14cf1fdfbe25e5d0ed44e6dcb691bf4189f67154c0e5aaf43c7e3c8fff22a0c"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/goals/2026-08-26-hxs2-qwen36-coderx-backend.md"
+notes:
+  hash_history: "eabfe4fc… (2026-08-26T03:17Z, first hash at ingestion) → d8cb3a7a… (2026-08-26T03:36Z, same-run re-validation): legitimate governor edit mid-run — owner decisions D1-D8 finalized per state log row 2 (2026-08-26T03:20Z: D2 widened to fleet /24 + parallel hxs-1 exposure change commissioned, D5 64K decided, D6 pre-approved, D8 deferred). declared_purpose updated to carry the finalized decisions; no other drift found on full re-read. → f4ea9f18… (2026-08-26T04:12Z, this run): two legitimate governor edits, both verified present at source — (1) status line corrected to 'D1–D8 decided and recorded; M1 COMPLETE 13/13, handoff pending Carol receipt' (source line 5; resolves the F-GOAL-1 status-line staleness flagged at the previous re-validation — hxs-2 state log row 6 records the fix); (2) D2 no-host-firewall amendment (source lines 50-51: 'No host firewall anywhere (owner rule 2026-08-26): services bind to the LAN; the private /24 itself is the boundary. Earlier ufw-based staging is void.' — state log row 5). declared_purpose updated for both; applies_to.models added (mannix/qwen3.6-27b-a3b-coderx:vision-Q4_K_M — first-class applicability target per the 2026-08-26 schema extension). → d14cf1fd… (2026-08-26T06:31Z, this T-micro run — batch-10 finding): SC-06 amended to the no-host-firewall rule after the 04:12Z re-validation (hxs-2 state log row 8, 04:37Z: 'F-GOAL-2 fixed: goal SC-06 amended to the no-host-firewall rule') — verified present at source line 75 ('no host firewall (owner rule 2026-08-26 — earlier ufw wording void)'); targeted re-read found no other drift (status line + D2 amendment block unchanged); validation status active/current preserved on source verification. FORMER residual note RESOLVED 2026-08-26T06:31Z: SC-06's evidence-contract text previously named 'ufw ruleset' (source line 75 — overtaken by the D2 amendment at that time); the governor has since amended SC-06 itself to the no-host-firewall rule (verified at source line 75 this run) — F-GOAL-2 closed; no ufw-named requirement remains in the source."
+  status_mapping: "status 'active' maps the file's own status line 'in-progress — M0 authorized 2026-08-26' (schema enum has no in-progress literal; convention: DOC-goal-hx1-ollama-qwen38-27b active during execution, mapped to historical at closure). Expected living-document churn (owner decision/status-line edits) handled by re-ingestion with hash history."
+  authority_note: "F-AUTH-1 ANSWERED 2026-08-26 (hxs-2 state log row 6): ratified-governance CONFIRMED per the two-goal convention — the dispatch brief's 'owner-directive' phrasing is resolved; the goal file is the governor-authored durable state record ratified through KDD-0006 and owner M0 authorization, owner decisions D1-D8 preserved verbatim in declared_purpose. Flag closed."
+  second_brain: "Second Brain evaluation recorded in-file (standing directive): the catalog becomes the factory's backend-capability registry (new record class, implemented at the registration milestone); hxs-1 playbook promoted toward a formal pattern (second validated use); retrieval package at M0/M1. Harness-era registration deferred (substrate verified nonexistent, KDD-0006)."

@@ -1,0 +1,53 @@
+document:
+  id: "DOC-meta-muse-glimmer-llama-cpp-guide"
+  title: "doc-1.md — Meta 'Deploy with llama.cpp' guide for Muse Glimmer (upstream capture, agent-zero-docs/pilots/hxs-3/meta/)"
+  type: "runbook"
+  declared_purpose: "Meta's official deployment guide (front matter: title 'Deploy with llama.cpp', description 'Run Muse Glimmer locally with llama.cpp for CPU, mixed, and GPU inference', cms alias /model-api/docs/muse-glimmer/llama-cpp): run Muse Glimmer with llama.cpp across CPU, Metal, CUDA, ROCm, and Vulkan, serving the published GGUF checkpoints with no conversion. Content: upstream-is-source-of-truth notice — Muse Glimmer support landed in commit 62bf73d25 (PR #26841), adding the muse-glimmer architecture, the vision projector, the ATEM tool-call parser, and DFlash speculative decoding; checkpoint download (meta-models/Muse-Glimmer-30B-GGUF: KQuant 17 GB Q4_K_M text model — 'use this one', dynamic K-quant Q4_K_XL ~20 GB, mmproj vision projector Q4_K_M ~1.4 GB, optional DFlash draft ~1.6 GB; full-precision not published as GGUF); build floor b10353 (b10344 and older refuse the architecture with 'unknown model architecture: muse-glimmer'; prebuilt or source build, Web UI off, arch registration check via LLM_ARCH_MUSE_GLIMMER); server startup (-a muse-glimmer, -ngl 99, -c 131072, --jinja, --chat-template-kwargs reasoning_strength, --api-key guards inference endpoints only; embedded-template rule — never --chat-template-file, the GGUF template is byte-identical to the published chat_template.jinja and selects the ATEM parser); context-per-slot semantics (n_ctx_slot bounds a single generation; exhaustion yields no answer and no error; scale -c with -np; GQA 2 KV heads + sliding window on 3 of 4 layers); reasoning-length control (reasoning_strength low/medium/high/xhigh default high, server-wide or per request; reasoning_effort NOT implemented; reasoning cannot be turned off — reasoning_strength: low spends fewer tokens, --reasoning-budget N hard-caps; reasoning tokens count against max_tokens, ceiling mid-thought returns empty content with finish_reason 'length'); vision via image_url (URL, data URI, local path — billed as prompt tokens); CLI binaries (llama-cli -st, llama-mtmd-cli for images; --jinja required; CLIs do not separate reasoning); tool-calling verification (server-side ATEM parsing returns finish_reason 'tool_calls' + structured tool_calls array — any OpenAI-compatible harness needs no ATEM-specific handling); stop tokens (eos = <|end_of_text|> + <|eot|>; never stop on <|eom|>); next steps (speculative decoding, quantization, other runtimes)."
+  inferred_value: "INFERENCE: the diagnostic compatibility floor and the drafted escape hatch for the hxs-3 pilot — HX deploys Ollama, not a separate llama.cpp server, so b10353/commit 62bf73d25 are floors the installed Ollama build must match in behavior (v1.1 §3.4); KDD-0007 rejected this path as primary (breaks blueprint-uniform operations) and retains it as the drafted escape hatch if the M4/M5 Ollama compatibility gate fails. Its context-per-slot and truncation failure modes are the exact behaviors the goal's context-ladder and SC-05 truncation checks must reproduce under Ollama. Vendor documentation: verify against the live runtime before converting any flag into configuration (upstream-reference; never HX-established fact)."
+  source:
+    author: "Meta (dev.meta.ai documentation)"
+    provided_by: "Agent Zero"
+    origin: "/home/hxsa/opt/local-tkv/agent-zero-docs/pilots/hxs-3/meta/doc-1.md (capture of dev.meta.ai/docs/muse-glimmer/llama-cpp)"
+    section: "§whole-document"
+    ingestion_date: "2026-08-26T05:05:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: [hxs-3]
+    fqdns: []
+    services: []
+    agents: [kimi-k3, john]
+    repositories: []
+    environments: [pilot]
+    models: [muse-glimmer:30b]
+  version: "capture as supplied 2026-08-25/26 (upstream page live-versioned; floor release b10353)"
+  status: "active"
+  authority_level: "upstream-reference"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "owner-docs tree (/home/hxsa/opt/local-tkv); '--api-key <your-key>' and 'Bearer <your-key>' are placeholders, not credentials"
+    contains_secret_values: false
+  relations:
+    - predicate: "references"
+      target: "DOC-goal-hxs3-muse-glimmer-tooling"
+      note: "controlling source named in the goal's Notes and links ('Meta llama.cpp guide (doc-1.md)'); llama.cpp floor b10353 = diagnostic only per state log row 1 — a llama.cpp serving plane is out of scope unless the M4/M5 gate fires the escape hatch"
+    - predicate: "references"
+      target: "DOC-kdd-0007-hxs3-muse-glimmer-tooling-adoption"
+      note: "KDD option 2 (this doc's path): first-class architecture (ATEM parser, DFlash, reasoning_strength support) rejected as primary for breaking blueprint-uniform operations; retained as the DRAFTED ESCAPE HATCH"
+    - predicate: "references"
+      target: "DOC-hxs3-muse-glimmer-pilot-v11"
+      note: "named in the v1.1 front-matter source_artifacts (dev.meta.ai/docs/muse-glimmer/llama-cpp); v1.1 §3.4 takes its identifiers as diagnostic compatibility floors, not instructions to introduce another serving plane"
+    - predicate: "describes"
+      target: "llama.cpp muse-glimmer support (commit 62bf73d25, release b10353)"
+      note: "adds the muse-glimmer architecture, vision projector, ATEM tool-call parser, DFlash speculative decoding; b10344 and older refuse the GGUF ('unknown model architecture'); server-side ATEM parsing means OpenAI-compatible clients need no ATEM handling"
+  validation:
+    validated_at: "2026-08-26T05:05:00Z"
+    freshness: "current"
+    review_due: "on upstream page change (live-versioned vendor doc), on any llama.cpp/Ollama runtime upgrade, or if the M4/M5 escape hatch fires (re-qualification on the drafted llama.cpp path)"
+  sha256: "c6728f19a38abf530c8eadd400963d30a5d7a09904752e14ae4a5eeb390d1be9"
+  canonical_location: "/home/hxsa/opt/local-tkv/agent-zero-docs/pilots/hxs-3/meta/doc-1.md"
+notes:
+  type_judgment: "Typed 'runbook' per dispatch: a vendor deployment procedure — download, build, serve, smoke-test, verify tool calling — in executable command form. Not 'plan' (it commissions no HX work) and not 'corpus' (a single document, not a collection — convention DOC-hxs2-coderx-knowledge-reference notes.type_judgment)."
+  authority_label: "authority_level upstream-reference: Meta's own vendor documentation, owner-supplied as a pilot controlling source. Its identifiers (commit 62bf73d25, release b10353, flags, failure modes) are vendor claims to verify against the live runtime — the goal deploys Ollama, so nothing here is configuration truth until the installed Ollama build demonstrates equivalent behavior (v1.1 §3.4) or the escape hatch fires."
+  origin_note: "Local capture of the live page https://dev.meta.ai/docs/muse-glimmer/llama-cpp (front-matter cms alias /model-api/docs/muse-glimmer/llama-cpp), supplied as doc-1.md in the same agent-zero-docs meta/ directory as the v1.1 pilot; the .md capture carries the record sha256. No .html sibling observed in the supplied directory."

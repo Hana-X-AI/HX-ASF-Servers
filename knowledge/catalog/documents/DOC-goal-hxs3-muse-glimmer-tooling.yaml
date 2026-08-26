@@ -1,0 +1,73 @@
+document:
+  id: "DOC-goal-hxs3-muse-glimmer-tooling"
+  title: "Goal 2026-08-26-hxs3-muse-glimmer-tooling — provision the hxs-3 tooling-inference backend (Muse Glimmer 30B via Ollama, mutating pilot)"
+  type: "goal"
+  declared_purpose: "Durable work-state record (Goal ID = file name, KDD-0002): intent (provision hxs-3 as a persistent local tooling-inference backend with the exact Ollama artifact muse-glimmer:30b — official library tag, ~18 GB, LM 27.9B Q4_K_M + 1.92B CLIP projector, Apache-2.0 — qualified end to end, exposed fleet-scoped (LAN, no host firewall — owner rule), and registered in the Second Brain catalog as the discoverable capability of record: the factory's primary tool agent for the RAG pipeline, a sequential one-tool-call-per-turn specialist — parallel tooling happens above the model in KK3's orchestration plane, never as a claimed model capability; the model proposes at most one tool call per turn and never authorizes or executes; KK3 retains orchestration, acceptance, and evidence), scope and target (hxs-3 192.168.50.202, registry role Agent intelligence; baseline from records — M1 re-verifies: i7-5960X 8c/16t, 66 GB RAM, 2x RTX 5060 Ti 16,311 MiB, driver 580.173.02 validated 2026-08-12, Ubuntu 24.04.4, NVMe root, no Ollama, Secure Boot disabled; in scope incl. OS readiness per the blueprint mask set, Ollama install/pin, exact-tag pull + FULL identity freeze (LM + projector digests, manifest, template/renderer, license), native Phase A baseline, system-policy preservation, prompt/reasoning compatibility + reasoning_strength mapping probes, tool contract suite + one-call-per-turn invariant + ATEM normalization gate, multimodal probes, context ladder 32K/64K/128K, persistence + reboot recovery, scoped endpoint + boundary proof, catalog registration, consumer-proof task; out of scope: DeepSeek Harness (verified nonexistent), a llama.cpp serving plane UNLESS the M4/M5 compatibility gate fires the drafted escape hatch, parallel tool calling (registered limit parallel_tool_calling: false), gpt-oss changes (retained as task-shaped control), LightRAG integration (consumer unbuilt), exposure beyond the LAN), owner decisions D1-D8 (D1 model store root ext4; D2 fleet 192.168.50.0/24 + no host firewall; D3 muse-glimmer:30b exact — manifest prefix de878ce33ad8 cross-check only, local full digest = frozen identity at M4; D4 Wi-Fi rfkill soft block boot-persisted; D5 operating context 65,536 (64K), ladder validates 32K/64K/128K first; D6 M8 cold reboots pre-approved per-cycle; D7 registration to the Second Brain catalog (Harness-free, KDD-0006 convention); D8 operating reasoning_strength default deferred to M5 mapping evidence — reasoning cannot be disabled, recorded; all ratified via plan approval), success conditions SC-01..SC-08 with evidence contracts and KK3 gates (SC-08 registration + process verified by Agent-Zero), execution controls (1 initial specialist run + 1 bounded correction per failed correctable gate; stop conditions incl. Ollama-Muse incompatibility with the drafted llama.cpp escape hatch; smallest-layer rollback; HITL checkpoints M0/Gate 0/each cold reboot/threshold confirmations/final sign-off; commits only with per-instance owner approval — Alert 2), notes and links. Status in file: in-progress — M0 authorized 2026-08-26 (plan approved; D-items ratified; M1 commissioned). Plan: session plan patriot-miles-morales-us-agent.md (approved 2026-08-26 — referenced, not supplied, not cataloged); authoritative source pilot v1.1 (Harness-free mapping per KDD-0006 convention)."
+  source:
+    author: "Kimi-K3 (goal record) / Agent Zero (authorization)"
+    provided_by: "Agent Zero"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/goals/2026-08-26-hxs3-muse-glimmer-tooling.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-26T05:05:00Z"
+  owner: "Agent Zero (human authority); Kimi-K3 (governor)"
+  applies_to:
+    hosts: [hxs-3]
+    fqdns: [hxs-3.hx.local.arpa]
+    services: [ollama.service]
+    agents: [kimi-k3, rick, john, carol]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot, fleet]
+    models: [muse-glimmer:30b]
+  version: "1"
+  status: "active"
+  authority_level: "ratified-governance"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "depends_on"
+      target: "DOC-kdd-0007-hxs3-muse-glimmer-tooling-adoption"
+      note: "pilot adoption (goal Notes and links: 'KDDs: KDD-0007 (adoption)'); D-items D1-D8 ratified via plan approval 2026-08-26"
+    - predicate: "governs"
+      target: "DOC-pilot-hxs3-state-log"
+      note: "state log opened at M0 (row 1, 2026-08-26T04:45Z); execution per the approved session plan patriot-miles-morales-us-agent.md (2026-08-26 — not cataloged: not supplied)"
+    - predicate: "references"
+      target: "DOC-hxs3-muse-glimmer-pilot-v11"
+      note: "authoritative source pilot v1.1 named in the goal Plan line (agent-zero-docs/pilots/hxs-3/meta/, 886 lines); its Harness-era §7 registration framing maps to the Second Brain catalog per KDD-0006 convention (substrate verified nonexistent)"
+    - predicate: "references"
+      target: "DOC-meta-muse-glimmer-llama-cpp-guide"
+      note: "controlling source (goal Notes and links: 'Meta llama.cpp guide (doc-1.md)'); llama.cpp floor b10353 is diagnostic only — the drafted escape hatch reserved for the M4/M5 compatibility gate (out of scope unless it fires)"
+    - predicate: "references"
+      target: "DOC-hxs3-gpt-oss-regular-pilot"
+      note: "earlier hxs-3 pilot document (2026-08-25 22:59) — superseded-in-role as primary candidate by the v1.1; gpt-oss:20b retained as task-shaped control (v1.1 §3.3; goal out-of-scope: 'gpt-oss changes (retained as task-shaped control)')"
+    - predicate: "references"
+      target: "DOC-kdd-0006-hxs2-coderx-backend-adoption"
+      note: "Harness-free registration convention source (goal D7 + out-of-scope line: 'DeepSeek Harness (verified nonexistent)'; mapping per the KDD-0006 convention, restated in KDD-0007)"
+    - predicate: "references"
+      target: "DOC-goal-hxs2-qwen36-coderx-backend"
+      note: "parallel pilot (goal Notes: 'PILOT-HXS2-CODERX-BACKEND-001 (parallel pilot)'); playbook PILOT-HX1 is the pattern source — this is its third validated use (DOC-pilot-hx1-plan)"
+    - predicate: "references"
+      target: "DOC-blueprint-llm-server"
+      note: "LLM-server blueprint named in scope ('OS readiness (blueprint mask set incl. hybrid-sleep)') and controlling sources (D1 model store per blueprint)"
+    - predicate: "references"
+      target: "DOC-tkv-server-registry"
+      note: "target identity hxs-3 192.168.50.202, registry role Agent intelligence (registry workload line: gpt-oss-20b TP=2; LightRAG graph & retrieval)"
+    - predicate: "references"
+      target: "DOC-tkv-hxs3-discovery"
+      note: "pre-flight intake baseline (goal Pre-flight: baseline from /opt/tkv-local/servers/hxs-3/ + directive driver validation, records); historical as-found — live re-verification at M1"
+  validation:
+    validated_at: "2026-08-26T06:15:00Z"
+    freshness: "current"
+    review_due: "each milestone gate (living goal); final reconciliation at pilot close (acceptance)"
+  sha256: "31cf8cb6f0fcd806795d6e9421eb9c4db50b77facf214ec96c5abe2eae77f79f"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/goals/2026-08-26-hxs3-muse-glimmer-tooling.md"
+notes:
+  status_mapping: "status 'active' maps the file's own status line 'in-progress — M0 authorized 2026-08-26' (schema enum has no in-progress literal; convention: DOC-goal-hxs2-qwen36-coderx-backend active during execution, DOC-goal-hx1-ollama-qwen38-27b mapped to historical at closure). Expected living-document churn (owner decision/status-line edits) handled by re-ingestion with hash history."
+  authority_note: "ratified-governance per the two-goal convention — dispatch brief wording matches the F-AUTH-1 resolution on the hxs-2 goal record (confirmed 2026-08-26, hxs-2 state log row 6): the goal file is the governor-authored durable state record ratified through KDD-0007 and owner M0 authorization; owner decisions D1-D8 preserved in declared_purpose."
+  capability_limit_convention: "The goal's Second Brain evaluation registers a capability LIMIT as first-class registry content (parallel_tool_calling: false; one tool call per model turn, proposed never authorized) so every future dispatch retrieves the limit — new catalog convention carried forward from this goal + KDD-0007; the SC-08 evidence contract requires the catalog capability record to carry it (registration milestone)."
+  plan_reference: "Session plan patriot-miles-morales-us-agent.md (approved 2026-08-26) is referenced by this goal and the state log but was not supplied; not cataloged (same treatment as the hxs-2 session plan, DOC-goal-hxs2-qwen36-coderx-backend)."
+  second_brain: "Second Brain evaluation recorded in-file (standing directive): capability limits become first-class registry content; the playbook earns its third validated host — formal LLM-backend-deployment pattern drafted at M8; retrieval package at M0/M1. DFlash/deep integrations deferred per evidence."
+  limit_enforcement_amendment: "MID-RUN AMENDMENT re-validated this run (2026-08-26T06:15Z; governor edit 05:48:44Z, 'Enforcement contract (2026-08-26, review finding)'): the intent section now states the harness enforces the one-call-per-turn limit at two levels — a model response containing more than one tool call is rejected, accepted calls execute serially with results returned before the next selection — and the request-level parallel_tool_calls: false flag is treated strictly as a compatibility probe, never enforcement; the SC-05 row carries the same ENFORCEMENT wording ('invariant proven with ENFORCEMENT…'). The LIMIT registration itself and D1–D8 are unchanged. Hash chain: 0ce2da45… (M0 ingestion 05:05Z) → 31cf8cb6… (this re-validation). Matching KDD-0007 amendment re-validated in DOC-kdd-0007-hxs3-muse-glimmer-tooling-adoption; the Meta-X capability record (DOC-backend-meta-x) carries the amended semantics."

@@ -1,0 +1,55 @@
+document:
+  id: "DOC-pilot-hxs2-ev-08-esme-m6-escalation-xid31"
+  title: "08-esme-m6-escalation-xid31.md — Esme (john) M6 PAUSED AT DRIFT CHECK: Xid 31 runner crash on hxs-2 (escalation to Kimi-K3; RESOLVED — owner RESUME ARMED)"
+  type: "evidence"
+  declared_purpose: "Escalation artifact (report ESME-HXS2-M6-ESC-XID31-001, session john-m6-20260826-01, window 07:15Z → 07:31Z — READ-ONLY throughout, ZERO target mutations; [TASK PAUSED — ESCALATION TO KIMI-K3]). The Xid-31 crash/recovery record: pre-session NVRM Xid 31 at 2026-08-26T05:46:59Z (this boot) — the M4-pinned runner (pid 7546) crashed serving an interactive ~1,048-token plain-text chat (no vision/mmproj activity): pathological prompt processing (24 tokens in 30.78 s), then CUDA illegal memory access in ggml_cuda_mul_mat_q (mmq.cu:159, cuda_v13 build) with kernel Xid 31 (PCI:0000:02:00, MMU Fault GPC2, FAULT_PDE VIRT_READ) → llama-server aborted (core dumped) → /api/chat HTTP 500 after 31.9 s. NOT capacity/thermal/power (17.6 GB of 31.85 GiB, GPUs cool, no throttle). Recovery (FACT): driver recovered immediately — new runner listening 05:47:18, /api/chat 200 by 05:47:32, six-plus successful requests through 07:12:14; ZERO Xid since (all-boots kernel count exactly 1); store intact (base ca661423d6b5 + alias 1d297a6a09 digests verified); configs == M4-frozen; units active NRestarts=0; listener unchanged; only casualty = residency (Forever pin died with the crashed runner; evicted ~07:17 at default keep_alive). Drift check that triggered the stop: /api/ps EMPTY vs the context packet's Forever-resident + kernel Xid count 1 vs M4's 0 — profile §13 stop on unexpected state, potential GPU/driver instability, and remote-vs-live inconsistency (all three present). GPU/driver health at 07:29Z: idle telemetry clean; INFERENCE — llama.cpp/ggml CUDA defect class on this architecture/driver, not hardware degradation. Escalation content: options O1 (recommended — proceed with stop conditions armed, record F-M6-0), O2 (hold for rick GPU/driver investigation), O3 (proceed reduced 32K+64K only — not recommended); the 'hx1.conf' naming interpretation question (resolved governor-side: hx2.conf, supplement 3); awareness of the 05:43–07:12 interactive use from 192.168.50.115 (resolved: the owner himself — foreign-client class CLOSED, supplement 4). Risk statement: the 128K deep-prefill is the heaviest ggml CUDA workload the stack had faced; proceeding silently would have concealed the owner's crashed session from the factory."
+  source:
+    author: "john / Esme (session john-m6-20260826-01)"
+    provided_by: "john via Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/08-esme-m6-escalation-xid31.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-26T10:00:00Z"
+  owner: "john"
+  applies_to:
+    hosts: [hxs-2, hxs-5]
+    fqdns: []
+    services: [ollama.service]
+    agents: [john, kimi-k3]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+    models: [mannix/qwen3.6-27b-a3b-coderx:vision-Q4_K_M, hx-qwen3.6-coderx]
+  version: ""
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "john"
+      note: "filed at the M6 drift check per profile §13 (immediate stop on unexpected state / GPU-driver instability evidence / remote-vs-live inconsistency); zero mutations; askpass helper deleted at the pause"
+    - predicate: "references"
+      target: "DOC-pilot-hxs2-wo-07-john-m6"
+      note: "the paused work order — its stop conditions ('any Xid') and the packet's frozen resident state are the tripwires that fired; resume required recorded Kimi-K3 direction"
+    - predicate: "references"
+      target: "DOC-pilot-hxs2-cp-08-john-m6"
+      note: "the contradicted baseline: packet said alias resident Forever ctx 32768; observed /api/ps EMPTY (explained — F-M6-0 crash + keep_alive eviction)"
+    - predicate: "risks"
+      target: "DOC-pilot-hxs2-ev-08-esme-m6-ladder-profiles"
+      note: "the Xid-31/F-M6-0 risk was carried into the resumed ladder run under owner decision RESUME ARMED with an armed Xid-watch (any recurrence = immediate stop + driver investigation): ZERO recurrence across the whole M6 window; F-M6-0 recorded as a single-event ggml-cuda/qwen35moe defect class — a second event warrants driver/ggml triage (cuda_v13 mmq on Blackwell-class GPUs) before any 128K production use"
+    - predicate: "describes"
+      target: "F-M6-0 (2026-08-26T05:46:59Z NVRM Xid 31, hxs-2, single event, recovered)"
+      note: "first GPU fault on the pilot fleet; driver self-recovered (new runner serving within ~40 s); zero recurrence since; coredumpctl empty (no persistent core retained)"
+  validation:
+    validated_at: "2026-08-26T10:00:00Z"
+    freshness: "current"
+    review_due: "on any Xid-31-class recurrence (driver/ggml triage per the F-M6-0 recommendation); otherwise historical at the next Coder-X milestone"
+  sha256: "6a7b2ccdd5f3267fa02e8ff2151eb9bd93c56630f381b8173c6e157fc145eea4"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/08-esme-m6-escalation-xid31.md"
+notes:
+  resolution: "RESOLVED — owner decision at hxs-2 state log row 17 (2026-08-26T07:39Z): RESUME ARMED — the full ladder as ordered with stop conditions armed + Xid-watch; F-M6-0 recorded as a single-event defect class; the -64k repoint restores Forever residency; resume captured pre-state FRESH (the concurrent web-search session could edit hx2.conf — no reliance on stale hashes). The interactive 192.168.50.115 sessions were CONFIRMED as the owner's own (governor supplement 4) — the foreign-client finding class is CLOSED. Resumed 07:40:36Z; delivered PASS in DOC-pilot-hxs2-ev-08-esme-m6-ladder-profiles."
+  options_record: "Presented to Kimi-K3: O1 proceed armed (RECOMMENDED — chosen), O2 hold for rick GPU/driver-first investigation, O3 proceed reduced 32K+64K only (not recommended — the armed stop conditions already provide that protection honestly, and 128K evidence is what D5/M6b need)."
+  sanitization: "No secret value was printed, logged, or stored anywhere in the window (sanitization confirmed in the source); GIN journal lines carry no request bodies; session evidence was transient at hxs-5:/tmp/esme-m6/evidence (volatile — the source document carries the record)."

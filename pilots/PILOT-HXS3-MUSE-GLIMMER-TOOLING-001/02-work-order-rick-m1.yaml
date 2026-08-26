@@ -1,0 +1,37 @@
+work_order:
+  task_id: "WO-HXS3-RICK-M1-001"
+  parent_goal: "GOAL-HXS3-MUSE-001"
+  goal_file: "goals/2026-08-26-hxs3-muse-glimmer-tooling.md"
+  milestone: "M1 — hxs-3 OS readiness verification (blueprint set from the start)"
+  assigned_agent: "rick (profile-briefed sub-agent)"
+  objective: >-
+    Verify hxs-3 is ready to host the Muse Glimmer tooling backend: driver/DKMS
+    re-proof, baseline health (13-point checklist), the BLUEPRINT sleep-mask set
+    exactly (suspend.target, hibernate.target, hybrid-sleep.target,
+    suspend-then-hibernate.target — the proven hxs-1 set; the hxs-2 divergence
+    lesson pre-applied), the Wi-Fi rfkill soft block per house posture (verify
+    the interface first, prove no routes/sessions, then block, then persistence),
+    and posture records (storage root ext4 headroom, Secure Boot disabled,
+    NO firewall anywhere per owner rule). Authorized mutations only: the four
+    masks and the rfkill block. Everything else read-only.
+  owner_authorizations:
+    - "Plan approved 2026-08-26 (M0, state log row 1): this milestone is commissioned"
+    - "Authorized mutations: the four named masks; the rfkill soft block (D4). Everything else read-only"
+    - "NOT authorized: any firewall design or enablement (owner rule — none anywhere), package installs/upgrades, kernel/driver/service changes, reboots"
+  boundaries:
+    - "Execution path: session on hxs-5; hxs-3 (192.168.50.202) via SSH hxsa@192.168.50.202; askpass helper READS the credential from the HX Fleet SSH Access Guide credential-record row at execution time — no extracted copy, helper deleted at task end; verify hostname + peer IP first; sudo -n only"
+    - "Host key: if no pin exists for hxs-3, first connection is TOFU — corroborate identity against the discovery record (machine-id/UUID/MAC) and record the pinned fingerprint for future strict checks (hxs-2 F-05 pattern)"
+    - "If password auth fails: STOP and escalate — no blind retries, no credential hunting"
+    - "One bounded correction attempt per failed correctable check; stop conditions: driver/GPU fault, any Xid, identity mismatch, unexpected exposure"
+  rollback: "rfkill inverse (echo 1 > state); unmask the four units. Record exact inverses in evidence."
+  controlling_sources:
+    - "03-context-packet-rick-m1.yaml (this package)"
+    - "/opt/tkv-local/servers/hxs-3/ (discovery.md, driver-results.md, pre-work-results.md — historical as-found, cross-check only)"
+    - "/opt/tkv-local/ubuntu (role knowledge gate)"
+    - "goal file D-items; servers/BLUEPRINT-llm-server.md §2 (mask set)"
+  deliverable: "04-rick-hxs3-os-readiness.md: 13-point checklist (defined/executed/PASS-FAIL), rfkill proof, driver/DKMS re-proof, baseline health, rollback inverses, sanitized command log, Task May Proceed receipt"
+  second_brain_evaluation:
+    opportunity_identified: "yes"
+    roadmap_capability_or_pattern: "OS-readiness checklist — third validated host use (pattern-promotion evidence accumulating); blueprint mask set applied uniformly for the first time"
+    disposition: "implemented — checklist + findings become catalog content at handoff"
+    evidence_and_reasoning: "uniformity across hosts is the blueprint's claim; this run either proves it or finds the next divergence to fix"

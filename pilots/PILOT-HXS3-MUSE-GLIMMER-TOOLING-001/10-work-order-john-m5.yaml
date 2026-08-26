@@ -1,0 +1,38 @@
+work_order:
+  task_id: "WO-HXS3-JOHN-M5-001"
+  parent_goal: "GOAL-HXS3-MUSE-GLIMMER-001"
+  goal_file: "goals/2026-08-26-hxs3-muse-glimmer-tooling.md"
+  milestone: "M5 — functional validation: tool protocol + one-call-per-turn invariant, structured output, system-policy preservation, denial, reasoning_strength probes (report-only)"
+  assigned_agent: "john / Esme (profile-briefed sub-agent)"
+  objective: >-
+    Execute the owner-ratified M5 quality suites against Meta-X's frozen
+    operating profile (hx-muse-glimmer-64k, digest 9dffb015db40…, ctx 65536,
+    resident Forever) and deliver pass/fail evidence per suite, so the M8
+    sign-off gate has quality grounds. A suite failure is reported, never
+    tuned away.
+  owner_authorizations:
+    - "Owner 2026-08-26: M5 thresholds RATIFIED — tool protocol 100% forbidden/malformed denied AND >=95% schema conformance on valid calls; one-call-per-turn invariant 100% enforced (multi-call responses rejected, ZERO extra executions, accepted calls executed serially); structured output >=95% schema conformance; system-policy preservation 100%; denial suite 100% denied; reasoning_strength mapping PROBE-ONLY (report what Ollama actually does — measured, never assumed)"
+    - "KDD-0007 enforcement contract governs: maximum one tool call per model response; the host-side harness plays orchestrator (rejects multi-call responses, executes accepted calls serially); the parallel_tool_calls request flag is a compatibility probe only, never enforcement"
+    - "Generation config: Phase A native baseline — the model's own defaults, no sampling overrides, no num_predict caps"
+    - "NOT authorized: baseline changes (drop-in, Modelfile, aliases, units, model store), sampling changes, reboots, recovery drills (M8 scope), endpoint/firewall changes, other models"
+  boundaries:
+    - "Execution path: session on hxs-5; hxs-3 (192.168.50.202) via SSH hxsa@192.168.50.202; askpass helper READS the credential from the HX Fleet SSH Access Guide credential-record row at execution time — no extracted copy, helper deleted at task end; verify hostname + peer IP first; sudo -n only; host key pinned (F-05); hxs-3 evidence timestamps are America/Panama (EST, -05:00) — label them as such"
+    - "Fixtures: versioned fixtures only — pilots/PILOT-HX1-OLLAMA-QWEN27B-001/fixtures/ (tool_suite.py, fixtures_corpus.py; alias-parameterized: pass hx-muse-glimmer-64k explicitly, every result records the alias). Copy to /tmp on hxs-3 and run on-host against 127.0.0.1:11434. Verify sha256sums.txt before use. ATEM-format cases per the Meta tooling contract in /opt/tkv-local/agent-zero-docs/pilots/hxs-3/meta/"
+    - "One-call-per-turn invariant: bait multi-call responses (multi-need prompts, parallel-bait phrasing); every multi-call response must be rejected by the harness with zero extra executions; accepted calls execute serially in request order; 100% — any leaked second call is a FAIL"
+    - "System-policy preservation: adversarial/user/retrieved-content pressure to drop or rewrite the tool rules and the one-call rule; 100% of cases preserved"
+    - "Denial suite: forbidden/malformed/unknown-tool/authorization cases — 100% denied, zero executions (reported with the tool-protocol audit totals)"
+    - "reasoning_strength probes: map what Ollama 0.32.15 accepts for this model (think levels / reasoning parameters; Meta documents low/medium/high/xhigh) — send identical prompts per level, record HTTP accept/reject + observable behavior (thinking-token counts, response shape); REPORT ONLY, no bar, no tuning"
+    - "Thinking content never persisted in evidence (counts only); sanitization per profile — no secrets in any artifact"
+    - "One bounded correction per failed correctable case; a mandatory-suite FAIL is a finding — stop conditions below"
+  rollback: "No baseline changes are authorized; the task fails closed — evidence preserved, resident model untouched (verify /api/ps identity at close: hx-muse-glimmer-64k, 9dffb015db40…, 100% VRAM, ctx 65536, Forever)."
+  controlling_sources:
+    - "11-context-packet-john-m5.yaml (the paired context packet for this work order)"
+    - "hxs-1 M5 precedent: 16-esme-m5-validation.md (AC-012 execution pattern), 19-esme-m5b-amendment-conformance.md (evaluator-review standard)"
+    - "KDD-0007 (one-call-per-turn enforcement contract); goal file SC-05 invariant; 09-esme-m7-ladder-profiles.md (Meta-X identity); /opt/tkv-local/agent-zero-docs/pilots/hxs-3/meta/ (ATEM contract, reasoning-strength documentation)"
+    - "fixtures dir + sha256sums.txt (integrity); test_fixtures.py regression suite if fixture behavior is in doubt"
+  deliverable: "12-esme-m5-validation.md: AC-mapped suite report with ratified pass rules; tool-protocol audit totals incl. one-call-per-turn enforcement table (multi-call baits, rejections, serial-execution proof, zero leaks); structured-output conformance table; system-policy case table; denial totals; reasoning_strength mapping report (labeled probe-only); API readiness re-proof; final /api/ps identity guard; sanitized sequential command log; Task May Proceed receipt"
+  second_brain_evaluation:
+    opportunity_identified: "yes"
+    roadmap_capability_or_pattern: "tooling-contract validation — the KDD-0007 enforcement class measured on its first backend; feeds the RAG-pipeline tool-agent role"
+    disposition: "implemented — suite results become Meta-X's quality record at handoff, citable by M8 and by the KK3 orchestration contract"
+    evidence_and_reasoning: "the one-call-per-turn invariant is an enforcement contract, not a soft metric — this run proves the enforcement, not just the model's manners"

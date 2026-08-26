@@ -1,0 +1,36 @@
+context_packet:
+  goal_id: "GOAL-HXS2-CODERX-001"
+  goal_version: 1
+  work_order_id: "WO-HXS2-RICK-M1-001"
+  session_id: "rick-m1-20260826-01"
+  role: "producer (Ubuntu Server OS plane: rick)"
+  milestone: "M1 — hxs-2 OS readiness (staged designs, two authorized mutations)"
+  objective: >-
+    Prove hxs-2's OS plane is ready for the CoderX backend: driver/DKMS re-proof,
+    13-point readiness checklist, staged-not-enabled ufw ruleset for the /24
+    endpoint scope, rfkill Wi-Fi block (D4), posture records. Only the sleep
+    masks and the rfkill block mutate; everything else is read-only.
+  current_state:
+    host: "hxs-2 (192.168.50.201), Ubuntu 24.04.4 LTS, kernel 7.0.0-28-generic (as-found 2026-08-12; re-verify live)"
+    cpu_ram: "i7-5960X 8c/16t, 66 GB non-ECC, 8 GB swap file"
+    gpus: "2x RTX 5060 Ti 16311 MiB each (32622 total); driver 580.173.02 (nvidia-driver-580-server-open, validated 2026-08-12); CUDA 13.0; DKMS expected for kernel 7.0.0-28"
+    storage: "3.6 TB NVMe ext4 root (model store per D1); 2x 596.2 GB SATA idle"
+    network: "eno1 192.168.50.201/24, gw/dns 192.168.50.1; enp6s0 DOWN; wlp5s0 Wi-Fi DOWN as-found (D4 target)"
+    services: "SSH :22 active; ufw INACTIVE; no Ollama/vLLM/Docker; Secure Boot disabled (standing posture — never enable)"
+    unknowns_to_resolve: "DKMS current state, wait-online state, AER/NVRM baselines, failed units, rfkill indices, kernel-update availability (record only — no installs)"
+  owner_decisions:
+    - "D1 model store root ext4; D2 endpoint allowlist 192.168.50.0/24 (ufw staged at M1, enabled at M8); D3 model CoderX vision-Q4_K_M; D4 Wi-Fi rfkill block formalized; Secure Boot stays disabled now and always (owner, standing)"
+  constraints:
+    - "Read-only except the two authorized mutations; no ufw enablement; no installs; no reboots; no service changes"
+    - "Evidence sanitized: no secrets, no credential material; masked-value probes only for the credential file's SHAPE if needed"
+    - "Historical TKV records are cross-check, never current truth — the live host is the authority"
+  evidence_requirements:
+    - "13 checks: hostname/IP/sudo identity; kernel + OS; Secure Boot state; driver bound + both GPUs in nvidia-smi; DKMS status for running kernel; storage layout + root free space; sleep masks (apply, then verify); rfkill inventory + Wi-Fi block + persistence mechanism; network posture (eno1 config, secondary DOWN); ufw inactive + staged ruleset document; failed units + wait-online + suspend services; NVRM/AER baseline + Xid count; swap + memory"
+    - "Staged ufw ruleset (document only): default deny incoming; allow 22 from 192.168.50.0/24; allow 11434 from 192.168.50.0/24; enablement explicitly deferred to M8"
+    - "Command log with timestamps, sanitized; failures and corrections kept"
+  consulted_records:
+    - "DOC-tkv-hxs2-discovery, DOC-tkv-hxs2-driver-results, DOC-tkv-hxs2-pre-work-results (catalog ids, cross-check)"
+    - "hxs-1 M1/M2 readiness artifacts (pattern reference: pilots/PILOT-HX1-OLLAMA-QWEN27B-001/03,04,07,08,26)"
+  handoff:
+    - "Deliverable 04-rick-hxs2-os-readiness.md goes to Carol for catalog receipt; handoff OPEN until the receipt is cited in the state log"
+  second_brain_evaluation: "Per the work order — readiness pattern reuse and hxs-2 knowledge spine"

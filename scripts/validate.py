@@ -178,7 +178,7 @@ def _load_yaml(path):
         return yaml.safe_load(fh)
 
 
-def check_catalog():
+def check_catalog(portable=False):
     c = Check("catalog-mechanical")
     cat = os.path.join(ROOT, CATALOG_DIR)
     try:
@@ -289,7 +289,7 @@ def check_catalog():
     # CAT-07: every canonical_location exists on disk. Exempt: pure external
     # URLs, and protected-resource records (access-restricted locations carry a
     # flagged, explained note in the record itself; never stat protected paths).
-    loc_checked = loc_url = loc_protected = 0
+    loc_checked = loc_url = loc_protected = loc_skipped = 0
     canon_locations = set()
     for rid, (rel, rec) in sorted(records.items()):
         loc = str(rec.get("canonical_location", "")).strip()
@@ -305,7 +305,12 @@ def check_catalog():
         else:
             loc_checked += 1
             probe = loc if os.path.isabs(loc) else os.path.join(ROOT, loc)
-            if not os.path.exists(probe):
+            if portable:
+                # --ci: canonical_location is anchored to the governor host by
+                # design (repo home + /opt/tkv-local); existence is unverifiable
+                # off-host, so the probe is skipped, not failed.
+                loc_skipped += 1
+            elif not os.path.exists(probe):
                 c.fail("[CAT-07] %s: canonical_location does not resolve: %s" % (rel, loc))
 
     # CAT-08: raw-path relation targets. A target is a raw path when it is a
@@ -334,11 +339,23 @@ def check_catalog():
                     "titles exact %d/%d — %d compressed, informational)"
                     % (n, len(idx_by_id), graded, titles_exact, len(idx_by_id),
                        len(idx_by_id) - titles_exact))
-    c.detail.append("relations resolve (CAT-04); CAT-07: %d locations resolve "
-                    "(%d external URLs exempt, %d protected-resource exempt); "
-                    "CAT-08 raw-path violations 0 (%d raw-path targets, %d noted uncataloged)"
-                    % (loc_checked, loc_url, loc_protected, raw_total, raw_noted))
+    if portable:
+        c.detail.append("relations resolve (CAT-04); CAT-07: existence probe "
+                        "SKIPPED for %d locations (--ci portable mode — paths are "
+                        "host-anchored by design; %d external URLs exempt, %d "
+                        "protected-resource exempt); CAT-08 raw-path violations 0 "
+                        "(%d raw-path targets, %d noted uncataloged)"
+                        % (loc_skipped, loc_url, loc_protected, raw_total, raw_noted))
+    else:
+        c.detail.append("relations resolve (CAT-04); CAT-07: %d locations resolve "
+                        "(%d external URLs exempt, %d protected-resource exempt); "
+                        "CAT-08 raw-path violations 0 (%d raw-path targets, %d noted uncataloged)"
+                        % (loc_checked, loc_url, loc_protected, raw_total, raw_noted))
     return c
+
+
+def check_catalog_portable():
+    return check_catalog(portable=True)
 
 
 # -------------------------------------------------------- check 4: secret sweep
@@ -441,8 +458,11 @@ def main(argv):
         if not fns:
             print("usage error: no checkable paths given", file=sys.stderr)
             return 2
+    elif argv[0] == "--ci":
+        fns = [check_wiki, check_fixtures, check_catalog_portable, check_secrets]
+        mode = "ci (portable catalog: CAT-07 existence probe skipped — paths are host-anchored by design)"
     else:
-        print("usage: python3 scripts/validate.py [--changed <path> [path...]]", file=sys.stderr)
+        print("usage: python3 scripts/validate.py [--changed <path> [path...]] [--ci]", file=sys.stderr)
         return 2
 
     print("HX-ASF validate — read-only local validation (UD1/UD2, 2026-08-25) — mode: %s" % mode)
