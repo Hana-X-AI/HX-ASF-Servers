@@ -21,7 +21,10 @@ when the required checks are green. No manual approval gates anywhere.
 5. Unit tests — fixtures regression suite (`fixtures/test_fixtures.py`).
 6. Unit tests — wiki renderer suite (`scripts/wiki/test_render.py`).
 7. Build validation — wiki HTML in sync (`scripts/wiki/render.py --check`).
-8. Catalog validation (`scripts/validate.py`).
+8. Catalog validation (`scripts/validate.py --ci` — portable mode: every catalog
+   check runs, except CAT-07's canonical_location *existence* probe, which is
+   anchored to the governor host by design — repo home plus `/opt/tkv-local` —
+   and stays a local-only check in the full mode).
 9. Security scan — gitleaks over the pushed commit range, redacted.
 
 **Job `coderabbit-review`** — non-`main` pushes only:
