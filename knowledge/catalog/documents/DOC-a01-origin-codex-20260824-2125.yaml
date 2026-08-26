@@ -6,7 +6,7 @@ document:
   source:
     author: "Codex (agent-zero-docs pipeline)"
     provided_by: "Agent Zero"
-    origin: "/home/hxsa/opt/local-tkv/agent-zero-docs/qwen/codex_20260824_2125_hx-1-ollama-pilot-qwen3.8-amendment.md"
+    origin: "/home/hxsa/opt/local-tkv/agent-zero-docs/pilots/hxs-1/codex_20260824_2125_hx-1-ollama-pilot-qwen3.8-amendment.md"
     section: "§whole-document"
     ingestion_date: "2026-08-25T04:50:00Z"
   owner: "Agent Zero"
@@ -34,8 +34,10 @@ document:
       target: "DOC-pilot-hx1-amendment-a01"
       note: "canonical operational copy in the repo — body VERIFIED verbatim by diff (2026-08-25) except one cosmetic markdown separator-cell in the §4.3 context-policy table (|---|---|---:| adopted vs |---|---:|---| source); no content difference. The adoption header's 'verbatim' claim is accurate at content level."
   validation:
-    validated_at: "2026-08-25T04:50:00Z"
+    validated_at: "2026-08-26T00:25:00Z"
     freshness: "historical"
     review_due: "historical source — operational authority is the adopted repo copy"
   sha256: "1e3551c502930002eed2812995a6f9eafcb98033793e72c330b88dd3bb5e0eb9"
-  canonical_location: "/home/hxsa/opt/local-tkv/agent-zero-docs/qwen/codex_20260824_2125_hx-1-ollama-pilot-qwen3.8-amendment.md"
+  canonical_location: "/home/hxsa/opt/local-tkv/agent-zero-docs/pilots/hxs-1/codex_20260824_2125_hx-1-ollama-pilot-qwen3.8-amendment.md"
+notes:
+  corrections_move_20260826: "MOVED (owner reorg 2026-08-25 ~22:36Z, same reorg that created keys.md/): canonical_location agent-zero-docs/qwen/ -> agent-zero-docs/pilots/hxs-1/. Surfaced by the ratified validator's CAT-07 path-resolution check (scripts/validate.py, run this wave). Content hash RE-VERIFIED against the moved file: identical (1e3551c5…) — pure path move, no content change. Old path gone."

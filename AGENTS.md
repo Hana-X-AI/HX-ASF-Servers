@@ -152,3 +152,24 @@ a second brain for the whole HX team, humans and agents (owner, 2026-08-25).
   in the governing log.
 - Governing principle: retrieve before investigating; reuse before recomputing;
   verify before trusting; catalog before closing.
+
+## Second Brain roadmap integration (standing directive)
+
+Owner directive, 2026-08-25. The HX Second Brain Roadmap is an active consideration
+in all planning and implementation workflows. Whenever a feature, server, service,
+agent, model, tool, or solution is introduced or materially changed, evaluating
+whether the work is a justified opportunity to advance the Second Brain
+architecture is **mandatory**; implementation is **not automatic**. Any proposed
+Second Brain capability must align with the active goal and approved architecture,
+provide clear measurable value, fit the current maturity and sequence, avoid scope
+expansion and premature complexity, preserve authority/security/provenance
+boundaries, and be presented for approval when it exceeds the work order's
+authority.
+
+Every material implementation handoff must state: (1) whether a Second Brain
+opportunity was identified; (2) which roadmap capability or pattern applies;
+(3) whether it was implemented, recommended for a future iteration, or deliberately
+deferred; (4) the evidence and reasoning for the disposition.
+
+Governing question for every material change: **does this work create a justified
+opportunity to advance the HX Second Brain while delivering the current goal?**

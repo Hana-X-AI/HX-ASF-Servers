@@ -6,7 +6,7 @@ document:
   source:
     author: "Codex (agent-zero-docs pipeline)"
     provided_by: "Agent Zero"
-    origin: "/home/hxsa/opt/local-tkv/agent-zero-docs/pilots/qwen/codex_20260824_1945_hx-1-ollama-qwen-27b-pilot-project.md"
+    origin: "/home/hxsa/opt/local-tkv/agent-zero-docs/pilots/hxs-1/codex_20260824_1945_hx-1-ollama-qwen-27b-pilot-project.md"
     section: "§whole-document"
     ingestion_date: "2026-08-25T20:15:00Z"
   owner: "Agent Zero"
@@ -37,10 +37,11 @@ document:
       target: "DOC-kdd-0004-hx1-qwen-pilot-adoption"
       note: "ratified decision adopting the plan derived from this source; KDD-0004 records this document as its 767-line unmodified historical input (provenance repointed to this record in batch 6)"
   validation:
-    validated_at: "2026-08-25T20:15:00Z"
+    validated_at: "2026-08-26T00:25:00Z"
     freshness: "historical"
     review_due: "historical source — operational authority is the adopted repo plan"
   sha256: "cbe90fb04fbe16e17aecfc2e175ec49b0fea0b477113021063d76ac8058342b7"
-  canonical_location: "/home/hxsa/opt/local-tkv/agent-zero-docs/pilots/qwen/codex_20260824_1945_hx-1-ollama-qwen-27b-pilot-project.md"
+  canonical_location: "/home/hxsa/opt/local-tkv/agent-zero-docs/pilots/hxs-1/codex_20260824_1945_hx-1-ollama-qwen-27b-pilot-project.md"
 notes:
+  corrections_move_20260826: "MOVED (owner reorg 2026-08-25 ~22:36Z, same reorg that created keys.md/): canonical_location agent-zero-docs/pilots/qwen/ -> agent-zero-docs/pilots/hxs-1/. Surfaced by the ratified validator's CAT-07 path-resolution check (scripts/validate.py, run this wave). Content hash RE-VERIFIED against the moved file: identical (cbe90fb0…) — pure path move, no content change. Old path gone."
   adoption_lineage: "Adopted-origin per the owner-docs origin convention (cf. DOC-a01-origin-codex-20260824-2125). Lineage evidence: DOC-pilot-hx1-plan source.author ('Codex (source pilot doc codex_20260824_1945) / adopted and amended per KDD-0004') and DOC-kdd-0004's ratified adoption record. superseded_by expresses the authority handoff to the adopted repo plan, not content identity (the adoption included KDD-0004 amendments)."

@@ -4,15 +4,15 @@
 index:
   schema_version: 1
   initialized: 2026-08-25 (Carol instantiation, owner amendment)
-  updated: "2026-08-25T2218Z (preload-budget + ratifications run: 5 added — DOC-pilot-hx1-wo-33-john-preload-budget / DOC-pilot-hx1-cp-34-john-preload-budget / DOC-pilot-hx1-ev-35-esme-preload-budget (wo -> cp -> deliverable chain; milestone COMPLETE, PASS 10/10, TimeoutStartUSec 20min -> 10min, script worst case 11,760 s -> 538 s) / DOC-kdd-0005-second-brain-canonical-home (R1 ratified: repo = canonical Second Brain home) / DOC-scripts-wiki-dual-format-render (Q2 dual-format disposition, render.py + manifest.txt; 29 derived .html covered by the one record, never individually cataloged); 5 re-validated — DOC-goal-hx1-ollama-qwen38-27b daba7e86… -> 87187b16… (M7b deferred-to-backlog edit), DOC-knowledge-issues 6b22c6a6… -> 9a7db851… (M7b backlog entry), DOC-agent-carol-profile cf027c04… -> 07a9d03f… (R2 suitable_for_execution verdict-header gate, §5), DOC-cat-001-acceptance a4fde520… -> b85797df… (R3 CAT-10..15 ratified golden-question corpus), DOC-repo-governance-agents-md f5927267… -> f8941618… (Q1 Secure Boot confirmation + dual-format-implemented line); DOC-pilot-hx1-state-log intentionally not re-validated (living record); receipt receipts/2026-08-25T2225Z-carol-preload-and-ratifications.md)"
-  document_count: 172
+  updated: "2026-08-26T0025Z (hooks/validator wave: 5 added — DOC-scripts-validate-py (ratified single local validation command UD1/UD2; wiki-sync + fixture-suite + catalog-mechanical CAT-01/03/04/07/08 + secret-boundary; MANUAL GATE labels) / DOC-scripts-hooks (hook system: secret-boundary.sh U5/UD4 warn-mode pilot with three-layer detection + validate-changed.sh U3/UD3 advisory; registrations external in user config.toml) / DOC-pilot-templates-work-order + DOC-pilot-templates-context-packet (UD5/U6 ratified templates, mandatory second_brain_evaluation block) / DOC-agent-kimi-k3-verification-checklist (UD5/U7 governor receipt-check, 10 steps)); 6 re-validated — DOC-protected-ssh-info-hxs1 (MOVED to agent-zero-docs/keys.md/ssh-info.md, 239-line HX Fleet SSH Access Guide; existence-only verify, no read/no hash; rotation-recommendation conflict recorded, owner standing decision governs) / DOC-scripts-wiki-dual-format-render (render.py list-engine rewrite + _emit_list, test_render.py 12 tests green, manifest 32 lines/31 unique — duplicate F-DUP-1 flagged) / DOC-assessment-capability-read-only (O1 narrowed to payload boundary, O3 fixtures-directory correction) / DOC-repo-governance-agents-md (Second Brain roadmap integration standing-directive section verified present) / DOC-a01-origin-codex-20260824-2125 + DOC-hx1-qwen-pilot-origin-codex-20260824-1945 (CAT-07 repairs: same owner reorg moved both to agent-zero-docs/pilots/hxs-1/, content hashes re-verified identical — pure path moves); 2 verified undrifted — DOC-assessment-hx-second-brain-guidance-001-review, DOC-assessment-unified-capability-recommendations; receipt receipts/2026-08-26T0025Z-carol-wave-hooks-validator.md)"
+  document_count: 180
   documents:
   - id: DOC-a01-origin-codex-20260824-2125
     title: codex_20260824_2125_hx-1-ollama-pilot-qwen3.8-amendment.md — original source of Amendment A01 (agent-zero-docs)
     type: amendment
     authority_level: historical-as-found
     freshness: historical
-    canonical_location: /home/hxsa/opt/local-tkv/agent-zero-docs/qwen/codex_20260824_2125_hx-1-ollama-pilot-qwen3.8-amendment.md
+    canonical_location: /home/hxsa/opt/local-tkv/agent-zero-docs/pilots/hxs-1/codex_20260824_2125_hx-1-ollama-pilot-qwen3.8-amendment.md
   - id: DOC-agent-carol-charter
     title: Agent charter — carol (documentation and knowledge steward, horizontal lane)
     type: charter
@@ -49,6 +49,12 @@ index:
     authority_level: ratified-governance
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/kimi-k3/profile.md
+  - id: DOC-agent-kimi-k3-verification-checklist
+    title: agents/kimi-k3/verification-checklist.md — governor evidence-verification checklist (receipt-check, ratified UD5/U7)
+    type: runbook
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/kimi-k3/verification-checklist.md
   - id: DOC-agent-rick-charter
     title: Agent charter — rick (Ubuntu Server engineer, vertical lane)
     type: charter
@@ -67,18 +73,36 @@ index:
     authority_level: ratified-governance
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/README.md
+  - id: DOC-assessment-capability-read-only
+    title: 2026-08-25-capability-assessment-read-only.md — governor read-only project capability assessment (Kimi-K3, O1–O10, for owner review)
+    type: evidence
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/assessments/2026-08-25-capability-assessment-read-only.md
   - id: DOC-assessment-hx-second-brain-guidance-001-review
     title: 2026-08-25-hx-second-brain-guidance-001-review.md — governor assessment of hx-second-brain-guidance-001 (Kimi-K3, for owner review)
     type: evidence
     authority_level: agent-evidence
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/assessments/2026-08-25-hx-second-brain-guidance-001-review.md
+  - id: DOC-assessment-unified-capability-recommendations
+    title: 2026-08-25-unified-capability-recommendations.md — governor reconciliation of KK3 × Codex capability assessments (U1–U12, UD1–UD7, for owner decision)
+    type: evidence
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/assessments/2026-08-25-unified-capability-recommendations.md
   - id: DOC-cat-001-acceptance
     title: CAT-001 — Catalog acceptance battery (governor-owned verification suite for knowledge/catalog/)
     type: contract
     authority_level: delegated-contract
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/catalog/tests/cat-001-acceptance.md
+  - id: DOC-codex-20260825-2207-capability-assessment
+    title: codex_20260825_2207_hx-asf-servers-read-only-project-capability-assessment.md — supplied Codex/GitHub-Copilot read-only capability assessment (tool-belt, owner-docs tree)
+    type: evidence
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /home/hxsa/opt/local-tkv/agent-zero-docs/tool-belt/codex_20260825_2207_hx-asf-servers-read-only-project-capability-assessment.md
   - id: DOC-goal-hx1-ollama-qwen38-27b
     title: Goal 2026-08-24-hx1-ollama-qwen38-27b — deploy and validate qwen3.8:27b on hxs-1 via Ollama (mutating pilot)
     type: goal
@@ -102,7 +126,7 @@ index:
     type: plan
     authority_level: historical-as-found
     freshness: historical
-    canonical_location: /home/hxsa/opt/local-tkv/agent-zero-docs/pilots/qwen/codex_20260824_1945_hx-1-ollama-qwen-27b-pilot-project.md
+    canonical_location: /home/hxsa/opt/local-tkv/agent-zero-docs/pilots/hxs-1/codex_20260824_1945_hx-1-ollama-qwen-27b-pilot-project.md
   - id: DOC-john-ollama-recon-inventory
     title: codex_20260824_0205_ollama-directory-reconnaissance-inventory.md — Ollama directory reconnaissance inventory (320 directories, 1707 files)
     type: evidence
@@ -409,20 +433,44 @@ index:
     authority_level: ratified-governance
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-KK3-JOHN-OLLAMA-AUDIT-001/plan.md
+  - id: DOC-pilot-templates-context-packet
+    title: pilots/_templates/context-packet.yaml — ratified context-packet template (UD5/U6; consulted_records + Carol handoff rule)
+    type: contract
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/_templates/context-packet.yaml
+  - id: DOC-pilot-templates-work-order
+    title: pilots/_templates/work-order.yaml — ratified work-order template (UD5/U6; mandatory second_brain_evaluation block)
+    type: contract
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/_templates/work-order.yaml
   - id: DOC-protected-ssh-info-hxs1
-    title: ssh-info.md — protected credential resource for SSH access to hxs-1 (existence, owner, retrieval mechanism only)
+    title: keys.md/ssh-info.md (HX Fleet SSH Access Guide) — protected credential resource for SSH access to hxs-1 (existence, owner, retrieval mechanism only)
     type: protected-resource
     authority_level: owner-directive
     freshness: current
-    canonical_location: /home/hxsa/opt/local-tkv/agent-zero-docs/ssh-info.md
+    canonical_location: /home/hxsa/opt/local-tkv/agent-zero-docs/keys.md/ssh-info.md
   - id: DOC-repo-governance-agents-md
     title: HX-ASF-Servers AGENTS.md — repository governance, skills, communication contract, stewardship
     type: contract
     authority_level: ratified-governance
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/AGENTS.md
+  - id: DOC-scripts-hooks
+    title: scripts/hooks/ — Kimi Code hook script system (secret-boundary U5/UD4 pilot; validate-changed U3/UD3 advisory; README placement convention)
+    type: runbook
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/scripts/hooks/README.md
+  - id: DOC-scripts-validate-py
+    title: scripts/validate.py — single local validation command (ratified UD1 validation contract; UD2 bounded implementation)
+    type: runbook
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/scripts/validate.py
   - id: DOC-scripts-wiki-dual-format-render
-    title: scripts/wiki/render.py + manifest.txt — dual-format Markdown-to-HTML rendering system (ratified convention Q2, 29 documents)
+    title: scripts/wiki/render.py + manifest.txt — dual-format Markdown-to-HTML rendering system (ratified convention Q2, 31 documents + test_render.py regression suite)
     type: runbook
     authority_level: ratified-governance
     freshness: current

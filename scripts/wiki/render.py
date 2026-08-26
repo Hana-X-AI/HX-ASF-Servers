@@ -73,6 +73,17 @@ def inline(t):
     t = re.sub(r"\x00(\d+)\x00", lambda m: f"<code>{spans[int(m.group(1))]}</code>", t)
     return t
 
+def _emit_list(tag, list_items):
+    """Emit one list level; item children nest inside their parent <li>."""
+    h = [f"<{tag}>"]
+    for _ord, text, children in list_items:
+        h.append(f"<li>{inline(text)}")
+        for ctag, citems in children:
+            h.append(_emit_list(ctag, citems))
+        h.append("</li>")
+    h.append(f"</{tag}>")
+    return "".join(h)
+
 def render_md(text):
     lines = text.split("\n")
     if lines and lines[0].strip() == "---":  # YAML front matter: metadata, not body
@@ -127,27 +138,40 @@ def render_md(text):
             out.append("".join(t))
             continue
         m = re.match(r"^(\s*)([-*+]|\d+\.)\s+(.*)$", ln)
-        if m:  # list block (nested by indent; wrapped lines join their item)
-            items = []
+        if m:  # list block: tree-built so nested lists stay inside their parent <li>;
+            # blank lines between items are tolerated when a marker follows; inline
+            # markup is applied ONCE to each item's joined text (bold may span wraps).
+            items = []  # (indent, ordered, [raw text parts])
             while i < len(lines):
                 mm = re.match(r"^(\s*)([-*+]|\d+\.)\s+(.*)$", lines[i])
                 if mm:
-                    items.append([len(mm.group(1)), mm.group(2)[0].isdigit(), [inline(mm.group(3))]])
+                    items.append((len(mm.group(1)), mm.group(2)[0].isdigit(), [mm.group(3)]))
                     i += 1; continue
+                if items and re.match(r"^\s*$", lines[i]):
+                    j = i + 1
+                    while j < len(lines) and re.match(r"^\s*$", lines[j]):
+                        j += 1
+                    if j < len(lines) and re.match(r"^(\s*)([-*+]|\d+\.)\s+", lines[j]):
+                        i = j; continue
+                    break
                 if items and re.match(r"^\s+\S", lines[i]):
-                    items[-1][2].append(inline(lines[i].strip())); i += 1; continue
+                    items[-1][2].append(lines[i].strip()); i += 1; continue
                 break
-            html_parts, stack = [], []  # stack of (indent, tag)
+            root, stack = [], []  # stack of (indent, items-of-open-list)
             for ind, ordered, parts in items:
-                tag = "ol" if ordered else "ul"
-                while stack and stack[-1][0] >= ind:
-                    html_parts.append(f"</{stack.pop()[1]}>")
-                if not stack or stack[-1][0] < ind:
-                    html_parts.append(f"<{tag}>"); stack.append((ind, tag))
-                html_parts.append(f"<li>{' '.join(parts)}</li>")
-            while stack:
-                html_parts.append(f"</{stack.pop()[1]}>")
-            out.append("".join(html_parts))
+                while stack and ind < stack[-1][0]:
+                    stack.pop()
+                if (not stack or ind > stack[-1][0]
+                        or (ind == stack[-1][0] and ordered != stack[-1][1][0][0])):
+                    new_list = []
+                    node = (("ol" if ordered else "ul"), new_list)
+                    if stack:
+                        stack[-1][1][-1][2].append(node)
+                    else:
+                        root.append(node)
+                    stack.append((ind, new_list))
+                stack[-1][1].append((ordered, " ".join(parts), []))
+            out.append("".join(_emit_list(tag, list_items) for tag, list_items in root))
             continue
         buf = [ln.strip()]  # paragraph
         i += 1

@@ -31,3 +31,5 @@ knowledge/catalog/README.md
 pilots/PILOT-HX1-OLLAMA-QWEN27B-001/plan.md
 pilots/PILOT-HX1-OLLAMA-QWEN27B-001/amendment-A01-qwen38-baseline.md
 pilots/PILOT-HX1-OLLAMA-QWEN27B-001/23-kk3-m6-capacity-decision.md
+knowledge/assessments/2026-08-25-capability-assessment-read-only.md
+knowledge/assessments/2026-08-25-unified-capability-recommendations.md

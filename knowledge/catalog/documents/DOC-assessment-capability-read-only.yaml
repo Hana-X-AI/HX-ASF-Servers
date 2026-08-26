@@ -1,0 +1,51 @@
+document:
+  id: "DOC-assessment-capability-read-only"
+  title: "2026-08-25-capability-assessment-read-only.md — governor read-only project capability assessment: hooks, skills, MCP, marketplace plugins (Kimi-K3, O1–O10, for owner review)"
+  type: "evidence"
+  declared_purpose: "Governor assessment under owner directive 'Read-Only Project Capability Assessment' (2026-08-25): capability inventory (10 skills, one disabled MCP 'mobbin', no hooks, no plugins), opportunity matrix O1–O10 with dispositions (adopt-pilot O1 secret-boundary hook / O2 wiki-sync hook; adopt O4 work-order-authoring skill / O5 evidence-verification skill; pilots O3 fixtures hook, O6 catalog-query skill, O7 read-only TKV filesystem MCP; defer O8 Ollama MCP and O9 catalog DB/vector-graph; reject O10 convenience MCPs/plugins), architecture/security considerations, prioritized recommendations, explicit non-recommendations, open owner questions Q-A..Q-E, and the §11 Second Brain standing-directive evaluation of every item. Document's own posture: read-only honored — the only artifacts produced are the report and its conventional .html rendering; every adoption decision and follow-up awaits owner word. Product facts verified against official Kimi Code hooks/MCP docs fetched 2026-08-25."
+  inferred_value: "INFERENCE: O1 is the only item in either capability assessment that prevents a demonstrated incident class (F-M5-1; 0600 extractions x2) instead of containing it — if owner-approved it complements this lane's post-hoc CAT-05 sweep with a pre-hoc gate, but hook fail-open semantics mean it can never be cited as a sole barrier. Q-D names Carol cataloging as a queued follow-up; this record answers it."
+  source:
+    author: "Kimi-K3 (governor), under owner directive 'Read-Only Project Capability Assessment'"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/knowledge/assessments/2026-08-25-capability-assessment-read-only.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T23:06:00Z"
+  owner: "Agent Zero (decision authority for Q-A..Q-E and every O1–O10 disposition); Kimi-K3 (author)"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: [kimi-k3, carol]
+    repositories: [HX-ASF-Servers]
+    environments: [fleet]
+  version: "2026-08-25"
+  status: "active"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "references"
+      target: "DOC-scripts-wiki-dual-format-render"
+      note: "O2 origin: the wiki-sync hook proposal arises from the ratified dual-format system — HTML/MD sync is manual and AGENTS.html drifted within hours of the first wave (state-log row 55 cited); render.py --check stays the audit. The report's own sibling .html is a derived rendering under that system's one-record disposition"
+    - predicate: "references"
+      target: "DOC-hx-second-brain-framework"
+      note: "§11 answers the standing Second Brain directive for every item: O1/O2/O3 map to Principle 2 deterministic controls and the §9 risk-table secret-quarantine pattern; O4/O5 are pattern-library proto-patterns under the library's two-use promotion rule; O9's deferral trigger is the framework's G-06 benchmark gate (storage selection stays a named non-action)"
+    - predicate: "references"
+      target: "DOC-assessment-hx-second-brain-guidance-001-review"
+      note: "§11 item 2 cites its deferral D5: no pattern-library build-out — O4/O5 promote to formal pattern records only after two validated uses, per that assessment's rule"
+  validation:
+    validated_at: "2026-08-26T00:25:00Z"
+    freshness: "current"
+    review_due: "on owner disposition of Q-A..Q-E (carried into UD1–UD7 of DOC-assessment-unified-capability-recommendations) or on document revision"
+  sha256: "e4a369e4d9f558dd2ba4019a224487d00527ce33e8759ec25f2bb3b22fe6f772"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/knowledge/assessments/2026-08-25-capability-assessment-read-only.md"
+notes:
+  derived_html: "Sibling 2026-08-25-capability-assessment-read-only.html is a derived rendering under the ratified dual-format convention — covered by the DOC-scripts-wiki-dual-format-render one-record disposition, never separately cataloged; Markdown is the source of truth."
+  cataloging_context: "Type judged 'evidence' per the governor-analysis convention (cf. DOC-assessment-hx-second-brain-guidance-001-review): O1–O10 dispositions and Q-A..Q-E are OPEN recommendations to the owner, not decisions — the decision types do not apply. Authority agent-evidence per the Kimi-K3-authored-record convention. Cataloged 2026-08-25T23:06Z, answering the report's own queued follow-up Q-D (Carol cataloging; wiki-manifest inclusion and state-log citation remain governor/owner actions outside Carol's bounds)."
+  reconciliation: "Reconciled with the supplied Codex assessment in DOC-assessment-unified-capability-recommendations: O2 resolved to the no-mutating-hooks model (wiki sync becomes a validator check + advisory warning, U3); O4/O5 content adopted as template/checklist U6/U7 instead of new skills; O7 deferred to the Codex position with its verification items preserved here."
+  corrections_20260826: "Re-validation after the governor's post-review-batch-8 corrections — both verified at source, legitimate governor edits, re-hashed 4ce87f38… -> e4a369e4…. (1) O1 NARROWED to the payload boundary with the three-layer description: the hook fires on generic patterns / the literal credential read at execution / protected-source copy-verb references, and its detection guarantee is stated plainly (corrected 2026-08-26 per review finding): it sees only matched Write/Edit/Bash payloads — not channels outside the matcher, encoded/obfuscated content, unnamed copy verbs, or the human editor channel; value field now reads 'prevention-at-write-time AT THE PAYLOAD BOUNDARY', not a guarantee against every exfiltration path. (2) O3 fixtures-directory command correction (corrected 2026-08-26 per review finding): the fixture hook now runs BOTH commands from the fixtures directory (cd pilots/PILOT-HX1-OLLAMA-QWEN27B-001/fixtures && sha256sum *.py > sha256sums.txt && python3 -m unittest -q test_fixtures.py) so hashing reads the intended files and the checksum file lands in the fixtures location. This record's inferred_value already carried the narrowed reading ('hook fail-open semantics mean it can never be cited as a sole barrier') — no field change required beyond the hash."
+  snapshot_staleness: "The document's §2/§3 inventory remains its 2026-08-25 as-written snapshot: 'Hooks: none configured', 'catalog (172 records)', '29 dual-format documents'. Superseded in fact by the 2026-08-25T23:47Z UD wave (state log row 60): hooks now exist (DOC-scripts-hooks), the catalog is at 180 records, and the manifest carries 31 unique documents (DOC-scripts-wiki-dual-format-render). The source is NOT rewritten (originals rule); the snapshot stands as the assessment-time state its O1–O10 reasoning was based on."

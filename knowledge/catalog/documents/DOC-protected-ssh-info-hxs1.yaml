@@ -1,12 +1,12 @@
 document:
   id: "DOC-protected-ssh-info-hxs1"
-  title: "ssh-info.md — protected credential resource for SSH access to hxs-1 (existence, owner, retrieval mechanism only)"
+  title: "keys.md/ssh-info.md (HX Fleet SSH Access Guide) — protected credential resource for SSH access to hxs-1 (existence, owner, retrieval mechanism only)"
   type: "protected-resource"
-  declared_purpose: "Owner-provided SSH credential reference used by pilot execution paths to reach hxs-1 (hxsa@192.168.50.200) from hxs-5. Per every pilot work order: access uses the askpass pattern (sudo -A / SSH_ASKPASS) — the secret is never printed, logged, or stored; any askpass helper and transient secret file are deleted at task end. This record documents EXISTENCE, OWNER, and RETRIEVAL MECHANISM only. The file's contents were never read, quoted, or copied for this catalog."
+  declared_purpose: "Owner-provided SSH credential reference used by pilot execution paths to reach hxs-1 (hxsa@192.168.50.200) from hxs-5. Since the owner reorg 2026-08-25 (~22:36Z) the resource is a 239-line 'HX Fleet SSH Access Guide' whose credential-record table row (line ~25, '| SSH password | ... |') holds the value. Per every pilot work order: access uses the askpass pattern (sudo -A / SSH_ASKPASS) — the secret is never printed, logged, or stored; any askpass helper and transient secret file are deleted at task end. This record documents EXISTENCE, OWNER, and RETRIEVAL MECHANISM only. The file's contents were never read, quoted, or copied for this catalog."
   source:
     author: "Agent Zero"
     provided_by: "Agent Zero"
-    origin: "/home/hxsa/opt/local-tkv/agent-zero-docs/ssh-info.md"
+    origin: "/home/hxsa/opt/local-tkv/agent-zero-docs/keys.md/ssh-info.md"
     section: "§whole-document"
     ingestion_date: "2026-08-25T04:50:00Z"
   owner: "Agent Zero"
@@ -34,11 +34,14 @@ document:
       target: "secret-handling rule: no secret values in catalog, evidence, or logs"
       note: "profile §6 boundary; lessons-learned secret-scan adoption gate"
   validation:
-    validated_at: "2026-08-25T20:15:00Z"
+    validated_at: "2026-08-26T00:25:00Z"
     freshness: "current"
     review_due: "on credential rotation by owner (re-attestation by owner, NOT re-hash — no credential-derived verifier may be stored in the catalog)"
   sha256: "withheld — protected resource; no credential-derived verifier stored; integrity by owner attestation"
-  canonical_location: "/home/hxsa/opt/local-tkv/agent-zero-docs/ssh-info.md"
+  canonical_location: "/home/hxsa/opt/local-tkv/agent-zero-docs/keys.md/ssh-info.md"
 notes:
-  security_note: "FLAG F-SEC-1 (informational): file is 53 bytes, plaintext credential material in an owner docs directory. Existence recorded per profile §6; contents never accessed. No action proposed (owner no-hardening stance recorded at state log row 17 / F-M5-2 context)."
+  retrieval_mechanism: "askpass/awk read of the credential-record table row ('| SSH password | ... |', line ~25) at execution time (ratified pattern, state log row 53); never copy. Consumers on record: pilot work-order askpass helpers (deleted at task end) and the secret-boundary.sh PreToolUse hook layer 2 (UD4 pilot — awk read at execution, never printed/logged/stored; see DOC-scripts-hooks)."
+  security_note: "FLAG F-SEC-1 (informational): plaintext credential material in an owner docs directory. Existence recorded per profile §6; contents never accessed. No action proposed (owner no-hardening stance recorded at state log row 17 / F-M5-2 context)."
+  corrections_move_20260826: "MOVED (owner reorg 2026-08-25 ~22:36Z): canonical_location /home/hxsa/opt/local-tkv/agent-zero-docs/ssh-info.md -> /home/hxsa/opt/local-tkv/agent-zero-docs/keys.md/ssh-info.md. Verified this run by EXISTENCE ONLY: new path present, old 2-line file retired (path gone). The resource changed form: 53-byte 2-line file -> 239-line HX Fleet SSH Access Guide carrying the credential-record table row at line ~25. The file was NOT read and NOT hashed for this update — the withheld-digest marker and the protected-resource conventions stand unchanged (no digest of the file anywhere in the catalog, CAT-05)."
+  conflict_rotation_20260826: "CONFLICT (recorded per profile §9, authority-ranked, escalated to Kimi-K3): the guide itself carries an owner-action ROTATION RECOMMENDATION, which conflicts with the owner's STANDING NO-ROTATION decision (no-hardening stance, state log row 17 / F-M5-2 context). Authority ranking: the owner's standing decision is the current owner directive and GOVERNS until he rules otherwise; the guide's recommendation is a document-carried proposal of lower rank. Both claims preserved with provenance; Carol does not resolve operational contradictions. Awaiting owner ruling."
   corrections_batch6: "sha256 REMOVED (batch 6, T7, security-critical): the record carried a content digest of the 53-byte short-password file — a credential-derived verifier usable to confirm offline brute-force guesses. It must not remain in the catalog. Replaced with a withheld marker per the protected-resource convention; integrity is now by owner attestation, and review_due is re-attestation on owner rotation (not re-hash). The removed digest is deliberately NOT preserved in notes, hash history, or anywhere else in the catalog — not even truncated (this note intentionally carries no digest characters). Record-level change only — the source file was never read, hashed, or touched by Carol (contents never accessed, before and now)."

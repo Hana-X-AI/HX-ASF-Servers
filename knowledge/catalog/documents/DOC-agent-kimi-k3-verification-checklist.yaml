@@ -1,0 +1,50 @@
+document:
+  id: "DOC-agent-kimi-k3-verification-checklist"
+  title: "agents/kimi-k3/verification-checklist.md — governor evidence-verification checklist (receipt-check, ratified UD5/U7)"
+  type: "runbook"
+  declared_purpose: "The governor's receipt-check for every producer deliverable (ratified 2026-08-25, owner decision UD5 approving U7 authoring; state log row 60), run BEFORE any acceptance is logged. A deliverable that fails any step goes back with one bounded correction or escalates per the approval discipline — never accepted around a failed step. Ten steps: (1) artifact exists, non-empty, at the work-order path, timestamped inside the session window; (2) receipt line present exactly once ('Task May Proceed: YES/NO' or the profile's PASS marker, producer's own completion language); (3) token context check — every FAIL/BLOCKED/NOT RUN token read in context (benign summaries acceptable; a real failure token stops acceptance); (4) secret sweep — grep -F the protected credential string plus generic patterns (PEM blocks, bearer tokens, password[:=] assignments), zero hits, no exceptions; (5) governor-artifact integrity — work order and context packet still hash to the state-log proof values; (6) claims vs live state — material current-state claims spot-verified read-only against the live target (the document is never sole evidence); (7) boundary conformance — mutation disclosure matches the work-order allowlist; (8) completeness — every evidence requirement from the context packet present; (9) honest limitations disclosed in the deliverable itself; (10) handoff rule — deliverable to Carol, handoff OPEN until her catalog receipt is cited in the state log, only then the acceptance row and goal-status update. Escalation: producer defect -> one bounded correction with the finding stated exactly; authority/safety/identity problem -> stop and escalate to the owner; repeated failure class -> lessons-learned entry plus a deterministic guard (test, check, or hook), not a memo."
+  inferred_value: "INFERENCE: step 4's literal-credential grep -F is the governor-side manual gate that validate.py deliberately excludes — the checklist and the validator are complementary halves of the verification surface (judgment + literal sweep here; mechanized checks there)."
+  source:
+    author: "Kimi-K3 (governor; U7 authoring approved as UD5)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/agents/kimi-k3/verification-checklist.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-26T00:25:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: [kimi-k3, carol]
+    repositories: [HX-ASF-Servers]
+    environments: [fleet, pilot]
+  version: ""
+  status: "active"
+  authority_level: "ratified-governance"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "references"
+      target: "DOC-assessment-unified-capability-recommendations"
+      note: "U7 origin: governor verification checklist adopted in content from the KK3 O5 evidence-verification proposal; authoring approved as owner decision UD5 (state log row 60)"
+    - predicate: "references"
+      target: "DOC-agent-carol-profile"
+      note: "step 10 encodes the documentation-governance amendment handoff rule: no acceptance row until the Carol catalog receipt is cited in the state log (profile §7/§8)"
+    - predicate: "references"
+      target: "DOC-protected-ssh-info-hxs1"
+      note: "step 4 secret sweep greps the protected credential string (governor-side, read-at-verification) plus generic patterns; zero-hit rule with no exceptions"
+    - predicate: "references"
+      target: "DOC-scripts-validate-py"
+      note: "complement: the checklist owns the judgment steps and the literal-credential sweep that the ratified validator carries as MANUAL GATE labels (governor-only, never part of the command)"
+  validation:
+    validated_at: "2026-08-26T00:25:00Z"
+    freshness: "current"
+    review_due: "on checklist revision (re-hash this record)"
+  sha256: "b2cbbcb67a1ff039ddb4ca97be11c1cd3b3ffd2fb45593da490022b9951bd22e"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/kimi-k3/verification-checklist.md"
+notes:
+  cataloging_context: "Type runbook per the governor's receipt-check characterization (fixed operational procedure, run per deliverable). Authority ratified-governance (UD5/U7). Sibling agents/kimi-k3/*.html files are derived renderings where manifest-listed — covered by the DOC-scripts-wiki-dual-format-render one-record disposition, never separately cataloged."

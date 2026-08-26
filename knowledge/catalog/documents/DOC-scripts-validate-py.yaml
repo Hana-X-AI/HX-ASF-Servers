@@ -1,0 +1,54 @@
+document:
+  id: "DOC-scripts-validate-py"
+  title: "scripts/validate.py — single local validation command (ratified UD1 validation contract; UD2 bounded implementation)"
+  type: "runbook"
+  declared_purpose: "The ratified single read-only repo-root validation command (owner decisions UD1/UD2 2026-08-25, state log row 60; unified recommendations U1/U2). One command runs every mechanized check the factory has ratified and honestly labels the checks that remain human judgment as MANUAL GATE lines. Consolidates four check families: wiki-sync (render.py --check hash synchronization), fixture-suite (pilot fixtures regression tests + sha256 manifest verify), catalog-mechanical (CAT-01/03/04/07/08 per knowledge/catalog/tests/cat-001-acceptance.md), and secret-boundary (generic high-signal secret patterns, tuned so prose does not match). MANUAL GATE lines (noted, never graded): CAT-10..15 golden questions, CAT-20..22 judgment checks, CB-01 write-set audit, and the literal-credential sweep against the protected ssh-info file (governor-only; the command NEVER reads protected credential material). Read-only contract: never writes/formats/renders/catalogs; child Python runs with -B and PYTHONDONTWRITEBYTECODE=1; sha256sum -c verify-only; catalog/YAML opened read-only. Exit codes: 0 all mechanized PASS, 1 any FAIL, 2 usage error. Usage: validate.py (full repo) | validate.py --changed PATH [PATH..] (scoped: wiki manifest member -> wiki-sync; fixtures file -> fixture-suite; knowledge/catalog/** -> catalog-mechanical; anything else -> secret sweep on that file). Hook rule: hooks (U3 advisory, U5 secret-boundary, any future gate) MUST call this command rather than reimplementing checks. Deterministic: same tree, same result."
+  inferred_value: "INFERENCE: this command is now the cheapest complete mechanical self-check for a Carol run (catalog-mechanical + secret-boundary cover CAT-01/03/04/07/08 and the generic half of CAT-05); the literal-credential half of CAT-05 and the CB-01 write-set audit stay governor judgment by design — the catalog cannot self-certify those."
+  source:
+    author: "Kimi-K3 (governor; bounded implementation per owner decisions UD1/UD2)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/scripts/validate.py"
+    section: "§whole-document"
+    ingestion_date: "2026-08-26T00:25:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: [kimi-k3, carol]
+    repositories: [HX-ASF-Servers]
+    environments: [fleet, pilot]
+  version: ""
+  status: "active"
+  authority_level: "ratified-governance"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "references"
+      target: "DOC-cat-001-acceptance"
+      note: "mechanizes CAT-01/03/04/07/08 as the catalog-mechanical check; CAT-10..15 (owner-ratified golden-question corpus), CAT-20..22, and CB-01 are carried as honest MANUAL GATE labels — run by the governor, never graded by the command"
+    - predicate: "references"
+      target: "DOC-scripts-wiki-dual-format-render"
+      note: "consolidates render.py --check as the wiki-sync check family; hooks must call this command (one contract, one place to fix a check)"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-fixtures-manifest"
+      note: "fixture-suite check runs the pilot fixtures regression tests and verifies the sha256 manifest (sha256sum -c, verify-only)"
+    - predicate: "references"
+      target: "DOC-protected-ssh-info-hxs1"
+      note: "boundary by design: the literal-credential sweep against the protected source is a governor-only MANUAL GATE, deliberately NOT part of this command — the command never reads protected credential material"
+    - predicate: "produced_by"
+      target: "kimi-k3"
+      note: "state log row 60 (2026-08-25T23:47Z): UD1 ratified the validation contract, UD2 approved the bounded implementation; U2 dispatched to a build session"
+  validation:
+    validated_at: "2026-08-26T00:25:00Z"
+    freshness: "current"
+    review_due: "on validate.py change (re-hash this record) or on CAT battery revision that changes the mechanized set"
+  sha256: "6976e4b74e48ea059618cfbec8af16ae78697e0ba0259d54602acfb3bca5c268"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/scripts/validate.py"
+notes:
+  cataloging_context: "Type judged 'runbook' (executable operational procedure with a fixed invocation contract), authority ratified-governance (owner decisions UD1/UD2). Cataloged in the governor wave receipt 2026-08-26T0025Z together with the hooks system, WO/CP templates, and the governor verification checklist."
+  dependency: "Imports PyYAML (import yaml) — present and in proven CAT use (unified-list correction C-C2); stdlib otherwise."

@@ -1,0 +1,45 @@
+document:
+  id: "DOC-assessment-unified-capability-recommendations"
+  title: "2026-08-25-unified-capability-recommendations.md — governor reconciliation of the KK3 and Codex capability assessments into one unified recommendation list (U1–U12, UD1–UD7, for owner decision)"
+  type: "evidence"
+  declared_purpose: "Governor reconciliation at owner request ('review tool-belt, come back with a unified recommendation list') of the two same-day read-only capability assessments — (a) the KK3 assessment (O1–O10) and (b) the supplied Codex/GitHub-Copilot assessment (657 lines; R1–R7, O1–O17, D1–D7) — per the AGENTS.md adoption-of-provided-documents convention (verify claims against current evidence and ratified authority; reconcile conflicts, never blend; record corrections with provenance). Contents: the agreement set (no new platform/store/orchestrator/database/MCP/session-injection/auto-mutating hooks/catalog skill/custom-agent executables; CI only after local proof), corrections C-C1..C-C4 to the Codex document, three conflict resolutions (KK3 O2 -> Codex no-mutating-hooks model; KK3 O4/O5 skills -> template files U6 + checklist U7; KK3 O7 TKV filesystem MCP -> deferred to the Codex position), the unified list U1–U12 in four tracks (A validation foundation, B security interception, C workflow codification, D hold/defer/reject), owner decisions UD1–UD7, and the mandatory standing-directive Second Brain disposition. Document's own status line: 'Recommendation only. Nothing here is implemented or authorized by this document.' Product facts verified against official Kimi Code hooks/MCP docs fetched 2026-08-25."
+  inferred_value: "INFERENCE: U5 (secret-boundary PreToolUse hook) is flagged the highest-value single item — the only one preventing a demonstrated incident class. U1/U2 would consolidate the governor's per-run CAT mechanical checks into one governed command (scripts/validate.py), changing how this lane's acceptance evidence is produced if approved — track as lane-affecting; CAT-05, the protected-resource convention, and owner attestation remain the secret boundary regardless (hooks are fail-open)."
+  source:
+    author: "Kimi-K3 (governor), at owner request"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/knowledge/assessments/2026-08-25-unified-capability-recommendations.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T23:06:00Z"
+  owner: "Agent Zero (decision authority for UD1–UD7); Kimi-K3 (author)"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: [kimi-k3, carol]
+    repositories: [HX-ASF-Servers]
+    environments: [fleet]
+  version: "2026-08-25"
+  status: "active"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "assesses"
+      target: "DOC-assessment-capability-read-only"
+      note: "input (a): reconciled in full — its O2 auto-render proposal resolved to the no-mutating-hooks model (U3 validator check + advisory warning; render.py --check stays the audit), its O4/O5 skill proposals adopted in content as U6 template files + U7 checklist (no new skills now), its O7 TKV filesystem MCP deferred to the Codex position with verification items preserved on the source record"
+    - predicate: "assesses"
+      target: "DOC-codex-20260825-2207-capability-assessment"
+      note: "input (b): read end-to-end (657 lines) and verified against current repo state and official product docs; corrections C-C1..C-C4 recorded at section 2 per the adoption convention (C-C1 hook lifecycle VERIFIED via official docs — its D3 precondition satisfied; C-C2 PyYAML present and in proven CAT use — its D2 answerable 'yes, in scope'; C-C3 markdownlint = editor-host state, never a project gate; C-C4 q16_rerun ResourceWarning confirmed, housekeeping); source preserved unchanged per the originals rule"
+  validation:
+    validated_at: "2026-08-25T23:06:00Z"
+    freshness: "current"
+    review_due: "on owner disposition of UD1–UD7 or on document revision"
+  sha256: "365c84c168b626fad82bb82116b57a8df1bff3718c82dc2d05d087bdc1d7d7bf"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/knowledge/assessments/2026-08-25-unified-capability-recommendations.md"
+notes:
+  derived_html: "Sibling 2026-08-25-unified-capability-recommendations.html is a derived rendering under the ratified dual-format convention — covered by the DOC-scripts-wiki-dual-format-render one-record disposition, never separately cataloged."
+  cataloging_context: "Type judged 'evidence' per the governor-analysis convention: U1–U12 and UD1–UD7 are OPEN recommendations awaiting owner decisions — nothing implemented or authorized by the document. Authority agent-evidence per the Kimi-K3-authored-record convention. Section 7 queued Carol records for both input assessments and this list; this run answers that queue in full (3 records). State-log citation (row 59) and wiki-manifest inclusion remain governor actions outside Carol's bounds."

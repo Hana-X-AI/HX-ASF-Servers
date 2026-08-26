@@ -1,0 +1,43 @@
+document:
+  id: "DOC-codex-20260825-2207-capability-assessment"
+  title: "codex_20260825_2207_hx-asf-servers-read-only-project-capability-assessment.md — supplied Codex/GitHub-Copilot read-only capability assessment of HX-ASF-Servers (tool-belt, owner-docs tree)"
+  type: "evidence"
+  declared_purpose: "Supplied external assessment (frontmatter: document_id HX-CAPABILITY-ASSESSMENT-2026-08-25, status assessment-complete-owner-review-required, prepared_at 2026-08-25T22:07:00Z, author GitHub Copilot) of the same owner assignment as the KK3 read-only capability assessment: verdict that the project needs no new platform, knowledge store, or integration layer — the material gap is narrower (no single executable repository validation entry point, no hook configuration, no CI/workspace validation config). Carries an explicit truth-state model, project inventory, opportunity matrix O1–O17, a proposed validation contract (section 8, incl. the honest 'MANUAL GATE REQUIRED, not PASS' rule for unmechanized CAT checks), hook design guardrails, skill/MCP/marketplace-extension assessments, prioritized recommendations R1–R7, owner decisions D1–D7, verification log V1–V4 (render --check 29/29 OK; 57 fixture tests pass with one q16_rerun.py ResourceWarning), evidence ledger, and limitations. Decision state per its own control block: recommendations only — no adoption or implementation authorized."
+  inferred_value: "INFERENCE: the section-8 validation contract and the two catalog-validation prerequisites (executable schema association; approved YAML parser) are the highest-signal contributions carried into the unified list; its VERIFICATION-REQUIRED items (Kimi hook lifecycle/events/paths) were resolved by the governor's same-day official-docs fetch — recorded as correction C-C1 in DOC-assessment-unified-capability-recommendations."
+  source:
+    author: "GitHub Copilot (Codex), read-only assessment session"
+    provided_by: "Agent Zero"
+    origin: "/home/hxsa/opt/local-tkv/agent-zero-docs/tool-belt/codex_20260825_2207_hx-asf-servers-read-only-project-capability-assessment.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-25T23:06:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: [kimi-k3, carol]
+    repositories: [HX-ASF-Servers]
+    environments: [fleet]
+  version: "HX-CAPABILITY-ASSESSMENT-2026-08-25"
+  status: "active"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond owner docs directory access"
+    contains_secret_values: false
+  relations:
+    - predicate: "references"
+      target: "DOC-assessment-capability-read-only"
+      note: "same assignment, parallel work: the KK3 governor assessment covers the identical read-only capability question (hooks, skills, MCP, plugins) on the same day from inside the project; agreements, conflicts, and resolutions between the two are reconciled in DOC-assessment-unified-capability-recommendations"
+  validation:
+    validated_at: "2026-08-25T23:06:00Z"
+    freshness: "current"
+    review_due: "on owner disposition of D1–D7 (carried into UD1–UD7 of DOC-assessment-unified-capability-recommendations)"
+  sha256: "6b306fa6e6b9c514cf35eac8a98a6e6276fb0a191803fa29fbb97b2757b74d82"
+  canonical_location: "/home/hxsa/opt/local-tkv/agent-zero-docs/tool-belt/codex_20260825_2207_hx-asf-servers-read-only-project-capability-assessment.md"
+notes:
+  adoption_review: "adoption review applied corrections C-C1..C-C4 (hook lifecycle VERIFIED via official docs; PyYAML present and in proven CAT use — its D2 answerable in-scope; markdownlint = editor-host state; q16_rerun ResourceWarning confirmed) — source preserved unchanged per originals rule."
+  derived_html: "A sibling .html rendering exists beside the source in the tool-belt directory — derived rendering, covered by this one record, not separately cataloged (per the owner-supplied disposition note and the dual-format derived-artifacts rule at DOC-scripts-wiki-dual-format-render)."
+  canonical_scope: "Canonical location is external to the repository (owner-docs tree, tool-belt directory). Originals rule applies: the source is preserved unchanged; the catalog describes and connects. Status judged 'active' from its own control block (assessment-complete-owner-review-required = complete and delivered, not draft); the verbatim status string is preserved in declared_purpose."
