@@ -1,0 +1,212 @@
+# ci-cd.yml — HX-ASF-Servers (p8, owner-ratified 2026-08-26)
+# Trigger: every push to any branch. 18 steps total across three jobs.
+#   gates             — deterministic quality gates (all pushes; happy path ≈3 min)
+#   coderabbit-review — CodeRabbit CLI review gate (non-main pushes; skips cleanly
+#                       until the CODERABBIT_API_KEY secret is configured)
+#   pr-manage         — auto-PR, auto-label, auto-merge, PR-comment notifications
+#                         (non-main pushes)
+# Auto-merge is the GitHub platform feature: it fires only when the required checks
+# (gates, coderabbit-review) are green on the PR. No manual approval gates anywhere.
+name: ci-cd
+
+on:
+  push:
+    branches: ["**"]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  gates:
+    name: gates
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout (full history for the secret-scan range)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Lint — byte-compile all Python
+        run: python3 -m compileall -q scripts pilots/PILOT-HX1-OLLAMA-QWEN27B-001/fixtures
+
+      - name: Lint — shellcheck repo hooks
+        run: shellcheck scripts/hooks/*.sh
+
+      - name: Unit tests — fixtures regression suite
+        run: python3 pilots/PILOT-HX1-OLLAMA-QWEN27B-001/fixtures/test_fixtures.py
+
+      - name: Unit tests — wiki renderer suite
+        run: python3 scripts/wiki/test_render.py
+
+      - name: Build validation — wiki HTML in sync
+        run: python3 scripts/wiki/render.py --check
+
+      - name: Catalog validation
+        run: python3 scripts/validate.py
+
+      - name: Security scan — secrets in the pushed range
+        env:
+          BEFORE: ${{ github.event.before }}
+        run: |
+          set -e
+          VER=$(curl -sSf https://api.github.com/repos/gitleaks/gitleaks/releases/latest \
+            | python3 -c "import json,sys; print(json.load(sys.stdin)['tag_name'].lstrip('v'))")
+          curl -sSfL -o /tmp/gitleaks.tar.gz \
+            "https://github.com/gitleaks/gitleaks/releases/download/v${VER}/gitleaks_${VER}_linux_x64.tar.gz"
+          tar -xzf /tmp/gitleaks.tar.gz -C /tmp gitleaks
+          RANGE="HEAD~1..HEAD"
+          if [ "$BEFORE" != "0000000000000000000000000000000000000000" ]; then
+            RANGE="${BEFORE}..HEAD"
+          fi
+          /tmp/gitleaks git --redact --log-opts="$RANGE" .
+
+  coderabbit-review:
+    name: coderabbit-review
+    if: github.ref_name != 'main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout (full history for the base diff)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install CodeRabbit CLI
+        run: |
+          export CODERABBIT_INSTALL_DIR="$RUNNER_TEMP/cr-bin"
+          curl -fsSL https://cli.coderabbit.ai/install.sh | sh
+          echo "$CODERABBIT_INSTALL_DIR" >> "$GITHUB_PATH"
+
+      - name: CodeRabbit review (agent JSON, light policy)
+        id: review
+        env:
+          CODERABBIT_API_KEY: ${{ secrets.CODERABBIT_API_KEY }}
+        run: |
+          if [ -z "${CODERABBIT_API_KEY:-}" ]; then
+            echo "::notice::CODERABBIT_API_KEY not configured — review skipped (see docs/cicd-pipeline.md setup)"
+            echo "skipped=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "skipped=false" >> "$GITHUB_OUTPUT"
+          git fetch origin main --depth=1 >/dev/null 2>&1 || true
+          coderabbit review --agent --light --base origin/main \
+            --api-key "$CODERABBIT_API_KEY" > "$RUNNER_TEMP/findings.jsonl" || true
+
+      - name: Parse findings and enforce the gate
+        if: steps.review.outputs.skipped == 'false'
+        run: |
+          python3 - <<'PYEOF'
+          import json, os, sys
+          path = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "findings.jsonl")
+          counts = {"critical": 0, "major": 0, "minor": 0, "trivial": 0, "info": 0}
+          complete_status, findings, errors = None, 0, []
+          if os.path.exists(path):
+              for line in open(path):
+                  line = line.strip()
+                  if not line:
+                      continue
+                  try:
+                      ev = json.loads(line)
+                  except ValueError:
+                      continue
+                  t = ev.get("type")
+                  if t == "finding":
+                      findings += 1
+                      sev = (ev.get("severity") or "info").lower()
+                      counts[sev] = counts.get(sev, 0) + 1
+                  elif t == "complete":
+                      complete_status = ev.get("status")
+                  elif t == "error":
+                      errors.append(str(ev.get("message", "")))
+          rows = "\n".join("| %s | %d |" % (k, v) for k, v in counts.items())
+          summary = (
+              "CodeRabbit CLI review — status `%s`, findings **%d** "
+              "(critical %d, major %d, minor %d, trivial %d, info %d).\n"
+              % (complete_status, findings, counts["critical"], counts["major"],
+                 counts["minor"], counts["trivial"], counts["info"])
+          )
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as fh:
+              fh.write("## CodeRabbit review\n\n| severity | count |\n|---|---|\n" + rows + "\n")
+          with open("/tmp/cr-summary.md", "w") as fh:
+              fh.write(summary)
+          if complete_status is None:
+              print("::error::no complete event from CodeRabbit CLI (auth/service failure) %s"
+                    % "; ".join(errors))
+              sys.exit(1)
+          blocking = counts["critical"] + counts["major"]
+          if blocking:
+              print("::error::%d blocking finding(s) (critical/major) — fix on this branch and re-push"
+                    % blocking)
+              sys.exit(1)
+          PYEOF
+
+      - name: Comment review result on the PR
+        if: steps.review.outputs.skipped == 'false' && always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR=$(gh pr view -R "$GITHUB_REPOSITORY" --json number -q .number 2>/dev/null || true)
+          [ -z "$PR" ] && exit 0
+          gh pr comment "$PR" -R "$GITHUB_REPOSITORY" --body-file /tmp/cr-summary.md || true
+
+  pr-manage:
+    name: pr-manage
+    if: github.ref_name != 'main' && always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Ensure PR exists
+        id: pr
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          BR="${GITHUB_REF_NAME}"
+          NUM=$(gh pr view "$BR" -R "$GITHUB_REPOSITORY" --json number -q .number 2>/dev/null || true)
+          if [ -z "$NUM" ]; then
+            gh pr create -R "$GITHUB_REPOSITORY" --base main --head "$BR" \
+              --title "$BR" --body "Auto-created by ci-cd on first push (p8)."
+            NUM=$(gh pr view "$BR" -R "$GITHUB_REPOSITORY" --json number -q .number)
+            echo "created=true" >> "$GITHUB_OUTPUT"
+          fi
+          echo "number=$NUM" >> "$GITHUB_OUTPUT"
+
+      - name: Auto-label by branch prefix
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ steps.pr.outputs.number }}
+        run: |
+          case "${GITHUB_REF_NAME}" in
+            feature/*) L=feature ;; fix/*) L=fix ;; chore/*) L=chore ;;
+            *) L="" ;;
+          esac
+          [ -z "$L" ] && exit 0
+          gh label create "$L" -R "$GITHUB_REPOSITORY" --force >/dev/null 2>&1 || true
+          gh pr edit "$PR" -R "$GITHUB_REPOSITORY" --add-label "$L"
+
+      - name: Enable auto-merge (squash)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ steps.pr.outputs.number }}
+        run: |
+          gh pr merge "$PR" -R "$GITHUB_REPOSITORY" --auto --squash \
+            || echo "::warning::auto-merge not armed yet (repo setting or required checks pending)"
+
+      - name: Notify pipeline state on the PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ steps.pr.outputs.number }}
+        run: |
+          gh pr comment "$PR" -R "$GITHUB_REPOSITORY" --body \
+            "ci-cd: gates and CodeRabbit review for the latest push are in the Checks tab. Auto-merge (squash) is armed; the PR merges when the required checks are green. Blocking findings are fixed by the factory agent on this branch and re-pushed — the loop re-runs automatically." \
+            >/dev/null || true

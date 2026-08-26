@@ -34,3 +34,9 @@ pilots/PILOT-HX1-OLLAMA-QWEN27B-001/23-kk3-m6-capacity-decision.md
 knowledge/assessments/2026-08-25-capability-assessment-read-only.md
 knowledge/assessments/2026-08-25-unified-capability-recommendations.md
 knowledge/agent-performance.md
+servers/BLUEPRINT-llm-server.md
+goals/2026-08-26-hxs2-qwen36-coderx-backend.md
+goals/2026-08-26-hxs3-muse-glimmer-tooling.md
+knowledge/decisions/KDD-0006-hxs2-coderx-backend-adoption.md
+knowledge/decisions/KDD-0007-hxs3-muse-glimmer-tooling-adoption.md
+docs/cicd-pipeline.md

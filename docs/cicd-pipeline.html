@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<!-- Generated from docs/cicd-pipeline.md (sha256 6b99bae481a2655906c20737eaa3928bc9b66839ca4d12bfcba265f59673434c) by scripts/wiki/render.py on 2026-08-26T19:46Z.
+     Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CI/CD pipeline — HX-ASF-Servers</title>
+<style>
+:root{color-scheme:light dark}
+body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.55;
+max-width:62rem;margin:0 auto;padding:1.5rem 2rem;color:#1a1a1a;background:#fff}
+h1,h2,h3,h4,h5,h6{line-height:1.25;margin-top:1.6em}
+h1{border-bottom:2px solid #444;padding-bottom:.3em}
+h2{border-bottom:1px solid #ccc;padding-bottom:.2em}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+code{background:#f0f0f0;padding:.1em .3em;border-radius:3px}
+pre{background:#f6f8fa;border:1px solid #ddd;border-radius:6px;padding:.8em;overflow-x:auto}
+pre code{background:none;padding:0}
+table{border-collapse:collapse;margin:1em 0;width:100%}
+th,td{border:1px solid #ccc;padding:.35em .6em;text-align:left;vertical-align:top}
+th{background:#f0f0f0}
+blockquote{border-left:4px solid #bbb;margin:1em 0;padding:.2em 1em;color:#444;background:#fafafa}
+a{color:#0645ad}
+.doc-meta{color:#666;font-size:.85em;border-bottom:1px dashed #bbb;padding-bottom:.6em;margin-bottom:1.2em}
+footer{margin-top:2.5em;border-top:1px solid #ccc;color:#666;font-size:.8em;padding-top:.8em}
+pre.mermaid{background:#fff;border:1px dashed #999}
+@media (prefers-color-scheme:dark){
+body{color:#ddd;background:#111} h1{border-color:#888} h2{border-color:#555}
+code{background:#2a2a2a} pre{background:#1b1b1b;border-color:#444}
+th{background:#222} th,td{border-color:#555} blockquote{color:#bbb;background:#191919;border-color:#666}
+a{color:#6fa8ff} .doc-meta,footer{color:#999}}
+</style>
+</head>
+<body>
+<main class="doc">
+<h1 id="ci-cd-pipeline-hx-asf-servers">CI/CD pipeline — HX-ASF-Servers</h1>
+<p>Owner-ratified 2026-08-26 (p8, plan <code>argent-groot-ant-man</code>). Trigger: <strong>every push to any branch</strong>. 18 steps across three jobs. Happy path (push to <code>main</code>, gates only) completes in about 3 minutes.</p>
+<p>The pipeline's own gates are the repo's existing quality discipline — the same commands the factory runs locally. CodeRabbit supplies the automated review gate on branches; the <strong>factory agent applies fixes</strong> (CodeRabbit's own supported loop: it detects, the coding agent fixes, ≤2 passes); GitHub platform auto-merge merges when the required checks are green. No manual approval gates anywhere.</p>
+<h2 id="step-list-18">Step list (18)</h2>
+<p><strong>Job <code>gates</code></strong> — all pushes:</p>
+<ol><li>Checkout (full history, for the secret-scan range).</li><li>Set up Python 3.12.</li><li>Lint — byte-compile all Python (<code>compileall scripts</code> + fixtures).</li><li>Lint — <code>shellcheck scripts/hooks/*.sh</code>.</li><li>Unit tests — fixtures regression suite (<code>fixtures/test_fixtures.py</code>).</li><li>Unit tests — wiki renderer suite (<code>scripts/wiki/test_render.py</code>).</li><li>Build validation — wiki HTML in sync (<code>scripts/wiki/render.py --check</code>).</li><li>Catalog validation (<code>scripts/validate.py</code>).</li><li>Security scan — gitleaks over the pushed commit range, redacted.</li></ol>
+<p><strong>Job <code>coderabbit-review</code></strong> — non-<code>main</code> pushes only:</p>
+<ol><li>Checkout (full history for the base diff).</li><li>Install the CodeRabbit CLI.</li><li>Review: <code>coderabbit review --agent --light --base origin/main</code> with the Agentic API key — skips with a notice when <code>CODERABBIT_API_KEY</code> is not configured.</li><li>Parse the JSON event stream; the gate <strong>fails on critical/major findings</strong> and on any review that ends without a <code>complete</code> event (fail-closed on auth/service failure); minor/trivial findings are reported, not blocking.</li><li>Comment the review summary on the PR.</li></ol>
+<p><strong>Job <code>pr-manage</code></strong> — non-<code>main</code> pushes only (runs regardless of other jobs, so the PR always exists for the fix loop):</p>
+<ol><li>Ensure a PR exists for the branch (create targeting <code>main</code> on first push).</li><li>Auto-label by branch prefix (<code>feature/</code>, <code>fix/</code>, <code>chore/</code>; labels auto-created).</li><li>Enable auto-merge (squash) on the PR.</li><li>Comment the pipeline state on the PR (notification surface).</li></ol>
+<h2 id="lifecycle">Lifecycle</h2>
+<pre class="mermaid">flowchart LR
+    A[push to any branch] --&gt; B[gates: lint, tests, build-sync, catalog, secrets]
+    A --&gt;|non-main| C[CodeRabbit CLI review]
+    A --&gt;|non-main| D[pr-manage: PR + label + auto-merge + comment]
+    B --&gt;|green| E{required checks}
+    C --&gt;|no critical/major| E
+    C --&gt;|blocking findings| F[factory agent fixes on the branch]
+    F --&gt;|re-push| A
+    E --&gt;|all green| G[auto-merge squash into main]</pre>
+<h2 id="the-review-fix-loop">The review-fix loop</h2>
+<p>CodeRabbit CLI reviews the branch diff against <code>main</code> and emits structured findings. Blocking findings (critical/major) fail the <code>coderabbit-review</code> check, which blocks auto-merge. The factory agent (Kimi-K3 / john) reads the findings, fixes on the same branch, and re-pushes — the pipeline re-runs automatically. Loop limit per CodeRabbit's own guidance: ≤2 review passes on the same change; remaining nits are ignored deliberately. A run that produces no <code>complete</code> event (CLI/auth/service failure) fails the gate loudly rather than passing silently.</p>
+<h2 id="conventions">Conventions</h2>
+<ul><li>Branches: <code>feature/&lt;slug&gt;</code>, <code>fix/&lt;slug&gt;</code>, <code>chore/&lt;slug&gt;</code> — anything else is legal but unlabeled. <code>main</code> is the factory's working branch; protection requires the two checks <strong>for PRs only</strong> — direct pushes by the governor stay possible.</li><li>PRs: auto-created on first push, auto-labeled by prefix, squash auto-merged when green. Bot/CI commits carry no co-author (repository rule).</li><li>Notifications: GitHub PR comments + check statuses (p8 default channel).</li></ul>
+<h2 id="setup-one-time">Setup (one-time)</h2>
+<p>Owner (web):</p>
+<ol><li>Create/confirm a CodeRabbit organization with an <strong>assigned seat</strong> (the headless API-key flow requires one; plan allowance is used first, usage-based add-on for over-limit). US region is the default (<code>--region eu</code> for EU accounts).</li><li>Generate an <strong>Agentic API key</strong> (app.coderabbit.ai → Settings → API Keys).</li><li>Add it as repo secret <strong><code>CODERABBIT_API_KEY</code></strong> (GitHub → repo → Settings → Secrets and variables → Actions).</li><li>Optional: install the CodeRabbit GitHub App for PR-native review threads and Autofix (<code>.coderabbit.yaml</code> already carries <code>request_changes_workflow</code> and <code>finishing_touches.autofix</code> for that day; Autofix needs a Pro plan).</li></ol>
+<p>Bootstrap (already executed via API with the classic PAT; documented here):</p>
+<ul><li><code>allow_auto_merge: true</code> on the repo.</li><li>Actions workflow permissions: write + allow Actions to create/approve PRs.</li><li>Branch protection on <code>main</code>: required checks <code>gates</code> and <code>coderabbit-review</code> (PR merges only; no required reviews; admins not restricted — the factory's governor-on-main flow is preserved).</li></ul>
+<p>Note: the fine-grained PAT in the local credential store returned 401 on 2026-08-26 — revoke/replace it; the classic PAT works.</p>
+<h2 id="deviations-from-the-p8-letter-ratified-with-the-plan">Deviations from the p8 letter (ratified with the plan)</h2>
+<ul><li>D1: Fix commits are made by the factory agent, not by CodeRabbit — CodeRabbit's current CLI does not commit fixes; its supported loop is "detect → agent fixes → re-review, ≤2 passes". (The App's Autofix can commit, but needs App + Pro plan.)</li><li>D2: "&lt;10 min happy path" holds for <code>main</code> pushes (gates only, ≈3 min). The branch review gate takes 7–30+ min by CodeRabbit's own numbers; <code>--light</code> policy trims it. Review gates merge, not push feedback.</li><li>D3: "CodeRabbit approves and merges" = green review check + GitHub platform auto-merge. No App-approval dependency.</li><li>D4: Security scan is gitleaks (this repo's real risk class is credential leaks; there are no dependency manifests, so Dependabot does not apply). CodeQL stays available free (public repo) as a later addition.</li></ul>
+<h2 id="second-brain-evaluation-standing-directive">Second Brain evaluation (standing directive)</h2>
+<ol><li>Opportunity identified: <strong>yes</strong> — pipeline runs and their outcomes are catalogable evidence (CI as a governance signal: which changes passed which gates, when, with which findings).</li><li>Roadmap capability/pattern: run receipts feeding the Second Brain catalog — the same evidence discipline the pilots already use, extended to CI.</li><li>Disposition: <strong>recommended for a future iteration, not implemented now</strong> — adding catalog writes to the pipeline today would expand scope beyond the ratified plan.</li><li>Evidence/reasoning: recorded here per the standing directive; revisit when the pipeline has a month of run history to catalog against.</li></ol>
+</main>
+<footer>Source of truth: <code>docs/cicd-pipeline.md</code> (sha256 <code>6b99bae481a2655906c20737eaa3928bc9b66839ca4d12bfcba265f59673434c</code>) · rendered 2026-08-26T19:46Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true});
+</script>
+<!-- If this file is viewed offline or the CDN is blocked, Mermaid diagrams appear
+     as their source text inside dashed boxes; that source is the authoritative form. -->
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+# CodeRabbit configuration — HX-ASF-Servers (p8, owner-ratified 2026-08-26)
+# Keys verified 2026-08-26 against the live official schema
+# (https://www.coderabbit.ai/integrations/schema.v2.json; configuration
+# reference dated 2026-08-24). Consumed by the CodeRabbit CLI review in the
+# ci-cd workflow; also governs the GitHub App if it is installed later.
+language: en-US
+early_access: false
+
+reviews:
+  # Balanced feedback; assertive was rejected as too noisy for a governance repo.
+  profile: chill
+
+  # App-side (when installed): approve once review comments are resolved, the
+  # latest commit is reviewed, and no pre-merge checks fail.
+  request_changes_workflow: true
+
+  # Rendered HTML is an artifact — Markdown is the source of truth. Caches excluded.
+  path_filters:
+    - "!**/*.html"
+    - "!**/__pycache__/**"
+
+  path_instructions:
+    - path: "scripts/**"
+      instructions: "stdlib-only Python is a hard repository rule; flag any third-party import."
+    - path: "pilots/**/fixtures/**"
+      instructions: "Fixtures are versioned and alias-parameterized; flag hard-coded model tags, missing alias recording in results, and any persisted thinking content."
+    - path: "**/*.md"
+      instructions: "Governance records are append-only; flag silent rewrites of history — corrections must be open and labeled."
+
+  auto_review:
+    enabled: true
+    auto_incremental_review: true
+    base_branches:
+      - main
+
+  # Autofix requires the GitHub App plus a Pro plan; inert until then.
+  finishing_touches:
+    autofix:
+      enabled: true
+
+  # Tool integrations matched to this repo's actual content.
+  tools:
+    ruff:
+      enabled: true
+    shellcheck:
+      enabled: true
+    yamllint:
+      enabled: true
+    actionlint:
+      enabled: true
+    gitleaks:
+      enabled: true
+
+chat:
+  auto_reply: true
