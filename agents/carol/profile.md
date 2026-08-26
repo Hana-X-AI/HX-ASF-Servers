@@ -233,7 +233,7 @@ mandatory gate is scoped, never skipped.
 
 | Tier | Use | Verification | Receipt |
 | --- | --- | --- | --- |
-| **T-micro** | ≤5 records touched, single-purpose (status flip, re-validation, re-hash, relation touch) | Write set only: parse + required fields + hash + index 1:1 + relation targets of touched records | Micro receipt; target cycle ≤ 3 min |
+| **T-micro** | ≤5 records touched, single-purpose (status flip, re-validation, re-hash, relation touch) | Write set only: parse + required fields + hash + index 1:1 + relation targets of touched records | Micro receipt; target cycle ≤ 5 min measured end-to-end (owner-ratified 2026-08-26; ≤3 min content-work aspiration) |
 | **T-standard** | Ingestion / correction runs | Write set + full-catalog self-check + one `validate.py` at close | Full receipt |
 | **T-full** | Sweep / audit | T-standard + CAT-10..15 known-answer + CB-01 bounds audit | Full receipt + battery results |
 
