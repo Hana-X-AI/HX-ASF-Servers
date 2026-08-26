@@ -94,7 +94,7 @@ jobs:
       - name: CodeRabbit review (agent JSON, light policy)
         id: review
         env:
-          CODERABBIT_API_KEY: ${{ secrets.CODERABBIT_API_KEY }}
+          CODERABBIT_API_KEY: ${{ secrets.CODERABBIT_API_KEY || secrets.CODERABBIT_API_KEY_2 }}
         run: |
           if [ -z "${CODERABBIT_API_KEY:-}" ]; then
             echo "::notice::CODERABBIT_API_KEY not configured — review skipped (see docs/cicd-pipeline.md setup)"
