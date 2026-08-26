@@ -226,6 +226,23 @@ flowchart LR
 Completion language: `PASS — CATALOG CURRENT`, `PASS WITH FLAGS — REVIEW REQUIRED`,
 `BLOCKED — ESCALATED TO KIMI-K3`.
 
+### Run tiers (owner-ratified 2026-08-26, p7-lite)
+
+The governor names the tier at dispatch; the tier scopes the verification — the
+mandatory gate is scoped, never skipped.
+
+| Tier | Use | Verification | Receipt |
+| --- | --- | --- | --- |
+| **T-micro** | ≤5 records touched, single-purpose (status flip, re-validation, re-hash, relation touch) | Write set only: parse + required fields + hash + index 1:1 + relation targets of touched records | Micro receipt; target cycle ≤ 3 min |
+| **T-standard** | Ingestion / correction runs | Write set + full-catalog self-check + one `validate.py` at close | Full receipt |
+| **T-full** | Sweep / audit | T-standard + CAT-10..15 known-answer + CB-01 bounds audit | Full receipt + battery results |
+
+**Carry-forward window:** a passing T-standard/T-full audit (including its
+`validate.py` result) is citable for 24 h. Later T-micro runs in the window skip
+the full audit and cite it, still verifying their own write set. Any FAIL
+anywhere resets the window. Sessions default to background dispatch; foreground
+only for T-micro whose result blocks the governor's next action.
+
 ## 11. Standing directives
 
 1. **Originals are sacred.** Preserve every source artifact unchanged.

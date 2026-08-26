@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Generated from goals/2026-08-24-hx1-ollama-qwen38-27b.md (sha256 87187b16b35e5820a4ab87cdf67ebfc0a46fba1ffb7aacf597ced4001b6c9ae1) by scripts/wiki/render.py on 2026-08-26T00:45Z.
+<!-- Generated from goals/2026-08-24-hx1-ollama-qwen38-27b.md (sha256 8bf0c1f4b05a0180dd750a4a2d1d627944390a125225756a15f2f37bbfbfb061) by scripts/wiki/render.py on 2026-08-26T01:56Z.
      Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
 <html lang="en">
 <head>
@@ -35,7 +35,7 @@ a{color:#6fa8ff} .doc-meta,footer{color:#999}}
 <body>
 <main class="doc">
 <h1 id="goal-deploy-and-validate-qwen3-8-27b-on-hxs-1-via-ollama-mutating-pilot">Goal: Deploy and validate qwen3.8:27b on hxs-1 via Ollama (mutating pilot)</h1>
-<ul><li>Goal ID: 2026-08-24-hx1-ollama-qwen38-27b (this file's name)</li><li>Version: 1</li><li>Status: in-progress — M7a PASS 2026-08-25 (AC-007 3/3 cold reboots, 60 s boot-to-ready ×3, kernel 7.0.0-30 + driver re-proven; evidence <code>pilots/PILOT-HX1-OLLAMA-QWEN27B-001/30-esme-m7a-reboot-cycles.md</code>, state log rows 41–42; unplanned-outage confirmation: state log row 47); M7b soak DEFERRED to backlog per owner directive 2026-08-25 (<code>knowledge/issues.md</code>, state log row 53): AC-008/AC-016 evidence absent — deferred, not waived; M8 scope adjusted</li><li>Owner: Agent-Zero</li><li>Created: 2026-08-24</li><li>Human authority: Agent-Zero</li><li>Agent lane(s): kimi-k3 (governor), rick (Ubuntu OS plane), john/Esme (Ollama plane)</li></ul>
+<ul><li>Goal ID: 2026-08-24-hx1-ollama-qwen38-27b (this file's name)</li><li>Version: 1</li><li>Status: <strong>COMPLETE — PASS</strong> 2026-08-26 (M8 owner sign-off: Jarvis Richardson ACCEPT; package <code>pilots/PILOT-HX1-OLLAMA-QWEN27B-001/36-kk3-m8-acceptance-reconciliation.md</code>, state log rows 63–64). SC-05/AC-008/AC-016 deferred-by-owner to backlog (<code>knowledge/issues.md</code>, state log row 53) — deferred, not waived</li><li>Owner: Agent-Zero</li><li>Created: 2026-08-24</li><li>Human authority: Agent-Zero</li><li>Agent lane(s): kimi-k3 (governor), rick (Ubuntu OS plane), john/Esme (Ollama plane)</li></ul>
 <h2 id="intent">Intent</h2>
 <p>Deploy a validated <code>qwen3.8:27b</code> (GGUF, non-MLX) on hxs-1 via Ollama, optimized for grounded RAG generation, schema-constrained agent tool calling, and repository-scale coding; maximum measured task quality with latency secondary; always-on boot recovery; deterministic, evidence-gated operations. Full plan: <code>pilots/PILOT-HX1-OLLAMA-QWEN27B-001/plan.md</code>.</p>
 <h2 id="scope-and-target">Scope and target</h2>
@@ -47,7 +47,7 @@ a{color:#6fa8ff} .doc-meta,footer{color:#999}}
 <h2 id="notes-and-links">Notes and links</h2>
 <ul><li>KDDs: KDD-0001, KDD-0002, KDD-0003, KDD-0004</li><li>Amendments: A01 adopted 2026-08-25 (<code>pilots/PILOT-HX1-OLLAMA-QWEN27B-001/amendment-A01-qwen38-baseline.md</code>) — Phase A native-sampling alias (plan §6.5 superseded), reasoning-control capability tests (<code>reasoning_effort</code>, <code>preserve_thinking</code> — probe, never assume parity), vision out of baseline; conformance re-run queued as M5b</li><li>2026-08-25 owner amendment — documentation governance: Carol (<code>agents/carol/</code>) catalogs all supplied/produced documents; material handoffs require Carol's catalog receipt; see AGENTS.md "Documentation governance and knowledge stewardship"</li><li>Plan: <code>pilots/PILOT-HX1-OLLAMA-QWEN27B-001/plan.md</code></li><li>Profiles: <code>agents/rick/profile.md</code>, <code>agents/john/profile.md</code>, <code>agents/kimi-k3/profile.md</code></li></ul>
 </main>
-<footer>Source of truth: <code>goals/2026-08-24-hx1-ollama-qwen38-27b.md</code> (sha256 <code>87187b16b35e5820a4ab87cdf67ebfc0a46fba1ffb7aacf597ced4001b6c9ae1</code>) · rendered 2026-08-26T00:45Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+<footer>Source of truth: <code>goals/2026-08-24-hx1-ollama-qwen38-27b.md</code> (sha256 <code>8bf0c1f4b05a0180dd750a4a2d1d627944390a125225756a15f2f37bbfbfb061</code>) · rendered 2026-08-26T01:56Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
 
 </body>
 </html>

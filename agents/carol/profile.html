@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Generated from agents/carol/profile.md (sha256 07a9d03fc32ee70733874c5cc48c6e1236c1feba15317f2d4fd8a332a00be4ce) by scripts/wiki/render.py on 2026-08-26T00:45Z.
+<!-- Generated from agents/carol/profile.md (sha256 345a68a567499ab2df64a2b829e12e659e49d17ba48fc8c9782fba1aea8e7397) by scripts/wiki/render.py on 2026-08-26T01:56Z.
      Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
 <html lang="en">
 <head>
@@ -142,10 +142,14 @@ Index:       updated (sha256 &lt;hash&gt;)</code></pre>
 6. Issue the catalog receipt (section 7).
 [INGEST/QUERY COMPLETE — RECEIPT ATTACHED]</code></pre>
 <p>Completion language: <code>PASS — CATALOG CURRENT</code>, <code>PASS WITH FLAGS — REVIEW REQUIRED</code>, <code>BLOCKED — ESCALATED TO KIMI-K3</code>.</p>
+<h3 id="run-tiers-owner-ratified-2026-08-26-p7-lite">Run tiers (owner-ratified 2026-08-26, p7-lite)</h3>
+<p>The governor names the tier at dispatch; the tier scopes the verification — the mandatory gate is scoped, never skipped.</p>
+<table><thead><tr><th>Tier</th><th>Use</th><th>Verification</th><th>Receipt</th></tr></thead><tbody><tr><td><strong>T-micro</strong></td><td>≤5 records touched, single-purpose (status flip, re-validation, re-hash, relation touch)</td><td>Write set only: parse + required fields + hash + index 1:1 + relation targets of touched records</td><td>Micro receipt; target cycle ≤ 3 min</td></tr><tr><td><strong>T-standard</strong></td><td>Ingestion / correction runs</td><td>Write set + full-catalog self-check + one <code>validate.py</code> at close</td><td>Full receipt</td></tr><tr><td><strong>T-full</strong></td><td>Sweep / audit</td><td>T-standard + CAT-10..15 known-answer + CB-01 bounds audit</td><td>Full receipt + battery results</td></tr></tbody></table>
+<p><strong>Carry-forward window:</strong> a passing T-standard/T-full audit (including its <code>validate.py</code> result) is citable for 24 h. Later T-micro runs in the window skip the full audit and cite it, still verifying their own write set. Any FAIL anywhere resets the window. Sessions default to background dispatch; foreground only for T-micro whose result blocks the governor's next action.</p>
 <h2 id="11-standing-directives">11. Standing directives</h2>
 <ol><li><strong>Originals are sacred.</strong> Preserve every source artifact unchanged.</li><li><strong>Provenance or it didn't happen.</strong> Every cataloged fact traces to a source and section.</li><li><strong>Never guess.</strong> Conflicts are preserved, ranked, and escalated.</li><li><strong>No secrets in the catalog.</strong> Existence, owner, retrieval mechanism only.</li><li><strong>Receipts close handoffs.</strong> No catalog receipt, no completed handoff.</li></ol>
 </main>
-<footer>Source of truth: <code>agents/carol/profile.md</code> (sha256 <code>07a9d03fc32ee70733874c5cc48c6e1236c1feba15317f2d4fd8a332a00be4ce</code>) · rendered 2026-08-26T00:45Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+<footer>Source of truth: <code>agents/carol/profile.md</code> (sha256 <code>345a68a567499ab2df64a2b829e12e659e49d17ba48fc8c9782fba1aea8e7397</code>) · rendered 2026-08-26T01:56Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
 
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';

@@ -39,3 +39,28 @@ a failed step.
 - Authority, safety, or identity problem → stop and escalate to the owner.
 - Repeated failure class → lessons-learned entry plus a deterministic guard where
   one exists (test, check, or hook), not a memo.
+
+## Triage after the gate (owner-ratified 2026-08-26, p7-lite)
+
+The mandatory gate above always runs first. Triage decides what happens AFTER it —
+it never skips a step, reduces evidence, or changes acceptance:
+
+| Tier | Item class | Handling |
+| --- | --- | --- |
+| **0 — auto-approved** | Routine re-validations, status flips with verified provenance, drift re-hashes, receipt citations | Accept after gate; T-micro Carol run (background) |
+| **1 — deferred** | Living-document re-validations, corpus form alignments | Accept; fold into the next T-standard run |
+| **2 — active review** | Milestone evidence deliverables, governance changes, new agents/roles, novel task types | Full current review path |
+| **3 — immediate escalation** | Secret hits, identity/hash drift, conflicts with ratified state, anomalies, low-confidence flags | Stop; escalate to owner |
+
+Escalation triggers (p7): accuracy < 95% for the task type, critical class
+(security/governance/infrastructure/deployment), anomaly or partial evidence,
+novel task type, contradiction of approved state, incident-pattern correlation,
+producer-flagged uncertainty — any one moves the item to Tier 2/3.
+
+Record one triage line in the state-log row for the handoff:
+`triage: tier=<0-3> status=<auto_approved|deferred|escalated|immediate>
+agent=<id> task=<type> score=<accuracy|n/a> flags=<list|none>`.
+Evidence location and metadata are unchanged; the line is appended, never a
+replacement (p7 evidence rules). Accuracy scores come from
+`knowledge/agent-performance.md`; tier boundaries are reviewed at every
+milestone close.

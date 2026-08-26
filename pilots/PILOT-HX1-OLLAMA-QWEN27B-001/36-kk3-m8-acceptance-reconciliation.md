@@ -92,11 +92,11 @@ receipt-closed, and reproducible (state-log rows 1–62; catalog 180 records).
 
 ## 9. Owner decision
 
-- [ ] **ACCEPT** — pilot closed as PASS (SC-05 deferred-by-owner recorded).
+- [x] **ACCEPT** — pilot closed as PASS (SC-05 deferred-by-owner recorded).
 - [ ] **ACCEPT WITH CONDITIONS** — conditions: ______________________
 - [ ] **REJECT** — grounds: ______________________
 
-Signed: ____________________  Date: ____________
+Signed: **Jarvis Richardson** (verbatim owner verdict: "I jarvis Richardson Accept M8")  Date: **2026-08-26**
 
 ## 10. Provenance
 
