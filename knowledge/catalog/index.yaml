@@ -4,7 +4,7 @@
 index:
   schema_version: 1
   initialized: 2026-08-25 (Carol instantiation, owner amendment)
-  updated: "2026-08-26T0215Z (T-micro pilot-2 — 2 records, tier-scoped per the new §10 'T-micro session scope' paragraph: DOC-agent-carol-profile (re-hash 345a68a5… -> 3619b16e…: governor's §10 F-TM1-1 correction — 'T-micro session scope' paragraph verified present; notes.tmicro_scope_correction added; validated_at 2026-08-26T02:14:15Z) / DOC-knowledge-agent-performance (re-hash 80a01e3f… -> 95528dc6…: 2026-08-26 pilot-1 review-log row verified present — 8m57s cycle, cause + fix; notes.pilot1_outcome added; validated_at 2026-08-26T02:14:15Z)); count 183 (unchanged); carry-forward: full audit receipt 2026-08-26T0137Z (self-check 182/182 + validator PASS, within 24 h — not re-run); receipt receipts/2026-08-26T0215Z-carol-tmicro-pilot2.md)"
+  updated: "2026-08-26T0245Z (T-micro pilot-3 — 2 records, tier-scoped per §10 'T-micro session scope': DOC-agent-carol-profile (re-hash 3619b16e… -> 09befadd…: §10 T-micro receipt cell now 'target cycle ≤ 5 min measured end-to-end (owner-ratified 2026-08-26; ≤3 min content-work aspiration)' — verified present; notes.tmicro_target_ratification added; validated_at 2026-08-26T02:44:37Z) / DOC-knowledge-agent-performance (re-hash 95528dc6… -> f5966ea5…: 2026-08-26 governance review-log row verified present — Owner ratified the ≤5 min T-micro target, state-log row 69; notes.tmicro_target_row added; validated_at 2026-08-26T02:44:37Z)); count 183 (unchanged); carry-forward: full audit receipt 2026-08-26T0137Z (self-check 182/182 + validator PASS, within 24 h — not re-run); receipt receipts/2026-08-26T0245Z-carol-tmicro-pilot3.md)"
   document_count: 183
   documents:
   - id: DOC-a01-origin-codex-20260824-2125

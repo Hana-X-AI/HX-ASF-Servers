@@ -43,4 +43,5 @@ precision.
 | 2026-08-26 | 1 (pilot-1: 3-record T-micro) | 0 | 0 | T-micro cycle 8m57s > 3 min target — cause: full-contract startup reads; fix: profile §10 tier-scoped startup + pre-cited briefs (pilot-2 measures) | rows 65–67 |
 | 2026-08-26 | 1 (pilot-2: 2-record T-micro) | 0 | 0 | Cycle 4m18s (−52%) — still >3 min. Remaining floor: host-mandated AGENTS.md read (system reminder, unavoidable) + post-edit re-parse. Plan rule: stop tuning; boundary recommendation to owner: re-target ≤5 min measured end-to-end, keep ≤3 min as content-work aspiration | rows 67–68 |
 | 2026-08-26 | — (governance) | — | — | **Owner ratified the ≤5 min T-micro target** (measured end-to-end; ≤3 min content-work aspiration); profile §10 updated. Pilot series closed with pilot-2's 4m18s inside the new target | row 69 |
+| 2026-08-26 | 1 (pilot-3: 2-record T-micro, within-target proof) | 0 | 0 | **3m57s end-to-end — INSIDE the ratified ≤5 min target** (content work ≈3 min, at the aspiration; remainder = host-mandated AGENTS.md read + receipt/index). Series closed: 8m57s → 4m18s → 3m57s, measured three times | row 70 |
 | (next review after 5 triaged items) | | | | | |

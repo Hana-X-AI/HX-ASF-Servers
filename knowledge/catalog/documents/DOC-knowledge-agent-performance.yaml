@@ -38,11 +38,12 @@ document:
       target: "DOC-goal-hx1-ollama-qwen38-27b"
       note: "seed source: ledger rows derive from this goal's pilot evidence (state log rows 7-64, milestones M1-M8), closed COMPLETE — PASS 2026-08-26 (M8 owner ACCEPT)"
   validation:
-    validated_at: "2026-08-26T02:14:15Z"
+    validated_at: "2026-08-26T02:44:37Z"
     freshness: "current"
     review_due: "first scheduled review after 5 triaged items (p7-lite pilot checkpoint); re-hash this record on every ledger update"
-  sha256: "95528dc6e6dbd86c6c5d02a47f45bd9157fc8e79a1e78d9870b0b5feb2dc36e3"
+  sha256: "f5966ea5ad6d997863e9eab7f7bd9d641a542e147fb13d01331921f152e0b2d5"
   canonical_location: "/home/hxsa/opt/HX-ASF-Servers/knowledge/agent-performance.md"
 notes:
   cataloging_context: "Type registry per schema judgment: a governor-maintained living register of agent/task accuracy scores consulted at triage time — nearest enum fit ('evidence' rejected: the ledger is derived maintained state, not one run's as-produced evidence; 'other' available but less specific). Authority ratified-governance: owner-ratified 2026-08-26 under the governor's Option A disposition. Cataloged in T-micro pilot run 1 (receipt 2026-08-26T0202Z-carol-tmicro-pilot1.md); first ingestion under the ratified run-tier rules (profile §10)."
   pilot1_outcome: "T-micro pilot-2 re-validation (2026-08-26T02:14Z): drift traced to the governor's review-log update — the 2026-08-26 pilot-1 row now present in the Review log (verified: items since last = 1 (pilot-1: 3-record T-micro); false neg 0; false pos 0; boundary change: T-micro cycle 8m57s > 3 min target — cause: full-contract startup reads; fix: profile §10 tier-scoped startup + pre-cited briefs (pilot-2 measures); state-log ref rows 65-67). This cause+fix is finding F-TM1-1 — the code is cited in profile §10 ('T-micro session scope' paragraph header); the ledger row carries the substance without the F-TM1-1 label (noted, not blocking). Legitimate governor edit. Re-hashed 80a01e3f… -> 95528dc6…."
+  tmicro_target_row: "T-micro pilot-3 re-validation (2026-08-26T02:44Z): drift traced to the governor's Review-log update — the 2026-08-26 governance row now present (verified: items since last '— (governance)'; boundary change '**Owner ratified the ≤5 min T-micro target** (measured end-to-end; ≤3 min content-work aspiration); profile §10 updated. Pilot series closed with pilot-2's 4m18s inside the new target'; state-log ref row 69). This row ratifies the ≤5 min re-target pilot-2 recommended; matching profile §10 receipt-cell text verified in DOC-agent-carol-profile this same run. Legitimate governor edit. Re-hashed 95528dc6… -> f5966ea5…. Carry-forward: M8-verdict full audit (receipt 2026-08-26T0137Z, self-check 182/182 + validator PASS, within 24 h) cited, not re-run. Declared_purpose re-verified — unchanged (update rules already cover Review-log appends)."
