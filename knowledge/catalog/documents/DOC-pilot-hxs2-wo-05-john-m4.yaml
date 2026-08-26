@@ -1,0 +1,63 @@
+document:
+  id: "DOC-pilot-hxs2-wo-05-john-m4"
+  title: "05-work-order-john-m4.yaml — WO-HXS2-JOHN-M4-001 (hxs-2 M4: Ollama install + exact-tag pull + identity freeze + D5-budget systemd)"
+  type: "work-order"
+  declared_purpose: "Delegated contract commissioning john / Esme (session john-m4-20260826-01) for hxs-2 milestone M4 — Ollama install + exact-tag pull + identity freeze + systemd with D5 budgets: install and pin Ollama on hxs-2; pull the exact approved tag mannix/qwen3.6-27b-a3b-coderx:vision-Q4_K_M (owner D3); capture the full identity evidence per the knowledge reference §12.2; create the working alias hx-qwen3.6-coderx bound to the frozen digest; deploy ollama.service + ollama-preload.service with D5-conformant budgets from day one (TimeoutStartSec=600, script worst-case ≤538 s — the 35-esme pattern); OLLAMA_HOST=0.0.0.0 with loopback preserved, OLLAMA_NO_CLOUD=1, NUM_PARALLEL=1, MAX_LOADED_MODELS=1; native-sampling baseline — NO sampling parameters added to any Modelfile, baked tag parameters preserved (draft_num_predict 3, baked num_ctx 32768 — the M6 ladder adjusts context). Owner authorizations: Gate 0 PASSED 2026-08-26 (owner 'proceed', state log row 7); endpoint posture per D2 + the no-host-firewall rule (bind 0.0.0.0 from install; the /24 itself is the boundary; NO ufw); NOT authorized: any other model, sampling overrides, context changes, reboots, ufw, any other host change. Boundaries: hxs-5 session, SSH hxsa@192.168.50.201, askpass helper reads the credential-record row at execution time (no extracted copy, helper deleted at task end), sudo -n only, host key pinned per rick M1 F-05 (strict check); identity guard — the pulled artifact's full local digest is the frozen identity (reference prefix ca661423d6b5 a cross-check only; ambiguity = STOP via governor confirmation); versioned change (pre/post sha256 + diffs); one bounded correction per failed correctable gate; stop conditions (wrong artifact family, digest ambiguity, GPU not visible, service failure after bounded retry, any Xid). Rollback stops at units/config by default (model-store removal separately approved). Deliverable: 07-esme-m4-install.md (completed PASS — 17/17; cataloged this run). Second Brain evaluation in-file (hxs-1 M4 install pattern, second validated use; disposition implemented)."
+  source:
+    author: "Kimi-K3 (governor)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/05-work-order-john-m4.yaml"
+    section: "§whole-document"
+    ingestion_date: "2026-08-26T05:35:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: [hxs-2, hxs-5]
+    fqdns: []
+    services: [ollama.service, ollama-preload.service]
+    agents: [john, kimi-k3]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+    models: [mannix/qwen3.6-27b-a3b-coderx:vision-Q4_K_M]
+  version: ""
+  status: "adopted"
+  authority_level: "delegated-contract"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "kimi-k3"
+      note: "M4 commissioned at Gate 0 (hxs-2 state log row 7, 2026-08-26T04:08Z: owner 'proceed'; kernel -30 accepted; hybrid-sleep alignment queued to rick's next hxs-2 session); WO/CP hashes recorded in the log row (55993f64…/9e8346b1… — match this ingestion)"
+    - predicate: "references"
+      target: "DOC-pilot-hxs2-cp-06-john-m4"
+      note: "paired context packet (session john-m4-20260826-01)"
+    - predicate: "depends_on"
+      target: "DOC-goal-hxs2-qwen36-coderx-backend"
+      note: "parent goal GOAL-HXS2-CODERX-001; owner decisions D1–D8 are the milestone's authority (D2 endpoint scope + no firewall, D3 exact tag, D5 64K after the M6 ladder)"
+    - predicate: "governs"
+      target: "DOC-pilot-hxs2-ev-07-esme-m4-install"
+      note: "paired deliverable (PASS — TASK COMPLETE, 17/17); handoff closes when this run's receipt lands in the hxs-2 state log (row 9: M4 COMPLETE, handoff OPEN pending Carol receipt)"
+    - predicate: "references"
+      target: "DOC-hxs2-coderx-knowledge-reference"
+      note: "controlling source §12.2 (mandatory identity evidence), §3 (identity), §5 (vision artifact), §18 (risks CX-R01..R13)"
+    - predicate: "references"
+      target: "DOC-blueprint-llm-server"
+      note: "§2/§3/§5 planes govern the install (OS, service + preload contract, exposure); blueprint-from-day-one is the milestone's stated payoff (Second Brain evaluation)"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-ev-35-esme-preload-budget"
+      note: "the 35-esme D5 budget contract (208 s probes + 300 s single-attempt load + 30 s assertion = 538 s < 600 s ≤ 900 s) applied from day one"
+    - predicate: "depends_on"
+      target: "DOC-protected-ssh-info-hxs1"
+      note: "ratified askpass execution path (hxs-5 → hxs-2); credential read at execution, never printed/logged/stored, helper deleted at task end"
+  validation:
+    validated_at: "2026-08-26T05:35:00Z"
+    freshness: "current"
+    review_due: "not applicable — discharged contract (milestone complete, deliverable 07 PASS)"
+  sha256: "55993f6439312e5a5da945ad80006d40da1441f6872b460b4559b343d1f75b11"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/05-work-order-john-m4.yaml"
+notes:
+  hash_crosscheck: "sha256 matches the value the governor recorded in the hxs-2 state log row 7 at commissioning (55993f6439312e5a5da945ad80006d40da1441f6872b460b4559b343d1f75b11) — the cataloged file is the commissioned artifact, unmodified."
+  convention: "Typed/statused/authorized per the WO/CP convention (DOC-pilot-hxs2-wo-02-rick-m1): type work-order, status adopted, authority delegated-contract, owner Kimi-K3."

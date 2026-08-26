@@ -1,0 +1,76 @@
+document:
+  id: "DOC-pilot-hxs2-wo-14-john-m5"
+  title: "14-work-order-john-m5.yaml — WO-HXS2-JOHN-M5-001 (hxs-2 M5: coding >=90% + evaluator review, tool protocol 100% denied / >=95% conformance, vision probes evidence-only; DISCHARGED — M5 COMPLETE PASS, state log row 31, 2026-08-26T19:55Z)"
+  type: "work-order"
+  declared_purpose: "Delegated contract commissioning john / Esme (session john-m5-hxs2-20260826-01) for hxs-2 milestone M5 — functional validation: execute the owner-ratified M5 quality suites against Coder-X's frozen operating profile (hx-qwen3.6-coderx-64k, digest ec9ebe08a824…, ctx 65536, resident Forever) and deliver pass/fail evidence per suite so the M8 sign-off gate has quality grounds (a suite failure is reported, never tuned away). Owner authorizations (owner 2026-08-26, thresholds RATIFIED): coding >=90% passing + mandatory evaluator review (specialist bar; Qwen-X generalist scored 90-100% on the same versioned set — read every solution in full, concur or dissent per task, no hardcoded-answer gaming); tool protocol 100% forbidden/malformed denied AND >=95% schema conformance on valid calls (duplicate-mutation executed exactly once; loop terminates); vision probes evidence-only, NO pass bar (bounded <=6 probes, deterministic synthetic images on-host, owner D8-vision deferral stands); Phase A native sampling, thinking ON, no overrides, no num_predict caps — the acceptance configuration, same as hxs-1 M5/M5b. NOT authorized: baseline changes (drop-in, Modelfile, aliases, units, model store), sampling changes, reboots, recovery drills (M8 scope), endpoint/firewall changes, other models. Boundaries: hxs-5 session, SSH hxsa@192.168.50.201, askpass helper READS the credential from the HX Fleet SSH Access Guide credential-record row at execution time (no extracted copy, helper deleted at task end), hostname + peer IP verified first, sudo -n only, host key pinned (F-05); versioned fixtures only (pilots/PILOT-HX1-OLLAMA-QWEN27B-001/fixtures/ — coding_suite.py, tool_suite.py, fixtures_corpus.py; alias-parameterized with hx-qwen3.6-coderx-64k passed explicitly; copied to /tmp on hxs-2, run on-host against 127.0.0.1:11434; sha256sums.txt verified before use); thinking content never persisted in evidence (counts only), sanitization per profile; one bounded correction per failed correctable case. Rollback: fails closed — evidence preserved, resident model untouched (/api/ps identity guard at close). Deliverable: 16-esme-m5-validation.md — AC-mapped suite report with ratified pass rules, coding per-task table + evaluator-review statement, tool-protocol audit totals, vision-probe evidence (labeled no-bar), API readiness re-proof, final /api/ps identity guard, sanitized sequential command log, Task May Proceed receipt. Second Brain evaluation: opportunity identified — quality-validation pattern (second backend through the same threshold discipline; uniform acceptance across the fleet); disposition implemented — suite results become Coder-X's quality record at handoff, citable by M8."
+  inferred_value: "INFERENCE: this is the quality gate that converts Coder-X from a capacity-proven profile into an M8-signable backend — the owner-ratified specialist bar (coding >=90% on the versioned deterministic 10-task v1.0.0 set with human-style evaluator review) plus the zero-forbidden-execution tool-protocol audit give the M8 gate measured grounds, and the evidence-only vision probes bank the D8 deferral decision material without blocking the milestone."
+  source:
+    author: "Kimi-K3 (governor)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/14-work-order-john-m5.yaml"
+    section: "§whole-document"
+    ingestion_date: "2026-08-26T19:18:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: [hxs-2, hxs-5]
+    fqdns: []
+    services: [ollama.service]
+    agents: [john, kimi-k3]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+    models: [mannix/qwen3.6-27b-a3b-coderx, hx-qwen3.6-coderx-64k]
+  version: ""
+  status: "adopted"
+  authority_level: "delegated-contract"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "kimi-k3"
+      note: "M5 commissioned at the owner threshold ratification (hxs-2 state log row 29, 2026-08-26T19:08Z — owner 'ratified' after the threshold proposal; session john-m5-hxs2-20260826-01 in flight at cataloging)"
+    - predicate: "governs"
+      target: "DOC-pilot-hxs2-ev-16-esme-m5-validation"
+      note: "paired deliverable (M5 COMPLETE PASS, hxs-2 state log row 31, 2026-08-26T19:55Z): AC-009 API readiness PASS; AC-013 coding 10/10 = 100% vs the ratified >=90% specialist bar, evaluator review concur 10/10; AC-012 tool protocol 0 forbidden/malformed executed of 51 events + 100% schema conformance of 29 decisions; vision probes evidence-only for the D8 deferral; F-M5-1 residency eviction explained + restored with a monitor recommendation to M8/owner — the governs edge deferred at the in-execution cataloging is added now per the M7-pair convention"
+    - predicate: "references"
+      target: "DOC-pilot-hxs2-cp-15-john-m5"
+      note: "paired context packet (session john-m5-hxs2-20260826-01)"
+    - predicate: "depends_on"
+      target: "DOC-goal-hxs2-qwen36-coderx-backend"
+      note: "parent goal GOAL-HXS2-CODERX-001 (goal_file goals/2026-08-26-hxs2-qwen36-coderx-backend.md); owner decisions are the milestone's authority (D8-vision deferral stands — vision probes evidence-only, no bar)"
+    - predicate: "references"
+      target: "DOC-pilot-hxs2-state-log"
+      note: "parent pilot state-log record — row 29 (2026-08-26T19:08Z) records the M5 threshold ratification + commissioning of this WO/CP pair"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-ev-16-esme-m5-validation"
+      note: "hxs-1 M5 precedent (controlling source 16-esme-m5-validation.md): AC-012/AC-013 execution pattern, D8 application"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-ev-19-esme-m5b-conformance"
+      note: "hxs-1 M5b evaluator-review standard (controlling source 19-esme-m5b-amendment-conformance.md)"
+    - predicate: "references"
+      target: "DOC-pilot-hxs2-ev-07-esme-m4-install"
+      note: "hxs-2 frozen identity basis (controlling source 07-esme-m4-install.md): frozen artifact mannix/qwen3.6-27b-a3b-coderx:vision-Q4_K_M digest ca661423d6b5…1df, CLIP 446.57M F16 projector (the vision path under probe)"
+    - predicate: "references"
+      target: "DOC-pilot-hxs2-ev-08-esme-m6-ladder-profiles"
+      note: "hxs-2 operating profile set (controlling source 08-esme-m6-ladder-profiles.md): suites run ONLY on hx-qwen3.6-coderx-64k (ec9ebe08a824…, ctx 65536 effective, Forever); sibling aliases 1d297a6a…/-128k 86a55171… in-store, not under test"
+    - predicate: "references"
+      target: "DOC-pilot-hxs2-ev-08-esme-m6-escalation-xid31"
+      note: "F-M6-0 Xid-31 single-event defect class ARMED for this run: ANY Xid during the run = immediate stop + escalate; journal checks at close, zero NEW Xid expected"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-fixtures-manifest"
+      note: "versioned fixtures integrity (controlling source): coding_suite.py (deterministic 10-task v1.0.0 set, same tasks/signatures/assertions as hxs-1 M5), tool_suite.py, fixtures_corpus.py — verify sha256sums.txt before use; test_fixtures.py regression suite if fixture behavior is in doubt"
+    - predicate: "depends_on"
+      target: "DOC-protected-ssh-info-hxs1"
+      note: "ratified askpass execution path (hxs-5 → hxs-2); credential read at execution, never printed/logged/stored, helper deleted at task end"
+  validation:
+    validated_at: "2026-08-26T20:08:00Z"
+    freshness: "current"
+    review_due: "not applicable — discharged contract (M5 COMPLETE PASS, hxs-2 state log row 31, 2026-08-26T19:55Z; the M5 handoff CLOSES when the governor cites this run's catalog receipt in the state log — profile §7)"
+  sha256: "03dd3d4fb41925fd5e343a060ba1e26626b46127bd43e47110ea66b11199bb84"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/14-work-order-john-m5.yaml"
+notes:
+  status_convention: "IN-EXECUTION WO/CP cataloging per the M7-pair convention (first established at receipt 2026-08-26T0810Z-carol-batch11-hygiene.md; T-micro receipt class 2026-08-26T0637Z for the commissioned-not-complete lineage): status active for a commissioned-not-complete milestone (commissioned 2026-08-26T19:08Z, hxs-2 state log row 29; session john-m5-hxs2-20260826-01 in flight at cataloging). FLIPPED 2026-08-26T20:08Z (this run, M5-deliverable wave): active -> adopted — the deliverable 16-esme-m5-validation.md landed PASS (governor-verified, state log row 31) and is cataloged as DOC-pilot-hxs2-ev-16-esme-m5-validation; the deferred governs edge is added above and the discharged-contract convention now applies."
+  hash_crosscheck: "sha256 03dd3d4fb41925fd5e343a060ba1e26626b46127bd43e47110ea66b11199bb84 computed at ingestion (2026-08-26T19:18Z); hxs-2 state log row 29 records no WO/CP hashes for this milestone (unlike the M4 row 7 pattern) — the catalog hash is the first recorded value."

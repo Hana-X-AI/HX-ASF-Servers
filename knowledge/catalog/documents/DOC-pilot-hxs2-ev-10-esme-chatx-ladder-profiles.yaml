@@ -1,0 +1,63 @@
+document:
+  id: "DOC-pilot-hxs2-ev-10-esme-chatx-ladder-profiles"
+  title: "10-esme-chatx-ladder-profiles.md — Esme (john) Chat-X pin 0.32.9 → 0.32.15 + GPU-isolation relaxation (O2) + three-rung ladder + profile freeze (PASS — TASK COMPLETE, A-1 disclosed)"
+  type: "evidence"
+  declared_purpose: "Chat-X L1 evidence (report ESME-CHATX-LADDER-001 rev 2, session john-chatx-20260826-01, two windows: 07:16–07:45Z pin + F-CHATX-L1 blocker; 09:15–09:41Z owner-O2 resumption). PIN (window 1, all tests PASS): Ollama 0.32.9 → 0.32.15 via the reviewed installer (sha256 byte-identical to the TKV baseline; binary == server; service active+enabled NRestarts=0; main unit installer-rewritten == the hxs-2/hxs-3 unit, diff = PATH line only; drop-in byte-identical at pin time; model + store intact (total blobs 4, removed 0); loopback-only listener preserved; LAN refusal re-proven; Xid=0; rollback path recorded, never needed). F-CHATX-L1 (window-1 blocker, RESOLVED by owner decision O2): the commissioned hx-commissioning.conf ('GPU isolation is MANDATORY', since 2026-08-14/23) restricted Ollama to the RTX 5060 8 GB only — 7.5 GiB usable; at ctx 65536 the model loaded 28%/72% CPU/GPU (the governor's row-76 'RESIDENT' wording corrected openly — size_vram was read as residency); no rung could meet the 100%-VRAM proof under the isolation → escalated; owner chose O2 (hxs-2 state log row 21). O2 RELAXATION (window 2, COMPLETE): versioned one-line amendment CUDA_VISIBLE_DEVICES=both GPU UUIDs (sha256 f78de229… → 9d1d024c…; every other setting preserved — Vulkan-disabled lines, OLLAMA_CONTEXT_LENGTH=65536, NUM_PARALLEL=1, MAX_LOADED_MODELS=1; drop-in delta forensics attributed the f78de229 intermediate state to the ratified web-search session before any mutation); usable VRAM 7.5 → 23.0 GiB (15.5 + 7.5, both GPUs; journal 'vram-based default context total_vram=23.0 GiB'); usability proof: bare-tag 65536 load size==size_vram 8,044,454,869 B 100% GPU (was 28%/72%). LADDER (COMPLETE): rung Modelfiles FROM the frozen artifact with num_ctx the ONLY changed parameter (D-CX-1 disclosed: the first @sha256 FROM → 400 invalid model name — plain-tag FROM + triple identity proof: pre-create digest assertion, post-create manifest-layer equality, deterministic rebuild); all three rungs 100% VRAM — 32k (7,373,575,942 B), 64k (7,725,656,308 B), 128k (10,879,867,286 B); KV f16 EXACTLY linear 32,768 B/token (journal llama_kv_cache direct, two deltas; 8 KV layers; supersedes the ~33,554 window-1 estimate); needles — 64k 62,125 tok 94.8% stop+found, 128k 124,161 tok 94.7% stop+found, 32k attenuated (A-1); known-answer spot checks FLAT across rungs (391/13, stop); journal 0 Xid / 0 OOM / 0 ERROR all window. FREEZE (COMPLETE): aliases hx-qwen3.5-9b-32k 3ef4f2846872…, -64k 5936a390c6c2… (DEFAULT usage reference — matches the commissioned 65536 default), -128k 09faff0fd4d3… — deterministic-rebuild EQUAL ×3 + manifest-layer equality vs base (weights+license shared, params-blob-only delta); no ollama rm anywhere (store intact); no config repointed (preload/persistence/endpoint remain PARKED — none implemented). Final state: 0.32.15 active+enabled, loopback-only, both GPUs usable, on-demand posture (nothing resident), Xid=0, no reboot. Completion: PASS — TASK COMPLETE with one recorded rung attenuation (A-1, disclosed, no test re-rolled)."
+  source:
+    author: "john / Esme (session john-chatx-20260826-01)"
+    provided_by: "john via Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/10-esme-chatx-ladder-profiles.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-26T10:00:00Z"
+  owner: "john"
+  applies_to:
+    hosts: [hxs-4, hxs-5]
+    fqdns: []
+    services: [ollama.service]
+    agents: [john]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot, fleet]
+    models: [qwen3.5:9b-q4_K_M, hx-qwen3.5-9b-32k, hx-qwen3.5-9b-64k, hx-qwen3.5-9b-128k]
+  version: ""
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "evidences"
+      target: "DOC-pilot-hxs2-wo-09-john-chatx"
+      note: "WO-HXS4-JOHN-L1-001 DISCHARGED — pin suite + O2 amendment + all residency proofs + KV linearity + freeze PASS, with the 32k ~95% needle reported NOT MET (attenuation A-1, disclosed, all four attempts preserved); Chat-X COMPLETE, governor live-verified (hxs-2 state log row 22, 2026-08-26T09:50Z; handoff OPEN until this run's receipt is cited)"
+    - predicate: "evidences"
+      target: "DOC-pilot-hxs2-cp-10-john-chatx"
+      note: "the packet's evidence contract satisfied: pin pre/post versions + service + list + smoke; per-rung /api/ps + KV derivation + needle JSON + 2 flat spot checks + journal excerpts; alias digests with manifest equality; final state summary"
+    - predicate: "evidences"
+      target: "DOC-goal-hxs2-qwen36-coderx-backend"
+      note: "the owner ladders+profiles order discharged on the fourth host — the blueprint's four-host profile-uniformity claim now rests on four measured ladders (Qwen-X, Coder-X, Meta-X, Chat-X)"
+    - predicate: "produced_by"
+      target: "john"
+      note: "under DOC-pilot-hxs2-wo-09-john-chatx; executed from hxs-5 via the ratified askpass path in both windows (helper rebuilt for window 2, deleted at task end, verified)"
+    - predicate: "configures"
+      target: "hxs-4 ollama.service + ollama.service.d/hx-commissioning.conf"
+      note: "pin 0.32.15 (main unit installer-rewritten, PATH line only) + the O2 one-line amendment (CUDA_VISIBLE_DEVICES both GPU UUIDs; sha256 f78de229… → 9d1d024c…); versioned edits with provenance (owner decision O2, row 21); rollback inverses recorded, none needed"
+    - predicate: "references"
+      target: "DOC-pilot-hxs2-ev-13-esme-websearch-enable"
+      note: "drop-in hash-chain attribution: commissioning 9d90a991… → web-search NO_CLOUD removal f78de229… (this evidence's §7) → O2 amendment 9d1d024c… — the window-2 resume verified and cited the ratified web-search edit before mutating"
+    - predicate: "risks"
+      target: "A-1 (Chat-X 32k-profile qualification fact — thinking-model headroom)"
+      note: "the 32k rung's needle at ~95% did not complete (done_reason=length at 95.3% and 91.5% — reasoning exhausts the remaining context at ≲2,800-token generation budget); needle proven stop+found at 89.5% and 86.3%; a measured model-behavior limit at small context, NOT a capacity/KV/residency failure (all passed) and not a work-order stop condition; 64k/128k met ~95% cleanly (94.8%/94.7%) — carried to every future deep-context consumer of hx-qwen3.5-9b-32k and to the blueprint §8 alias-table note"
+  validation:
+    validated_at: "2026-08-26T10:00:00Z"
+    freshness: "current"
+    review_due: "on any Chat-X posture change (the parked owner decisions) or re-qualification; A-1 carried to every deep-context consumer of the 32k profile"
+  sha256: "e80f92b190239be26a4b6b8ea157b90cef004dbc1487899dc573e25da1143314"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/10-esme-chatx-ladder-profiles.md"
+notes:
+  a1_attenuation: "A-1 (disclosed in full; no test re-rolled to force a pass): four 32k needle attempts preserved — 95.3% (31,237 tok) done_reason=length, 91.5% (29,989 tok) done_reason=length, 86.3% (28,273 tok) stop+found, 89.5% (29,313 tok) stop+found. Interpretation (INFERENCE from these FACTs in the source): this thinking 9B's reasoning on the needle probe grows non-convergently when the remaining generation budget is ≲2,800 tokens at ≥91% depth; at ≤89.5% it completes with stop and the needle found. Retrieval at depth works (two passes); the work-order's '~95% depth, done_reason=stop' target is NOT MET at the 32k rung — a Chat-X-specific qualification fact for any future deep-context consumer of the 32k profile (the blueprint §8 alias-table note for hx-qwen3.5-9b-32k carries it: 'needle-proven to 89.5% — thinking-model headroom, not ~95%')."
+  findings_register: "F-CHATX-L1 (RECORD, resolved): window-1 blocker — the packet's 24.5 GB premise vs the commissioned 7.5 GiB isolation; resolved by owner decision O2 (row 21). D-CX-1 (bounded correction 1 of 1, disclosed): @sha256 FROM rejected by 0.32.15 create (400 invalid model name; consistent with F-M7-1 on hxs-3) → plain-tag FROM + triple identity proof. F-M6-7 class (RECORD): /api/ps absolute size varies with runner placement/flags on this host — the journal llama_kv_cache lines, not /api/ps size deltas, are the KV ruler. Carried: F-E2-class GPU-discovery watchdog WARN at cold starts (benign). Corrections used: 1 of 1; no model test re-run to reach a pass (the four 32k needle attempts are distinct depths, all preserved). Governor correction carried (row 19): row 76's 'RESIDENT 100% VRAM' read size_vram as residency — the model always split 28%/72% at 64K under the isolation; the live model size 6,594,474,711 B supersedes the packet's 6,594,474,111 (transposition)."
+  kv_coefficient: "Chat-X KV = 32,768 B/token f16, EXACTLY linear (journal llama_kv_cache direct: 1,024 MiB @32k, 2,048 MiB @64k, 4,096 MiB @128k; K and V both f16; 8 KV layers — hybrid-attention architecture); supersedes the window-1 estimate ~33,554 B/token (derived from the rounded fit figure)."
+  profile_set: "Chat-X three-profile set (frozen 2026-08-26): hx-qwen3.5-9b-32k 3ef4f2846872a96ec1a8c3321b18ee0ab39e8ac7814374dd94bd7de601279b80 (baseline — A-1: needle-proven to 89.5%), hx-qwen3.5-9b-64k 5936a390c6c22594ce49e8c77187fc92f4a81126fd04a4eabad7c000b30447d2 (DEFAULT usage reference), hx-qwen3.5-9b-128k 09faff0fd4d3a5793c4bb99222e865cb9d210cb582319a77bf20d52c5330bf37 (extended); base tag qwen3.5:9b-q4_K_M 6488c96f… untouched; tags only, none resident (owner-provisioned on-demand posture); content-addressed to the frozen weights — an alias cannot resolve to anything else and does not follow the upstream tag if re-pulled."
+  sanitization: "No secret value printed, logged, stored, or placed on any command line in either window (sanitization confirmed in the source); credential probes emitted metadata only; session evidence ev00–ev43 contains command output only — no secrets, no thinking content (counts only per A01 §5.2); transient at hxs-5:/tmp/esme-chatx/ev (volatile — the source document carries the record)."

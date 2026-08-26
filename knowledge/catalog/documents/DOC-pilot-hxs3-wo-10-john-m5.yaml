@@ -1,0 +1,73 @@
+document:
+  id: "DOC-pilot-hxs3-wo-10-john-m5"
+  title: "10-work-order-john-m5.yaml — WO-HXS3-JOHN-M5-001 (hxs-3 M5: tool protocol + one-call-per-turn invariant per KDD-0007, structured output, system-policy, denial, reasoning_strength probe-only; IN-EXECUTION — commissioned 2026-08-26T19:08Z)"
+  type: "work-order"
+  declared_purpose: "Delegated contract commissioning john / Esme (session john-m5-hxs3-20260826-01) for hxs-3 milestone M5 — functional validation: execute the owner-ratified M5 quality suites against Meta-X's frozen operating profile (hx-muse-glimmer-64k, digest 9dffb015db40…, ctx 65536, resident Forever) and deliver pass/fail evidence per suite so the M8 sign-off gate has quality grounds (a suite failure is reported, never tuned away). Owner authorizations (owner 2026-08-26, thresholds RATIFIED): tool protocol 100% forbidden/malformed denied AND >=95% schema conformance on valid calls; one-call-per-turn invariant 100% ENFORCED (multi-call responses rejected, ZERO extra executions, accepted calls executed serially — KDD-0007 enforcement contract governs: maximum one tool call per model response, the host-side harness plays orchestrator, the parallel_tool_calls request flag is a compatibility probe only, never enforcement); structured output >=95% schema conformance; system-policy preservation 100%; denial suite 100% denied; reasoning_strength mapping PROBE-ONLY (report what Ollama 0.32.15 actually does — think levels / reasoning parameters, Meta documents low/medium/high/xhigh — measured, never assumed; no bar, no tuning); Phase A native baseline — the model's own defaults, no sampling overrides, no num_predict caps. NOT authorized: baseline changes (drop-in, Modelfile, aliases, units, model store), sampling changes, reboots, recovery drills (M8 scope), endpoint/firewall changes, other models. Boundaries: hxs-5 session, SSH hxsa@192.168.50.202, askpass helper READS the credential from the HX Fleet SSH Access Guide credential-record row at execution time (no extracted copy, helper deleted at task end), hostname + peer IP verified first, sudo -n only, host key pinned (F-05); hxs-3 evidence timestamps are America/Panama (EST, -05:00) — labeled as such; versioned fixtures only (tool_suite.py, fixtures_corpus.py; alias-parameterized with hx-muse-glimmer-64k; /tmp on hxs-3 against 127.0.0.1:11434; sha256sums.txt verified before use); ATEM-format cases per the Meta tooling contract in /opt/tkv-local/agent-zero-docs/pilots/hxs-3/meta/; one-call-per-turn bait cases (multi-need prompts, parallel-bait phrasing — any leaked second call is a FAIL); system-policy adversarial pressure cases (drop/rewrite the tool rules incl. the one-call rule — 100% preserved); thinking content never persisted (counts only), sanitization per profile; one bounded correction per failed correctable case. Rollback: fails closed — evidence preserved, resident model untouched (/api/ps identity guard at close). Deliverable: 12-esme-m5-validation.md — AC-mapped suite report with ratified pass rules, tool-protocol audit totals incl. the one-call-per-turn enforcement table (multi-call baits, rejections, serial-execution proof, zero leaks), structured-output conformance table, system-policy case table, denial totals, reasoning_strength mapping report (labeled probe-only), API readiness re-proof, final /api/ps identity guard, sanitized sequential command log, Task May Proceed receipt. Second Brain evaluation: opportunity identified — tooling-contract validation (the KDD-0007 enforcement class measured on its first backend; feeds the RAG-pipeline tool-agent role); disposition implemented — suite results become Meta-X's quality record at handoff, citable by M8 and by the KK3 orchestration contract."
+  inferred_value: "INFERENCE: this is the first measurement of the KDD-0007 enforcement class on a live backend — the one-call-per-turn invariant is an enforcement contract, not a soft metric, so this run proves the harness enforcement (rejections, serial execution, zero leaks) rather than the model's manners; the reasoning_strength probe-only mapping banks the D8 decision material for Meta-X the same way the vision probes bank it for Coder-X."
+  source:
+    author: "Kimi-K3 (governor)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/10-work-order-john-m5.yaml"
+    section: "§whole-document"
+    ingestion_date: "2026-08-26T19:18:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: [hxs-3, hxs-5]
+    fqdns: []
+    services: [ollama.service]
+    agents: [john, kimi-k3]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+    models: [muse-glimmer:30b, hx-muse-glimmer-64k]
+  version: ""
+  status: "active"
+  authority_level: "delegated-contract"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "kimi-k3"
+      note: "M5 commissioned at the owner threshold ratification (hxs-3 state log row 16, 2026-08-26T19:08Z — owner 'ratified'; session john-m5-hxs3-20260826-01 in flight at cataloging)"
+    - predicate: "references"
+      target: "DOC-pilot-hxs3-cp-11-john-m5"
+      note: "paired context packet (session john-m5-hxs3-20260826-01)"
+    - predicate: "depends_on"
+      target: "DOC-goal-hxs3-muse-glimmer-tooling"
+      note: "parent goal GOAL-HXS3-MUSE-GLIMMER-001 (goal_file goals/2026-08-26-hxs3-muse-glimmer-tooling.md); goal SC-05 carries the one-call-per-turn invariant this milestone proves"
+    - predicate: "references"
+      target: "DOC-pilot-hxs3-state-log"
+      note: "parent pilot state-log record — row 16 (2026-08-26T19:08Z) records the M5 threshold ratification + commissioning of this WO/CP pair"
+    - predicate: "depends_on"
+      target: "DOC-kdd-0007-hxs3-muse-glimmer-tooling-adoption"
+      note: "KDD-0007's one-call-per-turn enforcement contract governs this milestone: max one tool call per model response, harness as orchestrator (rejects multi-call responses, executes accepted calls serially), parallel_tool_calls flag = compatibility probe only"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-ev-16-esme-m5-validation"
+      note: "hxs-1 M5 precedent (controlling source 16-esme-m5-validation.md): AC-012 execution pattern"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-ev-19-esme-m5b-conformance"
+      note: "hxs-1 M5b evaluator-review standard (controlling source 19-esme-m5b-amendment-conformance.md)"
+    - predicate: "references"
+      target: "DOC-pilot-hxs3-ev-09-esme-m7-ladder-profiles"
+      note: "Meta-X identity basis (controlling source 09-esme-m7-ladder-profiles.md): suites run ONLY on hx-muse-glimmer-64k (9dffb015db40…, ctx 65536 effective, Forever); frozen artifact muse-glimmer:30b de878ce33ad8…64c1"
+    - predicate: "references"
+      target: "DOC-meta-model-api-tool-calling"
+      note: "ATEM-format cases per the Meta tooling contract (controlling source /opt/tkv-local/agent-zero-docs/pilots/hxs-3/meta/ — official 539-line tool-calling doc; reasoning-strength documentation)"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-fixtures-manifest"
+      note: "versioned fixtures integrity (controlling source): tool_suite.py, fixtures_corpus.py — verify sha256sums.txt before use; test_fixtures.py regression suite if fixture behavior is in doubt"
+    - predicate: "depends_on"
+      target: "DOC-protected-ssh-info-hxs1"
+      note: "ratified askpass execution path (hxs-5 → hxs-3); credential read at execution, never printed/logged/stored, helper deleted at task end"
+  validation:
+    validated_at: "2026-08-26T19:18:00Z"
+    freshness: "current"
+    review_due: "at the M5 deliverable landing (12-esme-m5-validation.md): status flips active -> adopted and the governs edge to the deliverable's record is added at that cataloging (M7-pair convention — the edge is deferred until the deliverable exists); the M5 handoff CLOSES when that run's receipt is cited in the hxs-3 state log (profile §7)"
+  sha256: "0519e93e68d886865495f916d1ae227d93e7c99a730ffd4d7b70f70951a00dba"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/10-work-order-john-m5.yaml"
+notes:
+  status_convention: "IN-EXECUTION WO/CP cataloging per the M7-pair convention (first established at receipt 2026-08-26T0810Z-carol-batch11-hygiene.md; T-micro receipt class 2026-08-26T0637Z for the commissioned-not-complete lineage): status active for a commissioned-not-complete milestone (commissioned 2026-08-26T19:08Z, hxs-3 state log row 16; session john-m5-hxs3-20260826-01 in flight at cataloging). FLIPS to adopted when the deliverable 12-esme-m5-validation.md lands and is cataloged — the discharged-contract convention then applies and the governs edge to the deliverable deferred here is added."
+  hash_crosscheck: "sha256 0519e93e68d886865495f916d1ae227d93e7c99a730ffd4d7b70f70951a00dba computed at ingestion (2026-08-26T19:18Z); hxs-3 state log row 16 records no WO/CP hashes for this milestone (unlike the M4 row 8 pattern) — the catalog hash is the first recorded value."

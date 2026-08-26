@@ -1,0 +1,44 @@
+work_order:
+  task_id: "WO-HXS3-JOHN-M7-001"
+  parent_goal: "GOAL-HXS3-MUSE-001"
+  goal_file: "goals/2026-08-26-hxs3-muse-glimmer-tooling.md"
+  milestone: "M7 — context ladder on the exact digest (32K/64K/128K) + three-profile freeze, hxs-1 pattern"
+  assigned_agent: "john / Esme (profile-briefed sub-agent)"
+  objective: >-
+    Run the hxs-1-shaped capacity ladder on Meta-X's exact frozen artifact
+    (de878ce33ad8…): BEFORE creating any rung, verify that hx-muse-glimmer:latest
+    references the expected frozen digest and frozen layers (ollama show +
+    manifest-layer comparison), then create rung Modelfiles with FROM set to that
+    alias (or the complete local blob path from `ollama show --modelfile` —
+    resolvable either way, never a bare digest), with num_ctx as the ONLY changed
+    parameter and the model, projector, template, parser, and baked parameters
+    otherwise preserved (32768 current VRAM-default baseline, 65536
+    operating per D5, 131072 extended — the artifact's own max context); prove
+    each rung (resident 100% VRAM, per-GPU split, KV growth f16 measured
+    linear, needle at ~95% depth found with done_reason=stop, D8-quality spot
+    flat vs baseline, no OOM/CPU fallback/Xid, link speed under load captured);
+    then freeze the three aliases hx-muse-glimmer-32k / -64k / -128k with
+    per-rung digest equality, repoint preload + drop-in to hx-muse-glimmer-64k,
+    re-prove residency (ctx 65536 effective, Forever), and leave the source tag
+    and both other aliases in-store (tags only).
+  owner_authorizations:
+    - "Owner 2026-08-26: 'complete each ladder and profile entries so they appear the same way hxs-1's did — identical pattern, same blueprint'"
+    - "D5 ratified: operating context 65,536 after the ladder (ladder validates 32K then 64K then 128K on the exact digest)"
+    - "NOT authorized: sampling changes, context beyond 131072, other models, reboots, model-store deletions, endpoint changes, a second serving plane"
+  boundaries:
+    - "Execution path: session on hxs-5; hxs-3 (192.168.50.202) via SSH hxsa@192.168.50.202; askpass helper READS the credential from the HX Fleet SSH Access Guide credential-record row at execution time — no extracted copy, helper deleted at task end; verify hostname + peer IP first; sudo -n only; host key pinned (F-05)"
+    - "Identity guard: every rung Modelfile starts FROM the frozen digest artifact (de878ce33ad8…) with num_ctx as the ONLY changed parameter; baked params otherwise preserved (temperature 1, top_k 64, top_p 0.95); the embedded Muse template is never modified"
+    - "Fixtures: versioned needle_probe.py (alias-parameterized — rung alias + required model arg); copy needed fixtures to the target /tmp, run locally on hxs-3 against 127.0.0.1:11434"
+    - "Dense-model VRAM watch: 17.8 GB weights + 1.92B projector + KV — measure per rung; stop conditions: OOM, unapproved CPU fallback, any Xid, needle miss at 32K or 64K (128K miss = extended-fail, fall back to two profiles and report — do not force it)"
+  rollback: "Preload + drop-in repointed back to hx-muse-glimmer (one-line versioned edits); aliases removed via ollama rm (tags only); pre-state hashes recorded."
+  controlling_sources:
+    - "08-context-packet-john-m7.yaml (this packet)"
+    - "hxs-1 M6 pattern: 22-esme-m6-capacity-ladder.md, 29-esme-m6b-profiles.md"
+    - "goal file D5; servers/BLUEPRINT-llm-server.md §4; v1.1 §10 (context behavior)"
+    - "fixtures dir: pilots/PILOT-HX1-OLLAMA-QWEN27B-001/fixtures/ (needle_probe.py, fixtures_corpus.py)"
+  deliverable: "09-esme-m7-ladder-profiles.md: per-rung capacity + KV + needle + quality table, alias digests with equality proofs, repoint diffs + hashes, final residency proof (-64k, 100% VRAM, ctx 65536, Forever), link-speed under load, sanitized command log, Task May Proceed receipt"
+  second_brain_evaluation:
+    opportunity_identified: "yes"
+    roadmap_capability_or_pattern: "hxs-1 ladder/profile pattern — third validated use (uniformity claim on the dense model)"
+    disposition: "implemented — rung evidence and the three aliases become Meta-X's catalog context profile at handoff"
+    evidence_and_reasoning: "dense ~29.6B on x8 links is the blueprint's hardest capacity case so far; its numbers must be measured here, never transferred"

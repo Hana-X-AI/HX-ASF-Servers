@@ -1,0 +1,63 @@
+document:
+  id: "DOC-pilot-hxs2-cp-08-john-m6"
+  title: "08-context-packet-john-m6.yaml — context packet for WO-HXS2-JOHN-M6-001 (session john-m6-20260826-01; hxs-2 M6+M6b; DISCHARGED — milestone complete)"
+  type: "context-packet"
+  declared_purpose: "Session-binding packet for the john/Esme M6 dispatch (goal binding GOAL-HXS2-CODERX-001 v1; work order WO-HXS2-JOHN-M6-001; role producer — Ollama specialist): objective — produce Coder-X's measured context ladder and freeze the three-profile set exactly as hxs-1's (aliases hx-qwen3.6-coderx-32k/-64k/-128k with digest equality, operating default -64k resident at ctx 65536, preload repointed). Current state: hxs-2 (192.168.50.201, Ubuntu 24.04.4, kernel 7.0.0-30, driver 580.173.02, Ollama 0.32.15); resident hx-qwen3.6-coderx:latest (alias digest 1d297a6a093f…, 17,602,392,879 B, 100% VRAM GPU0 9,940 + GPU1 8,772 MiB, ctx 32768 baked, Forever); frozen artifact mannix/qwen3.6-27b-a3b-coderx:vision-Q4_K_M digest ca661423d6b51ebeaca999f22cfc0f30c0851b2a6f328b2737bd8cb6eb90c1df (26.2B MoE, 184 experts top-8, CLIP 446.57M); VRAM headroom 32.6 GB total across both 5060 Ti — 128K KV f16 estimated ~5.8 GiB (measured, not assumed — hxs-1 measured 45,056 B/token there; re-measured here at 20,480); endpoint LAN-scoped, loopback preserved, no firewall. Owner decisions: D5 64K operating default after the ladder; profiles 'the same way hxs-1's did' (owner 2026-08-26); D3 CoderX identity frozen; no sampling overrides ever. Constraints: only the ladder + profile work in scope (no quality-suite changes — M5 follows separately with owner thresholds; no reboots, no firewall, no endpoint changes); needle probe with the rung's OWN alias and a context-matched target (~95% of rung depth; fixture validity gate on prompt_eval_count); thinking content never persisted in evidence (counts only). Evidence requirements: per rung /api/ps (name, digest, size==size_vram, context_length), per-GPU MiB, KV B/token derivation (two depths), needle JSON (fixture_valid, done_reason, needle_found, pass), 3 known-answer spot checks identical across rungs (thinking ON), link speed under load, journal excerpt (no Xid/OOM); alias digests per ollama show + manifest equality vs rung Modelfile; repoint pre/post sha256 + diffs; final /api/ps at -64k. Handoff: deliverable 08-esme-m6-ladder-profiles.md goes to Carol for catalog receipt; handoff OPEN until the receipt is cited in the state log."
+  inferred_value: "INFERENCE: the packet's evidence contract is what made the ladder's numbers fleet-comparable — identical spot checks across rungs, KV derivations at two depths, and the fixture-validity gate turn the MoE model's first capacity measurement into decision-grade input for D5; its resident-state snapshot (alias Forever-resident) is also the baseline the F-M6-0 drift check contradicted, which is exactly what the drift-check discipline exists to catch."
+  source:
+    author: "Kimi-K3 (governor)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/08-context-packet-john-m6.yaml"
+    section: "§whole-document"
+    ingestion_date: "2026-08-26T10:00:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: [hxs-2, hxs-5]
+    fqdns: []
+    services: [ollama.service, ollama-preload.service]
+    agents: [john, kimi-k3]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+    models: [mannix/qwen3.6-27b-a3b-coderx:vision-Q4_K_M, hx-qwen3.6-coderx, hx-qwen3.6-coderx-32k, hx-qwen3.6-coderx-64k, hx-qwen3.6-coderx-128k]
+  version: ""
+  status: "adopted"
+  authority_level: "delegated-contract"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "kimi-k3"
+      note: "commissioned with the paired work order at the owner ladders+profiles order (hxs-2 state log row 13, 2026-08-26T07:13Z)"
+    - predicate: "references"
+      target: "DOC-pilot-hxs2-wo-07-john-m6"
+      note: "paired work order WO-HXS2-JOHN-M6-001"
+    - predicate: "depends_on"
+      target: "DOC-goal-hxs2-qwen36-coderx-backend"
+      note: "goal binding GOAL-HXS2-CODERX-001 v1; owner decisions D3/D5/D8 restated in-packet"
+    - predicate: "references"
+      target: "DOC-pilot-hxs2-ev-07-esme-m4-install"
+      note: "consulted Coder-X identity basis (07-esme-m4-install.md): frozen digest, alias, baked ctx 32768, residency"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-ev-22-esme-m6-capacity-ladder"
+      note: "consulted hxs-1 ladder pattern (22-esme-m6-capacity-ladder.md)"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-ev-29-esme-m6b-profiles"
+      note: "consulted hxs-1 three-profile freeze pattern (29-esme-m6b-profiles.md)"
+    - predicate: "depends_on"
+      target: "DOC-protected-ssh-info-hxs1"
+      note: "execution per the paired WO's boundaries — askpass credential read at execution time only, helper deleted at task end; no credential content in this packet or in the catalog"
+  validation:
+    validated_at: "2026-08-26T10:00:00Z"
+    freshness: "current"
+    review_due: "at the next Coder-X milestone evidence landing (M5); the handoff clause keeps the handoff OPEN until this run's receipt is cited in the hxs-2 state log (profile §7)"
+  sha256: "2c8d7b3950241cc62a534a13169ae2f51cdad0739aa7e46422f34a278cf7a0dc"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/08-context-packet-john-m6.yaml"
+notes:
+  status_convention: "Cataloged POST-completion at status adopted (discharged-contract convention) — M6+M6b completed before ingestion (hxs-2 state log row 18); see DOC-pilot-hxs2-wo-07-john-m6 notes.status_convention."
+  governor_corrections_verified: "The cataloged artifact carries the governor's review batch-11 hx2.conf naming correction (hxs-2 state log row 16), VERIFIED before hash: the packet's constraints line reads 'preload/hx2.conf repoint' (zero 'hx1.conf' strings remain; grep-verified 2026-08-26T10:00Z)."
+  hash_crosscheck: "sha256 2c8d7b3950241cc62a534a13169ae2f51cdad0739aa7e46422f34a278cf7a0dc computed at ingestion (2026-08-26T10:00Z); state log row 13 records no hashes for this pair — the catalog hash is the first recorded value."
+  kv_estimate_note: "The packet's ~5.8 GiB 128K KV estimate (from hxs-1's 45,056 B/token class) was pessimistic by design ('measured, not assumed — re-measure here'): the M6 ladder measured CoderX at 20,480 B/token f16 (2.50 GiB at 131,072) — recorded in DOC-pilot-hxs2-ev-08-esme-m6-ladder-profiles."

@@ -1,0 +1,63 @@
+document:
+  id: "DOC-pilot-hxs3-wo-02-rick-m1"
+  title: "02-work-order-rick-m1.yaml — WO-HXS3-RICK-M1-001 (hxs-3 M1 OS readiness verification; blueprint mask set from the start)"
+  type: "work-order"
+  declared_purpose: "Delegated contract commissioning rick (session rick-m1-20260826-01) to verify hxs-3 is ready to host the Muse Glimmer tooling backend: driver/DKMS re-proof, baseline health (13-point checklist), the BLUEPRINT sleep-mask set exactly (suspend.target, hibernate.target, hybrid-sleep.target, suspend-then-hibernate.target — the proven hxs-1 set; the hxs-2 divergence lesson pre-applied), the Wi-Fi rfkill soft block per house posture (verify the interface first, prove no routes/sessions, then block, then persistence), and posture records (storage root ext4 headroom, Secure Boot disabled, NO firewall anywhere per the owner rule). Authorized mutations only: the four named masks and the rfkill soft block (D4); everything else read-only. Owner authorizations: plan approved 2026-08-26 (M0, state log row 1); NOT authorized: any firewall design or enablement (owner rule — none anywhere), package installs/upgrades, kernel/driver/service changes, reboots. Boundaries: hxs-5 session, SSH hxsa@192.168.50.202, askpass helper reads the credential-record row at execution time (no extracted copy, helper deleted at task end), verify hostname + peer IP first, sudo -n only; host key TOFU if no pin exists — corroborate identity against the discovery record (machine-id/UUID/MAC) and record the pinned fingerprint for future strict checks (hxs-2 F-05 pattern); auth failure = STOP and escalate; one bounded correction per failed correctable check; stop conditions (driver/GPU fault, any Xid, identity mismatch, unexpected exposure). Rollback: rfkill inverse (echo 1 > state); unmask the four units — exact inverses in evidence. Deliverable: 04-rick-hxs3-os-readiness.md (completed PASS — 13/13; cataloged this run). Second Brain evaluation in-file (OS-readiness checklist — third validated host use; blueprint mask set applied uniformly for the first time; disposition implemented)."
+  source:
+    author: "Kimi-K3 (governor)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/02-work-order-rick-m1.yaml"
+    section: "§whole-document"
+    ingestion_date: "2026-08-26T05:35:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: [hxs-3, hxs-5]
+    fqdns: []
+    services: [suspend.target, hibernate.target, hybrid-sleep.target, suspend-then-hibernate.target, systemd-rfkill.service]
+    agents: [rick, kimi-k3]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+    models: [muse-glimmer:30b]
+  version: ""
+  status: "adopted"
+  authority_level: "delegated-contract"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "kimi-k3"
+      note: "M1 commissioned at M0 (hxs-3 state log row 1, 2026-08-26T04:45Z: plan approved, D-items ratified, 'rick M1 in flight' — row 2 confirms in-flight with identity-corroboration if no host-key pin exists)"
+    - predicate: "references"
+      target: "DOC-pilot-hxs3-cp-03-rick-m1"
+      note: "paired context packet (session rick-m1-20260826-01)"
+    - predicate: "depends_on"
+      target: "DOC-goal-hxs3-muse-glimmer-tooling"
+      note: "parent goal GOAL-HXS3-MUSE-001; owner decisions D1–D8 are the milestone's authority (D1 root ext4, D2 fleet /24 + no host firewall, D4 rfkill block)"
+    - predicate: "governs"
+      target: "DOC-pilot-hxs3-ev-04-rick-os-readiness"
+      note: "paired deliverable (PASS — TASK COMPLETE, 13/13); M1 handoff CLOSED 2026-08-26T06:24Z — hxs-3 state log row 9 cites Carol receipt 2026-08-26T0608Z-carol-callsigns-meta-packages.md, closing the handoff per the packet clause. Historical, preserved: at this record's ingestion (2026-08-26T05:35Z) the handoff was OPEN pending that run's receipt (row 5: M1 COMPLETE, handoff OPEN pending Carol receipt)"
+    - predicate: "references"
+      target: "DOC-tkv-hxs3-discovery"
+      note: "controlling source (with driver-results / pre-work-results) — historical as-found, cross-check only; live host is the authority"
+    - predicate: "references"
+      target: "DOC-blueprint-llm-server"
+      note: "§2 mask set is the authorized mutation set — the proven hxs-1 set incl. hybrid-sleep (the hxs-2 divergence lesson pre-applied)"
+    - predicate: "references"
+      target: "DOC-pilot-hxs2-ev-04-rick-os-readiness"
+      note: "hxs-2 M1 readiness artifact named as the current checklist shape reference (third validated host use of the hxs-1 OS-readiness pattern)"
+    - predicate: "depends_on"
+      target: "DOC-protected-ssh-info-hxs1"
+      note: "ratified askpass execution path (hxs-5 → hxs-3); credential read at execution, never printed/logged/stored, helper deleted at task end"
+  validation:
+    validated_at: "2026-08-26T07:47:00Z"
+    freshness: "current"
+    review_due: "not applicable — discharged contract (milestone complete, deliverable 04 PASS)"
+  sha256: "43dcbf82c5932191d30c068c8f267acde286f8865ba87d513f7b69ddd07a0c15"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/02-work-order-rick-m1.yaml"
+notes:
+  convention: "Typed/statused/authorized per the WO/CP convention (DOC-pilot-hxs2-wo-02-rick-m1): type work-order, status adopted, authority delegated-contract, owner Kimi-K3."
+  mask_set_note: "Authorized mask set for hxs-3 = the exact blueprint set (suspend/hibernate/hybrid-sleep/suspend-then-hibernate — hybrid-sleep IS in; sleep.target deliberately untouched): the first uniform application of the blueprint set, pre-applying the hxs-2 divergence lesson (hxs-2 state log row 6; alignment on hxs-2 queued to rick's next hxs-2 session)."

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Generated from docs/cicd-pipeline.md (sha256 6b99bae481a2655906c20737eaa3928bc9b66839ca4d12bfcba265f59673434c) by scripts/wiki/render.py on 2026-08-26T19:46Z.
+<!-- Generated from docs/cicd-pipeline.md (sha256 6127bc20e3b63ba06933d073474e456080966282c269758237a0429d0a0cef0d) by scripts/wiki/render.py on 2026-08-26T21:47Z.
      Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
 <html lang="en">
 <head>
@@ -60,7 +60,7 @@ a{color:#6fa8ff} .doc-meta,footer{color:#999}}
 <ul><li>Branches: <code>feature/&lt;slug&gt;</code>, <code>fix/&lt;slug&gt;</code>, <code>chore/&lt;slug&gt;</code> — anything else is legal but unlabeled. <code>main</code> is the factory's working branch; protection requires the two checks <strong>for PRs only</strong> — direct pushes by the governor stay possible.</li><li>PRs: auto-created on first push, auto-labeled by prefix, squash auto-merged when green. Bot/CI commits carry no co-author (repository rule).</li><li>Notifications: GitHub PR comments + check statuses (p8 default channel).</li></ul>
 <h2 id="setup-one-time">Setup (one-time)</h2>
 <p>Owner (web):</p>
-<ol><li>Create/confirm a CodeRabbit organization with an <strong>assigned seat</strong> (the headless API-key flow requires one; plan allowance is used first, usage-based add-on for over-limit). US region is the default (<code>--region eu</code> for EU accounts).</li><li>Generate an <strong>Agentic API key</strong> (app.coderabbit.ai → Settings → API Keys).</li><li>Add it as repo secret <strong><code>CODERABBIT_API_KEY</code></strong> (GitHub → repo → Settings → Secrets and variables → Actions).</li><li>Optional: install the CodeRabbit GitHub App for PR-native review threads and Autofix (<code>.coderabbit.yaml</code> already carries <code>request_changes_workflow</code> and <code>finishing_touches.autofix</code> for that day; Autofix needs a Pro plan).</li></ol>
+<ol><li>Create/confirm a CodeRabbit organization with an <strong>assigned seat</strong> (the headless API-key flow requires one; plan allowance is used first, usage-based add-on for over-limit). US region is the default (<code>--region eu</code> for EU accounts).</li><li>Generate an <strong>Agentic API key</strong> (app.coderabbit.ai → Settings → API Keys).</li><li>Add it as repo secret <strong><code>CODERABBIT_API_KEY</code></strong> (GitHub → repo → Settings → Secrets and variables → Actions). The workflow also accepts a <code>CODERABBIT_API_KEY_2</code> fallback name (the repo currently carries the key under that name, 2026-08-26).</li><li>Optional: install the CodeRabbit GitHub App for PR-native review threads and Autofix (<code>.coderabbit.yaml</code> already carries <code>request_changes_workflow</code> and <code>finishing_touches.autofix</code> for that day; Autofix needs a Pro plan).</li></ol>
 <p>Bootstrap (already executed via API with the classic PAT; documented here):</p>
 <ul><li><code>allow_auto_merge: true</code> on the repo.</li><li>Actions workflow permissions: write + allow Actions to create/approve PRs.</li><li>Branch protection on <code>main</code>: required checks <code>gates</code> and <code>coderabbit-review</code> (PR merges only; no required reviews; admins not restricted — the factory's governor-on-main flow is preserved).</li></ul>
 <p>Note: the fine-grained PAT in the local credential store returned 401 on 2026-08-26 — revoke/replace it; the classic PAT works.</p>
@@ -69,7 +69,7 @@ a{color:#6fa8ff} .doc-meta,footer{color:#999}}
 <h2 id="second-brain-evaluation-standing-directive">Second Brain evaluation (standing directive)</h2>
 <ol><li>Opportunity identified: <strong>yes</strong> — pipeline runs and their outcomes are catalogable evidence (CI as a governance signal: which changes passed which gates, when, with which findings).</li><li>Roadmap capability/pattern: run receipts feeding the Second Brain catalog — the same evidence discipline the pilots already use, extended to CI.</li><li>Disposition: <strong>recommended for a future iteration, not implemented now</strong> — adding catalog writes to the pipeline today would expand scope beyond the ratified plan.</li><li>Evidence/reasoning: recorded here per the standing directive; revisit when the pipeline has a month of run history to catalog against.</li></ol>
 </main>
-<footer>Source of truth: <code>docs/cicd-pipeline.md</code> (sha256 <code>6b99bae481a2655906c20737eaa3928bc9b66839ca4d12bfcba265f59673434c</code>) · rendered 2026-08-26T19:46Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+<footer>Source of truth: <code>docs/cicd-pipeline.md</code> (sha256 <code>6127bc20e3b63ba06933d073474e456080966282c269758237a0429d0a0cef0d</code>) · rendered 2026-08-26T21:47Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
 
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';

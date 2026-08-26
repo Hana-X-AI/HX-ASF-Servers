@@ -1,0 +1,38 @@
+work_order:
+  task_id: "WO-FLEET-JOHN-WS-001"
+  parent_goal: "GOAL-HXS2-CODERX-001"
+  goal_file: "goals/2026-08-26-hxs2-qwen36-coderx-backend.md"
+  milestone: "Fleet change — enable Ollama Cloud web search on all four hosts (owner decision 2026-08-26)"
+  assigned_agent: "john / Esme (profile-briefed sub-agent)"
+  objective: >-
+    Remove OLLAMA_NO_CLOUD=1 from each host's ollama.service drop-in
+    (versioned one-line change per host), daemon-reload, restart ollama.service
+    ONLY, and re-verify: frozen model identity and residency byte-identical
+    pre/post on hxs-1 (hx-qwen3.8-27b-64k), hxs-2 (hx-qwen3.6-coderx), hxs-3
+    (hx-muse-glimmer); model list intact on hxs-4 (qwen3.5:9b-q4_K_M);
+    reachability (loopback on all four; LAN from hxs-5 on hxs-1/2/3); journal
+    clean, zero Xid, NRestarts accounted. Enable nothing else: no cloud models,
+    no remote inference, no endpoint changes, no firewall. Confirm the agent
+    web-search flag OLLAMA_AGENT_DISABLE_WEBSEARCH is unset (agent web search
+    allowed). Document for the owner the remaining interactive step: per-host
+    `ollama signin` (URL flow, his ollama.com account) — web search activates
+    after sign-in; verify and report the pre-signin availability state per host.
+  owner_authorizations:
+    - "Owner decision 2026-08-26: 'Enable Ollama Cloud web search' on all four hosts (hxs-3 log row 12; hxs-1 log row 78) — supersedes the ratified NO_CLOUD posture for the web-search class"
+    - "Explicitly NOT authorized: pulling or running any :cloud model, remote inference, endpoint/firewall changes, reboots, any other service changes"
+  boundaries:
+    - "Execution path: session on hxs-5; per host via SSH hxsa@<ip> (192.168.50.200/201/202/203); askpass helper READS the credential from the HX Fleet SSH Access Guide credential-record row at execution time — no extracted copy, helper deleted at task end; verify hostname + peer IP per host; sudo -n only; host keys pinned (hxs-1 known; hxs-2/3 F-05; hxs-4 TOFU-with-corroboration if unpinned)"
+    - "Frozen-identity guard per host: /api/ps (or ollama list on hxs-4) compared pre vs post; any drift = stop and restore that host's drop-in"
+    - "Versioned change: pre/post sha256 of each touched drop-in + unified diff in evidence"
+    - "One bounded correction per failed host; stop conditions: service fails to return, identity drift, any Xid"
+  rollback: "Restore the OLLAMA_NO_CLOUD=1 line per host drop-in (byte-copies retained in evidence), daemon-reload, service restart; NO_CLOUD posture restored."
+  controlling_sources:
+    - "12-context-packet-john-websearch.yaml (this packet)"
+    - "envconfig/config.go:330 (NO_CLOUD disables remote inference + web search); cmd signin flow (authErr.SigninURL); owner decision rows (hxs-3 #12, hxs-1 #78)"
+    - "35-esme-preload-budget.md (hxs-1 unit contracts); hxs-2/hxs-3 M4 unit contracts"
+  deliverable: "13-esme-websearch-enable.md: per-host pre/post drop-ins + diffs + hashes, restart proofs, identity/residency before-after matrices, reachability, journal excerpts, pre-signin web-search availability state per host, the owner's sign-in instruction per host, rollback inverse, Task May Proceed receipt"
+  second_brain_evaluation:
+    opportunity_identified: "yes"
+    roadmap_capability_or_pattern: "uniform bounded fleet change (four hosts, one shape) with identity guards — the SC-07a pattern generalized"
+    disposition: "implemented — the change lands with per-host provenance and the catalog notes the new capability class at handoff"
+    evidence_and_reasoning: "posture changes belong in the same versioned/evidenced path as everything else; the NO_CLOUD supersession is recorded owner-decision-first, config-second"

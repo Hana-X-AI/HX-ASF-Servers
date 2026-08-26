@@ -1,0 +1,65 @@
+document:
+  id: "DOC-hxs3-muse-glimmer-pilot-v11"
+  title: "codex_20260825_2332_hxs-3-muse-glimmer-30b-tooling-pilot-and-deepseek-harness-registration.md — v1.1 authoritative hxs-3 Muse Glimmer 30B tooling pilot (886 lines, agent-zero-docs)"
+  type: "plan"
+  declared_purpose: "Owner-updated authoritative pilot document (front matter: document_id doc:hx:pilot:hxs-3:muse-glimmer-30b, version 1.1, created 2026-08-25, updated 2026-08-26, status 'owner-selected primary tooling candidate; implementation and qualification pending', decision statement 'Begin the hxs-3 tooling pilot with Ollama muse-glimmer:30b' — authority Agent Zero, effective 2026-08-25; purpose 'Install, qualify, persist, and register Muse Glimmer 30B as a local tool-use inference capability available to KK3 through the DeepSeek Harness'; scope host hxs-3, environment development-staging, runtime Ollama, role general-agentic-tooling-specialist, orchestration authority KK3). Executive verdict (§1): Muse Glimmer 30B is the strongest current candidate for the HX general tooling specialist role — explicitly trained for long-horizon agentic task completion, schema-based tool use, failure recovery, multimodal input, scaffold compatibility; four facts must remain visible: 'runs on a single GPU' is conditional (Meta targets 24 GB; the ~18 GB package cannot fit a 16 GB GPU with runtime/KV), the model is dense (~29.6B participate), Muse is a sequential tool caller (one tool call per model turn, no parallel calls — a binding capability limit, not an evaluation question), and the model proposes actions but never authorizes or executes them (KK3 sole orchestrator). Content: mission + Definition of Done (§2); source/artifact record with the official prompting and inference contract table (§3 — chat template, system-prompt-first, private reasoning turn, reasoning_strength low/medium/high/xhigh default high, native ATEM tool format, one-call-per-turn, image sentinel, long-reasoning headroom, history accounting, native sampler T=1/top-k=64/top-p=0.95, EOS never <|eom|>; llama.cpp support from commit 62bf73d25 / release b10353 = diagnostic compatibility floors, not a second serving plane); HX placement and binding authority rules (§4); target-host qualification with all facts [TO BE CONFIRMED] (§5); implementation phases 0-10 (§6 — change control/baseline, pull + identity, HX pilot alias hx/muse-glimmer-30b:hxs3-pilot-20260825, native Phase A baseline + prompt/reasoning compatibility, system-policy preservation canary, tool contract suite A-F incl. the Ollama ATEM parser-normalization gate, multimodal suite, failure recovery/loop control, 32K/64K/128K context ladder, GPU/performance strategy, persistence/reboot recovery); DeepSeek Harness registration semantic contract + lifecycle (§7); comparative role boundaries (§8); monitoring + redacted replay envelope (§9); risk register MG-001..MG-018 (§10); rollback/quarantine (§11); deliverables by agent (§12); acceptance checklist (§13); final recommendation (§14 — proceed with muse-glimmer:30b, gates in order: host capacity/artifact identity, system policy/authorization, tool contracts/failure recovery); references + verification gaps (§15)."
+  inferred_value: "INFERENCE: the pilot's controlling plan and measurement basis — the goal names it the authoritative source pilot, and its phases/gates map onto the goal's SC-01..SC-08 evidence contracts and milestone structure. Its Harness-era framing (§7 registration contract, front-matter 'registered_in system:deepseek-harness', 'Neo' owner rows, §2.3 'Neo registers the backend') describes a substrate verified nonexistent (KDD-0006; mapping restated in KDD-0007): the registration intent maps onto the Second Brain catalog capability record, and the Neo role is covered by KK3 + john/Esme. All performance/capability claims remain vendor-reported until proven on the exact local digest (§3.3: use the scores to justify the pilot, never as the HX acceptance report)."
+  source:
+    author: "Codex (agent-zero-docs pipeline); owner-updated to v1.1"
+    provided_by: "Agent Zero"
+    origin: "/home/hxsa/opt/local-tkv/agent-zero-docs/pilots/hxs-3/meta/codex_20260825_2332_hxs-3-muse-glimmer-30b-tooling-pilot-and-deepseek-harness-registration.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-26T05:05:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: [hxs-3]
+    fqdns: []
+    services: [ollama.service]
+    agents: [kimi-k3, rick, john, carol]
+    repositories: []
+    environments: [pilot]
+    models: [muse-glimmer:30b]
+  version: "1.1 (document status: owner-selected primary tooling candidate; implementation and qualification pending)"
+  status: "active"
+  authority_level: "owner-directive"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "owner-docs tree (/home/hxsa/opt/local-tkv); no secret values observed (canary tokens and '--api-key <your-key>'-style placeholders are test fixtures/placeholders, not credentials)"
+    contains_secret_values: false
+  relations:
+    - predicate: "governs"
+      target: "DOC-goal-hxs3-muse-glimmer-tooling"
+      note: "named the authoritative source pilot in the goal Plan line (Harness-free mapping per KDD-0006 convention); its phases/gates are the pilot's measurement basis — subordinate to the goal's owner decisions D1-D8"
+    - predicate: "references"
+      target: "DOC-kdd-0007-hxs3-muse-glimmer-tooling-adoption"
+      note: "the adoption KDD for this pilot: one-call-per-turn registered as a first-class capability LIMIT; gpt-oss retained as task-shaped control; Harness framing mapped to the catalog"
+    - predicate: "references"
+      target: "DOC-kdd-0006-hxs2-coderx-backend-adoption"
+      note: "Harness-free mapping basis: §7's DeepSeek Harness registration contract (and the front-matter registered_in edge) is verified-nonexistent substrate per KDD-0006 — the Second Brain catalog fills the capability-registry role"
+    - predicate: "references"
+      target: "DOC-meta-muse-glimmer-llama-cpp-guide"
+      note: "named source artifact (front matter source_artifacts: dev.meta.ai/docs/muse-glimmer/llama-cpp — supplied as doc-1.md); §3.4 takes its b10353/commit 62bf73d25 identifiers as diagnostic compatibility floors; KDD-0007 retains the path as the drafted escape hatch"
+    - predicate: "references"
+      target: "DOC-hxs3-gpt-oss-regular-pilot"
+      note: "earlier hxs-3 pilot document: superseded-in-role as primary candidate by this v1.1; §3.3 retains GPT-OSS 20B (and Qwen CoderX) as task-shaped controls rather than forcing one universal model — §8 comparative role boundaries"
+    - predicate: "describes"
+      target: "muse-glimmer:30b (official Ollama library tag; deployment identity = exact tag + full local digest)"
+      note: "LM 27.9B Q4_K_M ~17 GB + CLIP projector 1.92B Q4_K_M ~1.4 GB; dense ~29.6B execution; declared 128K context (maximum declaration, not qualified HX context); native sampler T=1/top-k=64/top-p=0.95; Apache-2.0; manifest prefix de878ce33ad8 cross-check only; native tool format ATEM, one call per turn, reasoning_strength low/medium/high/xhigh default high"
+    - predicate: "produced_by"
+      target: "Codex session 2026-08-25 23:32 (agent-zero-docs/pilots/hxs-3/meta/)"
+      note: "filename timestamp; front matter created 2026-08-25, updated 2026-08-26 to v1.1 (owner-updated); no HX host was accessed or changed in its preparation"
+  validation:
+    validated_at: "2026-08-26T05:05:00Z"
+    freshness: "current"
+    review_due: "document's own triggers: mutable upstream tag/digest change (MG-010 — requalification), projector/model digest mismatch (MG-014), Ollama runtime behavior change; plus live validation at pilot M1 and each qualification gate"
+  sha256: "17d3231aa528b93713b11af7af8ceb6f5ec6c3020d74c1c1ded23a09ac4494a0"
+  canonical_location: "/home/hxsa/opt/local-tkv/agent-zero-docs/pilots/hxs-3/meta/codex_20260825_2332_hxs-3-muse-glimmer-30b-tooling-pilot-and-deepseek-harness-registration.md"
+notes:
+  type_judgment: "Typed 'plan' (dispatch offered contract|plan per judgment): the document declares itself 'Primary tooling candidate implementation and qualification plan' and its spine is phased execution — phases 0-10 with gates, measurement tables, an acceptance checklist, and per-agent deliverables. The 'contract' precedent (DOC-hxs2-deployment-directive) is an owner mission directive — required outcomes, DoD, authority clause — without execution phases. The v1.1 does carry a commissioning owner decision (front-matter decision block + § title-block callout): recorded verbatim in declared_purpose and covered by authority_level owner-directive; the sibling gpt-oss pilot document of identical shape is likewise typed plan."
+  status_mapping: "status 'active' (not 'adopted'): its owner decision is in active execution via the goal/KDD-0007 (M0 authorized 2026-08-26) — same treatment as the hxs-2 directive (DOC-hxs2-deployment-directive, active); the 'adopted' convention (DOC-hxs2-coderx-knowledge-reference) covers knowledge references adopted as measurement basis, not commissioning pilot plans. Front-matter status preserved in version."
+  harness_era_mapping: "VERIFIED-NONEXISTENT SUBSTRATE, conflict preserved + authority-ranked (profile §9): §7 'DeepSeek Harness Registration' (L585-668, semantic registration contract + lifecycle), the front-matter 'registered_in system:deepseek-harness' relationship, §2.3/§12 'Neo registers the backend', and §6 Phase 5-F 'reaches the DeepSeek Harness' describe infrastructure verified nonexistent (no deployed Harness anywhere; owner-confirmed easter egg 2026-08-26 — KDD-0006; mapping restated in KDD-0007). The registration intent maps onto the Second Brain catalog capability record (goal D7; SC-08), and the Neo role is covered by KK3 + john/Esme. The document is preserved unchanged; consumers must read it together with KDD-0006/KDD-0007 and the goal file."
+  section_map: "886 lines. Front matter L1-52 (document_id/version 1.1/decision block/owners/relationships/source_artifacts) — title block + owner-decision callout L54-60 — §1 Executive Verdict L62 (four visible facts L77-82) — §2 Mission and Definition of Done L84 (2.1 L86, 2.2 intended role L90, 2.3 DoD L107) — §3 Source and Artifact Record L124 (3.1 artifact table L126, 3.2 upstream architecture L145, 3.3 benchmark interpretation L149, 3.4 official prompting/inference contract L160; llama.cpp floor b10353 diagnostic L178) — §4 HX Placement and Authority Model L180 (binding authority rules L217) — §5 Target Host Qualification L227 (read-only discovery commands L246, capacity truth L270) — §6 Implementation Phases L280 (Phase 0 L282, Phase 1 pull/identify L294, Phase 2 HX alias L326, Phase 3 native baseline L348, Phase 3A prompt/reasoning compatibility L377, Phase 4 system-policy preservation L392, Phase 5 tool contract suite L418 — A single L422, B sequential dependency L426, C multi-need sequential L430, D partial failure L439, E schema/auth failures L443, F Ollama ATEM parser-normalization gate L464, Phase 6 multimodal suite L471, Phase 7 failure recovery/loop control L496, Phase 8 context ladder 32K/64K/128K L514, Phase 9 GPU/performance L535, Phase 10 persistence/reboot L550) — §7 DeepSeek Harness Registration L585 (registration contract L589, lifecycle L658 — Harness-era, verified-nonexistent per KDD-0006/0007) — §8 Comparative Role Boundaries L670 — §9 Monitoring and Failure Replay L683 (replay envelope L698) — §10 Risk Register MG-001..MG-018 L725 — §11 Rollback and Quarantine L748 — §12 Deliverables by Agent L763 (Carol rows L789) — §13 Acceptance Checklist L803 — §14 Final Recommendation L854 — §15 References and Remaining Gaps L866 (verification gaps L877-886)."
+  html_sibling: "A derived .html sibling exists in the same directory ('codex_20260825_2332_hxs-3-muse-glimmer-30b-tooling-pilot-and-deepseek-harness-registration (1).html' — note the ' (1)' in the filename, as supplied); covered by this one record per the dispatch brief — the .md is the authoritative artifact and carries the record sha256 (same convention as DOC-hxs2-coderx-knowledge-reference notes.html_sibling)."
+  volatility: "Front-matter source_artifacts are upstream URLs (ollama.com library page, HF model card, Meta methodology/prompting/llama.cpp docs) plus two upload captures ('Pasted markdown(9).md', 'Pasted markdown(10).md' — not supplied, not cataloged); the selected tag is mutable upstream — a digest, model-card, Ollama, or artifact change triggers review (MG-010/MG-014, §15 gaps). Re-hash on any owner re-supply."

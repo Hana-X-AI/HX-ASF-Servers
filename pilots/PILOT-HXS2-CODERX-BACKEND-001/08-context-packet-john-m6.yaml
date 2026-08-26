@@ -1,0 +1,31 @@
+context_packet:
+  goal_id: "GOAL-HXS2-CODERX-001"
+  goal_version: 1
+  work_order_id: "WO-HXS2-JOHN-M6-001"
+  session_id: "john-m6-20260826-01"
+  role: "producer (Ollama specialist: john / Esme)"
+  milestone: "M6+M6b — ladder 32K/64K/128K + three-profile freeze on Coder-X"
+  objective: >-
+    Produce Coder-X's measured context ladder and freeze the three-profile set
+    exactly as hxs-1's: aliases hx-qwen3.6-coderx-32k/-64k/-128k with digest
+    equality, operating default -64k resident at ctx 65536, preload repointed.
+  current_state:
+    host: "hxs-2 (192.168.50.201), Ubuntu 24.04.4, kernel 7.0.0-30, driver 580.173.02, Ollama 0.32.15"
+    resident: "hx-qwen3.6-coderx:latest (alias digest 1d297a6a093f…), 17,602,392,879 B, 100% VRAM (GPU0 9,940 + GPU1 8,772 MiB), ctx 32768 baked, Forever"
+    frozen_artifact: "mannix/qwen3.6-27b-a3b-coderx:vision-Q4_K_M, digest ca661423d6b51ebeaca999f22cfc0f30c0851b2a6f328b2737bd8cb6eb90c1df (26.2B MoE, 184 experts top-8, CLIP 446.57M)"
+    vram_headroom: "32.6 GB total across both 5060 Ti; 128K KV f16 estimated ~5.8 GiB (measured, not assumed — hxs-1 measured 45,056 B/token there; re-measure here)"
+    endpoint: "LAN-scoped, loopback preserved, no firewall"
+  owner_decisions:
+    - "D5 64K operating default after the ladder; profiles appear 'the same way hxs-1's did' (owner 2026-08-26); D3 CoderX identity frozen; no sampling overrides ever"
+  constraints:
+    - "Only the ladder + profile work in scope: rung Modelfiles, aliases, preload/hx2.conf repoint. No quality-suite changes (M5 follows separately with owner thresholds), no reboots, no firewall, no endpoint changes"
+    - "Needle probe must use the rung's OWN alias and a context-matched target (~95% of rung depth; fixture validity gate: prompt_eval_count within the rung's expected band)"
+    - "Thinking content never persisted in evidence (counts only)"
+  evidence_requirements:
+    - "Per rung: /api/ps (name, digest, size==size_vram, context_length), per-GPU MiB, KV B/token derivation (two depths), needle JSON (fixture_valid, done_reason, needle_found, pass), 3 known-answer spot checks identical across rungs (thinking ON), link speed under load, journal excerpt (no Xid/OOM)"
+    - "Alias digests: ollama show per alias + manifest equality vs rung Modelfile; repoint pre/post sha256 + diffs; final /api/ps at -64k"
+  consulted_records:
+    - "22-esme-m6-capacity-ladder.md, 29-esme-m6b-profiles.md (hxs-1 pattern); 07-esme-m4-install.md (hxs-2 identity); fixtures sha256sums.txt"
+  handoff:
+    - "Deliverable 08-esme-m6-ladder-profiles.md goes to Carol for catalog receipt; handoff OPEN until the receipt is cited in the state log"
+  second_brain_evaluation: "Per the work order — second validated ladder use; Coder-X context profile"

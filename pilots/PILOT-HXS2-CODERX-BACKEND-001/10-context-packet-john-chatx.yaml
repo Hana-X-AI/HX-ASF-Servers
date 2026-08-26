@@ -1,0 +1,32 @@
+context_packet:
+  goal_id: "GOAL-HXS2-CODERX-001"
+  goal_version: 1
+  work_order_id: "WO-HXS4-JOHN-L1-001"
+  session_id: "john-chatx-20260826-01"
+  role: "producer (Ollama specialist: john / Esme)"
+  milestone: "Chat-X bounded alignment + ladder + three profiles"
+  objective: >-
+    Pin Chat-X to the fleet's 0.32.15, then produce its measured ladder and
+    three-profile set (hx-qwen3.5-9b-32k/-64k/-128k, -64k as the default
+    reference — its already-native default) with digest equality. No preload,
+    no persistence, no endpoint change — those stay parked owner decisions.
+  current_state:
+    host: "hxs-4 (192.168.50.203), Ubuntu 24.04.4, 1x RTX 5060 Ti 16,311 MiB + 1x RTX 5060 8,151 MiB (24.5 GB total), Ollama 0.32.9 (to be aligned to 0.32.15), loopback-only endpoint"
+    resident: "qwen3.5:9b-q4_K_M (6,594,474,111 B, digest 6488c96fa5faab64…), resident-on-demand 6,109,381,261 B VRAM, ctx 65536 baked native default, idle-unloads"
+    vram_headroom: "24.5 GB total — the lightest model in the fleet; 128K is capacity-trivial here (still measured, per blueprint)"
+    model_identity: "qwen3.5:9b-q4_K_M (owner-provisioned 2026-08-26; basic chat utility role; NOT factory-qualified)"
+  owner_decisions:
+    - "Owner order 2026-08-26: ladders + profiles on all four LLMs, identical pattern, same blueprint — activates the version-pin alignment item"
+    - "Parked and NOT in scope here: preload/persistence, LAN posture, qualification suites, firewall anything"
+  constraints:
+    - "Only: version pin, ladder, aliases, default-reference repoint. Nothing else moves"
+    - "Needle probe with the rung's OWN alias at ~95% depth (fixture validity gate on prompt_eval_count); thinking content never persisted in evidence"
+  evidence_requirements:
+    - "Pin: pre/post ollama --version, service active after, ollama list intact (model preserved), /api/ps or reload smoke check"
+    - "Per rung: /api/ps (name, digest, size==size_vram, context_length), KV B/token (two depths), needle JSON (fixture_valid, done_reason, needle_found, pass), 2 known-answer spot checks identical across rungs, journal excerpt"
+    - "Alias digests: ollama show per alias + manifest equality vs rung Modelfile; final state summary"
+  consulted_records:
+    - "22-esme-m6-capacity-ladder.md, 29-esme-m6b-profiles.md (hxs-1 pattern); Chat-X verification facts (hxs-1 log row 76); fixtures sha256sums.txt"
+  handoff:
+    - "Deliverable 10-esme-chatx-ladder-profiles.md goes to Carol for catalog receipt; handoff OPEN until the receipt is cited in the governing log"
+  second_brain_evaluation: "Per the work order — fourth host, completing fleet profile uniformity"

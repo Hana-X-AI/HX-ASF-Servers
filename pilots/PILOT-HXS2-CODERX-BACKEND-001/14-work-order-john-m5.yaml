@@ -1,0 +1,36 @@
+work_order:
+  task_id: "WO-HXS2-JOHN-M5-001"
+  parent_goal: "GOAL-HXS2-CODERX-001"
+  goal_file: "goals/2026-08-26-hxs2-qwen36-coderx-backend.md"
+  milestone: "M5 — functional validation: coding, tool protocol, API readiness, vision probes (evidence-only)"
+  assigned_agent: "john / Esme (profile-briefed sub-agent)"
+  objective: >-
+    Execute the owner-ratified M5 quality suites against Coder-X's frozen
+    operating profile (hx-qwen3.6-coderx-64k, digest ec9ebe08a824…, ctx 65536,
+    resident Forever) and deliver pass/fail evidence per suite, so the M8
+    sign-off gate has quality grounds. A suite failure is reported, never
+    tuned away.
+  owner_authorizations:
+    - "Owner 2026-08-26: M5 thresholds RATIFIED ('ratified' after the threshold proposal) — coding >=90% passing + evaluator review (specialist bar; Qwen-X generalist scored 90-100% on the same versioned set); tool protocol 100% forbidden/malformed denied AND >=95% schema conformance on valid calls; vision probes evidence-only, NO pass bar (owner D8-vision deferral stands)"
+    - "Generation config: Phase A native sampling, thinking ON, no overrides, no num_predict caps — the acceptance configuration, same as hxs-1 M5/M5b"
+    - "NOT authorized: baseline changes (drop-in, Modelfile, aliases, units, model store), sampling changes, reboots, recovery drills (M8 scope), endpoint/firewall changes, other models"
+  boundaries:
+    - "Execution path: session on hxs-5; hxs-2 (192.168.50.201) via SSH hxsa@192.168.50.201; askpass helper READS the credential from the HX Fleet SSH Access Guide credential-record row at execution time — no extracted copy, helper deleted at task end; verify hostname + peer IP first; sudo -n only; host key pinned (F-05)"
+    - "Fixtures: versioned fixtures only — pilots/PILOT-HX1-OLLAMA-QWEN27B-001/fixtures/ (coding_suite.py, tool_suite.py, fixtures_corpus.py; alias-parameterized: pass hx-qwen3.6-coderx-64k explicitly, every result records the alias). Copy to /tmp on hxs-2 and run on-host against 127.0.0.1:11434. Verify sha256sums.txt before use"
+    - "Coding suite: the versioned deterministic 10-task v1.0.0 set (same tasks/signatures/assertions as hxs-1 M5); evaluator review is mandatory — read every solution in full, concur or dissent per task, no hardcoded-answer gaming tolerated"
+    - "Tool protocol: forbidden/malformed/unknown-tool/authorization cases — 100% denied, zero forbidden executions; valid calls >=95% schema conformance; duplicate-mutation executed exactly once; loop terminates"
+    - "Vision probes: bounded (<=6 probes); deterministic synthetic images generated on-host via python3 stdlib; report what the vision path returns (description/OCR accuracy) as EVIDENCE ONLY — no pass/fail, no tuning"
+    - "Thinking content never persisted in evidence (counts only); sanitization per profile — no secrets in any artifact"
+    - "One bounded correction per failed correctable case; a mandatory-suite FAIL is a finding — stop conditions below"
+  rollback: "No baseline changes are authorized; the task fails closed — evidence preserved, resident model untouched (verify /api/ps identity at close: hx-qwen3.6-coderx-64k, ec9ebe08a824…, 100% VRAM, ctx 65536, Forever)."
+  controlling_sources:
+    - "15-context-packet-john-m5.yaml (the paired context packet for this work order)"
+    - "hxs-1 M5 precedent: 16-esme-m5-validation.md (AC-012/AC-013 execution pattern, D8 application), 19-esme-m5b-amendment-conformance.md (evaluator-review standard)"
+    - "07-esme-m4-install.md + 08-esme-m6-ladder-profiles.md (hxs-2 frozen identity and profile set)"
+    - "fixtures dir + sha256sums.txt (integrity); test_fixtures.py regression suite if fixture behavior is in doubt"
+  deliverable: "16-esme-m5-validation.md: AC-mapped suite report with ratified pass rules; coding per-task table + evaluator-review statement; tool-protocol audit totals (denied/executed/conformance); vision-probe evidence (labeled no-bar); API readiness re-proof; final /api/ps identity guard; sanitized sequential command log; Task May Proceed receipt"
+  second_brain_evaluation:
+    opportunity_identified: "yes"
+    roadmap_capability_or_pattern: "quality-validation pattern — second backend through the same threshold discipline (uniform acceptance across the fleet)"
+    disposition: "implemented — suite results become Coder-X's quality record at handoff, citable by M8"
+    evidence_and_reasoning: "thresholds are owner-ratified per model role (specialist coding bar); results are measured, never assumed — the blueprint's acceptance clause"

@@ -1,0 +1,77 @@
+document:
+  id: "DOC-pilot-hxs2-ev-16-esme-m5-validation"
+  title: "16-esme-m5-validation.md — Esme M5 functional validation on Coder-X (PASS: coding 10/10 = 100% vs ratified >=90% specialist bar with evaluator review concur 10/10; tool protocol 0 forbidden/malformed executed of 51 events + 100% schema conformance of 29 decisions; API readiness PASS; vision probes evidence-only for the deferred D8-vision decision; F-M5-1 residency eviction explained + restored)"
+  type: "evidence"
+  declared_purpose: "M5 functional validation evidence (report ESME-HXS2-M5-VALIDATION-001) under WO-HXS2-JOHN-M5-001: the owner-ratified M5 quality suites executed against Coder-X's frozen operating profile hx-qwen3.6-coderx-64k (digest ec9ebe08a824…28a9f1 on frozen artifact mannix/qwen3.6-27b-a3b-coderx:vision-Q4_K_M ca661423d6b5…c1df, ctx 65536, 100% VRAM, Forever), window 2026-08-26T19:13–19:45Z. Results per the ratified pass rules (owner 2026-08-26, state log row 29): AC-009 API readiness PASS (version/ps <=32 ms, known-answer 391 with thinking); AC-013 coding PASS 10/10 = 100% on the versioned deterministic 10-task v1.0.0 set (rule >=90%) with the mandatory evaluator review — every solution read in full, concur 10/10, zero gaming; AC-012 tool protocol PASS — 51 audit events, 0 forbidden/malformed executed (6/6 denied = 100% denied rule), schema conformance 100.0% of 29 recorded decisions (rule >=95%), duplicate mutation executed exactly once, loop terminates; EF04 raw-False corrected by evaluator judgment (voluntary bounded stop at the retry-budget signal — hxs-1 M5b class, disclosed openly, no re-run); vision probes CAPTURED evidence-only (4 deterministic stdlib PNG probes, sha256-recorded: V1 quadrants exact, V2 counting exact, V3 OCR HK52 vs HXS2, V4 65482 vs 60482 — labeled RECORD for the owner's deferred D8-vision decision, no bar computed or implied); final identity guard EXACT (size == size_vram 17,815,411,094, ctx 65536, Forever; zero NEW Xid — all-boots count stays 1 = pre-existing F-M6-0). Disclosures: F-M5-1 pre-suite /api/ps EMPTY — benign scheduler eviction of the Forever pin under OLLAMA_MAX_LOADED_MODELS=1 by interactive bare-alias use 15:29–15:52Z (zero ERROR/Xid/OOM; proven from GPU-memory records), restored via the frozen preload path in 17 s with a monitor recommendation (/api/ps name+digest monitor with automatic re-pin + interactive alias discipline) routed to M8/owner; F-M5-2 concurrent interactive user at session start (RECORD, zero interference — 59/59 suite-window GIN requests from 127.0.0.1); F-M5-3 EF04 grader correction; F-M5-4 vision OCR evidence for D8; F-M5-5 deliberation distribution RECORD. Baseline: zero drift — no config/unit/digest/listener/version change at any checkpoint; scaffolding /tmp-only, removed at task end; askpass helper deleted (verified)."
+  inferred_value: "INFERENCE: this is the quality record that gives the M8 sign-off gate measured grounds on Coder-X — the second backend through the same threshold discipline as hxs-1 (uniform acceptance across the fleet, per the deliverable's own Second Brain evaluation); the F-M5-1 eviction finding is the operationally durable lesson: a Forever pin does NOT survive another alias's load under MAX_LOADED_MODELS=1, so residency assumptions behind the backend contract need either the recommended self-healing monitor or interactive alias discipline before M8."
+  source:
+    author: "john / Esme (session john-m5-hxs2-20260826-01)"
+    provided_by: "john via Kimi-K3 gate"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/16-esme-m5-validation.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-26T20:08:00Z"
+  owner: "john"
+  applies_to:
+    hosts: [hxs-2, hxs-5]
+    fqdns: []
+    services: [ollama.service, ollama-preload.service]
+    agents: [john, kimi-k3]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+    models: [mannix/qwen3.6-27b-a3b-coderx, hx-qwen3.6-coderx-64k]
+  version: ""
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "evidences"
+      target: "M5 COMPLETE — PASS; hxs-2 state log row 31 (2026-08-26T19:55Z)"
+      note: "governor-verified at row 31; handoff OPEN pending this catalog receipt — the M5 handoff CLOSES when the governor cites this run's receipt in the state log (profile §7)"
+    - predicate: "produced_by"
+      target: "john"
+      note: "under DOC-pilot-hxs2-wo-14-john-m5 + DOC-pilot-hxs2-cp-15-john-m5 (session john-m5-hxs2-20260826-01)"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-ev-16-esme-m5-validation"
+      note: "hxs-1 M5 execution precedent (AC-012/AC-013 pattern on the same versioned fixtures; consulted per the packet)"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-ev-19-esme-m5b-conformance"
+      note: "hxs-1 M5b evaluator-review + EF04-correction standard — the EF04 raw-False correction here follows that disclosed-correction pattern (history preserved, no re-run)"
+    - predicate: "depends_on"
+      target: "DOC-pilot-hx1-fixtures-manifest"
+      note: "versioned fixtures verified against sha256sums.txt before use: coding_suite.py 80fc2e1c…f4b6b7, tool_suite.py ce31e170…73d59e, fixtures_corpus.py 55bec492…9fc1a1 (10/10 OK); vision_probes.py authored this session (a3fc034f…e55c, Appendix A of the deliverable — bounded harness per the work order's no-versioned-vision-fixture gap disposition)"
+    - predicate: "references"
+      target: "DOC-pilot-hxs2-ev-07-esme-m4-install"
+      note: "frozen identity basis: artifact mannix/qwen3.6-27b-a3b-coderx:vision-Q4_K_M ca661423d6b5…c1df, CLIP 446.57M F16 projector (the vision path probed at §4.4)"
+    - predicate: "references"
+      target: "DOC-pilot-hxs2-ev-08-esme-m6-ladder-profiles"
+      note: "operating-profile basis: suites ran ONLY on hx-qwen3.6-coderx-64k (ec9ebe08a824…, ctx 65536 effective, Forever); baseline drift check clean pre/post"
+    - predicate: "references"
+      target: "DOC-pilot-hxs2-ev-08-esme-m6-escalation-xid31"
+      note: "F-M6-0 Xid-31 armed watch ran all session: zero NEW Xid (all-boots count stays 1)"
+    - predicate: "references"
+      target: "DOC-backend-coder-x"
+      note: "Coder-X capability record — these suite results are the quality evidence behind its candidate status ahead of the M8 sign-off gate"
+    - predicate: "risks"
+      target: "F-M5-1 Forever-pin eviction under OLLAMA_MAX_LOADED_MODELS=1 (interactive bare-alias use evicts the resident profile; restored via frozen preload path)"
+      note: "recommendation to M8/owner: /api/ps name+digest monitor with automatic preload re-pin; alias discipline for interactive use on hxs-2 (bare alias and -32k share a digest) — deliverable §7"
+    - predicate: "risks"
+      target: "F-M5-4 vision bitmap-font OCR imperfection (V3 HK52 vs HXS2; V4 65482 vs 60482)"
+      note: "evidence-only, labeled RECORD for the owner's deferred D8-vision decision; scene description + counting exact on the synthetic probes; no bar computed, no tuning proposed"
+    - predicate: "risks"
+      target: "F-M5-2 concurrent interactive user during suite windows (RECORD; zero interference measured)"
+      note: "scheduling note for M8 windows — deliverable §7"
+  validation:
+    validated_at: "2026-08-26T20:08:00Z"
+    freshness: "current"
+    review_due: "at the M8 sign-off gate (unified evidence review) and at any D8-vision disposition (F-M5-4 evidence)"
+  sha256: "351e25edf3cfc73a1eb3ce45c8ec4bc1bda5aa5b811bf1abd12d52f9efd14cbc"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/16-esme-m5-validation.md"
+notes:
+  handoff_clause: "hxs-2 state log row 31 (2026-08-26T19:55Z): M5 COMPLETE — PASS; handoff OPEN pending Carol receipt. The Coder-X M5 handoff CLOSES when the governor cites this run's receipt (receipts/2026-08-26T2026Z-carol-m5-coderx-ci-wave.md) in the state log."
+  transient_evidence_note: "Sanitized suite evidence (ev01–ev08, coding summary, tool-cases/tool-audit.jsonl, vision-evidence.json, vision_probes.py) is retained transiently at hxs-5:/tmp/esme-m5/ (volatile) — this document is the durable record; harness sha256 set recorded in deliverable §5/Appendix A."
+  sanitization: "contains_secret_values false per the deliverable's own sweep (zero think-tags, zero secret markers); askpass helper deleted at task end (verified); thinking content never persisted (counts only)."

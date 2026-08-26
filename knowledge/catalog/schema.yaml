@@ -20,7 +20,7 @@ schema:
     owner: {required: true}
     applies_to:
       required: false
-      fields: {hosts: list, fqdns: list, services: list, agents: list, repositories: list, environments: list}
+      fields: {hosts: list, fqdns: list, services: list, agents: list, repositories: list, environments: list, models: "list (added 2026-08-26 — model identities are first-class applicability targets, e.g. mannix/qwen3.6-27b-a3b-coderx)"}
     version: {required: false}
     status: {required: true, enum: [draft, adopted, active, superseded, historical, rejected]}
     authority_level:

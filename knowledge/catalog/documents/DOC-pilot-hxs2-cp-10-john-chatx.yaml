@@ -1,0 +1,59 @@
+document:
+  id: "DOC-pilot-hxs2-cp-10-john-chatx"
+  title: "10-context-packet-john-chatx.yaml — context packet for WO-HXS4-JOHN-L1-001 (session john-chatx-20260826-01; Chat-X bounded alignment + ladder + three profiles; DISCHARGED — milestone complete)"
+  type: "context-packet"
+  declared_purpose: "Session-binding packet for the john/Esme Chat-X dispatch (goal binding GOAL-HXS2-CODERX-001 v1; work order WO-HXS4-JOHN-L1-001; role producer — Ollama specialist): objective — pin Chat-X to the fleet's 0.32.15, then produce its measured ladder and three-profile set (hx-qwen3.5-9b-32k/-64k/-128k, -64k as the default reference — its already-native default) with digest equality; no preload, no persistence, no endpoint change — those stay parked owner decisions. Current state: hxs-4 (192.168.50.203, Ubuntu 24.04.4, 1x RTX 5060 Ti 16,311 MiB + 1x RTX 5060 8,151 MiB (24.5 GB total), Ollama 0.32.9 (to be aligned to 0.32.15), loopback-only endpoint); resident qwen3.5:9b-q4_K_M (6,594,474,111 B as then-recorded — the live /api/tags 6,594,474,711 B is authoritative (transposition, corrected in the L1 evidence §2.1), digest 6488c96fa5faab64…, resident-on-demand, ctx 65536 effective via the drop-in, idle-unloads); VRAM headroom 24.5 GB total — the lightest model in the fleet (128K capacity-trivial here, still measured per blueprint); model identity qwen3.5:9b-q4_K_M (owner-provisioned 2026-08-26; basic chat utility role; NOT factory-qualified). Owner decisions: ladders + profiles on all four LLMs, identical pattern, same blueprint — activates the version-pin alignment item; parked and NOT in scope: preload/persistence, LAN posture, qualification suites, firewall anything. Constraints: only version pin, ladder, aliases, default-reference repoint; needle probe with the rung's OWN alias at ~95% depth (fixture validity gate on prompt_eval_count); thinking content never persisted in evidence. Evidence requirements: pin pre/post ollama --version, service active after, ollama list intact, reload smoke check; per rung /api/ps (name, digest, size==size_vram, context_length), KV B/token (two depths), needle JSON (fixture_valid, done_reason, needle_found, pass), 2 known-answer spot checks identical across rungs, journal excerpt; alias digests per ollama show + manifest equality vs rung Modelfile; final state summary. Handoff: deliverable 10-esme-chatx-ladder-profiles.md goes to Carol for catalog receipt; handoff OPEN until the receipt is cited in the governing log."
+  inferred_value: "INFERENCE: two packet premises were proven wrong at execution and corrected openly — the 24.5 GB capacity premise (the commissioned GPU isolation limited Ollama to 7.5 GiB until owner decision O2 relaxed it) and the model-size byte count (a transposition vs live /api/tags); both corrections are first-class content in the L1 evidence, which is exactly what the packet's evidence discipline is for."
+  source:
+    author: "Kimi-K3 (governor)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/10-context-packet-john-chatx.yaml"
+    section: "§whole-document"
+    ingestion_date: "2026-08-26T10:00:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: [hxs-4, hxs-5]
+    fqdns: []
+    services: [ollama.service]
+    agents: [john, kimi-k3]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot, fleet]
+    models: [qwen3.5:9b-q4_K_M, hx-qwen3.5-9b-32k, hx-qwen3.5-9b-64k, hx-qwen3.5-9b-128k]
+  version: ""
+  status: "adopted"
+  authority_level: "delegated-contract"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "kimi-k3"
+      note: "commissioned with the paired work order at the owner ladders+profiles order (hxs-2 state log row 13, 2026-08-26T07:13Z)"
+    - predicate: "references"
+      target: "DOC-pilot-hxs2-wo-09-john-chatx"
+      note: "paired work order WO-HXS4-JOHN-L1-001"
+    - predicate: "depends_on"
+      target: "DOC-goal-hxs2-qwen36-coderx-backend"
+      note: "goal binding GOAL-HXS2-CODERX-001 v1; the owner ladders order restated in-packet"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-ev-22-esme-m6-capacity-ladder"
+      note: "consulted hxs-1 ladder pattern (22-esme-m6-capacity-ladder.md)"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-ev-29-esme-m6b-profiles"
+      note: "consulted hxs-1 three-profile freeze pattern (29-esme-m6b-profiles.md)"
+    - predicate: "depends_on"
+      target: "DOC-protected-ssh-info-hxs1"
+      note: "execution per the paired WO's boundaries — askpass credential read at execution time only, helper deleted at task end; no credential content in this packet or in the catalog"
+  validation:
+    validated_at: "2026-08-26T10:00:00Z"
+    freshness: "current"
+    review_due: "on any owner decision on the parked Chat-X items; the handoff clause keeps the handoff OPEN until this run's receipt is cited in the governing log (profile §7)"
+  sha256: "419502ffd6520d4ee7ff5283547fc180fff83815649e898afce3162b813e2571"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/10-context-packet-john-chatx.yaml"
+notes:
+  status_convention: "Cataloged POST-completion at status adopted (discharged-contract convention) — milestone complete before ingestion (hxs-2 state log row 22)."
+  governor_corrections_verified: "The cataloged artifact carries the governor's review batch-11 host-id fix (hxs-2 state log row 16): the consulted-records line reads 'Chat-X verification facts (hxs-1 log row 76)' — VERIFIED PRESENT before hash (2026-08-26T10:00Z). Row 76's 'RESIDENT 100% VRAM' wording was itself corrected openly by the governor at state log row 19 (size_vram was read as residency; the model always split 28%/72% at 64K under the isolation)."
+  hash_crosscheck: "sha256 419502ffd6520d4ee7ff5283547fc180fff83815649e898afce3162b813e2571 computed at ingestion (2026-08-26T10:00Z); state log row 13 records no hashes for this pair — the catalog hash is the first recorded value."

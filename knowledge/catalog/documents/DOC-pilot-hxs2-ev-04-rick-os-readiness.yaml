@@ -1,0 +1,67 @@
+document:
+  id: "DOC-pilot-hxs2-ev-04-rick-os-readiness"
+  title: "04-rick-hxs2-os-readiness.md — rick M1 hxs-2 OS readiness report (WO-HXS2-RICK-M1-001; 13/13 PASS)"
+  type: "evidence"
+  declared_purpose: "Milestone completion evidence for WO-HXS2-RICK-M1-001 (session rick-m1-20260826-01, window 2026-08-26T03:24:11Z-03:32:43Z, owner plan approval 2026-08-26 state log seq 1): hxs-2's OS plane is proven ready for the CoderX backend — 13 defined, 13 executed, 13 PASS, 0 FAIL/BLOCKED/NOT RUN. Exactly two mutations performed: (a) systemctl mask of sleep/suspend/hibernate/suspend-then-hibernate targets (3-view verified; hybrid-sleep deliberately untouched — not in the authorized set for hxs-2); (b) rfkill soft block of Wi-Fi (rfkill1=phy0/wlp5s0, MAC-matched to discovery; no routes/sessions proven first; state=0 soft=1 held across two independent sessions; systemd-rfkill persistence verified — save file /var/lib/systemd/rfkill/pci-0000:05:00.0:wlan re-created with blocked state at 03:28:53Z; bluetooth rfkill0 explicitly untouched). Driver/DKMS re-proof: 580.173.02 + CUDA 13.0, both RTX 5060 Ti bound nvidia, DKMS built for the running 7.0.0-30 AND 7.0.0-28; zero NVRM Xid across 8 retained boots; AER = 3 benign capability lines; 0 failed units; root ext4 3.4 T free (1 %); Secure Boot disabled untouched; ufw inactive with the staged /24 ruleset delivered as DOCUMENT ONLY (never applied). Regression + independent-second-session proofs PASS; rollback inverses exact and reboot-free. Findings F-01..F-07 + R-01 recorded (see notes). Completion PASS — TASK COMPLETE; Task May Proceed: YES."
+  inferred_value: "INFERENCE: F-04 (the systemd-rfkill save file stores the kernel SOFT flag, 1=blocked — proven by the untouched bluetooth control pair) plus F-03 (rfkill userspace binary absent on hxs-2; the sysfs state file is the block mechanism) are new reusable fleet facts: any future Wi-Fi-block verification on an HX host can assert against the save file content directly, and rollback scripts must not assume the rfkill binary exists. The 13-check readiness shape has now transferred across two hosts (hxs-1 M1/M2, hxs-2 M1) — it is the de facto fleet OS-readiness checklist."
+  source:
+    author: "rick (session rick-m1-20260826-01)"
+    provided_by: "rick via Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/04-rick-hxs2-os-readiness.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-26T04:10:00Z"
+  owner: "rick"
+  applies_to:
+    hosts: [hxs-2, hxs-5]
+    fqdns: []
+    services: [sleep.target, suspend.target, hibernate.target, suspend-then-hibernate.target, systemd-rfkill.service, wpa_supplicant.service, ufw.service]
+    agents: [rick]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+    models: [mannix/qwen3.6-27b-a3b-coderx:vision-Q4_K_M]
+  version: ""
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "evidences"
+      target: "DOC-pilot-hxs2-wo-02-rick-m1"
+      note: "WO-HXS2-RICK-M1-001 discharged PASS — TASK COMPLETE (13/13 checks; one read-only probe retry retained in evidence; no bounded correction needed; no stop condition hit)"
+    - predicate: "evidences"
+      target: "DOC-pilot-hxs2-cp-03-rick-m1"
+      note: "packet's 13-check enumeration executed verbatim; staged-ufw content delivered document-only per packet (element later voided by the owner no-host-firewall rule — see notes)"
+    - predicate: "evidences"
+      target: "DOC-goal-hxs2-qwen36-coderx-backend"
+      note: "M1 milestone of GOAL-HXS2-CODERX-001 complete; hxs-2 state log row 4 (governor-verified 2026-08-26T03:42Z); handoff OPEN until this run's receipt is cited (deliverable §12)"
+    - predicate: "produced_by"
+      target: "rick"
+      note: "session rick-m1-20260826-01 from hxs-5; every session an independent fresh SSH connection (no control-master reuse)"
+    - predicate: "configures"
+      target: "hxs-2 systemd sleep targets + rfkill"
+      note: "sleep/suspend/hibernate/suspend-then-hibernate masked x4 (/dev/null symlinks); rfkill1 (phy0/wlp5s0) soft-blocked via /sys/class/rfkill/rfkill1/state=0; systemd-rfkill saved blocked state (boot-persistent by mechanism — R-01)"
+    - predicate: "references"
+      target: "DOC-tkv-hxs2-discovery"
+      note: "identity corroborated against the 2026-08-12 as-found record (machine-id prefix/UUID/MAC all match); F-01 kernel drift vs that record (7.0.0-28 -> 7.0.0-30 at 2026-08-25T15:09:55Z, outage window) — live host is the authority; discovery stays historical as-found"
+    - predicate: "depends_on"
+      target: "DOC-protected-ssh-info-hxs1"
+      note: "ratified askpass pattern held: credential read at execution only, helper + volatile workspace deleted at task end; §12 sanitization disclosure is transcript-only, contained — no credential material in any file, evidence artifact, or this catalog"
+    - predicate: "risks"
+      target: "R-01 (boot-persistence of both mutations proven by systemd semantics + saved state, not by an observed reboot)"
+      note: "accepted-by-design (reboots not authorized at M1); first owner-approved reboot should spot-check is-enabled x4 + rfkill state (expect 0) — carried to the M7 cold-reboot milestone"
+  validation:
+    validated_at: "2026-08-26T04:10:00Z"
+    freshness: "current"
+    review_due: "at M2/M8 evidence index; R-01 spot check at the first authorized reboot"
+  sha256: "cb2833458f7853a0226d1101392a75aefc01836e1a0005b170457a5d947ef4e4"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/04-rick-hxs2-os-readiness.md"
+notes:
+  findings_register: "F-01 (drift, resolved): kernel 7.0.0-28 -> 7.0.0-30 since as-found; host rebooted 2026-08-25 15:09:55Z (site power-outage window, cf. hxs-1 log row 47); driver stack live-proven on -30, DKMS built for -30 and -28. F-02 (note): DKMS not built for 7.0.0-29 (superseded intermediate image; matters only if -29 ever manually booted). F-03 (mechanism): rfkill binary absent on hxs-2 — sysfs state file is the block/unblock mechanism. F-04 (proven semantics): systemd-rfkill save file stores the kernel soft flag (1=blocked), bluetooth control pair proof. F-05 (D-record): TOFU host-key pin — no prior known_hosts pin for 192.168.50.201 existed on hxs-5; first connection accept-new per the owner-authorized work order, identity corroborated vs discovery machine-id/UUID/MAC; ED25519 fingerprint SHA256:b2qlMQz496nUbuZKJu3wwmR0QY/EmN0KQtW4rM2HDcQ recorded in evidence §2 (public by design) — future hxs-2 tasks pin StrictHostKeyChecking=yes; a mismatch must halt the session. F-06 (observation): wpa_supplicant enabled+active with no configured network; rendered moot by the rfkill block; RECOMMENDATION (not executed): formal disablement under a future authorized service change. F-07 (record-only): routine package upgrades pending; no installs authorized."
+  sanitization_disclosure: "§12 (profile §11 honesty): one mis-scoped local sed mask printed the credential ONCE into the operator session transcript during credential-file shape verification on hxs-5 — never written to any file, evidence artifact, or the deliverable; contained. Catalog handling per profile §6: no secret value is quoted or stored anywhere in the catalog. Governor records this as the third transcript-class exposure (hxs-2 state log row 4, incl. F-M5-1 + 0600 extractions); rotation recommendation is pending with the owner OUTSIDE the catalog lane."
+  voided_element: "The §8 staged ufw ruleset (document-only, never applied) is VOID per the owner no-host-firewall rule 2026-08-26 (hxs-2 state log row 5): hxs-2's M8 endpoint binds to the LAN with the /24 itself as the boundary; blueprint §5 governs. Recorded element-level; the evidence document stands."
+  mask_set_divergence: "hxs-2 authorized set masked sleep.target and left hybrid-sleep.target static; the hxs-1 proven set is the inverse on those two members (hxs-2 state log row 6). Alignment (add hybrid-sleep.target on hxs-2) queued to rick's next hxs-2 session; not a readiness blocker."
+  second_brain: "In-file evaluation: hxs-1 OS-readiness pattern, second validated use; TKV server records as controlling sources from day one; disposition implemented — checklist, staged designs, and the F-04 persistence semantics become catalog content at handoff (this record)."

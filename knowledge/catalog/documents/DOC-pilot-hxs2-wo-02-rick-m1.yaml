@@ -1,0 +1,60 @@
+document:
+  id: "DOC-pilot-hxs2-wo-02-rick-m1"
+  title: "02-work-order-rick-m1.yaml — WO-HXS2-RICK-M1-001 (hxs-2 M1 OS readiness verification + staged designs; two authorized mutations)"
+  type: "work-order"
+  declared_purpose: "Delegated contract commissioning rick (session rick-m1-20260826-01) to verify hxs-2 is ready to host the CoderX backend: re-prove the driver/DKMS stack, execute the 13-point baseline checklist, stage (NOT enable) the ufw boundary ruleset for the D2 endpoint scope, formalize the Wi-Fi rfkill soft block per owner D4, and record the kernel/storage/Secure-Boot posture. Exactly two authorized mutations: the four sleep-target masks (sleep/suspend/hibernate/suspend-then-hibernate) and the rfkill soft block (with systemd-rfkill persistence check); everything else read-only. NOT authorized: ufw enablement or any firewall change (design only), package installs/upgrades, kernel changes, driver changes, service changes, reboots. Boundaries: hxs-5 session, SSH hxsa@192.168.50.201, askpass helper reads the credential-record table row at execution time (no extracted copy, helper deleted at task end), sudo -n only, password-failure = STOP, one bounded correction per failed correctable check, stop conditions (driver/GPU fault, unexpected exposure, any Xid, identity mismatch). Deliverable: 04-rick-hxs2-os-readiness.md (completed PASS — 13/13; cataloged this run). Second Brain evaluation recorded in-file (hxs-1 OS-readiness pattern, second validated use; disposition implemented)."
+  source:
+    author: "Kimi-K3 (governor)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/02-work-order-rick-m1.yaml"
+    section: "§whole-document"
+    ingestion_date: "2026-08-26T04:10:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: [hxs-2, hxs-5]
+    fqdns: []
+    services: [sleep.target, suspend.target, hibernate.target, suspend-then-hibernate.target, systemd-rfkill.service, ufw.service]
+    agents: [rick, kimi-k3]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+    models: [mannix/qwen3.6-27b-a3b-coderx:vision-Q4_K_M]
+  version: ""
+  status: "adopted"
+  authority_level: "delegated-contract"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "kimi-k3"
+      note: "M1 commissioned at M0 (hxs-2 state log rows 1-2, 2026-08-26T03:10Z/03:20Z: plan approved, D1-D8 recorded, 'rick M1 + Carol M0 in flight')"
+    - predicate: "references"
+      target: "DOC-pilot-hxs2-cp-03-rick-m1"
+      note: "paired context packet (session rick-m1-20260826-01)"
+    - predicate: "depends_on"
+      target: "DOC-goal-hxs2-qwen36-coderx-backend"
+      note: "parent goal GOAL-HXS2-CODERX-001; owner decisions D1-D4 are the milestone's authority (D2 endpoint scope, D4 rfkill formalization)"
+    - predicate: "governs"
+      target: "DOC-pilot-hxs2-ev-04-rick-os-readiness"
+      note: "paired deliverable (PASS — TASK COMPLETE, 13/13); handoff closes when this run's receipt lands in the hxs-2 state log"
+    - predicate: "references"
+      target: "DOC-tkv-hxs2-discovery"
+      note: "controlling source (with driver-results / pre-work-results) — historical as-found, cross-check only; live host is the authority"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-ev-07-rick-os-readiness"
+      note: "hxs-1 M1/M2 readiness artifacts named as the pattern reference (second validated use of the hxs-1 OS-readiness pattern)"
+    - predicate: "depends_on"
+      target: "DOC-protected-ssh-info-hxs1"
+      note: "ratified askpass execution path (hxs-5 -> hxs-2); credential read at execution, never printed/logged/stored, helper deleted at task end"
+  validation:
+    validated_at: "2026-08-26T04:10:00Z"
+    freshness: "current"
+    review_due: "not applicable — discharged contract (milestone complete, deliverable 04 PASS)"
+  sha256: "fa194a2739685b5bcacc08e9da84ff12b0ff99ebde53059c313d4ca57488f4ad"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/02-work-order-rick-m1.yaml"
+notes:
+  superseded_element: "The ufw-staging design element is VOID: owner rule 2026-08-26 (no host firewalls anywhere on HX hosts; hxs-1 state log row 73; hxs-2 state log row 5) struck the staged-ufw deliverable content after M1 completed — hxs-2's M8 endpoint will bind to the LAN with the /24 itself as the boundary (blueprint §5 governs). The work order itself stands as the discharged contract: the two authorized mutations were executed and persist. Recorded as an element-level supersession; the document is not superseded."
+  mask_set_note: "Authorized mask set for hxs-2 = sleep/suspend/hibernate/suspend-then-hibernate (hybrid-sleep deliberately untouched). hxs-2 state log row 6 records the divergence from the hxs-1 proven set (suspend/hibernate/hybrid-sleep/suspend-then-hibernate): alignment (add hybrid-sleep.target) queued to rick's next hxs-2 session; sleep.target may stay as harmless superset."

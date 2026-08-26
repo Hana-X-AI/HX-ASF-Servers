@@ -1,0 +1,54 @@
+document:
+  id: "DOC-pilot-hx1-cp-38-john-exposure"
+  title: "38-context-packet-john-exposure.yaml — context packet for WO-HX1-JOHN-EXP-001 (session john-exp-20260826-01)"
+  type: "context-packet"
+  declared_purpose: "Session-binding packet for the hxs-1 exposure john/Esme dispatch: goal binding (GOAL-HX1-QWEN38-001 v1), current state (hxs-1 192.168.50.200, Ubuntu 24.04.4 LTS, kernel 7.0.0-30-generic; resident hx-qwen3.8-27b-64k:latest digest 766cd9469fb47c42890616880772f2647fcfe4656b7550e5cc37ab186cc99d8a, 20,463,789,012 B, 100% VRAM, ctx 65536, Forever verified 2026-08-26; endpoint then OLLAMA_HOST=127.0.0.1:11434 loopback-only with remote refusal proven at M5/M7; both units enabled/active, preload TimeoutStartSec=600 / script worst case <= 538 s per 35-esme; ufw state to be captured — expected inactive, capture not assume; fixtures and preload call 127.0.0.1:11434 so loopback MUST remain functional), owner decisions (2026-08-26 directive; boundary 192.168.50.0/24 only for 11434, SSH stays /24, default deny incoming otherwise, no NAT port-forward owner-confirmed), constraints (only the two authorized mutation classes; rule order verified before enable — 22/24 FIRST, never lock out SSH; secrets never printed/logged/stored, askpass read-at-execution), evidence requirements (pre/post drop-in + sha256, ufw status numbered, /api/ps identity block; reachability matrix 127.0.0.1 + hxs-5 LAN + SSH + preload re-run; ruleset as applied; journal excerpt, NRestarts accounting), consulted records (29-esme-m6b-profiles, 35-esme-preload-budget, 16-esme S01-S03 prior loopback proof historical), and the handoff clause (deliverable to Carol; OPEN until the receipt is cited in the state log)."
+  source:
+    author: "Kimi-K3 (governor)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/38-context-packet-john-exposure.yaml"
+    section: "§whole-document"
+    ingestion_date: "2026-08-26T04:10:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: [hxs-1, hxs-5]
+    fqdns: []
+    services: [ollama.service, ollama-preload.service, ufw.service]
+    agents: [john, kimi-k3, carol]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot, fleet]
+    models: [hx-qwen3.8-27b-64k]
+  version: ""
+  status: "adopted"
+  authority_level: "delegated-contract"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "kimi-k3"
+      note: "hxs-1 state log row 71 (2026-08-26T03:20Z); record sha256 matches the row-71 proof hash exactly"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-wo-37-john-exposure"
+      note: "paired work order"
+    - predicate: "depends_on"
+      target: "DOC-goal-hx1-ollama-qwen38-27b"
+      note: "goal_id GOAL-HX1-QWEN38-001, goal_version 1; SC-07a amendment is the posture authority"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-ev-39-esme-exposure-change"
+      note: "deliverable produced under this packet (PASS — TASK COMPLETE); handoff OPEN until this run's receipt lands in the state log (packet handoff clause)"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-ev-16-esme-m5-validation"
+      note: "consulted record: 16-esme S01-S03 prior loopback-only proof — historical posture evidence (posture superseded for operations by SC-07a; the document stands)"
+  validation:
+    validated_at: "2026-08-26T04:10:00Z"
+    freshness: "current"
+    review_due: "not applicable — discharged (change complete, deliverable 39 PASS)"
+  sha256: "56ce99e6d4ae553b86400d6cd9ee19a13820e9fc6673499e48f64333fcf7e729"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/38-context-packet-john-exposure.yaml"
+notes:
+  superseded_element: "The ufw-ruleset content (owner-decisions bullet 'default deny incoming… SSH stays /24' and the staged-rule evidence requirements) was executed then REVERTED same day under the owner no-host-firewall rule 2026-08-26 (hxs-1 state log rows 72-73). The packet otherwise stands as the discharged session contract; the enduring posture is bind 0.0.0.0 + LAN-as-boundary (blueprint §5)."
+  assigned_agent_call_sign: "Esme = john (pilot call sign, not a roster entry)"

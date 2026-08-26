@@ -1,0 +1,66 @@
+document:
+  id: "DOC-kdd-0007-hxs3-muse-glimmer-tooling-adoption"
+  title: "KDD-0007 — Adopt the hxs-3 Muse Glimmer 30B tooling pilot (PILOT-HXS3-MUSE-GLIMMER-TOOLING-001)"
+  type: "decision"
+  declared_purpose: "Ratified decision (header: Date 2026-08-26, Status ratified, Decider Agent-Zero; related goal 2026-08-26-hxs3-muse-glimmer-tooling): adopt PILOT-HXS3-MUSE-GLIMMER-TOOLING-001 — provision hxs-3 with the exact muse-glimmer:30b artifact via Ollama per the approved plan (session plan patriot-miles-morales-us-agent.md), qualified per the factory playbook, and registered in the Second Brain catalog with parallel_tool_calling: false as a first-class capability LIMIT. Context: the owner commissioned the hxs-3 mission 2026-08-26 — deploy Meta's Muse Glimmer 30B as the factory's primary tool agent within the RAG pipeline per the owner-updated v1.1 authoritative pilot; Meta's documentation quality (explicit runtime boundaries, chat-template/special-token contracts, native ATEM tool format, one-call-per-turn limitation, reasoning-strength controls, context/truncation/image/DFlash behavior, compatibility floors, failure modes) materially improves HX fit and reduces reverse-engineering cost; the corrected v1.1 architecture registers Muse as a sequential, one-call-per-turn tooling specialist — parallel tooling must occur above the model within KK3's orchestration plane, never as an advertised model capability; the v1.1's DeepSeek Harness registration framing maps to the Second Brain catalog (Harness verified nonexistent, owner 2026-08-26; KDD-0006 convention) and its 'Neo' role is covered by KK3 + john/Esme; the artifact is an official Ollama library tag (muse-glimmer:30b, ~18 GB, LM 27.9B Q4_K_M + 1.92B CLIP projector, Apache-2.0) executing dense (~29.6B) on hxs-3's 2x RTX 5060 Ti with measured placement/KV. Options: (1) Ollama with the official artifact, blueprint-conformant (selected — uniform service/identity/preload/fixture patterns across all three hosts; v1.1's ratified choice; escape hatch preserved); (2) Meta's native llama.cpp server, the doc-1 path (rejected as the primary — breaks the blueprint's uniform operations: systemd, /api/ps, alias+digest, preload, fixtures; retained as the DRAFTED ESCAPE HATCH if the Ollama compatibility gate fails at M4/M5 — first-class architecture with ATEM parser, DFlash, reasoning_strength support); (3) defer hxs-3 until after hxs-2 closes (rejected — independent hosts and lanes; the factory multiplexes safely; the owner asked to start now). Decision text: one tool call per model turn, proposed never authorized; KK3 owns orchestration, parallelization-above-the-model, acceptance, and evidence; gpt-oss is retained as task-shaped control, not displaced; D-items D1-D8 recorded in the goal file. Consequences: enables the factory's agent-intelligence node with a documented native tool contract; capability limits become registry content (every future dispatch retrieves them); the LLM-backend playbook earns its third validated host, justifying formal pattern promotion at M8. Forecloses: any parallel-tool claim for this model, any second serving plane unless the escape hatch fires, any Harness dependency, LightRAG integration in this pilot (consumer unbuilt). Revisit if: Ollama fails Muse compatibility (escape hatch), the RAG pipeline is built (integration pilot), or Meta ships a materially different artifact (re-qualification on digest change, CX-R02 pattern)."
+  source:
+    author: "Kimi-K3 (record); decider Agent-Zero"
+    provided_by: "Agent Zero"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0007-hxs3-muse-glimmer-tooling-adoption.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-26T05:05:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: [hxs-3]
+    fqdns: [hxs-3.hx.local.arpa]
+    services: [ollama.service]
+    agents: [kimi-k3, rick, john, carol]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+    models: [muse-glimmer:30b]
+  version: ""
+  status: "active"
+  authority_level: "ratified-governance"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "decides"
+      target: "DOC-goal-hxs3-muse-glimmer-tooling"
+      note: "adopts the pilot the goal governs (KDD header: Related goals 2026-08-26-hxs3-muse-glimmer-tooling); owner D-items D1-D8 recorded in the goal file"
+    - predicate: "decides"
+      target: "muse-glimmer:30b (exact official Ollama tag; manifest prefix de878ce33ad8 cross-check only; full local digest = frozen identity at M4) as pilot model identity"
+      note: "owner selection 2026-08-26 (goal D3); dense ~29.6B execution on 2x RTX 5060 Ti with measured placement/KV — not the 30b-mlx Apple-Silicon tag (v1.1 Phase 9)"
+    - predicate: "decides"
+      target: "parallel_tool_calling: false — one-call-per-turn registered as a first-class capability LIMIT"
+      note: "the model proposes at most one tool call per turn and never authorizes or executes; parallel tooling lives above the model in KK3's orchestration plane — new catalog convention: capability LIMITS are first-class registry content (goal Second Brain evaluation; SC-08 evidence contract)"
+    - predicate: "references"
+      target: "DOC-kdd-0006-hxs2-coderx-backend-adoption"
+      note: "sibling Harness-free mapping: the v1.1's DeepSeek Harness registration framing maps onto the Second Brain catalog per the KDD-0006 convention (substrate verified nonexistent, owner 2026-08-26); the v1.1's 'Neo' role is covered by KK3 + john/Esme"
+    - predicate: "references"
+      target: "DOC-hxs3-muse-glimmer-pilot-v11"
+      note: "the owner-updated v1.1 authoritative pilot this KDD adopts (Context: Meta documentation quality materially improves HX fit); option 1 is the v1.1's ratified choice"
+    - predicate: "references"
+      target: "DOC-meta-muse-glimmer-llama-cpp-guide"
+      note: "option 2 (doc-1 path): rejected as primary for breaking blueprint-uniform operations, retained as the drafted escape hatch for the M4/M5 compatibility gate (ATEM parser, DFlash, reasoning_strength support)"
+    - predicate: "references"
+      target: "DOC-hxs3-gpt-oss-regular-pilot"
+      note: "earlier hxs-3 pilot context: gpt-oss retained as task-shaped control, not displaced (Decision); v1.1 §3.3 retains GPT-OSS 20B and Qwen CoderX as task-shaped controls rather than forcing one universal model"
+    - predicate: "governs"
+      target: "DOC-pilot-hxs3-state-log"
+      note: "execution state log opened at M0 under this adoption (row 1, 2026-08-26T04:45Z — plan approved Harness-free; goal file + KDD-0007 written; D-items ratified)"
+  validation:
+    validated_at: "2026-08-26T07:47:00Z"
+    freshness: "current"
+    review_due: "at pilot close, or on the KDD's own revisit triggers (Ollama fails Muse compatibility — escape hatch; the RAG pipeline is built — integration pilot; Meta ships a materially different artifact — re-qualification on digest change)"
+  sha256: "b96404144ef3383a0d58eda0227f46bc5fae8964c892470be631f7a3ae281971"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0007-hxs3-muse-glimmer-tooling-adoption.md"
+notes:
+  header_verification: "Verified at ingestion: KDD header fields read Date 2026-08-26, Status ratified, Decider Agent-Zero. Record status/authority follow the established KDD record convention (KDD-0001..0006: status active, authority_level ratified-governance — 'ratified' is not a schema status enum value); the header's ratified state and decider are preserved verbatim in declared_purpose (same treatment as DOC-kdd-0005/DOC-kdd-0006 notes.header_verification)."
+  capability_limit_convention: "NEW CATALOG CONVENTION (per dispatch, recorded in the KDD decision text and the goal's Second Brain evaluation): a capability LIMIT is registered as first-class registry content — parallel_tool_calling: false for muse-glimmer:30b — so every future dispatch retrieves the limit alongside capabilities. Prior registrations carried capabilities/limits inside Harness-era registry sketches (v1.1 §7) or prose; from KDD-0007 forward the limit is a decides-edge and, at the registration milestone (SC-08), a field of the catalog capability record."
+  escape_hatch: "Option 2 (Meta native llama.cpp server, doc-1 path) is retained as the DRAFTED ESCAPE HATCH, not a standing second serving plane: it fires only if the Ollama compatibility gate fails at M4/M5; llama.cpp floor b10353 (commit 62bf73d25) is diagnostic-only for the installed Ollama build (state log row 1)."
+  limit_enforcement_amendment: "MID-RUN AMENDMENT re-validated this run (2026-08-26T06:15Z; governor edit 05:48:44Z, 'review finding 2026-08-26'): the Decision's LIMIT sentence now carries the two-level enforcement contract — 'responses containing more than one tool call are rejected, and accepted calls execute serially with results returned before the next selection (the request-level parallel_tool_calls flag is a compatibility probe only, never enforcement)'. The registered LIMIT itself (parallel_tool_calling: false, one call per model turn, proposed never authorized) is unchanged; the amendment sharpens HOW the harness enforces it. Hash chain: caa8de2c… (M0 ingestion 05:05Z) → b9640414… (06:15Z re-validation) → b9640414… UNCHANGED at the 2026-08-26T07:47Z batch-11 re-validation (source md untouched since the amendment). The matching goal-file amendment (intent + SC-05 row) is re-validated in DOC-goal-hxs3-muse-glimmer-tooling. Historical, RESOLVED: the derived .html sibling was stale post-edit (wiki-sync DRIFT — governor-lane re-render, receipt flag F-WIKI-3); VERIFIED CURRENT this run — KDD-0007 is in scripts/wiki/manifest.txt (line 41), the KDD-0007.html sibling carries the amended two-level enforcement text verbatim, and render.py --check reports OK (in sync with the source md; html sha256 c0d6a479e861733711bde3365a1342e3b1c0f34d112a497ae0733afe597ef458). The Meta-X capability record (DOC-backend-meta-x) carries the amended semantics."
+  wiki_rendering: "At ingestion (2026-08-26T05:05Z) KDD-0007 was not listed in scripts/wiki/manifest.txt and had no .html sibling — flagged as a follow-up (same as KDD-0006, DOC-kdd-0006 notes.wiki_rendering). RESOLVED governor-side the same day (the manifest-completion follow-up recorded at hxs-3 state log row 6): KDD-0007 is manifest line 41 and the .html sibling renders in sync (render.py --check OK, verified 2026-08-26T07:47Z). Dual-format manifest membership and rendering remain the governor's lane (AGENTS.md documentation conventions)."

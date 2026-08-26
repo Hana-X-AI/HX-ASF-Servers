@@ -1,0 +1,33 @@
+work_order:
+  task_id: "WO-HXS2-RICK-M1-001"
+  parent_goal: "GOAL-HXS2-CODERX-001"
+  goal_file: "goals/2026-08-26-hxs2-qwen36-coderx-backend.md"
+  milestone: "M1 — hxs-2 OS readiness verification and staged designs (non-mutating except rfkill)"
+  assigned_agent: "rick (profile-briefed sub-agent)"
+  objective: >-
+    Verify hxs-2 is ready to host the CoderX backend: re-prove the driver/DKMS
+    stack, confirm baseline health (13-point checklist), stage (NOT enable) the
+    ufw boundary ruleset for the D2 endpoint scope, formalize the Wi-Fi rfkill
+    soft block per owner D4, and record the kernel/storage/Secure-Boot posture.
+    Two authorized mutations only: the four sleep masks and the rfkill soft
+    block (with systemd-rfkill persistence check). Everything else is read-only.
+  owner_authorizations:
+    - "Plan approved 2026-08-26 (M0, state log row 1): this milestone is commissioned"
+    - "Authorized mutations: sleep.target + suspend/hibernate/suspend-then-hibernate masks; rfkill soft block of Wi-Fi (D4). Everything else read-only"
+    - "NOT authorized: ufw enablement or any firewall change (design only), package installs/upgrades, kernel changes, driver changes, service changes, reboots"
+  boundaries:
+    - "Execution path: session on hxs-5; hxs-2 (192.168.50.201) via SSH hxsa@192.168.50.201; askpass helper READS the credential from the HX Fleet SSH Access Guide's credential-record table row (/home/hxsa/opt/local-tkv/agent-zero-docs/keys.md/ssh-info.md) AT EXECUTION TIME — no extracted copy, helper deleted at task end, never printed/logged/stored; verify hostname and peer IP before any action; sudo -n only"
+    - "If password auth fails on hxs-2: STOP and escalate — do not retry blindly, do not hunt for other credentials"
+    - "One bounded correction attempt per failed correctable check; stop conditions: driver/GPU fault, unexpected exposure, any Xid, identity mismatch"
+  rollback: "rfkill inverse (echo 1 > /sys/class/rfkill/<wifi>/state); unmask the four units (systemctl unmask). Record exact inverses in evidence."
+  controlling_sources:
+    - "03-context-packet-rick-m1.yaml (this package)"
+    - "/opt/tkv-local/servers/hxs-2/ (discovery.md, driver-results.md, pre-work-results.md — historical as-found, cross-check only)"
+    - "/opt/tkv-local/ubuntu (role knowledge gate per AGENTS.md)"
+    - "goal file owner decisions D1–D4; servers/AGENTS.md records contract"
+  deliverable: "04-rick-hxs2-os-readiness.md: 13-point checklist (defined, executed, PASS/FAIL), staged ufw ruleset document, rfkill proof (interface identity, no routes/sessions before block, state after, persistence mechanism), driver/DKMS re-proof, baseline health, Task May Proceed receipt"
+  second_brain_evaluation:
+    opportunity_identified: "yes"
+    roadmap_capability_or_pattern: "hxs-1 OS-readiness pattern (second validated use); TKV server records as controlling sources (the row-27 lesson, applied from day one)"
+    disposition: "implemented — the checklist and staged designs become catalog content at handoff"
+    evidence_and_reasoning: "same readiness shape as hxs-1 M1/M2 proves the pattern transfers; cataloging it builds the hxs-2 knowledge spine before mutation begins"

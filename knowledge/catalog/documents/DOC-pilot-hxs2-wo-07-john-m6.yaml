@@ -1,0 +1,68 @@
+document:
+  id: "DOC-pilot-hxs2-wo-07-john-m6"
+  title: "07-work-order-john-m6.yaml — WO-HXS2-JOHN-M6-001 (hxs-2 M6+M6b: context ladder 32K/64K/128K on the exact digest + three-profile freeze, hxs-1 pattern; DISCHARGED — milestone complete)"
+  type: "work-order"
+  declared_purpose: "Delegated contract commissioning john / Esme (session john-m6-20260826-01) for hxs-2 milestone M6+M6b — run the hxs-1-shaped capacity ladder on Coder-X's exact frozen artifact (ca661423d6b5…): create rung Modelfiles FROM the frozen digest with only PARAMETER num_ctx varied (32768 baked baseline, 65536 operating per D5, 131072 extended to match the hxs-1 profile set); prove each rung (resident 100% VRAM, per-GPU split, KV growth f16 measured linear, needle at ~95% depth found with done_reason=stop, D8-quality spot flat vs the 32K baseline, no OOM/CPU fallback/Xid); then freeze the three aliases hx-qwen3.6-coderx-32k / -64k / -128k with per-rung digest equality, repoint preload + hx2.conf to hx-qwen3.6-coderx-64k, re-prove residency (ctx 65536 effective, Forever), and leave the source tag and both other aliases in-store (tags only, not loaded). Owner authorizations: owner 2026-08-26 'complete each ladder and profile entries so they appear the same way hxs-1's did — identical pattern, same blueprint' (state log row 11); D5 ratified (operating context 65,536 after the ladder — ladder validates 32K then 64K then 128K on the exact digest); NOT authorized: sampling changes, context beyond 131072, other models, reboots, model-store deletions, endpoint changes. Boundaries: hxs-5 session, SSH hxsa@192.168.50.201, askpass helper READS the credential from the HX Fleet SSH Access Guide credential-record row at execution time (no extracted copy, helper deleted at task end), hostname + peer IP verified first, sudo -n only, host key pinned (F-05); rung Modelfiles FROM the frozen digest with num_ctx the ONLY changed parameter; versioned fixtures (needle_probe.py alias-parameterized); one bounded correction per failed correctable rung; stop conditions OOM / unapproved CPU fallback / any Xid / needle miss at 32K or 64K (128K needle miss = extended-fail, fall back to two profiles — not needed). Rollback: preload + hx2.conf repointed back to hx-qwen3.6-coderx (one-line versioned edits); aliases removed via ollama rm (tags only — blobs and base tag intact); pre-state hashes recorded. Deliverable: 08-esme-m6-ladder-profiles.md. Second Brain evaluation: opportunity identified — hxs-1 ladder/profile pattern, second validated use; disposition implemented (the rung evidence and the three aliases become Coder-X's catalog context profile at handoff)."
+  inferred_value: "INFERENCE: this is the capacity gate the D5 64K operating decision stood on for the MoE model — CoderX's hybrid-attention KV coefficient (20,480 B/token f16, under half of hxs-1's dense 45,056) had to be measured on this exact digest and never transferred, and the WO's identity guard (FROM the frozen digest, num_ctx the only delta) is what makes the three aliases content-addressed facts instead of convenience tags."
+  source:
+    author: "Kimi-K3 (governor)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/07-work-order-john-m6.yaml"
+    section: "§whole-document"
+    ingestion_date: "2026-08-26T10:00:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: [hxs-2, hxs-5]
+    fqdns: []
+    services: [ollama.service, ollama-preload.service]
+    agents: [john, kimi-k3]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+    models: [mannix/qwen3.6-27b-a3b-coderx:vision-Q4_K_M, hx-qwen3.6-coderx, hx-qwen3.6-coderx-32k, hx-qwen3.6-coderx-64k, hx-qwen3.6-coderx-128k]
+  version: ""
+  status: "adopted"
+  authority_level: "delegated-contract"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "kimi-k3"
+      note: "M6 commissioned at the owner ladders+profiles order (hxs-2 state log row 13, 2026-08-26T07:13Z; the same order commissioned the Chat-X ladder 09/10 and the hxs-3 M7 pair)"
+    - predicate: "references"
+      target: "DOC-pilot-hxs2-cp-08-john-m6"
+      note: "paired context packet (session john-m6-20260826-01)"
+    - predicate: "depends_on"
+      target: "DOC-goal-hxs2-qwen36-coderx-backend"
+      note: "parent goal GOAL-HXS2-CODERX-001 (goal_file goals/2026-08-26-hxs2-qwen36-coderx-backend.md); owner decisions D1–D8 are the milestone's authority (D3 frozen identity, D5 64K operating after the ladder, D8 quality spot per rung)"
+    - predicate: "references"
+      target: "DOC-pilot-hxs2-ev-07-esme-m4-install"
+      note: "identity + baseline basis: frozen digest ca661423d6b5…c1df, alias hx-qwen3.6-coderx 1d297a6a09…21ba5, ctx 32768 baked, residency 17,602,392,879 B 100% VRAM both GPUs"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-ev-22-esme-m6-capacity-ladder"
+      note: "hxs-1 M6 capacity-ladder pattern (controlling source 22-esme-m6-capacity-ladder.md) — second validated use, on the hybrid-attention MoE"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-ev-29-esme-m6b-profiles"
+      note: "hxs-1 M6b three-profile freeze pattern (controlling source 29-esme-m6b-profiles.md): alias set with digest equality + preload repoint to the 64k profile"
+    - predicate: "references"
+      target: "DOC-blueprint-llm-server"
+      note: "§4 governs the context plane (controlling source); the §8 Coder-X row gains its profile aliases from this milestone"
+    - predicate: "depends_on"
+      target: "DOC-protected-ssh-info-hxs1"
+      note: "ratified askpass execution path (hxs-5 → hxs-2); credential read at execution, never printed/logged/stored, helper deleted at task end"
+    - predicate: "governs"
+      target: "DOC-pilot-hxs2-ev-08-esme-m6-ladder-profiles"
+      note: "DISCHARGED by the M6+M6b deliverable 08-esme-m6-ladder-profiles.md (PASS — all three rungs; governor live-verified, hxs-2 state log row 18, 2026-08-26T08:15Z); execution paused once at the F-M6-0 Xid-31 escalation (DOC-pilot-hxs2-ev-08-esme-m6-escalation-xid31) and resumed under owner decision RESUME ARMED (row 17)"
+  validation:
+    validated_at: "2026-08-26T10:00:00Z"
+    freshness: "current"
+    review_due: "at the next Coder-X milestone evidence landing (M5 quality/vision probes); the M6+M6b handoff CLOSES when this run's receipt is cited in the hxs-2 state log (profile §7)"
+  sha256: "e8f2eb0372d215fd7d2e2ca6e3b545576c9f25f7b59fb8a380be9df8bb9e6938"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/07-work-order-john-m6.yaml"
+notes:
+  status_convention: "Cataloged POST-completion: status adopted per the discharged-contract convention (all pre-M7 WO/CP records); unlike the wo-08/cp-09 pair (cataloged in-execution at status active and flipped at the deliverable landing), this pair is ingested after M6+M6b completed (hxs-2 state log row 18, governor live-verified) and is adopted at ingestion."
+  governor_corrections_verified: "The cataloged artifact carries the governor's review batch-11 corrections (hxs-2 state log row 16), VERIFIED before hash: (1) the hx2.conf naming fix — the WO references hx2.conf at the repoint objective and the rollback line (zero 'hx1.conf' strings remain; grep-verified 2026-08-26T10:00Z); (2) the paired-packet reference fix — controlling_sources names 08-context-packet-john-m6.yaml (the actual paired packet)."
+  hash_crosscheck: "sha256 e8f2eb0372d215fd7d2e2ca6e3b545576c9f25f7b59fb8a380be9df8bb9e6938 computed at ingestion (2026-08-26T10:00Z); hxs-2 state log row 13 records no WO/CP hashes for this milestone (unlike the M4 row 7 pattern) — the catalog hash is the first recorded value."

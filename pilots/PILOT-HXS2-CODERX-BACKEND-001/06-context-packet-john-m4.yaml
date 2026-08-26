@@ -1,0 +1,34 @@
+context_packet:
+  goal_id: "GOAL-HXS2-CODERX-001"
+  goal_version: 1
+  work_order_id: "WO-HXS2-JOHN-M4-001"
+  session_id: "john-m4-20260826-01"
+  role: "producer (Ollama specialist: john / Esme)"
+  milestone: "M4 — Ollama install, exact-tag pull, identity freeze, D5-budget systemd"
+  objective: >-
+    Stand up Ollama on hxs-2 serving exactly mannix/qwen3.6-27b-a3b-coderx:vision-Q4_K_M
+    under the frozen identity, with the working alias hx-qwen3.6-coderx, persistent
+    systemd units at blueprint budgets, and the LAN-scoped endpoint live from
+    install (no firewall — the /24 is the boundary).
+  current_state:
+    host: "hxs-2 (192.168.50.201), Ubuntu 24.04.4 LTS, kernel 7.0.0-30-generic (F-01 accepted; DKMS built for -30 + -28)"
+    readiness: "rick M1 13/13 (state log row 4): driver 580.173.02 both 5060 Ti bound, zero Xid; rfkill1 Wi-Fi blocked (D4); sleep masks ×4 (hybrid-sleep alignment queued to rick's next session); root 3.4 TB free; ufw INACTIVE and stays that way (owner rule)"
+    ollama_state: "not installed (verified as-found; re-verify at start)"
+    endpoint_design: "OLLAMA_HOST=0.0.0.0 (loopback preserved); NO ufw — boundary is the private 192.168.50.0/24 network itself"
+    model_identity: "mannix/qwen3.6-27b-a3b-coderx:vision-Q4_K_M (~16.1 GB Q4_K_M LM + ~447M F16 CLIP projector; reference-observed digest prefix ca661423d6b5 = cross-check only; LOCAL full digest is the frozen identity)"
+    baked_params: "draft_num_predict 3 (MTP; A/B grid at M7), num_ctx 32768 baked (M6 ladder to 64K per D5), RENDERER/PARSER qwen3.5, sampling defaults native (temperature 1, top_p 0.95, top_k 20, min_p 0, repeat 1, presence 1.5 — PRESERVED, no overrides)"
+  owner_decisions:
+    - "D1 root ext4; D2 fleet /24 endpoint + no host firewall; D3 CoderX vision-Q4_K_M; D4 Wi-Fi blocked; D5 64K operating context (after M6 ladder); D6 M7 reboots pre-approved; D8 vision disposition deferred"
+    - "Secure Boot stays disabled (standing); no hardening proposals (owner standing)"
+  constraints:
+    - "Only this milestone's scope: install + pull + identity + units. No context changes, no sampling changes, no other models, no ufw, no reboot"
+    - "Secrets never printed/logged/stored; askpass helper reads at execution, deleted at task end; evidence sanitized"
+    - "Identity ambiguity is a STOP condition, not a guess point"
+  evidence_requirements:
+    - "Install + pin evidence (method, version); pull transcript (size/time); identity capture set per §12.2; alias binding proof; unit/drop-in contents + hashes + diffs; shellcheck clean; preload first run: /api/ps shows the alias resident, 100% VRAM across both GPUs, exact digest, Forever; service enabled states; journal clean (no Xid, no OOM)"
+    - "Reachability after install: 127.0.0.1 local, hxs-5 → 192.168.50.201:11434 (LAN), both /api/version"
+  consulted_records:
+    - "DOC-hxs2-coderx-knowledge-reference (§3/§5/§12); DOC-tkv-hxs2-discovery/driver-results (cross-check); hxs-1 M4 pattern (12-esme) and 35-esme budget contract"
+  handoff:
+    - "Deliverable 07-esme-m4-install.md goes to Carol for catalog receipt; handoff OPEN until the receipt is cited in the state log"
+  second_brain_evaluation: "Per the work order — install pattern reuse with blueprint budgets from day one"

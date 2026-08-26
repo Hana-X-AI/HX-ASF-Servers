@@ -1,0 +1,53 @@
+document:
+  id: "DOC-hxs2-deployment-directive"
+  title: "hxs-2-deployment.md — owner corrected mission directive for the HXS-2 coding-inference backend (agent-zero-docs)"
+  type: "contract"
+  declared_purpose: "Owner's corrected mission directive (2026-08-26): retarget the mission to hxs-2 (NOT hxs-1) and provision it as a persistent local coding-inference host using Ollama, with the deployed model registered as an approved backend resource within DeepSeek Harness rather than directly with KK3. Names target model mannix/qwen3.6-27b-a3b-coder:vision-Q4_K_M; six required outcomes (persistent Ollama service; authorized network endpoint reachable from the Harness workspace; Harness backend registration as coding + vision-capable inference; discoverable by the Harness resource/capability layer; available to KK3 and authorized Harness workflows without a direct model-specific KK3 integration; subordinate to Harness governance); architectural boundary (the model is an inference backend, never an autonomous sub-agent; no direct KK3-to-Ollama dependency bypassing the Harness; required chain hxs-2 → Ollama → model → Harness backend registry → authorized presets/workflows → KK3-controlled assignment); 12-item Definition of Done (exact model installed; persistent managed service; persistence policy residency; endpoint reachable from the Harness environment and not beyond the authorized HX boundary; Harness recognizes host/endpoint/identity/capabilities; preset invocation; KK3 discovery and task assignment through the Harness; other authorized workflow use; restart + host-reboot recovery; health/identity/inference/coding/vision/resource tests; final handoff with configuration, evidence, risks, ownership, rollback); KK3 authority clause (KK3 retains complete ownership of planning, decomposition, worker selection, delegation, context routing, task assignment, evidence gates, retry decisions, workflow state — the directive provisions and registers infrastructure only)."
+  inferred_value: "INFERENCE: the mission source the goal implements — but two of its premises are resolved elsewhere with higher authority: (1) the DeepSeek Harness registration substrate is verified nonexistent (owner-confirmed easter egg 2026-08-26, KDD-0006; the goal re-scoped the DoD Harness-free per owner D7 with the catalog filling the registry role); (2) its literal …-coder: tag is the sibling checkpoint, deliberately not selected (owner D3 selected CoderX by live registry evidence). The document is preserved unchanged; consumers must read it together with KDD-0006 and the goal file."
+  source:
+    author: "Agent Zero (owner corrected directive)"
+    provided_by: "Agent Zero"
+    origin: "/home/hxsa/opt/local-tkv/agent-zero-docs/pilots/hxs-2/hxs-2-deployment.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-26T03:26:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: [hxs-2]
+    fqdns: [hxs-2.hx.local.arpa]
+    services: [ollama.service]
+    models: [mannix/qwen3.6-27b-a3b-coderx]
+    agents: [kimi-k3]
+    repositories: []
+    environments: [pilot]
+  version: ""
+  status: "active"
+  authority_level: "owner-directive"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond owner docs directory access"
+    contains_secret_values: false
+  relations:
+    - predicate: "governs"
+      target: "DOC-goal-hxs2-qwen36-coderx-backend"
+      note: "the goal implements this corrected directive (goal plan line names it the source directive); DoD re-scoped Harness-free per owner D7 after the Harness premise was verified nonexistent — the re-scope is recorded in the goal SC table and KDD-0006, never edited into this document"
+    - predicate: "references"
+      target: "DOC-kdd-0006-hxs2-coderx-backend-adoption"
+      note: "KDD closes this directive's DeepSeek Harness premise as verified-nonexistent (owner-confirmed easter egg 2026-08-26) and resolves its literal …-coder: tag as the sibling checkpoint (D3 selected CoderX)"
+    - predicate: "references"
+      target: "DOC-hxs2-coderx-knowledge-reference"
+      note: "companion owner-supplied model knowledge reference supplied with this directive (876 lines, same agent-zero-docs directory)"
+    - predicate: "produced_by"
+      target: "Agent Zero owner correction 2026-08-26 (agent-zero-docs/pilots/hxs-2/)"
+      note: "corrects a prior uncataloged conversational instruction (target hxs-1, direct KK3 registration); that instruction was never a cataloged artifact, so no supersedes edge is recorded"
+  validation:
+    validated_at: "2026-08-26T03:26:00Z"
+    freshness: "current"
+    review_due: "on any further owner correction to the mission; operational truth for execution is the goal file + KDD-0006"
+  sha256: "c783d30e440c06cc3d2d7577ca3a03de46de59de1bdfd08b8af06d57555bec22"
+  canonical_location: "/home/hxsa/opt/local-tkv/agent-zero-docs/pilots/hxs-2/hxs-2-deployment.md"
+notes:
+  type_judgment: "Typed 'contract' (dispatch offered contract|amendment per judgment): an owner-issued mission contract — required outcomes, Definition of Done, architectural boundary, KK3 authority clause — commissioning new work. Not 'amendment': the amendment precedent (DOC-a01-origin-codex-20260824-2125) amended an existing adopted plan artifact; this directive corrects an uncataloged conversational instruction and commissions the goal. The Harness-era registration clauses are inoperative in fact (substrate verified nonexistent) but remain the document's own text — preserved, not edited (originals are sacred); status stays active with the resolution carried by KDD-0006 and the goal's Harness-free DoD re-scope (D7)."
+  tag_discrepancy: "RESOLVED, preserved: the directive's literal mannix/qwen3.6-27b-a3b-coder:vision-Q4_K_M is the Coder SIBLING (top-10, pure expert-selection prune — a different checkpoint). Owner D3 (2026-08-26, live registry evidence) selected mannix/qwen3.6-27b-a3b-coderx:vision-Q4_K_M (top-8, REAP/DERN prune). applies_to.models carries the resolved pilot model per the dispatch brief; the directive's literal tag is preserved here unedited."
+  harness_premise: "CONFLICT PRESERVED + AUTHORITY-RANKED (profile §9): directive text assumes 'existing Harness infrastructure'; verification + owner confirmation 2026-08-26 establish DeepSeek Harness does not exist and has never been deployed (easter egg). Current truth: KDD-0006 closure + goal Harness-free DoD. The directive's Harness chain (hxs-2 → Ollama → model → Harness registry → presets → KK3) maps onto the catalog-registration chain adopted by KDD-0006."

@@ -1,0 +1,60 @@
+document:
+  id: "DOC-pilot-hx1-wo-37-john-exposure"
+  title: "37-work-order-john-exposure.yaml — WO-HX1-JOHN-EXP-001 (post-M8 bounded change: hxs-1 fleet-scoped endpoint exposure, owner directive 2026-08-26, SC-07a)"
+  type: "work-order"
+  declared_purpose: "Delegated contract commissioning john/Esme (session john-exp-20260826-01) to take hxs-1's Ollama endpoint from loopback-only to fleet-scoped LAN access per owner directive 2026-08-26 ('the entire fleet should have access, the same should be true on hxs-1 — if not fix it'): bind Ollama to all interfaces (OLLAMA_HOST=0.0.0.0 — loopback MUST keep working: preload and fixtures depend on 127.0.0.1), then enforce the boundary with ufw (default deny incoming; allow 22 and 11434 from 192.168.50.0/24). Proof obligations: loopback survives, LAN reachability from hxs-5, ruleset exactness, frozen model identity and residency unchanged (hx-qwen3.8-27b-64k digest 766cd9469fb4…, ctx 65536, 100% VRAM, Forever — any drift = stop and restore), preload unit still green, boot path unaffected (ollama.service restart ONLY — no reboot, nothing else). NOT authorized: reboot, preload-unit restart via reboot, model-store/identity change, any other service change, package installs, kernel/driver changes. Versioned-change discipline: pre/post sha256 of every touched file + ruleset as applied, unified diffs, byte-copy rollback (restore OLLAMA_HOST=127.0.0.1 drop-in + ufw disable). Deliverable: 39-esme-hxs1-exposure-change.md (completed PASS — TASK COMPLETE; cataloged this run). Second Brain evaluation in-file: scoped-exposure change as a versioned, evidenced pattern — first post-closure posture change on a signed-off host; disposition implemented."
+  source:
+    author: "Kimi-K3 (governor)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/37-work-order-john-exposure.yaml"
+    section: "§whole-document"
+    ingestion_date: "2026-08-26T04:10:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: [hxs-1, hxs-5]
+    fqdns: []
+    services: [ollama.service, ollama-preload.service, ufw.service]
+    agents: [john, kimi-k3]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot, fleet]
+    models: [hx-qwen3.8-27b-64k]
+  version: ""
+  status: "adopted"
+  authority_level: "delegated-contract"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "kimi-k3"
+      note: "issued at hxs-1 state log row 71 (2026-08-26T03:20Z, owner directive); record sha256 matches the row-71 proof hash exactly"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-cp-38-john-exposure"
+      note: "paired context packet (session john-exp-20260826-01)"
+    - predicate: "depends_on"
+      target: "DOC-goal-hx1-ollama-qwen38-27b"
+      note: "parent goal GOAL-HX1-QWEN38-001; SC-07a amendment (owner directive 2026-08-26) is this change's authority — SC-07's loopback-only posture superseded for operations from 2026-08-26"
+    - predicate: "governs"
+      target: "DOC-pilot-hx1-ev-39-esme-exposure-change"
+      note: "paired deliverable (PASS — TASK COMPLETE, T1-T10); handoff closes when this run's receipt lands in the hxs-1 state log"
+    - predicate: "depends_on"
+      target: "DOC-pilot-hx1-ev-29-esme-m6b-profiles"
+      note: "frozen identity + preload contract is the guard to preserve (controlling source)"
+    - predicate: "depends_on"
+      target: "DOC-pilot-hx1-ev-35-esme-preload-budget"
+      note: "unit budgets (TimeoutStartSec=600, script worst case 538 s) bound the preload re-run proof (controlling source)"
+    - predicate: "depends_on"
+      target: "DOC-protected-ssh-info-hxs1"
+      note: "ratified askpass execution path (hxs-5 -> hxs-1); credential read at execution, never printed/logged/stored, helper deleted at task end"
+  validation:
+    validated_at: "2026-08-26T04:10:00Z"
+    freshness: "current"
+    review_due: "not applicable — discharged contract (change complete, deliverable 39 PASS)"
+  sha256: "bd48715084a6f3604a6f6cdb55fac16f14cddcdef4846bb9af0060f6c64aaf61"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/37-work-order-john-exposure.yaml"
+notes:
+  superseded_element: "The ufw-enforcement element was overtaken same day by the owner no-host-firewall rule 2026-08-26 (hxs-1 state log row 73: 'ufw anywhere, that is a rule' — the row-72 ufw enablement was reverted and verified inactive; the fleet exposure itself is UNCHANGED). The bind change (OLLAMA_HOST=0.0.0.0, loopback preserved) stands as the enduring posture per SC-07a + blueprint §5. Element-level supersession; the work order stands as the discharged contract."
+  assigned_agent_call_sign: "Esme = john (pilot call sign, not a roster entry)"

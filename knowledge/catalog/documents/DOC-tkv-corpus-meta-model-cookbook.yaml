@@ -1,0 +1,51 @@
+document:
+  id: "DOC-tkv-corpus-meta-model-cookbook"
+  title: "/opt/tkv-local/meta-model-cookbook-main — Meta Model API cookbook snapshot (official Meta model cookbook; 434 files)"
+  type: "corpus"
+  declared_purpose: "Upstream snapshot of the official Meta model cookbook per its README ('Meta Model API cookbook — Recipes for building agents and coding tools on the Meta Model API, covering API fundamentals, agent patterns, and end-to-end use cases'): Meta Model API is drop-in compatible with the OpenAI SDK, the Anthropic SDK, and agent CLIs like OpenCode and Claude Code; each recipe is a self-contained, copy-paste starting point that proves a capability; the cookbook's default model is Muse Spark (muse-spark-1.1, 1,048,576-token context). Four sections: 01_api_fundamentals (chat completions, streaming, tool/function calling, structured output, …), 02_agent_patterns (loop basics, interleaved reasoning, context management, validated edits, alert fatigue), 03_use_cases (end-to-end), 04_muse_code (the muse_code series — append-only audit log, deterministic replay, staged approvals, contained execution, immutable guardrails, subagent fanout, goal tracking, bundled skills, loop and cron, side chats)."
+  inferred_value: "INFERENCE: the worked-implementations complement to the three Meta doc captures — where tooling.md states the contract, these notebooks show the contract in running code (tool-calling loop in 01, agent-loop patterns in 02, and the muse_code agent-architecture series in 04, whose audit-log/staged-approvals/immutable-guardrails patterns are directly relevant to the factory's own agent governance design). Content targets the hosted API; against the local Ollama artifact every recipe is a pattern to adapt, never a configuration to copy."
+  source:
+    author: "Meta (official model cookbook); mirrored into /opt/tkv-local by Agent Zero"
+    provided_by: "Agent Zero"
+    origin: "/opt/tkv-local/meta-model-cookbook-main"
+    section: "§whole-document"
+    ingestion_date: "2026-08-26T05:35:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: [hxs-3]
+    fqdns: []
+    services: []
+    agents: [kimi-k3, john]
+    repositories: [tkv-local]
+    environments: [pilot]
+    models: [muse-glimmer:30b]
+  version: "snapshot as supplied 2026-08-26 (no .git metadata — upstream commit unavailable)"
+  status: "adopted"
+  authority_level: "upstream-reference"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access; README's 'MODEL_API_KEY=\"LLM|{numeric_id}|{secret}\"' is a documented placeholder pattern, not a credential"
+    contains_secret_values: false
+  relations:
+    - predicate: "references"
+      target: "DOC-goal-hxs3-muse-glimmer-tooling"
+      note: "hxs-3 controlling-source family (owner-supplied with the Meta doc captures, state log row 3): agent-pattern reference for the pilot's harness and M5/M6 contract work"
+    - predicate: "references"
+      target: "DOC-meta-model-api-tool-calling"
+      note: "contract companion: the cookbook's 01_api_fundamentals/03_tool_calling recipe implements the execute-and-feed-back loop this doc specifies"
+    - predicate: "describes"
+      target: "Meta model cookbook content (01_api_fundamentals, 02_agent_patterns, 03_use_cases, 04_muse_code)"
+      note: "434 files excluding VCS metadata; deep per-file cataloging on demand via retrieval packages (TKV-corpus convention)"
+  validation:
+    validated_at: "2026-08-26T05:35:00Z"
+    freshness: "current"
+    review_due: "2026-09-24 (corpus manifest re-hash) or on any corpus update"
+  sha256: "5c62c80e980ac94086477c12f35925224cde129429aedb7a92e074fe07308e3b"
+  canonical_location: "/opt/tkv-local/meta-model-cookbook-main"
+notes:
+  checksum_method: "CONTENT-SENSITIVE manifest digest per dispatch (the batch-7 content-sensitive convention, first corpus record to use it): sha256 over the concatenated 'sha256sum <relpath>' output lines for every file in the sorted relative-path manifest (434 files) — i.e. the digest commits to BOTH the file set AND per-file contents, unlike the earlier names-only corpus manifests (e.g. DOC-tkv-corpus-ollama notes.checksum_method). Regenerated 2026-08-26 at ingestion. No .git directory present (unpacked snapshot, not a checkout) — nothing excluded; directory canonical_location preserved."
+  upstream_provenance: "official Meta model cookbook (per README identity and content); local snapshot — the tree carries no .git metadata, so no upstream commit/tag is verifiable; supplied by the owner 2026-08-26 (hxs-3 state log row 3) together with the api/sdk/tooling doc captures."
+  truth_state: "point-in-time upstream snapshot: verify recipe/API claims against the live platform docs (the three Meta doc captures) and against the local Ollama artifact before converting any pattern into HX configuration (upstream-reference; never HX-established fact)."
+  muse_code_note: "Dispatch note recorded: official Meta model cookbook — agent patterns + the muse_code series (04_muse_code: append-only audit log, deterministic replay, staged approvals, contained execution, immutable guardrails, subagent fanout, goal tracking, bundled skills, loop and cron, side chats)."

@@ -1,0 +1,73 @@
+document:
+  id: "DOC-pilot-hxs2-ev-07-esme-m4-install"
+  title: "07-esme-m4-install.md — Esme (john) M4 hxs-2 Ollama install + exact-tag pull + identity freeze + D5-budget systemd (WO-HXS2-JOHN-M4-001; 17/17 PASS)"
+  type: "evidence"
+  declared_purpose: "Milestone completion evidence for WO-HXS2-JOHN-M4-001 (report ESME-HXS2-M4-INSTALL-001, session john-m4-20260826-01, window 2026-08-26T04:10Z→04:53Z, owner Gate 0 'proceed' state log row 7): hxs-2's Ollama plane is installed, pinned, identity-frozen, and resident at blueprint budgets — 17 tests defined, 17 executed, 17 PASS, 0 FAIL/BLOCKED/NOT RUN; stop conditions none hit. FACTS: Ollama 0.32.15 pinned-installed (binary == server; installer sha256 25f64b81…82c9f byte-identical to the TKV-reviewed baseline; upstream latest v0.33.0 observed and deliberately NOT taken — F-J4; installer's driver/apt logic confirmed skipped). FROZEN IDENTITY (the local full digest is authoritative): mannix/qwen3.6-27b-a3b-coderx:vision-Q4_K_M @ digest ca661423d6b51ebeaca999f22cfc0f30c0851b2a6f328b2737bd8cb6eb90c1df (reference prefix ca661423d6b5 MATCH — registry state has not advanced); size 16,956,334,345 B fully accounted (16,057,050,592 LM + 899,283,072 projector + 13 template + 132 params + 536 config); gguf / qwen35moe; 26.2B params; Q4_K_M (imatrix); model max context 262,144 with baked operating num_ctx 32768; capabilities completion, vision, tools, thinking; MoE 184 experts top-8 routing (the CoderX checkpoint — top-10 sibling excluded), 41 blocks, nextn_predict_layers 1 (MTP), hybrid attention + SSM; renderer/parser qwen3.5; baked parameters verbatim preserved (temperature 1, top_k 20, top_p 0.95, draft_num_predict 3, min_p 0, num_ctx 32768, presence_penalty 1.5, repeat_penalty 1 — zero overrides added anywhere); projector clip 'Qwen3.6 27B A3B Coder' 446,571,248 params F16 qwen3vl_merger; license publisher-declared Apache-2.0 (F-J5: no license blob in the pulled manifest). Alias hx-qwen3.6-coderx created FROM-only and BLOB-BOUND to the frozen artifact @ digest 1d297a6a093f7858da9a96e39950b6e7581118708b6121182a811a1f3bf21ba5 (three-way binding proof: manifest layer equality ordered+set, show field-for-field, alias config blob identity). Service plane: hx2.conf drop-in exactly the four mandated values (OLLAMA_HOST=0.0.0.0 loopback preserved, OLLAMA_NO_CLOUD=1, OLLAMA_NUM_PARALLEL=1, OLLAMA_MAX_LOADED_MODELS=1); preload script + unit at D5 budgets (208+300+30 = 538 s < TimeoutStartSec=600 ≤ 900 s SLO; ShellCheck 0.9.0 zero findings); preload first run RC=0 in 75 s cold; residency proven — /api/ps exact alias + exact frozen digest, size == size_vram 17,602,392,879 B (100% VRAM), both 5060 Ti (9,940 + 8,772 MiB), ctx 32768, Forever (re-verified 5 min post-pin, zero unload events); both units enabled; journal clean (zero Xid all boots, OOM 0, NRestarts=0; F-J1 watchdog-class WARN lines recorded MONITOR). Reachability matrix PASS: 127.0.0.1 and hxs-5 → 192.168.50.201:11434 /api/version. No reboot; no firewall; rollback inverses exact (§11). Completion PASS — TASK COMPLETE; Task May Proceed: YES."
+  inferred_value: "INFERENCE: this is the identity anchor for the entire Coder-X capability — the frozen digest pair (base ca661423d6b5…c1df + alias 1d297a6a09…21ba5) and the blob-binding proof are what every later hxs-2 milestone (M5 quality/vision, M6 ladder, M6b profile freeze, M7 reboots, M8 sign-off) must re-verify against; the 75 s cold-load measurement inside the 538 s budget is the first hxs-2 data point for the D5 recovery SLO."
+  source:
+    author: "john / Esme (session john-m4-20260826-01)"
+    provided_by: "john via Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/07-esme-m4-install.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-26T05:35:00Z"
+  owner: "john"
+  applies_to:
+    hosts: [hxs-2, hxs-5]
+    fqdns: []
+    services: [ollama.service, ollama-preload.service]
+    agents: [john]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+    models: [mannix/qwen3.6-27b-a3b-coderx:vision-Q4_K_M]
+  version: ""
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "evidences"
+      target: "DOC-pilot-hxs2-wo-05-john-m4"
+      note: "WO-HXS2-JOHN-M4-001 discharged PASS — TASK COMPLETE (17/17; one bounded correction used F-J3, one corrected pre-flight failure F-J2; no stop condition hit)"
+    - predicate: "evidences"
+      target: "DOC-pilot-hxs2-cp-06-john-m4"
+      note: "packet's evidence requirements executed in full (§12.2 identity capture set, alias binding proof, unit hashes/diffs, shellcheck, preload first run, reachability matrix)"
+    - predicate: "evidences"
+      target: "DOC-goal-hxs2-qwen36-coderx-backend"
+      note: "M4 milestone of GOAL-HXS2-CODERX-001 complete; governor live-verified at hxs-2 state log row 9 (2026-08-26T05:04Z); handoff OPEN until this run's receipt is cited (packet handoff clause)"
+    - predicate: "produced_by"
+      target: "john"
+      note: "session john-m4-20260826-01 from hxs-5; every session an independent fresh SSH connection; StrictHostKeyChecking=yes against the pinned F-05 host key"
+    - predicate: "configures"
+      target: "hxs-2 Ollama service plane + model store"
+      note: "Ollama 0.32.15 (user ollama, upstream unit); hx2.conf four-value drop-in; preload script + unit (D5 budgets); model pulled + identity-frozen; alias created; root ext4 storage delta 14 G → 32 G used (D1)"
+    - predicate: "references"
+      target: "DOC-hxs2-coderx-knowledge-reference"
+      note: "§12.2 identity capture set executed verbatim; §3 identity (family/quant), §5 vision artifact (projector identity), §18 risks consulted"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-ev-12-esme-m4-install"
+      note: "hxs-1 M4 install/pull/identity/alias pattern (second validated use) + 35-esme budget contract + 39-esme exposure mechanics applied from day one"
+    - predicate: "references"
+      target: "DOC-tkv-hxs2-discovery"
+      note: "identity corroborated against the 2026-08-12 as-found record (machine-id/UUID/MAC all match); live host is the authority"
+    - predicate: "depends_on"
+      target: "DOC-protected-ssh-info-hxs1"
+      note: "ratified askpass pattern held: credential read at execution only (markdown code-span unwrapped, F-J2), helper + volatile workspace deleted at task end — no credential material in any file, evidence artifact, or this catalog"
+    - predicate: "evidences"
+      target: "DOC-backend-coder-x"
+      note: "the Coder-X backend-capability registration's content basis: frozen digests, capabilities, residency, pin, budgets, reachability (candidate until M8)"
+  validation:
+    validated_at: "2026-08-26T07:47:00Z"
+    freshness: "current"
+    review_due: "at M5/M6 evidence index; F-J1 watchdog class monitored at M5/M7 (hxs-1 F-E2 precedent)"
+  sha256: "1724e0358f86995e54ba06811c67d11f63bf9d857dce092841e3e398dc4b7da5"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/07-esme-m4-install.md"
+notes:
+  findings_register: "F-J1 (carried class, MONITOR): llama-server GPU-discovery watchdog timeout during the first runner build (04:45:58–04:46:00) — same class as hxs-1 F-E2; retried and succeeded, load completed 100% GPU; inside the 75 s first-run measurement, wide inside the D5 budget; watch at M5/M7. F-J2 (corrected, disclosed): first SSH auth attempt failed — the credential value in the access guide is wrapped in markdown backticks; the askpass helper was corrected to strip the code-span (length-only diagnostics; the value never printed); one refused auth, no lockout approached; no target state touched. F-J3 (corrected, disclosed): /usr/local/libexec did not exist on hxs-2; first install batch omitted -D for the script — partial landing before the && chain stopped; re-transferred and installed cleanly; zero service impact; one bounded correction consumed. F-J4 (decision record): upstream latest v0.33.0 observed and deliberately not taken; pinned 0.32.15 (blueprint-host proven version; upgrade path = a future versioned work order). F-J5 (record): no license blob in the pulled manifest — license identity is publisher-declared Apache-2.0 (ollama.com model page, 04:37Z). F-J6 (record): first cold load via the preload unit = 75 s wall (page-cache cold, incl. ~40 s API-ready discovery); 75 s << 538 s script worst case < 600 s unit <= 900 s SLO. (Dispatch enumerated F-J1..F-J5; the document's register also carries F-J6 — all six recorded.)"
+  sanitization_disclosure: "§12 (profile §11 honesty): no secret value was printed, logged, stored, or placed on any command line; the askpass helper (deleted at task end with the volatile workspace) read the credential-record row at execution time only. The one refused authentication (F-J2) and the partial install (F-J3) are retained per profile §15 — no history rewritten. Catalog handling per profile §6: no secret value is quoted or stored anywhere in the catalog."
+  second_brain: "In-file evaluation: hxs-1 M4 install pattern (second validated use) + D5-budget preload as blueprint default from day one; disposition implemented — the identity freeze (frozen digest pair + blob-binding proof) and the unit contracts become the hxs-2 catalog spine at handoff (this record + DOC-backend-coder-x)."
+  naming_correction: "Record-text correction (batch 11, 2026-08-26T07:47Z): the service-plane description now carries the full OLLAMA_-prefixed variable names — OLLAMA_NO_CLOUD=1, OLLAMA_NUM_PARALLEL=1, OLLAMA_MAX_LOADED_MODELS (OLLAMA_HOST was already prefixed) — matching the deployed hx2.conf drop-in semantics. Record text only: the source evidence document is untouched (originals are sacred; record sha256 unchanged and re-verified against the live file this run)."
+  web_search_in_flight: "A fleet web-search enablement is IN FLIGHT (owner decision 2026-08-26 — hxs-2 state log rows 14–15, hxs-3 state log row 12; 11-work-order-john-websearch.yaml + 12-context-packet-john-websearch.yaml, session john-ws-20260826-01) that REMOVES OLLAMA_NO_CLOUD from each host's ollama.service drop-in for the web-search class (cloud models/remote inference remain unused by policy; per-host ollama signin is the owner's interactive step) — the next re-validation after that session lands will update the value state recorded here."

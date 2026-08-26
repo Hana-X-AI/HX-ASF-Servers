@@ -1,0 +1,35 @@
+context_packet:
+  goal_id: "GOAL-HXS3-MUSE-001"
+  goal_version: 1
+  work_order_id: "WO-HXS3-JOHN-M4-001"
+  session_id: "john-m4-20260826-01"
+  role: "producer (Ollama specialist: john / Esme)"
+  milestone: "M4 — Ollama install, exact muse-glimmer:30b pull, identity freeze, D5-budget systemd"
+  objective: >-
+    Stand up Ollama 0.32.15 on hxs-3 serving exactly muse-glimmer:30b under the
+    frozen identity, with alias hx-muse-glimmer, persistent systemd units at
+    blueprint budgets, and the LAN-scoped endpoint live from install (no
+    firewall — the /24 is the boundary).
+  current_state:
+    host: "hxs-3 (192.168.50.202), Ubuntu 24.04.4 LTS, kernel 7.0.0-30-generic (F-01 accepted; DKMS for -30 + -28)"
+    readiness: "rick M1 13/13 (row 5): driver 580.173.02 both PNY 5060 Ti bound, zero Xid; rfkill1 Wi-Fi blocked (D4); blueprint masks ×4; root 3.4 TB free; NO firewall (owner rule); Secure Boot disabled; host key pinned"
+    ollama_state: "not installed (re-verify at start)"
+    endpoint_design: "OLLAMA_HOST=0.0.0.0 (loopback preserved); NO ufw — boundary is the private 192.168.50.0/24 network itself"
+    model_identity: "muse-glimmer:30b — official Ollama library artifact; ~18 GB package (LM 27.9B Q4_K_M ~17 GB + CLIP projector 1.92B Q4_K_M ~1.4 GB); manifest prefix de878ce33ad8 = cross-check only; LOCAL full digest = frozen identity; capabilities text/image/tools/thinking; declared context 128K max (baked ctx captured at /api/show — ladder at M7); Apache-2.0"
+    runtime_notes: "Muse support floor: Ollama ≥0.32.8, parser boundary fix 0.32.9 — pin 0.32.15 covers both; dense ~29.6B execution across both 5060 Ti (32.6 GB); PCIe x8 caveat (row 2) — capture link speed under load in telemetry"
+  owner_decisions:
+    - "D1 root ext4; D2 fleet /24 + no host firewall; D3 muse-glimmer:30b exact; D4 Wi-Fi blocked; D5 64K operating context (after M7 ladder); D6 M8 reboots pre-approved; D8 reasoning_strength default deferred to M5 evidence"
+    - "Secure Boot stays disabled (standing); no hardening proposals (standing); one-call-per-turn enforcement contract (goal intent + SC-05) governs all tool behavior from M5 onward"
+  constraints:
+    - "Only this milestone's scope: install + pull + identity + units. No context/sampling changes, no other models, no firewall, no reboot, no second serving plane"
+    - "Secrets never printed/logged/stored; askpass helper reads at execution, deleted at task end; evidence sanitized"
+    - "Identity ambiguity or Muse load/template/parser failure is a STOP with escalation (llama.cpp fallback is drafted — governor decides, never improvised)"
+  evidence_requirements:
+    - "Install + pin evidence (method, version 0.32.15); pull transcript (size/time); FULL identity capture set; template/renderer/parser fields incl. ATEM presence; alias binding proof; unit/drop-in contents + hashes + diffs; shellcheck clean; preload first run: /api/ps alias + exact digest resident, 100% VRAM across BOTH 5060 Ti, Forever; units enabled; journal clean (no Xid/OOM)"
+    - "Telemetry: nvidia-smi link speed current vs max under the loaded model (row-2 caveat); smoke inference known-answer (17 × 23 = 391) with thinking content stripped from evidence"
+    - "Reachability after install: 127.0.0.1 local, hxs-5 → 192.168.50.202:11434 (LAN), both /api/version"
+  consulted_records:
+    - "DOC-hxs3-muse-glimmer-pilot-v11 (§3.1/§3.4/§12); DOC-meta-muse-glimmer-llama-cpp-guide (diagnostic floor); DOC-tkv-hxs3-discovery/driver-results (cross-check); hxs-2 M4 pattern (07-esme-m4-install.md) and 35-esme budget contract"
+  handoff:
+    - "Deliverable 07-esme-m4-install.md goes to Carol for catalog receipt; handoff OPEN until the receipt is cited in the state log"
+  second_brain_evaluation: "Per the work order — third host use of the install pattern; Meta-X spine"

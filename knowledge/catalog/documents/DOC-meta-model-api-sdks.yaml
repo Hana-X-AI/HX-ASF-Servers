@@ -1,0 +1,53 @@
+document:
+  id: "DOC-meta-model-api-sdks"
+  title: "sdk.md — Meta Model API 'SDKs and libraries' (OpenAI SDK + Anthropic SDK; upstream capture, agent-zero-docs/pilots/hxs-3/meta/)"
+  type: "runbook"
+  declared_purpose: "Meta's official SDK doc (front matter: title 'SDKs and libraries', description 'Use the OpenAI SDK (Python or TypeScript) or the Anthropic SDK with Meta Model API. No custom client required.', cms alias /model-api/docs/sdks): Meta Model API works with the OpenAI SDK and the Anthropic SDK — no custom client to learn; any OpenAI-compatible SDK, HTTP client, or framework (LangChain, LlamaIndex, Vercel AI SDK) works too. Point the OpenAI SDK at base URL https://api.meta.ai/v1 for Responses (client.responses.create()) and Chat Completions (client.chat.completions.create()); point the Anthropic SDK at base host https://api.meta.ai for the Messages format (the SDK appends /v1/messages; Model API key passed as bearer/auth_token). Supported features through the OpenAI SDK: Responses API, chat completions, search grounding (via Responses), image understanding (vision), video and audio understanding (Responses + Chat Completions), structured output (response_format), function calling / tool use, file uploads (client.files.create()), streaming, temperature and sampling parameters, model selection. Worked examples in Python and TypeScript for both SDKs (pip install openai / npm install openai; model 'muse-spark-1.1'). Authentication nuance: the OpenAI SDK looks for OPENAI_API_KEY by default, NOT MODEL_API_KEY — pass the Model API key explicitly when creating the client."
+  inferred_value: "INFERENCE: the client-surface reference for any HX harness that speaks to Meta-format endpoints — the explicit-key nuance (OPENAI_API_KEY default vs MODEL_API_KEY) and the base-url-vs-base-host distinction are exactly the class of wiring mistakes the hxs-3 harness work can avoid up front; for the LOCAL Ollama artifact the OpenAI-SDK shapes carry over (Ollama's OpenAI-compatible surface) while the hosted-only features (files, grounding) do not — an M5/M6 probe question, not an assumption."
+  source:
+    author: "Meta (dev.meta.ai documentation)"
+    provided_by: "Agent Zero"
+    origin: "/home/hxsa/opt/local-tkv/agent-zero-docs/pilots/hxs-3/meta/sdk.md (capture of the Meta Model API docs — front-matter cms alias /model-api/docs/sdks)"
+    section: "§whole-document"
+    ingestion_date: "2026-08-26T05:35:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: [hxs-3]
+    fqdns: []
+    services: []
+    agents: [kimi-k3, john]
+    repositories: []
+    environments: [pilot]
+    models: [muse-glimmer:30b]
+  version: "capture as supplied 2026-08-26 (upstream page live-versioned)"
+  status: "active"
+  authority_level: "upstream-reference"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "owner-docs tree (/home/hxsa/opt/local-tkv); 'MODEL_API_KEY' references are environment-variable placeholders, not credentials"
+    contains_secret_values: false
+  relations:
+    - predicate: "references"
+      target: "DOC-goal-hxs3-muse-glimmer-tooling"
+      note: "hxs-3 controlling-source family (owner-supplied Meta primary sources, state log row 3): client-surface reference for the pilot's harness work"
+    - predicate: "references"
+      target: "DOC-meta-model-api-choosing-api"
+      note: "sibling capture — the format-selection doc for the three APIs these SDKs speak"
+    - predicate: "references"
+      target: "DOC-meta-model-api-tool-calling"
+      note: "sibling capture — the tool-calling mechanics invoked through these SDK surfaces; the M6 contract-suite basis"
+    - predicate: "describes"
+      target: "Meta Model API SDK surfaces (OpenAI SDK base URL /v1; Anthropic SDK base host; MODEL_API_KEY passed explicitly)"
+      note: "no custom client required; examples run model 'muse-spark-1.1' (Muse Spark — the hosted default, not the HX local artifact)"
+  validation:
+    validated_at: "2026-08-26T05:35:00Z"
+    freshness: "current"
+    review_due: "on upstream page change (live-versioned vendor doc) or at the hxs-3 M5/M6 harness/contract work"
+  sha256: "507efa253aca006525b9f405dac487b63dfcf64e4af15d6f078f66c174bd5eb4"
+  canonical_location: "/home/hxsa/opt/local-tkv/agent-zero-docs/pilots/hxs-3/meta/sdk.md"
+notes:
+  type_judgment: "Typed 'runbook' per dispatch: a vendor how-to in executable form (install, client construction, first call). Same typing as the sibling captures and DOC-meta-muse-glimmer-llama-cpp-guide."
+  authority_label: "authority_level upstream-reference: Meta's own vendor documentation, owner-supplied as a pilot controlling source; verify against the live runtime — hosted-service features (file uploads, search grounding, video/audio understanding) are NOT assertions about the local Ollama artifact."
+  origin_note: "Local capture supplied 2026-08-26 in the agent-zero-docs meta/ directory; dev.meta.ai returns HTTP 500 to automated access from hxs-5 (bot block — hxs-3 state log row 3), so the owner supplied it via the browser route; the .md capture carries the record sha256."

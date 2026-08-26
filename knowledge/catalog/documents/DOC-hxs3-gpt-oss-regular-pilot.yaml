@@ -1,0 +1,63 @@
+document:
+  id: "DOC-hxs3-gpt-oss-regular-pilot"
+  title: "codex_20260825_2259_hxs-3-gpt-oss-regular-ollama-pilot-and-deepseek-harness-registration.md — earlier hxs-3 GPT-OSS Regular pilot (retained-control context, 731 lines, agent-zero-docs)"
+  type: "plan"
+  declared_purpose: "Codex-authored execution-grade installation, qualification, and handoff plan for the EARLIER hxs-3 candidate (front matter: document_id doc:hx:pilot:hxs-3:gpt-oss-regular, version 1.0, created 2026-08-25, status 'conditional-pilot-approved; production-adoption-not-approved'; purpose 'Install, qualify, and conditionally register mashriram/gpt-oss-Regular:latest on hxs-3 as an Ollama inference capability governed by KK3 through the DeepSeek Harness'; scope host hxs-3, development-staging, candidate mashriram/gpt-oss-Regular:latest, control gpt-oss:20b). Three decisions deliberately separated: installation authorized as a reversible pilot, qualification mandatory before real agent work, adoption conditional on a same-basis comparison with official gpt-oss:20b. Content: executive outcome + the most important correction ('built-in tools removed' is not 'unfettered weights' — the community template appears to omit caller-supplied .System, a governance blocker until cleared or corrected); mission/DoD/non-goals; claim audit (proposed rationale vs defensible position — 'unfettered' treated as marketing, system-override stripping BLOCKED for trusted use until the canary passes, num_gpu 99 folklore rejected, hardware facts [TO BE CONFIRMED]); artifact identity and supply-chain rules (community candidate digest prefix 7e0c17b5b7de, MXFP4 ~20.9B, 128K declared; official control gpt-oss:20b ~21B MoE, 3.6B active, Harmony, text-only, Apache-2.0); hxs-3 discovery contract; HX architecture and mandatory authority separation; implementation phases 0-11 (change record, pull candidate + official control, pinned alias hx/gpt-oss-regular-20b:hxs3-pilot-20260825, native baseline, system-instruction preservation gate — the candidate's critical gate, corrected-template path only if justified, LangGraph parallel-tool qualification, sampling comparison, context ladder, GPU placement, persistence/boot recovery, DeepSeek Harness registration); evaluation matrix; monitoring + redacted replay envelope; risk register R-001..R-015; rollback/quarantine; agent handoff package; final acceptance checklist; recommendation (install and test the community candidate but make official gpt-oss:20b the default control and likely fallback; reject the candidate if it fails the policy canary or does not materially outperform the official model); references + known gaps."
+  inferred_value: "INFERENCE: retained-control context for the active Muse pilot — the v1.1 supersedes it in the primary-candidate role while explicitly retaining GPT-OSS 20B (and Qwen CoderX) as task-shaped controls rather than forcing one universal model (v1.1 §3.3, §8 'Lightweight control/fallback'; KDD-0007: 'gpt-oss is retained as task-shaped control, not displaced'; goal out-of-scope: 'gpt-oss changes (retained as task-shaped control)'). Its qualification machinery (system-canary gate, same-basis A/B, supply-chain digest rules) remains the standing contract IF the gpt-oss control or the community candidate is ever changed; under the active pilot no gpt-oss changes are in scope. Its Harness-era registration phase (Phase 11) maps to the catalog per KDD-0006/0007 exactly as the v1.1's §7."
+  source:
+    author: "Codex (agent-zero-docs pipeline)"
+    provided_by: "Agent Zero"
+    origin: "/home/hxsa/opt/local-tkv/agent-zero-docs/pilots/hxs-3/codex_20260825_2259_hxs-3-gpt-oss-regular-ollama-pilot-and-deepseek-harness-registration.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-26T05:05:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: [hxs-3]
+    fqdns: []
+    services: [ollama.service]
+    agents: [kimi-k3, rick, john, carol]
+    repositories: []
+    environments: [pilot]
+    models: [gpt-oss:20b]
+  version: "1.0 (document status: conditional-pilot-approved; production-adoption-not-approved)"
+  status: "active"
+  authority_level: "owner-directive"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "owner-docs tree (/home/hxsa/opt/local-tkv); canary tokens are test fixtures, not credentials; no secret values observed"
+    contains_secret_values: false
+  relations:
+    - predicate: "references"
+      target: "DOC-goal-hxs3-muse-glimmer-tooling"
+      note: "retained-control context for the active goal: 'gpt-oss changes (retained as task-shaped control)' is out of scope for the Muse pilot — no gpt-oss work is commissioned by the goal"
+    - predicate: "references"
+      target: "DOC-kdd-0007-hxs3-muse-glimmer-tooling-adoption"
+      note: "KDD Decision: 'gpt-oss is retained as task-shaped control, not displaced' — this document's official-control path (gpt-oss:20b) is the retained control; its community-candidate adoption question remains conditional and unexecuted"
+    - predicate: "references"
+      target: "DOC-hxs3-muse-glimmer-pilot-v11"
+      note: "superseded-in-role as primary candidate by the v1.1 (2026-08-25 23:32, same-day owner update) — retained as task-shaped control per v1.1 §3.3/§8; NOT superseded as a document (no superseded_by edge): its qualification contract stands for any future gpt-oss change"
+    - predicate: "references"
+      target: "DOC-kdd-0006-hxs2-coderx-backend-adoption"
+      note: "its DeepSeek Harness registration phase (Phase 11) and 'Neo' owner rows describe the same verified-nonexistent substrate; the registration intent maps to the Second Brain catalog per the KDD-0006 convention"
+    - predicate: "describes"
+      target: "gpt-oss:20b (official Ollama control model)"
+      note: "OpenAI GPT-OSS 20B: ~21B total, 3.6B active MoE, native 128K, Harmony formatting, text-only, Apache-2.0; the required control and likely fallback — registry workload line for hxs-3: 'gpt-oss-20b TP=2' (DOC-tkv-server-registry)"
+    - predicate: "describes"
+      target: "mashriram/gpt-oss-Regular:latest (community candidate — conditional, unadopted)"
+      note: "community-packaged GPT-OSS variant with a modified Ollama template (appears to omit caller .System — governance blocker until the canary passes or the template is corrected); mutable latest tag, digest prefix 7e0c17b5b7de at document creation; production-adoption-not-approved"
+    - predicate: "produced_by"
+      target: "Codex session 2026-08-25 22:59 (agent-zero-docs/pilots/hxs-3/)"
+      note: "filename timestamp; front matter created 2026-08-25; no HX host was accessed or changed in its preparation"
+  validation:
+    validated_at: "2026-08-26T05:05:00Z"
+    freshness: "current"
+    review_due: "on any owner decision to change the gpt-oss control or revive the community candidate (its conditional-qualification contract then governs); on upstream digest change of either artifact"
+  sha256: "b4abd228cfc59f4a8143f2f366e53edad80e4fb6657df910a63ba8b509d15d0c"
+  canonical_location: "/home/hxsa/opt/local-tkv/agent-zero-docs/pilots/hxs-3/codex_20260825_2259_hxs-3-gpt-oss-regular-ollama-pilot-and-deepseek-harness-registration.md"
+notes:
+  status_mapping: "status 'active' per its content and the dispatch ruling: front-matter status is 'conditional-pilot-approved; production-adoption-not-approved' — the document was never rejected or completed, and its official-control role is LIVE inside the active Muse pilot (task-shaped control, v1.1 §3.3). Superseded-in-role as the primary-candidate plan by the v1.1, but NOT superseded as a document: no superseded_by edge is recorded and status is not 'superseded' — the retention is explicit in KDD-0007 ('retained as task-shaped control, not displaced') and the goal's out-of-scope line. If the owner later retires the control, re-ingest with a status change and a supersedes/superseded_by pair."
+  harness_era_mapping: "Same verified-nonexistent substrate as the v1.1: Phase 11 'DeepSeek Harness registration', the front-matter 'registered_in system:deepseek-harness', and the 'Neo' owner rows describe infrastructure verified nonexistent (KDD-0006); the registration intent maps onto the Second Brain catalog capability record. Document preserved unchanged (originals are sacred)."
+  html_sibling: "A derived .html sibling exists in the same directory (codex_20260825_2259_hxs-3-gpt-oss-regular-ollama-pilot-and-deepseek-harness-registration.html); covered by this one record — the .md is the authoritative artifact and carries the record sha256 (convention: DOC-hxs2-coderx-knowledge-reference notes.html_sibling)."
+  model_tag_note: "applies_to.models carries the official control tag gpt-oss:20b (the retained, live artifact) per the dispatch brief (gpt-oss-20b control context); the community candidate mashriram/gpt-oss-Regular:latest is conditional/unadopted and is carried as a describes-edge free entity instead of an applicability target."

@@ -1,0 +1,38 @@
+work_order:
+  task_id: "WO-HXS2-JOHN-M4-001"
+  parent_goal: "GOAL-HXS2-CODERX-001"
+  goal_file: "goals/2026-08-26-hxs2-qwen36-coderx-backend.md"
+  milestone: "M4 — Ollama install + exact-tag pull + identity freeze + systemd with D5 budgets"
+  assigned_agent: "john / Esme (profile-briefed sub-agent)"
+  objective: >-
+    Install and pin Ollama on hxs-2; pull the exact approved tag
+    mannix/qwen3.6-27b-a3b-coderx:vision-Q4_K_M (owner D3); capture the full
+    identity evidence per the knowledge reference §12.2; create the working
+    alias hx-qwen3.6-coderx bound to the frozen digest; and deploy
+    ollama.service + ollama-preload.service with D5-conformant budgets from day
+    one (TimeoutStartSec=600, script worst-case ≤538 s — the 35-esme pattern),
+    OLLAMA_HOST=0.0.0.0 with loopback preserved, OLLAMA_NO_CLOUD=1,
+    NUM_PARALLEL=1, MAX_LOADED_MODELS=1. Native-sampling baseline: NO sampling
+    parameters added to any Modelfile; baked tag parameters preserved
+    (draft_num_predict 3, baked num_ctx 32768 — the M6 ladder adjusts context).
+  owner_authorizations:
+    - "Gate 0 PASSED 2026-08-26 (owner 'proceed'; state log row 7): Ollama install + exact-tag pull + systemd deployment authorized on hxs-2"
+    - "Endpoint posture per D2 + the no-host-firewall rule: bind 0.0.0.0 from install; the /24 itself is the boundary; NO ufw"
+    - "NOT authorized: any model other than the exact tag, sampling overrides, context changes (M6's ladder), reboots, ufw, any other host change beyond this milestone's scope"
+  boundaries:
+    - "Execution path: session on hxs-5; hxs-2 (192.168.50.201) via SSH hxsa@192.168.50.201; askpass helper READS the credential from the HX Fleet SSH Access Guide credential-record row at execution time — no extracted copy, helper deleted at task end; verify hostname + peer IP first; sudo -n only; host key pinned per rick M1 (F-05) — strict check against the pinned fingerprint"
+    - "Identity guard: the pulled artifact's full local digest is the frozen identity; record it verbatim; the reference's observed prefix ca661423d6b5 is a cross-check only — any mismatch is reported, not assumed fatal (registry state may have advanced; report and proceed only with governor confirmation via stop condition)"
+    - "Versioned change: pre/post sha256 of every config file created/modified + unified diffs in evidence"
+    - "One bounded correction attempt per failed correctable gate; stop conditions: wrong artifact family, digest ambiguity, GPU not visible to Ollama, service failure after bounded retry, any Xid"
+  rollback: "Remove units + drop-ins, ollama rm the alias and tag (model-store removal is a separately-approved step — stop at units/config by default); byte-copies of created configs retained in evidence."
+  controlling_sources:
+    - "06-context-packet-john-m4.yaml (this package)"
+    - "CoderX knowledge reference §12 (acquisition/identity), §3 (identity), §5 (vision artifact), §18 (risks)"
+    - "goal file D1–D8; servers/BLUEPRINT-llm-server.md §2/§3/§5; 35-esme-preload-budget.md (unit/script budgets)"
+    - "/opt/tkv-local/servers/hxs-2/ (historical, cross-check); /opt/tkv-local/ollama (role knowledge gate)"
+  deliverable: "07-esme-m4-install.md: install/pin evidence, pull log, FULL identity capture (ollama --version, list, show, show --modelfile, /api/show — digest, size, family, params, quantization, capabilities, template, license, projector identity), alias binding, unit files + drop-ins with hashes/diffs, preload first-run proof (resident, 100% GPU, exact digest in /api/ps), shellcheck, sanitized command log, Task May Proceed receipt"
+  second_brain_evaluation:
+    opportunity_identified: "yes"
+    roadmap_capability_or_pattern: "hxs-1 M4 install pattern (second validated use); D5-budget preload as blueprint default from day one"
+    disposition: "implemented — the identity freeze and unit contracts become the hxs-2 catalog spine at handoff"
+    evidence_and_reasoning: "the install/evidence shape transfers; doing it with the blueprint from the start (not retrofitted) is the measurable payoff of the hxs-1 lessons"

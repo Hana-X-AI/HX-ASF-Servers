@@ -1,0 +1,37 @@
+context_packet:
+  goal_id: "GOAL-HXS3-MUSE-GLIMMER-001"
+  goal_version: 1
+  work_order_id: "WO-HXS3-JOHN-M5-001"
+  session_id: "john-m5-hxs3-20260826-01"
+  role: "producer (Ollama specialist: john / Esme)"
+  milestone: "M5 — tool protocol + one-call-per-turn invariant, structured output, system-policy preservation, denial, reasoning_strength probes (report-only) on Meta-X"
+  objective: >-
+    Deliver Meta-X's quality evidence against the owner-ratified bars: tool
+    protocol 100% denied / >=95% conformance; one-call-per-turn 100% enforced;
+    structured output >=95%; system-policy 100%; denial 100%; reasoning_strength
+    probe-only — all on the frozen operating profile hx-muse-glimmer-64k.
+  current_state:
+    host: "hxs-3 (192.168.50.202), Ubuntu 24.04.4, kernel 7.0.0-30, driver 580.173.02, Ollama 0.32.15 — evidence timestamps America/Panama (EST, -05:00)"
+    resident: "hx-muse-glimmer-64k:latest (digest 9dffb015db40…), 100% VRAM, ctx 65536 effective, Forever — verify live before first suite and at close"
+    frozen_artifact: "muse-glimmer:30b digest de878ce33ad81d060001db1469a02eebe4d86f0ad58cfe52dc062fdcbe4464c1 (Meta; KV 13,312 B/token f16 + 97.5 MiB second cache, scheduler slope 8,192 labeled separately)"
+    aliases_in_store: "hx-muse-glimmer, -32k, -64k (9dffb015db40…), -128k — use ONLY -64k for the suites"
+    endpoint: "LAN-scoped OLLAMA_HOST=0.0.0.0, loopback preserved, no firewall (owner rule); web search ACTIVE (owner signin 2026-08-26) — irrelevant to these suites, do not exercise it"
+    contract: "KDD-0007: one tool call per model response MAX; harness rejects multi-call responses and executes accepted calls serially; parallel_tool_calls flag = compatibility probe only"
+  owner_decisions:
+    - "M5 thresholds ratified 2026-08-26 (tools 100%/>=95%; one-call 100% enforced; structured output >=95%; system-policy 100%; denial 100%; reasoning_strength probe-only); Phase A native baseline always; a failure is a finding, not a re-roll"
+  constraints:
+    - "Only the M5 suites in scope: no ladder/profile/preload/config changes, no reboots, no recovery drills (M8), no security-boundary drills (M8), no other models"
+    - "Fixtures alias-parameterized — pass hx-muse-glimmer-64k; verify fixtures against sha256sums.txt before first use; run on-host in /tmp"
+    - "Thinking content never persisted (counts only); no secrets in artifacts; askpass discipline per the work order"
+  evidence_requirements:
+    - "Tool protocol: audit totals (events, executed, denied, conformance %, duplicates, loops), zero-forbidden-execution statement, tool-audit.jsonl preserved"
+    - "One-call-per-turn: per-bait table (prompt class, response call-count, harness action, executions) — zero leaked second calls; serial-order proof for accepted calls"
+    - "Structured output: per-case schema conformance table (valid JSON, required fields, types), >=95% on valid requests"
+    - "System-policy: per-case preserve/violate table incl. the one-call rule under pressure"
+    - "reasoning_strength: per-level accept/reject + thinking-token counts + response-shape notes; PROBE-ONLY banner — no pass/fail column"
+    - "API readiness: /api/version, /api/ps, one known-answer request within client timeouts; final /api/ps identity guard == current_state.resident; journal excerpt (no Xid/OOM)"
+  consulted_records:
+    - "16-esme-m5-validation.md + 19-esme-m5b-amendment-conformance.md (hxs-1 standard); KDD-0007; goal SC-05; 09-esme-m7-ladder-profiles.md (Meta-X identity); /opt/tkv-local/agent-zero-docs/pilots/hxs-3/meta/ (ATEM + reasoning-strength docs); fixtures sha256sums.txt"
+  handoff:
+    - "Deliverable 12-esme-m5-validation.md goes to Carol for catalog receipt; handoff OPEN until the receipt is cited in the state log"
+  second_brain_evaluation: "Per the work order — tooling-contract validation, first backend of the KDD-0007 class"

@@ -4,8 +4,8 @@
 index:
   schema_version: 1
   initialized: 2026-08-25 (Carol instantiation, owner amendment)
-  updated: "2026-08-26T0245Z (T-micro pilot-3 — 2 records, tier-scoped per §10 'T-micro session scope': DOC-agent-carol-profile (re-hash 3619b16e… -> 09befadd…: §10 T-micro receipt cell now 'target cycle ≤ 5 min measured end-to-end (owner-ratified 2026-08-26; ≤3 min content-work aspiration)' — verified present; notes.tmicro_target_ratification added; validated_at 2026-08-26T02:44:37Z) / DOC-knowledge-agent-performance (re-hash 95528dc6… -> f5966ea5…: 2026-08-26 governance review-log row verified present — Owner ratified the ≤5 min T-micro target, state-log row 69; notes.tmicro_target_row added; validated_at 2026-08-26T02:44:37Z)); count 183 (unchanged); carry-forward: full audit receipt 2026-08-26T0137Z (self-check 182/182 + validator PASS, within 24 h — not re-run); receipt receipts/2026-08-26T0245Z-carol-tmicro-pilot3.md)"
-  document_count: 183
+  updated: "2026-08-26T2026Z (T-standard run — M5 deliverable + CI/CD wave (Coder-X M5 COMPLETE PASS at hxs-2 state log row 31; p8 CI/CD live at row 33; OmniRoute F1 disposition at row 32): 4 records added — DOC-pilot-hxs2-ev-16-esme-m5-validation (16-esme-m5-validation.md, sha256 351e25ed…: AC-013 coding 10/10 = 100% vs ratified >=90% bar + evaluator review concur 10/10, AC-012 tool protocol 0 forbidden/malformed executed of 51 events + 100% schema conformance of 29 decisions, AC-009 API readiness PASS, vision probes evidence-only for the D8 deferral, F-M5-1 residency eviction explained + restored with monitor recommendation to M8/owner), DOC-ci-cd-workflow (.github/workflows/ci-cd.yml, 9dbe6070…, type contract), DOC-coderabbit-config (.coderabbit.yaml, c958d82c…, type contract — schema.v2-verified review policy), DOC-cicd-pipeline-doc (docs/cicd-pipeline.md, 6b99bae4…, type runbook; .html sibling per dual-format convention, one record for the Markdown source); 4 updated — DOC-pilot-hxs2-wo-14-john-m5 + DOC-pilot-hxs2-cp-15-john-m5 flipped active -> adopted (DISCHARGED, governs edges to the deliverable record added per the M7-pair convention; sources unchanged 03dd3d4f…/c5642d1a…), DOC-pilot-hxs2-state-log re-validated at rows 1-33 (ba0db561… -> c3bc1502…; rows 30-33: 1937Z receipt cited + F-M5C-2 fixed, M5 COMPLETE PASS handoff OPEN, 1957Z receipt + validate.py 4/4 + F1/F2 dispositions, p8 CI/CD live with two owner-pending items), DOC-pilot-hxs3-state-log at rows 1-17 (1f57374d… -> 11b3dd75…; row 17: M5 BLOCKED — hxs-3 lost on LAN mid-session, owner check requested, WO/CP stay in-execution); 1 note append — DOC-tkv-corpus-omniroute notes.reorg_history gains the F1 disposition (v3.8.50 backup left in place as the owner safety copy, not separately cataloged, hxs-2 row 32); count 235 -> 239; T-standard full-catalog self-check + one validate.py cited in receipt receipts/2026-08-26T2026Z-carol-m5-coderx-ci-wave.md; carry-forward window clean per the 1957Z receipt (validate.py 4/4 PASS))"
+  document_count: 239
   documents:
   - id: DOC-a01-origin-codex-20260824-2125
     title: codex_20260824_2125_hx-1-ollama-pilot-qwen3.8-amendment.md — original source of Amendment A01 (agent-zero-docs)
@@ -91,12 +91,60 @@ index:
     authority_level: agent-evidence
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/assessments/2026-08-25-unified-capability-recommendations.md
+  - id: DOC-backend-chat-x
+    title: Backend-capability record — Chat-X (hxs-4, 192.168.50.203; qwen3.5:9b-q4_K_M; Ollama 0.32.15; three-profile set frozen 2026-08-26; loopback-only endpoint; status ACTIVE, owner-provisioned)
+    type: registry
+    authority_level: owner-directive
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/servers/BLUEPRINT-llm-server.md
+  - id: DOC-backend-coder-x
+    title: Backend-capability record — Coder-X (hxs-2, 192.168.50.201:11434; mannix/qwen3.6-27b-a3b-coderx:vision-Q4_K_M; operating hx-qwen3.6-coderx-64k (M6); status CANDIDATE until M8)
+    type: registry
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/servers/BLUEPRINT-llm-server.md
+  - id: DOC-backend-meta-x
+    title: "Backend-capability record — Meta-X (hxs-3, http://192.168.50.202:11434 LIVE since M4 2026-08-26; muse-glimmer:30b frozen de878ce33ad8…; operating hx-muse-glimmer-64k (M7); status CANDIDATE until M8; LIMIT parallel_tool_calling: false)"
+    type: registry
+    authority_level: delegated-contract
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/servers/BLUEPRINT-llm-server.md
+  - id: DOC-backend-qwen-x
+    title: Backend-capability record — Qwen-X (hxs-1, 192.168.50.200:11434; qwen3.8:27b Q4_K_M; status ACTIVE, M8-signed)
+    type: registry
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/servers/BLUEPRINT-llm-server.md
+  - id: DOC-blueprint-llm-server
+    title: servers/BLUEPRINT-llm-server.md — LLM Server Configuration blueprint (hxs-1 proven; hxs-2 at its M8; owner standing instruction 2026-08-26)
+    type: contract
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/servers/BLUEPRINT-llm-server.md
   - id: DOC-cat-001-acceptance
     title: CAT-001 — Catalog acceptance battery (governor-owned verification suite for knowledge/catalog/)
     type: contract
     authority_level: delegated-contract
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/catalog/tests/cat-001-acceptance.md
+  - id: DOC-ci-cd-workflow
+    title: ".github/workflows/ci-cd.yml — p8 CI/CD pipeline definition (owner-ratified 2026-08-26; 18 steps across gates / coderabbit-review / pr-manage; trigger every push to any branch)"
+    type: contract
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/.github/workflows/ci-cd.yml
+  - id: DOC-cicd-pipeline-doc
+    title: "docs/cicd-pipeline.md — CI/CD pipeline human-facing documentation (p8, owner-ratified 2026-08-26; step list, lifecycle, review-fix loop, conventions, setup, deviations D1–D4)"
+    type: runbook
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/docs/cicd-pipeline.md
+  - id: DOC-coderabbit-config
+    title: ".coderabbit.yaml — CodeRabbit review configuration (p8, owner-ratified 2026-08-26; keys verified against the live official schema.v2)"
+    type: contract
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/.coderabbit.yaml
   - id: DOC-codex-20260825-2207-capability-assessment
     title: codex_20260825_2207_hx-asf-servers-read-only-project-capability-assessment.md — supplied Codex/GitHub-Copilot read-only capability assessment (tool-belt, owner-docs tree)
     type: evidence
@@ -109,6 +157,18 @@ index:
     authority_level: ratified-governance
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/goals/2026-08-24-hx1-ollama-qwen38-27b.md
+  - id: DOC-goal-hxs2-qwen36-coderx-backend
+    title: Goal 2026-08-26-hxs2-qwen36-coderx-backend — provision the hxs-2 coding-inference backend (CoderX via Ollama, mutating pilot)
+    type: goal
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/goals/2026-08-26-hxs2-qwen36-coderx-backend.md
+  - id: DOC-goal-hxs3-muse-glimmer-tooling
+    title: Goal 2026-08-26-hxs3-muse-glimmer-tooling — provision the hxs-3 tooling-inference backend (Muse Glimmer 30B via Ollama, mutating pilot)
+    type: goal
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/goals/2026-08-26-hxs3-muse-glimmer-tooling.md
   - id: DOC-goal-ollama-audit-hxs5
     title: Goal 2026-08-24-ollama-audit-hxs5 — read-only Ollama infrastructure and performance audit on hxs-5 (process pilot)
     type: goal
@@ -127,6 +187,30 @@ index:
     authority_level: historical-as-found
     freshness: historical
     canonical_location: /home/hxsa/opt/local-tkv/agent-zero-docs/pilots/hxs-1/codex_20260824_1945_hx-1-ollama-qwen-27b-pilot-project.md
+  - id: DOC-hxs2-coderx-knowledge-reference
+    title: codex_20260825_1917_qwen3.6-27b-a3b-coderx-agent-knowledge-reference.md — CoderX model knowledge and operating reference (876 lines, agent-zero-docs)
+    type: runbook
+    authority_level: owner-directive
+    freshness: current
+    canonical_location: /home/hxsa/opt/local-tkv/agent-zero-docs/pilots/hxs-2/codex_20260825_1917_qwen3.6-27b-a3b-coderx-agent-knowledge-reference.md
+  - id: DOC-hxs2-deployment-directive
+    title: hxs-2-deployment.md — owner corrected mission directive for the HXS-2 coding-inference backend (agent-zero-docs)
+    type: contract
+    authority_level: owner-directive
+    freshness: current
+    canonical_location: /home/hxsa/opt/local-tkv/agent-zero-docs/pilots/hxs-2/hxs-2-deployment.md
+  - id: DOC-hxs3-gpt-oss-regular-pilot
+    title: codex_20260825_2259_hxs-3-gpt-oss-regular-ollama-pilot-and-deepseek-harness-registration.md — earlier hxs-3 GPT-OSS Regular pilot (retained-control context, 731 lines, agent-zero-docs)
+    type: plan
+    authority_level: owner-directive
+    freshness: current
+    canonical_location: /home/hxsa/opt/local-tkv/agent-zero-docs/pilots/hxs-3/codex_20260825_2259_hxs-3-gpt-oss-regular-ollama-pilot-and-deepseek-harness-registration.md
+  - id: DOC-hxs3-muse-glimmer-pilot-v11
+    title: codex_20260825_2332_hxs-3-muse-glimmer-30b-tooling-pilot-and-deepseek-harness-registration.md — v1.1 authoritative hxs-3 Muse Glimmer 30B tooling pilot (886 lines, agent-zero-docs)
+    type: plan
+    authority_level: owner-directive
+    freshness: current
+    canonical_location: /home/hxsa/opt/local-tkv/agent-zero-docs/pilots/hxs-3/meta/codex_20260825_2332_hxs-3-muse-glimmer-30b-tooling-pilot-and-deepseek-harness-registration.md
   - id: DOC-john-ollama-recon-inventory
     title: codex_20260824_0205_ollama-directory-reconnaissance-inventory.md — Ollama directory reconnaissance inventory (320 directories, 1707 files)
     type: evidence
@@ -169,6 +253,18 @@ index:
     authority_level: ratified-governance
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0005-second-brain-canonical-home.md
+  - id: DOC-kdd-0006-hxs2-coderx-backend-adoption
+    title: KDD-0006 — Adopt the hxs-2 CoderX coding-inference backend pilot (PILOT-HXS2-CODERX-BACKEND-001)
+    type: decision
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0006-hxs2-coderx-backend-adoption.md
+  - id: DOC-kdd-0007-hxs3-muse-glimmer-tooling-adoption
+    title: KDD-0007 — Adopt the hxs-3 Muse Glimmer 30B tooling pilot (PILOT-HXS3-MUSE-GLIMMER-TOOLING-001)
+    type: decision
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0007-hxs3-muse-glimmer-tooling-adoption.md
   - id: DOC-kimi-k3-goal-setting-guidance
     title: agents/kimi-k3/goal-setting-guidance.md — Kimi-K3 goal-setting and agent invocation guidance (ratified adoption per KDD-0002)
     type: runbook
@@ -205,6 +301,30 @@ index:
     authority_level: ratified-governance
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/README.md
+  - id: DOC-meta-model-api-choosing-api
+    title: api.md — Meta Model API 'Choosing an API' (Responses vs Chat Completions vs Messages; upstream capture, agent-zero-docs/pilots/hxs-3/meta/)
+    type: runbook
+    authority_level: upstream-reference
+    freshness: current
+    canonical_location: /home/hxsa/opt/local-tkv/agent-zero-docs/pilots/hxs-3/meta/api.md
+  - id: DOC-meta-model-api-sdks
+    title: sdk.md — Meta Model API 'SDKs and libraries' (OpenAI SDK + Anthropic SDK; upstream capture, agent-zero-docs/pilots/hxs-3/meta/)
+    type: runbook
+    authority_level: upstream-reference
+    freshness: current
+    canonical_location: /home/hxsa/opt/local-tkv/agent-zero-docs/pilots/hxs-3/meta/sdk.md
+  - id: DOC-meta-model-api-tool-calling
+    title: tooling.md — Meta Model API 'Tool calling' (539-line official tool-calling doc; upstream capture; the hxs-3 M6 contract-suite basis)
+    type: runbook
+    authority_level: upstream-reference
+    freshness: current
+    canonical_location: /home/hxsa/opt/local-tkv/agent-zero-docs/pilots/hxs-3/meta/tooling.md
+  - id: DOC-meta-muse-glimmer-llama-cpp-guide
+    title: doc-1.md — Meta 'Deploy with llama.cpp' guide for Muse Glimmer (upstream capture, agent-zero-docs/pilots/hxs-3/meta/)
+    type: runbook
+    authority_level: upstream-reference
+    freshness: current
+    canonical_location: /home/hxsa/opt/local-tkv/agent-zero-docs/pilots/hxs-3/meta/doc-1.md
   - id: DOC-pilot-hx1-amendment-a01
     title: Amendment A01 — Qwen3.8-27B model baseline for the HX-1 Ollama pilot (adopted, with adoption header)
     type: amendment
@@ -271,6 +391,12 @@ index:
     authority_level: delegated-contract
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/34-context-packet-john-preload-budget.yaml
+  - id: DOC-pilot-hx1-cp-38-john-exposure
+    title: 38-context-packet-john-exposure.yaml — context packet for WO-HX1-JOHN-EXP-001 (session john-exp-20260826-01)
+    type: context-packet
+    authority_level: delegated-contract
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/38-context-packet-john-exposure.yaml
   - id: DOC-pilot-hx1-decision-23-m6-capacity
     title: '23-kk3-m6-capacity-decision.md — M6 capacity decision record (KK3 gate), REVISION 2: three qualified context profiles'
     type: decision
@@ -361,6 +487,12 @@ index:
     authority_level: agent-evidence
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/35-esme-preload-budget.md
+  - id: DOC-pilot-hx1-ev-39-esme-exposure-change
+    title: 39-esme-hxs1-exposure-change.md — Esme hxs-1 fleet-scoped endpoint exposure change (WO-HX1-JOHN-EXP-001, SC-07a; PASS T1-T10)
+    type: evidence
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/39-esme-hxs1-exposure-change.md
   - id: DOC-pilot-hx1-fixtures-manifest
     title: fixtures/sha256sums.txt — pilot validation-fixture integrity manifest
     type: evidence
@@ -439,6 +571,204 @@ index:
     authority_level: delegated-contract
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/33-work-order-john-preload-budget.yaml
+  - id: DOC-pilot-hx1-wo-37-john-exposure
+    title: '37-work-order-john-exposure.yaml — WO-HX1-JOHN-EXP-001 (post-M8 bounded change: hxs-1 fleet-scoped endpoint exposure, SC-07a)'
+    type: work-order
+    authority_level: delegated-contract
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/37-work-order-john-exposure.yaml
+  - id: DOC-pilot-hxs2-cp-03-rick-m1
+    title: 03-context-packet-rick-m1.yaml — context packet for WO-HXS2-RICK-M1-001 (session rick-m1-20260826-01)
+    type: context-packet
+    authority_level: delegated-contract
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/03-context-packet-rick-m1.yaml
+  - id: DOC-pilot-hxs2-cp-06-john-m4
+    title: 06-context-packet-john-m4.yaml — context packet for WO-HXS2-JOHN-M4-001 (session john-m4-20260826-01; hxs-2 M4)
+    type: context-packet
+    authority_level: delegated-contract
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/06-context-packet-john-m4.yaml
+  - id: DOC-pilot-hxs2-cp-08-john-m6
+    title: 08-context-packet-john-m6.yaml — context packet for WO-HXS2-JOHN-M6-001 (session john-m6-20260826-01; hxs-2 M6+M6b; DISCHARGED — milestone complete)
+    type: context-packet
+    authority_level: delegated-contract
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/08-context-packet-john-m6.yaml
+  - id: DOC-pilot-hxs2-cp-10-john-chatx
+    title: 10-context-packet-john-chatx.yaml — context packet for WO-HXS4-JOHN-L1-001 (session john-chatx-20260826-01; Chat-X bounded alignment + ladder + three profiles; DISCHARGED — milestone complete)
+    type: context-packet
+    authority_level: delegated-contract
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/10-context-packet-john-chatx.yaml
+  - id: DOC-pilot-hxs2-cp-12-john-websearch
+    title: 12-context-packet-john-websearch.yaml — context packet for WO-FLEET-JOHN-WS-001 (session john-ws-20260826-01; fleet web-search enablement, four hosts; DISCHARGED — complete)
+    type: context-packet
+    authority_level: delegated-contract
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/12-context-packet-john-websearch.yaml
+  - id: DOC-pilot-hxs2-cp-15-john-m5
+    title: "15-context-packet-john-m5.yaml — context packet for WO-HXS2-JOHN-M5-001 (session john-m5-hxs2-20260826-01; hxs-2 M5: coding + tool protocol + API readiness + vision evidence-only on Coder-X; DISCHARGED — M5 COMPLETE PASS, state log row 31, 2026-08-26T19:55Z)"
+    type: context-packet
+    authority_level: delegated-contract
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/15-context-packet-john-m5.yaml
+  - id: DOC-pilot-hxs2-ev-04-rick-os-readiness
+    title: 04-rick-hxs2-os-readiness.md — rick M1 hxs-2 OS readiness report (WO-HXS2-RICK-M1-001; 13/13 PASS)
+    type: evidence
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/04-rick-hxs2-os-readiness.md
+  - id: DOC-pilot-hxs2-ev-07-esme-m4-install
+    title: 07-esme-m4-install.md — Esme (john) M4 hxs-2 Ollama install + exact-tag pull + identity freeze + D5-budget systemd (WO-HXS2-JOHN-M4-001; 17/17 PASS)
+    type: evidence
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/07-esme-m4-install.md
+  - id: DOC-pilot-hxs2-ev-08-esme-m6-escalation-xid31
+    title: "08-esme-m6-escalation-xid31.md — Esme (john) M6 PAUSED AT DRIFT CHECK: Xid 31 runner crash on hxs-2 (escalation to Kimi-K3; RESOLVED — owner RESUME ARMED)"
+    type: evidence
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/08-esme-m6-escalation-xid31.md
+  - id: DOC-pilot-hxs2-ev-08-esme-m6-ladder-profiles
+    title: 08-esme-m6-ladder-profiles.md — Esme (john) M6 context ladder (32K/64K/128K) + three-profile freeze on Coder-X (hxs-2) (PASS — TASK COMPLETE)
+    type: evidence
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/08-esme-m6-ladder-profiles.md
+  - id: DOC-pilot-hxs2-ev-10-esme-chatx-ladder-profiles
+    title: 10-esme-chatx-ladder-profiles.md — Esme (john) Chat-X pin 0.32.9 → 0.32.15 + GPU-isolation relaxation (O2) + three-rung ladder + profile freeze (PASS — TASK COMPLETE, A-1 disclosed)
+    type: evidence
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/10-esme-chatx-ladder-profiles.md
+  - id: DOC-pilot-hxs2-ev-13-esme-websearch-enable
+    title: "13-esme-websearch-enable.md — Esme (john) fleet web-search enablement: OLLAMA_NO_CLOUD removal on hxs-1/2/3/4 (PASS — TASK COMPLETE)"
+    type: evidence
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/13-esme-websearch-enable.md
+  - id: DOC-pilot-hxs2-ev-16-esme-m5-validation
+    title: "16-esme-m5-validation.md — Esme M5 functional validation on Coder-X (PASS: coding 10/10 = 100% vs ratified >=90% specialist bar with evaluator review concur 10/10; tool protocol 0 forbidden/malformed executed of 51 events + 100% schema conformance of 29 decisions; API readiness PASS; vision probes evidence-only for the deferred D8-vision decision; F-M5-1 residency eviction explained + restored)"
+    type: evidence
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/16-esme-m5-validation.md
+  - id: DOC-pilot-hxs2-state-log
+    title: PILOT-HXS2-CODERX-BACKEND-001 01-state-log.md — governor state-transition log (rows 1–33 at re-validation)
+    type: other
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/01-state-log.md
+  - id: DOC-pilot-hxs2-wo-02-rick-m1
+    title: 02-work-order-rick-m1.yaml — WO-HXS2-RICK-M1-001 (hxs-2 M1 OS readiness verification + staged designs; two authorized mutations)
+    type: work-order
+    authority_level: delegated-contract
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/02-work-order-rick-m1.yaml
+  - id: DOC-pilot-hxs2-wo-05-john-m4
+    title: "05-work-order-john-m4.yaml — WO-HXS2-JOHN-M4-001 (hxs-2 M4: Ollama install + exact-tag pull + identity freeze + D5-budget systemd)"
+    type: work-order
+    authority_level: delegated-contract
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/05-work-order-john-m4.yaml
+  - id: DOC-pilot-hxs2-wo-07-john-m6
+    title: "07-work-order-john-m6.yaml — WO-HXS2-JOHN-M6-001 (hxs-2 M6+M6b: context ladder 32K/64K/128K on the exact digest + three-profile freeze, hxs-1 pattern; DISCHARGED — milestone complete)"
+    type: work-order
+    authority_level: delegated-contract
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/07-work-order-john-m6.yaml
+  - id: DOC-pilot-hxs2-wo-09-john-chatx
+    title: "09-work-order-john-chatx.yaml — WO-HXS4-JOHN-L1-001 (Chat-X bounded alignment: pin 0.32.9 → 0.32.15 + ladder 32K/64K/128K + three-profile freeze; DISCHARGED — milestone complete)"
+    type: work-order
+    authority_level: delegated-contract
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/09-work-order-john-chatx.yaml
+  - id: DOC-pilot-hxs2-wo-11-john-websearch
+    title: "11-work-order-john-websearch.yaml — WO-FLEET-JOHN-WS-001 (fleet change: enable Ollama Cloud web search on all four hosts — NO_CLOUD removal; DISCHARGED — complete)"
+    type: work-order
+    authority_level: delegated-contract
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/11-work-order-john-websearch.yaml
+  - id: DOC-pilot-hxs2-wo-14-john-m5
+    title: "14-work-order-john-m5.yaml — WO-HXS2-JOHN-M5-001 (hxs-2 M5: coding >=90% + evaluator review, tool protocol 100% denied / >=95% conformance, vision probes evidence-only; DISCHARGED — M5 COMPLETE PASS, state log row 31, 2026-08-26T19:55Z)"
+    type: work-order
+    authority_level: delegated-contract
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/14-work-order-john-m5.yaml
+  - id: DOC-pilot-hxs3-cp-03-rick-m1
+    title: 03-context-packet-rick-m1.yaml — context packet for WO-HXS3-RICK-M1-001 (session rick-m1-20260826-01; hxs-3 M1)
+    type: context-packet
+    authority_level: delegated-contract
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/03-context-packet-rick-m1.yaml
+  - id: DOC-pilot-hxs3-cp-06-john-m4
+    title: 06-context-packet-john-m4.yaml — context packet for WO-HXS3-JOHN-M4-001 (session john-m4-20260826-01; hxs-3 M4)
+    type: context-packet
+    authority_level: delegated-contract
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/06-context-packet-john-m4.yaml
+  - id: DOC-pilot-hxs3-cp-09-john-m7
+    title: 09-context-packet-john-m7.yaml — context packet for WO-HXS3-JOHN-M7-001 (session john-m7-20260826-01; hxs-3 M7; DISCHARGED — milestone complete)
+    type: context-packet
+    authority_level: delegated-contract
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/09-context-packet-john-m7.yaml
+  - id: DOC-pilot-hxs3-cp-11-john-m5
+    title: "11-context-packet-john-m5.yaml — context packet for WO-HXS3-JOHN-M5-001 (session john-m5-hxs3-20260826-01; hxs-3 M5: tool protocol + one-call-per-turn invariant, structured output, system-policy, denial, reasoning_strength probe-only on Meta-X; IN-EXECUTION — commissioned 2026-08-26T19:08Z)"
+    type: context-packet
+    authority_level: delegated-contract
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/11-context-packet-john-m5.yaml
+  - id: DOC-pilot-hxs3-ev-04-rick-os-readiness
+    title: 04-rick-hxs3-os-readiness.md — rick M1 hxs-3 OS readiness report (WO-HXS3-RICK-M1-001; 13/13 PASS; blueprint mask set exact)
+    type: evidence
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/04-rick-hxs3-os-readiness.md
+  - id: DOC-pilot-hxs3-ev-07-esme-m4-install
+    title: 07-esme-m4-install.md — Esme (john) M4 hxs-3 Ollama install + exact muse-glimmer:30b pull + identity freeze + D5-budget systemd (WO-HXS3-JOHN-M4-001; 19/19 PASS)
+    type: evidence
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/07-esme-m4-install.md
+  - id: DOC-pilot-hxs3-ev-09-esme-m7-ladder-profiles
+    title: 09-esme-m7-ladder-profiles.md — Esme (john) M7 context ladder + three-profile freeze on Meta-X (hxs-3) (PASS — TASK COMPLETE)
+    type: evidence
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/09-esme-m7-ladder-profiles.md
+  - id: DOC-pilot-hxs3-state-log
+    title: PILOT-HXS3-MUSE-GLIMMER-TOOLING-001 01-state-log.md — governor state-transition log (rows 1–17 at re-validation)
+    type: other
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/01-state-log.md
+  - id: DOC-pilot-hxs3-wo-02-rick-m1
+    title: 02-work-order-rick-m1.yaml — WO-HXS3-RICK-M1-001 (hxs-3 M1 OS readiness verification; blueprint mask set from the start)
+    type: work-order
+    authority_level: delegated-contract
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/02-work-order-rick-m1.yaml
+  - id: DOC-pilot-hxs3-wo-05-john-m4
+    title: "05-work-order-john-m4.yaml — WO-HXS3-JOHN-M4-001 (hxs-3 M4: Ollama install + exact muse-glimmer:30b pull + identity freeze + D5-budget systemd)"
+    type: work-order
+    authority_level: delegated-contract
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/05-work-order-john-m4.yaml
+  - id: DOC-pilot-hxs3-wo-08-john-m7
+    title: "08-work-order-john-m7.yaml — WO-HXS3-JOHN-M7-001 (hxs-3 M7: context ladder 32K/64K/128K on the exact digest + three-profile freeze, hxs-1 pattern; DISCHARGED — milestone complete)"
+    type: work-order
+    authority_level: delegated-contract
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/08-work-order-john-m7.yaml
+  - id: DOC-pilot-hxs3-wo-10-john-m5
+    title: "10-work-order-john-m5.yaml — WO-HXS3-JOHN-M5-001 (hxs-3 M5: tool protocol + one-call-per-turn invariant per KDD-0007, structured output, system-policy, denial, reasoning_strength probe-only; IN-EXECUTION — commissioned 2026-08-26T19:08Z)"
+    type: work-order
+    authority_level: delegated-contract
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/10-work-order-john-m5.yaml
   - id: DOC-pilot-ollama-audit-plan
     title: PILOT-KK3-JOHN-OLLAMA-AUDIT-001 plan.md — Kimi-K3 and John Ollama audit process pilot plan (read-only, hxs-5)
     type: plan
@@ -631,6 +961,12 @@ index:
     authority_level: historical-as-found
     freshness: historical
     canonical_location: /opt/tkv-local/mdast-main
+  - id: DOC-tkv-corpus-meta-model-cookbook
+    title: /opt/tkv-local/meta-model-cookbook-main — Meta Model API cookbook snapshot (official Meta model cookbook; 434 files)
+    type: corpus
+    authority_level: upstream-reference
+    freshness: current
+    canonical_location: /opt/tkv-local/meta-model-cookbook-main
   - id: DOC-tkv-corpus-ollama
     title: /opt/tkv-local/ollama/ollama-main — upstream Ollama source snapshot (v0.32.11 per john profile version-matching rule)
     type: corpus
@@ -638,11 +974,11 @@ index:
     freshness: aging
     canonical_location: /opt/tkv-local/ollama/ollama-main
   - id: DOC-tkv-corpus-omniroute
-    title: /opt/tkv-local/OmniRoute/OmniRoute-release-v3.8.50 — upstream source snapshot of OmniRoute (release v3.8.50)
+    title: /opt/tkv-local/OmniRoute-release-v3.8.51 — upstream source snapshot of OmniRoute (release v3.8.51)
     type: corpus
     authority_level: upstream-reference
     freshness: current
-    canonical_location: /opt/tkv-local/OmniRoute/OmniRoute-release-v3.8.50
+    canonical_location: /opt/tkv-local/OmniRoute-release-v3.8.51
   - id: DOC-tkv-corpus-sap
     title: /opt/tkv-local/sap — HX SAP Copilot research workspace (23,456 files)
     type: corpus
@@ -1046,11 +1382,11 @@ index:
     freshness: historical
     canonical_location: /opt/tkv-local/ollama
   - id: DOC-tkv-omniroute-hx-evaluation
-    title: /opt/tkv-local/OmniRoute (HX side) — HX evaluation material for OmniRoute
+    title: /opt/tkv-local/OmniRoute_old (HX side) — HX evaluation material for OmniRoute
     type: corpus
     authority_level: historical-as-found
     freshness: historical
-    canonical_location: /opt/tkv-local/OmniRoute
+    canonical_location: /opt/tkv-local/OmniRoute_old
   - id: DOC-tkv-root-readme
     title: /opt/tkv-local/README.md — Bench Studio Ownership Kit quick start (misleading vault-root placement, FLAG F9)
     type: other

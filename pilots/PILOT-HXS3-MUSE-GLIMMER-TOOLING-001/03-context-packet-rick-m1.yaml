@@ -1,0 +1,35 @@
+context_packet:
+  goal_id: "GOAL-HXS3-MUSE-001"
+  goal_version: 1
+  work_order_id: "WO-HXS3-RICK-M1-001"
+  session_id: "rick-m1-20260826-01"
+  role: "producer (Ubuntu Server OS plane: rick)"
+  milestone: "M1 — hxs-3 OS readiness (blueprint set from the start)"
+  objective: >-
+    Prove hxs-3's OS plane is ready for the Muse Glimmer tooling backend:
+    driver/DKMS re-proof, 13-point readiness checklist, blueprint sleep-mask set
+    (suspend/hibernate/hybrid-sleep/suspend-then-hibernate), rfkill Wi-Fi block
+    (D4), posture records. Only the masks and the rfkill block mutate.
+  current_state:
+    host: "hxs-3 (192.168.50.202), Ubuntu 24.04.4 LTS (as-found 2026-08-12; kernel re-verify live — hxs-2 drifted to -30 in the outage; check here too)"
+    cpu_ram: "i7-5960X 8c/16t, 66 GB non-ECC"
+    gpus: "2x RTX 5060 Ti 16311 MiB each; driver 580.173.02 (validated 2026-08-12 per directive); DKMS expected for the running kernel"
+    storage: "NVMe ext4 root (model store per D1); check free space for ~18 GB artifact + headroom"
+    network: "primary NIC 192.168.50.202/24; Wi-Fi interface per discovery (D4 target — verify identity, no routes/sessions, then block)"
+    services: "SSH :22 active; NO firewall anywhere (owner rule — nothing to stage, nothing to design); no Ollama/vLLM/Docker; Secure Boot disabled (standing)"
+    unknowns_to_resolve: "running kernel + DKMS state, wait-online state, AER/NVRM baselines, failed units, rfkill indices, host-key pin state (TOFU if absent)"
+  owner_decisions:
+    - "D1 root ext4; D2 fleet /24 + NO host firewall (nothing to stage); D3 muse-glimmer:30b; D4 Wi-Fi rfkill block; Secure Boot stays disabled (standing); no hardening proposals (standing)"
+  constraints:
+    - "Read-only except the two authorized mutation classes; no installs; no reboots; no service changes; no firewall anything"
+    - "Evidence sanitized; masked-value probes only for credential SHAPE if needed (never the value)"
+    - "Historical TKV records are cross-check, never current truth — the live host is the authority"
+  evidence_requirements:
+    - "13 checks: hostname/IP/sudo identity; kernel + OS; Secure Boot state; driver bound + both GPUs in nvidia-smi; DKMS status for running kernel; storage layout + root free space; the FOUR blueprint masks applied + verified; rfkill inventory + Wi-Fi block + persistence mechanism; network posture; no firewall (verify none exists — owner rule); failed units + wait-online + suspend services; NVRM/AER baseline + Xid count; swap + memory"
+    - "Command log with timestamps, sanitized; failures and corrections kept"
+  consulted_records:
+    - "DOC-tkv-hxs3-discovery, DOC-tkv-hxs3-driver-results, DOC-tkv-hxs3-pre-work-results (cross-check)"
+    - "hxs-2 M1 (04-rick-hxs2-os-readiness.md) for the current checklist shape; blueprint §2 for the mask set"
+  handoff:
+    - "Deliverable 04-rick-hxs3-os-readiness.md goes to Carol for catalog receipt; handoff OPEN until the receipt is cited in the state log"
+  second_brain_evaluation: "Per the work order — third host use of the readiness pattern"

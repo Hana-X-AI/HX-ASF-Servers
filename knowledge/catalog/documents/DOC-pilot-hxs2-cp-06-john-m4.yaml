@@ -1,0 +1,60 @@
+document:
+  id: "DOC-pilot-hxs2-cp-06-john-m4"
+  title: "06-context-packet-john-m4.yaml — context packet for WO-HXS2-JOHN-M4-001 (session john-m4-20260826-01; hxs-2 M4)"
+  type: "context-packet"
+  declared_purpose: "Session-binding packet for the john/Esme M4 dispatch (goal binding GOAL-HXS2-CODERX-001 v1; work order WO-HXS2-JOHN-M4-001; role producer — Ollama specialist): objective (stand up Ollama on hxs-2 serving exactly mannix/qwen3.6-27b-a3b-coderx:vision-Q4_K_M under the frozen identity, working alias hx-qwen3.6-coderx, persistent systemd units at blueprint budgets, LAN-scoped endpoint live from install — no firewall, the /24 is the boundary); current state (hxs-2 192.168.50.201, Ubuntu 24.04.4 LTS, kernel 7.0.0-30-generic — F-01 accepted, DKMS built for -30 + -28; rick M1 13/13 at state log row 4: driver 580.173.02 both 5060 Ti bound, zero Xid, rfkill1 Wi-Fi blocked per D4, sleep masks ×4 with hybrid-sleep alignment queued, root 3.4 TB free, ufw INACTIVE and stays that way per the owner rule; Ollama not installed — re-verify at start; endpoint design OLLAMA_HOST=0.0.0.0 loopback preserved; model identity ~16.1 GB Q4_K_M LM + ~447M F16 CLIP projector, reference-observed prefix ca661423d6b5 = cross-check only, LOCAL full digest is the frozen identity; baked params draft_num_predict 3 (MTP; A/B grid at M7), num_ctx 32768 baked (M6 ladder to 64K per D5), RENDERER/PARSER qwen3.5, native sampling defaults preserved — no overrides); owner decisions D1–D8 restated + standing rules (Secure Boot stays disabled; no hardening proposals); constraints (this milestone's scope only; secrets never printed/logged/stored; identity ambiguity is a STOP condition, not a guess point); evidence requirements (install + pin evidence, pull transcript, §12.2 identity capture set, alias binding proof, unit/drop-in contents + hashes + diffs, shellcheck clean, preload first run — /api/ps alias resident 100% VRAM both GPUs exact digest Forever, enabled states, journal clean, reachability 127.0.0.1 + hxs-5 LAN /api/version); consulted records (DOC-hxs2-coderx-knowledge-reference §3/§5/§12, DOC-tkv-hxs2-discovery/driver-results cross-check, hxs-1 12-esme M4 pattern + 35-esme budget contract); handoff clause (deliverable 07-esme-m4-install.md to Carol for catalog receipt; handoff OPEN until the receipt is cited in the state log)."
+  source:
+    author: "Kimi-K3 (governor)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/06-context-packet-john-m4.yaml"
+    section: "§whole-document"
+    ingestion_date: "2026-08-26T05:35:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: [hxs-2, hxs-5]
+    fqdns: []
+    services: [ollama.service, ollama-preload.service]
+    agents: [john, kimi-k3]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+    models: [mannix/qwen3.6-27b-a3b-coderx:vision-Q4_K_M]
+  version: ""
+  status: "adopted"
+  authority_level: "delegated-contract"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "kimi-k3"
+      note: "commissioned at Gate 0 with the paired work order (hxs-2 state log row 7, 2026-08-26T04:08Z); hash 9e8346b1… recorded in the log row — match this ingestion"
+    - predicate: "references"
+      target: "DOC-pilot-hxs2-wo-05-john-m4"
+      note: "paired work order WO-HXS2-JOHN-M4-001"
+    - predicate: "depends_on"
+      target: "DOC-goal-hxs2-qwen36-coderx-backend"
+      note: "goal binding GOAL-HXS2-CODERX-001 v1; owner decisions D1–D8 restated in-packet"
+    - predicate: "references"
+      target: "DOC-pilot-hxs2-ev-04-rick-os-readiness"
+      note: "current-state basis: rick M1 13/13 (state log row 4) — driver/DKMS re-proof, rfkill block, masks, storage headroom, ufw-inactive posture"
+    - predicate: "references"
+      target: "DOC-hxs2-coderx-knowledge-reference"
+      note: "consulted §3 (identity), §5 (vision artifact), §12 (acquisition/identity evidence)"
+    - predicate: "references"
+      target: "DOC-tkv-hxs2-discovery"
+      note: "cross-check controlling source (historical as-found; live host is the authority)"
+    - predicate: "governs"
+      target: "DOC-pilot-hxs2-ev-07-esme-m4-install"
+      note: "the packet's evidence requirements + handoff clause bind the deliverable; handoff OPEN until this run's receipt is cited in the hxs-2 state log"
+  validation:
+    validated_at: "2026-08-26T05:35:00Z"
+    freshness: "current"
+    review_due: "not applicable — discharged packet (milestone complete, deliverable 07 PASS)"
+  sha256: "9e8346b12f037108e1bc3933c989c1286fb3e4f2d45602e428fd74257345eaaa"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/06-context-packet-john-m4.yaml"
+notes:
+  hash_crosscheck: "sha256 matches the value the governor recorded in the hxs-2 state log row 7 at commissioning (9e8346b12f037108e1bc3933c989c1286fb3e4f2d45602e428fd74257345eaaa) — the cataloged file is the commissioned artifact, unmodified."
+  convention: "Typed/statused/authorized per the WO/CP convention (DOC-pilot-hxs2-cp-03-rick-m1): type context-packet, status adopted, authority delegated-contract, owner Kimi-K3."

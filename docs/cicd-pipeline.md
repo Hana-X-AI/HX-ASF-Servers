@@ -85,7 +85,9 @@ Owner (web):
    over-limit). US region is the default (`--region eu` for EU accounts).
 2. Generate an **Agentic API key** (app.coderabbit.ai → Settings → API Keys).
 3. Add it as repo secret **`CODERABBIT_API_KEY`** (GitHub → repo → Settings →
-   Secrets and variables → Actions).
+   Secrets and variables → Actions). The workflow also accepts a
+   `CODERABBIT_API_KEY_2` fallback name (the repo currently carries the key
+   under that name, 2026-08-26).
 4. Optional: install the CodeRabbit GitHub App for PR-native review threads and
    Autofix (`.coderabbit.yaml` already carries `request_changes_workflow` and
    `finishing_touches.autofix` for that day; Autofix needs a Pro plan).

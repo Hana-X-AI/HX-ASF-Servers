@@ -74,6 +74,7 @@ document:
     agents: []                     # roster names
     repositories: []
     environments: []               # e.g. pilot, fleet, production
+    models: []                     # e.g. mannix/qwen3.6-27b-a3b-coderx (added 2026-08-26)
   version: ""
   status: ""                       # draft | adopted | active | superseded | historical | rejected
   authority_level: ""              # owner-directive | ratified-governance | delegated-contract |
@@ -233,9 +234,17 @@ mandatory gate is scoped, never skipped.
 
 | Tier | Use | Verification | Receipt |
 | --- | --- | --- | --- |
-| **T-micro** | ≤5 records touched, single-purpose (status flip, re-validation, re-hash, relation touch) | Write set only: parse + required fields + hash + index 1:1 + relation targets of touched records | Micro receipt; target cycle ≤ 5 min measured end-to-end (owner-ratified 2026-08-26; ≤3 min content-work aspiration) |
-| **T-standard** | Ingestion / correction runs | Write set + full-catalog self-check + one `validate.py` at close | Full receipt |
+| **T-micro** | ≤3 records touched, single-purpose (status flip, re-validation, re-hash, relation touch) | Write set only: parse + required fields + hash + index 1:1 + relation targets of touched records | Micro receipt; target cycle ≤ 5 min measured end-to-end (owner-ratified 2026-08-26; ≤3 min content-work aspiration) |
+| **T-standard** | Ingestion / correction runs; **also 4–5-task micro-class bundles** (calibration below) | Write set + full-catalog self-check + one `validate.py` at close | Full receipt |
 | **T-full** | Sweep / audit | T-standard + CAT-10..15 known-answer + CB-01 bounds audit | Full receipt + battery results |
+
+**Bundle calibration (owner-ratified 2026-08-26):** cycle time scales with task
+count, not tier class — measured 3m57s at 2 records (pilot-3) vs 12.7/15.9 min
+at 4–5-task bundles. T-micro is scoped to ≤3 records. A 4–5-task bundle either
+dispatches **T-standard**, or stays **T-micro with an explicit ≤15 min budget
+named in the governor's brief**. A bundle run under its ratified budget is
+on-target, not an informational miss; over-budget runs flag per the standard
+over-target path.
 
 **Carry-forward window:** a passing T-standard/T-full audit (including its
 `validate.py` result) is citable for 24 h. Later T-micro runs in the window skip

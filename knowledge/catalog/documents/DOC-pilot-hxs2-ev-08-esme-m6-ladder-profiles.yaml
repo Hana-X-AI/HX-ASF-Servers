@@ -1,0 +1,65 @@
+document:
+  id: "DOC-pilot-hxs2-ev-08-esme-m6-ladder-profiles"
+  title: "08-esme-m6-ladder-profiles.md — Esme (john) M6 context ladder (32K/64K/128K) + three-profile freeze on Coder-X (hxs-2) (PASS — TASK COMPLETE)"
+  type: "evidence"
+  declared_purpose: "M6+M6b evidence (report ESME-HXS2-M6-LADDER-PROFILES-001, session john-m6-20260826-01, resumed under owner decision O1 — RESUME ARMED after the F-M6-0 Xid-31 escalation): three rung Modelfiles FROM the frozen digest ca661423d6b5…c1df with num_ctx the ONLY changed parameter (rung diffs = header comment + num_ctx line only); ALL THREE RUNGS PASS — 32K (resident 17,144,322,454 B, 100% VRAM, needle 31,133 tok = 95.01% stop+found), 64K (17,815,411,094 B, needle 62,203 tok = 94.9% stop+found), 128K (19,157,588,374 B == linear prediction BYTE-EXACT, needle 124,421 tok = 94.9% stop+found); every rung fixture-valid, done_reason=stop, 3 known-answer spot checks FLAT (391/Paris/3, thinking ON counts only), journal 0 err / 0 Xid / 0 OOM. KV growth measured f16 EXACTLY linear at 20,480 B/token (two depth pairs; hybrid-attention MoE — under half of hxs-1's dense 45,056; the packet's ~5.8 GiB 128K estimate was pessimistic, actual 2.50 GiB). Profile freeze: aliases hx-qwen3.6-coderx-32k (digest 1d297a6a093f…21ba5 — byte-identical manifest to the M4-frozen bare alias; baked params already carry num_ctx 32768, deterministic rebuild), -64k (ec9ebe08a824…28a9f1), -128k (86a55171dc03…6049d); manifest sha256 == digest per tag, layer diffs = exactly one params-blob substitution each (num_ctx only); zero sampling parameters introduced. Repoint per D5: preload MODEL/DIGEST → hx-qwen3.6-coderx-64k (sha256 ab1c8010…fe86f9 → c95b7345…164710); hx2.conf + OLLAMA_CONTEXT_LENGTH=65536 operator-consistency (09184158…68c35b → 234da7c5…903afa; NO_CLOUD carried verbatim — concurrent removal session not yet landed). Final residency (steady state, re-proven after two controlled reloads): hx-qwen3.6-coderx-64k @ ec9ebe08a824…, ctx 65536 effective, size==size_vram 17,815,411,094 B 100% VRAM, Forever, GPU0 10,182 + GPU1 8,976 MiB; only -64k resident, source tag + bare alias + all three rung aliases in-store. Link-speed under load: NIC 1000Mb/s constant; PCIe gen1 x8 idle → gen3 x8 (= driver-reported max) under prefill on both GPUs. Disclosed: 32K needle attempt-1 fixture calibration (30,015 tok 91.6%, found+stop — preserved, D-M6-2 class; 26.03 tok/line density); F-M6-7 size-report anomaly with variable-isolation experiment. Sanitized command log; Task May Proceed YES; completion PASS — TASK COMPLETE."
+  source:
+    author: "john / Esme (session john-m6-20260826-01)"
+    provided_by: "john via Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/08-esme-m6-ladder-profiles.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-26T10:00:00Z"
+  owner: "john"
+  applies_to:
+    hosts: [hxs-2, hxs-5]
+    fqdns: []
+    services: [ollama.service, ollama-preload.service]
+    agents: [john]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+    models: [mannix/qwen3.6-27b-a3b-coderx:vision-Q4_K_M, hx-qwen3.6-coderx, hx-qwen3.6-coderx-32k, hx-qwen3.6-coderx-64k, hx-qwen3.6-coderx-128k]
+  version: ""
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "evidences"
+      target: "DOC-pilot-hxs2-wo-07-john-m6"
+      note: "WO-HXS2-JOHN-M6-001 DISCHARGED — every mandatory test at all three rungs PASS; M6+M6b COMPLETE, governor live-verified (hxs-2 state log row 18, 2026-08-26T08:15Z; handoff OPEN until this run's receipt is cited)"
+    - predicate: "evidences"
+      target: "DOC-pilot-hxs2-cp-08-john-m6"
+      note: "the packet's evidence contract satisfied item-for-item: per-rung /api/ps + per-GPU MiB + KV two-depth derivation + fixture-valid needle JSON + 3 flat spot checks + link speed + journal excerpts; alias digests with manifest equality; repoint pre/post sha256 + diffs; final /api/ps at -64k"
+    - predicate: "evidences"
+      target: "DOC-goal-hxs2-qwen36-coderx-backend"
+      note: "owner decision D5 discharged: the 64K operating context validated on the exact digest (needle 94.9% stop+found, KV linear, 100% VRAM) and frozen as the hx-qwen3.6-coderx-64k operating profile, resident Forever"
+    - predicate: "produced_by"
+      target: "john"
+      note: "under DOC-pilot-hxs2-wo-07-john-m6; executed from hxs-5 via the ratified askpass path (credential read at execution only, helper deleted, verified); window 07:15Z → 08:12Z incl. the 07:31Z → 07:40Z escalation pause"
+    - predicate: "configures"
+      target: "hxs-2 ollama-preload.service + ollama.service.d/hx2.conf at the 64K operating profile"
+      note: "preload MODEL=hx-qwen3.6-coderx-64k DIGEST=ec9ebe08a824…28a9f1; hx2.conf + OLLAMA_CONTEXT_LENGTH=65536 (operator-consistency; the alias Modelfile num_ctx remains the effective contract — /api/ps context_length is the proof); versioned edits, rollback inverse recorded"
+    - predicate: "references"
+      target: "DOC-pilot-hxs2-ev-08-esme-m6-escalation-xid31"
+      note: "the pre-resume escalation this session filed at the drift check (F-M6-0 Xid 31, single event, recovered); the ladder ran under owner decision RESUME ARMED with an armed Xid-watch — 0 at every checkpoint (baseline, per-rung ×3, post-repoint, final)"
+    - predicate: "risks"
+      target: "F-M6-7 (service-restart discovery-race resident-size over-report class)"
+      note: "loads planned during the GPU-discovery race over-reported resident size (+2,179,507,159 B) with all acceptance properties intact; steady-state loads report the exact rung value (isolated by experiment); the M4 first-load delta assessed as the same class (INFERENCE) — RECOMMENDATION to monitors/KK3: assert residency values only from steady-state loads"
+    - predicate: "risks"
+      target: "F-M6-0 (Xid 31 recurrence watch — single event, recovered)"
+      note: "carried finding: single-event ggml-cuda/qwen35moe defect class on driver 580.173.02 (cuda_v13 mmq); zero recurrence this run; a second event warrants driver/ggml triage before any 128K production use (rick/KK3)"
+  validation:
+    validated_at: "2026-08-26T10:00:00Z"
+    freshness: "current"
+    review_due: "at M5 (quality/vision probes against the resident -64k profile) and the M7 reboot-cycle evidence; F-M6-0 recurrence watch stands"
+  sha256: "30151c4290cb58af13efd81b52accbfe53af31d7c12dedd44b23803ad1e97dfc"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/08-esme-m6-ladder-profiles.md"
+notes:
+  findings_register: "F-M6-0 (RECORD, carried): pre-session Xid 31 (2026-08-26T05:46:59Z) — single-event ggml-cuda/qwen35moe defect, driver recovered, zero recurrence; the 192.168.50.115 interactive sessions were the owner himself (governor supplement 4) — foreign-client class CLOSED; see DOC-pilot-hxs2-ev-08-esme-m6-escalation-xid31. F-M6-7 (FACT, new): service-restart discovery-race loads can over-report resident size with all acceptance properties intact (isolated; steady-state exact). Carried classes: F-M6-1/F-M6B-1 (preload auto-run via Requires= during restart; one absorbed info-level probe retry), F-M6-2 (poll-to-empty unload discipline — empty at poll 1 every time). Budgets: bounded corrections 0 of 1 used; stop conditions none hit; the 128K extended-fail fallback not needed — three profiles frozen as ordered."
+  kv_coefficient: "CoderX KV = 20,480 B/token f16, EXACTLY linear (32K→64K and 64K→128K both 20,480.0; S(131072) predicted byte-exact). f16 proven two ways: no OLLAMA_KV_CACHE_TYPE set (default f16) + runner journal K(f16)/V(f16) lines. >131,072 remains unauthorized and unconfigured."
+  profile_set: "Coder-X three-profile set (frozen 2026-08-26, needle-proven): hx-qwen3.6-coderx-32k 1d297a6a093f7858da9a96e39950b6e7581118708b6121182a811a1f3bf21ba5 (baseline; byte-identical to the M4 bare alias), hx-qwen3.6-coderx-64k ec9ebe08a82447f7440fd8cba07b406f6972c19ea7fa0cfd53ea8055ff28a9f1 (OPERATING — resident, ctx 65536 effective, Forever), hx-qwen3.6-coderx-128k 86a55171dc03fa282e54eb2ad986d91bd8d278123d888305975ebbdd6cd6049d (extended, qualified — needle found at 94.9%); source tag ca661423d6b5…c1df + bare alias 1d297a6a09…21ba5 in-store (tags only)."
+  sanitization: "No secrets, tokens, cookies, private prompts, user data, or thinking content in the source (counts only, A01 §5.2-class); all prompts synthetic; askpass helper deleted (verified); transient sanitized evidence at hxs-5:/tmp/esme-m6/evidence (volatile — the source document carries the record). Catalog stores no credential material (profile §6)."

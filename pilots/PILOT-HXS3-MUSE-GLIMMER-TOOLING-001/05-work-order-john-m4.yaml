@@ -1,0 +1,41 @@
+work_order:
+  task_id: "WO-HXS3-JOHN-M4-001"
+  parent_goal: "GOAL-HXS3-MUSE-001"
+  goal_file: "goals/2026-08-26-hxs3-muse-glimmer-tooling.md"
+  milestone: "M4 — Ollama install + exact muse-glimmer:30b pull + identity freeze + D5-budget systemd"
+  assigned_agent: "john / Esme (profile-briefed sub-agent)"
+  objective: >-
+    Install and pin Ollama 0.32.15 on hxs-3 (blueprint-consistent; Muse support
+    floor 0.32.8 + parser boundary fix 0.32.9 both covered); pull EXACTLY
+    muse-glimmer:30b (official library artifact); capture the FULL identity
+    evidence (ollama --version, list, show, show --modelfile, /api/show — LM
+    digest, size, family, params, quantization, capabilities (text/image/tools/
+    thinking), embedded template + renderer/parser capture incl. ATEM parser
+    presence, license, CLIP projector identity); create alias hx-muse-glimmer
+    bound to the frozen digest (FROM-only, baked params preserved: temperature
+    1, top_k 64, top_p 0.95); deploy ollama.service + ollama-preload.service
+    with D5-conformant budgets (TimeoutStartSec=600, script ≤538 s), exact
+    alias+digest /api/ps assertion, OLLAMA_HOST=0.0.0.0 with loopback
+    preserved, OLLAMA_NO_CLOUD=1, NUM_PARALLEL=1, MAX_LOADED_MODELS=1, NO
+    firewall anywhere (owner rule).
+  owner_authorizations:
+    - "Owner 'commission M4' 2026-08-26 (state log row 8): Ollama install + exact-tag pull + systemd deployment authorized on hxs-3"
+    - "Endpoint posture per D2 + no-host-firewall rule: bind 0.0.0.0 from install; the /24 itself is the boundary"
+    - "NOT authorized: any model other than muse-glimmer:30b, sampling/context overrides (M7 ladder's), reboots, any firewall, any other host change beyond this milestone"
+  boundaries:
+    - "Execution path: session on hxs-5; hxs-3 (192.168.50.202) via SSH hxsa@192.168.50.202; askpass helper READS the credential from the HX Fleet SSH Access Guide credential-record row at execution time — no extracted copy, helper deleted at task end; verify hostname + peer IP first; sudo -n only; host key pinned (rick M1 F-05) — strict check"
+    - "Identity guard: the local full digest is the frozen identity; manifest prefix de878ce33ad8 is a cross-check only; family/template/parser ambiguity = STOP and report, never guess (escape hatch: drafted llama.cpp fallback — escalate, do NOT improvise a second serving plane)"
+    - "Versioned change: pre/post sha256 of every config file created/modified + unified diffs in evidence"
+    - "One bounded correction attempt per failed correctable gate; stop conditions: wrong artifact family, Muse load failure, template/ATEM parser absent, GPU not visible to Ollama, service failure after bounded retry, any Xid"
+  rollback: "Remove units + drop-ins, ollama rm the alias and tag (model-store removal separately approved — stop at units/config by default); byte-copies of created configs retained in evidence."
+  controlling_sources:
+    - "06-context-packet-john-m4.yaml (this package)"
+    - "v1.1 authoritative pilot §3.1/§3.4/§12 (artifact, contract, acquisition); Meta llama.cpp guide (diagnostic floor only)"
+    - "goal file D-items + SC table; servers/BLUEPRINT-llm-server.md §2/§3/§5; 35-esme-preload-budget.md (budgets)"
+    - "/opt/tkv-local/servers/hxs-3/ (historical, cross-check); /opt/tkv-local/ollama (role knowledge gate)"
+  deliverable: "07-esme-m4-install.md: install/pin evidence, pull log, FULL identity capture (incl. template/renderer/parser + projector), alias binding, unit files + hashes/diffs, shellcheck, preload first-run proof (resident, 100% GPU both 5060 Ti, exact digest, Forever), link-speed-under-load telemetry (row-2 PCIe caveat), smoke inference (known-answer), reachability matrix, sanitized command log, Task May Proceed receipt"
+  second_brain_evaluation:
+    opportunity_identified: "yes"
+    roadmap_capability_or_pattern: "hxs-1/hxs-2 M4 install pattern (third validated use); Meta-X capability record materializes from this identity freeze"
+    disposition: "implemented — the identity capture and unit contracts become the Meta-X catalog spine at handoff"
+    evidence_and_reasoning: "three hosts, one shape: the blueprint's uniformity claim is proven again or the next divergence is found — either way the catalog gains the fact"
