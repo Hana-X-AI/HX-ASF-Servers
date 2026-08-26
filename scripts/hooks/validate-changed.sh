@@ -17,7 +17,7 @@ esac
 
 ROOT="/home/hxsa/opt/HX-ASF-Servers"
 cd "$ROOT" || exit 0
-rel="${path#$ROOT/}"
+rel="${path#"$ROOT"/}"
 out="$(PYTHONDONTWRITEBYTECODE=1 python3 scripts/validate.py --changed "$rel" 2>&1)"
 code=$?
 if [ "$code" -ne 0 ]; then
