@@ -37,7 +37,7 @@ document:
       target: "DOC-knowledge-network"
       note: "FQDN model hxs-N.hx.local.arpa; IPs authoritative here"
   validation:
-    validated_at: "2026-08-25T08:10:00Z"
+    validated_at: "2026-08-26T01:10:00Z"
     freshness: "current"
     review_due: "on any fleet change; hxs-1 row wording refresh at next registry amendment (see FLAG F-REG-1 in this run's receipt)"
   sha256: "8f0f30172ecbcd277f09c886962272e43567a4df311ad38a2ec8420be0f263a5"
@@ -45,3 +45,4 @@ document:
 notes:
   fqdn_truth_state: "TARGET-STATE, not live DNS: the 16 per-host FQDNs (hxs-1..hxs-15, hxs-cp — pattern <host>.hx.local.arpa per SERVER-REGISTRY.md rows and the dns-fqdn material) are documented intended names. hxs-1 discovery records NO configured FQDN (hostname -f returns the short name) and that persistent hx.local.arpa DNS is not established (act-001 open). Do not present these as live resolving names. Bare zone entry hx.local.arpa removed from this list 2026-08-25 (C10) — the zone itself is covered by DOC-tkv-dns-fqdn-hx-local-dns."
   phase3_tension: "Registry text: 'The Phase 3 mutation guard is hard-locked for every registry status' and server implementation is a 'later owner-authorized phase'. The hxs-1 pilot (M0 authorized 2026-08-24 by owner) installs and configures the approved registry workload on hxs-1 — owner directive outranks the guard text (authority order), and the owner approved hxs-1/configuration.md for M8 (state log row 28). FLAG: hxs-1's configured state currently lives only in the pilot corpus; the TKV server records do not yet reflect it. Escalated as follow-up, review at M8."
+  m8_resolution_20260826: "RESOLVED IN FACT at M8 (addendum, 2026-08-26T0110Z run — phase3_tension preserved above as the historical record): hxs-1/configuration.md now exists at /opt/tkv-local/servers/hxs-1/configuration.md (server records contract Phase 2, companion to the M8 sign-off package) and is cataloged as DOC-tkv-hxs1-configuration — the TKV server records now reflect hxs-1's configured state; first-ingestion flag F8 closed. Registry file itself verified undrifted this run (sha256 8f0f3017… match). STILL OPEN: F-REG-1/F7 row-wording refresh ('unreleased, slot reserved' text and any Phase-2 status wording) is an owner-side registry amendment, pending — the registry row text, not the catalog, is what lags."

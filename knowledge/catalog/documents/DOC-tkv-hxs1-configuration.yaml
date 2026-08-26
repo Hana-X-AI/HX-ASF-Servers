@@ -1,0 +1,53 @@
+document:
+  id: "DOC-tkv-hxs1-configuration"
+  title: "/opt/tkv-local/servers/hxs-1/configuration.md — hxs-1 configured state (Phase 2, server records contract; pilot M0-M8, owner-ratified into M8 at state-log row 28)"
+  type: "contract"
+  declared_purpose: "Phase-2 server configuration record per the /opt/tkv-local server records contract — 'What did HX configure this server to become'. Records hxs-1's assigned role (Deep reasoning & synthesis) and primary workload (Qwen 3.8 27B GGUF Q4_K_M non-MLX via Ollama) copied from SERVER-REGISTRY.md (the record does not assign them; fulfills the registry's reserved slot); approved by Agent Zero (KDD-0004 baseline adoption; M0 authorization 2026-08-24). Captures the final configuration: Ubuntu 24.04.4 LTS kernel 7.0.0-30-generic (DKMS covers -28/-30), nvidia-driver-580-server-open 580.173.02 (retain-and-validate, owner D3); static 192.168.50.200, SSH-only exposure, Ollama API loopback-only 127.0.0.1:11434 with remote refusal proven, CORS localhost-only, OLLAMA_NO_CLOUD=1, Wi-Fi rfkill soft-blocked and boot-persisted (x4 incl. one unplanned site power loss); root ext4 on 3.6 TB NVMe with model store on root (owner D1), two further disks unallocated; both RTX 4070 Ti SUPER fully resident for the model (100% VRAM; layer-split compute alternation expected, equal utilization a non-goal; PCIe x4/x16 asymmetry recorded since 2026-08-11; Hailo-8 present driverless unused); three ratified profile aliases (hx-qwen3.8-27b-32k db2c6206… recovery baseline, -64k 766cd9469fb4… operating default resident, -128k 94b83a1e… qualified extended explicitly selected; bare alias retired tags-only with deterministic inverse); preload script + ollama-preload.service drop-in (TimeoutStartSec=600, <=538 s worst case) and hx1.conf (ctx 65536); services ollama.service + ollama-preload.service + systemd-rfkill units all enabled/active. Validation checklist all boxes ticked with milestone citations; full Material Change Record (install/pin through A01 rebuild, three-profile ratification, rfkill, kernel -30, preload-budget fix, unplanned power cut) each with validation and rollback; Sources cite the pilot package (evidence 03-35, M8 reconciliation 36, state log rows 1-63) and the Carol catalog. Closes catalog flag F8 (configured state previously lived only in the pilot corpus)."
+  inferred_value: "INFERENCE: this is now the first-stop answer to 'what is hxs-1 supposed to be' — the fleet-level complement to the pilot's evidence corpus, and the record future work orders on hxs-1 should cite for configured-state truth (verified live 2026-08-26 per its Sources). Its rollback column (one-line versioned inverses, GRUB previous entry, byte-copies retained) makes it the cheapest rollback reference as well. Freshness risk: it is a point-in-time M8 snapshot — any post-M8 host change must grow its Material Change Record or this record goes stale."
+  source:
+    author: "HX pilot (Kimi-K3 governor lane) per server records contract Phase 2; approved by Agent Zero (record header: KDD-0004 baseline adoption; M0 authorization 2026-08-24)"
+    provided_by: "Kimi-K3 (M8 sign-off package companion record)"
+    origin: "/opt/tkv-local/servers/hxs-1/configuration.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-26T01:10:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: [hxs-1]
+    fqdns: []
+    services: [ollama.service, ollama-preload.service]
+    agents: []
+    repositories: [tkv-local]
+    environments: [fleet, production]
+  version: "Phase 2; configuration date 2026-08-24 through 2026-08-26 (pilot M0-M8)"
+  status: "active"
+  authority_level: "ratified-governance"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "configures"
+      target: "hxs-1"
+      note: "the configured-state record for the host: role, workload, OS/driver, network, storage, GPU, profile aliases, services, validation, and material-change history — answers 'what did HX configure this server to become'"
+    - predicate: "references"
+      target: "DOC-tkv-hxs1-discovery"
+      note: "discovery record preserved as historical as-found (2026-08-11), never modified; reconciled against pilot evidence with zero material conflicts (state-log rows 27, 33)"
+    - predicate: "references"
+      target: "DOC-tkv-server-registry"
+      note: "role/workload source: assigned role and workload copied from SERVER-REGISTRY.md, not assigned by this record; fulfills registry note 'Qwen 3.8 27B — unreleased, slot reserved'"
+    - predicate: "produced_by"
+      target: "DOC-pilot-hx1-decision-36-m8-acceptance"
+      note: "created per server records contract Phase 2 as the M8 companion record (owner-approved at state-log row 28); the M8 package names it companion and its Sources cite the pilot evidence corpus (03-35, 36, state log rows 1-63) it summarizes"
+  validation:
+    validated_at: "2026-08-26T01:10:00Z"
+    freshness: "current"
+    review_due: "on any material change to hxs-1 configured state (its Material Change Record must grow with the change) or on registry status change"
+  sha256: "7cd4508f9df73d1ababd0a60ad18630d2ab978822b796427abaead257e4e46bb"
+  canonical_location: "/opt/tkv-local/servers/hxs-1/configuration.md"
+notes:
+  authority_basis: "authority_level ratified-governance per the record's evidence basis: creation owner-approved for M8 at state-log row 28 (owner-gated phase), role/workload assigned by the owner-maintained registry, and every material configuration decision owner-ratified (D1 model store, D3 driver, A01/Rev-2 profile dispositions, rfkill directive). Content assembled from pilot agent evidence, which remains cited as Sources."
+  template_precedent: "Type contract follows the catalog precedent for configuration-record forms (DOC-tkv-servers-template-configuration, blank template, type contract) — a configuration record is the per-server configured-state contract."
+  f8_closure: "Closes first-ingestion flag F8 (2026-08-25T0455Z receipt): hxs-1's configured state no longer lives only in the pilot corpus; the TKV server records now reflect it. Companion registry-row wording refresh (F-REG-1/F7) remains owner-side pending — SERVER-REGISTRY.md itself verified undrifted this run (sha256 8f0f3017… match)."
+  no_secrets: "Record self-declares 'No credentials, keys, or secret values are stored in this record (contract)' — verified at ingestion; contains_secret_values false."
