@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Generated from knowledge/agent-performance.md (sha256 95528dc6e6dbd86c6c5d02a47f45bd9157fc8e79a1e78d9870b0b5feb2dc36e3) by scripts/wiki/render.py on 2026-08-26T02:11Z.
+<!-- Generated from knowledge/agent-performance.md (sha256 2c2e35aad04babb2486e90e38c36d545797ddff36a4ec78801b878ba7a6f725f) by scripts/wiki/render.py on 2026-08-26T02:19Z.
      Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
 <html lang="en">
 <head>
@@ -42,9 +42,9 @@ a{color:#6fa8ff} .doc-meta,footer{color:#999}}
 <h2 id="update-rules">Update rules</h2>
 <ol><li>Governor appends after every milestone/handoff close: runs, clean count, disclosed defects, score recomputed, tier eligibility re-stated.</li><li>Incident correlation: a post-review finding traced to a previously auto-approved item lowers that agent/task type to Tier 2/3 temporarily — logged here with the pattern and the recovery condition.</li><li>Boundary review at each milestone close: false-negative rate (auto-approved items that should have escalated) and false-positive rate (escalations that were trivially approvable) recorded below; tier boundaries adjusted only with a state-log citation.</li><li>First scheduled review: after 5 triaged items (p7-lite pilot checkpoint).</li></ol>
 <h2 id="review-log">Review log</h2>
-<table><thead><tr><th>Date</th><th>Items since last</th><th>False neg</th><th>False pos</th><th>Boundary change</th><th>State-log ref</th></tr></thead><tbody><tr><td>2026-08-26</td><td>1 (pilot-1: 3-record T-micro)</td><td>0</td><td>0</td><td>T-micro cycle 8m57s &gt; 3 min target — cause: full-contract startup reads; fix: profile §10 tier-scoped startup + pre-cited briefs (pilot-2 measures)</td><td>rows 65–67</td></tr><tr><td>(next review after 5 triaged items)</td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table>
+<table><thead><tr><th>Date</th><th>Items since last</th><th>False neg</th><th>False pos</th><th>Boundary change</th><th>State-log ref</th></tr></thead><tbody><tr><td>2026-08-26</td><td>1 (pilot-1: 3-record T-micro)</td><td>0</td><td>0</td><td>T-micro cycle 8m57s &gt; 3 min target — cause: full-contract startup reads; fix: profile §10 tier-scoped startup + pre-cited briefs (pilot-2 measures)</td><td>rows 65–67</td></tr><tr><td>2026-08-26</td><td>1 (pilot-2: 2-record T-micro)</td><td>0</td><td>0</td><td>Cycle 4m18s (−52%) — still &gt;3 min. Remaining floor: host-mandated AGENTS.md read (system reminder, unavoidable) + post-edit re-parse. Plan rule: stop tuning; boundary recommendation to owner: re-target ≤5 min measured end-to-end, keep ≤3 min as content-work aspiration</td><td>rows 67–68</td></tr><tr><td>(next review after 5 triaged items)</td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table>
 </main>
-<footer>Source of truth: <code>knowledge/agent-performance.md</code> (sha256 <code>95528dc6e6dbd86c6c5d02a47f45bd9157fc8e79a1e78d9870b0b5feb2dc36e3</code>) · rendered 2026-08-26T02:11Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+<footer>Source of truth: <code>knowledge/agent-performance.md</code> (sha256 <code>2c2e35aad04babb2486e90e38c36d545797ddff36a4ec78801b878ba7a6f725f</code>) · rendered 2026-08-26T02:19Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
 
 </body>
 </html>

@@ -41,4 +41,5 @@ precision.
 | Date | Items since last | False neg | False pos | Boundary change | State-log ref |
 | --- | --- | --- | --- | --- | --- |
 | 2026-08-26 | 1 (pilot-1: 3-record T-micro) | 0 | 0 | T-micro cycle 8m57s > 3 min target — cause: full-contract startup reads; fix: profile §10 tier-scoped startup + pre-cited briefs (pilot-2 measures) | rows 65–67 |
+| 2026-08-26 | 1 (pilot-2: 2-record T-micro) | 0 | 0 | Cycle 4m18s (−52%) — still >3 min. Remaining floor: host-mandated AGENTS.md read (system reminder, unavoidable) + post-edit re-parse. Plan rule: stop tuning; boundary recommendation to owner: re-target ≤5 min measured end-to-end, keep ≤3 min as content-work aspiration | rows 67–68 |
 | (next review after 5 triaged items) | | | | | |
