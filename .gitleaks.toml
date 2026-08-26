@@ -1,0 +1,15 @@
+# Gitleaks configuration — HX-ASF-Servers (2026-08-26)
+# Repo-level allowlist for verified false positives. Every entry must carry its
+# justification and stay as narrow as the verified case allows.
+title = "HX-ASF-Servers gitleaks config"
+
+[allowlist]
+description = "Verified false positives only — see per-entry comments"
+# The ollama.com/connect sign-in URLs recorded in the hxs-2 web-search enablement
+# evidence embed each host's PUBLIC ed25519 key (base64) — public key material by
+# design (the deliverable's sanitization statement: public material only; the
+# private keys never leave the hosts). All four hosts completed sign-in
+# 2026-08-26 (state log row 27); the URLs are spent. generic-api-key fires on the
+# high-entropy key= parameter — a false positive for public key material.
+paths = ['''pilots/PILOT-HXS2-CODERX-BACKEND-001/13-esme-websearch-enable\.md''']
+regexes = ['''ollama\.com/connect\?name=hxs-''']
