@@ -243,6 +243,14 @@ the full audit and cite it, still verifying their own write set. Any FAIL
 anywhere resets the window. Sessions default to background dispatch; foreground
 only for T-micro whose result blocks the governor's next action.
 
+**T-micro session scope** (2026-08-26, F-TM1-1 correction): a T-micro session
+reads ONLY this run-tier block, the write-set records, and index.yaml lookups
+for the touched ids (+ count). The full profile, charter, repo AGENTS.md, and
+the full-index parse are **out of scope for T-micro**; T-standard/T-full keep
+the full startup above. The governor's T-micro brief pre-cites record ids,
+last-known hashes, and the exact sections to verify — the run is
+recompute-and-compare, never discovery.
+
 ## 11. Standing directives
 
 1. **Originals are sacred.** Preserve every source artifact unchanged.

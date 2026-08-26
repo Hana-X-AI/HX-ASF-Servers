@@ -4,7 +4,7 @@
 index:
   schema_version: 1
   initialized: 2026-08-25 (Carol instantiation, owner amendment)
-  updated: "2026-08-26T0137Z (M8 verdict wave: 2 updated — DOC-pilot-hx1-decision-36-m8-acceptance (§9 SIGNED: owner Jarvis Richardson ACCEPT 2026-08-26, verbatim 'I jarvis Richardson Accept M8', no conditions — pilot closed as PASS; status draft -> active per the unsigned-decision convention; re-hashed f334065b… -> 41d5f9de…; SC-05 deferred-by-owner stands, §7 non-authorizations unchanged) / DOC-goal-hx1-ollama-qwen38-27b (status line now COMPLETE — PASS 2026-08-26; re-hashed 87187b16… -> 8bf0c1f4…; record status active -> historical as the terminal-closed enum mapping of the document's own header, mapping + closure recorded in notes.m8_closure; freshness current, authority ratified-governance unchanged)); count unchanged (182 records); receipt receipts/2026-08-26T0137Z-carol-m8-verdict.md)"
+  updated: "2026-08-26T0202Z (T-micro pilot-1 — first run under the ratified §10 run-tier rules: 3 records — DOC-agent-carol-profile (re-hash 07a9d03f… -> 345a68a5…: governor added the §10 Run tiers block, owner-ratified 2026-08-26 p7-lite, verified present; validated_at 2026-08-26T02:01:37Z) / DOC-agent-kimi-k3-verification-checklist (re-hash b2cbbcb6… -> 8accdfad…: governor-appended 'Triage after the gate' section — tiers 0-3, escalation triggers, state-log triage line — verified present; references edge added to DOC-knowledge-agent-performance; validated_at 2026-08-26T02:01:37Z) / DOC-knowledge-agent-performance NEW (registry; governor-seeded accuracy ledger, p7-lite dynamic learning MVP; authority ratified-governance, owner Option A 2026-08-26; references -> DOC-agent-carol-profile run tiers, DOC-agent-kimi-k3-verification-checklist triage block, DOC-goal-hx1-ollama-qwen38-27b)); count 182 -> 183; carry-forward: full audit receipt 2026-08-26T0137Z (self-check 182/182 + validator PASS, within 24 h — not re-run); receipt receipts/2026-08-26T0202Z-carol-tmicro-pilot1.md)"
   document_count: 183
   documents:
   - id: DOC-a01-origin-codex-20260824-2125
@@ -175,6 +175,12 @@ index:
     authority_level: ratified-governance
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/kimi-k3/goal-setting-guidance.md
+  - id: DOC-knowledge-agent-performance
+    title: knowledge/agent-performance.md — agent performance ledger (p7-lite dynamic learning, MVP)
+    type: registry
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/agent-performance.md
   - id: DOC-knowledge-issues
     title: knowledge/issues.md — open issues and action items
     type: other

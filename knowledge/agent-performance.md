@@ -40,4 +40,5 @@ precision.
 
 | Date | Items since last | False neg | False pos | Boundary change | State-log ref |
 | --- | --- | --- | --- | --- | --- |
-| (pending first review) | | | | | |
+| 2026-08-26 | 1 (pilot-1: 3-record T-micro) | 0 | 0 | T-micro cycle 8m57s > 3 min target — cause: full-contract startup reads; fix: profile §10 tier-scoped startup + pre-cited briefs (pilot-2 measures) | rows 65–67 |
+| (next review after 5 triaged items) | | | | | |
