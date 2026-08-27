@@ -1,0 +1,52 @@
+document:
+  id: "DOC-fleet-time-and-mask-pass"
+  title: "2026-08-26-fleet-time-and-mask-pass.md — rick fleet time+mask pass (PASS — TASK COMPLETE: Etc/UTC ×4 with hxs-3 changed 2026-08-26T23:52:40Z; NTP=time.cloudflare.com pinned ×4 with FallbackNTP empty and one shared timesyncd.conf sha256 e2b94d4b…a349dc2; hxs-2 hybrid-sleep.target masked 23:56:20Z aligning to the proven hxs-1/hxs-3 set; ollama undisturbed 14/14 probes; F-1 hxs-4 has no sleep masks, queued for an authorized hxs-4 session)"
+  type: "evidence"
+  declared_purpose: "Rick's execution evidence for the owner one-source directive 2026-08-26 ('they should all use one source'; fleet consistency is rick's lane — hxs-3 state log row 18, 2026-08-26T23:36Z), commissioned by the governor and executed 2026-08-26T23:39:24Z–23:58Z from hxs-5 against hxs-1/2/3/4. Three bounded items, nothing else: (1) one timezone — Etc/UTC on all four (hxs-3 America/Panama -> Etc/UTC at 2026-08-26T23:52:40Z, the one real change, three-view verified; hxs-1/2/4 idempotent, untouched); (2) one named NTP source — NTP=time.cloudflare.com with FallbackNTP explicitly empty on all four (identical two-line timesyncd.conf change, fail-closed staged awk + diff review, canary hxs-1 first then fleet progression, synchronized ~0 s after each restart; all four files share ONE sha256 — the file-level one-source proof; baseline showed this was a pin, not a repair); (3) hxs-2 mask alignment — hybrid-sleep.target masked at 23:56:20Z, matching the proven hxs-1/hxs-3 set (sleep.target superset retained per the commission; hxs-2 state-log row-6 queue item CLOSED). Guards held: ollama undisturbed (14/14 /api/version probes 0.32.15 — 4 baseline, 6 post-mutation, 4 final-sweep, zero failures), zero failed units, no reboots, no packages, no firewall, systemd-timesyncd restart only. Result PASS — TASK COMPLETE (T-TZ-1 ×3, T-TZ-2, T-NTP-1 ×4, T-NTP-2 canary, T-MASK-1, T-REG-1 10 post-change / 14 total, T-REG-2 ×4 all PASS; no failed/blocked/not-run). Provenance: owner one-source directive 2026-08-26 + hxs-2 state log row 37 (2026-08-27T00:05Z) + hxs-3 state log row 19 (2026-08-27T00:05Z). Commissioned notes carried: the EST/America-Panama evidence-labeling class on hxs-3 ENDS at 2026-08-26T23:52:40Z — pre-change EST-labeled records remain historical fact and are not rewritten (F-3); F-1 hxs-4 carries NO sleep-target masks — reported, not performed, queued for a future authorized hxs-4 session; F-2 systemd-255 timedatectl comma-joined -p quirk disclosed with the working repeated-flag form; F-4 ssh-info.md mode 0600 remediation observed, rotation still an owner decision. Open corrections tracked: the source was corrected in place twice after delivery — 2026-08-27T00:21:43Z ollama-probe arithmetic (12/12 -> 14/14 with the 4+6+4 breakdown, mirrored in hxs-2 state log row 37 the same second) and 2026-08-27T00:26:10Z uptime-continuity detail (hxs-3's day carried TWO reboots — orderly systemd-reboot 18:16:40 EST = 23:17Z journal-verified plus the 19:50Z owner maintenance move; the batch-13 review's ~4h7m figure superseded); this record hashes and quotes the twice-corrected source."
+  inferred_value: "INFERENCE: the fleet time/NTP/mask baseline of record — the one-source directive is now file-level proven (one timesyncd.conf sha256 ×4), so any future drift is detectable by a single re-hash; its F-1 finding is the standing queue item for the first authorized hxs-4 session; its F-2 verifier quirk and its rollback table (exact inverses for all three items) are reusable fleet knowledge; the documented fallback-free NTP posture (FallbackNTP deliberately empty) is a directive-consistent resilience note future auditors must not mistake for an omission; the corrected uptime paragraph is the reconciled account of hxs-3's two 2026-08-26 reboots."
+  source:
+    author: "Rick (Ubuntu Server Engineer)"
+    provided_by: "Kimi-K3 (governor T-micro dispatch brief to Carol)"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/servers/2026-08-26-fleet-time-and-mask-pass.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-27T00:30:00Z"
+  owner: "rick"
+  applies_to:
+    hosts: [hxs-1, hxs-2, hxs-3, hxs-4]
+    fqdns: []
+    services: [systemd-timesyncd.service, ollama.service]
+    agents: [rick, kimi-k3, carol]
+    repositories: [HX-ASF-Servers]
+    environments: [fleet]
+  version: "PASS — TASK COMPLETE (execution window 2026-08-26T23:39:24Z–23:58Z; open corrections 2026-08-27T00:21:43Z probe arithmetic + 2026-08-27T00:26:10Z uptime continuity)"
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "configures"
+      target: "DOC-backend-qwen-x"
+      note: "hxs-1 — NTP canary: timesyncd.conf pinned to time.cloudflare.com at 23:54:27Z, fleet progression gated on its PASS; timezone already Etc/UTC (idempotent, untouched); proven mask set untouched"
+    - predicate: "configures"
+      target: "DOC-backend-coder-x"
+      note: "hxs-2 — NTP pin at 23:55:27Z + hybrid-sleep.target masked at 23:56:20Z, aligning to the proven hxs-1/hxs-3 set (sleep.target superset retained per the commission); timezone already Etc/UTC"
+    - predicate: "configures"
+      target: "DOC-backend-meta-x"
+      note: "hxs-3 — timezone America/Panama -> Etc/UTC at 2026-08-26T23:52:40Z (the pass's one real timezone change; EST evidence-labeling class ends there) + NTP pin at 23:55:28Z; the owner's interactive use was not disturbed"
+    - predicate: "configures"
+      target: "DOC-backend-chat-x"
+      note: "hxs-4 — NTP pin at 23:55:29Z; timezone already Etc/UTC; F-1 recorded: NO sleep-target masks present (drift vs the blueprint proven set) — out of this pass's scope, queued for a future authorized hxs-4 session"
+  validation:
+    validated_at: "2026-08-27T00:47:00Z"
+    freshness: "current"
+    review_due: "on any fleet time/NTP/sleep-mask change, and at the first authorized hxs-4 session (F-1 disposition)"
+  sha256: "26a46cf01023a4ef8ed71cd3b460ed4f71f35f7c028569ceb276a31a5daf9baf"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/servers/2026-08-26-fleet-time-and-mask-pass.md"
+notes:
+  typing_convention: "Typed evidence per the rick execution-report precedent (DOC-pilot-hxs2-ev-05-rick-os-readiness / DOC-pilot-hxs3-ev-04-rick-os-readiness class: test plan + baseline + exact-change log + validation summary). The governor's brief allowed evidence or runbook: evidence chosen — the document is a completed, point-in-time execution record (status adopted, not a living runbook); its rollback table is a section of the evidence, not a standing procedure."
+  credential_hygiene: "Source §2/§8 document the SSH_ASKPASS/sudo -S credential mechanism, prove helper deletion and auth-path closure (seq 35–36), and contain no credential value; this record quotes none (profile §6; cf. DOC-protected-ssh-info-hxs1 for the protected-resource pattern — ssh-info.md is named by existence only)."
+  mid_run_correction: "Source hash chain during this ingestion: 2bb3278f… (first hash 2026-08-27T00:08Z) -> a857f63a… (00:21:43Z — author corrected the ollama-probe arithmetic in place: 12/12 -> 14/14 = 4 baseline + 6 post-mutation + 4 final-sweep, with hxs-2 state log row 37 corrected in the same second) -> 26a46cf0… (00:26:10Z — author corrected the uptime-continuity paragraph: hxs-3's day carried two reboots, the orderly 23:17Z systemd-reboot plus the 19:50Z owner maintenance move, superseding the batch-13 review's ~4h7m figure). The recorded hash is of the final corrected source; both superseded figures are disclosed here and in the run receipt, never silently dropped (server records contract: corrections land openly). RE-HASH 2026-08-27T00:47Z (Meta-X M5 wave; dispatched per hxs-2 state log row 38, 2026-08-27T00:38Z — 'governor's uptime edit post-dates her 00:33Z verification'): recomputed against the current source — UNCHANGED, 26a46cf0… == live file, source mtime 2026-08-27T00:26:10.25Z. The batch-13 uptime content at line 139 ('~40 min' vs the second 23:17Z reboot, incl. the explicit 'Batch-13 note:' sentence) was already present in the bytes hashed at 00:26:10Z and verified 00:33Z. CONFLICT FLAG (profile §9 — preserved, not guess-resolved): the row-38/dispatch premise that the governor's line-139 edit landed after the 00:33Z verification does not hold against the filesystem evidence (mtime 00:26:10.25Z + hash equality); the edit's CONTENT is verified present and the record's hash stands verified-current — flagged in the run receipt for the governor."

@@ -1,0 +1,37 @@
+context_packet:
+  goal_id: "GOAL-HXS3-MUSE-GLIMMER-001"
+  goal_version: 1
+  work_order_id: "WO-HXS3-JOHN-M8-001"
+  session_id: "john-m8-hxs3-20260827-01"
+  role: "producer (Ollama specialist: john / Esme)"
+  milestone: "M8 — Meta-X sign-off gate"
+  objective: >-
+    Deliver the M8 evidence package for owner sign-off: 3/3 cold-reboot recovery
+    with no human action, endpoint boundary proof, consumer-proof task,
+    servers/hxs-3/configuration.md, and the acceptance reconciliation — against
+    the frozen operating profile hx-muse-glimmer-64k.
+  current_state:
+    host: "hxs-3 (192.168.50.202), Ubuntu 24.04.4, kernel 7.0.0-30, driver 580.173.02, Ollama 0.32.15, Etc/UTC (since 2026-08-26T23:52:40Z), NTP time.cloudflare.com"
+    resident: "hx-muse-glimmer-64k:latest (digest 9dffb015db40…), 100% VRAM, ctx 65536 effective, Forever — verify live at session start and after every cycle"
+    frozen_artifact: "muse-glimmer:30b digest de878ce33ad81d060001db1469a02eebe4d86f0ad58cfe52dc062fdcbe4464c1; KV 13,312 B/token f16 + 97.5 MiB second cache"
+    aliases_in_store: "hx-muse-glimmer (472ad84e752d…, baked 32K), -32k (09c4f825ac2f…), -64k (9dffb015db40…), -128k (17fe5b804838…) — suites use ONLY -64k"
+    endpoint: "LAN-scoped OLLAMA_HOST=0.0.0.0, loopback preserved, no firewall (owner rule); web search ACTIVE (owner signin 2026-08-26)"
+    milestone_chain: "M0/M1/M4/M5/M7 all PASS and handoff-closed (state log rows 1-22; catalog 241); M5 covered quality; M8 covers production readiness"
+    watch_items: "F-M6-0 Xid class armed; NVRM teardown-assertion chatter on this host (recorded class); /tmp is boot-cleared (F-M5-1); interactive loads can evict the pin under MAX_LOADED_MODELS=1 (preload-restore rule); running ollama process may format EST offsets cosmetically until next service restart"
+  owner_decisions:
+    - "Meta-X M8 approved 2026-08-27 (row 23); three cold reboots pre-approved per-cycle in a governor-announced window (hxs-1 D6 precedent); no host firewalls ever; Secure Boot stays disabled always"
+  constraints:
+    - "Only M8 scope: no baseline changes, no other milestones, no other hosts, no firewall, no packages, no sampling overrides"
+    - "Evidence off-host after EVERY cycle (boot-cleared /tmp); incremental deliverable after EVERY phase"
+    - "Reboot cycles in the announced window only; the owner may abort — honor an abort immediately after the current poll completes"
+    - "Thinking content never persisted (counts only); no secrets in artifacts; askpass discipline per the work order"
+  evidence_requirements:
+    - "Per cycle: pre-state, boot-id delta, /api/ps poll timeline (detection/recovery vs D5), identity guard EXACT (name/digest/size==size_vram/ctx/Forever), preload Result=success, journal + Xid + NRestarts sweep"
+    - "Endpoint: ss -lntp listener line, LAN 200 from hxs-5, ufw state, blueprint section 5 boundary statement"
+    - "Consumer-proof: task text, response shape/conformance/latency, one-call-per-turn contract exercised"
+    - "configuration.md: complete per servers/AGENTS.md; acceptance reconciliation per goal SC item with evidence pointers"
+  consulted_records:
+    - "hxs-1 M8/M7a shape (hxs-1 state log rows 60+); this pilot's 07/09/12 deliverables; servers/AGENTS.md; servers/BLUEPRINT-llm-server.md sections 5/8; goal file SC items"
+  handoff:
+    - "Deliverable 15-esme-m8-signoff.md goes to Carol for catalog receipt; handoff OPEN until the receipt is cited in the state log; the owner's ACCEPT decision follows the deliverable (governor presents it)"
+  second_brain_evaluation: "Per the work order — second backend through the sign-off gate; first configuration.md"

@@ -1,0 +1,65 @@
+work_order:
+  task_id: "WO-HXS3-JOHN-M8-001"
+  parent_goal: "GOAL-HXS3-MUSE-GLIMMER-001"
+  goal_file: "goals/2026-08-26-hxs3-muse-glimmer-tooling.md"
+  milestone: "M8 — sign-off gate: persistence proof, three cold reboots, endpoint boundary, consumer-proof, configuration.md, acceptance reconciliation"
+  assigned_agent: "john / Esme (profile-briefed sub-agent)"
+  objective: >-
+    Prove Meta-X's production readiness for owner sign-off: the frozen operating
+    profile (hx-muse-glimmer-64k, digest 9dffb015db40…, ctx 65536) returns to
+    ready state with no human action across three cold reboots; the endpoint
+    boundary is proven as designed; a consumer-class task exercises the alias
+    end-to-end; servers/hxs-3/configuration.md is written per the server-records
+    contract; and the goal's success criteria are reconciled for the owner's
+    acceptance decision.
+  owner_authorizations:
+    - "Owner 2026-08-27: 'Meta-X M8 approved' (state log row 23) — the full gate"
+    - "Reboot protocol: three COLD reboots inside a governor-announced window (hxs-1 D6 precedent — pre-approved per-cycle; the owner may abort at any time). No other reboots, no other milestones"
+    - "NOT authorized: baseline changes (drop-in, Modelfile, aliases, units beyond evidence capture, model store), sampling changes, firewall (owner rule — none), endpoint changes, other models, package installs, M8 on any other host"
+  boundaries:
+    - "Execution path: session on hxs-5; hxs-3 (192.168.50.202) via SSH hxsa@192.168.50.202; askpass helper READS the credential from the credential-record row at execution time — never printed/logged/stored, helper deleted at task end; verify hostname + peer IP first; sudo -n only; host key pinned (F-05). hxs-3 is now Etc/UTC (fleet pass 2026-08-26T23:52:40Z) — UTC labels; the RUNNING ollama process may still format EST offsets cosmetically until its next service restart (explained, not drift)"
+    - "F-M5-1 fact: /tmp on hxs-3 is BOOT-CLEARED — pull every cycle's evidence off-host to hxs-5 IMMEDIATELY after each cycle, before the next reboot"
+    - "Interactive-use rule (MAX_LOADED_MODELS=1): if an interactive load has evicted the -64k pin, restore via the frozen preload path (systemctl restart ollama-preload.service) and disclose per the F-M5-1 class"
+    - "Xid-watch armed (F-M6-0 class): any Xid = immediate stop + escalate; NVRM assertion chatter at teardown on this host is a known class — record, don't panic"
+    - "Incremental deliverable rule: write the deliverable after EVERY phase; a stop must never cost more than one phase"
+    - "One bounded correction per failed correctable cycle; a failed cycle is a finding, never silently re-run"
+  reboot_cycle_protocol: >-
+    Per cycle (3 total): (1) pre-state capture — /api/ps identity, digests, unit
+    hashes, journal cursor; (2) cold reboot (systemctl reboot; confirm boot via
+    uptime + boot-id change); (3) poll /api/ps until resident — record
+    detection/recovery timings against D5 (detection <=120 s, recovery <=900 s;
+    preload script <=538 s, TimeoutStartSec 600); (4) identity guard EXACT —
+    name, digest 9dffb015db40…, size == size_vram, context_length 65536,
+    Forever; preload Result=success; (5) journal + Xid + NRestarts sweep;
+    (6) pull evidence off-host immediately. AC-007-class pass: model ready with
+    no human action, 3/3.
+  endpoint_boundary_proof: >-
+    Listener shape (*:11434 with loopback preserved — ss -lntp), LAN
+    reachability from hxs-5 (authorized 192.168.50.0/24 member), no host
+    firewall anywhere (owner rule; ufw absent/inactive), boundary = the /24 LAN
+    per blueprint section 5 with the O1 monitoring tripwire named as the
+    residual. No boundary changes — proof only.
+  consumer_proof: >-
+    One consumer-class task against hx-muse-glimmer-64k via the alias: a
+    RAG-pipeline-shaped tool task (retrieved-document question + one tool call),
+    native sampling, exercising the one-call-per-turn contract end-to-end.
+    Report response shape, conformance, and latency — evidence for the §8
+    consumer contract.
+  configuration_md: >-
+    Write servers/hxs-3/configuration.md per servers/AGENTS.md (the FIRST of its
+    class; owner authorized by the M8 approval): what HX configured hxs-3 to
+    become — role (Meta-X tooling specialist backend, KDD-0007 contract),
+    workload, the material configuration chain (install, frozen artifact +
+    aliases, profiles, preload, exposure, web search, TZ/NTP), and validation
+    pointers to the pilot evidence. discovery.md preserved untouched.
+  controlling_sources:
+    - "14-context-packet-john-m8.yaml (the paired context packet for this work order)"
+    - "hxs-1 M8/M7a shape: pilots/PILOT-HX1-OLLAMA-QWEN27B-001 state log rows 60+ (AC-007 3/3 pattern, sign-off flow)"
+    - "This pilot's evidence chain: 07-esme-m4-install.md, 09-esme-m7-ladder-profiles.md, 12-esme-m5-validation.md (+Addendum A)"
+    - "servers/AGENTS.md (records contract); servers/BLUEPRINT-llm-server.md (sections 5/8); goal file success criteria"
+  deliverable: "15-esme-m8-signoff.md: cycle table (3/3 with timings vs D5), identity guards, endpoint boundary proof, consumer-proof evidence, configuration.md written, acceptance reconciliation per goal SC item, sanitized sequential command log, Task May Proceed receipt — assembled for the owner's ACCEPT decision"
+  second_brain_evaluation:
+    opportunity_identified: "yes"
+    roadmap_capability_or_pattern: "sign-off pattern — the blueprint's M8 gate applied to the second backend class; configuration.md instantiates the server-records contract for the first time"
+    disposition: "implemented — sign-off evidence + configuration.md become Meta-X's production record; the backend-capability registration flips candidate -> active at the owner's ACCEPT (post-deliverable wave, governor's lane)"
+    evidence_and_reasoning: "M8 is the gate that converts a candidate into a production backend; every prior milestone exists to make this one cheap"

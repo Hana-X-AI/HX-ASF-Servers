@@ -4,8 +4,8 @@
 index:
   schema_version: 1
   initialized: 2026-08-25 (Carol instantiation, owner amendment)
-  updated: "2026-08-26T2026Z (T-standard run — M5 deliverable + CI/CD wave (Coder-X M5 COMPLETE PASS at hxs-2 state log row 31; p8 CI/CD live at row 33; OmniRoute F1 disposition at row 32): 4 records added — DOC-pilot-hxs2-ev-16-esme-m5-validation (16-esme-m5-validation.md, sha256 351e25ed…: AC-013 coding 10/10 = 100% vs ratified >=90% bar + evaluator review concur 10/10, AC-012 tool protocol 0 forbidden/malformed executed of 51 events + 100% schema conformance of 29 decisions, AC-009 API readiness PASS, vision probes evidence-only for the D8 deferral, F-M5-1 residency eviction explained + restored with monitor recommendation to M8/owner), DOC-ci-cd-workflow (.github/workflows/ci-cd.yml, 9dbe6070…, type contract), DOC-coderabbit-config (.coderabbit.yaml, c958d82c…, type contract — schema.v2-verified review policy), DOC-cicd-pipeline-doc (docs/cicd-pipeline.md, 6b99bae4…, type runbook; .html sibling per dual-format convention, one record for the Markdown source); 4 updated — DOC-pilot-hxs2-wo-14-john-m5 + DOC-pilot-hxs2-cp-15-john-m5 flipped active -> adopted (DISCHARGED, governs edges to the deliverable record added per the M7-pair convention; sources unchanged 03dd3d4f…/c5642d1a…), DOC-pilot-hxs2-state-log re-validated at rows 1-33 (ba0db561… -> c3bc1502…; rows 30-33: 1937Z receipt cited + F-M5C-2 fixed, M5 COMPLETE PASS handoff OPEN, 1957Z receipt + validate.py 4/4 + F1/F2 dispositions, p8 CI/CD live with two owner-pending items), DOC-pilot-hxs3-state-log at rows 1-17 (1f57374d… -> 11b3dd75…; row 17: M5 BLOCKED — hxs-3 lost on LAN mid-session, owner check requested, WO/CP stay in-execution); 1 note append — DOC-tkv-corpus-omniroute notes.reorg_history gains the F1 disposition (v3.8.50 backup left in place as the owner safety copy, not separately cataloged, hxs-2 row 32); count 235 -> 239; T-standard full-catalog self-check + one validate.py cited in receipt receipts/2026-08-26T2026Z-carol-m5-coderx-ci-wave.md; carry-forward window clean per the 1957Z receipt (validate.py 4/4 PASS))"
-  document_count: 239
+  updated: "2026-08-27T0047Z (T-standard run — Meta-X M5 wave (governor-verified hxs-2 state log row 38 + hxs-3 state log row 21, both 2026-08-27T00:38Z): 1 record added — DOC-pilot-hxs3-ev-12-esme-m5-validation (pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/12-esme-m5-validation.md, sha256 2ef34204…, type evidence, status adopted, authority agent-evidence: M5 PASS — TASK COMPLETE on every mandatory suite per the owner-ratified bars — tool protocol 14/14 with 100% forbidden/malformed denied + 100.0% schema conformance + 0 raw ATEM, one-call-per-turn 100% ENFORCED incl. the OC07 live rejection with 0 leaked executions, structured output 20/20 = 100%, system-policy 22/22 = 100%, denial 100% with 0 executions; reasoning_strength + parallel_tool_calls REPORTED probe-only; Addendum A — independent session -02 re-derived every number from raw evidence with exact agreement; batch-13 fixes incorporated — 19-reviewed count, 18:42 conversion, EST=-01/UTC=-02 scoping; provenance hxs-3 log rows 20+21; row-20's cited hash e37c2ec8…db5c1 superseded by the 00:21:43Z batch-13 bytes, chain disclosed in-record); 5 updated — DOC-pilot-hxs3-wo-10-john-m5 + DOC-pilot-hxs3-cp-11-john-m5 flipped active -> adopted DISCHARGED with the deferred governs edges to the new deliverable record added (M7-pair convention; both source hashes re-verified UNCHANGED at the flip), DOC-fleet-time-and-mask-pass re-hashed per hxs-2 log row 38 — UNCHANGED 26a46cf0… (the batch-13 line-139 uptime content was already present in the 00:26:10Z bytes verified 00:33Z; the row-38 'post-dates 00:33Z verification' premise is contradicted by source mtime 00:26:10.25Z + hash equality — CONFLICT FLAG preserved in-record, never guess-resolved), DOC-pilot-hxs2-state-log re-validated at rows 1-38 (910cef53… -> 9baf140e…; row 38: fleet-pass receipt cited + batch-13 dispositions + this wave queued), DOC-pilot-hxs3-state-log at rows 1-21 (50631411… -> 994cbed6…; row 21: fleet-pass receipt cited + batch-13 hxs-3-side dispositions + M5 handoff OPEN pending this wave); count 240 -> 241; T-standard verification — write set + full-catalog self-check + validate.py 4/4 PASS at close; receipt receipts/2026-08-27T0047Z-carol-metax-m5-wave.md)"
+  document_count: 241
   documents:
   - id: DOC-a01-origin-codex-20260824-2125
     title: codex_20260824_2125_hx-1-ollama-pilot-qwen3.8-amendment.md — original source of Amendment A01 (agent-zero-docs)
@@ -151,6 +151,12 @@ index:
     authority_level: agent-evidence
     freshness: current
     canonical_location: /home/hxsa/opt/local-tkv/agent-zero-docs/tool-belt/codex_20260825_2207_hx-asf-servers-read-only-project-capability-assessment.md
+  - id: DOC-fleet-time-and-mask-pass
+    title: "2026-08-26-fleet-time-and-mask-pass.md — rick fleet time+mask pass (PASS — TASK COMPLETE: Etc/UTC ×4 with hxs-3 changed 2026-08-26T23:52:40Z; NTP=time.cloudflare.com pinned ×4 with FallbackNTP empty and one shared timesyncd.conf sha256 e2b94d4b…a349dc2; hxs-2 hybrid-sleep.target masked 23:56:20Z aligning to the proven hxs-1/hxs-3 set; ollama undisturbed 14/14 probes; F-1 hxs-4 has no sleep masks, queued for an authorized hxs-4 session)"
+    type: evidence
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/servers/2026-08-26-fleet-time-and-mask-pass.md
   - id: DOC-goal-hx1-ollama-qwen38-27b
     title: Goal 2026-08-24-hx1-ollama-qwen38-27b — deploy and validate qwen3.8:27b on hxs-1 via Ollama (mutating pilot)
     type: goal
@@ -656,7 +662,7 @@ index:
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/16-esme-m5-validation.md
   - id: DOC-pilot-hxs2-state-log
-    title: PILOT-HXS2-CODERX-BACKEND-001 01-state-log.md — governor state-transition log (rows 1–33 at re-validation)
+    title: PILOT-HXS2-CODERX-BACKEND-001 01-state-log.md — governor state-transition log (rows 1–38 at re-validation)
     type: other
     authority_level: agent-evidence
     freshness: current
@@ -716,7 +722,7 @@ index:
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/09-context-packet-john-m7.yaml
   - id: DOC-pilot-hxs3-cp-11-john-m5
-    title: "11-context-packet-john-m5.yaml — context packet for WO-HXS3-JOHN-M5-001 (session john-m5-hxs3-20260826-01; hxs-3 M5: tool protocol + one-call-per-turn invariant, structured output, system-policy, denial, reasoning_strength probe-only on Meta-X; IN-EXECUTION — commissioned 2026-08-26T19:08Z)"
+    title: "11-context-packet-john-m5.yaml — context packet for WO-HXS3-JOHN-M5-001 (session john-m5-hxs3-20260826-01; hxs-3 M5: tool protocol + one-call-per-turn invariant, structured output, system-policy, denial, reasoning_strength probe-only on Meta-X; DISCHARGED — milestone complete)"
     type: context-packet
     authority_level: delegated-contract
     freshness: current
@@ -739,8 +745,14 @@ index:
     authority_level: agent-evidence
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/09-esme-m7-ladder-profiles.md
+  - id: DOC-pilot-hxs3-ev-12-esme-m5-validation
+    title: 12-esme-m5-validation.md — Esme (john) M5 functional validation on Meta-X (hxs-3) (PASS — TASK COMPLETE; independently verified by session -02, Addendum A)
+    type: evidence
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/12-esme-m5-validation.md
   - id: DOC-pilot-hxs3-state-log
-    title: PILOT-HXS3-MUSE-GLIMMER-TOOLING-001 01-state-log.md — governor state-transition log (rows 1–17 at re-validation)
+    title: PILOT-HXS3-MUSE-GLIMMER-TOOLING-001 01-state-log.md — governor state-transition log (rows 1–21 at re-validation)
     type: other
     authority_level: agent-evidence
     freshness: current
@@ -764,7 +776,7 @@ index:
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/08-work-order-john-m7.yaml
   - id: DOC-pilot-hxs3-wo-10-john-m5
-    title: "10-work-order-john-m5.yaml — WO-HXS3-JOHN-M5-001 (hxs-3 M5: tool protocol + one-call-per-turn invariant per KDD-0007, structured output, system-policy, denial, reasoning_strength probe-only; IN-EXECUTION — commissioned 2026-08-26T19:08Z)"
+    title: "10-work-order-john-m5.yaml — WO-HXS3-JOHN-M5-001 (hxs-3 M5: tool protocol + one-call-per-turn invariant per KDD-0007, structured output, system-policy, denial, reasoning_strength probe-only; DISCHARGED — milestone complete)"
     type: work-order
     authority_level: delegated-contract
     freshness: current

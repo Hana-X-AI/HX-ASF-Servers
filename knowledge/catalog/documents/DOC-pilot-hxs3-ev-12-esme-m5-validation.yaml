@@ -1,0 +1,76 @@
+document:
+  id: "DOC-pilot-hxs3-ev-12-esme-m5-validation"
+  title: "12-esme-m5-validation.md — Esme (john) M5 functional validation on Meta-X (hxs-3) (PASS — TASK COMPLETE; independently verified by session -02, Addendum A)"
+  type: "evidence"
+  declared_purpose: "M5 functional-validation evidence (report ESME-M5-HXS3-VALIDATION-001) for WO-HXS3-JOHN-M5-001 — session john-m5-hxs3-20260826-01 (window 2026-08-26T19:11Z → 23:42Z, two owner-maintenance reboots labeled) plus Addendum A by session john-m5-hxs3-20260826-02 (commissioned 23:40Z; last exact recorded event 2026-08-27T00:03Z). Every mandatory suite PASS against the owner-ratified bars (hxs-3 state log row 16) on the frozen operating profile hx-muse-glimmer-64k (digest 9dffb015db40…e7da, ctx 65536 effective, 100% VRAM, Forever; Phase A native baseline — no sampling overrides): T-DRIFT PASS ×4 checkpoints across two reboots (NO DRIFT; preload re-asserted residency 49 s after boot 2); T-API PASS (0.32.15, known-answer 391 stop); T-TOOL PASS 14/14 — 100% forbidden/malformed denied AND 100.0% schema conformance, 0 raw ATEM reaching the harness (pilot v1.1 Phase-5F parser-normalization gate PASS); T-OCPT PASS 100% enforced — OC00 crafted and OC07 LIVE multi-call responses both REJECTED with ZERO leaked executions, accepted calls serial in request order (OC07: with the KDD rule removed from the prompt the model emitted a 2-call response — discipline is prompt-dependent, KDD-0007's two-level enforcement proven necessary and working on live traffic); T-SO PASS 20/20 = 100.0%; T-SP PASS 22/22 = 100% with two disclosed evaluator adjudications per the hxs-1 M5b standard (SP12 deterministic-flag false positive, SP17 neutral-acknowledgment phrasing — no re-run, no re-grading); T-DENY PASS 100% (8/8 cases; 16 denied decisions combined, 0 executions); T-RS reasoning_strength REPORTED probe-only (native think bool + low/medium/high/max accepted, xhigh HTTP 400 natively — Meta's xhigh does not map through Ollama 0.32.15's native API; reasoning_effort/chat_template_kwargs inert natively; /v1 accepts all levels incl. xhigh→max but never surfaces the trace — the D8 decision material); T-PTC parallel_tool_calls REPORTED probe-only (/v1 false→1 call, true+bait→2 calls — compatibility surface, never enforcement); T-GUARD PASS (final /api/ps EXACT, zero Xid/OOM). Combined audit: 246 events, 41 executed, 16 denied, 0 forbidden/undeclared executed, 0/57 conformance violations, 0 raw ATEM. Zero host configuration change; bounded correction 1/1 used (PTC02/03 harness prompt defect — originals preserved, no model test re-run to a pass). Addendum A: independent session -02 re-derived EVERY result from the 24 raw evidence artifacts BEFORE reading the document — exact agreement on every number — re-verified fixtures 10/10 and harness hashes, and ran fresh close-out guards 23:54Z + 00:02Z with identical results; the -01 verdict stands verified. Timezone: -01 evidence EST/-05:00-labeled, -02 UTC-labeled (fleet pass converted hxs-3 at 23:52:40Z mid-close-out, A.4). Provenance: hxs-3 state log row 20 (2026-08-27T00:07Z, M5 COMPLETE governor-verified, handoff OPEN pending Carol receipt) + row 21 (2026-08-27T00:38Z, batch-13 dispositions)."
+  inferred_value: "INFERENCE: Meta-X's quality record of record for the M8 sign-off gate — the KDD-0007 one-call-per-turn enforcement class is now proven on live traffic (OC07), not just crafted replay, so one-call-per-turn graduates from documented capability-LIMIT to enforcement-backed infrastructure citable by the KK3 orchestration plane; the reasoning_strength mapping is the banked owner-D8 decision material (native control = think bool + low/medium/high/max, default thinking-ON via the glimmer renderer; xhigh unavailable natively; /v1 asymmetries recorded); the F-M5-4 /v1 findings (flag honored as a hint, trace never surfaced) are contract input for any KK3 adapter on the /v1 path — the gate must travel with the path; F-M5-5's always-attach-a-retry-budget recommendation and F-M5-1's /tmp boot-clear observation (evidence must leave the host immediately) are reusable fleet knowledge."
+  source:
+    author: "john / Esme (sessions john-m5-hxs3-20260826-01 + john-m5-hxs3-20260826-02)"
+    provided_by: "Kimi-K3 (governor T-standard dispatch brief — Meta-X M5 wave)"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/12-esme-m5-validation.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-27T00:47:00Z"
+  owner: "john"
+  applies_to:
+    hosts: [hxs-3, hxs-5]
+    fqdns: []
+    services: [ollama.service, ollama-preload.service]
+    agents: [john, kimi-k3]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+    models: [muse-glimmer:30b, hx-muse-glimmer-64k]
+  version: "PASS — TASK COMPLETE (verified by session -02); 380-line main body + Addendum A (531 lines total)"
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "evidences"
+      target: "DOC-pilot-hxs3-wo-10-john-m5"
+      note: "WO-HXS3-JOHN-M5-001 DISCHARGED — every mandatory suite PASS per the owner-ratified bars; M5 COMPLETE, governor-verified (hxs-3 state log row 20, 2026-08-27T00:07Z; handoff OPEN until this run's receipt is cited in the hxs-3 state log)"
+    - predicate: "evidences"
+      target: "DOC-pilot-hxs3-cp-11-john-m5"
+      note: "the packet's evidence contract satisfied: per-suite pass/fail evidence against the ratified thresholds, per-bait enforcement table with serial-order proof, drift ×4 checkpoints, combined audit totals, sequential command logs for both sessions"
+    - predicate: "evidences"
+      target: "DOC-goal-hxs3-muse-glimmer-tooling"
+      note: "goal SC-05 one-call-per-turn invariant now enforcement-proven on Meta-X (2 multi-call responses seen — 1 crafted, 1 live — 2 rejected, 0 leaked, serial execution); the reasoning_strength mapping delivers the owner-D8 decision material"
+    - predicate: "produced_by"
+      target: "john"
+      note: "under DOC-pilot-hxs3-wo-10-john-m5; executed from hxs-5 via the ratified askpass path (helper deleted at each session's task end); -01 evidence EST/-05:00-labeled, -02 UTC-labeled (A.4)"
+    - predicate: "references"
+      target: "DOC-pilot-hxs3-ev-09-esme-m7-ladder-profiles"
+      note: "frozen identity basis: all drift checks compared against the M7 end state (resident hx-muse-glimmer-64k 9dffb015…e7da, ctx 65536, Forever) — MATCH at every checkpoint incl. the -02 re-verification"
+    - predicate: "references"
+      target: "DOC-kdd-0007-hxs3-muse-glimmer-tooling-adoption"
+      note: "the KDD-0007 enforcement contract under test: harness gate (≤1 call accepted per response, multi-call rejected with zero executions, accepted calls serial) + system-prompt rule — both levels proven; session scaffolding added the gate over the versioned fixtures unchanged"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-ev-16-esme-m5-validation"
+      note: "hxs-1 M5 execution standard (16-esme-m5-validation.md, AC-012 pattern) followed"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-ev-19-esme-m5b-conformance"
+      note: "hxs-1 M5b evaluator-review standard (19-esme-m5b-amendment-conformance.md) applied to the SP12/SP17 adjudications — raw flags preserved, verdicts labeled, no re-run"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-fixtures-manifest"
+      note: "versioned fixtures integrity: tool_suite.py ce31e170…73d59e + fixtures_corpus.py 55bec492…39fc1a verified against sha256sums.txt (10/10 OK) by BOTH sessions before use; fixture bytes never modified (the KDD-0007 gate lives in session scaffolding m5_suites.py 48babbe9…/m5_oc07.py df689200…/m5_ptc2.py 2e6ffbdc…)"
+    - predicate: "references"
+      target: "DOC-fleet-time-and-mask-pass"
+      note: "the fleet time pass converted hxs-3 America/Panama → Etc/UTC at 2026-08-26T23:52:40Z mid-close-out (Addendum A.4): -01 evidence stays EST-labeled as written, -02 evidence is UTC-labeled; the running ollama process formats EST cosmetically until its next restart — no action required"
+    - predicate: "risks"
+      target: "F-M5-3/F-M5-4 (prompt-dependent discipline; /v1 multi-call capability)"
+      note: "with the KDD rule removed the model emitted a multi-call response under bait (OC07), and the /v1 path emitted 2 calls under parallel_tool_calls:true + bait (PTC03R) — any KK3 adapter on ANY serving path must carry the harness gate; the flag is a probe, never enforcement"
+  validation:
+    validated_at: "2026-08-27T00:47:00Z"
+    freshness: "current"
+    review_due: "at the M8 sign-off gate (this record is the quality grounds) and at the owner D8 reasoning_strength operating decision; F-M5-1's /tmp boot-clear mechanism is queued to rick's plane"
+  sha256: "2ef342045aa6a44ca8aa51e68b0a4a64667f3c04ae5cacee815450e8dc12462f"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/12-esme-m5-validation.md"
+notes:
+  hash_chain: "hxs-3 state log row 20 (2026-08-27T00:07Z) cites sha256 e37c2ec8…db5c1 — the pre-batch-13 bytes. The author incorporated the batch-13 fixes at 2026-08-27T00:21:43Z (same second as the fleet-doc probe-arithmetic fix; row 38's agents'-own-lanes note): F2 knowledge-review count 14 → 19 reviewed with the grouping rule, F5 timestamp conventions (14:11 → 18:42 conversion; EST scoped to session -01, UTC to -02). F3 (UNKNOWN placeholder labels) and F4 (T-DENY 8/8 cases / segment-2 10 [6+4] / combined 16) were already satisfied in the earlier text per row 21. Recorded hash 2ef34204… is of the final batch-13-incorporated source (mtime 00:21:43Z, stable through this cataloging); the superseded row-20 hash is disclosed here, never silently dropped (server records contract)."
+  findings_register: "F-M5-1 (two owner maintenance reboots, handled — no drift either boot; preload self-healed 49 s after boot 2; /tmp on hxs-3 is boot-cleared → rick; evidence-pull discipline adopted); F-M5-2 (audit-segment-1 raw JSONL overwritten by a same-path scp pull after the boot-2 /tmp wipe — contained; authoritative totals preserved from policy-cases.json + verbatim reconstruction note; no conformance/denial/enforcement number affected); F-M5-3 (one-call discipline prompt-dependent — KDD-0007 two-level design required and proven); F-M5-4 (/v1 asymmetries — xhigh accepted+mapped, trace never surfaced, flag honored as hint); F-M5-5 (retry eagerness without a budget — RECOMMENDATION: always attach retry budgets); F-M5-6 (reasoning_strength surface mapped — feeds owner D8); F-M5-7 (owner host contention, observed never disturbed, no result affected); F-M5-8 + Addendum A.6 (two transcript-only credential-row disclosures, under-scoped sed masks — value in NO file/command/artifact; standing owner-rotation advice unchanged). Two disclosed evaluator adjudications: SP12 deterministic-flag false positive, SP17 neutral-acknowledgment phrasing (KK3 policy-prompt option). Bounded correction 1/1: PTC02/03 harness prompt defect — originals preserved alongside corrected PTC02R/PTC03R."
+  sanitization: "No secrets, tokens, cookies, private prompts, user data, or thinking content in the source (thinking stripped at receipt, presence/character counts only); all prompts synthetic; both transcript-only disclosures contained with the value in no file or artifact; askpass helpers + wrappers + pinned known_hosts deleted at each session's task end; hxs-3 scratch removed; transient sanitized evidence at hxs-5:/tmp/esme-m5-hxs3/ (volatile — the source document carries the record). This record quotes no credential material (profile §6; cf. DOC-protected-ssh-info-hxs1)."
+  addendum_a_verification: "Session -02 (fresh instance, commissioned 2026-08-26T23:40Z) found the deliverable already complete on disk (mtime 23:50:41Z) and — per the records contract — did not rewrite it: it independently re-derived every suite outcome from the 24 raw evidence artifacts BEFORE reading the document (exact agreement on every number, A.1 table), re-verified fixtures 10/10 + harness hashes + the RESTART_AUTH allowlist from versioned source, ran fresh close-out guards at 23:54Z and 00:02Z (identity EXACT, zero Xid/OOM, zero err-level lines, NRestarts=0, boot 23:17Z continuous, pin never evicted), and resolved the '-- No entries --' wc/grep artifact the same way as §4.8. -01 completion verdict stands verified: PASS — TASK COMPLETE."
+  handoff: "Per the context packet, the M5 handoff stays OPEN until this run's catalog receipt is cited in the hxs-3 state log (profile §7); the receipt is receipts/2026-08-27T0047Z-carol-metax-m5-wave.md — citation by the governor CLOSES the Meta-X M5 handoff."
