@@ -1,0 +1,60 @@
+document:
+  id: "DOC-pilot-omniroute-source-provenance-receipt"
+  title: "PILOT-OMNIROUTE-LAYER0-001 07-source-provenance-receipt.md — OmniRoute v3.8.51 source identity VERIFIED (content-sensitive proof — 13,098/13,098 git-blob identical to upstream diegosouzapw/OmniRoute@42a13fedef8b…)"
+  type: "evidence"
+  declared_purpose: "Governor's deterministic Wave 0B source-provenance receipt (2026-08-27 UTC; receipt by Kimi-K3 — no model inference used for any fact; truth-state labels VERIFIED / REPORTED / INFERRED / NOT-ESTABLISHED / RECORD). Identity verdict: VERIFIED — content-sensitive proof that the local snapshot /opt/tkv-local/OmniRoute-release-v3.8.51 is byte-for-byte identical to upstream diegosouzapw/OmniRoute@42a13fedef8bb6806c1c4382b2c65539e871e88c (release/v3.8.51 at snapshot time). §1 identity: package version 3.8.51 VERIFIED (package.json); reported branch release/v3.8.51 VERIFIED as the upstream DEFAULT branch; reported commit 42a13fedef8b… VERIFIED content-identical; commit upstream date/message 2026-08-26T16:43:58Z 'fix(search): properly resolve configured search connection in /v1/responses pipe' VERIFIED (GitHub API); branch head at verification c9f11d86b55d… — upstream has moved past the snapshot (expected; snapshot pinned at 42a13fe) VERIFIED; local tree carries NO .git metadata (FACT — content comparison used instead); acquisition method owner download from a Drive share RECORD (owner-supplied); source file count 13,098 (.git excluded) VERIFIED; content-sensitive manifest sha256 085fb94b7d76c34291daea9ab792cbee8df60d83a5c64ee874e4f0b35e6b535d — per-file '<sha256>  <relpath>' lines, LC_ALL=C sorted, trailing newline (method of record; supersedes the earlier names-only digest c5a65089…); package-lock.json sha256 58a9d071… and package.json sha256 fe6c7dbe… VERIFIED present. §2 license/instructions/requirements: MIT license (LICENSE, © 2026 diegosouzapw) VERIFIED — package-lock carries the dependency tree as the Layer-1 third-party review input; Node engines >=22.22.2 <23 || >=24.0.0 <27 VERIFIED (hxs-8 has NO node/npm — the single Layer-1 dependency per rick's readiness evidence); instruction files 3x AGENTS.md (root + 2 nested) + 87x CLAUDE.md/GEMINI.md VERIFIED by inventory — upstream-project guidance, all read-only here, HX-side use reviewed at Layer 1 before adoption (repo AGENTS.md adoption rule); top-level layout src/ packages/ config/ docker/ electron/ docs/ examples/ open-sse/ @omniroute/ skills/ tests/ bin/ scripts/ public/ changelog.d/ contrib/ images/ — Next.js 16 standalone build per the root AGENTS.md (dev port 20128). §3 the p11 bar (deterministic, reproducible): local per-file manifest 13,098 files hashed sha256 zero errors; upstream tree at the reported commit via GitHub API (git/trees/42a13fe…?recursive=1) 15,406 entries, 13,098 blobs, truncated false; per-file git-blob identity comparison (sha1 of 'blob <len>\\0<content>') — content-identical 13,098/13,098, upstream-only 0, local-only 0, differ 0, read errors 0. §4 contradictions/limitations preserved and ranked: bundled docs/ops version drift 3.8.40/3.8.50 VERIFIED (VM_DEPLOYMENT_GUIDE, TUNNELS_GUIDE, DATABASE_GUIDE, FLY_IO_DEPLOYMENT_GUIDE — resolution per the plan's rule: package metadata, lockfile, commit, and this receipt outrank document frontmatter); snapshot age — upstream head one commit past the snapshot (c9f11d86… vs 42a13fe…; upgrade decisions Layer-3+/owner territory, OD-11 production-version policy); acquisition channel RECORD (owner Drive share) — content equality with upstream closes the provenance gap; NOT-ESTABLISHED none remaining for source identity (runtime behavior, capability surface, deployment fitness are separate questions with their own evidence). §5 downstream effect: the capability ledger may cite this commit as VERIFIED source identity in every entry's provenance fields; DOC-tkv-corpus-omniroute gains the content-sensitive manifest digest + this verification at this catalog wave."
+  inferred_value: "INFERENCE: the provenance anchor for every later OmniRoute layer — converts the pinned corpus from an owner-channel snapshot of reported identity into a content-verified upstream reference, so Layer-1+ design evidence can cite commit 42a13fedef8b… as established fact rather than candidate claim."
+  source:
+    author: "Kimi-K3 (governor) — deterministic verification, no model inference"
+    provided_by: "Kimi-K3 (state log row 6, 2026-08-27T04:22Z)"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/07-source-provenance-receipt.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-27T04:56:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: [hxs-8]
+    fqdns: []
+    services: []
+    agents: [kimi-k3, trinity]
+    repositories: [HX-ASF-Servers, tkv-local]
+    environments: [pilot]
+    models: []
+  version: ""
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "evidences"
+      target: "upstream identity of the pinned OmniRoute v3.8.51 corpus — VERIFIED by content-sensitive proof"
+      note: "13,098/13,098 git-blob identical to diegosouzapw/OmniRoute@42a13fedef8b… (0 missing/extra/differ); the reported commit upgrades REPORTED -> VERIFIED (p11 bar met, state log row 6); supersedes the KDD-0008/charter/profile CANDIDATE-claimed honesty limit for source identity"
+    - predicate: "produced_by"
+      target: "kimi-k3"
+      note: "Wave 0B deterministic verification pipeline (local per-file sha256 manifest + GitHub API tree fetch + git-blob comparison); governor receipt, state log row 6 (2026-08-27T04:22Z)"
+    - predicate: "references"
+      target: "DOC-tkv-corpus-omniroute"
+      note: "the verified local snapshot; this wave attaches the content-sensitive manifest digest 085fb94b… (method of record) + this verification to that record — the earlier names-only digest c5a65089… preserved in its notes as history"
+    - predicate: "references"
+      target: "DOC-goal-omniroute-trinity-layer0"
+      note: "governing Goal Contract — the content-sensitive proof is the p11 source-identity bar for Layer 0; acquisition-channel provenance gap closed for Layer 0 (§4.3)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-state-log"
+      note: "row 6 artifact (2026-08-27T04:22Z): SOURCE IDENTITY VERIFIED; row 5 launched Wave 0B (content-sensitive source manifest, 13,098 files, per-file sha256 pipeline)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-rick-hxs8-readiness"
+      note: "corroborating evidence: §2 Node engines >=22.22.2 <23 || >=24.0.0 <27 matches rick's package.json verification; hxs-8 Node gap = the single Layer-1 dependency"
+  validation:
+    validated_at: "2026-08-27T04:56:00Z"
+    freshness: "current"
+    review_due: "on any corpus update or upstream re-pin (the snapshot identity is pinned at 42a13fedef8b…; upstream head c9f11d86b55d… has moved past — upgrade decisions are Layer-3+/owner, OD-11)"
+  sha256: "5971157ac0a4de98e1512df8daa3e3b87cf06588f8ba2c4312120866613f6578"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/07-source-provenance-receipt.md"
+notes:
+  ingestion_provenance: "Wave 0B artifact named by state log row 6 (2026-08-27T04:22Z) and queued for this follow-up wave by row 7 (2026-08-27T04:49Z — '07-source-provenance-receipt cataloging'); the 0A receipt (2026-08-27T0441Z) flagged it as next-wave scope. File verified on disk complete (64 lines, identity verdict VERIFIED in the header) at ingestion. Ingested in full."
+  method_of_record: "The content-sensitive manifest digest 085fb94b7d76c34291daea9ab792cbee8df60d83a5c64ee874e4f0b35e6b535d is the method of record for corpus identity from this wave forward: per-file '<sha256>  <relpath>' lines, LC_ALL=C sorted, trailing newline, 13,098 files, .git excluded, zero read errors. It supersedes the names-only manifest digest c5a65089… (DOC-tkv-corpus-omniroute sha256 field 2026-08-26 → this wave); the names-only digest and method are preserved in DOC-tkv-corpus-omniroute notes as history."
+  upstream_facts: "Upstream repository diegosouzapw/OmniRoute is public; release/v3.8.51 IS the default branch; commit 42a13fedef8bb6806c1c4382b2c65539e871e88c exists, dated 2026-08-26T16:43:58Z ('fix(search): properly resolve configured search connection in /v1/responses pipe'); branch head at verification c9f11d86b55d… — one commit past the snapshot (snapshot pinned, documented). Local tree carries no .git metadata — identity proven by content comparison, not git lineage."
+  security_review: "No secret values anywhere in the receipt (contains_secret_values false); Drive-share path is an owner-supplied provenance RECORD, not a credential. Instruction-file inventory (3x AGENTS.md + 87x CLAUDE/GEMINI) recorded as read-only upstream guidance — Layer-1 review before any HX-side adoption per the repo AGENTS.md adoption rule."

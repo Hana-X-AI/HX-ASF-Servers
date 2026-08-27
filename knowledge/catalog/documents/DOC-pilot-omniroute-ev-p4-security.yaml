@@ -1,0 +1,60 @@
+document:
+  id: "DOC-pilot-omniroute-ev-p4-security"
+  title: "PILOT-OMNIROUTE-LAYER0-001 ledger/P4-security.{md,json} — Wave 0B partition P4 security (50 entries, 146 refs; CRITICAL plaintext-secrets finding CAP-P4-039; central proxy.ts authz pipeline fail-closed; batch-20 reviewed-at correction carried)"
+  type: "evidence"
+  declared_purpose: "Wave-0B partition deliverable P4 of WO-OMNI-TRINITY-LEDGER-001 (COMPLETE state log row 16, 2026-08-27T07:32Z): the source-derived capability ledger of OmniRoute v3.8.51's security plane. Two forms, one artifact: P4-security.json — 50 entries (45 capabilities + 5 NOT-ESTABLISHED), each carrying the packet's 12 schema fields, 146 source refs (41 ACTIVE-CANDIDATE / 4 AVAILABLE-DISABLED / 5 NOT-ESTABLISHED) — and P4-security.md — the human partition summary (startup receipt, authN/authZ analysis, secrets/CORS/SSRF findings, self-verification). Findings (per the md + state log row 16): authN/authZ precisely mapped — Next.js 16's renamed src/proxy.ts runs runAuthzPipeline(enforce:true) over /, /dashboard/*, /api/*, /v1*, classifying every request PUBLIC/CLIENT_API/MANAGEMENT fail-closed (REFINES P1's 'no global middleware' NOT-ESTABLISHED — cross-partition refinement, labeled); per-route requireManagementAuth in 286 route.ts files across 56 domains (refines P1's ~100); 10 authenticator types ordered; 3-tier route guard (43+4 LOCAL_ONLY spawn-capable, 6 ALWAYS_PROTECTED); P1's /api/openapi/try flag RESOLVED VERIFIED (gated, route.ts:65); P2's leak guard confirmed (executors/index.ts:231,242). CRITICAL for HX install design (to the owner-decision packet): auto-generated JWT_SECRET + API_KEY_SECRET persist PLAINTEXT in SQLite key_value 'secrets' (secrets.ts:19, instrumentation-node.ts:125-150); src/lib/db/AGENTS.md 'dedicated encrypted store' claim UPSTREAM-STALE; field-level AES-256-GCM exists but ships passthrough without STORAGE_ENCRYPTION_KEY — Layer-1 must env-provision both secrets AND set STORAGE_ENCRYPTION_KEY (CAP-P4-039; owner-ratified requirement 2026-08-27). SSRF: metadata blocked unconditionally, LAN allowed by default (local-first — matches HX posture); CORS fail-closed allowlist + credentialed-only token-surface relaxation (GHSA-7px7)."
+  inferred_value: "INFERENCE: P4 carries the Wave-0B deliverable's single most consequential fact for HX — the plaintext-secrets persistence — already converted into an owner-ratified Layer-1 requirement, and its proxy.ts refinement of P1's honest NOT-ESTABLISHED is the model of how the partitions compose into one coherent map rather than eight isolated lists."
+  source:
+    author: "trinity (Coder-X bounded execution under the local-model contract)"
+    provided_by: "Kimi-K3 (governor dispatch — Wave-0B closing wave)"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/ledger/ (P4-security.md + P4-security.json)"
+    section: "§whole-document (md + json pair — one artifact, two forms)"
+    ingestion_date: "2026-08-27T09:58:00Z"
+  owner: "trinity"
+  applies_to:
+    hosts: [hxs-2, hxs-5]
+    fqdns: []
+    services: [ollama.service]
+    agents: [trinity, kimi-k3]
+    repositories: [HX-ASF-Servers, tkv-local]
+    environments: [pilot]
+    models: [hx-qwen3.6-coderx-64k]
+  version: "Wave 0B final (2026-08-27, state log row 16; batch-20 reviewed-at correction carried)"
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "trinity"
+      note: "partition task COMPLETE 2026-08-27T07:32Z (state log row 16); Coder-X 2 bounded calls with zero credential-shaped strings in prompts; 2 of its judgments corrected against source; pre-citation-contract partition (baseline shape by design, row 14)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-wo-05-trinity-ledger"
+      note: "commissioning work order (8-partition DAG, per-task contract, acceptance criteria) — DISCHARGED by the Wave-0B deliverable set this partition is part of"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-cp-06-trinity-ledger"
+      note: "entry schema (12 fields) + conventions"
+    - predicate: "evidences"
+      target: "DOC-tkv-corpus-omniroute"
+      note: "146 source refs into the identity-VERIFIED corpus; her checks 146/146 refs PASS (second scripted run) + 27-ref content spot-check PASS; governor spot-check 8/8 (row 16)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-ev-08-capability-ledger"
+      note: "merged into the Wave-0B merged ledger as its P4 part (its contains edge; the partition json+md remain the per-partition source of record)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-state-log"
+      note: "governing log; completion provenance row 16 (2026-08-27T07:32Z)"
+  validation:
+    validated_at: "2026-08-27T09:58:00Z"
+    freshness: "current"
+    review_due: "at Wave 0C (reconciliation packet + Qwen-X independent verification); re-hash on any ledger edit"
+  sha256: "90d05eeaa3c850ea976f5f1e542b49519e4d4581af5f0e66a3a0df9d9e84a0c7"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/ledger"
+notes:
+  checksum_method: "MULTI-FILE convention (DOC-fleet-script-library pattern): sha256 field = digest of the content-sensitive 2-file manifest ('<sha256>  <filename>' lines for P4-security.json + P4-security.md, LC_ALL=C sort, manifest text digested), captured 2026-08-27T09:56Z. Per-file sha256 at mint: P4-security.json 0998c44e0dd1a7aa8459bcfd639f372d7a9d84c5c1a567b36338d6a212fa9b8b; P4-security.md 87cca9cd1b949218792f63f14435da5150b937e212d770641f4d3668fbab756a. Hash chain note: the md moved 07:29Z -> 08:09Z (batch-20 F2 reviewed-at correction, below); the catalog hash is the FIRST recorded value for both files (minted at the corrected content — the pre-correction digest never entered the catalog as a validated state)."
+  verification_at_mint: "Deterministic recomputation against the live json (2026-08-27T09:56Z, read-only): 50 entries, each exactly the 12 schema fields; 146 source_refs; dispositions 41 ACTIVE-CANDIDATE / 4 AVAILABLE-DISABLED / 5 NOT-ESTABLISHED (sums 50). Matches the merged ledger's P4 part (50) and the md header."
+  corrections_carried: "Batch-20 F2 labeled correction carried in the md header (VERIFIED PRESENT at mint): 'Reviewed at: 2026-08-27T07:29Z (corrected 2026-08-27 per review batch 20: previously read 07:55Z — postdated this file's own completion stamp and mtime (07:29:05Z); the close/review time documented here is 07:29Z, with the Coder-X identity receipt at 07:00Z)' — the postdated timestamp was corrected openly with cause recorded; the catalog mints at the corrected content."
+  protected_reference: "The partition documents the plaintext-secrets FINDING (CAP-P4-039) as a capability/risk fact — mechanism and remediation only; no secret VALUE appears in the artifact or in this record (profile §6)."

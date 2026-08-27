@@ -1,0 +1,33 @@
+context_packet:
+  goal_id: "GOAL-OMNIROUTE-L1-SECURE-CORE"
+  goal_version: 1
+  work_order_id: "WO-L1-GATE-001"
+  session_id: "trinity-l1-gate-20260827-01"
+  role: "producer (OmniRoute lifecycle engineer: trinity)"
+  milestone: "L1-M3 — the Secure Core gate"
+  objective: >-
+    Prove the gate: deep parity per reachable backend, restart ×2, one cold
+    reboot, backup-and-restore, rehearsed rollback, hygiene close-out,
+    configuration.md, and the acceptance package for the owner's sign-off.
+  current_state:
+    deployed: "omniroute.service active+enabled on hxs-8 (Type=notify, READY + 60 s watchdog, user omniroute uid 999), Next 16.3.2 standalone at /opt/omniroute/app, 0.0.0.0:20128 (LAN+loopback, no firewall)"
+    secrets: "OD-13 verified at M2 — 0 plaintext rows in the DB secrets namespace; connection api_key AES-256-GCM ciphertext; management password bcrypt; root-only 0640 drop-in (hash-recorded, never valued)"
+    backends: "Qwen-X/Coder-X/Meta-X registered with identity evidence; Chat-X registered with loopback-only posture PROVEN (posture-blocked, not failed)"
+    parity_baseline: "M2 parity byte-identical ×3 reachable backends (content 42, stop, identical token counts); usage_history evidences routed calls"
+    findings_carried: "cloudEnabled set explicit false (code-default true, caught at M2); backup moved to a versioned systemd timer (daily 03:17 UTC, integrity-gated, keep-20, 2 drill snapshots PASS); session JWTs stateless; Chat-X test_status display quirk noted"
+    reboot_protocol: "cold reboot PRE-APPROVED in a governor-announced window (hxs-1 D6 precedent; owner may abort — honor it); after the reboot, re-prove both the service AND the four backends' own residencies from their hosts"
+  owner_decisions:
+    - "OD-12 authorized; OD-04 native no-docker; OD-08 amended all-four; OD-13 verified; OD-07 LAN-only + OmniRoute authN/authZ + no host firewall; OD-09 plaintext snapshots + own encryption; local-model-only everywhere"
+  constraints:
+    - "The four LLM backends are read-only consumers — identity guards before/after, never a change to them"
+    - "Secrets existence + mechanism only; zero values anywhere; zero :cloud; agent surfaces stay disabled"
+    - "Everything versioned and reversible; sanitized command log; helpers deleted at task end"
+  evidence_requirements:
+    - "G1-G6 evidence per the work order's gate_tests (parity comparisons, restart/reboot timelines vs budgets, restore proof, rollback proof, hygiene close-out)"
+    - "configuration.md complete per servers/AGENTS.md; acceptance reconciliation per the goal's seven gate items with evidence pointers"
+    - "Pre/post hashes for every state touched; sanitized sequential command log"
+  consulted_records:
+    - "03-trinity-l1-install.md; goals/2026-08-27-omniroute-layer1-secure-core.md; servers/AGENTS.md; servers/hxs-3/configuration.md (first-of-class template); DOC-backend-* records"
+  handoff:
+    - "Deliverable 05-trinity-l1-gate.md goes to Carol for catalog receipt; handoff OPEN until the receipt is cited in the pilot state log; the governor then presents the acceptance package for the owner's ACCEPT verdict"
+  second_brain_evaluation: "Per the work order — the reusable service-acceptance battery"

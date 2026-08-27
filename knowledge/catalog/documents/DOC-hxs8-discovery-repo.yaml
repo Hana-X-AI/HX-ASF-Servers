@@ -1,0 +1,56 @@
+document:
+  id: "DOC-hxs8-discovery-repo"
+  title: "servers/hxs-8/discovery.md — hxs-8 discovery, REPO maintained copy (2026-08-12 baseline entries + labeled 2026-08-27 addenda: post-upgrade memory 46 GiB visible — 32 GB Samsung + 16 GB Micron DDR4 SODIMMs both channels, 2666 MT/s configured, non-ECC; the living hxs-8 host record)"
+  type: "discovery"
+  declared_purpose: "Phase 1 discovery record of hxs-8 as MAINTAINED in the repository (Discovery date 2026-08-12, read-only over SSH via the project collector with passwordless sudo; no packages installed, no driver changed, no configuration modified; facts unobtainable from the as-found state marked unavailable with reason) — the LIVING hxs-8 host record the governor keeps current, distinct from the vault original at /opt/tkv-local/servers/hxs-8/discovery.md (DOC-tkv-hxs8-discovery, preserved historical-as-found). Current content: identity (LENOVO, machine-id 91086d52…, no configured FQDN — act-001); the 2026-08-27 owner-upgrade framing (owner-supplied interactive-session runtime evidence, not a new collector run; derived context labeled); Memory section RESTRUCTURED at the 2026-08-27 review batch (OmniRoute state log row 44 fix 6): the 2026-08-12 baseline entries restored as THE entries (Installed RAM 16 GB total online, 1 module single-channel, DDR4 2666 MT/s, ECC None, swap 4.0 GiB — all dated 2026-08-12) with the post-upgrade evidence moved into the clearly labeled '### Addendum 2026-08-27' block (46 GiB total visible to Linux per free -h; DIMM layout RESOLVED — 32 GB Samsung + 16 GB Micron DDR4 SODIMMs both channels populated; type/speed RESOLVED — rated 2667 MT/s configured 2666 MT/s with the DMI type-16 'Maximum Capacity: 32 GB' firmware under-report quirk, the OS sees all 48 GB; ECC RESOLVED non-ECC — rick's dmidecode sudo read-only evidence, Wave 0A); GPU — no discrete GPU (Intel CoffeeLake-S GT2 UHD 630, i915; VRAM n/a; no NVIDIA/CUDA/ROCm/Docker/Ollama/vLLM packages); storage — single 476.9 GB NVMe carrying the OS, 1.6% used (baseline 1.5%); network — single active 1 Gb/s copper link + inactive wireless; capability summary (6c/6t Coffee Lake low-power single socket, memory line carrying the post-upgrade resolution, most usable free space of any non-GPU host); constraints (ufw inactive + disabled at boot — not firewalled; SSH currently permits password authentication; Secure Boot disabled; no BMC/OOB); notes (open-vm-tools installed; absent diagnostic tooling — nvidia-smi, rocminfo, nvme-cli, smartmontools). Maintenance history: batch-15 baseline restorations 2026-08-27T02:46Z (root-fs 1.6% vs 1.5%, kernel 7.0.0-30 vs 7.0.0-28, update-count 10 vs 0, storage 1.6% vs 1.5% + the ECC 'not reverified' qualification), Wave-0A rick memory resolution (the three PENDING memory items resolved by dmidecode with provenance to 04-rick-hxs8-readiness.md), row-44 baseline-restore + labeled addendum (this mint's content)."
+  inferred_value: "INFERENCE: the two-copy split's living half — the record future hxs-8 work orders should cite for host-state truth (the L1 readiness/install/gate chain already does), while the vault original answers what hxs-8 was when HX found it; the labeled-addendum structure is the server-records-contract pattern for post-discovery hardware changes (baseline entries stay dated and primary, upgrades land as labeled addenda, never silent rewrites)."
+  source:
+    author: "HX project (2026-08-12 collector) + owner interactive-session evidence (2026-08-27) + rick dmidecode resolution (Wave 0A, 2026-08-27); maintained by Kimi-K3 (governor)"
+    provided_by: "Agent Zero / Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/servers/hxs-8/discovery.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-27T21:20:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: [hxs-8]
+    fqdns: [hxs-8.hx.local.arpa]
+    services: []
+    agents: [kimi-k3, rick]
+    repositories: [HX-ASF-Servers, tkv-local]
+    environments: [fleet]
+  version: "Discovery date 2026-08-12 + 2026-08-27 maintained addenda (batch-15 baselines, Wave-0A memory resolution, row-44 baseline-restore)"
+  status: "active"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "describes"
+      target: "hxs-8 (hxs-8.hx.local.arpa, 192.168.50.207)"
+      note: "the living maintained host record; verify against the live host before operational use (server records contract); the vault original answers the as-found state"
+    - predicate: "references"
+      target: "DOC-tkv-hxs8-discovery"
+      note: "the vault original at /opt/tkv-local/servers/hxs-8/discovery.md — historical-as-found, unchanged (sha256 37997d0d… re-verified this run); the F-A1 two-copy split is RESOLVED by THIS record (option (a) per the governor's dispatch): repo maintained copy cataloged separately"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-rick-hxs8-readiness"
+      note: "the dmidecode memory-resolution source (Wave 0A): 32 GB Samsung M471A4G43MB1-CTD + 16 GB Micron 16ATF2G64HZ-2G6E1 DDR4 SODIMMs, both channels, rated 2667 MT/s configured 2666 MT/s, non-ECC — carried in this file's memory addendum and capability summary"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-state-log"
+      note: "maintenance provenance: batch-15 baselines (row-adjacent ACCEPT wave), Wave-0A resolution (rows 3-4), row 44 fix 6 (2026-08-27T20:49Z) — the memory-section restructure minted here"
+    - predicate: "references"
+      target: "DOC-server-registry"
+      note: "fleet registry row for hxs-8 (the authoritative registry record for consumers as of this wave)"
+  validation:
+    validated_at: "2026-08-27T21:20:00Z"
+    freshness: "current"
+    review_due: "on any hxs-8 host-state change (the governor maintains this copy — hardware, OS, posture); re-hash on every amendment"
+  sha256: "3a06841bafa281fc50526fa5071f9c8d1c0d831c8ac4cf62bdfef492f1011ddc"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/servers/hxs-8/discovery.md"
+notes:
+  f_a1_resolution: "F-A1 (hxs-8 two-copy split, first flagged receipt 2026-08-27T0337Z and carried on DOC-tkv-hxs8-discovery notes.f_a1_disposition) RESOLVED by option (a) per the governor's review-batch dispatch (OmniRoute state log row 44 queue: 'the hxs-8 discovery record'): a SEPARATE record minted for the REPO maintained copy — this record. The vault original's record (DOC-tkv-hxs8-discovery) stands unchanged as historical-as-found (its canonical hash 37997d0d… re-verified == live this run); its f_a1_disposition flag text is preserved as the historical record of the split."
+  memory_resolution: "The row-44 memory-section restructure (VERIFIED PRESENT this run): the 2026-08-12 baseline entries are THE Memory-section entries again (16 GB single-channel, dated); the post-upgrade evidence lives in the clearly labeled '### Addendum 2026-08-27' block (46 GiB visible free -h; DIMM layout RESOLVED 32 GB Samsung + 16 GB Micron both channels; rated 2667 MT/s configured 2666 MT/s with the DMI under-report quirk; ECC RESOLVED non-ECC; swap backing not reverified) — source lines 39-52; the capability-summary memory line (line 107) and the constraints DIMM-topology + non-ECC lines (112/115) carry the same resolution with rick/dmidecode provenance."
+  amendment_chain: "Repo-copy hash chain (from DOC-tkv-hxs8-discovery's notes + this run): fc1df61d… (batch-15 baseline restorations 2026-08-27T02:46Z) -> 82a043e5… (Wave-0A rick memory resolution) -> 3a06841b… (row-44 baseline-restore + labeled addendum — this record, minted 2026-08-27T21:2xZ). File verified on disk (131 lines) at mint."
+  no_secrets: "Per the server records contract no credentials, keys, or secret values appear in server records — verified at mint (the SSH-permits-password-authentication line is a posture fact, not a credential); contains_secret_values false (profile §6)."

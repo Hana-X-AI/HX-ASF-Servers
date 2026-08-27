@@ -1,0 +1,65 @@
+document:
+  id: "DOC-pilot-omniroute-ev-18-independent-verification"
+  title: "PILOT-OMNIROUTE-LAYER0-001 18-independent-verification-report.md — Qwen-X independent verification of Layer 0 (VERIFIED, zero discrepancies; producer hxs-2 ≠ verifier hxs-1)"
+  type: "evidence"
+  declared_purpose: "The Wave-0C independent verification report for OmniRoute Layer 0 (run window 2026-08-27 10:41–10:53Z; verdict VERIFIED — all deterministic checks pass; all Qwen-X verdicts sound after adjudication; zero artifact discrepancies). Verifier identity receipt (gate passed before any review): Qwen-X on hxs-1 (http://192.168.50.200:11434), Ollama 0.32.15, alias hx-qwen3.8-27b-64k only (no substitution), digest 766cd9469fb4… match, size == size_vram (fully in VRAM), context_length 65536, family qwen35 27.3B Q4_K_M, ACTIVE M8-signed; producer/verifier independence held (producer Coder-X on hxs-2; verifier Qwen-X on hxs-1; never the same host); 5 inference calls (3 for the ledger review incl. 2 bounded corrections, 1 for authority matrix + owner-decision register, 1 for the risk register); budgets ≤60 min (~12 min used) / ≤2 bounded corrections (2 used, both on the ledger-review call); zero cloud, zero credentials in model context. Deterministic results (acceptance authority): F1 ledger recount PASS exact — 367 entries; per-partition 42/23/26/50/37/55/60/74; dispositions 229 ACTIVE-CANDIDATE / 74 AVAILABLE-DISABLED / 35 NOT-ESTABLISHED / 12 LAB-ONLY / 9 NOT-APPLICABLE / 8 BLOCKED (sums to 367, zero unlabeled); 1,325 source refs; the eight partition JSONs independently sum to 367/1,325 and a key-by-key comparison of every partition entry against the merged file found zero field mismatches; F2 source-ref sample PASS 25/25 (seed 20260827, spanning 7 of 8 partitions — cited file exists, cited line in range); F3 schema PASS (all 367 entries exactly the 13 required keys — 12 schema fields + partition; 367 unique ids); F4 control-manifest YAML PASS (safe_load clean; 12 top-level keys incl. source_identity / hx_authority / owner_decisions OD-01..OD-13 / layer_map / non_negotiables_enforced_this_phase); F5 forbidden-token sweep PASS (DeepSeek Harness only as removed-never-existed, /opt/tkv-local/omniroute only as rejected, host firewall only as removed/no-host-firewalls, cloud only as no-cloud and foreclosure-context product-surface names; disk check: /opt/tkv-local/omniroute does not exist); F6 artifact integrity PASS (all verified artifact mtimes 06:49–10:40Z predate the 10:41Z window; no mutation during the run). Qwen-X bounded review (think:false, temperature 0.1): call 1 disposition distribution + 5 sample entries (CAP-P1-014, CAP-P1-101, CAP-P1-113, CAP-P4-900, CAP-P7-037) 6/6 sound with excerpt-line evidence_refs; call 2 authority matrix A1–A9 + owner-decision register O1–O13 22/22 sound; call 3 risk register R1–R12 12/12 sound — 40/40 structured verdicts sound. Corrections recorded per contract: call 1's format:json parameter induced single-object truncation with an unstable verdict flip (an incomplete-structured-answer instance of the known reasoning-model empty-response class); re-asked without format + an explicit output template — complete 6-item array, stable verdicts. Deterministic adjudications: D1 distribution sound (the recount is discriminating evidence; the flip was a format-failure artifact); D2 CAP-P4-900 no ssrf-named module sound (find returns zero implementation files; the SSRF guard lives at outboundUrlGuard.ts:9 as cited); D3 CAP-P1-113 quota-share internal-only sound (routingStrategies.ts:31; the public array holds exactly 19 strategies — corroborating the P1 headline); D4 CAP-P4-039/P5-030 plaintext secrets sound, source-confirmed (secrets.ts:19-24 JSON.stringify with no encryption call; instrumentation-node.ts:125-135 auto-generates and persists JWT_SECRET at boot — the packet's R1 and ratified OD-13 rest on a verified fact); D5 requireManagementAuth in 286 routes exact; D6 688 route.ts / 102 API domains exact (the naive 697 src/app-wide count reconciles — 9 non-API routes). Observations not affecting the verdict: O1 a reference checkout /opt/tkv-local/deepseek-harness-master EXISTS (the upstream DeepSeek open-source project, developer preview) — KDD-0006's 'never existed' is scoped to a DEPLOYED HX execution foundation; no contradiction, recorded for precision; O2 Qwen-X + Ollama format:json interacts badly with array-output instructions — verifier harnesses should omit format and supply an explicit output template with a stated object count (tooling lesson for the Wave-0C skill candidate). Final verdict VERIFIED with six exact reasons — Layer 0's evidence base stands as presented."
+  inferred_value: "INFERENCE: the independence proof of Layer 0 — the evidence base stands because a verifier on a different host re-derived the load-bearing numbers from corpus (19 strategies + quota-share, 286 requireManagementAuth routes, 688/102, plaintext secrets at secrets.ts:19-24) instead of trusting the producer's claims; any future 'was the ledger independently checked' question resolves here."
+  source:
+    author: "Kimi-K3 (governor, report author) with Qwen-X bounded review verdicts (independent verifier)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/18-independent-verification-report.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-27T11:12:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: [hxs-1, hxs-2]
+    fqdns: []
+    services: [ollama.service]
+    agents: [kimi-k3, trinity]
+    repositories: [HX-ASF-Servers, tkv-local]
+    environments: [pilot]
+    models: [hx-qwen3.8-27b-64k, mannix/qwen3.6-27b-a3b-coderx]
+  version: "VERIFIED — zero discrepancies (Wave-0C verification, run window 2026-08-27 10:41–10:53Z)"
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "DOC-backend-qwen-x"
+      note: "the independent verifier — identity receipt §1: hxs-1 http://192.168.50.200:11434, Ollama 0.32.15, alias hx-qwen3.8-27b-64k ONLY (no substitution), digest 766cd9469fb4… match, resident size == size_vram, ctx 65536, ACTIVE M8-signed; 5 inference calls; producer/verifier independence held — producer Coder-X on hxs-2 ≠ verifier Qwen-X on hxs-1"
+    - predicate: "assesses"
+      target: "DOC-pilot-omniroute-ev-08-capability-ledger"
+      note: "F1 recount exact (367; 42/23/26/50/37/55/60/74; 229/74/35/12/9/8; 1,325 refs; partition JSONs sum + zero field mismatches vs the merged file), F2 25/25 sample refs, F3 schema exact; call-1 6/6 sample verdicts sound; D2/D3 adjudications"
+    - predicate: "assesses"
+      target: "DOC-pilot-omniroute-reconciled-program-packet"
+      note: "call 2 (authority matrix A1–A9 + OD register O1–O13: 22/22 sound) and call 3 (risk register R1–R12: 12/12 sound) reviewed the packet's §2/§5/§6; F5 forbidden-token sweep covered the packet"
+    - predicate: "assesses"
+      target: "DOC-pilot-omniroute-control-manifest"
+      note: "F4 manifest parses clean (safe_load; 12 top-level keys incl. OD-01..OD-13); F5 forbidden-token sweep PASS on the manifest"
+    - predicate: "references"
+      target: "DOC-tkv-corpus-omniroute"
+      note: "the corpus every sampled citation resolved against and the load-bearing numbers were independently re-derived from (D3 routingStrategies.ts:31; D4 secrets.ts:19-24; D5 286 routes; D6 688/102)"
+    - predicate: "references"
+      target: "DOC-backend-coder-x"
+      note: "the producer backend (hxs-2) whose ledger work was verified; the independence rule producer host ≠ verifier host held throughout"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-state-log"
+      note: "mint provenance: row 24 artifact (Qwen-X VERIFIED — zero discrepancies, 2026-08-27T10:58Z)"
+  validation:
+    validated_at: "2026-08-27T14:30:00Z"
+    freshness: "current"
+    review_due: "final at delivery (point-in-time verification record); re-verify only if a verified artifact mutates (F6 mtimes pinned)"
+  sha256: "c7222dd535112c6cbe756ebae4bdffeefc561a56ec63860506ad3d03b47140c7"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/18-independent-verification-report.md"
+notes:
+  typing_convention: "Typed evidence per the verification-record precedent (DOC-fleet-metax-verification-2026-08-27): a completed point-in-time verification with the deterministic checks as acceptance authority and the model's role bounded review; status adopted."
+  observation_o1_precision: "O1 recorded for precision: /opt/tkv-local/deepseek-harness-master EXISTS as reference material (the upstream DeepSeek open-source project, developer preview). KDD-0006's 'never existed' is scoped to a DEPLOYED HX execution foundation (hxs-2 state log row 1: verification found no deployed DeepSeek Harness anywhere; owner confirmed 2026-08-26). The manifest's correction stands within scope — no contradiction. Catalog consistency: the checkout is already cataloged as DOC-tkv-corpus-deepseek-harness (type corpus) — reference material, not a deployment."
+  observation_o2_tooling: "O2 tooling lesson (recorded for the Wave-0C citation-contract skill candidacy): Qwen-X + Ollama format:json truncates array-output instructions to a single object with verdict instability; verifier harnesses should omit format and give an explicit output template with a stated object count."
+  markdown_only: "Markdown-only per the routine-record convention (the report's own tail note; NOT in scripts/wiki/manifest.txt — no HTML sibling; queued for dual-format only if KK3 classifies it a major document)."
+  credential_hygiene: "Zero credentials in model context per the report's cloud statement (prompts contained artifact text and checklists only); the two credential classes are policy-denied and no secret value appears anywhere in the artifact — cataloged per profile §6 with nothing to flag."
+  amendment_batch22: "Batch-22 amendment (state log row 26, 2026-08-27T14:12Z, finding F3 — governor-applied): the §3 corrections paragraph's verdict-flip adjudication reference (source line 45) now reads '(D1 below)' (was '(D2 below)') — matches the §4 adjudication order and point (5); VERIFIED PRESENT this run. This is the only batch-22 edit to the report: no finding, count, or verdict changed — the VERIFIED verdict stands. Two precision notes: (a) the report's F1 zero-field-mismatch state (partition JSONs vs merged file, run window 10:41–10:53Z) PREDATES the batch-22 partition-json corrections — the resulting merged-json divergence is preserved and authority-ranked in DOC-pilot-omniroute-ev-08-capability-ledger notes.batch22_drift_flag — and was RESOLVED mid-run by the governor's deterministic re-merge (state log row 27, 2026-08-27T14:39Z; zero partition-vs-merged field mismatches re-verified this run); (b) the record's review_due mtime pin now covers the amended file — re-pinned at this run's hash (c7222dd5…; chain 43956687… -> c7222dd5…)."

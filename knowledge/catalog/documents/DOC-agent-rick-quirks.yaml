@@ -1,0 +1,74 @@
+document:
+  id: "DOC-agent-rick-quirks"
+  title: "agents/rick/quirks.md — rick's quirks register (7 seeded entries with evidence pointers; standing startup input to every rick assignment; every F-class quirk gets an entry at handoff)"
+  type: "runbook"
+  declared_purpose: "Rick's quirks register (owner-ratified commission, hxs-2 log row 55; delivered row 56). Standing input to every rick assignment — read at startup alongside agents/rick/profile.md. The register is where discovered platform quirks become permanent knowledge: each entry is a fact with an evidence pointer, never a guess, never folklore. Maintenance rules per its header: every future F-class quirk discovered during a task gets an entry at that task's handoff (one line, evidence pointer mandatory); entries are applied, not just recorded (cite the entry in the deliverable instead of re-deriving); entries are never silently rewritten — corrections append a dated note; format name | symptom | root cause | rule to apply | evidence pointer | date added. Seeded 2026-08-27 with 7 entries: (1) timedatectl comma-`-p` quirk (systemd 255 — query single properties; never trust an empty `show` as a negative result); (2) ufw unit-state artifact (rule firewall state on /etc/ufw/ufw.conf ENABLED=, unit state informational only); (3) boot-cleared /tmp on hxs-3 (pull evidence off-host at capture; root cause UNCONFIRMED by its own text); (4) sleep-mask proven set (4-target masked set on LLM hosts; hxs-2's extra sleep.target mask = documented harmless superset; manage via fleet-sleepmasks.sh, never ad-hoc); (5) DMI capacity under-report (trust OS-level data + per-module dmidecode type-17 over the DMI array capacity field; hxs-8); (6) NVRM teardown assertions (monitor-only chatter class on 580.173.02, NOT a halt trigger — Xid remains the stop class); (7) set-timezone vs running processes (cosmetic stale-zone labels post-switch; do not restart services outside the work order)."
+  inferred_value: "INFERENCE: the compounding half of rick's lane memory — it converts per-task F-class findings into standing startup knowledge so a quirk is paid for once, and it pairs with DOC-tkv-corpus-ubuntu-refs-ubuntu-24-04: the pinned noble man pages carry the baseline command contract, this register carries the fleet-specific amendments to that contract (the MANIFEST's own notes state the pairing)."
+  source:
+    author: "rick (Ubuntu Server engineer lane)"
+    provided_by: "Kimi-K3 (governor dispatch — knowledge/cadence wave; commission owner-ratified 2026-08-27, hxs-2 log row 55, delivered row 56)"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/agents/rick/quirks.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-27T08:35:00Z"
+  owner: "rick (lane register)"
+  applies_to:
+    hosts: [hxs-1, hxs-2, hxs-3, hxs-4, hxs-8]
+    fqdns: []
+    services: [ollama.service]
+    agents: [rick]
+    repositories: [HX-ASF-Servers]
+    environments: [fleet, pilot]
+    models: []
+  version: "2026-08-27 (7 seeded entries)"
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "rick"
+      note: "owner-ratified commission (hxs-2 log row 55: 'rick quirks register — commissioned'); delivered row 56 with every pointer verified against the record before writing"
+    - predicate: "references"
+      target: "DOC-agent-rick-profile"
+      note: "standing startup input — read alongside the profile at every rick assignment per its maintenance header"
+    - predicate: "references"
+      target: "DOC-agent-rick-charter"
+      note: "the lane it serves: rick's operating governance; the register is the lane's permanent quirk-knowledge surface"
+    - predicate: "references"
+      target: "DOC-tkv-corpus-ubuntu-refs-ubuntu-24-04"
+      note: "the companion half of the same commission (row 55/56): the noble-pinned man pages are the baseline command contract these fleet quirks amend (refs MANIFEST §Notes)"
+    - predicate: "references"
+      target: "DOC-fleet-time-and-mask-pass"
+      note: "evidence pointer for entries #1 (§4 note + §7 F-2, the timedatectl comma-`-p` quirk), #4 (§5 item 3 + Addendum, the proven sleep-mask set), #7 (§5 item 1, the EST-class label end 23:52:40Z)"
+    - predicate: "references"
+      target: "DOC-fleet-script-library"
+      note: "evidence pointer for entry #2 (scripts/fleet/README.md Field notes + fleet-standard.yaml firewall rule — rule on firewall.ufw_conf, unit state informational) and the management tooling named in entries #3 (fleet-evidence-pull.sh) and #4 (fleet-sleepmasks.sh)"
+    - predicate: "references"
+      target: "DOC-pilot-hxs3-state-log"
+      note: "evidence pointer for entries #3 (row 23 F-M5-1 fact, row 25 M8 evidence streamed at capture) and #7 (row 20, the set-timezone explanation)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-rick-hxs8-readiness"
+      note: "evidence pointer for entry #5 (§3 + F-5: hxs-8 DMI type-16 'Maximum Capacity 32 GB' vs 48 GB installed)"
+    - predicate: "references"
+      target: "DOC-pilot-hxs3-ev-09-esme-m7-ladder-profiles"
+      note: "evidence pointer for entry #6 (NVRM teardown assertions, line ~235)"
+    - predicate: "references"
+      target: "DOC-pilot-hxs3-ev-15-esme-m8-signoff"
+      note: "evidence pointer for entry #6 (NVRM teardown assertions, lines ~141, ~263)"
+    - predicate: "references"
+      target: "DOC-pilot-hxs2-state-log"
+      note: "evidence pointer for entry #4 (row 6, the hxs-2 hybrid-sleep queue item); commission provenance rows 55 (ratified) / 56 (delivered)"
+  validation:
+    validated_at: "2026-08-27T08:35:00Z"
+    freshness: "current"
+    review_due: "at every rick task handoff carrying an F-class quirk (the register's own maintenance rule: entry appended at handoff) — append-only, corrections by dated note"
+  sha256: "12f32db6cab6d04b75d6d6cc566797f91979ddda71b2c66e942b0c765f587bad"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/rick/quirks.md"
+notes:
+  typing_judgment: "Typed runbook per the dispatch's 'runbook or reference per your schema judgment': the schema enum carries no 'reference' type, and the register is a living operational rules register (symptom -> root cause -> rule to apply) in the same class as DOC-fleet-script-library (runbook). status adopted = adopted as the standing lane input (owner-ratified commission, hxs-2 log row 55); authority agent-evidence — every entry carries an evidence pointer by its own rule, and all pointed sources are themselves cataloged records (relations above)."
+  entry_integrity: "7 entries seeded 2026-08-27, format name | symptom | root cause | rule to apply | evidence pointer | date added. Entry #3's root cause is UNCONFIRMED by its own text ('mechanism UNCONFIRMED — investigate when next authorized') — cataloged as-is; the honest-negative is preserved, not resolved (profile §9). Entry #2's ENABLED= authority rests on the on-host file's own comments, not an upstream man page — the companion pack's retrieval gap G1 records ufw.conf(5) as nonexistent (DOC-tkv-corpus-ubuntu-refs-ubuntu-24-04 notes.retrieval_gaps)."
+  derived_html: "none — routine lane record, Markdown-only per the repo documentation conventions (dual-format is for major documents; logs/notes/routine records stay Markdown-only)."

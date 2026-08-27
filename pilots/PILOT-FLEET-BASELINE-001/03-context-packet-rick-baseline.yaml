@@ -1,0 +1,26 @@
+# CP-03 — Context Packet: rick Fleet Baseline Wave
+# Pairs with 02-work-order-rick-baseline.yaml. Execution-time facts rick needs in-context.
+
+packet: CP-03-fleet-baseline
+for: session rick-fleet-baseline-20260827-01
+
+fleet_topology: 192.168.50.0/24, host .N = 199+N (hxs-6=.205 … hxs-15=.214); all Ubuntu 24.04 LTS, one admin user hxsa; ssh from hxs-5 with pinned host keys (StrictHostKeyChecking=yes); askpass supplies the password at execution time.
+
+standard_summary: scripts/fleet/fleet-standard.yaml v0.1 — fresh hosts are class server-default; the five re-verify hosts are llm-host (hxs-8 server-default) posture already proven 08-26/08-27. One timezone (Etc/UTC), one NTP source (time.cloudflare.com), 4-target sleep mask set, no host firewalls (owner rule), Secure Boot posture per owner standing directive (record, never change).
+
+proven_patterns:
+  ntp_pin: fleet-ntp-pin.sh <host> --apply — mktemp staging on the remote, diff reviewed, timesyncd restart only; proven ×5 on 2026-08-26/27 (hxs-1,2,3,4,8 byte-identical timesyncd.conf sha256 e2b94d4b…)
+  sleep_mask: 4-target set masked on the proven hosts; align drift only
+  selftest: fleet-selftest.sh must stay green (42-check battery incl. hostile-path refusal matrix)
+  evidence_doc: mirror servers/2026-08-26-fleet-time-and-mask-pass.md — per-host verdicts + full command log
+
+known_host_notes:
+  hxs-6: Secure Boot ENABLED (owner flag; BIOS visit is an owner call — RECORD ONLY). Was briefly DOWN 2026-08-24, recovered; confirm reachability first.
+  hxs-9: PostgreSQL + Redis host (LiteLLM DB, LangGraph checkpoints) — if services are live, timesyncd restart is still safe; anything beyond the two sanctioned classes → skip + REPORT.
+  hxs-10: Open WebUI host (may serve users — same caution rule).
+  hxs-11: SKIP (owner flag unreachable).
+  hxs-12/13/14/15: Docling / n8n / prompt-eng / QA roles per registry.
+
+secrets_reminder: NO credential value in any command echo, artifact, log, receipt, or model context; askpass helper 0700, deleted at end; the literal-credential sweep is governor-only.
+
+output_contract: per host one verdict line (PASS/REPORT/FAIL + one-line evidence) in the final summary; REPORT always names the declared direction (what owner decision or later pass would close it).

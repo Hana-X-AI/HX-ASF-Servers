@@ -1,0 +1,65 @@
+document:
+  id: "DOC-pilot-fleet-baseline-state-log"
+  title: "PILOT-FLEET-BASELINE-001 01-state-log.md — governor state-transition log (rows 1–3 at ingestion)"
+  type: "other"
+  declared_purpose: "Kimi-K3 governor's sequential state log for PILOT-FLEET-BASELINE-001 (goal goals/2026-08-27-fleet-baseline-deployment.md — owner directive 'complete the baseline platform deployment' 2026-08-27, sequenced BEFORE OmniRoute L1-M3 closure per OmniRoute pilot state log row 43; executor rick, local-model rule applies; append-only, open corrections labeled in-row). Row 1 (2026-08-27T19:40Z): wave commissioned on owner GO — scope FRESH (7) hxs-6/hxs-9/hxs-10/hxs-12/hxs-13/hxs-14/hxs-15 (discovery refresh, fleet-verify-baseline against fleet-standard.yaml, NTP pin + sleep-mask alignment — the two sanctioned mutation classes, fleet-selftest, TKV pre-work records refreshed), RE-VERIFY (5) hxs-1..hxs-4 + hxs-8 (confirm the proven posture, report drift), EXCLUDED hxs-5 (control plane) / hxs-7 (replaced by hxs-20) / hxs-20+hxs-21 (provisioning) / hxs-11 (owner flag unreachable — skipped pending owner confirmation), hxs-6 Secure Boot ENABLED record-only; OPEN CORRECTION in-row: the governor's GO message said '9 fresh hosts' — the correct count is 7, caught while drafting the WO; WO-02/CP-03 written, session rick-fleet-baseline-20260827-01 dispatched (background). Row 2 (2026-08-27T20:19Z): rick fleet baseline wave COMPLETE — PASS — TASK COMPLETE, 12/12 verdicts (10 PASS, 2 REPORT, 0 FAIL): hxs-1/2/3/4/8 PASS (re-verify; hxs-8 NTP already pinned per L1-M1 16:05:59Z — provenance reconciled live; masks aligned 20:03:42Z), hxs-9/12/13/14/15 PASS (fresh; ntp + mask timestamps), hxs-6 REPORT (baseline green; storage drift vs 08-13 discovery — second NVMe + LVM, owner confirmation closes; Secure Boot ENABLED recorded only), hxs-10 REPORT (baseline green; memory drift — 1×16 GB detected vs 2×16 GB recorded, owner hardware inspection closes); fleet state Etc/UTC ×12, one NTP source ×12 (timesyncd.conf sha256 e2b94d4b… byte-identical ×12, NTPSynchronized ×12), proven 4-target mask set ×12, 0 failed units on all 8 mutated hosts, verify-baseline OVERALL hosts=12 hosts-with-FAIL=0, selftest 42/42 at BOTH gates; mutations only the two sanctioned classes (ntp ×7 — hxs-6/9/10/12/13/14/15; mask ×8 — hxs-6/8/9/10/12/13/14/15); hxs-9 postgresql/redis + hxs-10 open-webui found INACTIVE (record-only); F-4 standards-file staleness queued to governor; TKV pre-work-results.md refreshed ×7; zero secret values (literal sweep 0 matches); helpers deleted; no git commit. Row 3 (2026-08-27T20:28Z): wave receipt cited — BASELINE COMPLETE: governor spot check hxs-13 (timesyncd.conf e2b94d4b…, NTPSynchronized=yes, 4/4 masked — matches); F-4 FIXED (governor-lane): fleet-standard.yaml AMENDED 2026-08-27 — the stale 'hxs-8 on ntp.ubuntu.com / pending owner call' comment superseded (L1-M1 pin + baseline GO recorded with evidence pointer), the server-default class gained ntp_enabled + ntp_synchronized enforce + the 4-target mask set enforce, ntp_server lifted report -> enforce, SB + firewall remain report-only by absence; RE-VERIFICATION vs the amended standard (governor, independent run): llm-host 10/10 ×4, server-default 8/8 ×8, OVERALL hosts=12 hosts-with-FAIL=0; one transport lesson recorded (the fleet scripts take FLEET_SSH as a single wrapper executable — bare ssh fails; governor wrapper transient, removed at arc end); OWNER DECISIONS QUEUED (2 REPORTs): hxs-6 storage drift (owner confirmation closes), hxs-10 memory drift (owner hardware inspection closes); postgresql/redis inactive on hxs-9 + open-webui inactive on hxs-10 noted for later (record-only); Carol catalog wave dispatched (THIS RUN)."
+  inferred_value: "INFERENCE: the chronological spine and governing log of the fleet baseline pilot, same role as the per-LLM-host pilot state logs (DOC-pilot-hx1-state-log class) — the handoff is incomplete until the matching catalog receipt is referenced here (profile §7/§8); rows 1-3 are the complete arc of a one-session pilot: commission, execution-complete, receipt+amendment+re-verification."
+  source:
+    author: "Kimi-K3 (governor, main session)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-FLEET-BASELINE-001/01-state-log.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-27T20:42:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: [hxs-1, hxs-2, hxs-3, hxs-4, hxs-6, hxs-8, hxs-9, hxs-10, hxs-12, hxs-13, hxs-14, hxs-15]
+    fqdns: []
+    services: [systemd-timesyncd]
+    agents: [kimi-k3, rick, carol]
+    repositories: [HX-ASF-Servers, tkv-local]
+    environments: [pilot, fleet]
+    models: []
+  version: "rows 1–3 at ingestion (living log)"
+  status: "active"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "describes"
+      target: "PILOT-FLEET-BASELINE-001 transition history (rows 1–3 at ingestion)"
+      note: "commissioning on owner GO with the open 9->7 host-count correction (row 1, 2026-08-27T19:40Z), rick's execution COMPLETE — 12/12 verdicts 10 PASS 2 REPORT 0 FAIL, mutations only the two sanctioned classes, one-source ×12 file-level proof (row 2, 20:19Z), and the wave receipt — BASELINE COMPLETE with the F-4 standards amendment + independent re-verification green 12/12 and two owner hardware decisions queued (row 3, 20:28Z)"
+    - predicate: "depends_on"
+      target: "DOC-goal-fleet-baseline-deployment"
+      note: "governing goal; owner-sequenced FIRST before OmniRoute L1-M3 closure (OmniRoute pilot state log row 43) — cataloged THIS wave"
+    - predicate: "references"
+      target: "DOC-pilot-fleet-baseline-wo-02-rick-baseline"
+      note: "row 1 artifact: the work order WO-02-fleet-baseline (7 fresh + 5 re-verify; two sanctioned mutation classes; boundaries + acceptance) — cataloged THIS wave, MINTED ALREADY-DISCHARGED per the wo-07 variant (the deliverable landed before cataloging)"
+    - predicate: "references"
+      target: "DOC-pilot-fleet-baseline-cp-03-rick-baseline"
+      note: "row 1 artifact: the paired context packet CP-03-fleet-baseline (topology, standard summary, proven patterns, known host notes, output contract) — cataloged THIS wave, DISCHARGED at mint with the WO"
+    - predicate: "references"
+      target: "DOC-fleet-baseline-wave-2026-08-27"
+      note: "row 2 artifact: rick's evidence deliverable servers/2026-08-27-fleet-baseline-wave.md (verdicts + test plan + changes + command log + validation summary) — cataloged THIS wave"
+    - predicate: "references"
+      target: "DOC-fleet-script-library"
+      note: "row 1 controlling source + row 3 F-4 amendment: fleet-standard.yaml AMENDED 2026-08-27 (stale hxs-8 comment superseded; server-default gained ntp_enabled/ntp_synchronized/4-target-mask enforce; ntp_server report -> enforce) and re-verified green 12/12 by the governor — the library record is re-hashed THIS wave"
+    - predicate: "references"
+      target: "DOC-tkv-hxs6-pre-work-results"
+      note: "row 2/3 artifact family: the 7 refreshed /opt/tkv-local/servers/<host>/pre-work-results.md (hxs-6, hxs-9, hxs-10, hxs-12, hxs-13, hxs-14, hxs-15 — second refresh-by-prepend layer, the baseline-wave re-verification section) — all seven existing records re-hashed + note-extended THIS wave; hxs-6's carries the REPORT verdict (storage drift F-1 + SB ENABLED record-only), hxs-10's the REPORT verdict (memory drift F-2)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-state-log"
+      note: "owner sequencing authority: OmniRoute pilot state log row 43 (2026-08-27T19:24Z) — baseline platform deployment FIRST, OmniRoute L1-M3 closure after; the OmniRoute log record is re-minted to rows 1-43 THIS wave"
+  validation:
+    validated_at: "2026-08-27T20:42:00Z"
+    freshness: "current"
+    review_due: "each state transition (living log); re-hash on every re-ingestion; the handoff CLOSES when this run's receipt is cited here (profile §7)"
+  sha256: "79ef9ceb81adaa91fd57e0edf2808383318abc2071f065769d3193e3f2bdfe80"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-FLEET-BASELINE-001/01-state-log.md"
+notes:
+  living_document: "This log is appended to during the active pilot (governor live). Hash chain: 79ef9ceb… (rows 1-3, 2026-08-27T20:3xZ, first hash at ingestion — all three rows landed before this wave's mint; the pilot's full arc completed 19:40Z-20:28Z ahead of cataloging). The hash is as-of the stated row window; re-hash on every re-ingestion and extend the chain here (convention: DOC-pilot-hx1-state-log / DOC-pilot-hxs2-state-log / DOC-pilot-omniroute-state-log notes.living_document)."
+  typing_convention: "Typed per the hxs-1/hxs-2/hxs-3/omniroute state-log precedent: type other, authority_level agent-evidence, status active, owner Kimi-K3, version carries the row window of the living log."
+  protected_reference: "Rows 1-3 name no protected resource and quote no credential content (profile §6; the execution's askpass discipline is recorded as mechanism only — helper 0700, deleted at end, BatchMode probe ×12 password path closed; cf. DOC-protected-ssh-info-hxs1 for the protected-resource pattern)."

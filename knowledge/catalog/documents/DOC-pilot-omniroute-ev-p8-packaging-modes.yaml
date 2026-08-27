@@ -1,0 +1,60 @@
+document:
+  id: "DOC-pilot-omniroute-ev-p8-packaging-modes"
+  title: "PILOT-OMNIROUTE-LAYER0-001 ledger/P8-packaging-modes.{md,json} — Wave 0B partition P8 packaging/modes (74 entries, 297 refs; encrypted CLI backups WRITE-ONLY; --cloud backup POSTs to a nonexistent endpoint; citation contract FINAL 0.0%)"
+  type: "evidence"
+  declared_purpose: "Wave-0B partition deliverable P8 of WO-OMNI-TRINITY-LEDGER-001 (COMPLETE state log row 21, 2026-08-27T09:44Z — the final partition): the source-derived capability ledger of OmniRoute v3.8.51's packaging and deployment-mode surfaces (packaging, CLI, dashboard, container, desktop, mobile/other, distribution). Two forms, one artifact: P8-packaging-modes.json — 74 entries (68 capabilities + 6 NOT-ESTABLISHED), each carrying the packet's 12 schema fields, 297 source refs (33 ACTIVE-CANDIDATE / 21 AVAILABLE-DISABLED / 8 NOT-APPLICABLE / 2 BLOCKED / 4 LAB-ONLY / 6 NOT-ESTABLISHED) — and P8-packaging-modes.md — the human partition summary (startup receipt, mode-by-mode analysis, contract measurement, self-verification). Findings (per the md + state log row 21): packaging model — one npm package + one Next-16 standalone build feeds all modes; CLI ~80 command families + 31-tag OpenAPI tree; supervised serve with maxRestarts 2; Electron shell loopback-pinned (127.0.0.1) with encrypted-credentials refusal; container = five-stage hardened Dockerfile (non-root, healthcheck, ci --ignore-scripts + CVE overlay). DATA-INTEGRITY findings x2: encrypted CLI backups are WRITE-ONLY (createDecipheriv imported never called; restore matches plaintext names only — encrypt-then-never-restore) and the --cloud backup flag POSTs to a NONEXISTENT endpoint (/api/db-backups/cloud, grep-verified) — backup encryption/remote-upload treated as nonexistent (CAP-P8-905/906). BLOCKED: runner-cli container flavor (bakes cloud CLIs + host docker.sock) + cloud agent-tasks CLI; bun variant LAB-ONLY. CITATION CONTRACT FINAL: 0/46 = 0.0% at P8 (baseline 35.6%; P5 4.0%, P6 ~3%, P7 3.1%) — the experiment is closed with proof; residual class = path-attribution slips with the skill-candidate refinement recorded."
+  inferred_value: "INFERENCE: P8 is the install-reality partition — the one-package/one-build model and the hardened container shape are what a Layer-1 hxs-8 deployment would actually execute, and its two data-integrity findings close the backup story P5 opened: encryption at rest for backups is theater end-to-end until upstream ships a restore path, so any HX backup design must not rely on it."
+  source:
+    author: "trinity (Coder-X bounded execution under the local-model contract)"
+    provided_by: "Kimi-K3 (governor dispatch — Wave-0B closing wave)"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/ledger/ (P8-packaging-modes.md + P8-packaging-modes.json)"
+    section: "§whole-document (md + json pair — one artifact, two forms)"
+    ingestion_date: "2026-08-27T09:58:00Z"
+  owner: "trinity"
+  applies_to:
+    hosts: [hxs-2, hxs-5]
+    fqdns: []
+    services: [ollama.service]
+    agents: [trinity, kimi-k3]
+    repositories: [HX-ASF-Servers, tkv-local]
+    environments: [pilot]
+    models: [hx-qwen3.6-coderx-64k]
+  version: "Wave 0B final (2026-08-27, state log row 21)"
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "trinity"
+      note: "partition task COMPLETE 2026-08-27T09:44Z (state log row 21) — the final partition; Coder-X eviction handled correctly (identity via /api/tags digest, load-only warmup, re-verified — no substitution)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-wo-05-trinity-ledger"
+      note: "commissioning work order (8-partition DAG, per-task contract, acceptance criteria) — DISCHARGED by the Wave-0B deliverable set this partition completes"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-cp-06-trinity-ledger"
+      note: "entry schema (12 fields) + conventions + the owner-ratified §citation_contract_p5_onward (third contract run; FINAL measurement 0/46 = 0.0%)"
+    - predicate: "evidences"
+      target: "DOC-tkv-corpus-omniroute"
+      note: "297 source refs into the identity-VERIFIED corpus; her checks 297/297 refs + 79/79 symbol spot-checks (second scripted run); governor spot-check 8/8 (row 21)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-ev-08-capability-ledger"
+      note: "merged into the Wave-0B merged ledger as its P8 part (its contains edge; the partition json+md remain the per-partition source of record)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-state-log"
+      note: "governing log; completion provenance row 21 (2026-08-27T09:44Z — WAVE 0B COMPLETE)"
+  validation:
+    validated_at: "2026-08-27T14:30:00Z"
+    freshness: "current"
+    review_due: "at Wave 0C (reconciliation packet + Qwen-X independent verification); re-hash on any ledger edit"
+  sha256: "8418a2378f9abb0f8cd37bfc0e474257f4e064a495380a296cd9a784cec7f2f3"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/ledger"
+notes:
+  checksum_method: "MULTI-FILE convention (DOC-fleet-script-library pattern): sha256 field = digest of the content-sensitive 2-file manifest ('<sha256>  <filename>' lines for P8-packaging-modes.json + P8-packaging-modes.md, LC_ALL=C sort by filename, manifest text digested), captured 2026-08-27T14:25Z. Per-file sha256 at this capture: P8-packaging-modes.json cf09acd2911277fee3164e40d263d801e5112339d5159b1b2462c587094ff4ad; P8-packaging-modes.md 48493ba749472e45888415ee1c5aa1c8bde3a69f3b19c61342387fce04ff173a. Manifest-digest chain: fc82ea82… (Wave-0B mint; per-file json b86dfcc8…, md 7b16d679…) -> 8418a237… (batch-22 json+md amendment, state log row 26 F4b/F6/F7; recipe re-verified this run against the unchanged P1 record's mint digest)."
+  corrections_batch22: "Batch-22 amendment (state log row 26, 2026-08-27T14:12Z — governor-applied): F4b — CAP-P8-061 risk_class now 'high — critical-adjacent: credential-extraction utility in-tree (redacted output, but extracts live host secrets); flagged per the secrets discipline' (enum-first; VERIFIED PRESENT this run); CAP-P8-058 SKIPPED — already compliant ('low (HX)' begins with a valid severity, qualifier trailing). F6 — four cross-reference identifier classes corrected with entry identities verified (this run corroborated all four in the live json): CAP-P8-004's dependency CAP-P8-006 -> CAP-P8-005 (the tarball prepublish the release chain actually uses); the write-only-restore reference CAP-P8-036 -> CAP-P8-906 (CAP-P8-029); three electron-standalone bundle/staging references CAP-P8-063 -> CAP-P8-059 (CAP-P8-053/054/058); the unsigned-artifact reference CAP-P8-064 -> CAP-P8-060 (CAP-P8-057); CAP-P8-009's CAP-P8-006 dependency is legitimate (native-dep stack on the postinstall fixup) and intact. Labeled audit record appended to P8-packaging-modes.md (§'Correction record — cross-reference identifiers (2026-08-27, review batch 22, labeled)' — VERIFIED PRESENT). F7 — the md now reads 'Fourth partition' under citation_contract_p5_onward (VERIFIED line 7) and P8-packaging-modes.reference-check.txt's baseline chain is P6-inclusive (P6 2/70 ~3%; the reference-check transcript itself stays uncataloged per the merged-ledger record's sibling_files_disposition). JSON re-validated this run: 74 entries x exactly 12 schema fields, zero residual wrong refs in the four corrected classes (row 26's 74x12 claim corroborated); counts/dispositions unchanged (297 refs; 33/21/8/2/4/6 stands)."
+  verification_at_mint: "Deterministic recomputation against the live json (2026-08-27T09:56Z, read-only): 74 entries, each exactly the 12 schema fields; 297 source_refs; dispositions 33 ACTIVE-CANDIDATE / 21 AVAILABLE-DISABLED / 8 NOT-APPLICABLE / 2 BLOCKED / 4 LAB-ONLY / 6 NOT-ESTABLISHED (sums 74). Matches the merged ledger's P8 part (74) and the md header (68 capabilities + 6 NOT-ESTABLISHED)."
+  protected_reference: "No protected resource named; no credential content in the artifact or this record (profile §6)."

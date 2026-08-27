@@ -1,0 +1,57 @@
+document:
+  id: "DOC-tkv-corpus-ubuntu-refs-ubuntu-24-04"
+  title: "/opt/tkv-local/ubuntu/refs-ubuntu-24.04 — rick's ratified Ubuntu 24.04 (noble) reference pack (13 files + MANIFEST.md: noble-pinned man pages, netplan stable, 3 Server Guide chapters; per-file sha256; retrieval gaps labeled)"
+  type: "corpus"
+  declared_purpose: "Version-pinned local reference for rick's command families on Ubuntu 24.04 LTS (noble): time/NTP (timedatectl, systemd-timesyncd.service, timesyncd.conf), systemd units/sleep targets (systemd.unit, systemd.special, systemd-suspend.service, systemd-sleep), netplan, ufw, dmidecode, plus the 24.04 Server Guide chapters for networking (about-netplan), time synchronisation, and security — per its MANIFEST.md (owner-ratified commission, hxs-2 log row 55; delivered row 56). Retrieval 2026-08-27T07:5x-08:0xZ via curl -fsSL over HTTPS from official public sources only (manpages.ubuntu.com, netplan.readthedocs.io, documentation.ubuntu.com); read-only retrieval, no content executed, no packages installed, no mirrors of doc trees. Version pin: noble man pages — release-matched to the HX fleet; netplan docs 'stable' branch; Ubuntu Server documentation (24.04-current). 13 files, 823,357 bytes total + MANIFEST.md carrying per-file source URL, version pin, verified title, sha256, and bytes."
+  inferred_value: "INFERENCE: closes the recorded runbook gap of the parent corpus — DOC-tkv-corpus-ubuntu (ubuntu.com-main webapp tree) holds no time-sync/firewall/suspend runbook per its own declared_purpose; this pack supplies exactly those command families, noble-pinned, and pairs with DOC-agent-rick-quirks (the fleet-specific amendments to this baseline contract — the MANIFEST's notes state the pairing). The labeled retrieval gaps (G1/G2) are as valuable as the files: they prevent a future session from re-hunting two documents that do not exist."
+  source:
+    author: "rick (retrieval + verification); upstream content: Canonical/Ubuntu manpages + Server documentation, netplan project"
+    provided_by: "Kimi-K3 (governor dispatch — knowledge/cadence wave; commission owner-ratified 2026-08-27, hxs-2 log row 55, delivered row 56)"
+    origin: "/opt/tkv-local/ubuntu/refs-ubuntu-24.04"
+    section: "§whole-document"
+    ingestion_date: "2026-08-27T08:35:00Z"
+  owner: "Agent Zero (vault); rick (assigned consumer)"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: [rick]
+    repositories: [tkv-local]
+    environments: [fleet]
+  version: "Ubuntu 24.04 LTS (noble) man pages; netplan docs 'stable'; 24.04 Server documentation (current) — snapshot 2026-08-27 (13 files, 823,357 bytes + MANIFEST.md)"
+  status: "adopted"
+  authority_level: "upstream-reference"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "rick"
+      note: "owner-ratified corpus-refresh commission (hxs-2 log row 55: bounded, versioned reference pack, public-docs retrieval only, nothing installed); delivered row 56"
+    - predicate: "references"
+      target: "DOC-tkv-corpus-ubuntu"
+      note: "sits inside the /opt/tkv-local/ubuntu tree; the parent corpus record's 2,162-file names manifest (re-manifest 2026-08-27T08:13Z, receipt 0817Z) already includes this pack's 14 files — parent record current at mint, no re-manifest owed"
+    - predicate: "references"
+      target: "DOC-agent-rick-profile"
+      note: "knowledge source for the lane per the profile §5 review rule and the MANIFEST pack rules: reference material, not current truth — verify versions, state, and applicability against the live environment before use (repo AGENTS.md TKV rule)"
+    - predicate: "references"
+      target: "DOC-agent-rick-quirks"
+      note: "the companion half of the same commission: this pack is the pinned baseline command contract; the quirks register carries the fleet-specific amendments to it (MANIFEST §Notes)"
+    - predicate: "references"
+      target: "DOC-pilot-hxs2-state-log"
+      note: "commission provenance: row 55 (owner ratification of the recommendation set) / row 56 (delivery, gaps labeled, read-only retrieval)"
+  validation:
+    validated_at: "2026-08-27T08:35:00Z"
+    freshness: "current"
+    review_due: "2026-09-24 (the standing corpus manifest re-hash) or on any pack update; verify against the live environment before use (reference material, not current truth)"
+  sha256: "6c47bfab5c9a3759d35cb0a778f7c97ee105f3d4c4a6d7bf2c0bd9efef6fbc04"
+  canonical_location: "/opt/tkv-local/ubuntu/refs-ubuntu-24.04"
+notes:
+  record_class: "tkv-record class per the DOC-tkv-corpus-ubuntu-mcp-server precedent (itself per stig-baseline/deepseek-harness): type corpus — the schema enum has no 'reference-corpus' type; the reference-only disposition is carried here in notes (pack_rules). status adopted + upstream-reference."
+  checksum_method: "sha256 = digest of the sorted relative-path file manifest (14 files, names only), NOT content hashes; captured 2026-08-27T08:26Z; pipeline: cd /opt/tkv-local/ubuntu/refs-ubuntu-24.04 && find . -type f -not -path './.git/*' -not -path './.idea/*' | sed 's|^\\./||' | LC_ALL=C sort | sha256sum — paths relative to the tree root without './' prefix, LC_ALL=C sort, manifest text digested (per the DOC-tkv-corpus-ubuntu-mcp-server / stig-baseline convention). No .git or .idea content present. Content integrity rides on MANIFEST.md's per-file sha256 column — all 13 re-verified this run (verification_log below); MANIFEST.md's own sha256 d5a537e8fb72bbcb6516b48f0171d8cc84766fff55bc2c9297b8e16a533efac9 recorded for drift detection."
+  verification_log: "Carol verification at ingestion (2026-08-27T08:25-08:27Z): (1) all 13 per-file sha256 recomputed locally and MATCH MANIFEST.md exactly (man1-timedatectl a72f63fc…, man8-systemd-timesyncd.service 14a91d81…, man5-timesyncd.conf 747c7266…, man5-systemd.unit 129bd6f2…, man7-systemd.special 33c79e82…, man8-systemd-suspend.service f25b8b77…, man8-systemd-sleep 2935db15…, man8-ufw b6b63a54…, man8-dmidecode d37ffbe4…, netplan-yaml-stable a874ca50…, server-guide-about-time-synchronisation f7505019…, server-guide-about-netplan cccace8a…, server-guide-security cd6b8fde…); (2) all 13 <title> tokens grep-verified against the MANIFEST 'Verified title' column, including the two documented artifacts (the combined systemd-suspend/sleep upstream page; the '-sation' URL slug vs '-zation' page title); (3) byte total recomputed 823,357 = MANIFEST claim; (4) retrieval gaps G1/G2 preserved as labeled (retrieval_gaps note); (5) the HTTP-200 retrieval claims are rick's evidence (MANIFEST §Verification method, retrieval 2026-08-27T07:5x-08:0xZ) — NOT re-probed this run: Carol's bounds carry no network probes; the local hash + title chain verifies what was cataloged."
+  retrieval_gaps: "Labeled by rick, not worked around — preserved verbatim in substance. G1: ufw.conf(5) does NOT exist as a noble man page (HTTP 404 probe recorded); noble ufw(8) does not document ENABLED= literally (content grep zero matches); the authoritative documentation of ENABLED= on the fleet is the file's own comment block (verified on hxs-5) — quirks-register entry #2 therefore relies on the on-host file comments, not an upstream man page. G2: no standalone services/systemd chapter exists in the current 24.04 Server documentation structure; the services family is covered in this pack by the noble systemd man pages (unit, special, suspend.service, sleep); labeled, no substitute invented."
+  pack_rules: "Reference only — /opt/tkv-local/ubuntu remains reference material, not current truth: verify versions, state, and applicability against the live environment before use (repo AGENTS.md). HTML as published. Do not execute downloaded content. Nothing installed, nothing executed, no hosts touched during retrieval (hxs-2 log row 56)."

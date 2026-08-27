@@ -1,0 +1,64 @@
+document:
+  id: "DOC-goal-omniroute-trinity-layer0"
+  title: "Goal 2026-08-27-omniroute-trinity-layer0 — Trinity adoption review + OmniRoute v3.8.51 Layer 0 program foundation (read-only, gated waves)"
+  type: "goal"
+  declared_purpose: "Program Goal Contract (Goal ID = file name, KDD-0002; version 1; status in-progress — Layer 0, M0 authorized 2026-08-27 by owner directive p11 + approved plan red-star-stargirl-kamala-khan Option A): establish the governed foundation for Trinity's adoption and for OmniRoute v3.8.51's later phased implementation — correct, reproducible, reviewable — NOT to install OmniRoute quickly. Layer 0 produces: reconciled authority, the Trinity adoption packet (charter/profile/KDD drafts, candidate state), source provenance receipt with honest identity limits, source-derived capability ledger, reconciled program packet with owner-decision register, independent verification, and the KK3 gate decision; completion does not authorize Layer 1. Authorized scope (p11 Layer 0 execution contract): read-only governance and source review, source inventory and content hashing, capability-ledger generation, contradiction/risk analysis, Trinity charter/profile/KDD proposal drafting, goal/work-order/context-packet/evidence-contract/owner-decision drafting, deterministic validation, independent local review (Qwen-X, deterministic first), rick's read-only hxs-8 post-upgrade readiness assessment, Carol handoff preparation and catalog receipts. Prohibited scope (p11 non-negotiables, all enforced): no install/start/deploy, no mutation of any host/runtime/service/network/DNS/TLS/firewall/credential/database/backend, no cloud or remote inference anywhere (local-model-only), no /opt/tkv-local/omniroute, no duplicate Second Brain/catalog/registry, no Trinity-active before the adoption gate, no verbatim candidate adoption, no Layer 1 without new explicit owner authorization, no secrets in any artifact or model context. Authority matrix: Agent Zero (intent, final authority, Trinity ratification, hxs-8 selection/placement, Layer-1+ authorization, high/critical risk acceptance); KK3 governor (authority validation, Goal Contracts, decomposition, work orders, evidence gates, escalation, final recommendation); Trinity ACTIVE 2026-08-27 (KDD-0008 O1 — authority-matrix row flipped candidate -> active by the governor's batch-16 edit; bounded OmniRoute lifecycle engineering under issued work orders only); rick (hxs-8 readiness evidence, read-only); john (not engaged in Layer 0); carol (catalog); Coder-X (bounded execution backend); Qwen-X (independent local verifier). Layer map L0-L4 with entry/exit gates (L1 Secure Core Gateway; L2 Governed Routing & Resilience; L3 Intelligence, Quality & Modalities; L4 Agent & Ecosystem Integration — each gated on the prior layer + owner authorization). Owner-decision register: OD-01 target host DECIDED hxs-8; OD-02 Trinity ratification DECIDED 2026-08-27 — ratified O1 adopt-as-corrected, lane ACTIVE (state log row 5; the register line flipped OPEN -> DECIDED by the governor's row-7 cleanup, re-validated this wave); OD-03 hxs-8 readiness acknowledgement OPEN (rick's evidence cataloged Wave 0A); OD-04..OD-12 OPEN (deployment mode, FQDN/DNS, TLS, exposure scope, initial backends, retention/RPO-RTO, Qdrant/memory disposition, production-version policy, Layer 1 authorization). Success criteria per p11 validation; stop/escalation rules per p11 stop; Second Brain evaluation recorded in-file (adoption-gate pattern + backend-execution/independent-verifier contract as reusable Second Brain patterns; disposition: implemented in this contract)."
+  source:
+    author: "Kimi-K3 (goal record) / Agent Zero (authorization, p11)"
+    provided_by: "Kimi-K3 (governor, Wave 0A catalog dispatch)"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/goals/2026-08-27-omniroute-trinity-layer0.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-27T04:06:00Z"
+  owner: "Agent Zero (human authority); Kimi-K3 (governor)"
+  applies_to:
+    hosts: [hxs-8]
+    fqdns: []
+    services: []
+    agents: [kimi-k3, trinity, rick, carol]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+    models: []
+  version: "1"
+  status: "active"
+  authority_level: "ratified-governance"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "governs"
+      target: "DOC-pilot-omniroute-state-log"
+      note: "state log opened at M0 (row 1, 2026-08-27T03:38Z); execution per the approved plan red-star-stargirl-kamala-khan Option A (full Layer 0 in gated waves — session plan, not cataloged: not supplied)"
+    - predicate: "depends_on"
+      target: "DOC-kdd-0008-trinity-omniroute-adoption"
+      note: "OD-02 Trinity ratification — DECIDED 2026-08-27T04:14Z: owner ratified O1 adopt-as-corrected (state log row 5); the goal file's register line NOW reads '**DECIDED — ratified O1 (adopt as corrected) 2026-08-27; lane ACTIVE (row 5)**' (source line 63, VERIFIED this wave — the governor's row-7 cleanup landed the sync the 0A receipt flagged pending)"
+    - predicate: "references"
+      target: "DOC-tkv-corpus-omniroute"
+      note: "pinned OmniRoute v3.8.51 source corpus /opt/tkv-local/OmniRoute-release-v3.8.51 — read-only this program (goal Scope — authorized: source inventory and content hashing)"
+    - predicate: "references"
+      target: "DOC-backend-coder-x"
+      note: "Coder-X designated Trinity's primary execution backend (authority matrix: bounded execution, per-task identity/health verification, stop-and-escalate, no cloud substitution)"
+    - predicate: "references"
+      target: "DOC-backend-qwen-x"
+      note: "Qwen-X independent local verifier (ACTIVE, M8-signed; verifier contract: deterministic checks -> Qwen-X -> owner review)"
+    - predicate: "references"
+      target: "DOC-tkv-hxs8-discovery"
+      note: "OD-01 target host hxs-8 DECIDED (owner); readiness supersedes via rick's read-only assessment + owner acknowledgement (OD-03)"
+    - predicate: "references"
+      target: "DOC-blueprint-llm-server"
+      note: "§5 boundary convention carried into OD-07: no host firewalls (owner rule 2026-08-26); the /24 LAN + OmniRoute authn/authz governs exposure"
+  validation:
+    validated_at: "2026-08-27T06:20:00Z"
+    freshness: "current"
+    review_due: "at each wave close (living goal during Layer 0); on any Layer-1 authorization (OD-12)"
+  sha256: "7ead761d30e3e68997291cb8c50c7241004832a82b3bf8cbea9f4092c1d687bf"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/goals/2026-08-27-omniroute-trinity-layer0.md"
+notes:
+  status_mapping: "The file's own status line reads 'in-progress — Layer 0 (M0 authorized 2026-08-27 by p11 + approved plan red-star-stargirl-kamala-khan Option A)' (source line 5, VERIFIED PRESENT); mapped to status active per the in-progress-goal convention (DOC-goal-hxs2-qwen36-coderx-backend active during execution; the schema enum has no in-progress literal). Terminal-closed goals map to historical per the DOC-goal-hx1/hxs3 M8-closure precedent — not applicable at ingestion."
+  authority_note: "ratified-governance per the two-goal convention (F-AUTH-1 resolution, hxs-2 state log row 6): the goal file is the governor-authored durable state record ratified through owner M0 authorization (p11, 2026-08-27) + approved plan Option A; owner decisions OD-01..OD-12 preserved in declared_purpose."
+  roster_state_caveat: "The goal file was written at M0 when Trinity was ABSENT from the roster (state log row 1, 03:38Z); MID-RUN UPDATE: the owner ratified O1 at 04:14Z and the roster row was ADDED (agents/README.md line 25; state log row 5) — Trinity is now rostered/active as a lane. applies_to.agents records applicability; roster truth lives in DOC-agents-roster-readme."
+  provenance: "Pilot provenance rows 1-4 of pilots/PILOT-OMNIROUTE-LAYER0-001/01-state-log.md (cataloged as DOC-pilot-omniroute-state-log): row 1 (03:38Z) M0 authorized + this Goal Contract named; row 2 (03:47Z) Goal Contract written + registered in the wiki manifest and rendered."
+  second_brain: "Second Brain evaluation recorded in-file (standing directive): opportunity YES (new traffic-plane capability entering the governed catalog; Trinity a new candidate roster lane); patterns: the adoption-gate path (candidate -> charter/profile/KDD -> owner ratification -> catalog -> roster) and the backend-execution + independent-verifier contract; disposition: implemented in this contract — nothing extra commissioned."
+  revalidation_2026_08_27_followup: "RE-VALIDATED this wave (governor's row-7 cleanup): the only source change is the OD-02 register line OPEN -> DECIDED (source line 63 VERIFIED: '| OD-02 | Trinity ratification (roster admission) | **DECIDED — ratified O1 (adopt as corrected) 2026-08-27; lane ACTIVE (row 5)** |'); status line unchanged (source line 5, VERIFIED PRESENT); re-rendered in sync (wiki-sync at this run's validate.py close). Hash chain: b7c27dd9… (M0 content, Wave 0A mint) -> 0f187018… (OD-02 DECIDED, this record). The depends_on KDD-0008 relation note and review_due updated accordingly; declared_purpose's owner-decision register now records OD-02 DECIDED. MID-RUN DRIFT (second governor edit, 2026-08-27T05:10Z — review batch 16 disposition per state log row 8): the authority-matrix Trinity row flipped candidate -> '**active** 2026-08-27, KDD-0008 O1' (source line 43, VERIFIED at re-verification 05:22Z; the owns text now reads 'bounded OmniRoute lifecycle engineering under issued work orders (source review, install/config DESIGN, conformance design, …)'). Hash chain: b7c27dd9… (M0 content, Wave 0A mint) -> 0f187018… (OD-02 DECIDED, transient mid-run state — cataloged ~30 min then superseded) -> b6a4afc4… (authority-matrix flip, this record). Observed remaining pre-gate wording (recorded openly, governor's lane per the row-8 living-document doctrine): source line 9 still reads 'trinity (candidate — OmniRoute lifecycle steward, NOT active until the adoption gate)' — the gate has fired (row 5); line 16's 'charter/profile/KDD drafts, candidate state' is the Layer-0 product description (accurate as scoped at M0). RESOLVED 2026-08-27 (governor's row-9 remnant fix, VERIFIED this wave): source line 9 now reads 'trinity (**active** 2026-08-27 — OmniRoute lifecycle steward, owner-ratified KDD-0008 O1)' in the Agent lane(s) header — the pre-gate candidate wording is gone; the lane line carries the dated ratified transition per the row-8 living-document doctrine (line 16's product description untouched, still accurate as scoped at M0). Hash chain: b7c27dd9… (M0 content, Wave 0A mint) -> 0f187018… (OD-02 DECIDED, transient mid-run state — cataloged ~30 min then superseded) -> b6a4afc4… (authority-matrix flip, 0532Z wave) -> 7ead761d… (line-9 candidate remnant -> active, this record)."

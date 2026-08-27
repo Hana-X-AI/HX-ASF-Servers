@@ -1,0 +1,62 @@
+document:
+  id: "DOC-pilot-omniroute-rick-hxs8-readiness"
+  title: "PILOT-OMNIROUTE-LAYER0-001 04-rick-hxs8-readiness.md — rick hxs-8 post-upgrade readiness (PASS, SUITABLE-WITH-FINDINGS; memory PENDING items resolved; Node absent = single Layer-1 dependency)"
+  type: "evidence"
+  declared_purpose: "Read-only post-memory-upgrade readiness assessment of hxs-8 (192.168.50.207) for the OmniRoute role (task rick-hxs8-readiness-2026-08-27, PILOT-OMNIROUTE-LAYER0-001 Wave 0A; executor hxs-5; evidence window 2026-08-27T03:38Z-03:46Z; boundary compliance: ZERO mutations on hxs-8 — the only state written anywhere was the hxs-8 host-key pin in hxs-5's known_hosts, executor-side, verified against the owner's pre-work console record before pinning; result PASS). §1 knowledge review receipt (/opt/tkv-local/ubuntu re-confirmed, no OmniRoute/host-readiness runbook — live state + the OmniRoute source snapshot + server records govern; contradictions: p11's hxs-8-offline state stale, already resolved at state log row 1). §2 identity proof verified FIRST: hostname, peer IP, machine-id 91086d5265a74450b7c2047b3b7ca2ae all MATCH; host key SHA256:qtFdqEskYzA8l1nl+E1cW4/Z/TK+mpxWHHpYsGJp2EI matched the owner's preparation-session console record (/opt/tkv-local/servers/hxs-8/pre-work-results.md line 313) via live ssh-keyscan before pinning (first strict-check failure rc=255 kept as evidence; no TOFU, no check-disabling; all subsequent sessions StrictHostKeyChecking=yes). §3 hardware baseline vs current: CPU i5-9400T 6C/6T MATCH; memory 46 GiB visible / 865 MiB used MATCH (upgrade confirmed live); ALL THREE discovery PENDING memory items RESOLVED by dmidecode (sudo read-only): ChannelA-DIMM0 32 GB Samsung SODIMM DDR4 M471A4G43MB1-CTD rank 2 + ChannelB-DIMM0 16 GB Micron SODIMM DDR4 16ATF2G64HZ-2G6E1 rank 2, both channels populated (48 GB raw -> 46 GiB visible), rated 2667 MT/s configured 2666 MT/s 1.2 V, NON-ECC (DMI type 16); channel-mode effective interleave/flex behavior NOT ESTABLISHED from read-only evidence (partial); DMI type-16 'Maximum Capacity: 32 GB' firmware under-report quirk NOTED (OS sees all 46 GiB — observation, not a defect); GPU UHD 630 only MATCH; storage PC SN530 476.9 GB, / 7.6 G used of 468 G (2%), 437 G available MATCH; network eno1 .207/24 1000 Mb/s full, wlp2s0 DOWN MATCH; swap 4.0 GiB file, 0 B used MATCH; maintenance-reboot evidence boot 2026-08-27 01:40:06Z, boot-id e492546c-02b2-4cc6-b9ca-21b7aacc5e29. §4 OS state: Ubuntu 24.04.4 LTS noble MATCH; kernel 7.0.0-30-generic running MATCH (HWE update effective); 5 upgradable packages verified (all python3.12 3.12.3-1ubuntu0.15 -> .16; banner's 10 not reproduced — login-time generated; apt update NOT run, would be a mutation); /var/run/reboot-required ABSENT; 0 failed units; sleep targets static (non-LLM host, record only); timezone Etc/UTC MATCH; NTP active/synchronized from 185.125.190.58 ntp.ubuntu.com distro default — RECORDED NOT CHANGED (hxs-8 was outside the fleet time pass; one-source extension is a governor/owner decision, F-2); ufw inactive MATCH (owner no-firewall rule intact, not touched); open-vm-tools installed unit enabled but inactive — normal on bare metal, not a defect; SSH 0.0.0.0:22 + [::]:22 only non-DNS listener MATCH. §5 OmniRoute-role readiness (Layer-1 inputs, evidence only; requirements from /opt/tkv-local/OmniRoute-release-v3.8.51/package.json engines node '>=22.22.2 <23 || >=24.0.0 <27', README default localhost:20128): Node.js ABSENT (node/nodejs/npm/npx all absent) — GAP, the single hard Layer-1 dependency; docker/podman/containerd absent CLEAR; ollama absent MATCH (not an LLM backend host); port 20128 + entire 20000-20999 range FREE (only 22/tcp + resolved stub 53 listening) CLEAR; no nginx/apache/caddy/gateway/route/omni daemons or units CLEAR; 437 G free CLEAR; DNS self-resolution + upstream 192.168.50.1 CLEAR; ufw record-only CLEAR; python3 3.12.3 NOTED. Overall verdict SUITABLE-WITH-FINDINGS — no blockers beyond the expected Layer-1 dependency gap. Findings: F-1 Node.js must be installed at Layer-1 within the engines range (a mutation, not performed); F-2 fleet-consistency decision for governor/owner — hxs-8 keeps distro-default NTP, timezone already Etc/UTC; F-3 hygiene — 5 python3.12 upgrades pending, owner's maintenance lane, no reboot required; F-4 host-key hygiene — hxs-8 key now pinned on hxs-5 against owner console evidence (fleet key-coverage gap closed for this executor); F-5 observation — DMI 32 GB under-report quirk, no action. §6 NOT ESTABLISHED / requires mutation (labeled, not performed): memory channel-mode characterization (needs a load-generating bandwidth benchmark, Layer-1+ decision); SMART/NVMe health detail (smartctl/nvme-cli absent, install is a mutation); fresh apt metadata (apt update not run); all OmniRoute installation/service/port-binding work (Layer-1 scope). §7 sequential sanitized command log (10 steps; credential via execution-time askpass only, never in argv/history/logs; helpers mode 700, removed and verified absent at step 10). §8 summary + 'PASS — TASK COMPLETE'."
+  source:
+    author: "rick (background session, governor commission 2026-08-27)"
+    provided_by: "rick via Kimi-K3 (state log row 3, 2026-08-27T03:51Z)"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/04-rick-hxs8-readiness.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-27T04:06:00Z"
+  owner: "rick"
+  applies_to:
+    hosts: [hxs-8, hxs-5]
+    fqdns: []
+    services: [systemd-timesyncd, ufw, open-vm-tools, ssh]
+    agents: [rick]
+    repositories: [HX-ASF-Servers, tkv-local]
+    environments: [pilot, fleet]
+    models: []
+  version: ""
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "evidences"
+      target: "hxs-8 readiness for the OmniRoute role — SUITABLE-WITH-FINDINGS (goal OD-03 input; state log row 3, 2026-08-27T03:51Z)"
+      note: "no blockers beyond the Node.js gap (F-1, the single hard Layer-1 dependency: engines >=22.22.2 <23 || >=24.0.0 <27); port 20128 + 20xxx range free; zero mutations; owner acknowledgement of OD-03 still required before host-dependent work"
+    - predicate: "produced_by"
+      target: "rick"
+      note: "governor commission 2026-08-27 (three evidence classes + verdict requirement); read-only everywhere; PASS — TASK COMPLETE"
+    - predicate: "references"
+      target: "DOC-tkv-hxs8-discovery"
+      note: "baseline source for §3 hardware comparison; its three PENDING memory items (DIMM topology, speed, ECC) are RESOLVED by this assessment's dmidecode evidence — the REPO maintained copy servers/hxs-8/discovery.md carries the resolution text (see DOC-tkv-hxs8-discovery notes; repo copy uncataloged, F-A1 disposition open)"
+    - predicate: "references"
+      target: "DOC-tkv-hxs8-pre-work-results"
+      note: "§2 host-key authority: owner preparation-session console record (line 313 ED25519 fingerprint) used to verify the live key before pinning — profile §14 escalation path invoked and resolved without escalation"
+    - predicate: "references"
+      target: "DOC-tkv-corpus-omniroute"
+      note: "§5 requirements source: package.json engines + README default port read from the pinned corpus (read-only)"
+    - predicate: "references"
+      target: "DOC-goal-omniroute-trinity-layer0"
+      note: "governing Goal Contract (rick's lane: hxs-8 readiness evidence read-only; OD-03 acknowledgement gates host-dependent work)"
+    - predicate: "risks"
+      target: "hxs-8 NTP sources from distro-default ntp.ubuntu.com, not the fleet-pinned one-source (F-2)"
+      note: "RECORDED, NOT CHANGED — hxs-8 was outside the fleet time pass; timezone already Etc/UTC; one-source extension is a governor/owner decision (cf. DOC-fleet-time-and-mask-pass)"
+  validation:
+    validated_at: "2026-08-27T06:20:00Z"
+    freshness: "current"
+    review_due: "at owner OD-03 acknowledgement; F-1 (Node.js) closes at Layer-1 authorization (OD-12); F-2/F-3 on owner/governor disposition"
+  sha256: "8bc820fe36e72206a3e47a4efd2e9b6b814a3412abafc3258f2b660f8c59148c"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/04-rick-hxs8-readiness.md"
+notes:
+  ingestion_provenance: "Dispatched in the Wave 0A catalog bundle (state log row 4, 2026-08-27T03:57Z — 'rick hxs-8 readiness COMPLETE — SUITABLE-WITH-FINDINGS' at row 3, 03:51Z). File verified on disk complete ('PASS — TASK COMPLETE', 142 lines) at ingestion. Ingested in full."
+  security_review: "Sanitized command log only (§7): credential supplied via execution-time askpass helper, never in argv/history/logs; helpers mode 700 created then removed and verified absent; the credential value appears nowhere in the document — contains_secret_values false (profile §6 compliant). Host-key fingerprint quoted is public-key material, not a secret."
+  memory_resolution: "The three discovery PENDING memory items are RESOLVED here by dmidecode (sudo read-only): 32 GB Samsung M471A4G43MB1-CTD (ChannelA-DIMM0) + 16 GB Micron 16ATF2G64HZ-2G6E1 (ChannelB-DIMM0) DDR4 SODIMMs, both channels populated, rated 2667 MT/s configured 2666 MT/s, non-ECC (DMI type 16). The governor folded the resolution into the REPO maintained copy servers/hxs-8/discovery.md (batch-15 + rick's resolution edits — see DOC-tkv-hxs8-discovery notes.resolution_2026_08_27_wave0a); the canonical tkv-local discovery source is unchanged."
+  correction_2026_08_27: "RE-HASHED this wave (batch-16 refresh, governor-queued per OmniRoute state log row 8 and cited at row 9): source line 10 (Boundary compliance) gained a labeled correction — '(Correction appended 2026-08-27 per review batch 16: retained-vs-temporary writes distinguished.)' — the line now distinguishes RETAINED state (the hxs-8 host-key pin in hxs-5's known_hosts, executor-side, verified against the owner's pre-work console record) from TEMPORARY askpass/SSH helper files (created on hxs-5 during execution, deleted + verified absent at task end) and states explicitly 'no state of any kind was written on hxs-8' (VERIFIED at source this wave). The correction sharpens, not changes, the boundary claim this record already carries (declared_purpose: zero mutations on hxs-8, the only state written executor-side; notes.security_review: helpers mode 700 created then removed and verified absent). Hash chain: a1fca816… (Wave 0A mint) -> 8bc820fe… (line-10 retained-vs-temporary correction, this record)."

@@ -1,0 +1,32 @@
+JSON VALID. entries=37
+schema: 37/37 entries carry all 12 fields
+refs: 155/155 exist with cited line in range
+spot: 105/105 load-bearing refs have the expected symbol at the cited line
+OK    src/lib/db/core.ts:1292                                    | WAL mode set
+OK    src/lib/db/migrationRunner.ts:1096                         | per-migration db.transaction
+OK    src/lib/db/migrationRunner.ts:1085                         | pre-migration backup gated on DISABLE_SQLITE_AUTO_BACKUP
+OK    src/lib/db/encryption.ts:201                               | GCM getAuthTag
+OK    src/lib/db/encryption.ts:189                               | plaintext passthrough when key unset
+OK    src/lib/db/backup.ts:400                                   | integrity_check pragma on restore candidate
+OK    src/lib/db/backup.ts:456                                   | unlink before copy
+WRONG src/lib/db/backup.ts:461                                   | 'copies the backup' (model's claim)
+OK    src/lib/db/migrationRunner.ts:1083                         | comment: skip backup if fresh
+OK    src/lib/db/backup.ts:252                                   | comment: auto+pre-write stop when toggle off
+OK    src/lib/db/backup.ts:254                                   | isAutoBackupDisabledBySetting gate
+OK    src/lib/db/encryption.ts:210                               | fallback to plaintext on cipher failure
+OK    src/lib/db/core.ts:1298                                    | busy_timeout 2s
+OK    src/shared/utils/featureFlags.ts:9                         | priority comment DB>env>default
+OK    src/shared/utils/featureFlags.ts:12                        | db override read
+OK    src/app/api/settings/feature-flags/route.ts:72             | CC_DISCOVERY exception
+OK    src/app/api/settings/feature-flags/route.ts:79             | ADAPTIVE_VIRTUAL_LANES exception
+OK    open-sse/services/payloadRules.ts:237                      | runtimeOverride first
+OK    src/lib/db/featureFlags.ts:53                              | registry validation before write
+OK    src/lib/config/hotReload.ts:74                             | poll timer
+OK    src/lib/config/hotReload.ts:83                             | fs.watch listener
+OK    src/lib/config/hotReload.ts:97                             | hot-reload started log
+OK    open-sse/services/payloadRules.ts:218                      | #2986 DB-preferred comment
+OK    open-sse/services/payloadRules.ts:243                      | dbConfig preferred over file
+OK    src/lib/config/hotReload.ts:89                             | watch failure -> polling only
+
+drafted citations: 25 | wrong: 1 (4.0%) vs P1 baseline 21/59 (35.6%)
+  WRONG src/lib/db/backup.ts:461: claim['copies the backup' (model's claim)] want[copyFileSync] got[]

@@ -1,0 +1,69 @@
+work_order:
+  task_id: "WO-OMNI-TRINITY-LEDGER-001"
+  parent_goal: "GOAL-OMNI-TRINITY-LAYER0"
+  goal_file: "goals/2026-08-27-omniroute-trinity-layer0.md"
+  milestone: "Wave 0B — source-derived capability ledger (read-only)"
+  assigned_agent: "trinity (owner-ratified 2026-08-27, KDD-0008; first commission)"
+  objective: >-
+    Produce the source-derived capability ledger for OmniRoute v3.8.51 across
+    eight bounded partition tasks (DAG below). Every capability gets: stable ID,
+    exact source reference (file:line), purpose, owner, architectural plane,
+    risk class, dependency, required authorization, test contract, rollback or
+    disable path, and a preliminary disposition (ACTIVE-CANDIDATE /
+    AVAILABLE-DISABLED / LAB-ONLY / BLOCKED / NOT-APPLICABLE / NOT-ESTABLISHED).
+    Nothing activates; the source snapshot stays read-only.
+  source_identity:
+    path: "/opt/tkv-local/OmniRoute-release-v3.8.51 (READ-ONLY)"
+    identity: "VERIFIED by content-sensitive proof 2026-08-27 — 13,098/13,098 git-blob identical to upstream diegosouzapw/OmniRoute@42a13fedef8bb6806c1c4382b2c65539e871e88c (release/v3.8.51 at snapshot; branch head since moved to c9f11d86b55d). Manifest sha256 085fb94b…; package.json fe6c7dbe…; lockfile 58a9d071…"
+  model_contract:
+    execution_backend: "Coder-X (hxs-2, http://192.168.50.201:11434, alias hx-qwen3.6-coderx-64k ONLY, expected digest ec9ebe08a824…; owner-designated; per-task identity/health re-verification: /api/version + /api/ps resident, digest match, size==size_vram, ctx 65536; on failure STOP and escalate to Kimi-K3 — re-assignment control is the meta-agent's; NO cloud substitution ever)"
+    verifier: "deterministic checks first (every cited file:line must exist — grep-verifiable); Qwen-X independent review at Wave 0C"
+    local_model_first_rule: "record call-sign/endpoint/alias/identity/role per task; zero credentials in model context; prompts contain only source excerpts + the entry schema; zero cloud"
+  partition_dag:
+    - id: "P1-api-routing"
+      scope: "top-level API domains, route registration, routing strategies (characterize ALL strategy implementations found; the plan claims 19 — verify count from source, label any mismatch)"
+      source_hint: "src/app/api/**, src/**/route*, src/**/router*, src/**/strateg*, packages/**/rout*"
+    - id: "P2-providers-protocol"
+      scope: "provider registry, provider classes, protocol adapters and translation paths (OpenAI-compatible, ATEM/native, others found)"
+      source_hint: "**/provider*/**, open-sse/**, src/**/adapter*, src/**/translat*"
+    - id: "P3-tools-streaming"
+      scope: "tool-calling and structured-output behavior; streaming, cancellation, errors, finish reasons, usage accounting"
+      source_hint: "src/**/tool*, src/**/stream*, src/**/usage*, src/**/finish*, packages/**/tool*"
+    - id: "P4-security"
+      scope: "authN/authZ, route guards, CORS, SSRF, egress controls, secret handling/encryption-at-rest"
+      source_hint: "src/**/auth*, src/**/guard*, src/**/cors*, src/**/ssrf*, src/**/secret*, src/**/encrypt*, config/**"
+    - id: "P5-persistence-config"
+      scope: "persistence, migrations, encryption, backup, restore, restart behavior; configuration precedence and feature flags"
+      source_hint: "src/**/db*, src/**/migrat*, src/**/backup*, src/**/config*, config/**, src/**/flag*"
+    - id: "P6-observability"
+      scope: "health endpoints, telemetry, logging, capacity controls (rate limits, quotas, budgets, sessions)"
+      source_hint: "src/**/health, src/**/metrics, src/**/telemetry, src/**/log*, src/**/rate*, src/**/quota*"
+    - id: "P7-agent-surfaces"
+      scope: "MCP, A2A, ACP, memory, skills, plugins, evaluation, remote administration, tunnels, webhooks, embedded services, process-spawning surfaces — the disabled-by-default class; every surface gets a control-plane-collision note"
+      source_hint: "skills/**, src/**/mcp*, src/**/a2a*, src/**/acp*, src/**/memory*, src/**/plugin*, src/**/tunnel*, src/**/webhook*, src/**/embed*"
+    - id: "P8-packaging-modes"
+      scope: "packaging, CLI, dashboard (Next.js), container, desktop (electron), mobile, other client/runtime modes; distribution surfaces (bin/, scripts/, public/)"
+      source_hint: "bin/**, scripts/**, docker/**, electron/**, public/**, package.json, .github/**"
+  per_task_contract:
+    accountable_role: "trinity"
+    inputs: "assigned partition scope + source_hint globs; the source-identity block above; the entry schema"
+    allowed_surfaces: "read-only source reads, grep/glob/find, deterministic hashing; Coder-X API calls per the model contract"
+    prohibited_surfaces: "any write to the source tree; install/build/run of OmniRoute code (node, npm, npx, docker, electron binaries); network calls other than Coder-X and the local host; host contact beyond read-only from hxs-5"
+    acceptance_criteria: "every entry has all 12 fields (the context packet's entry_schema keys — corrected 2026-08-27 per review batch 19: this line previously read '11 fields'; the schema always carried 12) — every file:line reference exists (deterministic check); partition coverage statement notes what was NOT found (NOT-ESTABLISHED is a valid, honest entry state); no capability marked beyond preliminary disposition"
+    evidence: "ledger JSON per partition (machine) + a short .md summary; the deterministic reference-check output; Coder-X call count + identity receipts"
+    budgets: "per partition: <=90 min wall, <=2 bounded corrections, one session; escalate on third failure"
+    stop_conditions: "Coder-X identity failure; source tree mutation detected; reference-check disagreement that cannot be resolved by discriminating evidence; scope creep beyond the partition"
+    rollback: "read-only — nothing to roll back; bad output is discarded, never corrected silently into the ledger"
+    handoff: "partition ledgers to the governor for merge into 08-capability-ledger.md + Carol receipt at the Wave-0B wave"
+    second_brain_evaluation: "opportunity: yes — the ledger is catalog-native knowledge (capability inventory with dispositions); disposition: implemented — it lands as catalog content at handoff; verifier independence: producer Coder-X (hxs-2) != verifier Qwen-X (hxs-1) at Wave 0C"
+  deliverable: "pilots/PILOT-OMNIROUTE-LAYER0-001/ledger/ — one JSON + one .md per partition; merged 08-capability-ledger.md (governor, after all partitions)"
+  controlling_sources:
+    - "06-context-packet-trinity-ledger.yaml (the paired context packet)"
+    - "07-source-provenance-receipt.md (identity + inventory)"
+    - "agents/trinity/charter.md + profile.md (her lane contract)"
+    - "02-intent-authority-source-register.md (reconciliation register)"
+  boundaries:
+    - "Trinity is ACTIVE as a lane; this WO is read-only source work — NOT Layer 1; no host mutation anywhere; the corpus never changes"
+    - "Coder-X per-task identity verification is MANDATORY and recorded; failure = stop-and-escalate, no substitution"
+    - "Every cited file:line must exist; a wrong reference fails the entry, deterministically"
+    - "Parallel partitions at most 2 sessions at a time (Coder-X NUM_PARALLEL=1 serializes backend calls anyway)"

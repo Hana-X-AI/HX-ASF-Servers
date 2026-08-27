@@ -139,6 +139,25 @@ doubt, act reversibly and report rather than pause.
   that shapes how other ecosystem components are configured at deployment —
   retrieve it before designing anything that consumes an HX LLM endpoint
   (owner standing instruction, 2026-08-26).
+- **No Docker/containers for HX deployments** unless the owner explicitly
+  authorizes otherwise (owner rule, 2026-08-27) — native services on systemd
+  are the deployment shape.
+- **Local-model-first rule** (owner, 2026-08-27). At every task or work order the
+  first questions are mandatory: (1) can this be accomplished with a local LLM —
+  allowed answers: yes (name the backend), not model-required (deterministic
+  work), or no (capability gap, documented and escalated to the owner — never
+  cloud, never silently absorbed); (2) which local backend fits the work class —
+  Qwen-X deep reasoning/synthesis, Coder-X coding/source analysis, Meta-X
+  tooling/structured contracts, Chat-X basic utility — with call-sign, endpoint,
+  alias, identity, and role recorded per task. Controls: on backend failure the
+  session STOPS the affected branch and escalates to the meta-agent —
+  re-assignment control stays with KK3, no automatic substitution, cloud
+  substitution always prohibited; the verifying backend is always a different
+  host than the producing backend when one is available, deterministic checks
+  first regardless. Exception: KK3's own orchestration and governance runs on
+  the meta-agent model; subagent session substrates are orchestration
+  mechanics, not "the LLM for the work" — the rule governs model-inference
+  work products.
 
 ## Documentation governance and knowledge stewardship
 

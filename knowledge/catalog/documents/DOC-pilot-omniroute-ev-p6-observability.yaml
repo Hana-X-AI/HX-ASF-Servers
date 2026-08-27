@@ -1,0 +1,61 @@
+document:
+  id: "DOC-pilot-omniroute-ev-p6-observability"
+  title: "PILOT-OMNIROUTE-LAYER0-001 ledger/P6-observability.{md,json} — Wave 0B partition P6 observability (55 entries, 225 refs; 8 rate-limit mechanisms with exact fail-open/fail-closed semantics; batch-22 authorization-enum restoration carried)"
+  type: "evidence"
+  declared_purpose: "Wave-0B partition deliverable P6 of WO-OMNI-TRINITY-LEDGER-001 (COMPLETE state log row 19, 2026-08-27T08:21Z): the source-derived capability ledger of OmniRoute v3.8.51's observability plane — second citation-contract partition. Two forms, one artifact: P6-observability.json — 55 entries (49 capabilities + 6 NOT-ESTABLISHED), each carrying the packet's 12 schema fields, 225 source refs (46 ACTIVE-CANDIDATE / 3 AVAILABLE-DISABLED / 6 NOT-ESTABLISHED) — and P6-observability.md — the human partition summary (startup receipt, health/telemetry/logging/rate-limit analysis, contract measurement §8, self-verification, batch-21 authorization-correction note). Findings (per the md + state log row 19): layered health surface (public liveness /healthz + event-loop watchdog vs aggregated /api/monitoring/health with the GHSA anonymous-view split); telemetry (7-phase request timing p50/95/99, OTLP sink AVAILABLE-DISABLED); three parallel logging stacks with universal redaction net; EIGHT rate-limit mechanisms with exact fail-open/fail-closed semantics (client-key Redis fixed-window fail-OPEN on outage, token limits fail-closed 503, provider Bottleneck header-learning, per-model semaphore, WAF gap, relay windows); admission gates; quota engine (fail-open by design); budget evaluator fail-closed; sessions with generation fencing. Citation-contract measurement #2: 2/70 ~3% vs 35.6% baseline — contract confirmed twice."
+  inferred_value: "INFERENCE: P6 is the operations-truth partition — the eight rate-limit mechanisms' fail-open/fail-closed semantics and the fail-open-by-design quota engine are the exact facts that decide whether HX's alerting and capacity gates can trust the gateway's own surfaces, and the universal redaction net is the logging-hygiene baseline any HX log pipeline inherits."
+  source:
+    author: "trinity (Coder-X bounded execution under the local-model contract)"
+    provided_by: "Kimi-K3 (governor dispatch — Wave-0B closing wave)"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/ledger/ (P6-observability.md + P6-observability.json)"
+    section: "§whole-document (md + json pair — one artifact, two forms)"
+    ingestion_date: "2026-08-27T09:58:00Z"
+  owner: "trinity"
+  applies_to:
+    hosts: [hxs-2, hxs-5]
+    fqdns: []
+    services: [ollama.service]
+    agents: [trinity, kimi-k3]
+    repositories: [HX-ASF-Servers, tkv-local]
+    environments: [pilot]
+    models: [hx-qwen3.6-coderx-64k]
+  version: "Wave 0B final (2026-08-27, state log row 19; batch-22 required_authorization enum restoration carried, state log row 26; governor md supersession addendum carried, state log row 28)"
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "trinity"
+      note: "partition task COMPLETE 2026-08-27T08:21Z (state log row 19); second citation-contract run (measurement #2: 2/70 ~3% vs 35.6% baseline)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-wo-05-trinity-ledger"
+      note: "commissioning work order (8-partition DAG, per-task contract, acceptance criteria) — DISCHARGED by the Wave-0B deliverable set this partition is part of"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-cp-06-trinity-ledger"
+      note: "entry schema (12 fields) + conventions + the owner-ratified §citation_contract_p5_onward (numbered excerpts nl -ba + '<path> lines a-b' headers, small chunks, harness grep-verify of every file:line, drafted-wrong-line count measured)"
+    - predicate: "evidences"
+      target: "DOC-tkv-corpus-omniroute"
+      note: "225 source refs into the identity-VERIFIED corpus; her checks 225/225 refs + 128/128 spot checks (row 19; governor spot-check pending standard at that row — governor lane, recorded)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-ev-08-capability-ledger"
+      note: "merged into the Wave-0B merged ledger as its P6 part (its contains edge; the partition json+md remain the per-partition source of record)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-state-log"
+      note: "governing log; completion provenance row 19 (2026-08-27T08:21Z); supersession-addendum provenance row 28 (2026-08-27T15:03Z)"
+  validation:
+    validated_at: "2026-08-27T15:14:00Z"
+    freshness: "current"
+    review_due: "at Wave 0C (reconciliation packet + Qwen-X independent verification); re-hash on any ledger edit"
+  sha256: "8c3f51fd658ead79ad6b1a18f9c285133d5bb4cb3b7228a81eb7722725b3df5f"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/ledger"
+notes:
+  checksum_method: "MULTI-FILE convention (DOC-fleet-script-library pattern): sha256 field = digest of the content-sensitive 2-file manifest ('<sha256>  <filename>' lines for P6-observability.json + P6-observability.md, LC_ALL=C sort by filename, manifest text digested), captured 2026-08-27T15:14Z (this T-micro). Per-file sha256 at this capture: P6-observability.json abdde4db2b26199f9931a38556079d7237b38d0cf28a3e21f4c3cf7d8533f437 (UNCHANGED since the batch-22 amendment); P6-observability.md 7d2b8a54100233f6a6d08192e4b06fe5fb843336e23aabb0132731fd3c955907 (aa56de0d… -> 7d2b8a54… this run — the governor's supersession addendum, state log row 28; the md's first change since the Wave-0B mint). Manifest-digest chain: 5bb12719… (batch-21-corrected Wave-0B mint; per-file json e8ec9a3f…, md aa56de0d…) -> 6cd74836… (batch-22 json-only amendment, state log row 26 F4a; recipe re-verified this run against the unchanged P1 record's mint digest) -> 8c3f51fd… (md-only supersession addendum, state log row 28 — batch-21 prose-state addendum marked historical, required_authorization is the HX activation enum with behavior in purpose/test_contract, batch-23 settled the semantic; json untouched)."
+  verification_at_mint: "Deterministic recomputation against the live json (2026-08-27T09:56Z, read-only): 55 entries, each exactly the 12 schema fields; 225 source_refs; dispositions 46 ACTIVE-CANDIDATE / 3 AVAILABLE-DISABLED / 6 NOT-ESTABLISHED (sums 55). Matches the merged ledger's P6 part (55) and the md header."
+  corrections_carried: "Batch-21 authorization corrections carried in the json with the md's addendum recording them (VERIFIED PRESENT at mint): CAP-P6-005 required_authorization now splits GET anonymous = liveness only ({status, setupComplete} per GHSA-mvf8-qc78-5mxm) vs GET full view = management vs DELETE = management only with 401 (route.ts:37, :247-249); CAP-P6-010 -> management (requireManagementAuth; route.ts:21-22); CAP-P6-049 -> authenticated (isAuthenticated — 401 'Authentication required'; route.ts:8-10). JSON re-validated by the governor: 55 entries, 12 fields each, all three test_contracts intact; no other entry changed. The catalog mints at the corrected content. SUPERSEDED in part by review batch 22 (state log row 26, F4a — governor correction of its own batch-21 error): the field is the HX enum, and the batch-21 prose values were themselves the contract violation — see corrections_batch22."
+  corrections_batch22: "Batch-22 amendment (state log row 26, 2026-08-27T14:12Z, finding F4a — governor-applied to the json only): required_authorization is the HX enum (none|owner|layer-N|specialist-review), not product auth — CAP-P6-005 / CAP-P6-010 / CAP-P6-049 all restored to 'none', with the product behavior living in purpose/test_contract (005's GHSA-mvf8-qc78-5mxm anonymous-liveness vs management split, 010's requireManagementAuth management gate, 049's isAuthenticated 401 — all VERIFIED PRESENT in those fields this run, read-only). JSON re-validated this run: 55 entries x exactly 12 schema fields (row 26's 55x12 claim corroborated); no count/disposition change (225 refs; 46/3/6 stands — values only). The md is untouched by batch 22: its batch-21 addendum now describes a superseded field state — the current truth is this note + the json (flagged in this run's receipt, governor's lane — RESOLVED state log row 28, 2026-08-27T15:03Z: the md gained the governor's supersession addendum, marking the batch-21 addendum historical and recording the batch-22/23 enum resolution in the md itself; md, json, and this note now agree — md re-hashed this T-micro, chain in notes.checksum_method). BATCH-23 CONFIRMATION (state log row 27, 2026-08-27T14:40Z): the F2/F3/F4 requests to set layer-N on these three entries were SKIPPED with the de-facto semantic evidence — required_authorization is the HX ACTIVATION class (the tier THIS program needs to enable a capability), proven by the ledger's own 57 layer-N entries; 'none' stands as the Layer-1 class for the three observability endpoints, and the CP entry_schema now carries the one-line semantic note (DOC-pilot-omniroute-cp-06-trinity-ledger, re-hashed this run)."
+  protected_reference: "No protected resource named; no credential content in the artifact or this record (profile §6)."

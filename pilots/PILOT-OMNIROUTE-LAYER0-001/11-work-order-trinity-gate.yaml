@@ -1,0 +1,44 @@
+work_order:
+  task_id: "WO-L1-GATE-001"
+  parent_goal: "GOAL-OMNIROUTE-L1-SECURE-CORE"
+  goal_file: "goals/2026-08-27-omniroute-layer1-secure-core.md"
+  milestone: "L1-M3 — the Secure Core gate: parity deep, restart, reboot, backup/restore, rollback, configuration.md, owner sign-off package"
+  assigned_agent: "trinity (owner-ratified lane)"
+  objective: >-
+    Prove the Secure Core gate on hxs-8's live OmniRoute: deep direct-vs-routed
+    parity against every reachable backend, two service restarts and one cold
+    reboot with routing intact, a real backup-and-restore drill, a rehearsed
+    rollback, and the assembled acceptance package with servers/hxs-8/
+    configuration.md for the owner's sign-off.
+  owner_authorizations:
+    - "OD-12 Layer 1 authorized; OD-13 verified at M2 (0 plaintext rows, AES-256-GCM ciphertext); OD-08 amended (parity across backends); OD-09 plaintext snapshots + own encryption; cold reboot PRE-APPROVED per the governor-announced window (hxs-1 D6 precedent; owner may abort)"
+    - "NOT authorized: Layer-2+ routing/combo/strategy work; new backends or provider changes; Docker/containers; cloud anything; agent-like surfaces; firewall; changes to the four LLM backends"
+  boundaries:
+    - "Execution path: session on hxs-5; hxs-8 (192.168.50.207) via SSH hxsa@192.168.50.207; askpass helper READS the credential at execution time — never printed/logged/stored, helper deleted at task end; verify hostname + peer IP + machine-id first; host key pinned"
+    - "Everything versioned and reversible: pre-state captures (unit hashes, DB state, registered connections), exact steps with hashes, documented inverse for every change; the four backends are read-only consumers — their identity guards (digests, residents) verified before and after the reboot"
+    - "Secrets discipline: existence + mechanism only; no values in any artifact"
+  gate_tests:
+    - "G1 parity deep: three distinct known-answer tasks per reachable backend (short, structured-output, and a longer generation), direct vs routed through OmniRoute — compare content, finish reason, token accounting; usage_history evidences the routed calls"
+    - "G2 restart x2: systemctl restart omniroute.service; identity guard + routing re-verified intact each time (Type=notify READY within budget)"
+    - "G3 cold reboot: full host reboot in the announced window; service auto-starts; routing re-verified intact; the four backends' own residency re-proven from their hosts afterward"
+    - "G4 backup/restore: trigger a snapshot, restore it to a scratch DATA_DIR, prove the restored state answers (registered connections present, secrets table state, integrity_check pass) — never overwriting live data"
+    - "G5 rollback drill: rehearse the documented install inverse to a checkpoint and forward again without loss (or prove the inverse on a scratch copy if live rollback would risk the backends)"
+    - "G6 hygiene: zero :cloud anywhere at close; agent surfaces verified still disabled; no plaintext secrets anywhere; loopback + LAN posture unchanged"
+  configuration_md:
+    - "Write servers/hxs-8/configuration.md per servers/AGENTS.md (the SECOND of its class after hxs-3): what HX configured hxs-8 to become — the OmniRoute traffic plane, its runtime, secrets design, backends, exposure, backup design, and validation pointers. discovery.md preserved untouched."
+  deliverable: "05-trinity-l1-gate.md in pilots/PILOT-OMNIROUTE-LAYER0-001/: per-gate-test evidence tables, parity comparisons, restart/reboot timelines vs budgets, restore proof, rollback proof, hygiene close-out, the configuration.md, the acceptance reconciliation per goal gate item (1-7), sanitized sequential command log, Task May Proceed receipt — assembled for the owner's ACCEPT decision"
+  second_brain_evaluation:
+    opportunity_identified: "yes"
+    roadmap_capability_or_pattern: "the gate pattern generalized to a traffic plane: parity + restart + restore + rollback as the reusable acceptance battery for future services"
+    disposition: "implemented — the battery and configuration.md become catalog content at handoff"
+    evidence_and_reasoning: "every future service gets signed off by this battery, not by vibes"
+  controlling_sources:
+    - "12-context-packet-trinity-gate.yaml (the paired context packet)"
+    - "03-trinity-l1-install.md (the deployed state and inverses)"
+    - "goals/2026-08-27-omniroute-layer1-secure-core.md (the gate criteria)"
+    - "servers/AGENTS.md (records contract); servers/hxs-3/configuration.md (the first-of-class template)"
+  budgets:
+    sessions: 2
+    transient_retry: 1
+  stop_conditions: "parity mismatch any backend; routing broken after restart/reboot; restore fails integrity; secrets verification regression; any :cloud tag anywhere; scope exceedance — stop, preserve, escalate to Kimi-K3"
+  rollback_or_containment: "the documented install inverse (M2) plus this gate's own pre-state captures; nothing proceeds past a failed gate test as if it passed"

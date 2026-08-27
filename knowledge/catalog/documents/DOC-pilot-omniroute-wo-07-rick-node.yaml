@@ -1,0 +1,69 @@
+document:
+  id: "DOC-pilot-omniroute-wo-07-rick-node"
+  title: "07-work-order-rick-node.yaml — WO-L1-RICK-NODE-001 (L1-M1: engines-compliant pinned Node runtime on hxs-8 + the pending one-source NTP pin; DISCHARGED — L1-M1 COMPLETE, state log row 34; deliverable DOC-pilot-omniroute-ev-01-rick-l1-node-runtime)"
+  type: "work-order"
+  declared_purpose: "Delegated contract commissioning rick (Ubuntu OS plane) for L1-M1 of GOAL-OMNIROUTE-L1-SECURE-CORE (goal_file goals/2026-08-27-omniroute-layer1-secure-core.md): give hxs-8 an engines-compliant Node.js runtime for OmniRoute (required >=22.22.2 <23 || >=24.0.0 <27, verified against the v3.8.51 package.json) as a clean, pinned, native installation — no snap, no Docker, no containers — with the install path chosen on evidence (a: official nodejs.org binary tarball; b: NodeSource apt repo 22 LTS; c: snap REJECTED out-of-lane) and recorded for repeatability; and close the pending fleet item by pinning hxs-8's NTP source to time.cloudflare.com with FallbackNTP empty (the owner's one-source rule; scripts/fleet/fleet-ntp-pin.sh --apply authorized, or the manual staged pattern; daemon-reload + restart systemd-timesyncd only; verify current server + synchronized). owner_authorizations: OD-12 Layer 1 authorized 2026-08-27 + OD-03 readiness acknowledged; OD-04 native systemd, never Docker (owner rule); the hxs-8 NTP one-source pin (standing fleet rule, the F-2 carry from the fleet pass); NOT authorized — Docker/containers/snap, package installs beyond the Node toolchain + documented prerequisites, firewall changes, any OmniRoute installation/start (Trinity's separate work order), any backend changes. Boundaries: execution from hxs-5 via SSH hxsa@192.168.50.207 with the askpass credential discipline (read at execution time, never printed/logged/stored, helper deleted at task end); identity verified first against servers/hxs-8/discovery.md (hostname + peer IP + machine-id) with the host key pinned (rick's readiness-run ceremony); exact version pin recorded within the engines range; everything versioned and reversible (pre-state captures, exact steps with hashes, documented inverse per change). Deliverable: 01-rick-l1-node-runtime.md — install-path decision with evidence, exact versions + pin mechanism, engines-range verification vs package.json, runtime smoke, pre/post hashes, NTP pin evidence, documented inverse, sanitized sequential command log, Task May Proceed receipt. Budgets: sessions 1, transient_retry 1. Stop conditions: no clean native path within engines range (escalate, do not force snap/docker); unexpected host state vs the readiness baseline; any requirement to exceed scope. Rollback/containment: documented inverse for every change; pre-state hashes recorded. second_brain_evaluation: opportunity yes — the engines-compliant runtime as a versioned, repeatable recipe becomes the fleet pattern for future service runtimes; disposition implemented (catalog content at handoff)."
+  inferred_value: "INFERENCE: the first work order of the owner-authorized Layer 1 — small by design (one runtime + one pending fleet pin) so the layer opens with a fully authenticated, fully reversible mutation and a closed carry (F-2) rather than new risk; its evidence-on-path-decision requirement (tarball vs apt vs snap) sets the comparison pattern later runtime work reuses."
+  source:
+    author: "Kimi-K3 (governor)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/07-work-order-rick-node.yaml"
+    section: "§whole-document"
+    ingestion_date: "2026-08-27T16:23:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: [hxs-8, hxs-5]
+    fqdns: []
+    services: [systemd-timesyncd]
+    agents: [rick, kimi-k3]
+    repositories: [HX-ASF-Servers, tkv-local]
+    environments: [pilot]
+    models: []
+  version: ""
+  status: "adopted"
+  authority_level: "delegated-contract"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "kimi-k3"
+      note: "issued at OmniRoute pilot state log row 33 (2026-08-27T15:57Z — 'L1-M1 commissioned: rick Node runtime + NTP pin (goal file + WO/CP written)'); session rick-l1-node-20260827-01 dispatched (background)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-cp-08-rick-node"
+      note: "paired context packet (goal binding GOAL-OMNIROUTE-L1-SECURE-CORE v1; session rick-l1-node-20260827-01; current_state, constraints, evidence requirements, handoff clause) — cataloged THIS wave, adopted"
+    - predicate: "depends_on"
+      target: "DOC-goal-omniroute-layer1-secure-core"
+      note: "parent goal GOAL-OMNIROUTE-L1-SECURE-CORE (owner parameters ratified 2026-08-27; OD-12 authorized, OD-04 native no-docker, one-source NTP fleet rule) — cataloged THIS wave"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-state-log"
+      note: "governing log; commissioned at row 33 (2026-08-27T15:57Z), DISCHARGED at row 34 (2026-08-27T16:12Z — 'L1-M1 COMPLETE (rick): Node v24.20.0 authenticated + fleet one-source now covers FIVE hosts')"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-rick-hxs8-readiness"
+      note: "controlling source: the host's verified state (04-rick-hxs8-readiness.md — readiness baseline the WO's stop conditions reference; its F-2 NTP carry is the pin this WO closes)"
+    - predicate: "references"
+      target: "DOC-fleet-time-and-mask-pass"
+      note: "controlling source: the proven NTP pin pattern (fleet-time-and-mask-pass.md) and the hardened library script fleet-ntp-pin.sh (--apply authorized under this WO)"
+    - predicate: "references"
+      target: "DOC-tkv-corpus-omniroute"
+      note: "engines source of truth: /opt/tkv-local/OmniRoute-release-v3.8.51/package.json READ-ONLY ('>=22.22.2 <23 || >=24.0.0 <27')"
+    - predicate: "references"
+      target: "DOC-blueprint-llm-server"
+      note: "controlling source: native-service conventions (servers/BLUEPRINT-llm-server.md)"
+    - predicate: "governs"
+      target: "DOC-pilot-omniroute-ev-01-rick-l1-node-runtime"
+      note: "DISCHARGED by the L1-M1 deliverable 01-rick-l1-node-runtime.md (PASS — TASK COMPLETE; state log row 34, 2026-08-27T16:12Z) — cataloged THIS wave; per the M7-pair convention the governs edge lands at the discharge flip, and since this pair is minted already-discharged the edge is present at mint"
+  validation:
+    validated_at: "2026-08-27T17:15:00Z"
+    freshness: "current"
+    review_due: "discharged — no further review unless the deliverable is corrected; the L1-M1 handoff (and the CP-08 handoff clause) CLOSED 2026-08-27T16:55Z when the governor cited receipt 2026-08-27T1641Z-carol-l1-commissions.md in the OmniRoute pilot state log row 36 (profile §7)"
+  sha256: "2fca44b01ff0bb395e2041f69b2aa23d905ab6fb113e179bcc2f7b57a2febeb0"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/07-work-order-rick-node.yaml"
+notes:
+  status_convention: "WO/CP pair cataloged per the M7-pair convention (first established DOC-pilot-hxs3-wo-08-john-m7 / cp-09; exercised DOC-pilot-omniroute-wo-05-trinity-ledger / cp-06). VARIANT at this mint: MINTED ALREADY-DISCHARGED — the deliverable landed (state log row 34, 2026-08-27T16:12Z) BEFORE this pair was cataloged, and the governor's L1-commissions dispatch authorized the flip at Carol's judgment ('DISCHARGED at your judgment since the deliverable landed and is being cataloged in this same wave; if you flip it, note it') — TAKEN: status adopted at mint (never cataloged in-execution), the governs edge to the deliverable present at mint, sources unchanged. The paired packet's handoff clause keeps the handoff OPEN until this run's receipt is cited in the pilot state log (profile §7/§8)."
+  hash_crosscheck: "sha256 8ad842b06e2da3c74da1af7603d3d7075cdb98c4cf3686674e3f150b1204eb66 at mint (2026-08-27T16:23Z) — the first recorded hash for this artifact (state log rows 33-34 record no WO/CP hashes, same pattern as the earlier pairs); re-verified == live at this run's close self-check."
+  source_anomaly_f_l1_1: "The WO's controlling_sources names '02-context-packet-rick-node.yaml (the paired context packet)' — NO such file exists in the pilot directory; the paired packet is 08-context-packet-rick-node.yaml (02- is 02-intent-authority-source-register.md, a different artifact). A filename slip in the source, harmless in execution (the CP's own work_order_id binding is correct and the session executed against the right packet). Source untouched per the originals-are-sacred rule; flagged in this run's receipt (F-L1-1) for the governor. RESOLVED 2026-08-27T16:55Z: the governor corrected the source (02- -> 08-context-packet, one token; OmniRoute pilot state log row 36 — 'her two governor-lane flags FIXED by me: F-L1-1 — the 07 WO's controlling_sources typo'). The corrected line VERIFIED PRESENT at source line 33 this run ('08-context-packet-rick-node.yaml (the paired context packet)'). Re-hash 8ad842b0… -> 2fca44b0…; the anomaly text above is preserved as the historical record of the finding (server records contract: corrections land openly)."
+  protected_reference: "The askpass credential discipline is named as mechanism only (reads the credential-record row at execution time; never printed/logged/stored; helper deleted at task end) — no protected resource is named beyond that mechanism and no credential content appears (profile §6; cf. DOC-protected-ssh-info-hxs1 for the protected-resource pattern)."

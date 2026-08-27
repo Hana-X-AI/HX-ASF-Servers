@@ -1,0 +1,506 @@
+{
+  "partition": "P3-tools-streaming",
+  "work_order": "WO-OMNI-TRINITY-LEDGER-001",
+  "producer": "trinity",
+  "produced_at": "2026-08-27T07:19:00Z",
+  "corpus": "/opt/tkv-local/OmniRoute-release-v3.8.51 (read-only; identity VERIFIED 2026-08-27, 07-source-provenance-receipt.md)",
+  "truth_states": "FACT = verified in source at the cited line; UPSTREAM = bundled-doc claim, drift-prone; INFERENCE = producer reasoning, labeled",
+  "entries": [
+    {
+      "id": "CAP-P3-001",
+      "name": "Tool-calling capability gate for direct/pinned requests",
+      "source_refs": [
+        "open-sse/handlers/chatCore/toolCallingRequiredCheck.ts:19",
+        "open-sse/handlers/chatCore/toolCallingRequiredCheck.ts:31",
+        "open-sse/handlers/chatCore.ts:2738"
+      ],
+      "purpose": "checkToolCallingRequiredButUnsupported blocks a direct (non-combo) request carrying a non-empty tools[] array when the resolved model's unsupported list includes 'tools', returning an explicit error instead of silently stripping tools and producing a 200 that can never call anything (live incident cited in module header: AI Horde/Behemoth-X-123B narrating fake actions).",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "medium — fail-closed gate on agentic traffic; a false positive blocks legitimate tool requests, a false negative silently degrades them",
+      "dependencies": ["model capability resolution (getResolvedModelCapabilities via comboStructure.ts filterTargetsByRequestCompatibility, per module header comment)", "open-sse/handlers/chatCore.ts request path"],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: routed — direct request with tools[] to a tool-incapable model must return the explicit block error, not a 200; negative — combo requests must NOT be blocked here (isCombo short-circuit at toolCallingRequiredCheck.ts:25); direct — empty tools[] must pass",
+      "rollback_or_disable": "Gate is inherent to the chat path; removal is source-level (delete the chatCore.ts:2738 check). No runtime toggle found",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P3-002",
+      "name": "Request tool-definition normalization (mixed shapes → OpenAI function form)",
+      "source_refs": [
+        "open-sse/handlers/chatCore/openAICompatibleTools.ts:5",
+        "open-sse/handlers/chatCore.ts:2386",
+        "open-sse/handlers/chatCore/claudeToolDefaults.ts:19"
+      ],
+      "purpose": "normalizeOpenAICompatibleTools converts heterogeneous incoming tool shapes (bare name/input_schema, Responses custom tools) into {type:'function', function:{...}} while passing Responses-API formats through untouched and counting dropped entries; defaultClaudeToolType defaults a missing Claude tool `type` to 'custom' to avoid upstream HTTP 400.",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "medium — mis-normalization silently drops or mangles client tool declarations before translation",
+      "dependencies": ["open-sse/translator/formats.ts FORMATS (passthrough decision at openAICompatibleTools.ts:12)"],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: direct — mixed-shape tools array round-trips to canonical function form with correct dropped count; routed — Responses-format requests must pass through unmodified; negative — Claude tools without type must gain type:'custom'",
+      "rollback_or_disable": "Pure transform; removal is source-level. No runtime toggle found",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P3-003",
+      "name": "Tool-name identity ledger (normalize → alias → restore)",
+      "source_refs": [
+        "open-sse/translator/helpers/toolCallHelper.ts:61",
+        "open-sse/translator/helpers/toolCallHelper.ts:131",
+        "open-sse/handlers/chatCore/passthroughToolNames.ts:6",
+        "open-sse/handlers/chatCore/passthroughToolNames.ts:53",
+        "open-sse/handlers/chatCore/passthroughToolNames.ts:76",
+        "open-sse/handlers/chatCore/requestToolIdentity.ts:62",
+        "open-sse/utils/stream.ts:592"
+      ],
+      "purpose": "normalizeOpenAIToolNames rewrites over-long/invalid function names to provider-safe aliases and returns an alias ledger; restoreOpenAIToolNames / restoreClaudePassthroughToolNames / restoreNonStreamingToolNames map upstream tool-call names back to client-declared names (including the Claude OAuth prefix map and the executor _toolNameMap side channel merged at passthroughToolNames.ts:53); extractRequestToolIdentityMap recovers the #7936/#9780 namespace identity ledger from translated bodies; restoreClaudePassthroughToolUseName does the same inside the streaming SSE transform.",
+      "owner_plane": "provider-adapter",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "medium — a lost ledger returns aliased tool names to the client, breaking agent-loop tool dispatch (wrong-tool execution)",
+      "dependencies": ["CAP-P3-002 normalization", "executor _toolNameMap side channel (transformed body)"],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: direct — alias/restore round-trip for over-long and prefixed names; routed — streaming Claude passthrough restores tool_use block names (stream.ts:592); negative — case-insensitive lookup must not cross-map distinct tools (toolCallHelper.ts:109)",
+      "rollback_or_disable": "Passing a null map disables restoration (names pass through as upstream sent them); no runtime toggle found",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P3-004",
+      "name": "Tool-call id and tool-result repair helpers",
+      "source_refs": [
+        "open-sse/translator/helpers/toolCallHelper.ts:180",
+        "open-sse/translator/helpers/toolCallHelper.ts:303",
+        "open-sse/translator/helpers/toolCallHelper.ts:355",
+        "open-sse/translator/helpers/toolCallHelper.ts:166"
+      ],
+      "purpose": "ensureToolCallIds generates/normalizes missing or non-conformant tool_call ids (optional 9-char [a-zA-Z0-9] mode for Mistral-class upstreams); fixMissingToolResponses synthesizes placeholder tool results for tool_calls that lack one; stripOrphanedToolResults drops tool results whose call id no longer exists — keeping request history structurally valid for strict upstreams.",
+      "owner_plane": "provider-adapter",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "medium — synthesized placeholder results alter conversation semantics; over-aggressive orphan stripping drops real history",
+      "dependencies": ["open-sse/translator/helpers/toolCallHelper.ts id generators (:161 fallbackToolCallId, :166 generateToolCallId)"],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: direct — history with missing ids/results is repaired to schema-valid form; negative — valid history must pass through unchanged; routed — strict upstream (e.g. Mistral 9-char ids) accepts repaired payload",
+      "rollback_or_disable": "Helpers are opt-in call sites in translators/executors; removal is source-level. No runtime toggle found",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P3-005",
+      "name": "Streamed tool-call argument fragment accumulation",
+      "source_refs": [
+        "open-sse/utils/toolCallArguments.ts:41",
+        "open-sse/utils/toolCallArguments.ts:28"
+      ],
+      "purpose": "appendToolCallArgumentDelta accumulates streamed tool-call arguments, concatenating incremental deltas verbatim while deduplicating only unambiguous full-snapshot repeats (#3701), and JSON-stringifying non-conformant object-shaped argument fragments instead of dropping them (#6459); the module explicitly rejects fuzzy overlap heuristics that silently truncate legitimate deltas.",
+      "owner_plane": "provider-adapter",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "high — argument corruption produces wrong-parameter tool execution downstream; the module documents prior silent-truncation and '[object Object]' failure modes",
+      "dependencies": ["SSE transform tool-call assembly (open-sse/utils/stream.ts createSSEStream)"],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: direct — delta/snapshot/object fragment fixtures assert byte-exact assembly; negative — repeated leading bytes ('ls -ll') must survive; regression — issue #3701 duplication and #6459 object-fragment cases",
+      "rollback_or_disable": "Pure function used at assembly call sites; removal is source-level",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P3-006",
+      "name": "Text-protocol tool-call parsing (non-JSON tool-call emissions)",
+      "source_refs": [
+        "open-sse/utils/textualToolCall.ts:57",
+        "open-sse/utils/textualToolCall.ts:19",
+        "open-sse/utils/composerToolCalls.ts:1"
+      ],
+      "purpose": "parseTextualToolCallCandidate recovers tool calls emitted as plain text ('[Tool call: name]\\nArguments: {json}') with zero-width-character stripping and partial/complete classification for streaming; composerToolCalls.ts parses Cursor Composer's DeepSeek-style inline sentinel format (<|tool_calls_begin|> ...) from normal text output.",
+      "owner_plane": "provider-adapter",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "medium — false-positive parsing converts ordinary prose into a tool call; false negatives leak raw protocol text to the client",
+      "dependencies": ["SSE transform integration (stream.ts)", "CAP-P3-005 argument assembly"],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: direct — complete/partial/negative fixtures incl. zero-width obfuscation; routed — Composer-format upstream stream yields structured tool_calls; negative — prose containing '[Tool call:' without Arguments: must not misfire (containsTextualToolCallMarker gate)",
+      "rollback_or_disable": "Parser invocation is per-path in the transform; removal is source-level. No runtime toggle found",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P3-007",
+      "name": "Per-tool argument shims (TOOL_SHIMS registry)",
+      "source_refs": [
+        "open-sse/translator/helpers/toolCallShim.ts:71",
+        "open-sse/translator/helpers/toolCallShim.ts:46",
+        "open-sse/translator/helpers/toolCallShim.ts:33"
+      ],
+      "purpose": "TOOL_SHIMS is a registry of per-tool-name defensive argument transformers applied to assembled OpenAI tool-call arguments before re-emission as a single Claude input_json_delta — e.g. the Read shim clamps limit to <=2000 (Claude Code cap), coerces stringified numbers, drops negative offsets and invalid PDF pages args that cause client retry loops.",
+      "owner_plane": "provider-adapter",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "medium — shim bugs rewrite legitimate tool arguments; the registry pattern invites unreviewed per-tool exceptions",
+      "dependencies": ["CAP-P3-005 assembled arguments", "Claude-format response emission path"],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: direct — oversized limit/negative offset/string number fixtures are clamped/coerced; negative — unregistered tool names pass through untouched; routed — cleaned args reach Claude Code client without retry loop",
+      "rollback_or_disable": "Remove the tool-name entry from TOOL_SHIMS (toolCallShim.ts:71) — arguments then pass through unmodified",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P3-008",
+      "name": "Tool-schema sanitization for strict upstream validators",
+      "source_refs": [
+        "open-sse/config/toolCloaking.ts:39",
+        "open-sse/config/toolCloaking.ts:15",
+        "open-sse/executors/antigravity/executeAttempt.ts:275",
+        "open-sse/services/toolSchemaSanitizer.ts:1"
+      ],
+      "purpose": "sanitizeAntigravityToolPayload recursively strips enumDescriptions from Antigravity tool schemas (upstream rejects the field with HTTP 400) while preserving tool identity/order; toolSchemaSanitizer.ts strips null entries from enum schemas for strict JSON-Schema validators (Moonshot via opencode-go/kimi-k2.6, per module header).",
+      "owner_plane": "provider-adapter",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "medium — schema rewriting can drop validation constraints the client relied on; failures surface as upstream 400s",
+      "dependencies": ["Antigravity executor path (executeAttempt.ts:275)", "translator request path"],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: direct — enumDescriptions removed from anyOf/allOf/$defs nests; routed — sanitized payload accepted by strict-validator mock; negative — tool names/order/identity must be unchanged",
+      "rollback_or_disable": "Sanitizers are call-site applied; removal is source-level. The earlier decoy-injection cloaking mechanism was already removed upstream (see CAP-P3-026)",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P3-009",
+      "name": "Tool-history flattening for prose-only legs",
+      "source_refs": [
+        "open-sse/utils/flattenToolHistory.ts:46",
+        "open-sse/handlers/chatCore/unsupportedParamsStrip.ts:45"
+      ],
+      "purpose": "flattenToolHistory converts structured tool turns (OpenAI tool/function roles + tool_calls, Anthropic tool_use/tool_result blocks) into plain assistant prose when a combo leg or fan-out strips tool definitions — preventing agentic models from emitting tool_calls with no tools declared (which produced empty prose and upstream 503s, per module header).",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "medium — lossy history rewrite; over-flattening erases tool context the model needed",
+      "dependencies": ["combo/prose-only leg stripping (chatCore/unsupportedParamsStrip.ts)"],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: direct — OpenAI and Anthropic tool-turn fixtures flatten to prose; routed — stripped-tools combo leg no longer triggers empty-prose 503; negative — requests keeping tools must not be flattened",
+      "rollback_or_disable": "Applied only on the strip path; removal is source-level",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P3-010",
+      "name": "Structured-output (response_format) translation and downgrade",
+      "source_refs": [
+        "open-sse/translator/request/openai-to-claude.ts:471",
+        "open-sse/translator/request/openai-to-gemini.ts:593",
+        "open-sse/translator/request/openai-responses.ts:176",
+        "open-sse/translator/request/openai-responses/toResponses.ts:36",
+        "open-sse/translator/request/openai-responses/toResponses.ts:359",
+        "open-sse/translator/index.ts:123",
+        "open-sse/executors/default.ts:623",
+        "open-sse/executors/default.ts:679"
+      ],
+      "purpose": "response_format is mapped per target: injected as a system-prompt JSON instruction for Claude (no native support, openai-to-claude.ts:468-472 comment); converted to responseMimeType/responseSchema for Gemini; mapped to json_schema/json_object or text.format for Responses-API targets (translator/index.ts:123 normalization); DefaultExecutor downgrades json_schema→json_object or strips response_format entirely for providers that reject it (kilocode DeepSeek 400, default.ts:623-682); tool_choice is similarly translated Chat→Responses at toResponses.ts:359.",
+      "owner_plane": "provider-adapter",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "medium — structured-output semantics degrade silently on the Claude prompt-injection path (schema adherence becomes model-dependent); over-stripping loses machine-checkable output",
+      "dependencies": ["CAP-P2-006 translator registry", "CAP-P2-012 STRIP_RULES param stripping"],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: routed — json_schema request round-trips per target format; negative — provider rejecting response_format must receive the downgraded/stripped form, never the raw field; direct — tool_choice object→{type:function,name} mapping",
+      "rollback_or_disable": "Translation pairs unregister via translator/bootstrap.ts; downgrade rules are data/code in DefaultExecutor — source-level revert",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P3-011",
+      "name": "Tool-policy allowlist/denylist (TOOL_POLICY_MODE)",
+      "source_refs": [
+        "src/lib/toolPolicy.ts:76",
+        "src/lib/toolPolicy.ts:147",
+        "src/lib/toolPolicy.ts:29",
+        "src/lib/toolPolicy.ts:52"
+      ],
+      "purpose": "Env-driven (TOOL_POLICY_MODE=allowlist|denylist|disabled, default disabled) tool-name invocation policy with runtime override via setRuntimePolicy, intended to prevent dangerous tool use via prompt injection — BUT: deterministic grep for validateToolsInRequest / evaluateToolPolicy / toolPolicy imports across the corpus finds zero call sites outside the module itself [FACT]; the policy engine exists but is not wired into any request path.",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "management-plane",
+      "risk_class": "medium — a security-relevant control that appears available but is inert gives false assurance; wiring it changes traffic behavior (denied tools)",
+      "dependencies": ["no runtime dependencies; would need a call site in the chat request path (chatCore.ts) to function"],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N (if ever wired): routed — denylisted tool name in tools[]/tool_choice must be rejected before dispatch; negative — disabled mode must pass everything; direct — extractToolNames covers tools/functions/tool_choice shapes (toolPolicy.ts:115)",
+      "rollback_or_disable": "Already inert (no call site); TOOL_POLICY_MODE defaults to disabled; resetRuntimePolicy clears runtime overrides (toolPolicy.ts:65)",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P3-012",
+      "name": "Unified SSE transform (createSSEStream)",
+      "source_refs": [
+        "open-sse/utils/stream.ts:637",
+        "open-sse/utils/stream.ts:615",
+        "open-sse/utils/stream.ts:703",
+        "open-sse/utils/streamTiming.ts:46",
+        "open-sse/config/constants.ts:20"
+      ],
+      "purpose": "The core SSE TransformStream: TRANSLATE mode (format-to-format chunk conversion) and PASSTHROUGH mode (normalize + usage extraction), idle-timeout protection (STREAM_IDLE_TIMEOUT_MS), canonical TTFT/ITL timing (createStreamTiming, marked on first forwarded chunk), per-client-format [DONE] suppression (Claude/Antigravity SDKs break on a trailing [DONE], stream.ts:697-716 comments), and Responses commentary dropping (#6199 feature-flagged).",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "high — every streamed chat response flows through this transform; a defect corrupts or truncates all SSE traffic",
+      "dependencies": ["open-sse/translator response pairs (CAP-P2-006)", "open-sse/utils/streamTiming.ts", "feature flags (RESPONSES_PASSTHROUGH_DROP_COMMENTARY)"],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: routed — golden SSE fixtures per format pair incl. [DONE] presence/absence per client format; negative — idle upstream must trip the timeout error, not hang; direct — TTFT marked on first forwarded chunk",
+      "rollback_or_disable": "Inherent to the streaming path; no kill-switch found. Revert is source-level",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P3-013",
+      "name": "Streaming response pipeline assembly (disconnect → PII → progress → heartbeat → model-echo)",
+      "source_refs": [
+        "open-sse/handlers/chatCore/streamingPipeline.ts:62",
+        "open-sse/handlers/chatCore.ts:5819",
+        "open-sse/utils/sseHeartbeat.ts:93",
+        "open-sse/utils/sseHeartbeat.ts:11",
+        "src/lib/streamingPiiTransform.ts:8"
+      ],
+      "purpose": "assembleStreamingPipeline chains the post-transform stream stages in fixed order: disconnect-aware pipe → optional PII sanitization (explicit transform or PII_RESPONSE_SANITIZATION flag) → opt-in progress tracking → SSE heartbeat keepalive (default 15s, comment/Anthropic-ping/OpenAI-chunk shapes, OMNIROUTE_SSE_COMMENTS gate) → optional model-echo (#1311 alias name in each chunk).",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "medium — transform-order or heartbeat-shape mistakes break specific client SDKs (the module documents such incidents); PII stage touches response content",
+      "dependencies": ["CAP-P3-012 transform", "CAP-P3-014 disconnect controller", "src/shared/utils/featureFlags"],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: routed — heartbeat frames arrive within interval on a stalled upstream; negative — comment-shaped heartbeats must not reach SDK clients when OMNIROUTE_SSE_COMMENTS=off; direct — transform order assertion (pipe → pii → progress → heartbeat → echo)",
+      "rollback_or_disable": "Progress/PII/echo stages are individually opt-in/flag-gated; heartbeat interval configurable; core pipe is inherent",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P3-014",
+      "name": "Stream cancellation and client-disconnect handling",
+      "source_refs": [
+        "open-sse/utils/streamHandler.ts:236",
+        "open-sse/utils/streamHandler.ts:159",
+        "open-sse/utils/streamHandler.ts:632",
+        "open-sse/handlers/chatCore.ts:2954",
+        "open-sse/utils/streamFailureFinalization.ts:48",
+        "open-sse/utils/streamFailureFinalization.ts:201",
+        "open-sse/handlers/chatCore/streamFinalize.ts:10"
+      ],
+      "purpose": "createStreamController owns an AbortController bridged to the client request signal (deadline-abort reasons distinguished from true client disconnects, streamHandler.ts:190/426); isClientDisconnectError classifies AbortError/ResponseAborted so cancelled requests skip the failover/cooldown path (one cancelled request must not mark a provider bad); createClientDisconnectGraceHandler (#9653) polls for completion before recording a 499 so a disconnect-after-full-delivery is not mis-logged; pipeline errors map to 499 client_disconnected vs 502 stream error; wrapReadableStreamWithFinalize runs a finalize callback exactly once on drain/error/cancel.",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "high — mis-classified disconnects either poison provider health state (failover storms) or leak hung upstream connections",
+      "dependencies": ["client request AbortSignal from the route layer", "resilience/cooldown services (P1/P6 scope — interaction point only)"],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: routed — client abort mid-stream aborts the upstream fetch and records 499 client_disconnected with zero usage; negative — client abort must NOT trip provider cooldown; regression — #9653 disconnect-after-complete records success, not 499",
+      "rollback_or_disable": "Grace period configurable (gracePeriodMs <= 0 restores pre-#9653 immediate finalize); core abort plumbing is inherent",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P3-015",
+      "name": "Stream failure finalization and per-format error framing",
+      "source_refs": [
+        "open-sse/utils/streamFailureFinalization.ts:141",
+        "open-sse/handlers/chatCore.ts:5716",
+        "open-sse/utils/streamErrorFormat.ts:48",
+        "open-sse/utils/streamErrorFormat.ts:81",
+        "open-sse/utils/upstreamErrorPassthrough.ts:30",
+        "open-sse/utils/upstreamErrorPassthrough.ts:16",
+        "src/shared/utils/upstreamError.ts:7"
+      ],
+      "purpose": "createStreamFailureFinalizers records failed streams once (buildErrorBody payload, persistFailureUsage, failure callback); normalizeStreamFailurePayload extracts status/code/message from heterogeneous upstream error bodies (429 heuristic for rate-limit wording, else 502); formatTranslatedStreamError emits the error in the client's SSE dialect (response.failed for Responses API, event:error for Claude, data+ [DONE] for OpenAI); shouldPassthroughUpstreamError relays upstream 4xx bodies verbatim for Claude Code's capability auto-recovery contract — but refuses passthrough on 401/403/407, internal-path leaks, or credential-pattern echoes (CREDENTIAL_LEAK_RE, #10898-sec).",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "high — verbatim error passthrough is a credential-leak vector (mitigated by regex refusal); wrong status mapping defeats client retry semantics",
+      "dependencies": ["open-sse/utils/error.ts buildErrorBody (Hard Rule #12)", "CAP-P3-023 failure usage persistence"],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: routed — upstream 4xx with capability wording relays verbatim; negative — body containing Bearer/sk- patterns must fall back to sanitized buildErrorBody; direct — status extraction order and 429 heuristic; per-format error-frame shape goldens",
+      "rollback_or_disable": "Passthrough is a decision function — returning false restores sanitized errors everywhere; finalizers are inherent to the stream path",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P3-016",
+      "name": "Finish-reason normalization and abort classification",
+      "source_refs": [
+        "open-sse/utils/finishReason.ts:64",
+        "open-sse/utils/finishReason.ts:39",
+        "open-sse/utils/finishReason.ts:59",
+        "open-sse/utils/finishReason.ts:30",
+        "open-sse/handlers/chatCore/passthroughToolNames.ts:90",
+        "open-sse/handlers/chatCore.ts:4975"
+      ],
+      "purpose": "normalizeOpenAICompatibleFinishReason canonicalizes provider finish reasons (max_tokens→length, safety family→content_filter) while deliberately NOT collapsing abort reasons (malformed_function_call, unexpected_tool_call) to a misleading 'stop' — the Claude translation classifies them via isAbortFinishReason so an aborted tool call cannot present as a clean end_turn (9router#2462); isMalformedToolCallFinishReason lets gemini-to-openai synthesize a tool_calls entry + finish_reason:'tool_calls' instead (OpenClaw incident 1784489701456-d8c0e9); normalizeOpenAIToolFinishReasons forces finish_reason:'tool_calls' on non-streaming responses carrying tool_calls.",
+      "owner_plane": "provider-adapter",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "medium — wrong finish mapping makes agent loops misread terminal state (infinite retries or silently dropped failures, both documented in source comments)",
+      "dependencies": ["translator response pairs (gemini-to-openai, openai-to-claude)", "CAP-P3-003 tool-name restoration"],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: direct — reason-mapping table fixtures (stop/length/tool_calls/content_filter/max_tokens/safety family); negative — abort reasons must NOT map to stop/end_turn; routed — malformed_function_call stream surfaces as tool_calls failure to an OpenAI client",
+      "rollback_or_disable": "Mapping tables are data; revert is source-level. No runtime toggle found",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P3-017",
+      "name": "Empty-stream rejection guard (#9268)",
+      "source_refs": [
+        "open-sse/utils/streamEmptyChoices.ts:1"
+      ],
+      "purpose": "A streaming provider that completes having forwarded only empty choices:[] chunks (no content, tool_calls, or finish_reason) is rejected instead of terminating as a clean empty 200 — the SSE transform threads a forwardedValuableChunk boolean so clients get an error to stop on rather than retrying an apparently-valid empty turn to their cap.",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "medium — false positive rejects legitimately empty responses; absence caused client retry storms (documented #9268)",
+      "dependencies": ["CAP-P3-012 transform forwarded-chunk signal", "CAP-P3-015 failure framing"],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: routed — all-empty-choices upstream stream yields an error frame, not a 200 empty turn; negative — any forwarded valuable chunk must suppress the guard",
+      "rollback_or_disable": "Guard is a boolean decision in the transform path; removal is source-level. No runtime toggle found",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P3-018",
+      "name": "Stream-recovery holdback (truncated-stream transparent retry)",
+      "source_refs": [
+        "open-sse/services/streamRecovery.ts:1"
+      ],
+      "purpose": "Opt-in (ResilienceSettings.streamRecovery, default OFF) holdback window that retries an upstream stream truncated before any byte reached the client, invisibly to the client; ported from free-claude-code's always-on recovery but kept off by default because the holdback adds up to HOLDBACK_MS of TTFT on every streaming request (module header).",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "medium — transparent retry replays non-idempotent upstream calls; the TTFT cost is why it ships disabled",
+      "dependencies": ["resilience settings surface (P5/P6 configuration)", "CAP-P3-014 abort plumbing"],
+      "required_authorization": "layer-N",
+      "test_contract": "Layer-N: routed — pre-first-byte truncation retries once transparently; negative — post-first-byte truncation must NOT retry (client already has partial data); direct — default-off assertion from settings resolution",
+      "rollback_or_disable": "Disabled by default; per-settings toggle off is the disable path",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P3-019",
+      "name": "Early stream keepalive",
+      "source_refs": [
+        "open-sse/utils/earlyStreamKeepalive.ts:3"
+      ],
+      "purpose": "Emits keepalive bytes/frames before the upstream produces its first output (bridge the pre-TTFT gap so proxies/clients do not time out the connection), distinct from the mid-stream heartbeat in CAP-P3-013.",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "low — keepalive bytes must match the client's SSE dialect; a wrong shape breaks parsers (same class as heartbeat-shape incidents)",
+      "dependencies": ["CAP-P3-013 pipeline", "client format detection"],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: routed — slow upstream (delay > keepalive interval) still yields pre-TTFT frames the client accepts; negative — keepalive must stop once real chunks flow",
+      "rollback_or_disable": "Keepalive stage is pipeline-attached; interval/disable via the same heartbeat/keepalive configuration surface [INFERENCE: exact toggle line not traced this partition]",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P3-020",
+      "name": "Stream state machines and metrics trackers (dormant)",
+      "source_refs": [
+        "src/sse/services/streamState.ts:58",
+        "src/sse/services/streamState.ts:189",
+        "src/shared/utils/streamTracker.ts:165"
+      ],
+      "purpose": "Two independent stream-lifecycle trackers exist: StreamTracker state machine (INITIALIZED→CONNECTING→STREAMING→COMPLETED|FAILED|CANCELLED with a valid-transition table and an active-stream registry, streamState.ts:179) and a metrics tracker (token counts, TTFT, tokens/sec progress callbacks). Deterministic grep finds NO production import of either — streamState.ts is referenced only by tests/unit/advanced-fase07-09.test.ts; shared/utils/streamTracker.ts only by a doc-check script comment [FACT — import grep corpus-wide].",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "management-plane",
+      "risk_class": "low — dormant code; the risk is observability gaps if operators assume the tracked states exist at runtime",
+      "dependencies": ["none at runtime (unwired); production streaming telemetry currently rides CAP-P3-012 timing + CAP-P3-023 usage rows instead"],
+      "required_authorization": "layer-N",
+      "test_contract": "Layer-N (if wired): direct — transition table rejects invalid moves; routed — active-stream registry reflects live requests; today: absence assertion (no import) is the honest check",
+      "rollback_or_disable": "Already inert; nothing wired to disable",
+      "preliminary_disposition": "LAB-ONLY"
+    },
+    {
+      "id": "CAP-P3-021",
+      "name": "Usage extraction (streaming and non-streaming, multi-format)",
+      "source_refs": [
+        "open-sse/utils/usageTracking.ts:665",
+        "open-sse/utils/usageTracking.ts:675",
+        "open-sse/handlers/usageExtractor.ts:5",
+        "open-sse/handlers/usageExtractor.ts:99",
+        "open-sse/utils/usageTracking.ts:599"
+      ],
+      "purpose": "extractUsage pulls token usage from streaming chunks across Claude (message_start/message_delta, folding cache_read+cache_creation into prompt tokens, FIX #74), OpenAI Responses (response.completed), and Gemini shapes; extractUsageFromResponse does the same for non-streaming bodies across OpenAI (incl. DeepSeek flat cache fields, xAI cost_in_usd_ticks passthrough), Claude (input+cache sum), Responses, and Gemini usageMetadata (thoughts folded into completion, antigravity envelope unwrap #59d858b); normalizeUsage canonicalizes field names.",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "data-plane",
+      "risk_class": "medium — under-counted usage breaks quota/billing accuracy; the code documents multiple provider-specific counting fixes",
+      "dependencies": ["CAP-P3-012 transform (chunk source)", "provider response formats"],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: direct — per-format usage fixtures (OpenAI/Claude/Responses/Gemini, cache and reasoning fields); negative — missing usage block yields null, not zeros; regression — cache-fold and thoughts-fold arithmetic",
+      "rollback_or_disable": "Pure extraction; revert is source-level",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P3-022",
+      "name": "Client-visible usage buffering, filtering, and estimation",
+      "source_refs": [
+        "open-sse/handlers/chatCore/clientUsageBuffer.ts:100",
+        "open-sse/handlers/chatCore.ts:5040",
+        "open-sse/utils/usageTracking.ts:186",
+        "open-sse/utils/usageTracking.ts:223",
+        "open-sse/utils/usageTracking.ts:898",
+        "open-sse/handlers/chatCore/clientUsageBuffer.ts:54"
+      ],
+      "purpose": "applyClientUsageBuffer post-processes response usage for the client: post-#8331 the safety buffer stays OUT of client-visible metering fields (billing reflects real upstream usage) except the Claude-Code-compatible path where context_budget_* fields fold back into visible prompt/input/total fields; empty or all-zero provider usage (common for web providers) triggers content-length estimation (estimateUsage); filterUsageForFormat renames fields per client format.",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "data-plane",
+      "risk_class": "medium — the buffer exists to prevent CLI context-window errors; mis-scoping it inflates billing or starves CLI headroom (the #8331 regression class)",
+      "dependencies": ["CAP-P3-021 extraction", "USAGE_TOKEN_BUFFER setting (default 2000, per clientUsageBuffer.ts:52 comment)"],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: direct — buffer excluded from visible fields for API clients, folded back for claude-code-compatible; routed — zero-usage web-provider response yields an estimate, not a constant 2000; negative — isEmptyUsage must not misfire on real small usages",
+      "rollback_or_disable": "Buffer size configurable (USAGE_TOKEN_BUFFER); scoping logic revert is source-level",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P3-023",
+      "name": "Usage persistence, dedup, failure and rejection accounting",
+      "source_refs": [
+        "src/lib/usage/usageHistory.ts:641",
+        "src/lib/usage/usageHistory.ts:614",
+        "src/lib/usage/usageHistory.ts:264",
+        "src/lib/usage/usageHistory.ts:432",
+        "src/lib/usageDb.ts:21",
+        "open-sse/handlers/chatCore/streamingUsageStats.ts:72",
+        "open-sse/handlers/chatCore/nonStreamingUsageStats.ts:81",
+        "open-sse/handlers/chatCore/failureUsage.ts:11",
+        "src/sse/handlers/rejectedRequestUsage.ts:49",
+        "open-sse/handlers/chatCore/streamingCost.ts:19",
+        "open-sse/handlers/chatCore/streamingQuotaShare.ts:20",
+        "open-sse/services/tokenLimitCounter.ts:257"
+      ],
+      "purpose": "saveRequestUsage inserts per-request rows into SQLite usage_history (UsageEntry contract, usageHistory.ts:614) with a same-second natural-key dedup guard preventing double-count when success callbacks fire twice; trackPendingRequest/finalizePendingRequest manage in-flight request lifecycle; streaming/non-streaming paths record fire-and-forget rows plus per-api-key billable-token counters (recordTokenUsage, 200-only for streams); buildFailureUsageRecord zeroes tokens with success:false for failed requests; recordRejectedRequestUsage writes BOTH call_logs and usage_history for pre-dispatch gate rejections so per-key counters include rejected traffic (2026-07-08 support-mesh escalation); streamingCost/streamingQuotaShare attach cost and shared-quota consumption on stream completion.",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "data-plane",
+      "risk_class": "high — this is the metering/billing source of truth; double-counts or dropped rejections corrupt quota enforcement and cost reporting",
+      "dependencies": ["src/lib/db SQLite layer (P5 scope)", "CAP-P3-021/022 usage shapes", "P6 quota/rate-limit consumers"],
+      "required_authorization": "layer-N",
+      "test_contract": "Layer-N: persistence — success/failure/rejection rows land in usage_history with correct success/status/tokens and survive restart; negative — duplicate same-second callback must not double-insert; direct — billable counter fires only on 200 streams",
+      "rollback_or_disable": "Persistence is best-effort (writes swallow own errors) and gated by shouldPersistToDisk (usageHistory.ts:642); DB backup/restore per P5 runbooks",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P3-024",
+      "name": "ATEM-shaped tool-call handling",
+      "source_refs": [
+        "open-sse/utils/finishReason.ts:1"
+      ],
+      "purpose": "Work-order carryover check: P2 found zero ATEM adapter corpus-wide and asked P3 to record any ATEM-shaped tool-call handling as a correction. Searched: case-sensitive whole-word 'ATEM' across src/, open-sse/, packages/, docs/, config/, skills/, tests/ → zero matches; case-insensitive 'atem' in the P3-scope core files (stream.ts, finishReason.ts, usageTracking.ts, toolCallHelper.ts, usageExtractor.ts, toolPolicy.ts) → zero matches. No ATEM protocol tool-call handling exists in this partition's scope. RESULT: corroborates P2's NOT-ESTABLISHED; no correction required.",
+      "owner_plane": "provider-adapter",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "low — absence verified; no capability to assess",
+      "dependencies": [],
+      "required_authorization": "none",
+      "test_contract": "N/A — nothing to prove; re-run the same greps on any future snapshot",
+      "rollback_or_disable": "N/A",
+      "preliminary_disposition": "NOT-ESTABLISHED"
+    },
+    {
+      "id": "CAP-P3-025",
+      "name": "SSE resume/reconnect contract (Last-Event-ID)",
+      "source_refs": [
+        "open-sse/utils/stream.ts:637"
+      ],
+      "purpose": "Searched for server-side SSE resumption support (last-event-id / lastEventId handling, EventSource retry contract) across the corpus: matches are only client-side dashboard EventSource usage and base-path rewriting (next.config.mjs:123, scripts/docker/patch-standalone-base-path.mjs:108); no Last-Event-ID consumption or stream-resume logic exists on the chat/API SSE path. A disconnected client cannot resume a stream; it must re-issue the request (CAP-P3-014 records the abort as 499).",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "low — absence verified; reconnect cost falls on clients (full re-request)",
+      "dependencies": [],
+      "required_authorization": "none",
+      "test_contract": "N/A — absence assertion: grep 'last-event-id|lastEventId' returns no server-side handler; re-run on future snapshots",
+      "rollback_or_disable": "N/A",
+      "preliminary_disposition": "NOT-ESTABLISHED"
+    },
+    {
+      "id": "CAP-P3-026",
+      "name": "Decoy tool cloaking (AG_DECOY_TOOLS / AG_TOOL_SUFFIX) — removed upstream",
+      "source_refs": [
+        "config/quality/test-masking-allowlist.json:94",
+        "open-sse/config/toolCloaking.ts:39"
+      ],
+      "purpose": "A prior Antigravity tool-cloaking mechanism (cloakAntigravityToolPayload: renamed client tools with a suffix and injected decoy tools AG_DECOY_TOOLS/AG_TOOL_SUFFIX) was REMOVED in v3.8.49 (#8013) and replaced by sanitizeAntigravityToolPayload, which preserves tool identity and only strips enumDescriptions. Deterministic grep confirms cloakAntigravityToolPayload / AG_TOOL_SUFFIX / AG_DECOY_TOOLS no longer exist in source; the removal is recorded in the test-masking allowlist notes [UPSTREAM — in-repo quality-record claim, corroborated by zero grep hits]. Recorded here so the ledger does not resurrect a dead mechanism from stale docs.",
+      "owner_plane": "provider-adapter",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "low — absent mechanism; the doc-drift risk is stale references implying identity-obscuring behavior that no longer exists",
+      "dependencies": [],
+      "required_authorization": "none",
+      "test_contract": "N/A — absence verified by grep; the successor sanitizer is CAP-P3-008",
+      "rollback_or_disable": "N/A (already removed upstream)",
+      "preliminary_disposition": "NOT-ESTABLISHED"
+    }
+  ]
+}

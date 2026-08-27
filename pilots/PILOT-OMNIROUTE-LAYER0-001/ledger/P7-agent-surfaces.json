@@ -1,0 +1,1268 @@
+{
+  "partition": "P7-agent-surfaces",
+  "work_order": "WO-OMNI-TRINITY-LEDGER-001",
+  "producer": "trinity",
+  "corpus": "/opt/tkv-local/OmniRoute-release-v3.8.51 (READ-ONLY; identity VERIFIED 2026-08-27)",
+  "reviewed_at": "2026-08-27T09:10Z",
+  "entries": [
+    {
+      "id": "CAP-P7-001",
+      "name": "MCP server core (in-process agent control plane)",
+      "source_refs": [
+        "open-sse/mcp-server/server.ts:733",
+        "open-sse/mcp-server/server.ts:111",
+        "src/lib/db/settings.ts:172"
+      ],
+      "purpose": "createMcpServer() assembles ~107 MCP tools (counted by countUniqueMcpTools across routing/quota/budget/resilience/cache/compression plus memory, skill, agent-skill, github-skill, plugin, pool, gamification, notion, obsidian and local-corpus families) over the official SDK. Collision: these tools hand an MCP client management-plane write primitives (omniroute_switch_combo, set_budget_guard, set_routing_strategy, set_resilience_profile) that duplicate KK3's orchestration authority and Carol's catalog governance, so the HX lane keeps the surface disabled by default (mcpEnabled:false, settings.ts:172).",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "agent-surface",
+      "risk_class": "critical — full management-plane control exposed to any connected MCP client when enabled",
+      "dependencies": [
+        "settings.mcpEnabled=true",
+        "an MCP transport (stdio/sse/streamable-http)",
+        "the Next.js app or CLI mcp-server entry"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Enable in a lab setting, connect a client, assert tool list matches scope map; negative: mcpEnabled=false yields 503 at the HTTP transports.",
+      "rollback_or_disable": "Set settings.mcpEnabled=false (default) — stream/sse routes return 503 via guardEnabled (src/app/api/mcp/stream/route.ts:18-23); stdio launcher simply is not configured.",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P7-002",
+      "name": "MCP HTTP transports (streamable-HTTP + SSE)",
+      "source_refs": [
+        "src/app/api/mcp/stream/route.ts:15",
+        "src/app/api/mcp/stream/route.ts:38",
+        "src/app/api/mcp/sse/route.ts:18",
+        "src/server/authz/routeGuard.ts:34"
+      ],
+      "purpose": "guardEnabled() 503s unless settings.mcpEnabled and the transport string matches, and every verb passes requireManagementAuth with the mcp:connect scope carve-out; the whole /api/mcp/ prefix is a Tier-1 LOCAL_ONLY entry (routeGuard.ts:34). Collision: the transport decision controls whether any off-box agent can reach the MCP control plane at all — the LOCAL_ONLY tier is the quarantine that keeps it on-LAN.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "management-plane",
+      "risk_class": "high — remote reachability of the MCP control plane if the guard tiers were relaxed",
+      "dependencies": [
+        "CAP-P7-001",
+        "settings.mcpTransport = 'streamable-http'|'sse'"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "With MCP enabled and transport set, POST a JSON-RPC initialize over loopback and over LAN; negative: non-local peer denied by the LOCAL_ONLY tier before auth.",
+      "rollback_or_disable": "mcpEnabled=false or mcpTransport!='streamable-http'/'sse' returns 503/400; LOCAL_ONLY prefix match denies non-local peers unconditionally (routeGuard.ts:33-34).",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P7-003",
+      "name": "MCP stdio transport via CLI launcher",
+      "source_refs": [
+        "open-sse/mcp-server/server.ts:1523",
+        "open-sse/mcp-server/server.ts:1529",
+        "bin/mcp-server.mjs:21",
+        "bin/omniroute.mjs:304",
+        "open-sse/mcp-server/httpAuthContext.ts:51"
+      ],
+      "purpose": "startMcpStdio() serves the same MCP tool set over StdioServerTransport when an MCP client spawns the OmniRoute CLI entry (bin/mcp-server.mjs resolves dist or ts server, wired from bin/omniroute.mjs:304); per httpAuthContext.ts:51 stdio has no per-caller identity and stays on the env scope fallback. Collision: any local agent process that can run the CLI obtains the control plane with no caller attribution — an attribution gap KK3's work-order model does not have.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "agent-surface",
+      "risk_class": "high — no per-caller identity on stdio; scopes fall back to process env",
+      "dependencies": [
+        "CAP-P7-001",
+        "a local MCP client configured to spawn the CLI"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Launch the CLI mcp-server entry with a scoped env; assert tools callable; negative: with OMNIROUTE_MCP_ENFORCE_SCOPES=true and empty OMNIROUTE_MCP_SCOPES, tool calls are rejected as missing_scopes.",
+      "rollback_or_disable": "Do not configure the MCP client (inert by default — no listener exists); when launched, OMNIROUTE_MCP_ENFORCE_SCOPES=true plus a minimal OMNIROUTE_MCP_SCOPES set constrains it.",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P7-004",
+      "name": "MCP per-tool scope enforcement",
+      "source_refs": [
+        "open-sse/mcp-server/scopeEnforcement.ts:99",
+        "open-sse/mcp-server/scopeEnforcement.ts:107",
+        "open-sse/mcp-server/server.ts:104",
+        "src/shared/constants/mcpScopes.ts:11",
+        "open-sse/mcp-server/httpAuthContext.ts:54"
+      ],
+      "purpose": "evaluateToolScopes checks each tool's required scopes from MCP_TOOL_MAP against caller scopes resolved authInfo→meta→env, with wildcard support and fail-closed tool_definition_missing; enforcement runs only when OMNIROUTE_MCP_ENFORCE_SCOPES==='true' (server.ts:104) — otherwise every caller is allowed (scopeEnforcement.ts:107-109); resolveMcpCallerAuthInfo binds real per-key api_keys.scopes on HTTP/SSE and fails closed to the fallback chain. Collision: this is OmniRoute's own delegation-to-agents authorization model, parallel to KK3's work-order scoping — two authority models for the same plane.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "agent-surface",
+      "risk_class": "medium — enforcement is env-gated and fail-open by default; per-key binding exists on HTTP transports",
+      "dependencies": [
+        "CAP-P7-001",
+        "api_keys.scopes populated for per-key binding"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "With enforcement on, call a write:combos tool with a read-only key and assert missing_scopes; with enforcement off, confirm the documented allow-all path (lab evidence for the owner).",
+      "rollback_or_disable": "Unset OMNIROUTE_MCP_ENFORCE_SCOPES (default) removes enforcement; full quarantine remains mcpEnabled=false.",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P7-005",
+      "name": "MCP tool-call audit trail",
+      "source_refs": [
+        "open-sse/mcp-server/audit.ts:4",
+        "open-sse/mcp-server/audit.ts:220",
+        "open-sse/mcp-server/audit.ts:240",
+        "src/app/api/mcp/audit/route.ts:19"
+      ],
+      "purpose": "logToolCall persists hashed inputs and summarized outputs to a dedicated mcp_tool_audit SQLite table (better-sqlite3 with node:sqlite fallback), queryable via management-gated /api/mcp/audit(+stats). Collision: none — this is the observability counterpart the owner authority plane needs if MCP is ever enabled; it records, it does not control.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "management-plane",
+      "risk_class": "low — append-only audit store; no control authority",
+      "dependencies": [
+        "CAP-P7-001"
+      ],
+      "required_authorization": "layer-N",
+      "test_contract": "Enable MCP in lab, fire one tool call, assert one audit row with hashed input; persistence: restart and re-query.",
+      "rollback_or_disable": "No writes occur while the MCP server is disabled; table can be left in place (append-only evidence).",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P7-006",
+      "name": "MCP introspection routes (tools catalog, status)",
+      "source_refs": [
+        "src/app/api/mcp/tools/route.ts:6",
+        "src/app/api/mcp/status/route.ts:17"
+      ],
+      "purpose": "GET routes expose the MCP tool catalog and runtime status to management callers, accepting the mcp:connect scope; read-only introspection used by the dashboard Endpoints page. Collision: minor — read-only; the mcp:connect scope is the same carve-out the transports use, so its bypass policy (localOnlyManageScopeBypassEnabled default true, settings.ts:228-229) governs reach.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "management-plane",
+      "risk_class": "low — read-only introspection",
+      "dependencies": [
+        "CAP-P7-001"
+      ],
+      "required_authorization": "layer-N",
+      "test_contract": "GET both routes with a manage-scope token; negative: without auth expect 401/403 per the central pipeline.",
+      "rollback_or_disable": "Central MANAGEMENT classification plus requireManagementAuth gates; no separate disable needed.",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P7-007",
+      "name": "A2A JSON-RPC endpoint (/a2a)",
+      "source_refs": [
+        "src/app/a2a/route.ts:147",
+        "src/app/a2a/route.ts:149",
+        "src/app/a2a/route.ts:31",
+        "src/lib/db/settings.ts:173"
+      ],
+      "purpose": "The /a2a router serves A2A v0.3 methods (message/send, message/stream, tasks/get, tasks/cancel) plus v1.0 aliases (SendMessage/SendStreamingMessage, route.ts:31-34), and rejectIfA2ADisabled returns JSON-RPC -32000/503 unless settings.a2aEnabled===true (default false, settings.ts:173). Collision: this endpoint lets OmniRoute act as an agent peer accepting task delegation from foreign agents — the exact inverse of KK3's sole-orchestrator rule, hence disabled by default and owner-gated.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "agent-surface",
+      "risk_class": "high — inbound task delegation channel from arbitrary A2A clients when enabled",
+      "dependencies": [
+        "settings.a2aEnabled=true",
+        "CAP-P7-008",
+        "CAP-P7-009"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Enable in lab, run message/send against a builtin skill and a v1.0 alias; negative: disabled state returns error code -32000 with HTTP 503.",
+      "rollback_or_disable": "settings.a2aEnabled=false (default) — every method short-circuits at rejectIfA2ADisabled.",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P7-008",
+      "name": "A2A task manager (lifecycle state machine)",
+      "source_refs": [
+        "src/lib/a2a/taskManager.ts:73",
+        "src/lib/a2a/taskManager.ts:8",
+        "src/lib/a2a/taskManager.ts:49"
+      ],
+      "purpose": "A2ATaskManager runs submitted→working→completed|failed|cancelled transitions with UUID ids, in-memory storage with optional SQLite persistence, 5-minute default TTL, a concurrent-task limit, and GHSA-jcm5 owner scoping (sha256 of the API key; ownerless keyless tasks stay visible to every caller by design, taskManager.ts:49-54). Collision: durable task state inside the gateway is orchestration state — if A2A is ever enabled, KK3 must treat this store as subordinate state, never truth.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "agent-surface",
+      "risk_class": "medium — in-memory task state with a keyless-visible ownership carve-out",
+      "dependencies": [
+        "CAP-P7-007"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Drive a task through every legal transition; negative: illegal transition rejected; persistence: enable SQLite backing and restart to confirm reload.",
+      "rollback_or_disable": "Only reachable when a2aEnabled; clearing in-memory state is process restart; TTL expiry reaps stale tasks.",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P7-009",
+      "name": "A2A authentication posture (keyless local-first)",
+      "source_refs": [
+        "src/lib/a2a/authenticate.ts:29",
+        "src/lib/a2a/authenticate.ts:35",
+        "src/lib/a2a/authenticate.ts:49",
+        "src/app/api/a2a/tasks/route.ts:119"
+      ],
+      "purpose": "authenticateA2ARequest mirrors the /v1 posture: REQUIRE_API_KEY on → valid OmniRoute key required; else OMNIROUTE_API_KEY env → timing-safe token match; else keyless allow (authenticate.ts:40-41), with resolveA2AOwner hashing the key for task scoping; the REST task routes independently re-check a2aEnabled!==true (tasks/route.ts:119). Collision: under the local-first keyless default any LAN peer could drive agent tasks the moment the feature flag flips — the flag and the key posture are separate axes the owner must set together.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "agent-surface",
+      "risk_class": "medium — keyless-by-default auth mirrors /v1; exposure only materializes when A2A is enabled",
+      "dependencies": [
+        "CAP-P7-007"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "With A2A enabled: no key → 401 when REQUIRE_API_KEY=true; wrong key rejected via timing-safe compare; keyless mode allowed and ownerless tasks listed.",
+      "rollback_or_disable": "a2aEnabled=false closes the surface regardless of key posture.",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P7-010",
+      "name": "A2A agent card discovery (/.well-known/agent.json)",
+      "source_refs": [
+        "src/app/.well-known/agent.json/route.ts:25",
+        "src/app/.well-known/agent.json/route.ts:28",
+        "src/app/.well-known/agent.json/route.ts:17",
+        "src/app/api/a2a/status/route.ts:14"
+      ],
+      "purpose": "The well-known route always serves an A2A v0.3 agent card (name, url, capabilities, skills) merged with Conductor fleet skills when the hub is reachable; PACKAGE_VERSION falls back to the stale literal '1.8.1' (route.ts:17) when npm_package_version is unset [UPSTREAM drift — package is 3.8.51]; the status route only embeds the card when A2A is enabled. Collision: the card advertises OmniRoute-as-agent to any discovering orchestrator — marketing the control plane KK3 does not want advertised; centrally MANAGEMENT-classified (non-/api path falls to the fail-closed default).",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "agent-surface",
+      "risk_class": "low — read-only advertisement, but it publishes capability metadata (and a stale version fallback) to any authenticated peer",
+      "dependencies": [
+        "CAP-P7-007"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "GET the well-known route and the agent-card.json twin; assert the card validates; content check: version matches package.json when run under npm.",
+      "rollback_or_disable": "No per-route disable; the card is inert metadata while a2aEnabled=false (status route omits it).",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P7-011",
+      "name": "A2A built-in agent skills (6 handlers)",
+      "source_refs": [
+        "src/lib/a2a/taskExecution.ts:21",
+        "src/lib/a2a/taskExecution.ts:41",
+        "src/lib/a2a/skills/smartRouting.ts:2",
+        "src/app/a2a/route.ts:17"
+      ],
+      "purpose": "A2A_SKILL_HANDLERS lazily imports six builtin skills (smart-routing, quota-management, provider-discovery, cost-analysis, health-report, list-capabilities) that execute prompts through the OmniRoute pipeline and return routing_explanation/cost/resilience/policy metadata. Collision: these are agent-callable macros over the routing plane — foreign agents could steer routing analysis through A2A tasks; subordinate to the same a2aEnabled gate.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "agent-surface",
+      "risk_class": "medium — agent-invokable analytics over the routing plane",
+      "dependencies": [
+        "CAP-P7-007",
+        "CAP-P7-008"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "With A2A enabled, execute each builtin skill once and validate artifact shapes; negative: unknown skill id rejected.",
+      "rollback_or_disable": "a2aEnabled=false disables the whole handler path; no per-skill flags exist.",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P7-012",
+      "name": "ACP CLI-agent registry (host CLI detection)",
+      "source_refs": [
+        "src/lib/acp/registry.ts:13",
+        "src/lib/acp/registry.ts:53",
+        "src/app/api/acp/agents/route.ts:40",
+        "src/server/authz/routeGuard.ts:72"
+      ],
+      "purpose": "detectInstalledAgents probes the host for codex/claude/gemini/goose (+operator-defined custom) agent CLIs by execFileSync'ing their version commands (registry.ts:13, definitions at :53); POST accepts client-chosen custom binaries persisted to settings; the routeGuard comments classify /api/acp/agents as an RCE-via-tunnel spawn surface and gate it LOCAL_ONLY (routeGuard.ts:72). Collision: the registry exists so OmniRoute can discover and drive host agent CLIs — an orchestration-adjacent capability that steps on KK3's commissioning authority; the LOCAL_ONLY tier is the quarantine.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "agent-surface",
+      "risk_class": "high — version-probe spawns plus client-defined binary registration (loopback-constrained)",
+      "dependencies": [
+        "settings.customAgents (optional)"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "GET the route from loopback and assert detection shape; negative: non-loopback peer denied by the LOCAL_ONLY tier; register a custom agent then remove it.",
+      "rollback_or_disable": "LOCAL_ONLY tier blocks remote callers; deleting settings.customAgents removes custom entries; no global enable flag exists because detection is on-demand only.",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P7-013",
+      "name": "ACP process spawner (CLI-as-backend transport)",
+      "source_refs": [
+        "src/lib/acp/manager.ts:1",
+        "src/lib/acp/manager.ts:45",
+        "src/lib/acp/manager.ts:54",
+        "src/lib/acp/manager.ts:65",
+        "src/lib/acp/manager.ts:67"
+      ],
+      "purpose": "AcpManager.spawn launches a registered CLI agent as a child process with piped stdio, shell:false, and the FULL OmniRoute process env merged under caller-supplied env (manager.ts:65-69) — Coder-X corroborated the unfiltered env inheritance: provider credentials present in the gateway env flow into agent children; hasRegisteredAgent is the only quarantine (:54), and no production call site outside src/lib/acp references AcpManager (grep-verified — currently unwired). Collision: OmniRoute spawning agent processes is precisely the process-spawning class the HX disabled-by-default rule freezes, and 'CLI-as-backend' makes the gateway an agent runtime competing with KK3's execution substrate.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "agent-surface",
+      "risk_class": "critical — child processes inherit gateway env secrets; arbitrary registered binaries",
+      "dependencies": [
+        "CAP-P7-012"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Static: assert no route wiring reaches spawn (grep); dynamic lab: register a benign CLI, spawn, assert env allowlisting requirement before any HX use.",
+      "rollback_or_disable": "No runtime wiring exists today (inert); if ever wired, the registry whitelist plus the LOCAL_ONLY API tier are the quarantine; removing custom agents closes the binary set.",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P7-014",
+      "name": "Memory engine (per-key long-term memory store)",
+      "source_refs": [
+        "src/lib/memory/settings.ts:33",
+        "src/lib/memory/settings.ts:101",
+        "src/lib/memory/store.ts:22",
+        "src/app/api/memory/route.ts:23"
+      ],
+      "purpose": "The memory engine provides CRUD over typed memory rows (api-key-scoped, session-optional, TTL/expiry, TV6 typed-decay columns) with a 60s/500-entry cache; getMemorySettings defaults enabled:false (settings.ts:33,101) and the REST API is management-gated. Collision: a second long-term memory living inside the traffic gateway competes with Carol's catalog/second-brain governance (who owns remembered knowledge, provenance, expiry) — the HX lane keeps it disabled by default.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "agent-surface",
+      "risk_class": "high — persistent per-key memory that silently shapes future prompts if enabled",
+      "dependencies": [
+        "embedding provider for semantic retrieval (CAP-P7-017)"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Disabled: retrieve returns empty and injection is skipped; enabled lab: create/retrieve/expire a memory and assert api-key scoping isolation between two keys.",
+      "rollback_or_disable": "memoryEnabled=false (default) disables retrieval, injection, and the reindex path; rows persist but stay unread — delete via the management API for full quarantine.",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P7-015",
+      "name": "Memory+skills injection into the chat traffic path",
+      "source_refs": [
+        "open-sse/handlers/chatCore/memorySkillsInjection.ts:23",
+        "open-sse/handlers/chatCore/memorySkillsInjection.ts:116",
+        "open-sse/handlers/chatCore.ts:1250",
+        "open-sse/handlers/chatCore.ts:1253"
+      ],
+      "purpose": "injectMemoryAndSkills runs on every chat request: it retrieves owner memories (memorySkillsInjection.ts:116) and injects them plus enabled skill tools into the outbound body; the per-request x-omniroute-no-memory:true header nulls the owner and disables both branches (chatCore.ts:1248-1252). Collision: silent prompt mutation inside the traffic plane — invisible to clients unless they send the opt-out header — is an observability and owner-authority concern even when memory itself is approved.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "high — in-path request mutation; default-on once memoryEnabled",
+      "dependencies": [
+        "CAP-P7-014",
+        "CAP-P7-019"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "With memory enabled, assert an injected block appears and that the opt-out header removes it; negative: memoryEnabled=false injects nothing.",
+      "rollback_or_disable": "memoryEnabled=false globally; per-request x-omniroute-no-memory:true header (always available).",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P7-016",
+      "name": "Memory vector backends (sqlite / Qdrant / Obsidian)",
+      "source_refs": [
+        "src/lib/memory/qdrant.ts:16",
+        "src/lib/memory/obsidianBackend.ts:20",
+        "src/lib/memory/obsidianBackend.ts:2",
+        "src/lib/memory/backend.ts:1"
+      ],
+      "purpose": "Memory backends are pluggable behind the MemoryBackend interface: local SQLite vectors (default), an external Qdrant cluster (host/port/apiKey/collection/quantization config, qdrant.ts:16-26), and an Obsidian backend that reads/writes memories as Markdown+frontmatter files in a user vault path (obsidianBackend.ts:2-29). Collision: Qdrant moves governed memory content to an external service (egress + retention outside the plane) and Obsidian writes into arbitrary user filesystem locations — both need an owner decision on data placement; backend selection lives in memory settings and all backends die with memoryEnabled=false.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "data-plane",
+      "risk_class": "medium — external/filesystem data placement of memory content",
+      "dependencies": [
+        "CAP-P7-014"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Lab: point at a throwaway Qdrant collection and a temp vault dir, assert round-trip; negative: unreachable Qdrant degrades per backend health check.",
+      "rollback_or_disable": "Backend selection reverts to sqlite; memoryEnabled=false disables all backends; no external target is contacted while disabled.",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P7-017",
+      "name": "Embeddings backing service (memory + /v1/embeddings)",
+      "source_refs": [
+        "src/lib/embeddings/service.ts:1",
+        "src/lib/embeddings/service.ts:39",
+        "src/lib/embeddings/service.ts:30"
+      ],
+      "purpose": "createEmbeddingResponse routes embedding requests through the provider/combo machinery (embeddingRegistry, familyGuard dimension checks) and treats private/LAN hosts as trusted no-auth per the #6925 comment (service.ts:39-40) with outbound URL guard imports for cloud targets. Collision: minor — it is traffic-plane, but it is also the memory pipeline's embedding source, so memory enablement inherits its LAN trust posture; no orchestration content.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "medium — LAN no-auth trust class for the embeddings route feeds the memory pipeline",
+      "dependencies": [
+        "provider or combo with an embedding model"
+      ],
+      "required_authorization": "layer-N",
+      "test_contract": "Direct: POST /v1/embeddings against a configured provider; negative: unknown embedding provider yields the formatted error; persistence: none.",
+      "rollback_or_disable": "Traffic-plane standard path; removing embedding providers/combos disables it; memoryEnabled=false removes the memory consumer.",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P7-018",
+      "name": "Skill registry + executor",
+      "source_refs": [
+        "src/lib/skills/executor.ts:43",
+        "src/lib/skills/executor.ts:44",
+        "src/lib/skills/registry.ts:119",
+        "src/lib/skills/executor.ts:64",
+        "src/app/api/skills/route.ts:15"
+      ],
+      "purpose": "SkillExecutor.execute blocks only when settings.skillsEnabled === false (executor.ts:43-46) — getSettings carries NO hardcoded skillsEnabled default (grep-verified across src/lib/db), so an unpersisted key means execution is allowed; executions are audited into skill_executions rows (:64-75) and skills are stored per api-key with enabled/mode flags (registry.ts:119-130). Collision: user-defined executable capabilities inside the gateway bypass KK3's work-order scoping, and the default-allow gate means the disabled-by-default rule is NOT enforced by the code for this surface — an owner-set skillsEnabled=false row is required to actually disable it.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "agent-surface",
+      "risk_class": "high — default-allow execution gate contradicts the HX disabled-by-default rule until explicitly set",
+      "dependencies": [
+        "CAP-P7-019 for the model-invocation path"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Unset key: execute a builtin skill via /api/skills/executions and record that it runs (evidence of default-allow); set skillsEnabled=false and assert the 403-style error; per-skill enabled=false rejects by name.",
+      "rollback_or_disable": "Persist settings.skillsEnabled=false (explicit — the code default is allow); per-skill enabled=false in the registry; management API is requireManagementAuth-gated.",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P7-019",
+      "name": "Skill tool injection + interception in provider requests",
+      "source_refs": [
+        "src/lib/skills/injection.ts:33",
+        "src/lib/skills/injection.ts:35",
+        "src/lib/skills/interception.ts:279",
+        "src/lib/skills/interception.ts:31"
+      ],
+      "purpose": "Enabled skills are advertised to models as provider-native tools (name@version, base64url-encoded under the omr_skill_ prefix when needed, injection.ts:33-41) and their calls are intercepted and executed gateway-side with builtin aliasing (web_search/web_fetch fallbacks, interception.ts:31-34); customSkillExecutionEnabled===false blocks custom-skill interception (:279). Collision: this gives models tool-level access to gateway-managed capabilities — agent-like autonomous behavior inside the traffic plane, gated only by the same default-allow skills posture (CAP-P7-018).",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "high — models gain executable tools mid-stream",
+      "dependencies": [
+        "CAP-P7-018"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "With a test skill enabled, assert the tool appears in the outbound payload and its call is intercepted; negative: skillsEnabled=false strips injection (memorySkillsInjection both-branch disable).",
+      "rollback_or_disable": "skillsEnabled=false globally; per-skill enabled=false; builtinToolNames allowlist constrains builtins per request.",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P7-020",
+      "name": "Skill sandbox (container-runtime execution)",
+      "source_refs": [
+        "src/lib/skills/sandbox.ts:25",
+        "src/lib/skills/sandbox.ts:80",
+        "src/lib/skills/containerProvider.ts:12",
+        "src/lib/skills/containerProvider.ts:71"
+      ],
+      "purpose": "SandboxRunner executes skill code in containers (docker/apple/wsl/orbstack/podman auto-detected, SKILLS_SANDBOX_RUNTIME override, containerProvider.ts:12-15) with defaults cpu 100 / mem 256MB / 30s timeout / network disabled / read-only fs (sandbox.ts:25-31); runtime detection probes binaries via spawnSync and fails closed when none exists (containerProvider.ts:71-79). Collision: container spawning on the host is the process-spawning class — on HX hosts container runtimes are rick's plane, so this stays lab-only; the isolation defaults are sound but the capability itself needs an owner decision.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "agent-surface",
+      "risk_class": "high — host container execution; mitigated by network-off/read-only defaults and fail-closed runtime detection",
+      "dependencies": [
+        "a container runtime on the host",
+        "CAP-P7-018"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Lab only: run a trivial image and assert network-isolation and read-only flags reach the runtime command; negative: no runtime installed → provider resolution fails, no spawn.",
+      "rollback_or_disable": "No container runtime on the host → hard fail-closed; SKILLS_SANDBOX_RUNTIME can pin or the sandbox caller path stays unused while skills are disabled.",
+      "preliminary_disposition": "LAB-ONLY"
+    },
+    {
+      "id": "CAP-P7-021",
+      "name": "Built-in + memory-builtin skill handlers",
+      "source_refs": [
+        "src/lib/skills/builtins.ts:1",
+        "src/lib/skills/memoryBuiltins.ts:1",
+        "src/lib/skills/webFetchExecution.ts:1",
+        "src/lib/skills/interception.ts:36"
+      ],
+      "purpose": "builtinSkills and memoryBuiltinHandlers provide the prepackaged handlers (web_search, web_fetch with pinned fetch-backend support, browser, and memory CRUD tools surfaced as model-callable tools, MEMORY_TOOL_NAMES at interception.ts:36) registered at startup with a chunk-singleton fallback. Collision: memory builtins give models direct write access to the memory store when memory is enabled — model-driven memory mutation crosses into Carol's knowledge-governance lane; otherwise standard capability code.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "agent-surface",
+      "risk_class": "medium — model-invokable memory mutation among otherwise benign builtins",
+      "dependencies": [
+        "CAP-P7-018",
+        "CAP-P7-014 (memory builtins)"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Execute each builtin directly with a test input; negative: builtin not in the request allowlist is not resolved (interception.ts:44-49).",
+      "rollback_or_disable": "Same gates as CAP-P7-018/019; memory builtins additionally die with memoryEnabled=false.",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P7-022",
+      "name": "skills.sh external skill provider install",
+      "source_refs": [
+        "src/app/api/skills/skillssh/install/route.ts:18",
+        "src/app/api/skills/skillssh/install/route.ts:23",
+        "src/app/api/skills/skillssh/install/route.ts:6"
+      ],
+      "purpose": "The skillssh install route fetches third-party SKILL.md content via fetchSkillMd and registers it globally, but only when the active skills provider setting is 'skillssh' (409 otherwise, route.ts:23-32); authenticated via isAuthenticated. Collision: importing unvetted external skill definitions is a supply-chain path into the skill registry (and from there into model tool lists) — owner approval and content provenance review belong before any use.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "agent-surface",
+      "risk_class": "high — third-party content supply chain into executable skills",
+      "dependencies": [
+        "skills provider setting switched to 'skillssh'",
+        "CAP-P7-018"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "With provider=skillssh, install a known test skill and assert registry row + provenance fields; negative: provider unset returns 409.",
+      "rollback_or_disable": "Provider setting not switched (default path rejects with 409); uninstall removes the registry row.",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P7-023",
+      "name": "GitHub skill collector (external repo discovery + install)",
+      "source_refs": [
+        "src/lib/skills/githubCollector.ts:1",
+        "src/lib/skills/githubCollector.ts:8",
+        "src/app/api/github-skills/route.ts:1"
+      ],
+      "purpose": "githubCollector searches GitHub for SKILL.md-bearing repos, scores them, scans for blocked patterns (malware/secrets), and installs skill files INTO EXTERNAL AGENT DIRECTORIES (Hermes, Claude, etc. per the module header, githubCollector.ts:1-11). Collision: it reaches out to GitHub (egress) and writes into other agents' host directories — crossing the owner authority plane and other lanes' filesystems; the blocked-pattern scan is the only quarantine besides not calling it.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "agent-surface",
+      "risk_class": "high — writes to foreign agent directories plus GitHub egress",
+      "dependencies": [
+        "GitHub reachability",
+        "target agent directories on the host"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Dry-run a search and inspect scoring; negative: a repo matching blocked patterns is refused; never run install outside a lab directory.",
+      "rollback_or_disable": "On-demand API only (no scheduler found); skipping use leaves nothing running; installed files are plain files removable by hand.",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P7-024",
+      "name": "Skill Collector CLI detection + chaos dispatch",
+      "source_refs": [
+        "src/server/authz/routeGuard.ts:69",
+        "src/app/api/skills/collect/detect/route.ts:1",
+        "src/shared/constants/publicApiRoutes.ts:54",
+        "src/shared/constants/publicApiRoutes.ts:60",
+        "src/app/api/skills/collect/chaos/route.ts:67"
+      ],
+      "purpose": "The /api/skills/collect/ tree probes the host for installed CLI tools via child-process detection — classified RCE-via-tunnel and gated LOCAL_ONLY (routeGuard.ts:69) — while the single chaos dispatch route is PUBLIC-by-exact-path but enforces its own Bearer validateApiKey check (chaos/route.ts:67) per the publicApiRoutes.ts:54-60 contract. Collision: host probing plus an externally-triggerable dispatch endpoint into skill execution — the LOCAL_ONLY tier covers the probes; chaos mode is the one intentionally-public hole and needs its flag+key evidence before any owner sign-off.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "agent-surface",
+      "risk_class": "high — host CLI probing; one public exact route with per-handler auth",
+      "dependencies": [
+        "chaos mode flag for the chaos route"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "GET detect from loopback (shape check) and from LAN (expect LOCAL_ONLY denial); POST chaos without a key (expect 401) and with a key when enabled.",
+      "rollback_or_disable": "LOCAL_ONLY tier for /api/skills/collect/; chaos requires its own enabled flag plus a valid key — both absent by default.",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P7-025",
+      "name": "Agent-skills catalog + skills/ SKILL.md corpus",
+      "source_refs": [
+        "src/lib/agentSkills/generator.ts:2",
+        "skills/README.md:1",
+        "src/app/api/agent-skills/route.ts:21",
+        "src/app/api/agent-skills/route.ts:37"
+      ],
+      "purpose": "45 generated SKILL.md manifests (23 API + CLI families per skills/README.md and the generator header 'all 45 agent skills', generator.ts:2) teach any external agent (Claude Desktop, ChatGPT, Cursor, Cline, Continue) how to drive OmniRoute's management API — keys, settings, backups, tunnels, MCP — and are served read-only via GET /api/agent-skills (no route-level auth; central MANAGEMENT classification applies). Collision: this corpus advertises the full management-plane control surface to arbitrary agents — a competing catalog to Carol's curated knowledge governance, publishing exactly the capabilities the HX lane keeps disabled.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "distribution",
+      "risk_class": "medium — read-only, but it is a public advertisement of the entire control surface to any agent that can read it",
+      "dependencies": [
+        "the generated skills/ tree (build-time artifact)"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "GET /api/agent-skills and count entries vs the skills/ tree; content check: omni-mcp advertises 107 tools/32 scopes vs the measured scope list (17 MCP scopes — drift worth recording).",
+      "rollback_or_disable": "Read-only catalog; removing the skills/ tree or the route removes the advertisement; nothing executes from these files server-side.",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P7-026",
+      "name": "Agent-skills SKILL.md generator (build tooling)",
+      "source_refs": [
+        "src/lib/agentSkills/generator.ts:10",
+        "src/lib/agentSkills/generator.ts:11",
+        "src/lib/agentSkills/generator.ts:28",
+        "src/app/api/agent-skills/generate/route.ts:28"
+      ],
+      "purpose": "generateAgentSkills rebuilds SKILL.md files from the OpenAPI spec and CLI registry with a hard safety contract — dryRun=true default, writes require dryRun=false, deletion requires prune AND dryRun=false (generator.ts:10-15) — and the generate route is management-gated. Collision: none material — doc synthesis tooling; its output feeds CAP-P7-025's advertisement concern.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "distribution",
+      "risk_class": "low — filesystem writes possible only under explicit non-default flags",
+      "dependencies": [
+        "OpenAPI spec + CLI registry inputs"
+      ],
+      "required_authorization": "layer-N",
+      "test_contract": "Run generator default (assert zero writes and a dry-run report); lab: dryRun=false against a temp copy and diff.",
+      "rollback_or_disable": "Default dry-run; generated files are overwritable artifacts (regeneration is the inverse).",
+      "preliminary_disposition": "LAB-ONLY"
+    },
+    {
+      "id": "CAP-P7-027",
+      "name": "Plugin manager (install/activate lifecycle)",
+      "source_refs": [
+        "src/lib/plugins/manager.ts:2",
+        "src/lib/plugins/manager.ts:77",
+        "src/app/api/plugins/route.ts:19",
+        "src/server/authz/routeGuard.ts:56"
+      ],
+      "purpose": "The plugin manager coordinates scanner, loader, DB rows, and hook registry for install/activate/deactivate/uninstall, with assertWithinPluginDir (manager.ts:77-81) blocking rm of any path outside the plugin root even from a tampered DB pluginDir; the API tree is LOCAL_ONLY (routeGuard.ts:56-57) as a child_process code-exec class. Collision: third-party code lifecycle inside the gateway — the plugin class is named in the charter's disabled-by-default list; nothing ships installed (scanner reads ~/.omniroute/plugins which is operator-populated).",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "agent-surface",
+      "risk_class": "high — third-party code lifecycle management inside the gateway process",
+      "dependencies": [
+        "CAP-P7-028",
+        "operator-populated plugin dir"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Scan an empty plugin dir (zero plugins, no errors); lab: install a fixture plugin, activate, assert DB status transitions; negative: tampered pluginDir delete attempt throws.",
+      "rollback_or_disable": "Deactivate+uninstall via the API (path-guarded rm); LOCAL_ONLY tier blocks remote lifecycle calls; empty plugin dir means nothing loads at boot.",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P7-028",
+      "name": "Plugin loader (child-process isolation + env filtering)",
+      "source_refs": [
+        "src/lib/plugins/loader.ts:2",
+        "src/lib/plugins/loader.ts:198",
+        "src/lib/plugins/loader.ts:386",
+        "src/lib/plugins/loader.ts:37"
+      ],
+      "purpose": "loadPlugin runs each plugin in a separate node child process over IPC (spawn process.execPath with a temp host script, stdio ignore/pipe/pipe/ipc, loader.ts:198-206) with a permission-filtered environment (getFilteredEnv allowlists safe keys unless the 'env' permission widens it, :386-395), SRI-format integrity hashing (:37-40), 10s hook timeout and SIGKILL grace. Collision: this is the gateway's third-party code execution engine — process-spawning class; the env filter is the only runtime permission enforcement found (see CAP-P7-903), so declared network/file/exec permissions are not code-enforced here.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "agent-surface",
+      "risk_class": "critical — executes third-party code on the host; isolation is process-level only, permission enforcement partial",
+      "dependencies": [
+        "CAP-P7-027"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Load a fixture plugin and assert IPC ready/result round-trip; inspect the child env for allowlisted keys only; negative: hook timeout yields SIGTERM→SIGKILL cleanup.",
+      "rollback_or_disable": "Deactivate the plugin (child is killed, temp host script removed); no plugins loaded while none installed.",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P7-029",
+      "name": "Plugin manifest + permission schema",
+      "source_refs": [
+        "src/lib/plugins/manifest.ts:11",
+        "src/lib/plugins/manifest.ts:52",
+        "src/lib/plugins/manifest.ts:123"
+      ],
+      "purpose": "plugin.json is validated against a manifest schema whose requires.permissions enum is network|file-read|file-write|env|exec (manifest.ts:11), defaulting to an empty permission list (:123), and the granted set is persisted to the DB at install/scan. Collision: the schema is the dashboard-visible contract for plugin authority — but enforcement beyond env filtering was not found (CAP-P7-903), so the declaration currently outruns the mechanism; owner review must treat manifests as claims, not guarantees.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "agent-surface",
+      "risk_class": "medium — permission declarations without full runtime enforcement",
+      "dependencies": [
+        "CAP-P7-027",
+        "CAP-P7-028"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Validate manifests missing/extra fields against the schema; assert DB row records the declared permission set at install.",
+      "rollback_or_disable": "Schema-level only; uninstalling plugins removes the rows.",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P7-030",
+      "name": "Plugin marketplace (remote registry install)",
+      "source_refs": [
+        "src/lib/plugins/marketplace.ts:11",
+        "src/lib/plugins/marketplace.ts:35",
+        "src/lib/plugins/marketplace.ts:53",
+        "src/app/api/plugins/marketplace/install/route.ts:1"
+      ],
+      "purpose": "The marketplace browses and installs plugins from a registry URL guarded by isSafeMarketplaceUrl — http(s) only, literal-private rejection, and A+AAAA DNS resolution with any-private-address rejection failing closed (marketplace.ts:35-60) — plus safeOutboundFetch public-only with redirect blocking for the fetch itself. Collision: remote code supply chain into the gateway (Phase 1 local seed registry, Phase 2 remote per the header) — the SSRF posture is strong, the supply-chain decision is the owner's.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "agent-surface",
+      "risk_class": "critical — downloads and activates third-party code from a remote registry",
+      "dependencies": [
+        "CAP-P7-027",
+        "CAP-P7-028",
+        "network egress to the registry"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Point at a lab registry fixture, install, assert integrity + manifest validation; negative: registry hostname resolving to a private IP is rejected (A and AAAA cases).",
+      "rollback_or_disable": "Do not configure/use the marketplace (inert by default); installed plugins uninstall through the path-guarded manager.",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P7-031",
+      "name": "Plugin hooks + fs-watch hot reload",
+      "source_refs": [
+        "src/lib/plugins/manager.ts:31",
+        "src/lib/plugins/watcher.ts:4",
+        "src/lib/plugins/watcher.ts:36",
+        "src/lib/plugins/hooks.ts:1"
+      ],
+      "purpose": "Plugins register lifecycle hooks (onRequest/onResponse/onError/onInstall/onActivate/onDeactivate/onUninstall, manager.ts:31-40) that run in the request path, and a directory watcher auto-reloads changed plugin dirs after a 500ms debounce (watcher.ts:4,36-47). Collision: in-path request/response mutation by third-party code, plus filesystem-triggered code reload — a tampered plugin file becomes live code without any management action; the watcher means 'disabled by default' must include not watching empty dirs.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "critical — unvetted code mutating traffic plus fs-triggered reload",
+      "dependencies": [
+        "CAP-P7-027",
+        "CAP-P7-028"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Activate a fixture hook plugin and assert onRequest fires in order; touch a plugin file and observe debounced reload; negative: deactivated plugin emits no hooks.",
+      "rollback_or_disable": "Deactivation unregisters hooks (unregisterHooks) and stops watching; nothing watched while no plugins are installed.",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P7-032",
+      "name": "Pre-request middleware hooks (vm.Script compilation)",
+      "source_refs": [
+        "src/lib/middleware/registry.ts:7",
+        "src/lib/middleware/registry.ts:111",
+        "src/lib/middleware/registry.ts:118",
+        "src/lib/middleware/registry.ts:214",
+        "src/server/authz/routeGuard.ts:58"
+      ],
+      "purpose": "The pre-request hook registry compiles operator-supplied JS into reusable vm.Script objects (registry.ts:111-118) that run in priority order BEFORE provider selection and can mutate body/headers, redirect to a different model/combo, or short-circuit a response (:7-13); the routeGuard classifies /api/middleware/ with the plugins code-exec tier and gates it LOCAL_ONLY (routeGuard.ts:58). Collision: arbitrary code rewriting routing decisions in the hot path — an ungoverned second routing brain competing with KK3's route governance; Coder-X independently classed it as untrusted-code-execution authority.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "critical — operator/supplied JS executes in the request hot path and can redirect traffic",
+      "dependencies": [
+        "hook configurations (DB-backed)"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Register a fixture hook that tags a header and assert order/effect; negative: compile error in hook code is rejected at registration; LAN peer denied by LOCAL_ONLY tier.",
+      "rollback_or_disable": "Remove hook configurations (registry initializes empty without them); LOCAL_ONLY API tier blocks remote hook management.",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P7-033",
+      "name": "Eval framework (builtin + custom suites)",
+      "source_refs": [
+        "src/lib/evals/evalRunner.ts:11",
+        "src/lib/evals/evalRunner.ts:14",
+        "src/lib/evals/runtime.ts:1",
+        "src/app/api/evals/route.ts:12"
+      ],
+      "purpose": "The eval runner executes builtin suites (golden/coding/reasoning/multilingual/safety/instruction/codex-comparison, evalRunner.ts:14-22) and custom DB suites against live models by POSTing through the local chat-completions route (runtime.ts:1-5) and persisting runs; strategies exact/contains/regex (safe-regex)/custom; the API is management-gated. Collision: none with KK3 — evaluation is owner-evidence machinery — but runs burn provider quota and touch real models, so it stays operator-triggered lab work.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "management-plane",
+      "risk_class": "low — read/evaluate-only; cost side effects on providers",
+      "dependencies": [
+        "a configured provider/combo target"
+      ],
+      "required_authorization": "layer-N",
+      "test_contract": "Run a tiny builtin suite against a lab combo and assert persisted run rows; negative: unknown suite id 404s.",
+      "rollback_or_disable": "No background scheduler found — nothing runs unless invoked; deleting runs/suites is plain CRUD.",
+      "preliminary_disposition": "LAB-ONLY"
+    },
+    {
+      "id": "CAP-P7-034",
+      "name": "Router-eval observation records",
+      "source_refs": [
+        "src/lib/routerEval/index.ts:3",
+        "src/lib/routerEval/index.ts:16"
+      ],
+      "purpose": "routerEval defines typed RouterObservation records (sampleId, routeInput, configId, selected vs expected model, latencyMs, costUsd, success) with an input-normalization parser for offline router-quality evaluation. Collision: none — pure data-shaping for evaluation evidence; supports the owner's routing-correctness questions without touching traffic.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "data-plane",
+      "risk_class": "low — type/parsing utilities only",
+      "dependencies": [
+        "evaluation harness consuming the records"
+      ],
+      "required_authorization": "layer-N",
+      "test_contract": "Feed malformed and well-formed observation inputs and assert normalization outcomes (unit-level).",
+      "rollback_or_disable": "Library only — nothing to disable.",
+      "preliminary_disposition": "LAB-ONLY"
+    },
+    {
+      "id": "CAP-P7-035",
+      "name": "Model self-assessment loop (/api/assess)",
+      "source_refs": [
+        "src/app/api/assess/route.ts:14",
+        "src/app/api/assess/route.ts:62",
+        "src/app/api/assess/route.ts:83",
+        "src/app/api/assess/route.ts:147",
+        "src/domain/assessment/assessor.ts:57"
+      ],
+      "purpose": "POST /api/assess fans an assessment run across every auto/* model via loopback /v1 calls (assessor.ts:57) and categorizes fitness with a SelfHealer; the route carries NO route-level auth and relies on the central MANAGEMENT fallback (classify.ts:122-126); its self-auth env var is misspelled OMNIROUTe_API_KEY at both use sites (route.ts:15,147) so the intended key never resolves and it silently falls back to API_KEY/empty [FACT — code bug/drift]. Collision: a one-POST fleet-wide probe storm burning quota on every model is an orchestration-grade action with a broken credential knob — owner evidence required before any use, and the typo belongs in the drift register.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "management-plane",
+      "risk_class": "medium — unauthenticated-at-route bulk model probing; broken env-var spelling defeats its own configuration",
+      "dependencies": [
+        "providers with auto/* models"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Confirm centrally-gated 401 without management auth; lab: POST with scope model and assert exactly one model probed; record the typo fallback behavior as evidence.",
+      "rollback_or_disable": "Central MANAGEMENT classification is the gate; not calling it leaves nothing running; results are in-memory in the Assessor instance.",
+      "preliminary_disposition": "LAB-ONLY"
+    },
+    {
+      "id": "CAP-P7-036",
+      "name": "Cloudflare tunnel (cloudflared binary lifecycle)",
+      "source_refs": [
+        "src/lib/cloudflaredTunnel.ts:1",
+        "src/lib/cloudflaredTunnel.ts:13",
+        "src/app/api/tunnels/cloudflared/route.ts:22",
+        "src/server/authz/routeGuard.ts:43"
+      ],
+      "purpose": "The cloudflared module downloads the binary from the GitHub releases API (cloudflaredTunnel.ts:13-14, sha256-pinned asset specs) and spawns it to publish OmniRoute at a public URL, with persisted tunnel state; the API is authenticated and the POST lifecycle is LOCAL_ONLY (routeGuard.ts:43). Collision: any tunnel publishes the entire gateway (management plane included) beyond the 192.168.50.0/24 LAN — the owner rule reserves boundary widening to an owner decision, so this surface is BLOCKED for HX use regardless of its internal guards.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "management-plane",
+      "risk_class": "critical — public internet exposure of the whole service; binary supply chain",
+      "dependencies": [
+        "network egress to GitHub + Cloudflare edge"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Static review only for HX: verify the download pins sha256 and the spawn is LOCAL_ONLY-gated (done, this ledger); no live enablement without an owner decision.",
+      "rollback_or_disable": "Not installed/not started by default; stop path exists in the module; removing the managed binary dir completes quarantine.",
+      "preliminary_disposition": "BLOCKED"
+    },
+    {
+      "id": "CAP-P7-037",
+      "name": "Tailscale Serve/Funnel tunnel",
+      "source_refs": [
+        "src/lib/tailscaleTunnel.ts:64",
+        "src/app/api/tunnels/tailscale/enable/route.ts:15",
+        "src/lib/db/settings.ts:146",
+        "src/server/authz/routeGuard.ts:44"
+      ],
+      "purpose": "The tailscale module drives tailscaled/login/serve/funnel subprocesses (funnel result typing at tailscaleTunnel.ts:64-65) via enableTailscaleTunnel (enable/route.ts:15) with tailscaleEnabled defaulting false (settings.ts:146); every mutation endpoint (enable/disable/install/login/start-daemon) is individually LOCAL_ONLY-listed (routeGuard.ts:44-48). Collision: tailnet-only Serve stays near the HX boundary model, but Funnel is public-internet exposure identical in class to cloudflared — owner decision required; the per-endpoint LOCAL_ONLY listing is the quarantine that already exists.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "management-plane",
+      "risk_class": "critical — Funnel publishes the service publicly; daemon lifecycle spawns system services",
+      "dependencies": [
+        "tailscaled on the host",
+        "tailscale account"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Static review for HX (done); lab-only: enable serve (not funnel) on a throwaway tailnet and assert URL shape; negative: non-local peer denied on every mutation route.",
+      "rollback_or_disable": "tailscaleEnabled=false default; disable route stops funnel/serve; uninstall path removes the daemon integration.",
+      "preliminary_disposition": "BLOCKED"
+    },
+    {
+      "id": "CAP-P7-038",
+      "name": "ngrok tunnel",
+      "source_refs": [
+        "src/lib/ngrokTunnel.ts:12",
+        "src/lib/ngrokTunnel.ts:30",
+        "src/app/api/tunnels/ngrok/route.ts:19"
+      ],
+      "purpose": "The ngrok module starts a listener targeting http://127.0.0.1:<apiPort> (ngrokTunnel.ts:30-33) and reports a public URL whose /v1 becomes the published API URL (:35-37); the route is authenticated via isAuthenticated. Collision: identical exposure-boundary class as the other tunnels — a one-call public URL for the whole gateway conflicts with the HX LAN boundary rule absent an owner decision.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "management-plane",
+      "risk_class": "critical — public internet exposure of the whole service",
+      "dependencies": [
+        "ngrok binary/agent + account"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Static review for HX (done); no live enablement planned without owner approval.",
+      "rollback_or_disable": "Not started by default; stop the listener via the module; no persisted state beyond the listener global.",
+      "preliminary_disposition": "BLOCKED"
+    },
+    {
+      "id": "CAP-P7-039",
+      "name": "Webhook dispatcher (HMAC-signed event egress)",
+      "source_refs": [
+        "src/lib/webhookDispatcher.ts:20",
+        "src/lib/webhookDispatcher.ts:45",
+        "src/lib/webhookDispatcher.ts:78",
+        "src/lib/webhookDispatcher.ts:132",
+        "src/lib/webhookDispatcher.ts:193"
+      ],
+      "purpose": "deliverWebhook POSTs HMAC-SHA256-signed (sha256= prefix, dispatcher.ts:20-22) event payloads to registered URLs with a 10s timeout and up to 3 retries, re-validating the URL against the outbound SSRF policy at dispatch time (:45,:78); the hot-path wrapper is fire-and-forget over dispatchEvent (:132-141) with deliveries recorded for history. Collision: an automated egress channel carrying request/quota metadata off-box — controlled entirely by who may register webhooks (management API) and by the URL guard; no orchestration content, but it is a data-exfiltration-shaped surface the owner should see in the boundary review.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "data-plane",
+      "risk_class": "medium — outbound event egress; SSRF-guarded at create and dispatch; no durable retry queue (CAP-P7-902)",
+      "dependencies": [
+        "registered webhook rows (CAP-P7-040)"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Register a lab webhook to a local listener, fire test.ping, assert signature header format and delivery row; negative: private/LAN URL rejected at create and at dispatch.",
+      "rollback_or_disable": "Delete the webhook rows — no registrations, no dispatches; dispatcher has no standalone process.",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P7-040",
+      "name": "Webhook management API + chat integrations",
+      "source_refs": [
+        "src/app/api/webhooks/route.ts:19",
+        "src/app/api/webhooks/route.ts:31",
+        "src/lib/webhooks/eventDescriptions.ts:1",
+        "src/app/api/webhooks/route.ts:45"
+      ],
+      "purpose": "The management API CRUDs webhooks of kinds slack/telegram/discord/custom (route.ts:19) over events request.completed/request.failed/quota.exceeded/test.ping plus wildcard (eventDescriptions.ts:1), validating non-telegram URLs with parseAndValidateWebhookUrl inside a zod superRefine (:31-40); telegram kind uses the Bot API instead of a raw URL. Collision: chat-ops integrations as a notification plane — benign, but telegram's guard exemption means its egress path (Bot API token) needs the same secret-handling review as any credential.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "management-plane",
+      "risk_class": "medium — management CRUD with per-kind egress transformers",
+      "dependencies": [
+        "CAP-P7-039"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Create/update/test/delete each kind in lab; negative: private URL rejected with the zod issue message; telegram kind skips URL validation by design (assert it).",
+      "rollback_or_disable": "requireManagementAuth gates every verb; deleting webhooks disables all egress.",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P7-041",
+      "name": "Embedded service supervisor (child-process lifecycle)",
+      "source_refs": [
+        "src/lib/services/ServiceSupervisor.ts:1",
+        "src/lib/services/ServiceSupervisor.ts:27",
+        "src/lib/services/registry.ts:20",
+        "src/server/authz/routeGuard.ts:42"
+      ],
+      "purpose": "ServiceSupervisor is the generic supervisor for embedded services (9router, CLIProxyAPI, future per its header): spawn with ignore/pipe/pipe stdio and detached:false (:27-44), ring-buffered logs, health probes that flip the service to error after consecutive failures, and a registry that stops all supervisors on SIGINT/SIGTERM (registry.ts:20-42); the /api/services/ tree is LOCAL_ONLY (routeGuard.ts:42). Collision: daemon lifecycle management inside the gateway is the process-spawning class — supervised daemons also become nested providers (CAP-P7-043), compounding the traffic-plane risk.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "agent-surface",
+      "risk_class": "high — long-lived child daemons supervised in-process",
+      "dependencies": [
+        "CAP-P7-042 (installed service binaries)"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Start a fixture service in lab and assert state transitions + log ring; kill -9 the child and assert error surfacing; negative: non-local API caller denied.",
+      "rollback_or_disable": "Stop via the supervisor (SIGTERM path) or the stop route; registry stopAll runs on shutdown; LOCAL_ONLY tier blocks remote control.",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P7-042",
+      "name": "Embedded service installers (npm/binary supply chain)",
+      "source_refs": [
+        "src/lib/services/installers/ninerouter.ts:7",
+        "src/lib/services/installers/ninerouter.ts:50",
+        "src/lib/services/installers/utils.ts:5",
+        "src/lib/services/installers/mux.ts:4"
+      ],
+      "purpose": "Installers pull third-party daemons into DATA_DIR: 9router via npm view/install (ninerouter.ts:7-8,:50) using an execFile-only npm wrapper (utils.ts:5), plus cliproxyapi, dario, bifrost, and mux — whose own header calls it 'a local agent-orchestration daemon' (mux.ts:4). Collision: installing mux literally installs a competing orchestrator inside the HX factory — the sharpest control-plane collision in this partition (KK3 is the sole orchestrator); the whole family is also a remote supply chain into supervised processes, so it stays disabled pending per-service owner review.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "agent-surface",
+      "risk_class": "critical — third-party daemon supply chain; mux is an agent-orchestration daemon competing with KK3",
+      "dependencies": [
+        "network egress to npm/binary hosts",
+        "CAP-P7-041"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Static inventory (done here); lab-only: install 9router into a temp DATA_DIR and assert execFile-only npm usage; never install mux outside an owner-approved experiment.",
+      "rollback_or_disable": "Not installed by default; uninstall removes the DATA_DIR service tree; supervisors stop before removal.",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P7-043",
+      "name": "Service backends registered as passthrough providers",
+      "source_refs": [
+        "src/lib/services/serviceBackends.ts:3",
+        "src/lib/services/serviceBackends.ts:18",
+        "src/lib/services/serviceBackends.ts:24"
+      ],
+      "purpose": "serviceBackends maps the supervised 9router/cliproxyapi daemons to provider-plugin manifest entries — OpenAI-format, no auth, passthroughModels:true, sidecar-ineligible as 'runtime provider' (serviceBackends.ts:3-6,18-38) — so a supervised daemon becomes a routable provider inside OmniRoute. Collision: OmniRoute routing into a nested router (9router is itself a routing daemon) delegates route decisions to a layer HX cannot see or verify — traffic-plane correctness risk on top of the process-spawning class.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "high — unverifiable nested routing behind a passthrough provider entry",
+      "dependencies": [
+        "CAP-P7-041",
+        "CAP-P7-042"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "With a lab 9router running, route one request through the passthrough provider and compare against direct provider routing; negative: daemon down surfaces the supervisor error state, not silent fallback.",
+      "rollback_or_disable": "Removing the provider rows / stopping the service detaches the nested router; nothing registers while services are uninstalled.",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P7-044",
+      "name": "Restart/shutdown remote lifecycle endpoints",
+      "source_refs": [
+        "src/app/api/restart/route.ts:4",
+        "src/app/api/restart/route.ts:10",
+        "src/app/api/shutdown/route.ts:4",
+        "src/app/api/shutdown/route.ts:11"
+      ],
+      "purpose": "POST /api/restart and /api/shutdown are management-authed one-liners that SIGTERM the gateway process after a 500ms reply delay (restart relies on an external process manager to come back). Collision: remote lifecycle control of the traffic plane — legitimately a management function, but no feature-flag disable exists for either route (CAP-P7-904), so management-token hygiene and the LOCAL_ONLY bypass policy are the only quarantines; availability impact makes it owner-visible.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "management-plane",
+      "risk_class": "high — remote process termination of the gateway",
+      "dependencies": [
+        "an external process manager for restart to return"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "In lab, POST restart and assert SIGTERM + supervisor stopAll evidence; negative: unauthenticated POST rejected by requireManagementAuth.",
+      "rollback_or_disable": "None in source (no flag found — CAP-P7-904); restrict manage-scope tokens and keep the routes behind the central pipeline.",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P7-045",
+      "name": "Job registry + background scheduled services",
+      "source_refs": [
+        "src/app/api/jobs/route.ts:17",
+        "src/server/authz/routeGuard.ts:64",
+        "src/instrumentation-node.ts:105",
+        "src/instrumentation-node.ts:107"
+      ],
+      "purpose": "The JobRegistry lists cron/interval jobs (DTO-whitelisted, jobs/route.ts:17-31) with enable/disable/run-now child routes — the whole tree LOCAL_ONLY (routeGuard.ts:64-65) — while boot wiring checks OMNIROUTE_DISABLE_BACKGROUND_SERVICES with a truthy-set parser that defaults to RUNNING when unset (instrumentation-node.ts:105-109). Collision: unattended background work (backup schedules, cloud sync, proxy/health schedulers) is the workflow class the HX rule freezes; the env kill-switch exists but is default-off, so 'disabled by default' requires setting it explicitly at deployment.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "agent-surface",
+      "risk_class": "medium — default-on background scheduling; kill-switch available",
+      "dependencies": [
+        "job definitions wired at boot"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Boot with OMNIROUTE_DISABLE_BACKGROUND_SERVICES=1 and assert no job registrations; default boot lists jobs via the LOCAL_ONLY API; run-now one job and inspect its run row.",
+      "rollback_or_disable": "OMNIROUTE_DISABLE_BACKGROUND_SERVICES=1 at boot; per-job disable via the LOCAL_ONLY API.",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P7-046",
+      "name": "Telegram bot gateway (bot webhook + Mini App proxy)",
+      "source_refs": [
+        "src/app/api/telegram/update/route.ts:1",
+        "src/app/api/telegram/update/route.ts:11",
+        "src/app/api/telegram/update/route.ts:21",
+        "src/shared/constants/publicApiRoutes.ts:29"
+      ],
+      "purpose": "The telegram update route is PUBLIC-classified (publicApiRoutes.ts:25-29) and serves two callers: Telegram bot updates (503 when TELEGRAM_BOT_TOKEN is unset — never a silent no-op, route.ts:11) and Mini App posts whose initData HMAC is verified before proxying chat through the OmniRoute pipeline. Collision: a public, dashboard-auth-free chat channel into the traffic plane — who may drive the gateway is an owner-authority question; the bot-token gate is the quarantine and it is default-closed.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "high — public unauthenticated-to-dashboard ingress into chat completions when a bot token is configured",
+      "dependencies": [
+        "TELEGRAM_BOT_TOKEN (unset by default)"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "POST an update with no token configured (expect 503); with a lab token, assert /start and a proxied chat reply; negative: bad initData HMAC rejected.",
+      "rollback_or_disable": "TELEGRAM_BOT_TOKEN unset (default) hard-closes the route with 503.",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P7-047",
+      "name": "Admin concurrency/semaphore inspection + reset",
+      "source_refs": [
+        "src/app/api/admin/concurrency/route.ts:10",
+        "src/app/api/admin/concurrency/route.ts:23"
+      ],
+      "purpose": "GET /api/admin/concurrency reports rate-limit and account-semaphore stats and POST performs admin actions such as semaphore resetAll, all behind requireManagementAuth. Collision: minor — capacity control is P6's plane (ledgered there); this entry records only the admin endpoint's existence so the remote-administration surface is complete; no orchestration content.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "management-plane",
+      "risk_class": "low — operational inspection plus a reset mutation",
+      "dependencies": [
+        "the rate-limit/semaphore subsystems"
+      ],
+      "required_authorization": "layer-N",
+      "test_contract": "GET and assert both stat blocks; lab: POST reset and assert semaphores clear; negative: unauthenticated rejected.",
+      "rollback_or_disable": "Management-auth gated; nothing to disable beyond token hygiene.",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P7-048",
+      "name": "Conductor hub integration (external OmniConductor orchestrator)",
+      "source_refs": [
+        "src/lib/conductor/hubProxy.ts:84",
+        "src/lib/conductor/hubProxy.ts:85",
+        "src/lib/conductor/bridge.ts:1",
+        "src/app/api/conductor/ask/route.ts:32",
+        "src/app/api/conductor/fleet/route.ts:13"
+      ],
+      "purpose": "hubProxy reads CONDUCTOR_HUB_URL/TOKEN (hubConfig returns null when unset, hubProxy.ts:84-87) and proxies Faro ask, fleet snapshots, and task detail with whitelisted shapes and server-side tokens; bridge.ts MIRRORS the external hub's SSE task events into the local A2A TaskManager with an explicit state mapping (bridge.ts:1-8). Collision: the most direct KK3 competitor found — an external orchestration plane driving OmniRoute-local task state and agent cards; Coder-X read it as 'client for an external orchestrator', which for the HX lane IS the collision [INFERENCE on severity, FACT on mechanism]; env-unset keeps it inert (degraded offline responses, never 5xx).",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "agent-surface",
+      "risk_class": "critical — external orchestration hub can drive local A2A task state and fleet advertising",
+      "dependencies": [
+        "CONDUCTOR_HUB_URL/TOKEN env (unset by default)",
+        "a reachable OmniConductor hub"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Unset env: assert degraded offline shapes from fleet/ask; lab-only with a fixture hub: assert task events mirror into the A2A TaskManager per the state ladder.",
+      "rollback_or_disable": "CONDUCTOR_HUB_URL unset (default) — hubConfig null disables every interaction; no local state persists.",
+      "preliminary_disposition": "BLOCKED"
+    },
+    {
+      "id": "CAP-P7-049",
+      "name": "Cloud agent providers (Jules/Devin/Codex-Cloud/Cursor-Cloud)",
+      "source_refs": [
+        "src/lib/cloudAgent/registry.ts:7",
+        "src/lib/cloudAgent/registry.ts:11",
+        "src/lib/cloudAgent/julesApi.ts:2"
+      ],
+      "purpose": "The cloudAgent registry wires four REMOTE cloud coding agents as task targets — Jules (https://jules.googleapis.com/v1alpha, julesApi.ts:2), Devin, codex-cloud, and cursor-cloud (registry.ts:7-14) — reached via their REST APIs with API-key credentials. Collision: double — delegating work to cloud agents violates the HX local-model-first/no-cloud rule if ever used, and it hands agent execution authority to third-party clouds; inert until credentials are configured, but the HX disposition is BLOCKED regardless of mechanism quality.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "agent-surface",
+      "risk_class": "critical — cloud egress plus agent-execution delegation to third parties",
+      "dependencies": [
+        "cloud agent API credentials (unconfigured by default)"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Static inventory only for HX (done); no live calls permitted under the no-cloud rule.",
+      "rollback_or_disable": "No credentials configured → no agent is callable; removing credential rows completes quarantine.",
+      "preliminary_disposition": "BLOCKED"
+    },
+    {
+      "id": "CAP-P7-050",
+      "name": "Issue agent (recorded triage executor)",
+      "source_refs": [
+        "src/lib/issueAgent/execution.ts:18",
+        "src/lib/issueAgent/execution.ts:25",
+        "src/lib/issueAgent/execution.ts:43",
+        "src/server/authz/routeGuard.ts:55"
+      ],
+      "purpose": "The issue agent replays recorded triage runs through the local chat-completions pipeline with model/provider env overrides, a 60s default timeout capped at 120s (execution.ts:25-27,43-47), and a RecordedTriageTimeoutError; the routeGuard keeps /api/issue-agent/ LOCAL_ONLY 'until sandbox + audit hardening is complete' (routeGuard.ts:55). Collision: an agent-like autonomous triage loop — the disabled-by-default class; the upstream guard comment itself acknowledges the hardening gap, supporting a LAB-ONLY posture.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "agent-surface",
+      "risk_class": "medium — bounded autonomous loop; upstream itself flags missing sandbox/audit hardening",
+      "dependencies": [
+        "recorded triage fixtures",
+        "a chat model route"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Run a recorded fixture in lab and assert timeout enforcement; negative: >120s timeout requests clamp to the cap.",
+      "rollback_or_disable": "LOCAL_ONLY tier confines it; no scheduler or always-on trigger found.",
+      "preliminary_disposition": "LAB-ONLY"
+    },
+    {
+      "id": "CAP-P7-051",
+      "name": "MITM agent bridge (host TLS interception)",
+      "source_refs": [
+        "src/mitm/manager.ts:1",
+        "src/mitm/manager.ts:11",
+        "src/mitm/manager.ts:13",
+        "src/mitm/manager.ts:30",
+        "src/server/authz/routeGuard.ts:51"
+      ],
+      "purpose": "The MITM manager spawns server.cjs as a child process, provisions /etc/hosts DNS overrides (manager.ts:11 dns imports), and installs a system-wide trusted root CA via privileged steps (runPrivilegedMitmStep, :30; cert install :13) to intercept agent CLI traffic; after GHSA-x7vm-hp44-9p79 both /api/tools/agent-bridge/ and /api/settings/mitm are LOCAL_ONLY (routeGuard.ts:51-53). Collision: host trust-store and DNS mutation is rick's OS lane and the owner's authority plane, not OmniRoute's — plus it turns the gateway into a TLS-interception appliance; BLOCKED for HX absent an explicit owner decision and rick's sign-off.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "agent-surface",
+      "risk_class": "critical — system trust-store + DNS mutation and TLS interception of host processes",
+      "dependencies": [
+        "root/sudo for CA install and hosts edits"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Static review only for HX (done); the LOCAL_ONLY reclassification after the GHSA is verified here by reading the guard entries.",
+      "rollback_or_disable": "Not enabled by default; teardown paths exist (removeDNSEntries/stopDnsTeardown imports); never run the enable flow on an HX host.",
+      "preliminary_disposition": "BLOCKED"
+    },
+    {
+      "id": "CAP-P7-052",
+      "name": "VNC browser-login sessions (containerized credential harvest)",
+      "source_refs": [
+        "src/lib/vncSession/service.ts:1",
+        "src/lib/vncSession/service.ts:9",
+        "src/lib/vncSession/service.ts:42",
+        "src/server/authz/routeGuard.ts:71"
+      ],
+      "purpose": "The VNC session service spawns Docker browser containers (service.ts:1) for provider web-login flows, waits for CDP, and harvests session state into provider credentials (harvest import :9), tracking labeled sessions with idle reaping (:42-45); the routeGuard gates /api/vnc-session/* LOCAL_ONLY as the GHSA-fhh6-4qxv-rpqj spawn class (routeGuard.ts:71). Collision: automated credential capture plus container spawning — secret-handling and owner-authority planes intersect; requires owner acceptance and a threat model before any HX use (critical change class).",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "agent-surface",
+      "risk_class": "critical — automated harvesting of provider session credentials via spawned browsers",
+      "dependencies": [
+        "docker on the host",
+        "provider web-login flows"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Lab-only with a throwaway provider account: run a session, assert harvest writes only credential fields and the container is reaped; negative: non-local caller denied by the guard.",
+      "rollback_or_disable": "On-demand only (no sessions exist by default); LOCAL_ONLY tier; session teardown removes containers and profile dirs.",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P7-053",
+      "name": "Copilot LLM driver (tool-executing assistant surface)",
+      "source_refs": [
+        "src/lib/copilot/tools.ts:4",
+        "src/lib/copilot/tools.ts:8",
+        "src/server/authz/routeGuard.ts:50"
+      ],
+      "purpose": "The copilot module defines tools letting an LLM 'configure OmniRoute on behalf of the user, query the codebase via CodeGraph, and execute CLI commands for full control' (tools.ts:1-5) via execFile/execSync (:7); the routeGuard describes /api/copilot/ as an 'unauthenticated LLM driver' kept CLI-only by default with an opt-in manage-scope bypass (routeGuard.ts:50). Collision: an LLM with CLI execution authority over the gateway is the strongest agent surface in the corpus — it converts model output directly into host commands; default loopback confinement is the only thing between it and remote abuse.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "agent-surface",
+      "risk_class": "critical — LLM-driven CLI execution against the host/gateway",
+      "dependencies": [
+        "an LLM backend for the copilot"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Static review (done); lab-only: confirm the LOCAL_ONLY tier denies LAN callers and the bypass requires an explicit manage-scope grant.",
+      "rollback_or_disable": "LOCAL_ONLY default; the manage-scope bypass is opt-in with a global kill-switch (localOnlyManageScopeBypassEnabled).",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P7-054",
+      "name": "OAuth host-credential auto-import (Cursor/Kiro/Raycast)",
+      "source_refs": [
+        "src/server/authz/routeGuard.ts:66",
+        "src/server/authz/routeGuard.ts:67",
+        "src/server/authz/routeGuard.ts:68",
+        "src/shared/constants/publicApiRoutes.ts:105",
+        "src/shared/constants/publicApiRoutes.ts:110"
+      ],
+      "purpose": "The oauth auto-import routes read HOST-LOCAL credential files (cursor binary probe, kiro-cli data, Raycast tokens) to import provider credentials; publicApiRoutes.ts:105-114 deliberately excludes them from the PUBLIC /api/oauth/ prefix so they fall to MANAGEMENT and reach the LOCAL_ONLY tier (routeGuard.ts:66-68) after GHSA-wgwc/gxv4. Collision: host credential access is the owner authority plane — the mechanism is correct (loopback-only) and ledgered here because it is an agent-adjacent host surface; provider credential lifecycle itself stays with P2/P4.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "agent-surface",
+      "risk_class": "high — reads host-local credential material (loopback-confined)",
+      "dependencies": [
+        "the respective CLIs installed on the host"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "From loopback with a fixture CLI config, import and assert credential fields land encrypted per the P5 path; negative: LAN caller denied by LOCAL_ONLY tier.",
+      "rollback_or_disable": "LOCAL_ONLY tier; not invoking the routes reads nothing.",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P7-901",
+      "name": "NOT-ESTABLISHED: true ACP wire-protocol implementation",
+      "source_refs": [
+        "src/lib/acp/manager.ts:5",
+        "src/lib/acp/manager.ts:1",
+        "src/lib/acp/registry.ts:1"
+      ],
+      "purpose": "Searched src/lib/acp/** and src/app/api/acp/** for the Agent Client Protocol (session/initialize handshake, ACP-spec JSON-RPC method set): found only generic stdio piping described as 'JSON-RPC style' (manager.ts:5) and CLI detection — the name 'ACP' denotes a CLI-as-backend transport here, not the Zed/AionUi ACP specification [INFERENCE from absence; registry header cites AionUi auto-detection as the reference]. Collision: none beyond CAP-P7-012/013 — recorded so no one assumes spec conformance.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "agent-surface",
+      "risk_class": "low — honest absence record",
+      "dependencies": [],
+      "required_authorization": "owner",
+      "test_contract": "Re-grep for 'session/initialize' or acp-spec schemas when upstream claims ACP conformance.",
+      "rollback_or_disable": "n/a — nothing found to disable.",
+      "preliminary_disposition": "NOT-ESTABLISHED"
+    },
+    {
+      "id": "CAP-P7-902",
+      "name": "NOT-ESTABLISHED: durable webhook retry queue",
+      "source_refs": [
+        "src/lib/webhookDispatcher.ts:132",
+        "src/lib/webhookDispatcher.ts:138",
+        "src/app/api/webhooks/[id]/deliveries/route.ts:8"
+      ],
+      "purpose": "Searched webhookDispatcher.ts and the webhook db modules for a persistent delivery queue: dispatch is fire-and-forget (Promise.allSettled inside dispatchEvent, :132-141) with in-call retries only (maxRetries=3, deliverWebhook :71-76); delivery HISTORY is persisted (getDeliveries, deliveries/route.ts:8) but a crash between attempts loses pending retries — no queue table or scheduler found [INFERENCE from absence]. Collision: none; recorded as a resilience gap for the owner.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "data-plane",
+      "risk_class": "low — delivery guarantees weaker than the retry knob implies",
+      "dependencies": [],
+      "required_authorization": "owner",
+      "test_contract": "Kill the process mid-retry in lab and assert the pending delivery is lost (expected) — evidence for the gap.",
+      "rollback_or_disable": "n/a — nothing found to disable.",
+      "preliminary_disposition": "NOT-ESTABLISHED"
+    },
+    {
+      "id": "CAP-P7-903",
+      "name": "NOT-ESTABLISHED: runtime enforcement of plugin permissions beyond env filtering",
+      "source_refs": [
+        "src/lib/plugins/loader.ts:386",
+        "src/lib/plugins/manifest.ts:11",
+        "src/lib/plugins/loader.ts:165"
+      ],
+      "purpose": "Searched loader/manager/hooks for code enforcing the manifest's network/file-read/file-write/exec permissions at runtime: the only enforcement found is environment-variable filtering (getFilteredEnv, loader.ts:386-395, fed from manifest permissions at :165); the child process keeps full network/fs/exec ability of the host user [INFERENCE from absence]. Collision: the manifest schema (CAP-P7-029) advertises guarantees the runtime does not provide — owner must treat plugin permissions as documentation until enforcement exists.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "agent-surface",
+      "risk_class": "medium — declared guarantees exceed mechanism; raises CAP-P7-028's effective risk",
+      "dependencies": [],
+      "required_authorization": "owner",
+      "test_contract": "Lab: a network-less-declared fixture plugin attempts an outbound fetch and succeeds (expected) — proving the gap.",
+      "rollback_or_disable": "n/a — nothing found to disable; the plugin class stays AVAILABLE-DISABLED regardless.",
+      "preliminary_disposition": "NOT-ESTABLISHED"
+    },
+    {
+      "id": "CAP-P7-904",
+      "name": "NOT-ESTABLISHED: feature-flag disable for restart/shutdown endpoints",
+      "source_refs": [
+        "src/app/api/restart/route.ts:4",
+        "src/app/api/shutdown/route.ts:4"
+      ],
+      "purpose": "Searched the feature-flag registry and both lifecycle routes for a disable switch: the routes mount unconditionally with requireManagementAuth as the only gate [INFERENCE from absence]. Collision: availability-affecting remote admin without an off switch — recorded so the owner can request one or accept the risk.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "management-plane",
+      "risk_class": "low — management-auth compensates; no flag exists",
+      "dependencies": [],
+      "required_authorization": "owner",
+      "test_contract": "Re-grep featureFlagDefinitions for a lifecycle flag at each upgrade review.",
+      "rollback_or_disable": "n/a — nothing found to disable.",
+      "preliminary_disposition": "NOT-ESTABLISHED"
+    },
+    {
+      "id": "CAP-P7-905",
+      "name": "NOT-ESTABLISHED: path-restricted tunnel exposure (publish /v1 only)",
+      "source_refs": [
+        "src/lib/ngrokTunnel.ts:30",
+        "src/lib/cloudflaredTunnel.ts:15",
+        "src/lib/tailscaleTunnel.ts:387"
+      ],
+      "purpose": "Searched all three tunnel modules for path/scope restriction of the published URL: ngrok targets the service root (ngrokTunnel.ts:30-33) and cloudflared/tailscale show no path filtering in the regions read — tunnels publish the WHOLE gateway (dashboard + management API + /v1), not just the client API [INFERENCE from absence]. Collision: strengthens CAP-P7-036/037/038's BLOCKED disposition — even an approved tunnel would expose the management plane.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "management-plane",
+      "risk_class": "medium — whole-surface publication when any tunnel runs",
+      "dependencies": [],
+      "required_authorization": "owner",
+      "test_contract": "If a tunnel is ever owner-approved, verify from outside that /api/<management> is reachable (expected: yes — the gap).",
+      "rollback_or_disable": "n/a — nothing found to disable; tunnels stay BLOCKED.",
+      "preliminary_disposition": "NOT-ESTABLISHED"
+    },
+    {
+      "id": "CAP-P7-906",
+      "name": "NOT-ESTABLISHED: sandboxing for ACP-spawned agent processes",
+      "source_refs": [
+        "src/lib/acp/manager.ts:65",
+        "src/lib/acp/manager.ts:67"
+      ],
+      "purpose": "Searched src/lib/acp/** for resource limits, sandboxing, or env allowlisting around spawned agent processes: spawn uses piped stdio with the full gateway env merged under caller env (manager.ts:65-69) and nothing else [INFERENCE from absence]; contrast with the skill sandbox's network-off/read-only defaults (sandbox.ts:25-31) which ACP does not reuse. Collision: raises CAP-P7-013's effective risk — agent children would run with gateway secrets and no containment.",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "agent-surface",
+      "risk_class": "medium — containment gap on an already-critical spawner",
+      "dependencies": [],
+      "required_authorization": "owner",
+      "test_contract": "Lab: inspect a spawned child's environ for gateway secrets (expected: present) — evidence for the gap.",
+      "rollback_or_disable": "n/a — nothing found to disable; ACP stays AVAILABLE-DISABLED and unwired.",
+      "preliminary_disposition": "NOT-ESTABLISHED"
+    }
+  ]
+}

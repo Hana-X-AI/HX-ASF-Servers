@@ -1,0 +1,81 @@
+document:
+  id: "DOC-pilot-omniroute-wo-09-trinity-install"
+  title: "09-work-order-trinity-install.yaml — WO-L1-TRINITY-INSTALL-001 (L1-M2: pinned OmniRoute install on hxs-8 + OD-13 secrets design + four-backend registration — trinity's first MUTATING commission; DISCHARGED — L1-M2 COMPLETE, state log row 37, 2026-08-27T17:38Z; deliverable DOC-pilot-omniroute-ev-03-trinity-l1-install)"
+  type: "work-order"
+  declared_purpose: "Delegated contract commissioning trinity (owner-ratified lane, KDD-0008; her FIRST MUTATING commission) for L1-M2 of GOAL-OMNIROUTE-L1-SECURE-CORE (goal_file goals/2026-08-27-omniroute-layer1-secure-core.md): install OmniRoute v3.8.51 on hxs-8 from the verified pinned corpus as a native systemd service; deploy it with the OD-13 secrets design (env-provisioned JWT_SECRET + API_KEY_SECRET + STORAGE_ENCRYPTION_KEY, never product defaults); register all four HX backends with identity evidence; configure management authN/authZ and the LAN-only exposure; set the disabled-by-default agent surfaces explicitly off; and lay the plaintext-snapshot backup design — all versioned and reversible. owner_authorizations: OD-12 Layer 1 authorized 2026-08-27; OD-04 native systemd never Docker; OD-08 amended (all four backends); OD-13 secrets rule ratified; OD-07 LAN-only + OmniRoute authN/authZ + no host firewall; OD-09 plaintext snapshots + own encryption; local-model-only everywhere; runtime present — /opt/node-v24.20.0 + /usr/local/bin symlinks (rick L1-M1 PASS — use it, do not install another Node); source /opt/tkv-local/OmniRoute-release-v3.8.51 READ-ONLY (copy to a work location on hxs-8 and build there; corpus hash-witnessed before and after, byte-identical); NOT authorized — Docker/containers/snap, other hosts or backend changes, cloud providers or cloud agent features, enabling any agent-like surface (MCP/A2A/ACP/Conductor/copilot/tunnels/cloud agents/skills/plugins), exposure beyond the LAN, firewall, Layer-2+ route/combo/strategy work. Boundaries: execution from hxs-5 via SSH with the askpass discipline; identity verified first against servers/hxs-8/discovery.md; secrets discipline — generate the three values locally (openssl rand -hex 32 class), provision via the systemd unit's Environment= lines (root-only 0640 drop-in, recorded by hash NEVER value), values in NO artifact/log/receipt/model context, the catalog records EXISTENCE + mechanism only; service conventions per the blueprint (native unit + versioned drop-in, budgets, no RemainAfterExit hacks that mask failure); everything versioned and reversible with documented inverses; the corpus stays pristine (sha256 before/after must be byte-identical). install_design: copy corpus to /opt/omniroute/src (or documented equivalent); npm ci --ignore-scripts per the source's own contract (the P8 container evidence used the same; handle the native-binary fixup CAP-P8-006 if the build needs it); build the Next.js standalone output per the product's own AGENTS.md (upstream guidance); deploy from the standalone build under /opt/omniroute with a systemd unit (Environment= for the OD-13 secrets, DATA_DIR under /opt/omniroute/data, HOSTNAME/LAN bind per the P8 standalone posture); build failure that cannot be bounded = STOP and escalate — never force an alternate runtime or a container (NO container fallback). secrets_design verification (method only, post-start): (a) no plaintext JWT/API secret in the DB key_value secrets table (the P4/P5 plaintext finding), (b) connection-row credential fields AES-256-GCM ciphertext (activates with STORAGE_ENCRYPTION_KEY). backends_registration: all four with identity evidence from the backend-capability records — Qwen-X hxs-1:11434 (hx-qwen3.8-27b-64k, digest 766cd9469fb4…), Coder-X hxs-2:11434 (hx-qwen3.6-coderx-64k, digest ec9ebe08a824…), Meta-X hxs-3:11434 (hx-muse-glimmer-64k, digest 9dffb015db40…), Chat-X hxs-4:11434 LOOPBACK-ONLY today (register it, record the posture: NOT LAN-reachable from hxs-8; parity only if posture allows, else posture-blocked not failed); each registration carries endpoint, profile alias, expected digest, ctx, capability notes; live identity verification from hxs-8 before registering (except Chat-X); a failed identity verification = do not register, report. exposure_and_management: LAN bind only, loopback preserved, no firewall (owner rule); management authN/authZ per the P4 proxy.ts evidence (management credential env-provisioned, same discipline; anonymous gets the documented limited view, management full view — never record the credential); skills execution and background jobs set explicitly off/explicit (the not-code-enforced finding); all agent surfaces verified disabled. backup_design: plaintext SQLite snapshots on a schedule to a managed directory (retention per product default 20); own encryption wrapper only if required later (OD-09: product encryption write-only, cloud upload a dead endpoint — never rely on either). Deliverable: 03-trinity-l1-install.md — versioned install record (source path + hashes, build evidence, unit + drop-in hashes, env-provision mechanism by name not value), secrets verification evidence (method only), backend registration records with identity evidence, exposure + management auth evidence, disabled-surface verification, backup design, pre/post hashes, documented inverses, sanitized sequential command log, Task May Proceed receipt — PLUS the L1-gate evidence section (direct-vs-routed parity per reachable backend, health-surface checks, service-restart routing-intact check; cold-reboot cycle belongs to the L1-M3 gate WO unless trivially safe — state the choice and why). Budgets: sessions 2, transient_retry 1. Stop conditions: build fails environmentally and cannot be bounded (escalate); corpus hash mismatch at any point (STOP — integrity); scope exceedance; secrets verification fails (do not paper over); backend identity verification fails (do not register — report). Rollback/containment: documented inverse per change (unit stop+remove, /opt/omniroute removal, data wipe, backend unregistration); pre-state hashes recorded. second_brain_evaluation: opportunity yes — first governed traffic plane + first secrets-design deployment (configuration.md for hxs-8 the second of its class); disposition implemented (install record + secrets pattern + backend registrations become catalog content at handoff)."
+  inferred_value: "INFERENCE: the highest-consequence WO the factory has issued to a non-governor lane — first production install, first secrets-handling contract, first four-backend integration — and its shape shows the Layer-0 ledger doing real work: nearly every boundary line cites a P4/P5/P8 finding (plaintext secrets, STORAGE_ENCRYPTION_KEY activation, not-code-enforced surfaces, write-only backup encryption, dead cloud endpoint), i.e. the capability inventory converted directly into deployment constraints."
+  source:
+    author: "Kimi-K3 (governor)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/09-work-order-trinity-install.yaml"
+    section: "§whole-document"
+    ingestion_date: "2026-08-27T16:23:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: [hxs-8, hxs-5]
+    fqdns: []
+    services: [ollama.service]
+    agents: [trinity, kimi-k3]
+    repositories: [HX-ASF-Servers, tkv-local]
+    environments: [pilot]
+    models: []
+  version: ""
+  status: "adopted"
+  authority_level: "delegated-contract"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "kimi-k3"
+      note: "issued at OmniRoute pilot state log row 35 (2026-08-27T16:15Z — 'L1-M2 commissioned: Trinity pinned install + OD-13 secrets + four-backend registration'); session trinity-l1-install-20260827-01 dispatched (background, in flight at this mint)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-cp-10-trinity-install"
+      note: "paired context packet (goal binding GOAL-OMNIROUTE-L1-SECURE-CORE v1; session trinity-l1-install-20260827-01; current_state incl. backends and product_facts, constraints, evidence requirements, handoff clause) — cataloged THIS wave, DISCHARGED with this WO at the L1-M2 flip (state log row 37)"
+    - predicate: "depends_on"
+      target: "DOC-goal-omniroute-layer1-secure-core"
+      note: "parent goal GOAL-OMNIROUTE-L1-SECURE-CORE (owner parameters ratified 2026-08-27 — every authorization line above traces to it) — cataloged THIS wave"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-state-log"
+      note: "governing log; commissioned at row 35 (2026-08-27T16:15Z); DISCHARGED at row 37 (2026-08-27T17:38Z — L1-M2 COMPLETE) with the deliverable cataloged THIS wave (M7-pair convention); the L1-M2 handoff CLOSES when this run's receipt is cited there (profile §7)"
+    - predicate: "references"
+      target: "DOC-tkv-corpus-omniroute"
+      note: "the install source: /opt/tkv-local/OmniRoute-release-v3.8.51 — identity VERIFIED (13,098/13,098 content-identical to upstream @42a13fedef8b…; manifest 085fb94b…); READ-ONLY, copied to hxs-8 and built there, hash-witnessed before/after"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-ev-01-rick-l1-node-runtime"
+      note: "the runtime precondition: Node v24.20.0 at /opt/node-v24.20.0 + /usr/local/bin (rick L1-M1 PASS, row 34) — 'use it; do not install another Node' — cataloged THIS wave"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-rick-hxs8-readiness"
+      note: "controlling source: host baseline (with 01-rick-l1-node-runtime.md — host + runtime)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-ev-08-capability-ledger"
+      note: "controlling source: the P4/P5/P8 evidence the install/secrets/exposure/backup designs cite (authN/authZ pipeline, plaintext-secrets findings, STORAGE_ENCRYPTION_KEY activation, standalone packaging + CAP-P8-006, write-only backup encryption / dead cloud endpoint, not-code-enforced skills/jobs)"
+    - predicate: "references"
+      target: "DOC-backend-qwen-x"
+      note: "registration 1 of 4: Qwen-X hxs-1:11434, alias hx-qwen3.8-27b-64k, expected digest 766cd9469fb4…, ctx 65536, ACTIVE — live identity verification from hxs-8 before registering"
+    - predicate: "references"
+      target: "DOC-backend-coder-x"
+      note: "registration 2 of 4: Coder-X hxs-2:11434, alias hx-qwen3.6-coderx-64k, expected digest ec9ebe08a824…, ctx 65536, candidate until its M8 (usable per owner designation) — live identity verification from hxs-8"
+    - predicate: "references"
+      target: "DOC-backend-meta-x"
+      note: "registration 3 of 4: Meta-X hxs-3:11434, alias hx-muse-glimmer-64k, expected digest 9dffb015db40…, ctx 65536, ACTIVE — live identity verification from hxs-8"
+    - predicate: "references"
+      target: "DOC-backend-chat-x"
+      note: "registration 4 of 4: Chat-X hxs-4:11434 LOOPBACK-ONLY today (hx-qwen3.5-9b-64k, 5936a390c6c2…) — register it and record the posture: NOT LAN-reachable from hxs-8; parity posture-blocked not failed unless its posture allows"
+    - predicate: "governs"
+      target: "DOC-pilot-omniroute-ev-03-trinity-l1-install"
+      note: "DISCHARGED by the L1-M2 deliverable 03-trinity-l1-install.md (PASS — OmniRoute v3.8.51 live on hxs-8: omniroute.service active+enabled on 0.0.0.0:20128, corpus byte-identical, OD-13 verified by method, three backends parity byte-identical ×3, Chat-X registered posture-blocked, cloudEnabled explicit false, backup timer daily 03:17 UTC keep-20; governor-logged COMPLETE at state log row 37, 2026-08-27T17:38Z); the governs edge deferred at the in-execution cataloging is added here at the flip (M7-pair convention)"
+  validation:
+    validated_at: "2026-08-27T18:04:00Z"
+    freshness: "current"
+    review_due: "DISCHARGED 2026-08-27 (L1-M2 COMPLETE, state log row 37); the L1-M2 handoff CLOSES when this run's receipt is cited in the OmniRoute pilot state log (profile §7); the L1-M3 gate work order follows (WO-11/CP-12 stands ready to dispatch per row 38)"
+  sha256: "120d6faef72a516266dbbfd4f190e3b829cc2c57f4ee87a5e44ca86f9a050ff8"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/09-work-order-trinity-install.yaml"
+notes:
+  status_convention: "IN-EXECUTION WO/CP cataloging per the M7-pair convention (DOC-pilot-hxs3-wo-08-john-m7 / cp-09; DOC-pilot-omniroute-wo-05-trinity-ledger / cp-06): status active = commissioned-not-complete — state log row 35 (2026-08-27T16:15Z), session trinity-l1-install-20260827-01 in flight at mint (deliverable 03-trinity-l1-install.md NOT yet present in the pilot directory at ingestion, verified). The governs edge to the deliverable is DEFERRED until discharge, per the same convention — it lands with the status flip at the wave that catalogs 03-trinity-l1-install.md. FLIPPED to adopted 2026-08-27T18:04Z (this run): the L1-M2 deliverable landed and is cataloged (DOC-pilot-omniroute-ev-03-trinity-l1-install; governor-logged COMPLETE at state log row 37, 2026-08-27T17:38Z — OmniRoute live on hxs-8 with OD-13 verified and parity ×3 byte-identical) — the discharged-contract convention now applies; the deferred governs edge is added above. Record sha256 re-verified UNCHANGED at the flip (120d6fae… == live file)."
+  hash_crosscheck: "sha256 120d6faef72a516266dbbfd4f190e3b829cc2c57f4ee87a5e44ca86f9a050ff8 at mint (2026-08-27T16:23Z) — the first recorded hash for this artifact (state log row 35 records no WO/CP hashes, same pattern as the earlier pairs); re-verified == live at this run's close self-check."
+  secrets_discipline: "The OD-13 secrets contract is cataloged as existence + mechanism only: values generated locally (openssl rand -hex 32 class), provisioned via systemd Environment= in a root-only 0640 drop-in, recorded BY HASH never value, appearing in NO artifact/log/receipt/model context — the WO's own discipline restates profile §6; the source file itself names no value (VERIFIED at ingestion). A protected-resource record for the drop-in is a candidate only if the governor directs one at the L1-M2 catalog wave."
+  first_mutating_commission: "Trinity's lane activation (KDD-0008, owner-ratified O1) covered read-only source work at Layer 0; this WO is her lane's first mutating commission, enabled by OD-12 (owner, row 32) after OD-03 acknowledgement. Budgets sessions 2 + transient_retry 1; the L1-M3 gate WO (parity ×4 deep, restart ×2, cold reboot, backup+restore, rollback drill, configuration.md, owner sign-off package) follows her install landing (row 35)."

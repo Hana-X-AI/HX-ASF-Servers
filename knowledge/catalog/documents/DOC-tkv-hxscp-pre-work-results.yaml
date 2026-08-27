@@ -34,8 +34,10 @@ document:
       target: "DOC-tkv-server-registry"
       note: "fleet registry row for hxs-cp"
   validation:
-    validated_at: "2026-08-25T05:55:00Z"
+    validated_at: "2026-08-27T17:14:00Z"
     freshness: "historical"
     review_due: "historical record — no review cycle; cross-check before any operational use"
   sha256: "4690c2b540d32f37798152f9256f5eee5c79873e256d8f0689ab5da3a8b4d078"
   canonical_location: "/opt/tkv-local/servers/hxs-cp/pre-work-results.md"
+notes:
+  roster_advisory_20260827: "OWNER ADVISORY (2026-08-27; provenance: hxs-2 state log row 58, 2026-08-27T16:20Z): hxs-cp has been REPLACED as the fleet control plane by hxs-5. The registry's 'hxs-cp control plane deliberately outside the fleet' wording (carried in DOC-tkv-server-registry declared_purpose) is now stale pending the owner's registry amendment — SERVER-REGISTRY.md is owner-maintained, not amended by the catalog lane; FLAGGED for the governor via DOC-tkv-server-registry notes.roster_advisory_20260827. This historical record's content unchanged; hash re-verified == live this run."

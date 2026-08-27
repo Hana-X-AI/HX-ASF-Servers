@@ -1,0 +1,60 @@
+document:
+  id: "DOC-pilot-omniroute-ev-p2-providers-protocol"
+  title: "PILOT-OMNIROUTE-LAYER0-001 ledger/P2-providers-protocol.{md,json} — Wave 0B partition P2 providers/protocol (23 entries, 110 refs; static registry 356/355 vs runtime 272 vs doc claims 353/354/268/339 ALL MISMATCH; zero ATEM adapter corpus-wide)"
+  type: "evidence"
+  declared_purpose: "Wave-0B partition deliverable P2 of WO-OMNI-TRINITY-LEDGER-001 (COMPLETE state log row 12, 2026-08-27T06:54Z — Trinity's FIRST partition PASS): the source-derived capability ledger of OmniRoute v3.8.51's provider registry and protocol-translation plane. Two forms, one artifact: P2-providers-protocol.json — 23 entries (CAP-P2-001..023), each carrying the packet's 12 schema fields, 110 source refs (18 ACTIVE-CANDIDATE / 4 AVAILABLE-DISABLED / 1 NOT-ESTABLISHED) — and P2-providers-protocol.md — the human partition summary (startup receipt, provider-count analysis, adapter inventory, self-verification, batch-19 field-count addendum). Findings (per the md + state log row 12): provider counts from SOURCE — static registry 356 records / 355 excl. system auto across 10 collections (src/shared/constants/providers/*) vs runtime chat REGISTRY 272 (open-sse/config/providers/index.ts:274) vs doc claims 353/354/268/339 — ALL MISMATCH (drift registered with deltas); adapters — 9 format identifiers, 11 request + 12 response registered pairs, hub-and-spoke via OpenAI (translator/index.ts), Responses transformer, param stripping, per-connection alternate-format switch; NOT-ESTABLISHED incl. ZERO ATEM ADAPTER corpus-wide (material for any future Meta-X-through-OmniRoute integration — Meta's native format has no adapter in v3.8.51) + no runtime kill-switch for registry/translator/fallback; high-risk flag — DefaultExecutor OpenAI fallback credential-leak guard class (#6699/#10274, CAP-P2-004)."
+  inferred_value: "INFERENCE: P2 is the integration-reality partition — its measured registry-vs-runtime-vs-docs mismatch is the standing warning that any provider count quoted from bundled docs is drift until re-derived from source, and the zero-ATEM finding (corroborated by P3) pre-answers the Meta-X-through-OmniRoute question before any Layer-3/4 design spends effort on it."
+  source:
+    author: "trinity (Coder-X bounded execution under the local-model contract)"
+    provided_by: "Kimi-K3 (governor dispatch — Wave-0B closing wave)"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/ledger/ (P2-providers-protocol.md + P2-providers-protocol.json)"
+    section: "§whole-document (md + json pair — one artifact, two forms)"
+    ingestion_date: "2026-08-27T09:58:00Z"
+  owner: "trinity"
+  applies_to:
+    hosts: [hxs-2, hxs-5]
+    fqdns: []
+    services: [ollama.service]
+    agents: [trinity, kimi-k3]
+    repositories: [HX-ASF-Servers, tkv-local]
+    environments: [pilot]
+    models: [hx-qwen3.6-coderx-64k]
+  version: "Wave 0B final (2026-08-27, state log row 12; batch-19 addendum appended)"
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "trinity"
+      note: "partition task COMPLETE 2026-08-27T06:54Z (state log row 12) — her first partition PASS; Coder-X model contract honored (identity verified pre-call ec9ebe08a824…, resident, ctx 65536; 2 bounded calls, corroboration-only)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-wo-05-trinity-ledger"
+      note: "commissioning work order (8-partition DAG, per-task contract, acceptance criteria) — DISCHARGED by the Wave-0B deliverable set this partition is part of"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-cp-06-trinity-ledger"
+      note: "entry schema (12 fields) + conventions — pre-citation-contract partition (baseline shape by design, state log row 14)"
+    - predicate: "evidences"
+      target: "DOC-tkv-corpus-omniroute"
+      note: "110 source refs into the identity-VERIFIED corpus; her deterministic self-check 110/110 refs exist; governor spot-check 8/8 sampled refs verified at exact file:line (seed 42, row 12)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-ev-08-capability-ledger"
+      note: "merged into the Wave-0B merged ledger as its P2 part (its contains edge; the partition json+md remain the per-partition source of record)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-state-log"
+      note: "governing log; completion provenance row 12 (2026-08-27T06:54Z)"
+  validation:
+    validated_at: "2026-08-27T09:58:00Z"
+    freshness: "current"
+    review_due: "at Wave 0C (reconciliation packet + Qwen-X independent verification); re-hash on any ledger edit"
+  sha256: "17245ac6f69d544d430e76c5591e8fc6c8ab4fd5fe7abde35d1b55778f0e468b"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/ledger"
+notes:
+  checksum_method: "MULTI-FILE convention (DOC-fleet-script-library pattern): sha256 field = digest of the content-sensitive 2-file manifest ('<sha256>  <filename>' lines for P2-providers-protocol.json + P2-providers-protocol.md, LC_ALL=C sort, manifest text digested), captured 2026-08-27T09:56Z. Per-file sha256 at mint: P2-providers-protocol.json 8fdd3286ec0fb7109f7a726c4912a673f4966b7639abec202ad7182d6fa801e3; P2-providers-protocol.md 953186b818ea7fa4622fd0b7c4482efd66b1ef48b28f2587f4cc1688180880bf."
+  verification_at_mint: "Deterministic recomputation against the live json (2026-08-27T09:56Z, read-only): 23 entries, each exactly the 12 schema fields; 110 source_refs; dispositions 18 ACTIVE-CANDIDATE / 4 AVAILABLE-DISABLED / 1 NOT-ESTABLISHED (sums 23). Matches the merged ledger's P2 part (23) and the md header."
+  corrections_carried: "Batch-19 labeled addendum appended to the md (VERIFIED PRESENT at mint, tail of file): the '11 schema fields' certification wording corrected to 12 (the schema always carried 12 keys; governor deterministic key-count PASS, field-count-revalidation-2026-08-27.txt); historical '11' claim preserved per the append-only convention."
+  protected_reference: "No protected resource named; no credential content in the artifact or this record (profile §6)."

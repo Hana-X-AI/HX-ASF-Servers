@@ -1,0 +1,720 @@
+{
+  "partition": "P5-persistence-config",
+  "work_order": "WO-OMNI-TRINITY-LEDGER-001",
+  "producer": "trinity",
+  "produced_at": "2026-08-27T08:05:00Z",
+  "corpus": "/opt/tkv-local/OmniRoute-release-v3.8.51 (read-only; identity VERIFIED 2026-08-27, 07-source-provenance-receipt.md)",
+  "truth_states": "FACT = verified in source at the cited line; UPSTREAM = bundled-doc/in-repo-record claim, drift-prone; INFERENCE = producer reasoning, labeled",
+  "entries": [
+    {
+      "id": "CAP-P5-001",
+      "name": "SQLite engine singleton (better-sqlite3 primary, node:sqlite fallback, WAL)",
+      "source_refs": [
+        "src/lib/db/core.ts:1031",
+        "src/lib/db/core.ts:192",
+        "src/lib/db/core.ts:205",
+        "src/lib/db/core.ts:1292",
+        "src/lib/db/core.ts:1298",
+        "src/lib/db/core.ts:1299"
+      ],
+      "purpose": "getDbInstance() returns the process-wide SQLite singleton opened via openSqliteDatabase(), which prefers the bundled better-sqlite3 native driver and falls back to node:sqlite (driver-resolution message at :205); the primary file is opened with journal_mode=WAL (:1292), busy_timeout=2000ms (:1298, capped so contended writes cannot freeze the Node event loop past the host watchdog), and synchronous=NORMAL (:1299).",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "data-plane",
+      "risk_class": "high — all routing, credential, and usage state lives in this single file; engine misconfiguration is data-integrity-critical",
+      "dependencies": ["better-sqlite3 native addon or node:sqlite fallback (src/lib/db/adapters)", "writable DATA_DIR (CAP-P5-002)"],
+      "required_authorization": "layer-N",
+      "test_contract": "Layer-N: persistence — write/read round-trip survives process restart; direct — `PRAGMA journal_mode` returns wal on the live file; negative — concurrent writer contention must not stall /health beyond the busy_timeout bound",
+      "rollback_or_disable": "None — the engine is the system of record; removal is not possible without replacing the product. File-level rollback is via backup restore (CAP-P5-014)",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P5-002",
+      "name": "Data directory and database file path resolution",
+      "source_refs": [
+        "src/lib/dataPaths.ts:64",
+        "src/lib/dataPaths.ts:107",
+        "src/lib/db/core.ts:103",
+        "src/lib/db/core.ts:105",
+        "src/lib/db/core.ts:107"
+      ],
+      "purpose": "resolveDataDir()/resolveWritableDataDir() resolve the state root from the DATA_DIR env var with XDG/legacy-dotdir defaults and a writability fallback; core.ts pins DATA_DIR (:103), SQLITE_FILE=<DATA_DIR>/storage.sqlite (:105), JSON_DB_FILE (:106), and DB_BACKUPS_DIR=<DATA_DIR>/db_backups (:107) from it, and creates the directory with an explicit operator hint when missing/unwritable (:229-231).",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "data-plane",
+      "risk_class": "medium — a wrong DATA_DIR silently points the server at a different (or empty) state file, the #3147 'phantom combos' failure mode",
+      "dependencies": ["filesystem writability", "DATA_DIR environment variable (optional)"],
+      "required_authorization": "layer-N",
+      "test_contract": "Layer-N: direct — start with explicit DATA_DIR and confirm the logged resolved path (core.ts:1405-1408) matches; negative — unwritable DATA_DIR must fall back or fail with the :229 hint, never silently write elsewhere",
+      "rollback_or_disable": "Unset DATA_DIR to return to the default resolution; deleting the env var is the full inverse",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P5-003",
+      "name": "Inline base schema (SCHEMA_SQL, 17 tables) with idempotent column ensure",
+      "source_refs": [
+        "src/lib/db/core.ts:238",
+        "src/lib/db/core.ts:1302",
+        "src/lib/db/core.ts:1303",
+        "src/lib/db/core.ts:1304",
+        "src/lib/db/core.ts:1305"
+      ],
+      "purpose": "SCHEMA_SQL (:238) defines the 17 base tables (provider_connections :239 through quota_snapshots :495 — grep-counted CREATE TABLE statements, matching the db/AGENTS.md count [UPSTREAM claim verified]); it is exec'd on every open (:1302) followed by idempotent ensure*Columns passes for provider_connections, usage_history, and call_logs (:1303-1305) so hot-path columns self-heal.",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "data-plane",
+      "risk_class": "high — the inline schema is the baseline every fresh DB starts from; a drift between it and the migration chain produces version-dependent schemas",
+      "dependencies": ["CAP-P5-001 engine", "CAP-P5-004 migration chain for everything past the baseline"],
+      "required_authorization": "layer-N",
+      "test_contract": "Layer-N: persistence — fresh DATA_DIR boot must yield all 17 base tables plus migration-tracked tables; direct — sqlite_master dump diffed against the pinned expectation",
+      "rollback_or_disable": "None — CREATE TABLE IF NOT EXISTS is additive-only; deleting tables is a restore-from-backup operation (CAP-P5-014)",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P5-004",
+      "name": "Versioned SQL migration runner (160 files, per-file transactions)",
+      "source_refs": [
+        "src/lib/db/migrationRunner.ts:931",
+        "src/lib/db/migrationRunner.ts:1096",
+        "src/lib/db/migrationRunner.ts:1111",
+        "src/lib/db/migrationRunner.ts:182",
+        "src/lib/db/migrationRunner.ts:1186"
+      ],
+      "purpose": "runMigrations() (:931) applies numbered NNN_description.sql files (160 present in src/lib/db/migrations/, 001→163 with gaps — grep-counted; db/AGENTS.md's '148 files → 153' claim is stale [UPSTREAM drift]) inside one transaction per file (:1096), records each in the _omniroute_migrations tracking table (created :182, insert :1111), and exposes getMigrationStatus() (:1186) for diagnostics.",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "data-plane",
+      "risk_class": "critical — schema migration is a critical-class change per the lane contract; a bad migration corrupts the system of record",
+      "dependencies": ["CAP-P5-001 engine", "CAP-P5-005 safety rails", "CAP-P5-006 pre-migration backup"],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N: persistence — upgrade a pinned older backup to current and assert every version row in _omniroute_migrations plus spot schema sentinels; negative — a failing migration must roll back its own file and abort startup (throw at migrationRunner.ts:1137)",
+      "rollback_or_disable": "No down-migrations exist (CAP-P5-034); rollback = restore the pre-migration backup (CAP-P5-006/014). Runner cannot be disabled; OMNIROUTE_MIGRATIONS_DIR only relocates the source dir (:62)",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P5-005",
+      "name": "Migration safety rails (mass-migration abort, renumber detection, gap back-fill, FTS5 deferral)",
+      "source_refs": [
+        "src/lib/db/migrationRunner.ts:942",
+        "src/lib/db/migrationRunner.ts:970",
+        "src/lib/db/migrationRunner.ts:981",
+        "src/lib/db/migrationRunner.ts:1009",
+        "src/lib/db/migrationRunner.ts:1059",
+        "src/lib/db/migrationRunner.ts:1077",
+        "src/lib/db/migrationRunner.ts:1124"
+      ],
+      "purpose": "Four guard rails wrap the runner: name-mismatch/renumbering detection with a CRITICAL warning (:942); gap reconciliation that back-fills missing intermediate versions instead of trusting a highest-applied heuristic (:970); deferral of optional FTS5 migrations on drivers lacking FTS5 (:981); and the mass-migration abort — an existing DB with more pending migrations than resolveMaxPendingMigrations() (:1009, env OMNIROUTE_MAX_PENDING_MIGRATIONS, 0 disables) throws MigrationSafetyAbortError (:1059 msg, :1077 throw, memoized #6260); 'duplicate column name' errors are treated as already-applied (:1124).",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "data-plane",
+      "risk_class": "high — the abort prevents data loss after a tracking-table wipe, but a false positive blocks startup entirely (availability impact)",
+      "dependencies": ["CAP-P5-004 runner", "physical-schema sentinels (migrationRunner/constants.ts)"],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N: negative — wipe _omniroute_migrations on a copy, restart, and assert the abort fires with the bypass hint; direct — OMNIROUTE_MAX_PENDING_MIGRATIONS=0 bypass proceeds; persistence — synthetic gap in applied versions gets back-filled",
+      "rollback_or_disable": "OMNIROUTE_MAX_PENDING_MIGRATIONS=0 disables the abort (operator bypass documented in the abort message :1054-1057); other rails have no toggles",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P5-006",
+      "name": "Pre-migration automatic backup",
+      "source_refs": [
+        "src/lib/db/migrationRunner.ts:1085",
+        "src/lib/db/migrationRunner.ts:1086",
+        "src/lib/db/migrationRunner.ts:892"
+      ],
+      "purpose": "Before applying any pending migration on a non-fresh DB, createPreMigrationBackup() (:892) snapshots the database; the call is gated on applied.size>0 and DISABLE_SQLITE_AUTO_BACKUP !== 'true' (:1085-1086), giving every upgrade a same-filesystem restore point.",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "data-plane",
+      "risk_class": "high — this is the only automatic rollback artifact for migrations; disabling it removes the migration safety net",
+      "dependencies": ["CAP-P5-012 backup engine", "CAP-P5-013 retention pruning", "free disk in DB_BACKUPS_DIR"],
+      "required_authorization": "layer-N",
+      "test_contract": "Layer-N: persistence — trigger an upgrade on a copy and assert a db_<ts>_auto|pre-migration snapshot exists in db_backups and restores cleanly; negative — DISABLE_SQLITE_AUTO_BACKUP=true must skip it",
+      "rollback_or_disable": "DISABLE_SQLITE_AUTO_BACKUP=true env disables automatic snapshots (migration abort gate at :1031 reads the same var)",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P5-007",
+      "name": "Field-level encryption at rest (AES-256-GCM, enc:v1 format, plaintext passthrough default)",
+      "source_refs": [
+        "src/lib/db/encryption.ts:30",
+        "src/lib/db/encryption.ts:40",
+        "src/lib/db/encryption.ts:41",
+        "src/lib/db/encryption.ts:181",
+        "src/lib/db/encryption.ts:196",
+        "src/lib/db/encryption.ts:222"
+      ],
+      "purpose": "encrypt()/decrypt() provide AES-256-GCM (:30) field encryption with a 16-byte GCM auth tag (pinned against tag-truncation forgery, :33-39) in the self-describing format enc:v1:<iv_hex>:<ct_hex>:<tag_hex> (PREFIX :40, assembly :196-203); keys are scrypt-derived with the static salt 'omniroute-field-encryption-v1' (:41). When STORAGE_ENCRYPTION_KEY is unset the module runs in passthrough mode and stores plaintext with a warning (:185-190, module header :7-8).",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "data-plane",
+      "risk_class": "critical — encryption of credentials at rest is a critical-class change; the passthrough default means at-rest protection is absent unless the operator provisions a key",
+      "dependencies": ["STORAGE_ENCRYPTION_KEY (CAP-P5-008)", "node:crypto scryptSync/createCipheriv"],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N: persistence — store a credential with the key set, assert enc:v1: prefix at rest and decrypt round-trip; negative — wrong key must fail auth-tag validation and return null (never garbage); direct — unset key stores plaintext (passthrough)",
+      "rollback_or_disable": "Setting no STORAGE_ENCRYPTION_KEY returns the system to passthrough (new writes plaintext; existing enc:v1: rows become undecryptable — key loss is unrecoverable, :231-237)",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P5-008",
+      "name": "Encryption key provisioning (STORAGE_ENCRYPTION_KEY with .env fallback chain)",
+      "source_refs": [
+        "src/lib/db/encryption.ts:84",
+        "src/lib/db/encryption.ts:91",
+        "src/lib/db/encryption.ts:121",
+        "src/lib/db/encryption.ts:128",
+        "src/lib/db/encryption.ts:163"
+      ],
+      "purpose": "ensureSecretLoaded() (:84) resolves the encryption secret from process.env.STORAGE_ENCRYPTION_KEY, then falls back to parsing (in order) <DATA_DIR>/.env, <cwd>/.env, and ~/.hermes/.env (:91-94), caching the derived key; getStaticKey() (:121) derives the 32-byte key via scryptSync (:128); isEncryptionEnabled() (:163) is the feature gate.",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "data-plane",
+      "risk_class": "high — key material is read from world-visible file paths if env is unset; key rotation without re-encryption orphans every enc:v1: row",
+      "dependencies": ["operator-provisioned secret (openssl rand -base64 32 per :133)", "one of the three .env fallback paths or the process environment"],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N: direct — with env unset and DATA_DIR/.env carrying the key, encryption activates (identity of source provable by removing each candidate); negative — no key anywhere must yield passthrough, never a crash",
+      "rollback_or_disable": "Remove the key from env and all three .env candidates to return to passthrough; there is no in-product rotation mechanism (rotation = decrypt-with-old, re-encrypt-with-new via CAP-P5-010's primitives)",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P5-009",
+      "name": "Connection-row credential encryption wiring (P2 sibling edge — assessed)",
+      "source_refs": [
+        "src/lib/db/encryption.ts:296",
+        "src/lib/db/encryption.ts:313",
+        "src/lib/db/providers.ts:717",
+        "src/lib/db/providers.ts:955",
+        "src/lib/db/providers.ts:360"
+      ],
+      "purpose": "encryptConnectionFields() (:296) encrypts apiKey/accessToken/refreshToken/idToken in place on every connection write (insert :717, update :955 via _updateConnectionRow), and decryptConnectionFields() (:313) transparently decrypts on reads (:360, :544). ASSESSMENT of the P2-deferred edge: connection-row encryption at rest is fully wired but CONDITIONAL — it is a no-op when isEncryptionEnabled() is false (:297, :315), so CAP-P2-014's provider_connections rows are plaintext at rest by default and AES-256-GCM only with STORAGE_ENCRYPTION_KEY provisioned.",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "data-plane",
+      "risk_class": "critical — these rows carry the provider API keys/tokens that are the LAN's upstream credentials; at-rest exposure equals credential exposure",
+      "dependencies": ["CAP-P5-007 encryption module", "CAP-P5-008 key provisioning", "CAP-P2-014 connection CRUD"],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N: persistence — create a connection with the key set and assert api_key carries enc:v1: in sqlite while API reads return plaintext; negative — with the key unset the row is plaintext (confirm and document as the HX decision point); failure — a changed key must surface credentialDecryptFailed (#6148, :329-333) not an empty-Bearer 401",
+      "rollback_or_disable": "Disable = unset the key (passthrough resumes for new writes; old rows need the key to read). Field-level removal is source-level",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P5-010",
+      "name": "Legacy dynamic-salt encryption auto-migration",
+      "source_refs": [
+        "src/lib/db/encryption.ts:375",
+        "src/lib/db/providers/migrations.ts:29",
+        "src/lib/db/core.ts:1393",
+        "src/lib/db/encryption.ts:329"
+      ],
+      "purpose": "At startup (core.ts:1393) autoMigrateLegacyEncryptedConnections() (providers/migrations.ts:29) scans provider_connections and re-encrypts any value only decryptable by the pre-v3.7.9 dynamic-salt key using migrateLegacyEncryptedString() (:375), converging all rows on the static-salt derivation; rows that fail both derivations are left untouched, and reads flag credentialDecryptFailed (:329) instead of firing empty credentials upstream.",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "data-plane",
+      "risk_class": "high — a write-back migration over credential columns; a bug re-encrypts or strands every connection secret",
+      "dependencies": ["CAP-P5-007/008 (both key derivations)", "CAP-P5-012 backup (providers/migrations.ts:78 takes a pre-write backup when it migrates)"],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N: persistence — seed a legacy-dynamic-salt ciphertext, restart, assert the row is re-encrypted to static-salt and decrypts; negative — an undecryptable row must remain byte-identical",
+      "rollback_or_disable": "None — runs unconditionally at init when encryption is enabled; inverse is restore-from-backup",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P5-011",
+      "name": "Encrypted-credential reset tool (recovery.ts) — no production call site",
+      "source_refs": [
+        "src/lib/db/recovery.ts:13",
+        "src/lib/db/recovery.ts:21"
+      ],
+      "purpose": "countEncryptedCredentials() (:13) counts provider_connections rows whose credential columns match enc:v1:%, and resetEncryptedColumns() (:21) NULLs those columns (dry-run supported) — the last-resort recovery when the encryption key is lost. Corpus-wide grep finds callers only in tests/unit/db-recovery.test.ts; no CLI, route, or startup path invokes it.",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "data-plane",
+      "risk_class": "high — destructive credential wipe; exactly why it must stay operator-invoked, but today it is unreachable without code",
+      "dependencies": ["CAP-P5-001 engine"],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N: direct — dry-run reports affected count without mutation; destructive run NULLs exactly the enc:v1: columns and leaves plaintext rows untouched (both already covered by tests/unit/db-recovery.test.ts:29-65)",
+      "rollback_or_disable": "Dry-run mode is the safe default; the wipe itself is irreversible except by re-authenticating connections or restoring a backup",
+      "preliminary_disposition": "LAB-ONLY"
+    },
+    {
+      "id": "CAP-P5-012",
+      "name": "Database file backup engine (native SQLite backup API, throttled, shrink-guarded)",
+      "source_refs": [
+        "src/lib/db/backup.ts:246",
+        "src/lib/db/backup.ts:294",
+        "src/lib/db/backup.ts:265",
+        "src/lib/db/backup.ts:282",
+        "src/lib/db/backup.ts:258"
+      ],
+      "purpose": "backupDbFile(reason) (:246) creates consistent snapshots using the native SQLite online backup API (db.backup at :294) into DB_BACKUPS_DIR as db_<timestamp>_<reason>.sqlite; guards: cloud/build short-circuit (:248), auto-backup disable checks (:250 env, :254 persisted dashboard toggle #5871), 4 KiB minimum size (:258), throttle window for non-manual reasons (:265), and a shrink detector that skips auto-snapshots when the DB lost >50% versus the latest backup (:282).",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "data-plane",
+      "risk_class": "high — the backup is the only rollback artifact for restore/migration failures; silent skip conditions (throttle, shrink, toggle) can leave an operator believing a snapshot exists when none was taken",
+      "dependencies": ["CAP-P5-001 engine", "CAP-P5-002 DB_BACKUPS_DIR", "CAP-P5-013 retention"],
+      "required_authorization": "layer-N",
+      "test_contract": "Layer-N: persistence — manual backup produces an openable .sqlite passing integrity_check; negative — a second auto backup inside the throttle window returns null; direct — shrink >50% skips with the warn log",
+      "rollback_or_disable": "DISABLE_SQLITE_AUTO_BACKUP=true (env) or persisted backup.autoBackupEnabled=false (dashboard) disables automatic snapshots; manual backups always allowed",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P5-013",
+      "name": "Backup retention policy and pruning",
+      "source_refs": [
+        "src/lib/db/backupRetention.ts:20",
+        "src/lib/db/backupRetention.ts:21",
+        "src/lib/db/backupRetention.ts:104",
+        "src/lib/db/backup.ts:104",
+        "src/lib/db/backup.ts:145"
+      ],
+      "purpose": "Retention constants MAX_DB_BACKUPS=20 (:20) and DEFAULT_DB_BACKUP_RETENTION_DAYS=0 (:21, unlimited age) bound the backup directory; pruneBackupDirectory() (:104) groups timestamped families and enforces keep-latest count and age; cleanupDbBackups() (backup.ts:104) applies it after every successful snapshot; isAutoBackupDisabledBySetting() (backup.ts:145) reads the persisted dashboard toggle.",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "data-plane",
+      "risk_class": "medium — over-aggressive pruning deletes the only good restore point; under-pruning fills the disk on the state volume",
+      "dependencies": ["CAP-P5-012 backup engine", "persisted retention settings (setDbBackupMaxFiles/setDbBackupRetentionDays, backup.ts:69-86)"],
+      "required_authorization": "layer-N",
+      "test_contract": "Layer-N: direct — seed 25 backups, run cleanup, assert newest 20 survive and family grouping keeps pre-restore/manual siblings coherent; negative — retentionDays=0 must never age-delete",
+      "rollback_or_disable": "Retention values are settings — reset keep-latest to 20 and retentionDays to 0 to restore defaults",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P5-014",
+      "name": "Backup restore with integrity validation and forced pre-restore snapshot",
+      "source_refs": [
+        "src/lib/db/backup.ts:365",
+        "src/lib/db/backup.ts:400",
+        "src/lib/db/backup.ts:426",
+        "src/lib/db/backup.ts:433",
+        "src/lib/db/backup.ts:448",
+        "src/lib/db/backup.ts:460"
+      ],
+      "purpose": "restoreDbBackup(backupId) (:365) validates the id against path traversal (:369-385), opens the candidate read-only and requires pragma integrity_check='ok' (:400), forces and awaits a pre-restore snapshot of the live DB (:413-430, dbForBackup.backup at :426), closes and resets the singleton plus all module state (:433 resetDbInstance, :436 resetAllDbModuleState), deletes the main file and -wal/-shm/-journal sidecars so stale frames cannot replay (:448-457), copies the backup into place (:460), reopens, and reports row counts.",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "data-plane",
+      "risk_class": "critical — full state replacement with an in-place delete-then-copy window; mitigated by the mandatory pre-restore snapshot and integrity gate",
+      "dependencies": ["CAP-P5-012 backup engine", "CAP-P5-031 state-reset registry", "management auth on the calling route (CAP-P5-015)"],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N: persistence — restore a known backup and assert row counts and WAL sidecar absence; negative — a corrupt candidate (integrity_check != ok) must be refused before any file is touched; negative — backupId with path separators must 500 with 'Invalid backup ID'",
+      "rollback_or_disable": "The forced pre-restore snapshot (:426) is the inverse — restore it to undo a restore",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P5-015",
+      "name": "Backup management API (/api/db-backups: manual backup, list, restore, retention, import, export)",
+      "source_refs": [
+        "src/app/api/db-backups/route.ts:44",
+        "src/app/api/db-backups/route.ts:65",
+        "src/app/api/db-backups/route.ts:84",
+        "src/app/api/db-backups/route.ts:163",
+        "src/app/api/db-backups/import/route.ts:32",
+        "src/app/api/db-backups/exportAll/route.ts:17"
+      ],
+      "purpose": "Admin-authenticated routes wrap the backup engine: PUT manual snapshot (:44), GET list (:65), POST restore (:84), DELETE cleanup/retention settings (:163); the import route replaces the DB from an uploaded file with an operator-tunable size cap (resolveMaxUploadSizeBytes :32, OMNIROUTE_DB_IMPORT_MAX_MB, 100 MB default / 4 GB ceiling), and exportAll (:17) exports settings/combos/providers/apiKeys with credentials excluded and API keys masked to their first 8 chars (backup.ts:497-505).",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "management-plane",
+      "risk_class": "critical — unauthenticated or over-broad access here equals full state exfiltration/destruction; exportAll's credential masking is the load-bearing control",
+      "dependencies": ["isAuthenticated (P4 scope)", "CAP-P5-012/014 engine and restore", "zod validation schemas"],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N: direct — each verb round-trips against a scratch DATA_DIR; negative — unauthenticated requests must 401 on every verb; persistence — exportAll output must contain no enc:v1: or plaintext credential values",
+      "rollback_or_disable": "Routes are inherent to the management surface; exposure is governed by the auth layer (P4), not a per-route toggle",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P5-016",
+      "name": "Scheduled backup job (cron file, CLI-owned schedule)",
+      "source_refs": [
+        "src/lib/jobs/backupScheduleJob.ts:69",
+        "src/lib/jobs/backupScheduleJob.ts:113",
+        "src/lib/jobs/backupScheduleJob.ts:30",
+        "src/instrumentation-node.ts:729"
+      ],
+      "purpose": "startBackupScheduleJob() (:113, wired at instrumentation-node.ts:729) ticks every 30s (floor 5s, OMNIROUTE_BACKUP_SCHEDULE_JOB_INTERVAL_MS) and runBackupScheduleTick() (:69) evaluates <DATA_DIR>/backup-schedule.json (:30) — written by the `omniroute backup auto enable` CLI with enabled/cron/cloud/encrypt/retention fields — and executes the CLI's own runBackupCommand when the cron matches, writing lastRunAt back.",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "data-plane",
+      "risk_class": "medium — the cloud/encrypt schedule options execute CLI backup semantics (bin/cli/commands/backup.mjs, P8 scope); an unmonitored schedule failure is silent until restore day",
+      "dependencies": ["backup-schedule.json written by the CLI (P8)", "CAP-P5-002 DATA_DIR resolution agreement between server and CLI"],
+      "required_authorization": "layer-N",
+      "test_contract": "Layer-N: direct — write an enabled schedule with a cron matching 'now', tick, assert lastRunAt updates and a backup artifact appears; negative — no file or enabled=false must no-op",
+      "rollback_or_disable": "`omniroute backup auto disable` (CLI) or deleting backup-schedule.json stops the schedule; the job idles harmlessly without the file",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P5-017",
+      "name": "Startup initialization and restart behavior (open, seed, migrate, optimize)",
+      "source_refs": [
+        "src/lib/db/core.ts:1310",
+        "src/lib/db/core.ts:1320",
+        "src/lib/db/core.ts:1325",
+        "src/lib/db/core.ts:1373",
+        "src/instrumentation-node.ts:74",
+        "src/instrumentation-node.ts:514",
+        "src/instrumentation-node.ts:564"
+      ],
+      "purpose": "Every process start runs the same idempotent sequence in getDbInstance(): auto-seed the 001 migration marker (:1310-1318), runMigrations (:1320), re-ensure the usage-history account index (:1323), re-apply stored optimization pragmas (:1325) and mmap_size (:1327-1338), stamp db_meta schema_version (:1372-1375), then start health/WAL schedulers (:1399-1400) — orchestrated from instrumentation-node.ts which awaits ensureDbInitialized (:74), starts config hot-reload (:514), the vacuum scheduler (:564), and the backup schedule job (:729). Restart behavior is therefore fully convergent: no operator action is required after an unclean stop.",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "data-plane",
+      "risk_class": "high — any throw in this sequence aborts startup (fail-closed), so a corrupted state file is an availability event, not a silent-degradation event",
+      "dependencies": ["CAP-P5-001..006 (engine, schema, migrations)", "CAP-P5-018 startup health check"],
+      "required_authorization": "layer-N",
+      "test_contract": "Layer-N: persistence — kill -9 mid-write, restart, assert clean convergence (WAL replay + no migration re-run); direct — second boot applies 0 migrations",
+      "rollback_or_disable": "None — init is unconditional; OMNIROUTE_SKIP_DB_HEALTHCHECK=1 skips only the integrity portion (CAP-P5-018)",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P5-018",
+      "name": "Startup DB health check with auto-repair",
+      "source_refs": [
+        "src/lib/db/core.ts:1376",
+        "src/lib/db/core.ts:1377",
+        "src/lib/db/core.ts:1381"
+      ],
+      "purpose": "When shouldRunStartupDbHealthCheck() (:1376) is true, init runs runDbHealthCheck with autoRepair:true and expectedSchemaVersion '1' (:1381-1386), creating a backup before any repair via createHealthCheckBackup; OMNIROUTE_SKIP_DB_HEALTHCHECK=1 (:1377) skips the integrity check for fast boots, and a periodic scheduler keeps checking after startup (:1399).",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "data-plane",
+      "risk_class": "high — auto-repair mutates the system of record unattended; the pre-repair backup is the only mitigation",
+      "dependencies": ["src/lib/db/healthCheck.ts", "CAP-P5-012 backup engine"],
+      "required_authorization": "layer-N",
+      "test_contract": "Layer-N: direct — corrupt a scratch DB's index, boot, assert repair plus a pre-repair backup artifact; negative — OMNIROUTE_SKIP_DB_HEALTHCHECK=1 must log the skip and not repair",
+      "rollback_or_disable": "OMNIROUTE_SKIP_DB_HEALTHCHECK=1 env; repairs are individually backed up before application",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P5-019",
+      "name": "Old-schema and probe-failure recovery at open",
+      "source_refs": [
+        "src/lib/db/core.ts:1140",
+        "src/lib/db/core.ts:1163",
+        "src/lib/db/core.ts:1183",
+        "src/lib/db/core.ts:1192",
+        "src/lib/db/core.ts:1347"
+      ],
+      "purpose": "Before opening, init probes an existing file read-only (:1140-1142): a legacy schema_migrations table (:1163) is dropped in place when data exists (#146, :1183) or the whole file is renamed to .old-schema when empty (:1196 renameSync, :1192 path); a skeleton setup file (provider_connections but no combos) is reclassified as fresh (:1159-1161, #9934); a failed probe triggers preserved-critical-state capture and, after reopen, restoreCriticalDbState (:1347-1369) with abort-and-preserve semantics on failure.",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "data-plane",
+      "risk_class": "critical — automatic file rename/drop decisions run against the operator's only state copy during the most fragile window (process start)",
+      "dependencies": ["CAP-P5-001 engine", "preserved-state helpers in core.ts"],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N: negative — feed a DB with a legacy schema_migrations table and assert the documented branch (drop-with-data vs rename-when-empty); persistence — probe-failure path preserves and restores critical tables or aborts naming the preserved file",
+      "rollback_or_disable": "The .old-schema rename is itself the rollback artifact; no toggle exists",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P5-020",
+      "name": "Legacy db.json auto-migration",
+      "source_refs": [
+        "src/lib/db/core.ts:1343",
+        "src/lib/db/core.ts:1344",
+        "src/lib/db/jsonMigration.ts:54"
+      ],
+      "purpose": "If <DATA_DIR>/db.json exists at init, migrateFromJson (core.ts:1343-1344) hydrates the SQLite database from the legacy JSON store via runJsonMigration() (jsonMigration.ts:54) — a single transaction upserting connections, nodes, combos, keys, settings, and usage history; the same helper backs the on-demand dashboard import (api/settings/import-json), whose caller strips auth keys first (jsonMigration.ts:8-11).",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "data-plane",
+      "risk_class": "medium — one-shot legacy import; the main hazard is re-importing stale JSON over newer SQLite state if the file is left behind",
+      "dependencies": ["CAP-P5-001 engine", "legacy db.json artifact"],
+      "required_authorization": "layer-N",
+      "test_contract": "Layer-N: persistence — place a fixture db.json, boot, assert counts per entity and single-transaction atomicity; negative — malformed JSON must not abort startup",
+      "rollback_or_disable": "Remove/rename db.json before first boot to skip; post-hoc inverse is restore-from-backup",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P5-021",
+      "name": "WAL maintenance and vacuum scheduling",
+      "source_refs": [
+        "src/lib/db/core.ts:980",
+        "src/lib/db/core.ts:1012",
+        "src/lib/db/core.ts:1399",
+        "src/lib/db/core.ts:1400",
+        "src/lib/db/vacuumScheduler.ts:255",
+        "src/lib/db/vacuumScheduler.ts:290"
+      ],
+      "purpose": "A periodic WAL checkpoint(TRUNCATE) scheduler (:1012) runs on OMNIROUTE_WAL_TRUNCATE_INTERVAL_MS (:980) to bound WAL growth, started with the health scheduler at init (:1399-1400); the vacuum scheduler (init :290, manual runNow :255) persists its own schedule/last-run state, never resumes a stale 'running' flag across restarts (:296), and is refreshed whenever database optimization settings change (databaseSettings.ts:312-314).",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "data-plane",
+      "risk_class": "medium — VACUUM/checkpoint I/O competes with traffic on the same file; mis-tuned intervals either bloat the WAL or stall writers",
+      "dependencies": ["CAP-P5-001 engine", "CAP-P5-024 database settings"],
+      "required_authorization": "layer-N",
+      "test_contract": "Layer-N: direct — force WAL growth, await the truncate tick, assert -wal file shrinks; persistence — vacuum lastRunAt survives restart, isRunning does not",
+      "rollback_or_disable": "OMNIROUTE_WAL_TRUNCATE_INTERVAL_MS controls the truncate cadence; vacuum schedule is operator-set in database settings",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P5-022",
+      "name": "Settings key-value store with revision tracking",
+      "source_refs": [
+        "src/lib/db/settings.ts:94",
+        "src/lib/db/settings.ts:141",
+        "src/lib/db/settings.ts:295"
+      ],
+      "purpose": "getSettings() (:141) and updateSettings() (:295) persist operator configuration into the SQLite key_value table under namespaces, with _settingsRevision (:94) providing a monotonic revision for change detection; the store carries everything from proxy config to payload rules and triggers backupDbFile('pre-write') snapshots on mutation (settings.ts:6 import, databaseSettings.ts:309 analogue).",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "data-plane",
+      "risk_class": "medium — this is the configuration system of record; corruption here changes routing/auth behavior on next read",
+      "dependencies": ["CAP-P5-001 engine", "CAP-P5-003 key_value base table (core.ts:303)"],
+      "required_authorization": "layer-N",
+      "test_contract": "Layer-N: persistence — update a setting, restart, assert value and incremented revision survive; negative — concurrent writers serialize through the single connection",
+      "rollback_or_disable": "Per-key overwrite plus pre-write backup restore; no bulk reset API found",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P5-023",
+      "name": "Runtime settings snapshot and hot-reload (poll + fs.watch)",
+      "source_refs": [
+        "src/lib/config/runtimeSettings.ts:256",
+        "src/lib/config/runtimeSettings.ts:457",
+        "src/lib/config/hotReload.ts:16",
+        "src/lib/config/hotReload.ts:66",
+        "src/lib/config/hotReload.ts:74",
+        "src/lib/config/hotReload.ts:83"
+      ],
+      "purpose": "buildRuntimeSettingsSnapshot() (:256) normalizes 15 runtime sections (payloadRules, modelAliases, corsOrigins, authzBypass, providerErrorRules, …) and applyRuntimeSettings() (:457) diffs against the last applied snapshot, pushing only changed sections into their consumers; startRuntimeConfigHotReload() (hotReload.ts:66) re-reads settings on a poll timer (default 5000ms, floor 1000ms, OMNIROUTE_CONFIG_HOT_RELOAD_MS at :16; setInterval at :74) AND on fs.watch of the SQLite file (:83), with watch failure degrading to poll-only (:89-94).",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "management-plane",
+      "risk_class": "medium — hot-applied config changes take effect without restart or audit checkpoint; authzBypass and CORS sections are security-relevant at runtime",
+      "dependencies": ["CAP-P5-022 settings store", "section consumers across open-sse services"],
+      "required_authorization": "layer-N",
+      "test_contract": "Layer-N: direct — change a setting via API, assert the [HOT_RELOAD] log names the section within one poll interval; negative — an invalid value must not crash the reload loop (warn-and-continue at hotReload.ts:52-58)",
+      "rollback_or_disable": "Revert the setting in the store — the next tick re-applies the old section; no global hot-reload kill-switch found (interval is only tunable)",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P5-024",
+      "name": "Persisted database optimization settings (pragmas as configuration)",
+      "source_refs": [
+        "src/lib/db/databaseSettings.ts:226",
+        "src/lib/db/databaseSettings.ts:243",
+        "src/lib/db/databaseSettings.ts:267",
+        "src/lib/db/core.ts:1325",
+        "src/lib/db/core.ts:1332"
+      ],
+      "purpose": "getUserDatabaseSettings() (:226) merges defaults with the databaseSettings key_value namespace (cache size, mmap, vacuum cadence, log pipelines); getDatabaseSettings() (:243) adds live location/stats (path, WAL size, freelist, integrity); updateDatabaseSettings() (:267) persists sections transactionally, snapshots pre-write, and immediately applies optimization pragmas plus refreshes the vacuum scheduler; init re-applies them on every boot (core.ts:1325, mmap at :1332 with 256 MiB fallback).",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "data-plane",
+      "risk_class": "medium — performance-affecting pragmas are operator-tunable and persist across upgrades; bad values degrade the hot path until changed back",
+      "dependencies": ["CAP-P5-022 settings store", "DEFAULT_DATABASE_SETTINGS (types/databaseSettings)"],
+      "required_authorization": "layer-N",
+      "test_contract": "Layer-N: persistence — set cacheSize/mmapSize, restart, assert pragmas re-applied (observable via getDatabaseSettings stats); negative — invalid values normalize to defaults (normalizeOptimizationSettings)",
+      "rollback_or_disable": "Re-save default values via the settings API; normalization clamps out-of-range input",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P5-025",
+      "name": "Feature flag definition registry (52 flags, 6 categories)",
+      "source_refs": [
+        "src/shared/constants/featureFlagDefinitions.ts:1",
+        "src/shared/constants/featureFlagDefinitions.ts:14",
+        "src/shared/constants/featureFlagDefinitions.ts:631"
+      ],
+      "purpose": "FEATURE_FLAG_DEFINITIONS (:14) is the canonical registry of 52 flags (deterministic count of key: entries) across security (10), network (10), runtime (19), policies (5), cli (5), health (3); each definition carries label, i18n key, defaultValue, boolean/enum type, requiresRestart (7 true: ENABLE_TLS_FINGERPRINT, MITM_DISABLE_TLS_VERIFY, ENABLE_CC_COMPATIBLE_PROVIDER, OMNIROUTE_DISABLE_BACKGROUND_SERVICES, OMNIROUTE_ENABLE_LIVE_WS, OMNIROUTE_CHAT_VIRTUAL_LANES, CLI_COMPAT_ALL), and warningLevel.",
+      "owner_plane": "config",
+      "architectural_plane": "management-plane",
+      "risk_class": "medium — the registry gates security-relevant behavior (REQUIRE_API_KEY, SSRF guard, PII) behind operator-togglable switches",
+      "dependencies": ["CAP-P5-026 resolution chain", "CAP-P5-028 management API"],
+      "required_authorization": "layer-N",
+      "test_contract": "Layer-N: direct — resolve every defined flag and assert key uniqueness, valid enum defaults, and category totals; negative — an unknown key is rejected by the API (route.ts:128-131) and the DB writer (featureFlags.ts:53-55)",
+      "rollback_or_disable": "Definitions are source-level; individual flags revert by removing overrides (CAP-P5-026)",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P5-026",
+      "name": "Feature flag resolution chain (DB override > env > default) with validated DB overrides",
+      "source_refs": [
+        "src/shared/utils/featureFlags.ts:9",
+        "src/shared/utils/featureFlags.ts:11",
+        "src/lib/db/featureFlags.ts:13",
+        "src/lib/db/featureFlags.ts:41",
+        "src/lib/db/featureFlags.ts:52",
+        "src/lib/db/featureFlags.ts:81"
+      ],
+      "purpose": "resolveFeatureFlag() (:11) implements the documented precedence DB override > process.env > definition.defaultValue (:9 comment); overrides live in the key_value namespace 'feature_flags' (db/featureFlags.ts:13), read via getFeatureFlagOverride (:41), written with registry+enum validation by setFeatureFlagOverride (:52), and removed by removeFeatureFlagOverride (:81); security-sensitive wrappers fail closed (REQUIRE_API_KEY defaults required on error :59-69; ALLOW_API_KEY_REVEAL defaults disabled :91-101).",
+      "owner_plane": "config",
+      "architectural_plane": "management-plane",
+      "risk_class": "high — a persisted DB override silently beats the deployment environment, so config-as-code review (env) can be silently superseded by a dashboard click",
+      "dependencies": ["CAP-P5-022 settings store", "CAP-P5-025 registry"],
+      "required_authorization": "layer-N",
+      "test_contract": "Layer-N: direct — set the same flag in env and DB, assert DB wins and source reports 'db'; persistence — overrides survive restart; negative — invalid enum value is refused pre-write",
+      "rollback_or_disable": "removeFeatureFlagOverride / clearAllFeatureFlagOverrides (:92) restore env/default behavior; catalog-relevant flags invalidate the model catalog on change (:72-74)",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P5-027",
+      "name": "Flag precedence exceptions (env-wins-over-db gates)",
+      "source_refs": [
+        "src/app/api/settings/feature-flags/route.ts:72",
+        "src/app/api/settings/feature-flags/route.ts:79",
+        "src/lib/admissionVirtualLanes.ts:23",
+        "src/lib/admissionVirtualLanes.ts:42"
+      ],
+      "purpose": "Two flags break the generic DB>env order: EXPOSE_CC_DISCOVERY_ALIASES reports its gate's own env-winning resolution (route.ts:72-75 via getCcAliasGlobalState) and OMNIROUTE_CHAT_VIRTUAL_LANES reads env at runtime construction — env wins, and a DB override only gates at next boot (route.ts:79-82, #9654 U7; flag key at admissionVirtualLanes.ts:23, resolver :42). The dashboard deliberately surfaces the gate's true source so the displayed precedence matches behavior.",
+      "owner_plane": "config",
+      "architectural_plane": "management-plane",
+      "risk_class": "medium — operator confusion: the same UI shows db-wins for 50 flags and env-wins for 2; automation relying on DB overrides silently fails for these two",
+      "dependencies": ["CAP-P5-026 generic chain", "getCcAliasGlobalState (db/ccDiscoveryAliases)"],
+      "required_authorization": "layer-N",
+      "test_contract": "Layer-N: direct — for each exception flag set conflicting env and DB values and assert env wins at runtime and source='env' in the GET payload; persistence — virtual-lanes DB override takes effect only after restart",
+      "rollback_or_disable": "Unset the env var to hand control back to the DB override/default",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P5-028",
+      "name": "Feature flag management API (/api/settings/feature-flags)",
+      "source_refs": [
+        "src/app/api/settings/feature-flags/route.ts:59",
+        "src/app/api/settings/feature-flags/route.ts:112"
+      ],
+      "purpose": "Admin-authenticated GET (:59) returns all 52 flags with effectiveValue, source (db/env/default), requiresRestart, and a summary tally (overriddenByDb/overriddenByEnv); PUT (:112) sets or removes a DB override after registry and enum validation (unknown key → 400).",
+      "owner_plane": "config",
+      "architectural_plane": "management-plane",
+      "risk_class": "high — one authenticated endpoint flips security gates (REQUIRE_API_KEY off, ALLOW_API_KEY_REVEAL on); authn/z strength is the only barrier (P4 scope)",
+      "dependencies": ["isAuthenticated (P4)", "CAP-P5-025/026 registry and override store"],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N: direct — PUT then GET round-trip with source='db'; negative — unauthenticated 401, unknown key 400, invalid enum 400; persistence — override survives restart",
+      "rollback_or_disable": "PUT with value omitted removes the override (route.ts:103-106 contract)",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P5-029",
+      "name": "Payload-rules configuration precedence (runtime override > DB > file)",
+      "source_refs": [
+        "open-sse/services/payloadRules.ts:134",
+        "open-sse/services/payloadRules.ts:210",
+        "open-sse/services/payloadRules.ts:224",
+        "open-sse/services/payloadRules.ts:236",
+        "open-sse/services/payloadRules.ts:243"
+      ],
+      "purpose": "getPayloadRulesConfig() (:236) resolves payload-mutation rules in three tiers: in-memory runtimeOverride (setPayloadRulesConfig :210, applied by hot-reload), then the DB-persisted settings copy (loadPayloadRulesFromSettings :224 — preferred since #2986 so saved rules survive restart), then the config/payloadRules.json file (path :134-139, overridable via OMNIROUTE_PAYLOAD_RULES_PATH, mtime-polled with a reload interval).",
+      "owner_plane": "config",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "medium — three live tiers can diverge; a cleared in-memory override silently revives stale file rules into the traffic path",
+      "dependencies": ["CAP-P5-022 settings store", "CAP-P5-023 hot-reload", "config/payloadRules.json (corpus-shipped default)"],
+      "required_authorization": "layer-N",
+      "test_contract": "Layer-N: direct — populate all three tiers distinctly and assert runtime>DB>file selection; persistence — DB rules survive restart with no file present; negative — a malformed file warns once (error-signature dedup :194-199) and keeps the previous config",
+      "rollback_or_disable": "clearPayloadRulesConfigOverride (:214) drops to DB; removing the settings key drops to file; deleting the file resets to the built-in default (:150-153)",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P5-030",
+      "name": "Secrets namespace persistence (JWT_SECRET / API_KEY_SECRET bootstrap)",
+      "source_refs": [
+        "src/lib/db/secrets.ts:7",
+        "src/lib/db/secrets.ts:19",
+        "src/instrumentation-node.ts:111",
+        "src/instrumentation-node.ts:342"
+      ],
+      "purpose": "ensureSecrets() (instrumentation-node.ts:111, invoked :342) guarantees JWT_SECRET and API_KEY_SECRET at startup: env first, else the persisted key_value 'secrets' namespace via getPersistedSecret (secrets.ts:7), else generate-and-persist via persistSecret (secrets.ts:19). NOTE: values are stored as plain JSON (:23-24) with NO encryption call — the db/AGENTS.md claim of a 'dedicated encrypted store' is drift [UPSTREAM refuted by source]; at-rest protection for these rows is absent regardless of STORAGE_ENCRYPTION_KEY.",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "data-plane",
+      "risk_class": "critical — the JWT signing secret and API-key HMAC secret sit plaintext in storage.sqlite; anyone reading the state file (or an unencrypted backup) can mint sessions/keys",
+      "dependencies": ["CAP-P5-022 settings store", "node:crypto random generation at first boot"],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N: persistence — delete env vars, boot twice, assert the same secret persists (stable identity across restart); negative — set env, boot, assert env wins over the persisted value; direct — inspect the row: value is JSON plaintext (documented exposure)",
+      "rollback_or_disable": "Provide JWT_SECRET/API_KEY_SECRET via environment to bypass persistence; rotating requires deleting the persisted row and restarting",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P5-031",
+      "name": "DB module state-reset registry (restore/reconnect support)",
+      "source_refs": [
+        "src/lib/db/stateReset.ts:14",
+        "src/lib/db/stateReset.ts:22",
+        "src/lib/db/backup.ts:436"
+      ],
+      "purpose": "registerDbStateResetter() (:14) lets every db module register a cleanup hook, and resetAllDbModuleState() (:22) runs them all — invoked mid-restore (backup.ts:436) so cached prepared statements and module singletons bound to the old connection cannot leak into the restored database.",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "data-plane",
+      "risk_class": "low — an internal correctness seam; a missing resetter yields stale-state bugs after restore, not data loss",
+      "dependencies": ["CAP-P5-014 restore", "discipline of each db module to register"],
+      "required_authorization": "layer-N",
+      "test_contract": "Layer-N: direct — register a spy resetter, run a restore, assert invocation between close and reopen; negative — a module that skips registration shows stale reads (documents the discipline requirement)",
+      "rollback_or_disable": "None — inherent to the restore path",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P5-032",
+      "name": "CLI-tool file backup service (per-tool config snapshots)",
+      "source_refs": [
+        "src/shared/services/backupService.ts:51",
+        "src/shared/services/backupService.ts:150",
+        "src/app/api/cli-tools/backups/route.ts:1"
+      ],
+      "purpose": "backupService.createBackup() (:51) / createMultiBackup() snapshot arbitrary CLI-tool config files (e.g. tool-owned JSON) keyed by toolId, with list (:99), restore (:150), and delete (:190) — a file-copy backup plane distinct from the SQLite backup engine, exposed via /api/cli-tools/backups.",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "data-plane",
+      "risk_class": "medium — restores overwrite live tool configuration files; path handling per toolId is the trust boundary",
+      "dependencies": ["filesystem paths of managed CLI tools (P8 scope)"],
+      "required_authorization": "layer-N",
+      "test_contract": "Layer-N: persistence — snapshot a scratch tool file, mutate, restore, assert byte-equality; negative — unknown toolId/backupId must error cleanly",
+      "rollback_or_disable": "deleteBackup removes snapshots; restore has its own pre-restore semantics per tool",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P5-033",
+      "name": "Usage persistence facade (cross-reference — owned by P3)",
+      "source_refs": [
+        "src/lib/usageDb.ts:18",
+        "src/lib/usageDb.ts:21"
+      ],
+      "purpose": "src/lib/usageDb.ts is a thin re-export facade whose side-effect import (:18) triggers usage migrations on module load and whose exports (:21 onward) forward to src/lib/usage/* (usageHistory, callLogs, costCalculator, usageStats). The substantive capability — SQLite usage_history persistence with same-second natural-key dedup, failure/rejection accounting — is ledgered as CAP-P3-023 (usageHistory.ts:641) and deliberately not duplicated here.",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "data-plane",
+      "risk_class": "low — facade only; risk lives in the owned modules (P3)",
+      "dependencies": ["CAP-P3-023 (usage persistence)", "src/lib/usage/migrations.ts"],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: see CAP-P3-023 — this entry exists only to close the P3 sibling edge from the persistence side",
+      "rollback_or_disable": "See CAP-P3-023 (shouldPersistToDisk gate noted there)",
+      "preliminary_disposition": "NOT-APPLICABLE"
+    },
+    {
+      "id": "CAP-P5-034",
+      "name": "Down-migrations / automated migration rollback (searched, not found)",
+      "source_refs": [
+        "src/lib/db/migrationRunner.ts:931"
+      ],
+      "purpose": "NOT-ESTABLISHED (INFERENCE — bounded negative search; the search evidence is FACT): the runner is forward-only — no down/rollback SQL files, no reverse-application path, and no version-target command exist; grep of migrationRunner.ts finds no rollback semantics beyond the pre-migration backup. Rollback of a schema change is defined as restore-the-snapshot (CAP-P5-006/014), which is a data-level, not schema-level, inverse.",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "data-plane",
+      "risk_class": "high — an upgrade whose new migrations misbehave can only be undone by full state restore, losing writes since the snapshot",
+      "dependencies": ["CAP-P5-004 runner"],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N: negative — assert that restoring the pre-migration backup returns the exact prior schema_version and _omniroute_migrations set (the de-facto rollback drill)",
+      "rollback_or_disable": "N/A — absence of the capability is the finding; the compensating control is CAP-P5-006",
+      "preliminary_disposition": "NOT-ESTABLISHED"
+    },
+    {
+      "id": "CAP-P5-035",
+      "name": "Point-in-time recovery / WAL archiving (searched, not found)",
+      "source_refs": [
+        "src/lib/db/backup.ts:246"
+      ],
+      "purpose": "NOT-ESTABLISHED (INFERENCE — bounded negative search; the search evidence is FACT): backups are whole-file snapshots via the SQLite online backup API; no WAL archive, incremental backup, or replay-to-timestamp mechanism exists (the WAL is truncated on schedule, core.ts:1012, which actively discards the frames PITR would need). Recovery granularity = the latest retained snapshot.",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "data-plane",
+      "risk_class": "medium — worst-case data-loss window equals the interval between snapshots (throttle + schedule dependent), unbounded if auto-backup is disabled",
+      "dependencies": ["CAP-P5-012 snapshot engine"],
+      "required_authorization": "layer-N",
+      "test_contract": "Layer-N: persistence — quantify the loss window: write, crash before next snapshot, restore, assert which writes survive (expected: only those in the last snapshot)",
+      "rollback_or_disable": "N/A — absence is the finding; tightening manual/scheduled backup cadence is the compensating control",
+      "preliminary_disposition": "NOT-ESTABLISHED"
+    },
+    {
+      "id": "CAP-P5-036",
+      "name": "Server-side cloud/encrypted remote backup upload (searched, not found in server scope)",
+      "source_refs": [
+        "src/lib/db/backup.ts:290",
+        "src/lib/jobs/backupScheduleJob.ts:37"
+      ],
+      "purpose": "NOT-ESTABLISHED (INFERENCE — bounded negative search; the search evidence is FACT) in the server: backupDbFile writes only to the local DB_BACKUPS_DIR (:290) with no encryption or remote-upload step. The schedule file carries cloud/encrypt booleans (:37 type) but those execute inside the CLI's runBackupCommand (bin/cli/commands/backup.mjs — P8 packaging scope), so server-side backup artifacts are plaintext SQLite files (including plaintext-enc:v1 ciphertext rows and the plaintext secrets namespace, CAP-P5-030).",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "data-plane",
+      "risk_class": "high — unencrypted local backups replicate the credential store; off-host copies depend on an unassessed CLI path (P8)",
+      "dependencies": ["CAP-P5-012 engine", "CLI backup command (P8, unassessed)"],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N: direct — enumerate server-side backup outputs and assert none is encrypted or off-host (documents exposure); deferred — P8 must assess the CLI cloud/encrypt semantics before any reliance",
+      "rollback_or_disable": "N/A — absence is the finding; filesystem-level controls on DB_BACKUPS_DIR are the compensating control (rick's storage plane)",
+      "preliminary_disposition": "NOT-ESTABLISHED"
+    },
+    {
+      "id": "CAP-P5-037",
+      "name": "Multi-replica / shared-state HA (searched, found explicitly unsupported)",
+      "source_refs": [
+        "src/lib/db/core.ts:1401",
+        "src/lib/db/core.ts:1405"
+      ],
+      "purpose": "NOT-ESTABLISHED (INFERENCE — bounded negative search; the search evidence is FACT): the single-file SQLite model has no replication, leader election, or shared-state coordination; the init log exists specifically to diagnose the multi-replica/Docker volume-topology mismatch where replicas open different on-disk DBs and combos/connections 'phantom' (#3147, comment at :1401-1404, log at :1405-1408). Horizontal scale-out of state is not a product capability.",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "data-plane",
+      "risk_class": "medium — an operator assuming HA can silently run split-brain state across replicas with no detection beyond the path log line",
+      "dependencies": ["CAP-P5-001 single-file engine"],
+      "required_authorization": "layer-N",
+      "test_contract": "Layer-N: negative — point two processes at different DATA_DIRs and observe divergent state with only the :1405 log as evidence (documents the operational constraint)",
+      "rollback_or_disable": "N/A — single-replica deployment is the supported posture for the state file",
+      "preliminary_disposition": "NOT-ESTABLISHED"
+    }
+  ]
+}

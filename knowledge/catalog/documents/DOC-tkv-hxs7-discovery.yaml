@@ -37,8 +37,10 @@ document:
       target: "DOC-tkv-server-registry"
       note: "fleet registry row for hxs-7"
   validation:
-    validated_at: "2026-08-25T05:55:00Z"
+    validated_at: "2026-08-27T17:14:00Z"
     freshness: "historical"
     review_due: "historical record — no review cycle; cross-check before any operational use"
   sha256: "805dcca3509a1437843df4700d7878eb58993ee058fd6e2ba89137618939a569"
   canonical_location: "/opt/tkv-local/servers/hxs-7/discovery.md"
+notes:
+  roster_advisory_20260827: "OWNER ADVISORY (2026-08-27; provenance: hxs-2 state log row 58, 2026-08-27T16:20Z): hxs-7 is REPLACED BY hxs-20 (provisioning in progress — no pre-work on hxs-20 until ready). hxs-7 was outside the 2026-08-27 remainder pass's commissioned target list (the excluded set covered only hxs-20/21 as provisioning — hxs-7 simply was not commissioned). OPEN ITEM carried with the succession: hxs-7's documented Secure-Boot-ENABLED state (with hxs-6, the fleet's only two SB-on hosts per this and the repo discovery record — F-2 of the 2026-08-27 pass, cross-recorded in DOC-fleet-prework-remainder-2026-08-27) sits against the owner standing SB-disabled-always directive (2026-08-24/25); BIOS-level remediation is a separate authorized pass and explicitly an owner decision. Advisory carried in this record's notes with provenance; the registry-row amendment is the owner's lane (SERVER-REGISTRY.md owner-maintained) — FLAGGED for the governor via DOC-tkv-server-registry notes.roster_advisory_20260827. This historical record's content unchanged; hash re-verified == live this run."

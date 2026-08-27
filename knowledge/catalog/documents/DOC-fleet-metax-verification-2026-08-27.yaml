@@ -1,0 +1,54 @@
+document:
+  id: "DOC-fleet-metax-verification-2026-08-27"
+  title: "evidence-2026-08-27-metax-verification.md — Meta-X verification of the fleet script library v0.1 (9/9 artifacts PASS, zero nonconformances; Meta-X's first production support task; full local-model contract recorded)"
+  type: "evidence"
+  declared_purpose: "Verification-stage evidence for the fleet script library v0.1 per owner designation 2026-08-27 (hxs-2 state log rows 44-45): verdict PASS for all nine artifacts, zero nonconformances found; no fixes applied, none needed. Executor: Kimi harness on hxs-5 (192.168.50.204), deterministic checks first, Meta-X bounded review second, harness adjudication last. Deterministic pass (acceptance authority, run first): D1 shellcheck 0.10.0 (official static binary, /tmp, deleted after) 7/7 scripts CLEAN rc=0; D2 fleet-selftest.sh 26/26 PASS rc=0 (v0.1 baseline — extended to 42 by the later batch-17 hardening); D3 grep-based contract checks G1-G8 all PASS (--help present 7/7; credential-token scan clean; mutator defaults mode=\"dry-run\" / action=\"verify\" / prune=0; zero accept-new / StrictHostKeyChecking=no / CheckHostIP=no / UserKnownHostsFile=/dev/null; BatchMode=yes + StrictHostKeyChecking=yes + exact fingerprint compare only; no python/pip/curl/wget/apt-install; no eval/source of remote data; standards-file content incl. host→class map + 10 llm-host rules). Meta-X adjudication: 9 inference calls (1 per artifact), 9x HTTP 200, zero re-requests; each response exactly one JSON verdict object (jq-validated); zero fail verdicts across 72 requirement cells (9 artifacts x 8 requirements R1-R8); AGREEMENT with the deterministic pass on every applicable cell; na cells match R5/R7/R8 per-artifact applicability. Findings: none; O1 observation (not a nonconformance): fleet-evidence-pull.sh interpolated caller-supplied <remote-dir> into a single-quoted remote shell string — adjudicated inside R6's commissioned scope (caller trust domain), noted for a future revision; RESOLVED by the batch-17 H1 hardening (closure recorded in the source's own Addendum A, appended 2026-08-27T06:44Z — %q at every interpolation site, hostile-path pull+prune proof). Addendum A (governor, labeled, this same document): A.1 the D2 26/26 result stands as the historical v0.1 result at Meta-X verification time; the accepted artifact is now fleet-selftest.sh v0.1.2 at 42/42 PASS (batch-17 H1-H4 + batch-18 F6/F7 corrections — eval removed from command position, refusal-matrix mock genuinely zero-transport), shellcheck CLEAN 7/7 throughout; A.2 O1 RESOLVED, no longer active. Compliance notes: prompts carried only the requirement list + artifact text (no credentials/secrets/host records in model context); SSH to hxs-3 not needed (LAN HTTP API); askpass helper never created; credential record ssh-info.md never read; artifacts under review unmodified — this evidence file is the only addition to the directory."
+  inferred_value: "INFERENCE: the fleet's first production-role local-model contract executed end-to-end — identity verified pre-task, deterministic checks first and final authority, one-call-per-turn (KDD-0007) complied, zero cloud, adjudication AGREEMENT on all 72 cells; it is the reusable reference shape for designating any fleet backend to a production support role under contract (the fleet-performance evidence the owner asked for, hxs-2 log row 49)."
+  source:
+    author: "Kimi-K3 (governor harness, hxs-5 executor) with Meta-X bounded review verdicts"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/scripts/fleet/evidence-2026-08-27-metax-verification.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-27T06:41:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: [hxs-3, hxs-5]
+    fqdns: []
+    services: [ollama.service]
+    agents: [kimi-k3]
+    repositories: [HX-ASF-Servers]
+    environments: [fleet, production]
+    models: [hx-muse-glimmer-64k]
+  version: "PASS — 9/9 artifacts, zero nonconformances (fleet library v0.1 verification stage, 2026-08-27)"
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "DOC-backend-meta-x"
+      note: "producer host of the review verdicts — Meta-X (hxs-3, http://192.168.50.202:11434, Ollama 0.32.15; alias hx-muse-glimmer-64k ONLY, digest 9dffb015db40…e7da full-prefix match; identity PASS at task start: /api/version 0.32.15, /api/ps resident, size==size_vram==18376336340, ctx 65536; ACTIVE / M8-signed consistent) — Meta-X's FIRST production support task under contract (hxs-2 state log row 49)"
+    - predicate: "evidences"
+      target: "DOC-fleet-script-library"
+      note: "the verification stage of the fleet script library v0.1: all nine artifacts PASS (deterministic D1-D3 acceptance authority + Meta-X 72-cell adjudication AGREEMENT); the O1 observation is RESOLVED by the batch-17 H1 hardening (source Addendum A.2) and the accepted selftest is now v0.1.2 42/42 (Addendum A.1)"
+    - predicate: "references"
+      target: "DOC-pilot-hxs2-state-log"
+      note: "commissioned per owner designation at rows 44-45; execution + verdict recorded at row 49 (2026-08-27T05:52Z — 'Meta-X first production task PASS 9/9')"
+    - predicate: "references"
+      target: "DOC-kdd-0007-hxs3-muse-glimmer-tooling-adoption"
+      note: "one-call-per-turn contract (KDD-0007) COMPLIANT — each turn exactly one structured request, no parallel model calls, each response exactly one JSON verdict (jq-validated), no rejection needed"
+  validation:
+    validated_at: "2026-08-27T06:41:00Z"
+    freshness: "current"
+    review_due: "on the next fleet-library verification stage (Meta-X re-verification of the hardened library is queued for the next natural checkpoint per hxs-2 log row 51 — this evidence covers v0.1, with Addendum A recording the v0.1.2 successor state)"
+  sha256: "262c8159771f804240aae6cdf6c3b82ce4b9e440ef287f5db3392d9faded7d80"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/scripts/fleet/evidence-2026-08-27-metax-verification.md"
+notes:
+  typing_convention: "Typed evidence per the rick execution-report precedent (DOC-fleet-time-and-mask-pass class): a completed, point-in-time verification record (status adopted); the harness executor is Kimi-K3's governor harness, Meta-X's role was bounded review with the deterministic checks as acceptance authority — recorded in the model contract block (§1 of the source)."
+  version_scope: "This evidence's verdict matrix covers the fleet library at v0.1 (selftest 26/26, pre-hardening) — preserved unchanged per the addendum convention for evidence docs. The batch-17 H1-H4 hardening (hxs-2 log rows 50-51) produced v0.1.1 AFTER this verification, and review batch 18 (row 53, 2026-08-27T06:45Z) appended this document's own Addendum A (06:44Z, governor, labeled): A.1 accepted artifact now fleet-selftest.sh v0.1.2 at 42/42 (batch-18 F6 eval-removal + F7 refusal-matrix zero-transport corrections inside the selftest), A.2 O1 RESOLVED by H1 (%q at every interpolation site + hostile-path live proof). The library record (DOC-fleet-script-library) is minted at v0.1.2 content. Meta-X re-verification of the hardened library is queued for the next natural checkpoint, not per-pass (row 51)."
+  credential_hygiene: "Source §7 proves the credential boundary held: no credentials/secrets/host records entered model context; SSH to hxs-3 not needed; the askpass helper was never created; the protected credential record ssh-info.md was never read (named by existence only — profile §6; cf. DOC-protected-ssh-info-hxs1). shellcheck 0.10.0 ran as the official static binary from /tmp, deleted after use; no system change on hxs-5."
+  hash_crosscheck: "MID-RUN ADDENDUM (this wave): first hash 24f48b38… at 06:36Z (pre-addendum content, stable since 05:48Z) -> 262c8159… at 06:47Z after the governor appended Addendum A at 06:44:57Z (review batch 18 F4/F5 fixes, hxs-2 log row 53) — the pre-addendum digest never entered the catalog as a validated state; the record is minted at the addendum content (living-document doctrine, state log row 8: history in the hash chain, addenda for evidence docs). hxs-2 log rows 49/53 record no file hash — the catalog hash is the first recorded value."

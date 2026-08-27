@@ -1,0 +1,85 @@
+document:
+  id: "DOC-pilot-hxs3-wo-13-john-m8"
+  title: "13-work-order-john-m8.yaml — WO-HXS3-JOHN-M8-001 (hxs-3 M8: Meta-X sign-off gate — 3 cold reboots pre-approved per-cycle, endpoint boundary, consumer-proof, first configuration.md, acceptance reconciliation; DISCHARGED — milestone complete)"
+  type: "work-order"
+  declared_purpose: "Delegated contract commissioning john / Esme (session john-m8-hxs3-20260827-01) for hxs-3 milestone M8 — the Meta-X sign-off gate: prove the frozen operating profile (hx-muse-glimmer-64k, digest 9dffb015db40…, ctx 65536) returns to ready state with NO human action across THREE cold reboots (AC-007-class pass 3/3); prove the endpoint boundary as designed; run one consumer-class RAG-pipeline-shaped tool task against the alias end-to-end; write servers/hxs-3/configuration.md per the server-records contract (the FIRST of its class); and reconcile the goal's success criteria for the owner's acceptance decision. Owner authorizations: owner 2026-08-27 'Meta-X M8 approved' (state log row 23) — the full gate; three COLD reboots pre-approved per-cycle inside a governor-announced window (hxs-1 D6 precedent — pre-approved per-cycle; the owner may abort at any time, honored immediately after the current poll completes); NOT authorized: baseline changes (drop-in, Modelfile, aliases, units beyond evidence capture, model store), sampling changes, firewall (owner rule — none), endpoint changes, other models, package installs, M8 on any other host. Boundaries: hxs-5 session, SSH hxsa@192.168.50.202, askpass helper READS the credential from the credential-record row at execution time (never printed/logged/stored, helper deleted at task end), hostname + peer IP verified first, sudo -n only, host key pinned (F-05); hxs-3 now Etc/UTC (fleet pass 2026-08-26T23:52:40Z) — UTC labels, the RUNNING ollama process may still format EST offsets cosmetically until its next service restart (explained, not drift); /tmp BOOT-CLEARED (F-M5-1 fact) — every cycle's evidence pulled off-host IMMEDIATELY after each cycle, before the next reboot; interactive-use rule (MAX_LOADED_MODELS=1): an evicted -64k pin is restored via the frozen preload path (systemctl restart ollama-preload.service) with F-M5-1-class disclosure; Xid-watch armed (F-M6-0 class — any Xid = immediate stop + escalate; NVRM teardown-assertion chatter a recorded class — record, don't panic); incremental deliverable after EVERY phase (a stop never costs more than one phase); one bounded correction per failed correctable cycle — a failed cycle is a finding, never silently re-run. Reboot-cycle protocol per cycle (3 total): pre-state capture (/api/ps identity, digests, unit hashes, journal cursor); cold reboot (systemctl reboot; boot via uptime + boot-id change); poll /api/ps until resident — detection/recovery timings vs D5 (detection <=120 s, recovery <=900 s; preload script <=538 s, TimeoutStartSec 600); identity guard EXACT (name, digest 9dffb015db40…, size == size_vram, context_length 65536, Forever; preload Result=success); journal + Xid + NRestarts sweep; evidence off-host immediately. Endpoint boundary proof: listener shape (*:11434 with loopback preserved — ss -lntp), LAN reachability from hxs-5 (authorized 192.168.50.0/24 member), no host firewall anywhere (owner rule; ufw absent/inactive), boundary = the /24 LAN per blueprint section 5 with the O1 monitoring tripwire named as the residual — proof only, no boundary changes. Consumer-proof: one RAG-pipeline-shaped tool task (retrieved-document question + one tool call), native sampling, the one-call-per-turn contract exercised end-to-end — response shape, conformance, latency reported as §8 consumer-contract evidence. configuration.md per servers/AGENTS.md: role (Meta-X tooling specialist backend, KDD-0007 contract), workload, the material configuration chain (install, frozen artifact + aliases, profiles, preload, exposure, web search, TZ/NTP), validation pointers to the pilot evidence; discovery.md preserved untouched. Deliverable: 15-esme-m8-signoff.md — cycle table (3/3 with timings vs D5), identity guards, endpoint boundary proof, consumer-proof evidence, configuration.md written, acceptance reconciliation per goal SC item, sanitized sequential command log, Task May Proceed receipt — assembled for the owner's ACCEPT decision."
+  inferred_value: "INFERENCE: this is the gate that converts Meta-X from a candidate into a production backend — the 3/3 no-human-action persistence proof is the fleet's second AC-007-class sign-off (hxs-1 pattern) and the first on the tooling-specialist class; the configuration.md deliverable instantiates the server-records contract for the first time and becomes the reference for the remaining fleet hosts; per the WO's own second-brain evaluation, every prior milestone exists to make this one cheap, and the backend-capability registration flips candidate -> active only at the owner's ACCEPT (post-deliverable governor wave, not this contract)."
+  source:
+    author: "Kimi-K3 (governor)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/13-work-order-john-m8.yaml"
+    section: "§whole-document"
+    ingestion_date: "2026-08-27T01:55:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: [hxs-3, hxs-5]
+    fqdns: []
+    services: [ollama.service, ollama-preload.service]
+    agents: [john, kimi-k3]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+    models: [muse-glimmer:30b, hx-muse-glimmer-64k]
+  version: ""
+  status: "adopted"
+  authority_level: "delegated-contract"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "kimi-k3"
+      note: "M8 commissioned at the owner approval 'Meta-X M8 approved' (hxs-3 state log row 23, 2026-08-27T01:37Z; session john-m8-hxs3-20260827-01 commissioned background, in flight at cataloging)"
+    - predicate: "references"
+      target: "DOC-pilot-hxs3-cp-14-john-m8"
+      note: "paired context packet (session john-m8-hxs3-20260827-01)"
+    - predicate: "depends_on"
+      target: "DOC-goal-hxs3-muse-glimmer-tooling"
+      note: "parent goal GOAL-HXS3-MUSE-GLIMMER-001 (goal_file goals/2026-08-26-hxs3-muse-glimmer-tooling.md); the acceptance reconciliation walks the goal's success-criteria items for the owner's ACCEPT decision"
+    - predicate: "references"
+      target: "DOC-pilot-hxs3-state-log"
+      note: "parent pilot state-log record — row 23 (2026-08-27T01:37Z) records the M8 approval + commissioning of this WO/CP pair"
+    - predicate: "references"
+      target: "DOC-pilot-hxs3-ev-12-esme-m5-validation"
+      note: "M5 quality grounds for the sign-off (controlling source 12-esme-m5-validation.md + Addendum A): every mandatory suite PASS per the owner-ratified bars — the gate stands on this evidence"
+    - predicate: "references"
+      target: "DOC-pilot-hxs3-ev-09-esme-m7-ladder-profiles"
+      note: "frozen operating profile basis (controlling source 09-esme-m7-ladder-profiles.md): hx-muse-glimmer-64k digest 9dffb015db40…, ctx 65536 effective, Forever — the identity the per-cycle guards assert EXACT; frozen artifact muse-glimmer:30b de878ce33ad8…64c1"
+    - predicate: "references"
+      target: "DOC-pilot-hxs3-ev-07-esme-m4-install"
+      note: "install + identity-freeze basis (controlling source 07-esme-m4-install.md) in the WO's evidence chain"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-state-log"
+      note: "hxs-1 M8/M7a shape (controlling source — hxs-1 state log rows 60+): the AC-007 3/3 cold-reboot pattern and the sign-off flow this gate reuses"
+    - predicate: "references"
+      target: "DOC-pilot-hx1-decision-36-m8-acceptance"
+      note: "hxs-1 M8 acceptance-decision precedent for the acceptance reconciliation + owner ACCEPT step this gate assembles"
+    - predicate: "references"
+      target: "DOC-blueprint-llm-server"
+      note: "§5 governs the endpoint boundary proof (the /24 LAN as the boundary, no host firewall, O1 monitoring tripwire as the named residual — controlling source); the §8 consumer contract is what the consumer-proof task evidences"
+    - predicate: "references"
+      target: "DOC-tkv-servers-records-contract"
+      note: "servers/AGENTS.md server-records contract governs servers/hxs-3/configuration.md — the FIRST of its class, owner-authorized by the M8 approval (controlling source); discovery.md preserved untouched"
+    - predicate: "references"
+      target: "DOC-fleet-time-and-mask-pass"
+      note: "hxs-3 Etc/UTC basis (fleet pass 2026-08-26T23:52:40Z) behind the boundary's UTC-labels clause; the running ollama process may format EST offsets cosmetically until its next service restart (explained, not drift)"
+    - predicate: "depends_on"
+      target: "DOC-protected-ssh-info-hxs1"
+      note: "ratified askpass execution path (hxs-5 → hxs-3); credential read at execution time, never printed/logged/stored, helper deleted at task end"
+    - predicate: "governs"
+      target: "DOC-pilot-hxs3-ev-15-esme-m8-signoff"
+      note: "DISCHARGED by the M8 deliverable 15-esme-m8-signoff.md (PASS — TASK COMPLETE: persistence 3/3 cold reboots ZERO human action, boot→ready 98 s deterministic vs the D5 budgets, identity guard EXACT per cycle, endpoint boundary PASS, consumer-proof PASS, acceptance reconciliation with SC-06 OPEN for owner disposition and SC-08 held for the owner verdict; governor-verified, hxs-3 state log row 25, 2026-08-27T02:23Z); the governs edge deferred at the in-execution cataloging is added here at the flip"
+    - predicate: "governs"
+      target: "DOC-hxs3-configuration"
+      note: "DISCHARGED by the gate's second deliverable servers/hxs-3/configuration.md (T-CONFIG-MD PASS — the FIRST record of its class per the server-records contract this WO commissioned; discovery.md preserved untouched, sha256 93bc5634…79d3 before and after); the deferred governs edge is added here at the flip"
+  validation:
+    validated_at: "2026-08-27T02:35:00Z"
+    freshness: "current"
+    review_due: "at the owner's M8 ACCEPT verdict (governor wave — SC-06 disposition + SC-08 verdict; DOC-backend-meta-x flips candidate -> active only at ACCEPT, Qwen-X precedent); the M8 handoff CLOSES when this run's receipt is cited in the hxs-3 state log (profile §7)"
+  sha256: "56dd98b9524e58c4abd30f137ae061e4ebfe334835746bf5a79b6bf69ed619b3"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/13-work-order-john-m8.yaml"
+notes:
+  status_convention: "IN-EXECUTION WO/CP cataloging per the M7-pair convention (first established at receipt 2026-08-26T0810Z-carol-batch11-hygiene.md; continued by the M5 pair at receipt 2026-08-26T1937Z-carol-m5-commissions.md): status active for a commissioned-not-complete milestone (commissioned 2026-08-27T01:37Z, hxs-3 state log row 23 — owner 'Meta-X M8 approved'; session john-m8-hxs3-20260827-01 in flight at cataloging). The governs edge to the future deliverable record (15-esme-m8-signoff.md) is DEFERRED at this cataloging and is added at the active -> adopted DISCHARGED flip, as with the M7/M5 pairs. FLIPPED to adopted 2026-08-27T02:35Z (the Meta-X M8 flip wave run): the M8 deliverable landed and is cataloged (DOC-pilot-hxs3-ev-15-esme-m8-signoff; governor-verified, hxs-3 state log row 25, 2026-08-27T02:23Z — M8 GATE COMPLETE, ALL PASS) together with the gate's second deliverable servers/hxs-3/configuration.md (DOC-hxs3-configuration, FIRST of its class) — the discharged-contract convention now applies; the governs edges deferred at the in-execution cataloging are added to both new records. Record sha256 re-verified UNCHANGED at the flip (56dd98b9… == live file)."
+  hash_crosscheck: "sha256 56dd98b9524e58c4abd30f137ae061e4ebfe334835746bf5a79b6bf69ed619b3 computed at ingestion (2026-08-27T01:55Z); hxs-3 state log row 23 records no WO/CP hashes for this milestone (the M7 row 11 / M5 row 16 pattern, unlike the M4 row 8 pattern) — the catalog hash is the first recorded value."

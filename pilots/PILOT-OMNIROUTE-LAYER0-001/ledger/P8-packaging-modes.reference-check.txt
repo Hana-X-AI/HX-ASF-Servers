@@ -1,0 +1,27 @@
+=== P8-packaging-modes deterministic verification — 2026-08-27 ===
+=== 1. reference check (existence + range + non-empty) ===
+entries: 74 (dupes: none)
+schema-field check: 74/74 have all 12 fields
+source refs: 297
+PASS: 297/297 refs — file exists, cited line in range, line non-empty
+
+=== 2. spot content check (expected symbol at cited line) ===
+SPOT-CHECK PASS: 79/79 load-bearing refs have the expected symbol at the cited line
+
+=== 3. JSON validity + disposition histogram ===
+JSON valid; entries: 74
+Counter({'ACTIVE-CANDIDATE': 33, 'AVAILABLE-DISABLED': 21, 'NOT-APPLICABLE': 8, 'NOT-ESTABLISHED': 6, 'LAB-ONLY': 4, 'BLOCKED': 2})
+
+=== 4. Coder-X drafted-citation measurement (citation contract) ===
+drafted unique line-bearing citations: 46
+wrong LINE numbers: 0 (0.0%)
+wrong PATH attributions (existence check): 7 + 1 garbled two-path citation (manual review) = 8
+  PATH-FAIL resp1.txt workflows/docker-publish.yml:149-153
+  PATH-FAIL resp1.txt workflows/docker-publish.yml:155-160
+  PATH-FAIL resp2.txt bin/lib/jobs/backupScheduleJob.ts:82-88
+  PATH-FAIL resp2.txt bin/electron/main.js:755-782
+  PATH-FAIL resp2.txt bin/electron/main.js:783-794
+  PATH-FAIL resp2.txt bin/electron/main.js:760-770
+  PATH-FAIL resp2.txt bin/electron/main.js:846-846
+distinct wrong paths: 'workflows/docker-publish.yml' (.github/ dropped, x2), 'bin/lib/jobs/backupScheduleJob.ts' (should be src/lib/jobs/, x2 incl garbled), 'bin/electron/main.js' (should be electron/, x4)
+baselines: P1 21/59 (35.6%) | P5 1/25 (4.0%) | P6 2/70 (~3%) | P7 1/32 (3.1%) | P8 0/46 (0.0%) wrong lines

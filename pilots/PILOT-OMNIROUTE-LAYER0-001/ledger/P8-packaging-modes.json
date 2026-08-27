@@ -1,0 +1,1619 @@
+{
+  "partition": "P8-packaging-modes",
+  "work_order": "WO-OMNI-TRINITY-LEDGER-001",
+  "producer": "trinity",
+  "corpus": "/opt/tkv-local/OmniRoute-release-v3.8.51 (READ-ONLY; identity VERIFIED 2026-08-27 per 07-source-provenance-receipt.md)",
+  "produced_at": "2026-08-27T10:05Z",
+  "entry_schema": [
+    "id",
+    "name",
+    "source_refs",
+    "purpose",
+    "owner_plane",
+    "architectural_plane",
+    "risk_class",
+    "dependencies",
+    "required_authorization",
+    "test_contract",
+    "rollback_or_disable",
+    "preliminary_disposition"
+  ],
+  "entries": [
+    {
+      "id": "CAP-P8-001",
+      "name": "npm package identity, bin entries, engines, workspaces",
+      "source_refs": [
+        "package.json:2",
+        "package.json:3",
+        "package.json:7",
+        "package.json:8",
+        "package.json:57",
+        "package.json:62",
+        "package.json:79"
+      ],
+      "purpose": "FACT: package 'omniroute' v3.8.51 (MIT) ships two bin entries (omniroute -> bin/omniroute.mjs, omniroute-reset-password -> bin/reset-password.mjs), declares npm workspaces open-sse + packages/browser-pool, and gates Node to >=22.22.2 <23 || >=24.0.0 <27. The single npm package is the primary distribution unit; the CLI bin is also the MCP-stdio and recovery-tool entry.",
+      "owner_plane": "packaging",
+      "architectural_plane": "distribution",
+      "risk_class": "low — identity metadata only, no runtime behavior",
+      "dependencies": [
+        "Node.js >=22.22.2 <23 || >=24.0.0 <27",
+        "npm"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: `npm pack --dry-run` shows bin/files; `omniroute --version` prints 3.8.51; engine mismatch warns via bin/nodeRuntimeSupport.mjs.",
+      "rollback_or_disable": "Uninstall the npm package (`npm uninstall -g omniroute`); package.json:253-254 wires scripts/build/uninstall.mjs.",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P8-002",
+      "name": "Isolated Next.js standalone build",
+      "source_refs": [
+        "package.json:100",
+        "next.config.mjs:185",
+        "next.config.mjs:15",
+        "scripts/build/build-next-isolated.mjs:94",
+        "scripts/build/build-next-isolated.mjs:108"
+      ],
+      "purpose": "FACT: `npm run build` spawns `next build` in an isolated environment (build-next-isolated.mjs runNextBuild spawns process.execPath) with output:'standalone' and distDir .build/next (NEXT_DIST_DIR overridable). Produces the self-contained server bundle every runtime mode consumes (Docker runner, electron-standalone, npm package).",
+      "owner_plane": "packaging",
+      "architectural_plane": "distribution",
+      "risk_class": "medium — build host resource exhaustion class (heap/worker caps documented in Dockerfile:177-200)",
+      "dependencies": [
+        "Node toolchain",
+        "package-lock.json (enforced Dockerfile:94-95)"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: build from a clean checkout; assert .build/next/standalone/server.js exists and boots (check:pack-boot, package.json:159).",
+      "rollback_or_disable": "Delete .build/; build artifacts are regenerable. No runtime state touched.",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P8-003",
+      "name": "Build profiles: minimal (secure) and backend-only",
+      "source_refs": [
+        "package.json:101",
+        "package.json:102"
+      ],
+      "purpose": "FACT: two alternate build profiles exist — OMNIROUTE_BUILD_PROFILE=minimal (build:secure) and OMNIROUTE_BUILD_BACKEND_ONLY=1 (build:backend) — selecting reduced build surfaces of the same isolated builder.",
+      "owner_plane": "packaging",
+      "architectural_plane": "distribution",
+      "risk_class": "low — build-time variant selection only",
+      "dependencies": [
+        "CAP-P8-002 build chain"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: run each profile; diff the emitted standalone tree against the full build's manifest.",
+      "rollback_or_disable": "Do not set the profile env vars; the default full build runs.",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P8-004",
+      "name": "Release build chain with build-SHA stamping",
+      "source_refs": [
+        "package.json:105",
+        "scripts/build/write-build-sha.mjs:1"
+      ],
+      "purpose": "FACT: build:release wipes .build/dist, stamps OMNIROUTE_BUILD_SHA from git, runs the standalone build plus the CLI tarball build, then writes the build SHA — the upstream release artifact chain.",
+      "owner_plane": "packaging",
+      "architectural_plane": "distribution",
+      "risk_class": "low — build orchestration only",
+      "dependencies": [
+        "git checkout",
+        "CAP-P8-002",
+        "CAP-P8-005"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: run build:release on a tagged checkout; verify the stamped SHA matches the commit.",
+      "rollback_or_disable": "Artifacts are regenerable; nothing persists outside .build/dist.",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P8-005",
+      "name": "CLI npm tarball prepublish + files allowlist",
+      "source_refs": [
+        "package.json:10",
+        "package.json:103",
+        "package.json:251",
+        "scripts/build/prepublish.ts:67"
+      ],
+      "purpose": "FACT: the npm package content is governed by an explicit files allowlist (bin/, dist/, open-sse/, selected src/ subtrees, build scripts; tests excluded) and prepublish.ts (build:cli) stages dist/ via runBuildTool; prepublishOnly chains build:cli-api + build:cli + check:pack-artifact before any publish.",
+      "owner_plane": "packaging",
+      "architectural_plane": "distribution",
+      "risk_class": "medium — a allowlist mistake ships or omits runtime files (publish-surface risk)",
+      "dependencies": [
+        "CAP-P8-002 build",
+        "scripts/cli/generate-api-commands.mjs"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: `npm pack` and diff tarball contents against the allowlist; check:pack-artifact (validate-pack-artifact.ts) must pass.",
+      "rollback_or_disable": "Do not publish; the tarball is a local artifact until `npm publish` runs.",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P8-006",
+      "name": "postinstall native-binary fixup",
+      "source_refs": [
+        "package.json:252",
+        "scripts/build/postinstall.mjs:121",
+        "scripts/build/postinstall.mjs:138",
+        "scripts/build/postinstall.mjs:42"
+      ],
+      "purpose": "FACT: every `npm install` of the package runs scripts/build/postinstall.mjs, which repairs platform-mismatched native binaries (better-sqlite3 et al.) shipped from the build platform, keyed off PUBLISHED_BUILD_ARCH/PLATFORM from native-binary-compat.mjs.",
+      "owner_plane": "packaging",
+      "architectural_plane": "distribution",
+      "risk_class": "medium — install-time code execution on the host (supply-chain surface, runs on every install)",
+      "dependencies": [
+        "npm lifecycle hook execution",
+        "node-gyp toolchain when rebuild needed"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: install the tarball on a different platform/arch than the build; assert better-sqlite3 loads (postinstall smoke path).",
+      "rollback_or_disable": "`npm install --ignore-scripts` skips it (at the cost of broken native modules); uninstall removes the package.",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P8-007",
+      "name": "Pack-artifact validation and boot/install-upgrade gates",
+      "source_refs": [
+        "package.json:158",
+        "package.json:159",
+        "package.json:160",
+        "scripts/build/validate-pack-artifact.ts:1"
+      ],
+      "purpose": "FACT: three scripted gates verify the packaged artifact before publish: validate-pack-artifact.ts (check:pack-artifact / --policy-only), check-pack-boot.mjs (the packed server actually boots), and check-install-upgrade.mjs (install/upgrade path).",
+      "owner_plane": "packaging",
+      "architectural_plane": "distribution",
+      "risk_class": "low — read-only verification gates",
+      "dependencies": [
+        "CAP-P8-005 staged tarball"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: run the three checks against a staged dist/; all must exit 0.",
+      "rollback_or_disable": "Gates are advisory locally; skipping them risks shipping a broken artifact (they are the rollback).",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P8-008",
+      "name": "Standalone bundle assembler + deterministic tarballs",
+      "source_refs": [
+        "scripts/build/assembleStandalone.mjs:68",
+        "scripts/build/assembleStandalone.mjs:114",
+        "scripts/build/assembleStandalone.mjs:163",
+        "scripts/build/standaloneTarball.mjs:1",
+        "scripts/build/standaloneTarball.mjs:14"
+      ],
+      "purpose": "FACT: assembleStandalone.mjs is the declared single source of truth for the standalone bundle's native assets and extra modules (EXTRA_MODULE_ENTRIES; run-standalone.mjs and the WS wrapper copied to dev/ inside the bundle), and standaloneTarball.mjs implements pure-Node deterministic ustar/gzip (zeroed mtime/uid/gid, normalized modes) so a given tree archives byte-identically on every machine.",
+      "owner_plane": "packaging",
+      "architectural_plane": "distribution",
+      "risk_class": "low — build-time file staging",
+      "dependencies": [
+        "CAP-P8-002 standalone output"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: build twice on different hosts; tarball digests must match; boot the assembled bundle.",
+      "rollback_or_disable": "Artifacts regenerable; nothing persists.",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P8-009",
+      "name": "Optional native dependency stack",
+      "source_refs": [
+        "package.json:344",
+        "package.json:347",
+        "package.json:349",
+        "package.json:351"
+      ],
+      "purpose": "FACT: heavy native/ML modules are optionalDependencies — better-sqlite3 (primary SQLite driver), keytar (OS keychain), sqlite-vec, tls-client-node, onnxruntime-node + llmlingua/transformers SLM stack — so the core install degrades gracefully when they fail to build (node:sqlite fallback per P5 core.ts:192,205).",
+      "owner_plane": "packaging",
+      "architectural_plane": "distribution",
+      "risk_class": "medium — optional native builds fetch/compile at install time",
+      "dependencies": [
+        "node-gyp/prebuilds per module",
+        "CAP-P8-006 postinstall fixup"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: install with and without --include=optional; verify core routes work in both modes (P5's driver fallback).",
+      "rollback_or_disable": "`npm install --omit=optional`; update.mjs:188-190 shows the updater force-includes them.",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P8-010",
+      "name": "Optional runtime packs (checksummed ML/browser closures)",
+      "source_refs": [
+        "scripts/packs/optionalPackManifest.mjs:5",
+        "scripts/packs/optionalPackManifest.mjs:11",
+        "scripts/packs/optionalPackInstaller.mjs:1",
+        "bin/cli/commands/packs.mjs:15",
+        "electron/main.js:133"
+      ],
+      "purpose": "FACT: issue-#10321 Stage-7 pack system ships the heavy optional ML/browser dependency closure as versioned, checksummed packs installed on first use into DATA_DIR/packs/<name>/node_modules (manifest owns the shared contract; installer verifies; `omniroute packs` is the UX; electron prepends pack node_modules to NODE_PATH). Fail-open by design when a pack is absent.",
+      "owner_plane": "packaging",
+      "architectural_plane": "distribution",
+      "risk_class": "medium — first-use network installs of versioned code into the data dir",
+      "dependencies": [
+        "bundle-shipped optional-packs.index.json",
+        "network access at first use"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N: install a pack via `omniroute packs`, corrupt a file, and confirm verification catches it; confirm features degrade gracefully with the pack removed.",
+      "rollback_or_disable": "`omniroute packs remove <name>` (installer removePack); absent packs degrade, never throw (manifest fail-open contract).",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P8-011",
+      "name": "npm publish workflow (provenance, staged 2FA publish)",
+      "source_refs": [
+        ".github/workflows/npm-publish.yml:26",
+        ".github/workflows/npm-publish.yml:65",
+        ".github/workflows/npm-publish.yml:69"
+      ],
+      "purpose": "FACT: the upstream release channel publishes to npm from GitHub Actions with id-token provenance, a staged mode requiring owner 2FA after a staged boot-verify, optional self-hosted 'omni-release' runner, and SBOM attachment to the GitHub release. HX never publishes OmniRoute; recorded as the artifact's upstream provenance machinery (trust input to our corpus, not an HX capability).",
+      "owner_plane": "packaging",
+      "architectural_plane": "distribution",
+      "risk_class": "high — external shared-state mutation (registry publish) when run upstream",
+      "dependencies": [
+        "GitHub Actions",
+        "npm registry credentials (upstream-owned)"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N (upstream only): staged publish dry-run; verify npm provenance attestation on the published tarball.",
+      "rollback_or_disable": "Upstream: unpublish/deprecate window; HX: pin and content-verify the snapshot (already done, 07-source-provenance-receipt.md).",
+      "preliminary_disposition": "NOT-APPLICABLE"
+    },
+    {
+      "id": "CAP-P8-012",
+      "name": "CLI entry point with fast-path and special bypasses",
+      "source_refs": [
+        "bin/omniroute.mjs:47",
+        "bin/omniroute.mjs:59",
+        "bin/omniroute.mjs:302",
+        "bin/omniroute.mjs:313",
+        "bin/omniroute.mjs:321"
+      ],
+      "purpose": "FACT: bin/omniroute.mjs fast-paths bare --version before loading tsx/polyfills/Commander (:47-51), redirects console output to stderr under --mcp to protect the JSON-RPC stream (:59-64), and hard-bypasses Commander for --mcp, reset-encrypted-columns, and reset-password (:302-328) before delegating all other commands to createProgram.",
+      "owner_plane": "packaging",
+      "architectural_plane": "distribution",
+      "risk_class": "medium — every CLI invocation flows through this file's bootstrap side effects",
+      "dependencies": [
+        "Node runtime",
+        "tsx/esm dynamic import",
+        "open-sse setupPolyfill.ts"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: `omniroute --version` returns without DB/env side effects; `--mcp` emits protocol-clean stdout; unknown commands error via Commander.",
+      "rollback_or_disable": "No persistent state changed by the entry logic itself; bypass tools are covered by their own entries.",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P8-013",
+      "name": "CLI env-file loading chain + Electron server.env migration",
+      "source_refs": [
+        "bin/omniroute.mjs:89",
+        "bin/omniroute.mjs:111",
+        "bin/omniroute.mjs:113",
+        "bin/omniroute.mjs:122",
+        "bin/omniroute.mjs:139",
+        "bin/omniroute.mjs:162"
+      ],
+      "purpose": "FACT: the CLI loads env vars first-set-wins from DATA_DIR/.env, default-data-dir/.env, cwd/.env, and (unless OMNIROUTE_CLI_SKIP_REPO_ENV=1) package-root/.env, warning on shadowed keys; a one-time migration copies Electron's <DATA_DIR>/server.env to .env when no .env exists (#7302) so the STORAGE_ENCRYPTION_KEY survives a desktop-to-CLI migration.",
+      "owner_plane": "packaging",
+      "architectural_plane": "management-plane",
+      "risk_class": "medium — silently sources configuration/secrets from up to four files; precedence bugs change effective config",
+      "dependencies": [
+        "Filesystem read access to the candidate env paths"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: plant distinct values per file and assert the documented precedence + shadow warnings; assert server.env migration fires once and never overwrites .env.",
+      "rollback_or_disable": "Remove the extra env files; explicit process env always wins over every file.",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P8-014",
+      "name": "CLI STORAGE_ENCRYPTION_KEY auto-provisioning with existing-DB guard",
+      "source_refs": [
+        "bin/omniroute.mjs:202",
+        "bin/omniroute.mjs:213",
+        "bin/omniroute.mjs:222",
+        "bin/omniroute.mjs:235",
+        "bin/omniroute.mjs:244"
+      ],
+      "purpose": "FACT: for commands that touch encrypted storage the CLI generates a 32-byte-hex STORAGE_ENCRYPTION_KEY on first run and persists it to <DATA_DIR>/.env (survives upgrades; Docker-volume-aware), but refuses to generate when a storage.sqlite already exists — a new key could not decrypt existing data (guard at :222-228). This is the CLI-side genesis of the key P5 showed gates AES-256-GCM field encryption (encryption.ts).",
+      "owner_plane": "packaging",
+      "architectural_plane": "data-plane",
+      "risk_class": "high — key-material genesis and persistence; loss or duplication locks or splits encrypted state",
+      "dependencies": [
+        "shouldProvisionStorageKey(argv) gate",
+        "writable DATA_DIR"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N: first-run creates the key in .env; rerun with existing DB + unset key prints the refusal and generates nothing; key in .env decrypts rows written under it.",
+      "rollback_or_disable": "Delete the generated key only together with the encrypted DB (P5: key loss is unrecoverable by design); restoring the previous key in DATA_DIR/.env recovers.",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P8-015",
+      "name": "Update notifier (npm registry check)",
+      "source_refs": [
+        "bin/omniroute.mjs:272",
+        "bin/omniroute.mjs:276",
+        "bin/omniroute.mjs:291"
+      ],
+      "purpose": "FACT: an update-notifier checks npm once per 24h and prints an 'Update available' message on exit (suggesting npm install -g or omniroute update --apply), suppressed by OMNIROUTE_NO_UPDATE_NOTIFIER, CI, --quiet, or machine-readable --output.",
+      "owner_plane": "packaging",
+      "architectural_plane": "distribution",
+      "risk_class": "low — outbound registry metadata query only",
+      "dependencies": [
+        "update-notifier package (optional import, degrades when pruned)",
+        "network access to the npm registry"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: set OMNIROUTE_NO_UPDATE_NOTIFIER=1 and assert no registry call/message; default path emits on exit only.",
+      "rollback_or_disable": "OMNIROUTE_NO_UPDATE_NOTIFIER=1 (env); CI/--quiet/json output auto-suppress.",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P8-016",
+      "name": "Commander program and global options",
+      "source_refs": [
+        "bin/cli/program.mjs:14",
+        "bin/cli/program.mjs:18",
+        "bin/cli/program.mjs:26",
+        "bin/cli/program.mjs:27",
+        "bin/cli/program.mjs:38"
+      ],
+      "purpose": "FACT: createProgram builds the 'omniroute' Commander root with global --output table|json|jsonl|csv, --quiet, --no-color, --timeout, --api-key (env OMNIROUTE_API_KEY), --base-url (env OMNIROUTE_BASE_URL), --context, and --lang, then registers every command family.",
+      "owner_plane": "packaging",
+      "architectural_plane": "management-plane",
+      "risk_class": "low — option parsing only",
+      "dependencies": [
+        "commander ^15",
+        "bin/cli/i18n.mjs"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: `--output json` yields machine output for any API-backed command; env-var options resolve without flags.",
+      "rollback_or_disable": "No state; options are per-invocation.",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P8-017",
+      "name": "Hand-written command registry (~80 register functions)",
+      "source_refs": [
+        "bin/cli/commands/registry.mjs:1",
+        "bin/cli/commands/registry.mjs:46",
+        "bin/cli/commands/registry.mjs:64",
+        "bin/cli/commands/registry.mjs:85"
+      ],
+      "purpose": "FACT: registerCommands wires ~80 hand-written command modules covering server lifecycle (serve/stop/restart), management (providers/keys/combos/models/quota/cache/logs/status/doctor/config), data (backup/restore/sync/env), agent-adjacent (mcp/a2a/skills/memory/cloud/tunnel/plugin — P7 surfaces), client setup (setup-codex/claude/cursor/... 15 files), and utilities (update/open/launch/run/tray/autostart/repl).",
+      "owner_plane": "packaging",
+      "architectural_plane": "management-plane",
+      "risk_class": "low — registration wiring; risk lives in the individual commands",
+      "dependencies": [
+        "Each command module's dependencies"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: `omniroute --help` lists every family; each register* has a corresponding bin/cli/commands/*.mjs module (grep-verified).",
+      "rollback_or_disable": "No state; removing a register line un-exposes a command.",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P8-018",
+      "name": "Generated OpenAPI `api` command family",
+      "source_refs": [
+        "bin/cli/api-commands/registry.mjs:1",
+        "bin/cli/api-commands/registry.mjs:34",
+        "bin/cli/api-commands/registry.mjs:38",
+        "scripts/cli/generate-api-commands.mjs:14",
+        "package.json:257"
+      ],
+      "purpose": "FACT: a second, AUTO-GENERATED command tree (`omniroute api ...`) is produced from docs/openapi.yaml by generate-api-commands.mjs (build:cli-api), covering 31 tags (playground, memory, chat, responses, providers, api-keys, quota, cloud, agentbridge, agent-skills, ...) — direct REST access mirroring the management API, including P7-class agent surfaces.",
+      "owner_plane": "packaging",
+      "architectural_plane": "management-plane",
+      "risk_class": "medium — generated write-capable API access from the shell incl. agent-surface tags",
+      "dependencies": [
+        "docs/openapi.yaml",
+        "OMNIROUTE_API_KEY / CLI token"
+      ],
+      "required_authorization": "layer-N",
+      "test_contract": "Layer-N: regenerate from the spec and diff (determinism); spot-call a read-only tag and assert parity with the HTTP API.",
+      "rollback_or_disable": "Do not run build:cli-api; the hand-written commands (CAP-P8-017) remain.",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P8-019",
+      "name": "CLI data-dir resolution (DATA_DIR > legacy/XDG/platform default)",
+      "source_refs": [
+        "bin/cli/data-dir.mjs:25",
+        "bin/cli/data-dir.mjs:29",
+        "bin/cli/data-dir.mjs:44",
+        "bin/cli/data-dir.mjs:50",
+        "bin/cli/data-dir.mjs:57"
+      ],
+      "purpose": "FACT: resolveDataDir honors DATA_DIR, else an existing ~/.omniroute legacy dir, else %APPDATA%/omniroute (win32), $XDG_CONFIG_HOME/omniroute, or ~/.omniroute; resolveStoragePath pins storage.sqlite inside it. The server-side schedule job imports this exact resolver so CLI and server agree on backup-schedule.json location (backupScheduleJob.ts:13).",
+      "owner_plane": "packaging",
+      "architectural_plane": "data-plane",
+      "risk_class": "low — path resolution only, but every CLI data touch flows through it",
+      "dependencies": [
+        "Filesystem"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: matrix-test each precedence branch (DATA_DIR set, legacy dir present, XDG set, win32 APPDATA).",
+      "rollback_or_disable": "Unset DATA_DIR/XDG_CONFIG_HOME to return to the default dir.",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P8-020",
+      "name": "CLI field-encryption helper (shared format with the server)",
+      "source_refs": [
+        "bin/cli/encryption.mjs:3",
+        "bin/cli/encryption.mjs:12",
+        "bin/cli/encryption.mjs:24"
+      ],
+      "purpose": "FACT: the CLI carries its own AES-256-GCM credential encryptor using the same enc:v1: prefix, 16-byte pinned auth tag, and static salt 'omniroute-field-encryption-v1' as the server (P5 encryption.ts:30-41,128) so credentials written by CLI setup commands remain decryptable by the dashboard/server and vice versa; key = scrypt(STORAGE_ENCRYPTION_KEY), null (no-op) when unset — the same plaintext-passthrough default P5 flagged.",
+      "owner_plane": "packaging",
+      "architectural_plane": "data-plane",
+      "risk_class": "medium — crypto parity code; divergence silently corrupts cross-tool credential reads",
+      "dependencies": [
+        "STORAGE_ENCRYPTION_KEY (else passthrough)"
+      ],
+      "required_authorization": "specialist-review",
+      "test_contract": "Layer-N: encrypt via CLI, decrypt via server (and inverse) on a shared DATA_DIR; assert enc:v1 format and tag-pinning rejection of truncated tags.",
+      "rollback_or_disable": "Unset STORAGE_ENCRYPTION_KEY → helper no-ops (plaintext passthrough, matching P5's AVAILABLE-DISABLED posture).",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P8-021",
+      "name": "serve command (default) with daemon mode",
+      "source_refs": [
+        "bin/cli/commands/serve.mjs:47",
+        "bin/cli/commands/serve.mjs:51",
+        "bin/cli/commands/serve.mjs:268",
+        "bin/cli/commands/serve.mjs:305",
+        "bin/cli/commands/serve.mjs:320"
+      ],
+      "purpose": "FACT: `omniroute serve` (the default command) spawns the Next standalone server as a child process — supervised in the foreground by default, or detached with --daemon writing a server PID file; flags cover --port, --no-open, --log, --no-recovery, --max-restarts, and tray toggles.",
+      "owner_plane": "packaging",
+      "architectural_plane": "management-plane",
+      "risk_class": "medium — spawns and supervises the long-running traffic-plane process",
+      "dependencies": [
+        "Built standalone bundle",
+        "writable PID/log locations"
+      ],
+      "required_authorization": "layer-N",
+      "test_contract": "Layer-N: `serve --daemon` then `status`/port probe; `stop` cleanly kills child+supervisor (stop.mjs:27-38 kills the supervisor too, #9455).",
+      "rollback_or_disable": "`omniroute stop` (SIGTERM to server and supervisor PIDs); PID files cleaned on exit.",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P8-022",
+      "name": "ServerSupervisor crash-restart policy + stop/restart lifecycle",
+      "source_refs": [
+        "bin/cli/commands/serve.mjs:287",
+        "bin/cli/commands/serve.mjs:415",
+        "bin/cli/commands/serve.mjs:417",
+        "bin/cli/runtime/processSupervisor.mjs:20",
+        "bin/cli/commands/stop.mjs:17",
+        "bin/cli/commands/restart.mjs:7"
+      ],
+      "purpose": "FACT: runWithSupervisor wraps the server in ServerSupervisor (pid file 'supervisor', configurable maxRestarts default 2, crash-log ring, MITM-crash detection, port-free wait per supervisorPolicy imports), with SIGINT/SIGTERM cleanup; `stop` and `restart` complete the lifecycle trio over the same PID-file machinery (utils/pid.mjs).",
+      "owner_plane": "packaging",
+      "architectural_plane": "management-plane",
+      "risk_class": "medium — automatic process resurrection can mask crash loops; bounded by maxRestarts",
+      "dependencies": [
+        "CAP-P8-021",
+        "bin/cli/utils/pid.mjs"
+      ],
+      "required_authorization": "layer-N",
+      "test_contract": "Layer-N: kill the child N>maxRestarts times and assert the supervisor exits instead of restarting (shouldExitInsteadOfRestart); stop during a restart window still cleans up.",
+      "rollback_or_disable": "`--no-recovery` disables supervision; `--max-restarts 0` bounds it; `stop` tears everything down.",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P8-023",
+      "name": "dashboard command (browser opener)",
+      "source_refs": [
+        "bin/cli/commands/dashboard.mjs:11",
+        "bin/cli/commands/dashboard.mjs:31",
+        "bin/cli/commands/dashboard.mjs:42",
+        "bin/cli/commands/dashboard.mjs:59"
+      ],
+      "purpose": "FACT: `omniroute dashboard` opens http://localhost:<port> (default 20128) in the system browser via the 'open' package with platform fallbacks (open/rundll32/xdg-open), or prints the URL with --url.",
+      "owner_plane": "packaging",
+      "architectural_plane": "management-plane",
+      "risk_class": "low — local browser launch only",
+      "dependencies": [
+        "A running server for the opened URL to resolve"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: `--url` prints the computed URL; opener falls back per-platform when 'open' is unavailable.",
+      "rollback_or_disable": "No state; use --url in headless environments.",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P8-024",
+      "name": "Interactive TUI dashboard (ink)",
+      "source_refs": [
+        "bin/cli/commands/dashboard.mjs:15",
+        "bin/cli/commands/dashboard.mjs:22",
+        "bin/cli/tui/Dashboard.jsx:1"
+      ],
+      "purpose": "FACT: `omniroute dashboard --tui` starts a React-ink terminal dashboard (bin/cli/tui/Dashboard.jsx plus tabs/Repl.jsx/EvalWatch.jsx/OAuthFlow.jsx companions) against the local server's API with the global api-key/base-url.",
+      "owner_plane": "dashboard",
+      "architectural_plane": "management-plane",
+      "risk_class": "low — terminal UI client of the management API",
+      "dependencies": [
+        "ink/react",
+        "a reachable server"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: launch --tui against a fixture server; tabs render and honor --output/--api-key globals.",
+      "rollback_or_disable": "Opt-in flag; default remains the browser opener (CAP-P8-023).",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P8-025",
+      "name": "CLI tray control + platform tray runtimes",
+      "source_refs": [
+        "bin/cli/commands/tray.mjs:6",
+        "bin/cli/commands/tray.mjs:10",
+        "bin/cli/tray/index.mjs:1",
+        "bin/cli/runtime/trayRuntime.ts:1"
+      ],
+      "purpose": "FACT: `omniroute tray` controls a system-tray presence via platform backends (systray on unix via traySystray, native PowerShell/tray.ps1 path on Windows via trayWindows, detachedTray for background), with trayRuntime shared by serve --tray.",
+      "owner_plane": "packaging",
+      "architectural_plane": "management-plane",
+      "risk_class": "low — desktop shell integration, spawns platform tray helpers",
+      "dependencies": [
+        "Desktop session (X11/Wayland/Windows tray)"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: tray show/hide/status round-trip on each supported platform; serve --tray detaches into the tray.",
+      "rollback_or_disable": "`omniroute tray hide`/stop; serve --no-tray; no tray started by default in headless use.",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P8-026",
+      "name": "autostart command (host boot persistence)",
+      "source_refs": [
+        "bin/cli/commands/autostart.mjs:6",
+        "bin/cli/commands/autostart.mjs:14",
+        "bin/cli/commands/autostart.mjs:26",
+        "bin/cli/commands/autostart.mjs:50"
+      ],
+      "purpose": "FACT: `omniroute autostart enable|disable|toggle|status` manages login-time persistence of the server/tray (electron/main.js:927 shows the freedesktop .desktop-file variant written by the desktop app) — a host-configuration mutation outside the OmniRoute data dir.",
+      "owner_plane": "packaging",
+      "architectural_plane": "management-plane",
+      "risk_class": "medium — writes host autostart entries (persistence beyond the app)",
+      "dependencies": [
+        "OS-specific autostart mechanism (xdg autostart / Windows registry / launchd)"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N: enable then reboot/login and observe start; status reflects the written entry; disable removes it byte-identically.",
+      "rollback_or_disable": "`omniroute autostart disable` removes the entry; default is no autostart entry.",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P8-027",
+      "name": "Self-update via npm (omniroute update)",
+      "source_refs": [
+        "bin/cli/commands/update.mjs:33",
+        "bin/cli/commands/update.mjs:58",
+        "bin/cli/commands/update.mjs:82",
+        "bin/cli/commands/update.mjs:190",
+        "bin/cli/commands/update.mjs:195"
+      ],
+      "purpose": "FACT: `omniroute update` compares the running version against `npm view omniroute version --prefer-online`, backs up bin/ to ~/.omniroute/backups first, then execSyncs `npm install -g omniroute@latest --include=optional` and trust-but-verifies by re-reading the running binary's version to catch PATH-shadowing (#9475). For HX this bypasses governor-managed change control — preliminary disposition AVAILABLE-DISABLED pending owner policy (updates should flow through the ledger/rollback path, not self-update).",
+      "owner_plane": "packaging",
+      "architectural_plane": "management-plane",
+      "risk_class": "high — network-driven replacement of the installed runtime in place",
+      "dependencies": [
+        "npm registry reachability",
+        "global npm prefix writability"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N: --check exit codes (0 current / 1 outdated); --dry-run prints the plan; post-update version re-read must match.",
+      "rollback_or_disable": "Pre-update bin backup at ~/.omniroute/backups/omniroute-<ts> (createBackup :58-80); bin/rollback.sh covers release-level rollback (CAP-P8-033).",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P8-028",
+      "name": "CLI backup create (plaintext by default) — P5 edge assessed",
+      "source_refs": [
+        "bin/cli/commands/backup.mjs:27",
+        "bin/cli/commands/backup.mjs:34",
+        "bin/cli/commands/backup.mjs:181",
+        "bin/cli/commands/backup.mjs:231",
+        "bin/cli/commands/backup.mjs:248"
+      ],
+      "purpose": "FACT (P5 edge — CLI-side assessment): `omniroute backup [create]` copies storage.sqlite (via the SQLite online backup API, backupSqliteFile), settings.json, combos.json, and providers.json into <DATA_DIR>/backups/omniroute-backup-<ts|name>/ and writes backup-info.json. Without --encrypt the copies are PLAINTEXT (copyFileSync :231) — confirming and sharpening P5's finding: the plaintext-artifact exposure exists in the CLI path too, and these backups include the credential-bearing storage.sqlite/settings.json outside the server's db_backups retention domain. Retention and --exclude are supported; name/backupId are path-sanitized (:185, :426).",
+      "owner_plane": "packaging",
+      "architectural_plane": "data-plane",
+      "risk_class": "high — plaintext snapshots of credential-bearing state files land in a second, less-governed directory",
+      "dependencies": [
+        "Readable DATA_DIR files",
+        "Writable DATA_DIR/backups"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N: create a backup against a fixture DATA_DIR; diff contents; confirm .enc naming only under --encrypt; confirm retention prune keeps N newest.",
+      "rollback_or_disable": "Delete the backup directory; no server state is mutated by creation. Plaintext artifacts must be purged with secure deletion where they landed.",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P8-029",
+      "name": "CLI backup --encrypt (AES-256-GCM, scrypt passphrase)",
+      "source_refs": [
+        "bin/cli/commands/backup.mjs:131",
+        "bin/cli/commands/backup.mjs:134",
+        "bin/cli/commands/backup.mjs:139",
+        "bin/cli/commands/backup.mjs:192",
+        "bin/cli/commands/backup.mjs:218"
+      ],
+      "purpose": "FACT (P5 edge): --encrypt encrypts each backed-up file with AES-256-GCM, key = scryptSync(passphrase, 16-byte random salt), output format salt(16)+iv(12)+authTag(16)+ciphertext (:131-154), files renamed <name>.enc (:218); passphrase comes from --key-file or an interactive prompt (no prompt -> exit 1). Distinct from the server's field encryption: a separate, passphrase-based file-level scheme local to this command.",
+      "owner_plane": "packaging",
+      "architectural_plane": "data-plane",
+      "risk_class": "medium — passphrase quality is the only protection; key-file handling on disk",
+      "dependencies": [
+        "operator passphrase or --key-file"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N: encrypted backup bytes differ across runs (random salt/iv); wrong passphrase fails GCM auth on any future decrypt; .enc files contain no plaintext header.",
+      "rollback_or_disable": "Delete the .enc artifacts; without the passphrase they are unrecoverable ciphertext (see CAP-P8-906 gap: the CLI itself cannot restore them).",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P8-030",
+      "name": "CLI backup --cloud upload client (dead server counterpart)",
+      "source_refs": [
+        "bin/cli/commands/backup.mjs:250",
+        "bin/cli/commands/backup.mjs:276",
+        "bin/cli/commands/backup.mjs:288",
+        "bin/cli/commands/backup.mjs:295",
+        "bin/cli/commands/backup.mjs:302"
+      ],
+      "purpose": "FACT (P5 edge): --cloud uploads the finished backup directory as multipart/form-data to the RUNNING server's /api/db-backups/cloud with Bearer OMNIROUTE_API_KEY + CLI-token headers, 30s timeout, warning-only on failure. Grep-verified across src/ and bin/: the ONLY occurrence of 'db-backups/cloud' is this client line — no server route exists in the pinned corpus (src/app/api/db-backups/ = export, exportAll, import, route.ts with no cloud handler), so the upload always fails closed with a warning. This answers P5's CAP-P5-036 pointer: cloud execution exists CLI-side, but its server endpoint is NOT-ESTABLISHED (CAP-P8-905).",
+      "owner_plane": "packaging",
+      "architectural_plane": "data-plane",
+      "risk_class": "high — would exfiltrate full state snapshots (plaintext unless combined with --encrypt) to whatever the base-url points at, if the endpoint existed",
+      "dependencies": [
+        "A running server at --base-url",
+        "OMNIROUTE_API_KEY / CLI token"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N: point --base-url at a fixture host and observe the 404/warning path; assert no local mutation on failure; if an endpoint ever lands, re-test with/without --encrypt.",
+      "rollback_or_disable": "Do not pass --cloud; failure is warning-only and the local backup remains. No server-side artifact is created today (endpoint absent).",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P8-031",
+      "name": "Scheduled backup job executing the CLI implementation in-process",
+      "source_refs": [
+        "src/lib/jobs/backupScheduleJob.ts:12",
+        "src/lib/jobs/backupScheduleJob.ts:69",
+        "src/lib/jobs/backupScheduleJob.ts:82",
+        "src/lib/jobs/backupScheduleJob.ts:93",
+        "src/lib/jobs/backupScheduleJob.ts:100",
+        "src/lib/jobs/backupScheduleJob.ts:113"
+      ],
+      "purpose": "FACT (P5 edge closed): the server's backup-schedule job imports runBackupCommand and resolveDataDir DIRECTLY from bin/cli (no spawn) and runs the persisted backup-schedule.json (written by `omniroute backup auto enable`) on a 30s tick with cron match, same-minute dedup, and lastRunAt persistence. encrypt:true schedules are REFUSED with an explicit error because no non-interactive passphrase source exists (`auto enable` has no --key-file) — an honest fail-closed guard rather than a stdin hang (:82-88). cloud:true schedules would run the upload into the same absent endpoint as CAP-P8-030 (warning-only).",
+      "owner_plane": "packaging",
+      "architectural_plane": "data-plane",
+      "risk_class": "medium — server-triggered disk writes on a cron; encrypt schedules silently never produce backups (refused)",
+      "dependencies": [
+        "backup-schedule.json in DATA_DIR",
+        "server job scheduler running (P7 jobs posture)"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: write a schedule with a past cron, tick runBackupScheduleTick(now), assert exactly one run per minute; encrypt:true returns false and logs the refusal.",
+      "rollback_or_disable": "`omniroute backup auto disable` flips enabled:false; deleting backup-schedule.json stops the job entirely (readSchedule null-guards).",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P8-032",
+      "name": "CLI restore command — and the encrypted-restore gap",
+      "source_refs": [
+        "bin/cli/commands/backup.mjs:382",
+        "bin/cli/commands/backup.mjs:426",
+        "bin/cli/commands/backup.mjs:436",
+        "bin/cli/commands/backup.mjs:453",
+        "bin/cli/commands/backup.mjs:13"
+      ],
+      "purpose": "FACT (P5 edge): `omniroute restore <id>` lists backups and, after confirmation, copyFileSync's the four well-known filenames back into DATA_DIR (:451-459) with id path-sanitization (:426). GAP: createDecipheriv is imported (:13) but never used anywhere in the module — no decrypt path exists, and the restore loop only matches the PLAINTEXT filenames, so a backup created with --encrypt (files named *.enc) restores NOTHING while still printing 'restored' (:460). Encrypted CLI backups are write-only with this tool — a data-recovery trap P5's server-side restore (integrity-checked, pre-restore snapshot) does not share. INFERENCE (labeled): the mismatch is an unfinished feature, not a deliberate refusal.",
+      "owner_plane": "packaging",
+      "architectural_plane": "data-plane",
+      "risk_class": "high — a restore that silently restores nothing is a data-integrity hazard exactly at incident time",
+      "dependencies": [
+        "A backup dir under DATA_DIR/backups"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N: round-trip plaintext backup -> restore -> diff; then encrypt a backup and run restore — assert zero files restored (the gap), deterministically.",
+      "rollback_or_disable": "Restore overwrites DATA_DIR files without a pre-restore snapshot (unlike the server path, P5 backup.ts:413-430) — take bin/snapshot-data.sh first (CAP-P8-033).",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P8-033",
+      "name": "Ops shell scripts: rollback / snapshot-data / restore-data / restore-policies",
+      "source_refs": [
+        "bin/rollback.sh:1",
+        "bin/rollback.sh:5",
+        "bin/snapshot-data.sh:1",
+        "bin/snapshot-data.sh:7",
+        "bin/restore-data.sh:1",
+        "bin/restore-data.sh:6",
+        "bin/_ops-common.sh:1"
+      ],
+      "purpose": "FACT: bash incident-recovery tooling shipped in bin/: rollback.sh (npm re-install of a previous version, or docker re-tag + compose recreate), snapshot-data.sh (consistent VACUUM INTO point-in-time snapshot of the SQLite volume, prints a snapshot id), restore-data.sh (pre-restore safety snapshot + verification + refusal to run unattended without --yes), restore-policies.sh, all sharing _ops-common.sh. These are the deploy/data-layer rollback surfaces the work order's rollback discipline maps to.",
+      "owner_plane": "packaging",
+      "architectural_plane": "data-plane",
+      "risk_class": "high — data-volume overwrite and version-replacement tooling; correct by design (snapshots first) but destructive if misused",
+      "dependencies": [
+        "bash",
+        "sqlite3 CLI for VACUUM INTO",
+        "docker/npm depending on method"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N: snapshot -> mutate fixture DB -> restore -> byte-compare; rollback --method docker against a fixture tag.",
+      "rollback_or_disable": "Self-hedging: restore-data takes a pre-restore snapshot of current data before overwriting (:6-8 header); rollback.sh itself is the release-level inverse.",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P8-034",
+      "name": "Recovery tools: reset-password and reset-encrypted-columns",
+      "source_refs": [
+        "bin/reset-password.mjs:6",
+        "bin/omniroute.mjs:313",
+        "bin/omniroute.mjs:321",
+        "bin/cli/commands/reset-encrypted-columns.mjs:1",
+        "package.json:8"
+      ],
+      "purpose": "FACT: two break-glass tools bypass Commander: omniroute-reset-password (own bin entry; interactive or --password-stdin; updates the admin password directly in the DB) and reset-encrypted-columns (recovery for broken encrypted credential columns — the CLI front-end of the class P5 found server-side as recovery.ts, LAB-ONLY there). Both require local DB access — the intended attacker-model boundary.",
+      "owner_plane": "packaging",
+      "architectural_plane": "management-plane",
+      "risk_class": "high — direct credential/DB mutation outside the authenticated management plane",
+      "dependencies": [
+        "Local filesystem access to storage.sqlite"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N: on a fixture DB, reset the password and authenticate with the new one; run reset-encrypted-columns against a fixture with a deliberately wrong STORAGE_ENCRYPTION_KEY.",
+      "rollback_or_disable": "No inverse — credential overwrite; mitigate by pre-running bin/snapshot-data.sh (CAP-P8-033).",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P8-035",
+      "name": "setup-* client-integration writers (15 tools)",
+      "source_refs": [
+        "bin/cli/commands/registry.mjs:64",
+        "bin/cli/commands/registry.mjs:75"
+      ],
+      "purpose": "FACT: fifteen setup-* commands (codex, claude, cline, continue, crush, cursor, goose, kilo, open-code/opencode, qwen, roo, aider, plus generic setup) write OmniRoute connection configuration INTO third-party AI CLI tools' own config files — outbound mutation of other applications' state from the OmniRoute CLI.",
+      "owner_plane": "packaging",
+      "architectural_plane": "management-plane",
+      "risk_class": "medium — writes foreign tool configs on the host (clobber risk outside OmniRoute's data dir)",
+      "dependencies": [
+        "The target tool's config directory present"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N: run each setup-* against a sandboxed HOME; diff the written config; re-run for idempotence.",
+      "rollback_or_disable": "Manual: each tool's config must be reverted by editing/removing the written block — no uninstall path found for setup-* writes (INFERENCE from command inventory; none registered).",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P8-036",
+      "name": "--mcp stdio entry mechanics (cross-reference to P7)",
+      "source_refs": [
+        "bin/omniroute.mjs:302",
+        "bin/omniroute.mjs:304",
+        "bin/mcp-server.mjs:1"
+      ],
+      "purpose": "FACT: the CLI doubles as the MCP-server launcher — `--mcp` anywhere in argv diverts to bin/mcp-server.mjs startMcpCli after installing the stdout-guard, entirely bypassing Commander. P8 ledgers only the entry/packaging mechanics; the MCP server itself (~107 tools, disabled-by-default posture) is P7's CAP-P7-001…006 with its control-plane-collision notes. Collision note: exposing the agent surface is one argv token away in the shipped binary.",
+      "owner_plane": "packaging",
+      "architectural_plane": "agent-surface",
+      "risk_class": "medium — one-flag activation of the full MCP agent surface from the shipped bin",
+      "dependencies": [
+        "tsx runtime",
+        "P7 MCP server modules"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N: `omniroute --mcp` speaks JSON-RPC on stdio with clean stdout (the :59-64 guard); server honors the P7-documented mcpEnabled gate.",
+      "rollback_or_disable": "Do not pass --mcp; the MCP surface stays off per P7's disabled-by-default evidence.",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P8-037",
+      "name": "cloud agent-tasks CLI (codex/devin/jules) — cross-reference to P7",
+      "source_refs": [
+        "bin/cli/commands/cloud.mjs:6",
+        "bin/cli/commands/cloud.mjs:198",
+        "bin/cli/commands/cloud.mjs:217",
+        "bin/cli/commands/cloud.mjs:229"
+      ],
+      "purpose": "FACT: `omniroute cloud` drives upstream cloud coding agents (codex/devin/jules) — task create/list/get/status/cancel/approve/message/sources over /api/v1/agents/tasks plus per-agent OAuth auth via oauth.mjs. P8 ledgers the CLI packaging surface; the server-side cloud-agent registry and its BLOCKED verdict (no-cloud rule, orchestration collision) are P7's CAP-P7-049. Collision note: KK3 orchestration authority + the owner no-cloud rule both apply; preliminary BLOCKED here too.",
+      "owner_plane": "packaging",
+      "architectural_plane": "agent-surface",
+      "risk_class": "high — delegates work to external cloud agents through the gateway (no-cloud rule; second orchestration plane)",
+      "dependencies": [
+        "Server cloud-agent endpoints (P7)",
+        "OAuth flow per agent"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N (lab only): against a fixture server, task create/list round-trip; auth command starts the OAuth flow without a browser via --no-browser.",
+      "rollback_or_disable": "Do not configure agent OAuth credentials — without them the commands fail closed (P7: no credentials -> not callable).",
+      "preliminary_disposition": "BLOCKED"
+    },
+    {
+      "id": "CAP-P8-038",
+      "name": "Next.js dashboard mode (dev/start over the standalone build)",
+      "source_refs": [
+        "package.json:87",
+        "package.json:107",
+        "next.config.mjs:130",
+        "next.config.mjs:185",
+        "next.config.mjs:238"
+      ],
+      "purpose": "FACT: the dashboard is the Next.js 16 app itself (dev port 20128 via scripts/dev/run-next.mjs; prod via the same runner over the prebuilt standalone), with outputFileTracingRoot pinned to the project root so the standalone trace captures the full runtime closure. One process serves traffic plane + management plane + dashboard (P1/P4 evidence), which is why the packaging story centers on the standalone bundle.",
+      "owner_plane": "dashboard",
+      "architectural_plane": "management-plane",
+      "risk_class": "medium — the dashboard shares the process with the traffic plane; build faults take both down",
+      "dependencies": [
+        "CAP-P8-002 standalone bundle"
+      ],
+      "required_authorization": "layer-N",
+      "test_contract": "Layer-N: dev server serves the dashboard on 20128; standalone server serves identical routes from the bundle.",
+      "rollback_or_disable": "Stop the process; no dashboard-specific state exists outside DATA_DIR.",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P8-039",
+      "name": "Reverse-proxy basePath (compile-time)",
+      "source_refs": [
+        "next.config.mjs:116",
+        "Dockerfile:146",
+        "scripts/build/normalizeBasePath.mjs:1",
+        "scripts/docker/patch-standalone-base-path.mjs:1",
+        "scripts/docker/ensure-docker-base-path.mjs:1"
+      ],
+      "purpose": "FACT: OMNIROUTE_BASE_PATH is compiled into the build (next.config basePath via normalizeBasePath; Dockerfile build-arg), with runtime patch/guard scripts for the container (patch-standalone-base-path, ensure-docker-base-path invoked from the entrypoint) — subpath hosting is a build-time decision, not a runtime flag.",
+      "owner_plane": "packaging",
+      "architectural_plane": "distribution",
+      "risk_class": "low — routing prefix config; mis-set values break all dashboard links predictably",
+      "dependencies": [
+        "CAP-P8-002 build"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: build with a basePath and assert dashboard + API respond under the subpath; container entrypoint guard fails loud on mismatch.",
+      "rollback_or_disable": "Rebuild without the arg (compile-time — no runtime toggle exists).",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P8-040",
+      "name": "Dashboard embed policy (DASHBOARD_ALLOW_EMBED build-arg)",
+      "source_refs": [
+        "Dockerfile:158",
+        "Dockerfile:149",
+        "Dockerfile:153",
+        "next.config.mjs:416"
+      ],
+      "purpose": "FACT: frame-ancestors/X-Frame-Options are compiled into the route manifest at build time; the Docker build-arg DASHBOARD_ALLOW_EMBED (default empty) exists solely to permit framing by VS Code's Simple Browser, and the in-source comment states the unset default keeps every route on frame-ancestors 'none' + X-Frame-Options: DENY (comment-backed FACT; the runner stage deliberately drops the var).",
+      "owner_plane": "packaging",
+      "architectural_plane": "distribution",
+      "risk_class": "low — clickjacking posture set at build time; default is deny",
+      "dependencies": [
+        "CAP-P8-002 build",
+        "scripts/build/dashboardEmbed.mjs"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N: default image serves X-Frame-Options: DENY on dashboard routes; an embed-enabled build serves the vscode-scoped policy only.",
+      "rollback_or_disable": "Rebuild without the build-arg; runtime env cannot widen it (by design).",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P8-041",
+      "name": "PWA mode (service worker + web app manifest) — the honest 'mobile' answer",
+      "source_refs": [
+        "public/sw.js:1",
+        "public/sw.js:3",
+        "src/app/manifest.ts:4",
+        "src/app/manifest.ts:10"
+      ],
+      "purpose": "FACT: the only mobile-adjacent mode in the corpus is a PWA: public/sw.js caches an app shell (/, /offline, manifest, icons; excludes /api/, /a2a, /dashboard/endpoint) and src/app/manifest.ts declares a standalone-display installable app ('OmniRoute', start_url /dashboard). No native mobile client exists (CAP-P8-901).",
+      "owner_plane": "dashboard",
+      "architectural_plane": "distribution",
+      "risk_class": "low — client-side caching of the app shell; API paths explicitly bypass the cache",
+      "dependencies": [
+        "A browser with service-worker support"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: install prompt appears per manifest; offline route serves from cache; /api/ responses never come from the cache (EXCLUDED_PATH_PREFIXES).",
+      "rollback_or_disable": "Browser-side unregister/clear; CACHE_NAME versioning (omniroute-pwa-v2) evicts old shells on activate.",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P8-042",
+      "name": "Multi-stage Dockerfile (base/builder/runner-base/web/cli)",
+      "source_refs": [
+        "Dockerfile:2",
+        "Dockerfile:60",
+        "Dockerfile:209",
+        "Dockerfile:259",
+        "Dockerfile:263",
+        "Dockerfile:272"
+      ],
+      "purpose": "FACT: the container build is a five-stage graph on node:26-trixie-slim — base (patched OS packages + libsecret), builder (npm ci + standalone build), runner-base (standalone bundle, non-root node user UID 1000, EXPOSE 20128, DATA_DIR=/app/data, HEALTHCHECK node healthcheck.mjs, CMD node dev/run-standalone.mjs), runner-web (+Chromium/Playwright), runner-cli (+agent CLIs). Entrypoint is scripts/check-permissions.sh.",
+      "owner_plane": "packaging",
+      "architectural_plane": "distribution",
+      "risk_class": "medium — image definition governs the deployed attack surface and user posture",
+      "dependencies": [
+        "Docker/buildkit",
+        "package-lock.json (enforced :94)"
+      ],
+      "required_authorization": "layer-N",
+      "test_contract": "Layer-N: build each target; assert non-root USER, healthcheck pass, and /api/monitoring/health 200 on runner-base.",
+      "rollback_or_disable": "Images are disposable; `docker compose down` + image prune. Nothing persists outside the mounted data volume.",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P8-043",
+      "name": "Image supply-chain hardening (npm CVE overlay, ignore-scripts, explicit native rebuilds)",
+      "source_refs": [
+        "Dockerfile:43",
+        "Dockerfile:94",
+        "Dockerfile:117",
+        "Dockerfile:119",
+        "Dockerfile:122"
+      ],
+      "purpose": "FACT: the builder overlays semver-patched copies of brace-expansion/ip-address/tar/undici onto npm's own bundled tree (measured CVE comments), requires a committed lockfile, runs npm ci --ignore-scripts to block dependency lifecycle scripts, then deterministically rebuilds better-sqlite3 via node-gyp and runs tls-client-node's postinstall explicitly with a fail-the-build check — a deliberate supply-chain posture worth mirroring in any HX build design.",
+      "owner_plane": "packaging",
+      "architectural_plane": "distribution",
+      "risk_class": "medium — build-time mitigation machinery; bypass silently reopens the install-script surface",
+      "dependencies": [
+        "Build network access to the npm registry + GitHub releases (tls-client binary)"
+      ],
+      "required_authorization": "specialist-review",
+      "test_contract": "Layer-N: image scan shows the four overlaid versions; deleting a staged binary fails the build (:123-124).",
+      "rollback_or_disable": "Build-time only; reverting the Dockerfile hunks restores upstream behavior (not recommended).",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P8-044",
+      "name": "runner-web flavor + internal Chromium sidecar",
+      "source_refs": [
+        "Dockerfile:289",
+        "Dockerfile:298",
+        "Dockerfile:310",
+        "docker-compose.yml:145"
+      ],
+      "purpose": "FACT: the web flavor adds Playwright + Chromium (~800MB) for web-cookie providers (gemini-web, claude-web, claude-turnstile), and the compose web profile adds an internal-only chatgpt-web-codex-browser sidecar reached over CDP at :9223 with no host-published browser port.",
+      "owner_plane": "packaging",
+      "architectural_plane": "distribution",
+      "risk_class": "medium — ships a full browser stack; expands image CVE and memory footprint for cookie-based provider login",
+      "dependencies": [
+        "runner-base",
+        "Playwright browser download at image build"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N: web-cookie provider login flow completes in the web flavor and fails with the documented executable-missing error on base (#2832).",
+      "rollback_or_disable": "Use the base profile/image; sidecar is profile-gated (absent by default).",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P8-045",
+      "name": "runner-cli flavor (agent CLIs + host docker.sock) — collision with P7",
+      "source_refs": [
+        "Dockerfile:316",
+        "Dockerfile:332",
+        "Dockerfile:338",
+        "docker-compose.yml:158",
+        "docker-compose.yml:173"
+      ],
+      "purpose": "FACT: the cli flavor installs git/docker.io/docker-compose and globally installs @openai/codex, @anthropic-ai/claude-code, droid and openclaw inside the image, and the compose cli profile bind-mounts the HOST docker.sock plus a workspace volume. Collision note: this packages the P7 agent-surface class (external agent CLIs driven by the gateway, CAP-P7-049/ACP class) and hands the container host-level Docker control — under the owner no-cloud rule and KK3 orchestration authority this flavor is BLOCKED preliminary.",
+      "owner_plane": "packaging",
+      "architectural_plane": "agent-surface",
+      "risk_class": "critical — host docker.sock mount + third-party agent CLIs in the shipped image = host control + second orchestration plane",
+      "dependencies": [
+        "Host Docker daemon",
+        "network access for the agent CLIs"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N (lab only): build the target and inventory the global CLIs; confirm the sock mount is absent in other profiles.",
+      "rollback_or_disable": "Do not use the cli profile/target; base/web/host profiles carry neither the CLIs nor the sock mount.",
+      "preliminary_disposition": "BLOCKED"
+    },
+    {
+      "id": "CAP-P8-046",
+      "name": "Compose profile model + sidecars (redis/qdrant/bifrost/cliproxyapi/codex-app-server)",
+      "source_refs": [
+        "docker-compose.yml:5",
+        "docker-compose.yml:70",
+        "docker-compose.yml:81",
+        "docker-compose.yml:92",
+        "docker-compose.yml:234",
+        "docker-compose.yml:262",
+        "docker-compose.yml:285",
+        "docker-compose.yml:318"
+      ],
+      "purpose": "FACT: deployment composes via profiles — base/web/cli/host app flavors plus opt-in sidecars: redis:8.6.5-alpine rate-limit backend (published loopback-only by default with an explicit unauthenticated-Redis warning), qdrant (memory offload), bifrost (Tier-1 router), cliproxyapi (:8317), and codex-app-server (WS :1456 with a shared capability-token volume). Qdrant/Bifrost/Caddy placement decisions are referenced to docs/architecture/cluster-decisions.md (UPSTREAM, not re-verified).",
+      "owner_plane": "packaging",
+      "architectural_plane": "distribution",
+      "risk_class": "medium — profile selection silently changes the deployed component graph (incl. P7-class sidecars)",
+      "dependencies": [
+        "Docker compose v2",
+        ".env from .env.example"
+      ],
+      "required_authorization": "layer-N",
+      "test_contract": "Layer-N: each profile up -> healthcheck green -> down; redis confirmed bound to 127.0.0.1 unless REDIS_BIND_HOST overridden.",
+      "rollback_or_disable": "`docker compose --profile <p> down`; sidecars are profile-gated off by default.",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P8-047",
+      "name": "Production compose snapshot (isolated instance on 20130)",
+      "source_refs": [
+        "docker-compose.prod.yml:5",
+        "docker-compose.prod.yml:31",
+        "docker-compose.prod.yml:44"
+      ],
+      "purpose": "FACT: docker-compose.prod.yml runs an isolated 'prod' instance (own redis + runner-cli-target image by default, port 20130 per header) intended to keep a production-like instance alive alongside local development.",
+      "owner_plane": "packaging",
+      "architectural_plane": "distribution",
+      "risk_class": "medium — its default build target is runner-cli (the CAP-P8-045 flavor); port footprint beyond the main instance",
+      "dependencies": [
+        "CAP-P8-042 image build"
+      ],
+      "required_authorization": "layer-N",
+      "test_contract": "Layer-N: up -d --build yields a second healthy instance on 20130 without disturbing the dev instance.",
+      "rollback_or_disable": "docker compose -f docker-compose.prod.yml down; override the target to runner-base to drop the cli flavor.",
+      "preliminary_disposition": "LAB-ONLY"
+    },
+    {
+      "id": "CAP-P8-048",
+      "name": "Container entrypoint permission guard + healthcheck/launcher",
+      "source_refs": [
+        "Dockerfile:266",
+        "scripts/check-permissions.sh:19",
+        "scripts/dev/healthcheck.mjs:1",
+        "scripts/dev/run-standalone.mjs:14"
+      ],
+      "purpose": "FACT: every container starts through check-permissions.sh, which applies OMNIROUTE_MEMORY_MB heap tuning, runs the base-path guard, and warns (with podman/docker-specific guidance) when the data volume is not writable by the runtime UID; the CMD then runs run-standalone.mjs, which bootstraps env (bootstrapEnv), resolves ports, prefers the WS-aware standalone wrapper for the trusted peer-IP stamp, and forwards signals.",
+      "owner_plane": "packaging",
+      "architectural_plane": "distribution",
+      "risk_class": "low — startup guards; failure mode is a loud warning, not silent corruption",
+      "dependencies": [
+        "CAP-P8-042 image"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: mount a root-owned data dir and assert the warning + guidance; healthcheck.mjs returns non-zero when the server is down.",
+      "rollback_or_disable": "Guards are advisory (warn, not fail) except the base-path guard (exit 1); replace entrypoint only by rebuilding the image.",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P8-049",
+      "name": "Bun-runtime image variant (Dockerfile.bun)",
+      "source_refs": [
+        "Dockerfile.bun:1",
+        "Dockerfile.bun:2"
+      ],
+      "purpose": "FACT: a parallel multi-stage Dockerfile builds a Bun-native runtime image (oven/bun:1.3.14-slim) — an alternate-runtime experiment next to the canonical Node image (docker-publish.yml builds BUN base platform images too, per its matrix step names).",
+      "owner_plane": "packaging",
+      "architectural_plane": "distribution",
+      "risk_class": "medium — alternate runtime with different native-module semantics (P5's node:sqlite/better-sqlite3 duality)",
+      "dependencies": [
+        "Bun 1.3.14 base image"
+      ],
+      "required_authorization": "specialist-review",
+      "test_contract": "Layer-N: build and boot the bun image; run the P5 SQLite adapter matrix (bunSqliteAdapter test exists per package.json:129).",
+      "rollback_or_disable": "Use the canonical Node Dockerfile; the bun variant is opt-in.",
+      "preliminary_disposition": "LAB-ONLY"
+    },
+    {
+      "id": "CAP-P8-050",
+      "name": "docker-publish workflow (multi-arch, dual registry, SBOM)",
+      "source_refs": [
+        ".github/workflows/docker-publish.yml:118",
+        ".github/workflows/docker-publish.yml:137",
+        ".github/workflows/docker-publish.yml:149",
+        ".github/workflows/docker-publish.yml:403"
+      ],
+      "purpose": "FACT: upstream image releases build linux/amd64+arm64 per flavor (base/web/bun), push by digest to Docker Hub and ghcr.io/diegosouzapw/omniroute, and attach a CycloneDX SBOM via anchore/sbom-action (advisory). No image signing step (cosign or equivalent) was found (CAP-P8-902). HX consumes the source snapshot, not these registries — recorded as upstream provenance machinery.",
+      "owner_plane": "packaging",
+      "architectural_plane": "distribution",
+      "risk_class": "high — external shared-state mutation (registry pushes) when run upstream",
+      "dependencies": [
+        "GitHub Actions",
+        "registry credentials (upstream-owned)"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N (upstream only): workflow_dispatch on a tag; verify multi-arch manifest + SBOM artifact.",
+      "rollback_or_disable": "Upstream: delete tags/retag; HX: our pin is content-verified independent of registry state.",
+      "preliminary_disposition": "NOT-APPLICABLE"
+    },
+    {
+      "id": "CAP-P8-051",
+      "name": "VNC browser-login container (cross-reference to P7)",
+      "source_refs": [
+        "docker/vnc-browser/README.md:1",
+        "docker/vnc-browser/README.md:5",
+        "docker/vnc-browser/chromium/Dockerfile:1"
+      ],
+      "purpose": "FACT: docker/vnc-browser/chromium builds the isolated interactive-login browser whose README documents the CDP credential-read flow into provider_connections rows, management-authenticated /api/vnc-session routes, and loopback-only port publishing; the image must be built locally before use. P8 ledgers the container packaging; the session/credential behavior and its owner-authority collision are P7's CAP-P7-052. Collision note carried: credential harvest class.",
+      "owner_plane": "packaging",
+      "architectural_plane": "agent-surface",
+      "risk_class": "high — interactive credential capture into provider rows (P7 collision); loopback-only by default",
+      "dependencies": [
+        "Locally built image",
+        "/api/vnc-session management auth (P4)"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N (lab): build the image, open a session, confirm loopback binding and that only declared fields are read.",
+      "rollback_or_disable": "Do not build/start the image; /api/vnc-session is LOCAL_ONLY (P4/P7) and inert without the container.",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P8-052",
+      "name": "devin-bridge test container set",
+      "source_refs": [
+        "docker/devin-bridge/compose.yml:1"
+      ],
+      "purpose": "FACT: docker/devin-bridge packages a mock-Devin + network-guard proxy + contract-runner compose set used by the Devin e2e scripts (run-claude-e2e/live) — development/test scaffolding, not a runtime mode.",
+      "owner_plane": "packaging",
+      "architectural_plane": "distribution",
+      "risk_class": "low — test fixtures with an explicit network-guard proxy",
+      "dependencies": [
+        "Docker compose"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: compose up runs the mock + contract tests hermetically.",
+      "rollback_or_disable": "Fixtures only; nothing installed by default.",
+      "preliminary_disposition": "LAB-ONLY"
+    },
+    {
+      "id": "CAP-P8-053",
+      "name": "Electron desktop shell (main process)",
+      "source_refs": [
+        "electron/main.js:5",
+        "electron/main.js:56",
+        "electron/package.json:2",
+        "electron/package.json:5"
+      ],
+      "purpose": "FACT: the desktop mode is an Electron 43 shell (package 'omniroute-desktop' v3.8.51, main.js) managing the main window, system tray, server lifecycle and IPC, with a single-instance lock and electron-updater wired; it embeds the Next standalone server as a child process (CAP-P8-054).",
+      "owner_plane": "packaging",
+      "architectural_plane": "distribution",
+      "risk_class": "medium — desktop shell with auto-update and child-process control of the server",
+      "dependencies": [
+        "Electron runtime",
+        "the electron-standalone bundle (CAP-P8-059)"
+      ],
+      "required_authorization": "layer-N",
+      "test_contract": "Layer-N: packaged app launches, spawns the server, renderer loads the dashboard; second launch focuses the existing instance.",
+      "rollback_or_disable": "Quit the app (tray close policy governs child teardown per windowClosePolicy); uninstall removes the bundle.",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P8-054",
+      "name": "Embedded server spawn (loopback-pinned, ELECTRON_RUN_AS_NODE)",
+      "source_refs": [
+        "electron/main.js:833",
+        "electron/main.js:846",
+        "electron/main.js:848",
+        "electron/main.js:108"
+      ],
+      "purpose": "FACT: the shell spawns the bundled Next server with ELECTRON_RUN_AS_NODE=1 on the Electron/Helper binary (macOS Helper resolution avoids dock artifacts), HOSTNAME pinned to 127.0.0.1 (Windows HOSTNAME would otherwise bind the LAN address), heap auto-sized ~35% of RAM clamped [512,4096], and NODE_PATH extended with optional-pack dirs — the embedded server is loopback-only by construction.",
+      "owner_plane": "packaging",
+      "architectural_plane": "distribution",
+      "risk_class": "medium — child-process lifecycle and env construction faults break the desktop mode wholesale",
+      "dependencies": [
+        "CAP-P8-059 staged bundle",
+        "CAP-P8-055 secrets"
+      ],
+      "required_authorization": "layer-N",
+      "test_contract": "Layer-N: spawned server listens on 127.0.0.1 only (ss/netstat negative check on the LAN interface); readiness gate drives the UI state.",
+      "rollback_or_disable": "Quitting the shell terminates the child (processTree management); remote mode (CAP-P8-056) skips spawning entirely.",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P8-055",
+      "name": "Electron zero-config secrets bootstrap (server.env)",
+      "source_refs": [
+        "electron/main.js:750",
+        "electron/main.js:756",
+        "electron/main.js:761",
+        "electron/main.js:771",
+        "electron/main.js:779",
+        "electron/main.js:793"
+      ],
+      "purpose": "FACT: on first launch the shell generates JWT_SECRET (64-hex), STORAGE_ENCRYPTION_KEY (32-hex, with a hasEncryptedCredentials refusal guard mirroring the CLI's), and API_KEY_SECRET, persisting them PLAINTEXT to <DATA_DIR>/server.env — the desktop-side genesis of the same secrets whose server-side storage P5 flagged (JWT/API_KEY secrets plaintext in storage.sqlite; storage key passthrough default). The CLI's server.env->.env migration (CAP-P8-013) is the documented bridge between the two modes.",
+      "owner_plane": "packaging",
+      "architectural_plane": "data-plane",
+      "risk_class": "high — plaintext secret genesis+persistence on the desktop host filesystem",
+      "dependencies": [
+        "Writable DATA_DIR"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N: first launch writes server.env with all three secrets; relaunch reuses them; pre-seeded encrypted DB + missing key hits the refusal path.",
+      "rollback_or_disable": "Delete server.env together with the encrypted DB (key loss is unrecoverable, P5); restoring the prior file recovers.",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P8-056",
+      "name": "Remote-server attach mode",
+      "source_refs": [
+        "electron/main.js:89",
+        "electron/main.js:94",
+        "electron/main.js:100",
+        "electron/lib/resolveRemoteServerUrl.js:1"
+      ],
+      "purpose": "FACT: the shell can attach to an already-running OmniRoute (container or another machine) instead of spawning the bundled server — URL resolved from OMNIROUTE_REMOTE_URL then a persisted electron-preferences.json, with a dedicated prompt window (remoteServerPrompt*) for managing it.",
+      "owner_plane": "packaging",
+      "architectural_plane": "distribution",
+      "risk_class": "medium — desktop becomes a client of a remote management plane (trust boundary crosses hosts)",
+      "dependencies": [
+        "A reachable remote OmniRoute server"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N: set OMNIROUTE_REMOTE_URL and assert no child spawn + renderer loads the remote dashboard; prefs file round-trips.",
+      "rollback_or_disable": "Unset the env var / clear the preference — the shell returns to embedded mode.",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P8-057",
+      "name": "Electron auto-updater (GitHub releases)",
+      "source_refs": [
+        "electron/main.js:226",
+        "electron/main.js:320",
+        "electron/main.js:338",
+        "electron/package.json:28"
+      ],
+      "purpose": "FACT: electron-updater is wired with autoDownload=false and autoInstallOnAppQuit=true — user-initiated check/download/quitAndInstall against the GitHub-releases publish channel (electron/package.json:53-57). Combined with the unsigned-artifact finding (CAP-P8-060), an HX desktop deployment would accept owner-managed updates only, not in-app updates — preliminary AVAILABLE-DISABLED.",
+      "owner_plane": "packaging",
+      "architectural_plane": "distribution",
+      "risk_class": "high — network-driven replacement of the desktop runtime, unsigned upstream",
+      "dependencies": [
+        "GitHub releases reachability"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N: checkForUpdates surfaces metadata without downloading; download then quitAndInstall swaps the bundle.",
+      "rollback_or_disable": "Do not trigger checkForUpdates; autoDownload=false is the coded default.",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P8-058",
+      "name": "electron-builder targets + GitHub publish channel",
+      "source_refs": [
+        "electron/package.json:43",
+        "electron/package.json:53",
+        "electron/package.json:95",
+        "electron/package.json:112",
+        "electron/package.json:119"
+      ],
+      "purpose": "FACT: desktop artifacts build via electron-builder (appId online.omniroute.desktop) for Windows (nsis + portable x64), macOS (dmg), and Linux (AppImage + deb, x64/arm64), publishing to GitHub releases under diegosouzapw/OmniRoute with the electron-standalone bundle staged as extraResources.",
+      "owner_plane": "packaging",
+      "architectural_plane": "distribution",
+      "risk_class": "low (HX) — upstream artifact configuration; high only when publishing (external state)",
+      "dependencies": [
+        "CAP-P8-059 staging",
+        "electron-builder toolchain"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N (upstream): each OS leg produces its installer; publish uploads assets to the release.",
+      "rollback_or_disable": "Upstream channel; HX would rebuild from the pinned source rather than consume these artifacts.",
+      "preliminary_disposition": "NOT-APPLICABLE"
+    },
+    {
+      "id": "CAP-P8-059",
+      "name": "Electron standalone staging (prepare-electron-standalone)",
+      "source_refs": [
+        "scripts/build/prepare-electron-standalone.mjs:7",
+        "scripts/build/prepare-electron-standalone.mjs:17",
+        "electron/package.json:18"
+      ],
+      "purpose": "FACT: before electron-builder runs, prepare:bundle reassembles the standalone tree into .build/electron-standalone via assembleStandalone, asserts a platform-matched sqlite prebuild (electronRebuildPlan), prunes runtime docs, and stages the optional packs — the desktop bundle is the same standalone artifact as Docker/npm, staged differently.",
+      "owner_plane": "packaging",
+      "architectural_plane": "distribution",
+      "risk_class": "low — build-time staging",
+      "dependencies": [
+        "CAP-P8-002 build",
+        "CAP-P8-008 assembler"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: staging output contains server.js, migrations, and pack index; packaged smoke test (electron:smoke:packaged) passes.",
+      "rollback_or_disable": "Artifacts regenerable; nothing persists.",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P8-060",
+      "name": "electron-release workflow (unsigned artifacts — INFERENCE)",
+      "source_refs": [
+        ".github/workflows/electron-release.yml:1",
+        ".github/workflows/electron-release.yml:59",
+        ".github/workflows/electron-release.yml:105"
+      ],
+      "purpose": "FACT: the upstream desktop release workflow validates the version, builds the shared Next standalone once, builds per-OS electron legs, and uploads release assets. Grep across the workflow found NO code-signing or notarization step (no CSC_*, notarize, or sign actions) — INFERENCE (labeled): shipped desktop artifacts are unsigned, which compounds with CAP-P8-057's in-app updater. HX does not consume these artifacts.",
+      "owner_plane": "packaging",
+      "architectural_plane": "distribution",
+      "risk_class": "high (consumers) — unsigned auto-updatable desktop binaries upstream; none for HX directly",
+      "dependencies": [
+        "GitHub Actions matrix runners"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N (upstream): release assets download; signature checks (codesign/sigcheck) report unsigned.",
+      "rollback_or_disable": "HX mitigates by building from the pinned source; no upstream artifact is consumed.",
+      "preliminary_disposition": "NOT-APPLICABLE"
+    },
+    {
+      "id": "CAP-P8-061",
+      "name": "Raycast integration scripts incl. macOS credential extractor",
+      "source_refs": [
+        "scripts/raycast/extract-credentials.mjs:4",
+        "scripts/raycast/extract-credentials.mjs:23",
+        "scripts/raycast/extract-credentials.mjs:29",
+        "scripts/raycast/usage-benchmark.mjs:1"
+      ],
+      "purpose": "FACT: scripts/raycast/ holds a usage benchmark and extract-credentials.mjs, a developer utility that reads Raycast Pro credentials from the macOS Keychain (`security find-generic-password`) and Raycast's encrypted SQLite, printing redacted previews (redact()). It handles REAL host credentials by design. HX handling: never run on HX hosts; no secret values were copied into any ledger artifact (structure cited, values not quoted). UPSTREAM dev tooling, LAB-ONLY.",
+      "owner_plane": "packaging",
+      "architectural_plane": "distribution",
+      "risk_class": "high — critical-adjacent: credential-extraction utility in-tree (redacted output, but extracts live host secrets); flagged per the secrets discipline",
+      "dependencies": [
+        "macOS host with Raycast installed",
+        "Keychain access prompts"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N: none proposed for HX — presence-only record; behavior claims rest on the in-source header/redact function.",
+      "rollback_or_disable": "Not installed or wired anywhere; deletion of the scripts dir removes the surface.",
+      "preliminary_disposition": "LAB-ONLY"
+    },
+    {
+      "id": "CAP-P8-062",
+      "name": "fly.io deployment configuration",
+      "source_refs": [
+        "fly.toml:6",
+        "fly.toml:12",
+        "fly.toml:25",
+        "fly.toml:42"
+      ],
+      "purpose": "FACT: a generated fly.toml deploys the standalone server (node run-standalone.mjs) as app 'omniroute' with a /data volume mount, internal_port 20128, force_https, 1GB shared VM, and 0.0.0.0 binding for Fly's runtime networking — an upstream cloud-PaaS mode. HX's no-cloud rule makes this NOT-APPLICABLE; recorded because it is a shipped runtime mode.",
+      "owner_plane": "packaging",
+      "architectural_plane": "distribution",
+      "risk_class": "medium — public PaaS exposure posture (0.0.0.0 + force_https) contradicts the HX LAN boundary",
+      "dependencies": [
+        "fly.io account/platform"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N: none for HX; the file's directives read against Fly's documented semantics.",
+      "rollback_or_disable": "Not deployed by HX; absence of a fly deployment is the disable state.",
+      "preliminary_disposition": "NOT-APPLICABLE"
+    },
+    {
+      "id": "CAP-P8-063",
+      "name": "VPS deploy workflow + self-hosted runner scripts",
+      "source_refs": [
+        ".github/workflows/deploy-vps.yml:17",
+        ".github/workflows/deploy-vps.yml:47",
+        ".github/workflows/deploy-vps.yml:51",
+        "scripts/vps/release-runner-up.sh:1"
+      ],
+      "purpose": "FACT: upstream operates a VPS deployment (appleboy/ssh-action with secret-held host/user/key, post-deploy version check and /api/monitoring/health poll) plus scripts/vps/release-runner-up|down.sh managing a self-hosted 'omni-release' Actions runner — the same runner npm-publish.yml can target. Upstream infrastructure; recorded as the shipped reference deployment automation.",
+      "owner_plane": "packaging",
+      "architectural_plane": "distribution",
+      "risk_class": "high — SSH-driven remote mutation of a production host when run upstream",
+      "dependencies": [
+        "VPS over SSH",
+        "GitHub Actions"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N (upstream only): dry SSH reachability check then deploy; health poll gates success.",
+      "rollback_or_disable": "HX does not run it; rollback.sh documents the corresponding npm-method rollback on such a host.",
+      "preliminary_disposition": "NOT-APPLICABLE"
+    },
+    {
+      "id": "CAP-P8-064",
+      "name": "contrib: Podman quadlets + VPS compose (alternative install paths)",
+      "source_refs": [
+        "contrib/podman/omniroute.container:1",
+        "contrib/podman/omniroute-redis.container:1",
+        "contrib/vps/compose.yaml:1"
+      ],
+      "purpose": "FACT: contrib/ ships community install paths — Podman systemd quadlets (app + redis containers, network, volumes) and a VPS compose — maintained outside the core packaging, referenced by the entrypoint's podman permission guidance.",
+      "owner_plane": "packaging",
+      "architectural_plane": "distribution",
+      "risk_class": "low — declarative unit files; drift risk vs the canonical Dockerfile/compose",
+      "dependencies": [
+        "Podman + systemd (quadlet)"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: quadlets pass `podman systemd unit generate` dry validation; compose config validates.",
+      "rollback_or_disable": "Remove the units/compose; nothing is installed by default.",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P8-065",
+      "name": "public/ static distribution assets",
+      "source_refs": [
+        "public/sw.js:1",
+        "public/openapi.yaml:1",
+        "public/icon-512.png:1"
+      ],
+      "purpose": "FACT: public/ carries 239 served static assets — the PWA service worker, a served OpenAPI 3.1 document (openapi.yaml), favicons/icons, provider logo SVG/PNG set, sponsors and audio — the dashboard's static distribution surface. The served openapi.yaml is a machine-readable contract consumers may trust; drift vs the real API is a documentation-integrity question (P1's route inventory is the authority).",
+      "owner_plane": "packaging",
+      "architectural_plane": "distribution",
+      "risk_class": "low — static files; the openapi.yaml's accuracy is the only material risk",
+      "dependencies": [
+        "The Next server to serve them"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: assets return 200 under the standalone server; diff served openapi.yaml against docs/openapi.yaml.",
+      "rollback_or_disable": "Static; removing an asset 404s it.",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P8-066",
+      "name": "GitHub CI workflow suite (35 workflows)",
+      "source_refs": [
+        ".github/workflows/ci.yml:1",
+        ".github/workflows/build.yml:1",
+        ".github/CODEOWNERS:1"
+      ],
+      "purpose": "FACT: the distribution surface includes 35 CI/CD workflows (ci, build, quality, codeql, semgrep, scorecard, dast-smoke, nightly compat/mutation/property/llm-security/resilience/schemathesis/release-green, docker-publish, npm-publish, electron-release, deploy-vps, wiki-sync, radar-export, lock-released-branch, opencode plugin/provider CI, mutation-redundancy, claude) plus CODEOWNERS and dependabot — upstream engineering machinery that produced the pinned snapshot (trust inputs, not HX capabilities).",
+      "owner_plane": "packaging",
+      "architectural_plane": "distribution",
+      "risk_class": "low (HX) — upstream CI; relevant only as provenance context",
+      "dependencies": [
+        "GitHub Actions"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N: none for HX; workflow files parse as valid Actions YAML.",
+      "rollback_or_disable": "Not applicable to HX; the pinned corpus is consumed as source, CI excluded.",
+      "preliminary_disposition": "NOT-APPLICABLE"
+    },
+    {
+      "id": "CAP-P8-067",
+      "name": "Claude Code CI agent workflow (@claude mentions)",
+      "source_refs": [
+        ".github/workflows/claude.yml:1",
+        ".github/workflows/claude.yml:13",
+        ".github/workflows/claude.yml:18"
+      ],
+      "purpose": "FACT: .github/workflows/claude.yml runs Claude Code on @claude mentions in issues/PRs with least-privilege top-level permissions — an AI-agent automation surface inside the distribution. Collision note: it is upstream CI plumbing (not shipped runtime), but it is an agent surface governed by the same HX rule class as P7; recorded NOT-APPLICABLE for HX with the collision flagged.",
+      "owner_plane": "packaging",
+      "architectural_plane": "agent-surface",
+      "risk_class": "medium — model-driven CI automation with repo write scopes upstream",
+      "dependencies": [
+        "GitHub Actions",
+        "Anthropic API access (upstream)"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N: none for HX; permissions block read as `{}` top-level with job-scoped grants.",
+      "rollback_or_disable": "HX does not adopt the workflow; if ever forked, it needs an owner decision under the agent-feature rule.",
+      "preliminary_disposition": "NOT-APPLICABLE"
+    },
+    {
+      "id": "CAP-P8-068",
+      "name": "Makefile convenience wrapper",
+      "source_refs": [
+        "Makefile:5",
+        "Makefile:11",
+        "Makefile:20"
+      ],
+      "purpose": "FACT: the Makefile delegates ~20 targets to the canonical package.json scripts (single-source-of-truth comment) — a developer-facing convenience surface, no behavior of its own.",
+      "owner_plane": "packaging",
+      "architectural_plane": "distribution",
+      "risk_class": "low — thin wrapper",
+      "dependencies": [
+        "make",
+        "npm"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: `make build` equals `npm run build`.",
+      "rollback_or_disable": "Use npm scripts directly.",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P8-901",
+      "name": "Native mobile applications (iOS/Android)",
+      "source_refs": [
+        "public/sw.js:1",
+        "src/app/manifest.ts:4"
+      ],
+      "purpose": "NOT-ESTABLISHED (INFERENCE — bounded negative search; the search evidence is FACT): grep/glob across the corpus for capacitor, react-native, tauri, cordova, android/, ios/ project files found no native mobile client (the only 'android' hits are the Termux-cache workaround and Playwright-android fix scripts). The mobile answer is the PWA (CAP-P8-041).",
+      "owner_plane": "packaging",
+      "architectural_plane": "distribution",
+      "risk_class": "low — absence record",
+      "dependencies": [
+        "—"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: re-run the negative search at any future snapshot.",
+      "rollback_or_disable": "Nothing to disable — nothing exists.",
+      "preliminary_disposition": "NOT-ESTABLISHED"
+    },
+    {
+      "id": "CAP-P8-902",
+      "name": "Artifact signing (cosign/GPG/notarization) for published artifacts",
+      "source_refs": [
+        ".github/workflows/docker-publish.yml:403",
+        ".github/workflows/electron-release.yml:105"
+      ],
+      "purpose": "NOT-ESTABLISHED (INFERENCE — bounded negative search; search evidence FACT): grep for cosign/sign/notarize/CSC_ across the release workflows found an image SBOM step (docker-publish.yml:403-411, CycloneDX via anchore, advisory) and npm provenance (npm-publish.yml:69), but no artifact-signing step for images or desktop installers. Provenance + SBOM exist; cryptographic signing does not, in the pinned source.",
+      "owner_plane": "packaging",
+      "architectural_plane": "distribution",
+      "risk_class": "medium — downstream consumers cannot cryptographically verify upstream artifacts; HX is unaffected (content-verified pin)",
+      "dependencies": [
+        "—"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: repeat the grep at the next snapshot; check upstream release notes for cosign bundles.",
+      "rollback_or_disable": "Nothing to disable — nothing exists; HX mitigation is the content-sensitive pin already in place.",
+      "preliminary_disposition": "NOT-ESTABLISHED"
+    },
+    {
+      "id": "CAP-P8-903",
+      "name": "Kubernetes / Helm packaging",
+      "source_refs": [
+        "docker-compose.yml:5"
+      ],
+      "purpose": "NOT-ESTABLISHED (INFERENCE — bounded negative search; search evidence FACT): no helm chart, kustomize tree, or k8s manifests found in the corpus (searched *helm*, chart*, k8s, kubernetes across paths and workflow files); the container orchestration story is docker-compose profiles plus contrib podman quadlets.",
+      "owner_plane": "packaging",
+      "architectural_plane": "distribution",
+      "risk_class": "low — absence record",
+      "dependencies": [
+        "—"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: re-run the negative search at any future snapshot.",
+      "rollback_or_disable": "Nothing to disable — nothing exists.",
+      "preliminary_disposition": "NOT-ESTABLISHED"
+    },
+    {
+      "id": "CAP-P8-904",
+      "name": "Homebrew formula / tap in-repo",
+      "source_refs": [
+        "bin/cli/commands/update.mjs:13"
+      ],
+      "purpose": "NOT-ESTABLISHED (INFERENCE — bounded negative search; search evidence FACT): update.mjs:13 references 'a global npm/brew install' as a deployment reality, but no formula/tap file exists in the pinned corpus (searched *brew*, Formula/, *.rb). Any Homebrew packaging lives outside this repository.",
+      "owner_plane": "packaging",
+      "architectural_plane": "distribution",
+      "risk_class": "low — absence record with a doc-level reference",
+      "dependencies": [
+        "—"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: re-run the negative search at any future snapshot.",
+      "rollback_or_disable": "Nothing to disable — nothing exists in-repo.",
+      "preliminary_disposition": "NOT-ESTABLISHED"
+    },
+    {
+      "id": "CAP-P8-905",
+      "name": "Server-side endpoint for CLI cloud backup (/api/db-backups/cloud)",
+      "source_refs": [
+        "bin/cli/commands/backup.mjs:295",
+        "src/app/api/db-backups/route.ts:44"
+      ],
+      "purpose": "NOT-ESTABLISHED (FACT-grade absence, grep-verified): the CLI's --cloud upload POSTs to /api/db-backups/cloud, but 'db-backups/cloud' occurs nowhere in src/ — the only hit is the client itself; src/app/api/db-backups/ contains route.ts + export/exportAll/import subroutes only. This closes the P5 CAP-P5-036 pointer: server-side cloud/encrypted remote backup does not exist in the pinned release; the CLI flag degrades to a warning.",
+      "owner_plane": "packaging",
+      "architectural_plane": "data-plane",
+      "risk_class": "medium — a shipped flag whose target does not exist (dead-letter behavior, warning-only)",
+      "dependencies": [
+        "—"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: repeat the grep ('db-backups/cloud') at any future snapshot; today the negative check is the test.",
+      "rollback_or_disable": "Nothing server-side to disable; the client flag is covered by CAP-P8-030.",
+      "preliminary_disposition": "NOT-ESTABLISHED"
+    },
+    {
+      "id": "CAP-P8-906",
+      "name": "CLI decrypt/restore path for --encrypt backups",
+      "source_refs": [
+        "bin/cli/commands/backup.mjs:13",
+        "bin/cli/commands/backup.mjs:453"
+      ],
+      "purpose": "NOT-ESTABLISHED (FACT-grade mechanism evidence + INFERENCE conclusion): createDecipheriv is imported at backup.mjs:13 and never called anywhere in the module (grep-verified), and the restore loop matches only plaintext filenames (:453-459) — no decryptFile, no .enc handling: encrypted CLI backups cannot be restored by the shipped CLI. Labeled INFERENCE: this is an unfinished feature rather than a deliberate refusal. Recorded so the CAP-P8-029/032 risk is tracked as a first-class absence.",
+      "owner_plane": "packaging",
+      "architectural_plane": "data-plane",
+      "risk_class": "high — data-recovery absence for the only encrypted-backup path the CLI offers",
+      "dependencies": [
+        "—"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N: the negative grep IS the test (no decipher call site); any future fix must add a round-trip test (.enc -> restore -> diff).",
+      "rollback_or_disable": "Nothing to disable; mitigation is procedural (manual openssl/node decrypt with the passphrase, or plaintext backups + filesystem protections).",
+      "preliminary_disposition": "NOT-ESTABLISHED"
+    }
+  ]
+}

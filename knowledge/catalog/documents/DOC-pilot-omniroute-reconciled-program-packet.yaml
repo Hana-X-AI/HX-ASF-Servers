@@ -1,0 +1,71 @@
+document:
+  id: "DOC-pilot-omniroute-reconciled-program-packet"
+  title: "PILOT-OMNIROUTE-LAYER0-001 09-reconciled-program-packet.md — reconciled program packet (all 10 p11 §0C components; Wave 0C)"
+  type: "contract"
+  declared_purpose: "The Wave-0C reconciled program packet for PILOT-OMNIROUTE-LAYER0-001 (governor Kimi-K3, 2026-08-27; basis: Goal Contract OD register, ratified KDD-0008 adoption packet, source provenance receipt identity-VERIFIED, the 367-entry/8-partition capability ledger, hxs-8 readiness evidence, the week's state logs). Carries all ten p11 §0C components: §1 executive verdicts per candidate artifact (Trinity profile ADOPT-AS-CORRECTED — ratified O1 2026-08-27, KDD-0008; phased plan REVISE — structure adopted, assumptions corrected; control manifest REVISE — re-issued corrected as 10-control-manifest.yaml); §2 authority matrix final (Agent Zero / Kimi-K3 / Trinity / rick / john / Carol ACTIVE; Coder-X CANDIDATE-backend; Qwen-X ACTIVE verifier; no material unfilled role at Layer 0); §3 source-truth matrix (/opt/tkv-local/OmniRoute-release-v3.8.51, 13,098 files read-only throughout; package 3.8.51 / release/v3.8.51 default branch VERIFIED; commit 42a13fedef8b… VERIFIED by content-sensitive proof — 13,098/13,098 git-blob identical, upstream head since moved to c9f11d86b55d pinned+documented; manifest 085fb94b… / lockfile 58a9d071… / package fe6c7dbe…; MIT; Node engines >=22.22.2 <23 || >=24.0.0 <27 — hxs-8 has none, the single Layer-1 dependency; no unresolved provenance, bundled-doc drift in the ledger's drift register); §4 architecture boundary ratified (KK3 sole control plane; OmniRoute a bounded model-traffic plane — never orchestrator, knowledge authority, or execution foundation; local backends are capabilities with recorded identities and limits; the catalog the only knowledge authority; Trinity accepts nothing she produces; agent-like OmniRoute surfaces disabled-by-default, collision-noted per entry, blocked where they collide with owner rules); §5 owner-decision register at Wave 0C (OD-01 DECIDED hxs-8; OD-02 DECIDED O1 adopt-as-corrected; OD-03..OD-09 + OD-12 OPEN with blocking boundaries and governor recommendations; OD-10/OD-11 OPEN later layers; OD-13 secrets-at-rest RATIFIED 2026-08-27 — env-provision JWT_SECRET + API_KEY_SECRET and set STORAGE_ENCRYPTION_KEY at install, never accept defaults); §6 risk register with evidence pointers (plaintext secrets CAP-P4-039/P5-030 critical; copilot LLM driver CAP-P7-053 executes model output as host CLI critical; backup encryption write-only + dead --cloud CAP-P8-905/906; authority-collision surfaces; skills/jobs not code-disabled; provider-doc drift; no ATEM adapter for Meta-X; Node absent on hxs-8; fail-open rate-limit classes; 160-migration convergent restart; pre-LTS posture; snapshot age); §7 layer map L0-L4 with entry/exit gates reconciled (L0 COMPLETE pending the KK3 gate; L1 entry OD-12 + OD-03 + Node present); §8 local-model execution contract final as exercised (0 identity failures, 1 eviction handled by re-verification never substitution, producer hxs-2 ≠ verifier hxs-1, citation contract 35.6% -> 0.0% PROVEN — Wave-0C skill candidate, zero cloud, zero credentials in model context, every call recorded with call-sign/endpoint/alias/identity/role); §9 test strategy for later layers (deterministic-first rule stands — model output is advice until checks agree); §10 rollback/containment (Layer 0 read-only — rollback documentation-only, exercised zero times; per-capability rollback_or_disable on all 367 entries; snapshot-before-change per OD-11; no silent fixes). Verdict line: the foundation is complete and defensible — Layer 0 ready for the KK3 gate and the owner's review."
+  inferred_value: "INFERENCE: the single reconciliation anchor a future 'what governs the OmniRoute program after Layer 0' question resolves to first — it folds the Wave-0A register, the ratified adoption, the provenance receipt, and the Wave-0B ledger into one adopted basis with the OD register's blocking boundaries explicit; consumers should read it with 10-control-manifest.yaml (the machine-form control instrument) and 19-kk3-gate-decision.md (the gate that relied on it)."
+  source:
+    author: "Kimi-K3 (governor)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/09-reconciled-program-packet.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-27T11:12:00Z"
+  owner: "Kimi-K3 (governor, author); Agent Zero (final authority the packet serves)"
+  applies_to:
+    hosts: [hxs-8, hxs-1, hxs-2]
+    fqdns: []
+    services: []
+    agents: [kimi-k3, trinity, rick, john, carol]
+    repositories: [HX-ASF-Servers, tkv-local]
+    environments: [pilot]
+    models: []
+  version: "2026-08-27 Wave-0C single delivery"
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "depends_on"
+      target: "DOC-goal-omniroute-trinity-layer0"
+      note: "the Goal Contract's named Layer-0 output 'reconciled program packet with owner-decision register' — this document discharges it; the §5 OD register is reconciled from the goal's register with OD-13 added from the ledger"
+    - predicate: "produced_by"
+      target: "kimi-k3"
+      note: "governor main session, Wave 0C (state log row 23, 2026-08-27T10:44Z)"
+    - predicate: "references"
+      target: "DOC-kdd-0008-trinity-omniroute-adoption"
+      note: "§1/§5 basis: OD-02 DECIDED O1 adopt-as-corrected, ratified 2026-08-27 (Trinity lane ACTIVE)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-source-provenance-receipt"
+      note: "§3 source-truth matrix basis: identity VERIFIED by content-sensitive proof (13,098/13,098 git-blob identical to upstream 42a13fedef8b…)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-ev-08-capability-ledger"
+      note: "§5/§6/§8 basis: the 367-entry merged ledger — OD-13 from its plaintext-secrets finding (CAP-P4-039/P5-030); risk-register evidence pointers into its partitions; citation-contract measurement FINAL 35.6% -> 0.0%"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-rick-hxs8-readiness"
+      note: "§5 OD-03 evidence: hxs-8 readiness SUITABLE-WITH-FINDINGS — the owner's ack is required before host-dependent work"
+    - predicate: "references"
+      target: "/home/hxsa/opt/local-tkv/agent-zero-docs/pilots/omniroute/agent/codex_20260826_1508_trinity-expert-omniroute-engineer-steward-agent-profile.md"
+      note: "§1 executive verdict on the candidate profile (1,229 lines): ADOPT-AS-CORRECTED — ratified O1 2026-08-27 (KDD-0008); candidate preserved unchanged, uncataloged (raw-path target per the register-record convention)"
+    - predicate: "references"
+      target: "/home/hxsa/opt/local-tkv/agent-zero-docs/pilots/omniroute/plan/codex_20260826_1548_omniroute-v3.8.51-full-capability-phased-implementation-plan.md"
+      note: "§1 executive verdict on the candidate phased plan (1,268 lines): REVISE — structure adopted (the 4-layer map kept, §7), assumptions corrected per the register; candidate preserved unchanged, uncataloged"
+    - predicate: "references"
+      target: "/home/hxsa/opt/local-tkv/agent-zero-docs/pilots/omniroute/plan/codex_20260826_1548_omniroute-v3.8.51-implementation-control-manifest.yaml"
+      note: "§1 executive verdict on the candidate control manifest (443 lines): REVISE — re-issued corrected as 10-control-manifest.yaml (DOC-pilot-omniroute-control-manifest); candidate preserved unchanged, uncataloged"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-state-log"
+      note: "mint provenance: row 23 artifact (Wave-0C governor documents written, 2026-08-27T10:44Z); the handoff-close rule binds this wave's receipt citation in that log"
+  validation:
+    validated_at: "2026-08-27T11:12:00Z"
+    freshness: "current"
+    review_due: "at the owner's Layer-1 decision session (OD-12) or on any amendment to the reconciled basis"
+  sha256: "5394e2652f8cd1df1fdf16f81b2364200d38fa86b5a7ca0741ec7138b4740c76"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/09-reconciled-program-packet.md"
+notes:
+  typing_judgment: "Typed contract (schema judgment per the dispatch's 'contract or evidence' latitude): the packet is the program's RECONCILED GOVERNANCE BASIS — it binds later work (ratified architecture boundary, OD register with blocking boundaries, layer entry/exit gates, execution contract, rollback rules) rather than recording a point-in-time reading; cf. the Wave-0A register (DOC-pilot-omniroute-intent-authority-source-register) typed evidence as a receipt/register of readings. authority_level agent-evidence: governor-authored and adopted as the basis at the KK3 gate; its owner-ratified contents (OD-02 O1, OD-13, the no-host-firewall and local-model-first rules) are cited from their ratifying authorities, and the packet itself goes to the owner with the Layer-0 handoff — any owner ratification of the packet would be a later re-ingestion event with its own receipt."
+  status_basis: "status adopted per the dispatch: accepted as the program's reconciled basis by the governor at Wave 0C (the KK3 gate PASS relies on it, state log row 24) — not 'active', because it is a basis-of-record, not an operating instrument (the control manifest carries the active-instrument role)."
+  dual_format: "Registered in scripts/wiki/manifest.txt with sibling 09-reconciled-program-packet.html rendered in sync (state log row 23); per the dual-format convention this ONE record covers the Markdown source of truth — the HTML is a deterministic rendering, never hand-edited."

@@ -1,0 +1,62 @@
+JSON VALID. entries=42
+OK   CAP-P1-001   src/app/api/[...omnirouteApiCatchAll]/route.ts:13              | * Static / dynamic segments under /api/ take precedence over this catch-all
+OK   CAP-P1-001   next.config.mjs:633                                            | async rewrites() {
+OK   CAP-P1-002   src/app/api/v1/route.ts:1                                      | import { CORS_HEADERS } from "@/shared/utils/cors";
+OK   CAP-P1-002   src/app/api/v1/chat/completions/route.ts:81                    | export async function POST(request) {
+OK   CAP-P1-003   src/app/api/v1/chat/completions/route.ts:81                    | export async function POST(request) {
+OK   CAP-P1-004   src/app/api/v1/route.ts:15                                     | export async function GET(request: Request) {
+OK   CAP-P1-005   src/app/api/v1beta/models/route.ts:1                           | import { PROVIDER_MODELS, PROVIDER_ID_TO_ALIAS } from "@/shared/constants/models
+OK   CAP-P1-006   src/app/api/[...omnirouteApiCatchAll]/route.ts:17              | function notFoundResponse(request: Request): Response {
+OK   CAP-P1-006   src/app/api/v1/[...omnirouteCatchAll]/route.ts:16              | function notFoundResponse(request: Request): Response {
+OK   CAP-P1-007   src/app/api/combos/route.ts:16                                 | import { requireManagementAuth } from "@/lib/api/requireManagementAuth";
+OK   CAP-P1-007   src/app/api/combos/route.ts:24                                 | const authError = await requireManagementAuth(request);
+OK   CAP-P1-008   src/shared/constants/publicApiRoutes.ts:18                     | const PUBLIC_API_ROUTE_PREFIXES = [
+OK   CAP-P1-009   open-sse/services/combo.ts:703                                 | export async function handleComboChat(options: HandleComboChatOptions): Promise<
+OK   CAP-P1-009   open-sse/services/combo/comboStructure.ts:813                  | export function resolveComboTargets(
+OK   CAP-P1-010   open-sse/services/combo/strategyDispatch.ts:47                 | export const HANDLED_COMBO_STRATEGIES: readonly string[] = [
+OK   CAP-P1-011   src/shared/constants/routingStrategies.ts:51                   | export const ACCOUNT_FALLBACK_STRATEGY_VALUES = [
+OK   CAP-P1-012   src/shared/constants/routingStrategies.ts:38                   | export const AUTO_ROUTING_STRATEGY_VALUES = [
+OK   CAP-P1-013   src/app/api/openapi/spec/route.ts:2                            | * API: OpenAPI Spec
+OK   CAP-P1-013   src/app/api/openapi/try/route.ts:2                             | * API: OpenAPI "Try It" Proxy
+OK   CAP-P1-014   src/app/api/routing/decisions/[requestId]/route.ts:5           | export async function GET(
+OK   CAP-P1-015   open-sse/services/wildcardRouter.ts:17                         | export function wildcardMatch(model, pattern) {
+OK   CAP-P1-015   open-sse/services/taskAwareRouter.ts:223                       | export function setTaskRoutingConfig(config: Partial<TaskRoutingConfig>): void {
+OK   CAP-P1-015   open-sse/services/intentClassifier.ts:594                      | export function classifyPromptIntent(prompt: string, systemPrompt?: string): Int
+OK   CAP-P1-016   src/lib/combos/intelligentRouting.ts:106                       | export function isIntelligentStrategy(strategy: unknown): boolean {
+OK   CAP-P1-016   src/domain/tagRouter.ts:15                                     | export function normalizeRoutingTags(value: unknown): string[] {
+OK   CAP-P1-016   src/lib/routing/adaptiveRouting.ts:61                          | export function scoreCandidate(candidate: RoutingCandidate): RoutingExplanation 
+OK   CAP-P1-016   src/lib/reasoningRouting/policy.ts:169                         | export function extractReasoningIntent(
+OK   CAP-P1-100   src/shared/constants/routingStrategies.ts:1                    | export const ROUTING_STRATEGY_VALUES = [
+OK   CAP-P1-100   src/shared/constants/routingStrategies.ts:31                   | export const INTERNAL_ROUTING_STRATEGY_VALUES = ["quota-share"] as const;
+OK   CAP-P1-101   open-sse/services/combo/applyStrategyOrdering.ts:68            | if (strategy === "lkgp") {
+OK   CAP-P1-102   open-sse/services/combo/applyStrategyOrdering.ts:118           | } else if (strategy === "strict-random") {
+OK   CAP-P1-103   open-sse/services/combo/applyStrategyOrdering.ts:139           | } else if (strategy === "random") {
+OK   CAP-P1-104   open-sse/services/combo/applyStrategyOrdering.ts:142           | } else if (strategy === "fill-first") {
+OK   CAP-P1-105   open-sse/services/combo/applyStrategyOrdering.ts:147           | } else if (strategy === "p2c") {
+OK   CAP-P1-106   open-sse/services/combo/applyStrategyOrdering.ts:150           | } else if (strategy === "least-used") {
+OK   CAP-P1-107   open-sse/services/combo/applyStrategyOrdering.ts:153           | } else if (strategy === "cost-optimized") {
+OK   CAP-P1-108   open-sse/services/combo/applyStrategyOrdering.ts:194           | } else if (strategy === "reset-aware") {
+OK   CAP-P1-109   open-sse/services/combo/applyStrategyOrdering.ts:206           | } else if (strategy === "reset-window") {
+OK   CAP-P1-110   open-sse/services/combo/applyStrategyOrdering.ts:218           | } else if (strategy === "context-optimized") {
+OK   CAP-P1-111   open-sse/services/combo/applyStrategyOrdering.ts:221           | } else if (strategy === "cache-optimized") {
+OK   CAP-P1-112   open-sse/services/combo/applyStrategyOrdering.ts:231           | } else if (strategy === "headroom") {
+OK   CAP-P1-113   open-sse/services/combo/applyStrategyOrdering.ts:242           | } else if (strategy === "quota-share") {
+OK   CAP-P1-113   open-sse/services/combo/quotaShareStrategy.ts:279              | export function selectQuotaShareTarget(
+OK   CAP-P1-113   src/shared/constants/routingStrategies.ts:31                   | export const INTERNAL_ROUTING_STRATEGY_VALUES = ["quota-share"] as const;
+OK   CAP-P1-120   open-sse/services/combo.ts:1187                                | strategy === "priority" &&
+OK   CAP-P1-121   open-sse/services/combo/dispatchPrelude.ts:599                 | if (strategy === "weighted") {
+OK   CAP-P1-121   open-sse/services/combo/targetResolution.ts:206                | strategy === "weighted" &&
+OK   CAP-P1-121   open-sse/services/combo.ts:1799                                | if (strategy === "weighted" && stickyWeightedLimit > 1) {
+OK   CAP-P1-122   open-sse/services/combo.ts:881                                 | if (strategy === "round-robin" && !activeNativeTurnPin) {
+OK   CAP-P1-122   open-sse/services/combo/dispatchPrelude.ts:629                 | if (strategy === "round-robin") {
+OK   CAP-P1-123   open-sse/services/combo.ts:1888                                | strategy === "context-relay" &&
+OK   CAP-P1-123   open-sse/services/combo/comboSetup.ts:82                       | strategy === "context-relay" ? resolveContextRelayConfig(relayOptions?.config ||
+OK   CAP-P1-124   open-sse/services/combo/resolveAutoStrategy.ts:97              | export async function resolveAutoStrategyOrder(
+OK   CAP-P1-125   open-sse/services/fusion.ts:27                                 | export const FUSION_DEFAULTS = {
+OK   CAP-P1-125   open-sse/services/fusion.ts:1                                  | /**
+OK   CAP-P1-126   open-sse/services/pipeline.ts:2                                | * Pipeline combo strategy — sequential chain.
+OK   CAP-P1-127   open-sse/services/autoCombo/routerStrategy.ts:85               | class RulesStrategyImpl implements RouterStrategy {
+OK   CAP-P1-127   open-sse/services/autoCombo/routerStrategy.ts:347              | strategyRegistry.set("eco", costStrategy); // alias
+OK   CAP-P1-127   open-sse/services/autoCombo/routerStrategy.ts:354              | export function getStrategy(name: string): RouterStrategy {
+
+RESULT: 59 refs verified, 0 failures, 42 entries, all-11-fields=PASS

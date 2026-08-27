@@ -1,0 +1,55 @@
+work_order:
+  task_id: "WO-L1-TRINITY-INSTALL-001"
+  parent_goal: "GOAL-OMNIROUTE-L1-SECURE-CORE"
+  goal_file: "goals/2026-08-27-omniroute-layer1-secure-core.md"
+  milestone: "L1-M2 — pinned OmniRoute install, secrets design, four-backend registration"
+  assigned_agent: "trinity (owner-ratified lane; her first mutating commission)"
+  objective: >-
+    Install OmniRoute v3.8.51 on hxs-8 from the verified pinned corpus as a
+    native systemd service; deploy it with the OD-13 secrets design
+    (env-provisioned JWT_SECRET + API_KEY_SECRET + STORAGE_ENCRYPTION_KEY,
+    never product defaults); register all four HX backends with identity
+    evidence; configure management authN/authZ and the LAN-only exposure;
+    set the disabled-by-default agent surfaces explicitly off; and lay the
+    plaintext-snapshot backup design — all with versioned, reversible steps.
+  owner_authorizations:
+    - "OD-12 Layer 1 authorized 2026-08-27; OD-04 native systemd, never Docker; OD-08 amended (all four backends); OD-13 secrets rule ratified; OD-07 LAN-only + OmniRoute authN/authZ + no host firewall; OD-09 plaintext snapshots + own encryption; local-model-only everywhere"
+    - "Runtime is present: /opt/node-v24.20.0 with /usr/local/bin symlinks (rick, L1-M1 PASS — use it; do not install another Node)"
+    - "Source: /opt/tkv-local/OmniRoute-release-v3.8.51 — the corpus is READ-ONLY; COPY it to a work location on hxs-8 and build/configure there; the corpus itself never changes (hash-witnessed before and after)"
+    - "NOT authorized: Docker/containers/snap; other hosts or backends changes; cloud providers or cloud agent features; enabling any agent-like surface (MCP/A2A/ACP/Conductor/copilot/tunnels/cloud agents/skills/plugins); exposure beyond the LAN; firewall; Layer-2+ route/combo/strategy work"
+  boundaries:
+    - "Execution path: session on hxs-5; hxs-8 (192.168.50.207) via SSH hxsa@192.168.50.207; askpass helper READS the credential at execution time — never printed/logged/stored, helper deleted at task end; verify hostname + peer IP + machine-id against servers/hxs-8/discovery.md first; host key pinned"
+    - "Secrets discipline: generate JWT_SECRET + API_KEY_SECRET + STORAGE_ENCRYPTION_KEY locally (openssl rand -hex 32 class); provision via the systemd unit's Environment= lines (root-only drop-in, mode 0640, recorded by hash — never the values); the values appear in NO artifact, log, receipt, or model context; the catalog records EXISTENCE + mechanism only"
+    - "Service conventions per the blueprint: native unit + versioned drop-in, budgets, RemainAfterExit-style preload only if useful, no RemainAfterExit hacks that mask failure"
+    - "Everything versioned and reversible: pre-state captures, exact steps with hashes, documented inverse for every change (unit removal, workdir removal, store wipe if needed)"
+    - "The corpus stays pristine: sha256 of the source path before and after (must be byte-identical)"
+  install_design:
+    - "Copy the corpus to /opt/omniroute/src (or your documented equivalent) on hxs-8; install dependencies per the source's own contract (npm ci --ignore-scripts — the P8 evidence shows the container used the same; note and handle the native-binary fixup (CAP-P8-006) if the build needs it); build the Next.js standalone output per the product's own AGENTS.md (read it, treat as upstream guidance); deploy from the standalone build under /opt/omniroute with a systemd unit (Environment= for the OD-13 secrets, DATA_DIR under /opt/omniroute/data, HOSTNAME/LAN bind per the evidence from P8's desktop/standalone posture)"
+    - "If the build path fails for an environmental reason you cannot bound, STOP and escalate with the failure evidence — never force an alternate runtime or a container"
+  secrets_design:
+    - "env-provision JWT_SECRET + API_KEY_SECRET + STORAGE_ENCRYPTION_KEY per the secrets discipline above; verify after start that (a) no plaintext JWT/API secret exists in the DB key_value secrets table (the P4/P5 plaintext finding), and (b) connection-row credential fields are AES-256-GCM ciphertext (the P5 wiring activates with STORAGE_ENCRYPTION_KEY) — record the verification method, not the values"
+  backends_registration:
+    - "Register all four HX backends with identity evidence from the backend-capability records: Qwen-X (hxs-1:11434, hx-qwen3.8-27b-64k, digest 766cd9469fb4…), Coder-X (hxs-2:11434, hx-qwen3.6-coderx-64k, digest ec9ebe08a824…), Meta-X (hxs-3:11434, hx-muse-glimmer-64k, digest 9dffb015db40…), Chat-X (hxs-4:11434 loopback-only today — register it but record its posture: it is NOT LAN-reachable from hxs-8; the parity test for Chat-X runs only if its posture allows, otherwise recorded as posture-blocked, not failed)"
+    - "Each registration carries: endpoint, profile alias, expected digest, ctx, capability notes (from DOC-backend-* records); verify each backend's identity live from hxs-8 before registering (except Chat-X, loopback)"
+  exposure_and_management:
+    - "LAN bind only; loopback preserved; no firewall (owner rule). Management authN/authZ per the P4 evidence: provision a management credential (env-provisioned, same discipline); verify the proxy.ts pipeline behavior: anonymous gets the documented limited view, management gets full view (do not record the credential itself)"
+    - "Skills execution and background jobs: set explicitly off/explicit per the ledger's not-code-enforced finding; MCP/A2A/ACP/Conductor/copilot/tunnels/cloud agents/skills/plugins all verified disabled"
+  backup_design:
+    - "Plaintext SQLite snapshots on a schedule to a managed directory (DATA_DIR/backups class), retention per the product default (20); our own encryption wrapper only if required later (OD-09 records the product's encryption is write-only and cloud upload is a dead endpoint — never rely on either)"
+  deliverable: "03-trinity-l1-install.md in pilots/PILOT-OMNIROUTE-LAYER0-001/: the versioned install record (source path + hashes, build evidence, unit + drop-in hashes, env-provision mechanism by name not value), secrets verification evidence (method only), backend registration records with identity evidence, exposure + management auth evidence, disabled-surface verification, backup design, pre/post hashes, documented inverses, sanitized sequential command log, Task May Proceed receipt. PLUS the L1-gate evidence section: direct-vs-routed parity results per reachable backend, health-surface checks, and the service-restart routing-intact check (cold-reboot cycle belongs to the L1-M3 gate work order unless trivially safe to include here — state your choice and why)"
+  second_brain_evaluation:
+    opportunity_identified: "yes"
+    roadmap_capability_or_pattern: "first governed traffic plane + first secrets-design deployment; configuration.md for hxs-8 becomes the second of its class"
+    disposition: "implemented — the install record + secrets pattern + backend registrations become catalog content at handoff"
+    evidence_and_reasoning: "every later service deployment reuses this secrets-and-reverse-proxy shape"
+  controlling_sources:
+    - "10-context-packet-trinity-install.yaml (the paired context packet)"
+    - "goals/2026-08-27-omniroute-layer1-secure-core.md (owner parameters)"
+    - "ledger/08-capability-ledger.md (P4/P5/P8 evidence: authN/authZ pipeline, secrets, packaging)"
+    - "04-rick-hxs8-readiness.md + 01-rick-l1-node-runtime.md (host + runtime)"
+    - "backend records: DOC-backend-qwen-x/coder-x/meta-x/chat-x"
+  budgets:
+    sessions: 2
+    transient_retry: 1
+  stop_conditions: "build fails environmentally and cannot be bounded (escalate); corpus hash mismatch at any point (STOP — integrity); any requirement to exceed scope; secrets verification fails (do not paper over it); identity verification of a backend fails (do not register it — report)"
+  rollback_or_containment: "documented inverse for every change: unit stop+remove, /opt/omniroute removal, data wipe, backend unregistration; pre-state hashes recorded"

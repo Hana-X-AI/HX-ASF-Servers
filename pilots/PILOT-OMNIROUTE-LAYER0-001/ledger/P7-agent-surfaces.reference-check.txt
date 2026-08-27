@@ -1,0 +1,4 @@
+checked 227 refs across 60 entries
+ALL REFS PASS: file exists, line in range, line non-empty
+spot-checked 45 load-bearing refs
+ALL SPOT CHECKS PASS: expected symbol at cited line

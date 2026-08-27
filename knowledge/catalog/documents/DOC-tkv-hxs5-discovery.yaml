@@ -37,8 +37,10 @@ document:
       target: "DOC-tkv-server-registry"
       note: "fleet registry row for hxs-5"
   validation:
-    validated_at: "2026-08-25T05:55:00Z"
+    validated_at: "2026-08-27T17:14:00Z"
     freshness: "historical"
     review_due: "historical record — no review cycle; cross-check before any operational use"
   sha256: "944cf4844803af0b37e1cf4a212d4fb6998794129d9f553a3d992a0598855439"
   canonical_location: "/opt/tkv-local/servers/hxs-5/discovery.md"
+notes:
+  roster_advisory_20260827: "OWNER ADVISORY (2026-08-27; provenance: hxs-2 state log row 58, 2026-08-27T16:20Z): hxs-5 has REPLACED hxs-cp as the fleet control plane — it is the governor's host in practice and was EXCLUDED from rick's 2026-08-27 fleet pre-work remainder pass for now; it was also that pass's EXECUTOR (the six new host-key pins landed in its known_hosts, all verified against owner records). Additionally hxs-21 is being provisioned to eventually replace the hxs-5 machine (out of scope until ready). Advisory carried in this record's notes with provenance; the registry-row amendment is the owner's lane (SERVER-REGISTRY.md owner-maintained) — FLAGGED for the governor via DOC-tkv-server-registry notes.roster_advisory_20260827. This historical record's content unchanged; hash re-verified == live this run."

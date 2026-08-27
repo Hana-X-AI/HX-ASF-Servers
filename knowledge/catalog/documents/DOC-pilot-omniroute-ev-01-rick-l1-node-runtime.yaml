@@ -1,0 +1,70 @@
+document:
+  id: "DOC-pilot-omniroute-ev-01-rick-l1-node-runtime"
+  title: "PILOT-OMNIROUTE-LAYER0-001 01-rick-l1-node-runtime.md — rick L1-M1 Node runtime + NTP pin on hxs-8 (PASS — TASK COMPLETE: Node v24.20.0 official tarball, sha256 + GPG-verified, /opt/node-v24.20.0 + /usr/local/bin symlinks; NTP pinned, timesyncd.conf byte-identical to the four LLM hosts — one-source ×5)"
+  type: "evidence"
+  declared_purpose: "Deliverable of WO-L1-RICK-NODE-001 (L1-M1, GOAL-OMNIROUTE-L1-SECURE-CORE; session rick-l1-node-20260827-01, 1 of 1 budgeted; executor hxs-5; target hxs-8 ONLY; window 2026-08-27T15:5xZ–16:07Z; result PASS — TASK COMPLETE): give hxs-8 an engines-compliant, pinned, native Node.js runtime for OmniRoute and close the pending fleet one-source NTP pin. §1 knowledge review receipt (/opt/tkv-local/ubuntu re-confirmed incl. refs-ubuntu-24.04; quirks register read — quirk #7's no-restart rule applied to the NTP pin: timesyncd restart only, ollama-class daemons untouched; contradictions/gaps none; Task May Proceed YES). §2 authority/identity/pre-state BEFORE any mutation: identity verified live 16:00:59Z against servers/hxs-8/discovery.md (host=hxs-8, peer 192.168.50.207, machine-id 91086d5265a74450b7c2047b3b7ca2ae — all MATCH; host key pinned per the readiness-run ceremony; askpass credential read at execution time only, deleted at end); pre-state consistent with the readiness baseline (node/nodejs/npm/npx ABSENT; xz+gzip present; snap present but NOT used; timesyncd.conf stock e6734751…, NTP ntp.ubuntu.com, Etc/UTC). §3 install-path decision ON EVIDENCE: (a) official nodejs.org binary tarball CHOSEN (exact-version pin by construction — immutable per-version artifact + published SHASUMS256 + GPG-signed sums; ZERO added apt/repo trust surface; single-command inverse; prerequisites already present) over (b) NodeSource apt (third-party source + signing key, version floats — rejected for this work order) and (c) snap (REJECTED out-of-lane by the WO). Version v24.20.0 linux-x64 (Krypton LTS, released 2026-08-26) selected live from dist/index.json (sha 46f40ad3…); alternative v22.23.2 (Jod LTS) recorded; engines constraint '>=22.22.2 <23 || >=24.0.0 <27' re-verified from the pinned corpus package.json (READ-ONLY). §4 artifact authentication BEFORE install: tarball (31,838,904 bytes) sha256 2f2c0da1…cbf2 MATCH against nodejs.org published SHASUMS256.txt; GPG Good signature (made 2026-08-26T14:25:36Z, EDDSA key 5BE8A3F6C8A5C01D106C0AD820B1A390B168D356 'Antoine du Hamel', Node.js release team) verified against the official nodejs/release-keys gpg/pubring.kbx keyring; signed payload vs .txt agree on every hash line (only a trailing-blank-line whitespace delta — reconciled openly, not assumed); transport to hxs-8 re-hashed identical. §5 install 16:04Z (single sudo block): extract to /opt/node-v24.20.0 (--strip-components=1), chown -R root:root, symlinks /usr/local/bin/{node,npm,npx}; no package manager, no repo, no service. Smoke 16:05:21Z all no-write: node v24.20.0, npm/npx 11.19.0, execPath /opt/node-v24.20.0/bin/node, engines-range eval true BY THE INSTALLED RUNTIME ITSELF. Post-state: /opt/node-v24.20.0 208M root:root; three symlinks verified; 0 failed units. §6 NTP pin 16:05:59Z via scripts/fleet/fleet-ntp-pin.sh hxs-8 --apply (mktemp staging STAGED_PATH=/tmp/.fleet-ntp-pin.COzfga4Y, diff reviewed, install -m 0644 root:root, systemd-timesyncd restart only): NTP=time.cloudflare.com with FallbackNTP empty; server contacted ~0 s (162.159.200.123), NTP=yes, NTPSynchronized=yes, Etc/UTC; timesyncd.conf sha256 e2b94d4b…dc2 BYTE-IDENTICAL to the four LLM hosts' pinned file — the fleet now runs ONE timezone and ONE NTP source across all five hosts (the readiness F-2 divergence CLOSED fleet-wide); no daemon-reload, no other service touched. §7 pre/post hashes + documented inverses (both one-command operations; no rollback needed, nothing rolled back). §8 boundaries compliance: native only; NO snap, NO Docker/containers, NO apt/pip/npm installs, NO OmniRoute install or start (Trinity's separate work order), NO firewall changes, NO service changes beyond the timesyncd restart; listeners unchanged (22 + stub DNS); 0 failed units throughout. §9 sanitized sequential command log (12 rows; credential via execution-time askpass only; helpers deleted; hxs-8 /tmp tarball removed; task-created ~/.gnupg side-effect removed from hxs-5). §10 validation summary: identity MATCH; pre-state consistent (stop condition not triggered); artifact authentication PASS (sha256 + GPG chain, discrepancy reconciled); smoke PASS; NTP pin PASS (fleet-identical file hash); remaining lane items recorded (Trinity's install proceeds against this runtime; upgrades are deliberate re-runs of this recipe, manual by design)."
+  inferred_value: "INFERENCE: the fleet's first pinned-runtime recipe — versioned, authenticated (sha256 + GPG), reversible by one command — and the reference pattern for future service runtimes (the WO's own second_brain_evaluation disposition: implemented — the install path + version pin become catalog content at handoff); also the closing proof of the fleet NTP one-source rule on the fifth host (file-level byte-identity ×5), and the runtime precondition that unblocks Trinity's L1-M2 install."
+  source:
+    author: "rick (session rick-l1-node-20260827-01)"
+    provided_by: "rick via Kimi-K3 (OmniRoute pilot state log row 34, 2026-08-27T16:12Z — L1-M1 COMPLETE)"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/01-rick-l1-node-runtime.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-27T16:23:00Z"
+  owner: "rick"
+  applies_to:
+    hosts: [hxs-8, hxs-5]
+    fqdns: []
+    services: [systemd-timesyncd]
+    agents: [rick]
+    repositories: [HX-ASF-Servers, tkv-local]
+    environments: [pilot, fleet]
+    models: []
+  version: ""
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "evidences"
+      target: "hxs-8 L1-M1 — engines-compliant pinned Node runtime + fleet one-source NTP pin (GOAL-OMNIROUTE-L1-SECURE-CORE; OmniRoute pilot state log row 34, 2026-08-27T16:12Z)"
+      note: "Node v24.20.0 (Krypton LTS) authenticated before install — tarball sha256 == nodejs.org published sums AND GPG Good signature vs the official release-keys keyring — installed native at /opt/node-v24.20.0 + /usr/local/bin symlinks; engines range self-evaluated true by the installed runtime; timesyncd.conf e2b94d4b… byte-identical to the four LLM hosts (one timezone + one NTP source ×5; readiness F-2 closed fleet-wide); zero boundary deviations, 0 failed units"
+    - predicate: "produced_by"
+      target: "rick"
+      note: "WO-L1-RICK-NODE-001, session rick-l1-node-20260827-01 (1 of 1 budgeted sessions; executor hxs-5); PASS — TASK COMPLETE"
+    - predicate: "depends_on"
+      target: "DOC-goal-omniroute-layer1-secure-core"
+      note: "governing L1 Goal Contract (owner parameters OD-04 native no-docker, OD-12 authorized, one-source NTP fleet rule); cataloged THIS wave"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-wo-07-rick-node"
+      note: "the discharged work order (cataloged THIS wave, adopted — DISCHARGED at the governor's dispatch authorization since the deliverable landed before cataloging, M7-pair convention)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-cp-08-rick-node"
+      note: "the paired context packet (cataloged THIS wave, adopted); its handoff clause keeps the handoff OPEN until this run's receipt is cited in the OmniRoute pilot state log (profile §7)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-rick-hxs8-readiness"
+      note: "host baseline: §2 pre-state matched the readiness baseline exactly (stop condition 'unexpected host state' not triggered); this deliverable CLOSES the readiness report's F-2 risk (hxs-8 NTP on ntp.ubuntu.com) — pinned to the fleet one-source, conf byte-identical ×5"
+    - predicate: "references"
+      target: "DOC-fleet-time-and-mask-pass"
+      note: "the proven NTP pin pattern (same pinned timesyncd.conf sha256 e2b94d4b… now on all five hosts) and the hardened library script fleet-ntp-pin.sh used with --apply under WO authorization"
+    - predicate: "references"
+      target: "DOC-tkv-corpus-omniroute"
+      note: "engines source of truth: package.json '>=22.22.2 <23 || >=24.0.0 <27' read from the pinned corpus READ-ONLY (§1, §3)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-state-log"
+      note: "governing log: commissioned row 33 (2026-08-27T15:57Z), COMPLETE row 34 (2026-08-27T16:12Z); the L1-M1 handoff CLOSES when this run's receipt is cited there (profile §7/§8)"
+  validation:
+    validated_at: "2026-08-27T16:23:00Z"
+    freshness: "current"
+    review_due: "at L1-M2 (Trinity's install consumes this runtime — WO-L1-TRINITY-INSTALL-001 names it 'use it; do not install another Node'); runtime upgrades are deliberate re-runs of this recipe (manual by design)"
+  sha256: "454bd96c8bb6504e451ad3808715fe92dd8d2e410a2de6c2fc354e1965d04cb4"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/01-rick-l1-node-runtime.md"
+notes:
+  ingestion_provenance: "Minted in the L1-commissions wave (governor dispatch citing OmniRoute pilot state log rows 32-35; row 34 L1-M1 COMPLETE 2026-08-27T16:12Z). File verified on disk complete (141 lines, terminal 'PASS — TASK COMPLETE') at ingestion. Ingested in full."
+  security_review: "Sanitized command log only (§9): credential supplied via execution-time askpass helper, never printed/logged/stored; helpers mode 700 created then deleted and verified absent; hxs-8-side tarball and hxs-5-side ~/.gnupg side-effect removed at cleanup; the credential value appears nowhere in the document — contains_secret_values false (profile §6 compliant). The GPG key fingerprint quoted (EDDSA …D356) is public keyring material, not a secret."
+  anomaly_reconciliation: "One authentication anomaly reconciled openly (§4): the GPG-clearsigned payload and SHASUMS256.txt differ by a single trailing blank line while every hash line is identical — recorded and reconciled, not waved through. Command-log row 6 also records a first-path 404 on the keyring fetch corrected to gpg/pubring.kbx."
+  f2_closure: "The readiness report's risks edge (DOC-pilot-omniroute-rick-hxs8-readiness F-2: hxs-8 sourcing ntp.ubuntu.com, outside the fleet pin) is CLOSED by this deliverable: timesyncd.conf sha256 e2b94d4b… byte-identical to the four LLM hosts — one timezone (Etc/UTC) and one NTP source (time.cloudflare.com, FallbackNTP empty) across all five hosts. Recorded here; the readiness record itself is untouched (historical evidence record — its F-2 was correct as found)."
+  second_brain: "Second Brain evaluation per the WO (§8): the versioned, repeatable runtime recipe (§3–§5) is the catalog-able pattern for future service runtimes — disposition implemented (this record is the catalog content)."

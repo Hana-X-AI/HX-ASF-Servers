@@ -1,0 +1,56 @@
+# WO-02 — rick: Fleet Baseline Wave
+# Commissioned 2026-08-27T19:40Z by governor Kimi-K3 on owner GO.
+# Pilot: pilots/PILOT-FLEET-BASELINE-001 | Goal: goals/2026-08-27-fleet-baseline-deployment.md
+
+id: WO-02-fleet-baseline
+milestone: BASELINE-1 (fleet base verification + standard alignment)
+executor: rick (agents/rick/charter.md + agents/rick/profile.md — read FIRST)
+session: rick-fleet-baseline-20260827-01
+priority: high — owner sequencing: this wave gates OmniRoute L1-M3 closure
+
+controlling_sources:
+  - scripts/fleet/fleet-standard.yaml (standards-as-data, v0.1 — the declared expected state)
+  - scripts/fleet/README.md (library usage contracts)
+  - servers/SERVER-REGISTRY.md (host truth: IPs, roles)
+  - /opt/tkv-local/servers/<host>/ (per-host historical as-found evidence — cross-check, never current truth)
+  - servers/2026-08-26-fleet-time-and-mask-pass.md (the proven pattern + command log shape)
+
+hosts:
+  fresh_7: [hxs-6, hxs-9, hxs-10, hxs-12, hxs-13, hxs-14, hxs-15]   # .205 .208 .209 .211 .212 .213 .214
+  reverify_5: [hxs-1, hxs-2, hxs-3, hxs-4, hxs-8]                  # .200 .201 .202 .203 .207
+  excluded:
+    hxs-5: control plane (owner word — never in scope)
+    hxs-7: replaced by hxs-20 (provisioning — no pre-work until ready)
+    hxs-11: owner flag unreachable — SKIP, do not probe repeatedly
+    hxs-20_hxs-21: provisioning
+
+tasks_per_fresh_host:
+  - identity + OS (Ubuntu 24.04) + kernel + uptime; record against TKV discovery (drift = REPORT, both values kept)
+  - scripts/fleet/fleet-verify-baseline.sh <host> (standards-as-data verdicts)
+  - NTP: check; where drifted from the standard (Etc/UTC + time.cloudflare.com) apply scripts/fleet/fleet-ntp-pin.sh <host> --apply (SANCTIONED MUTATION class 1; mktemp staging, diff review, timesyncd restart only)
+  - sleep targets: check 4-target mask set; align via scripts/fleet/fleet-sleepmasks.sh where drifted (SANCTIONED MUTATION class 2)
+  - scripts/fleet/fleet-selftest.sh run (library self-check stays green)
+  - refresh /opt/tkv-local/servers/<host>/pre-work-results.md (dated re-verification section; discovery.md drift notes where found)
+  - hxs-6 ONLY: record Secure Boot state (expected ENABLED per owner flag) — RECORD, never change; BIOS is an owner decision
+
+tasks_per_reverify_host:
+  - quick sweep: identity, NTP sync state vs standard, mask state, selftest — confirm green; drift = REPORT (no mutation unless the drift is in a sanctioned class, then fix + record)
+
+boundaries:
+  read_only: everything except the two sanctioned mutation classes
+  stop_and_escalate: any other mutation need; any credential anomaly; any host showing signs of active production workload that a mask/NTP restart could disturb (record + skip that mutation, verdict REPORT)
+  secrets: askpass pattern from the credential record (awk on the SSH-password row); helper 0700, deleted at end; NO secret value in any artifact/log/receipt/model context; sudo -n where prepared, else record
+  failure: per-host failure → record FAIL/REPORT for that host, CONTINUE the wave; systemic failure (library defect, auth failure on 2+ hosts) → STOP, escalate to governor
+  transient_retry: 1/1 per operation
+  model: local only (Qwen-X); failure → escalate to governor, no cloud fallback
+
+deliverables:
+  - servers/2026-08-27-fleet-baseline-wave.md — evidence + per-host verdicts + full command log (shape of the 08-26 pass doc)
+  - refreshed /opt/tkv-local/servers/<host>/pre-work-results.md per fresh host
+  - pilot state-log rows for governor handoff (summary verdicts per host)
+
+acceptance:
+  - every in-scope host carries a verdict: PASS / REPORT (with declared direction) / FAIL (with evidence)
+  - both sanctioned mutation classes verified post-apply (re-check green)
+  - zero secret values in any artifact
+  - handoff to governor with receipt-style summary

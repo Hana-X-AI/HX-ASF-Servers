@@ -1,0 +1,68 @@
+document:
+  id: "DOC-pilot-omniroute-owner-decision-packet"
+  title: "PILOT-OMNIROUTE-LAYER0-001 11-owner-decision-packet.md — owner decision packet (3 decided-for-record, 8 open Layer-1 decisions with recommendations, 2 later-layer, 7 deliberate non-decisions; Wave 0C)"
+  type: "contract"
+  declared_purpose: "The Wave-0C owner decision packet for the OmniRoute program (governor Kimi-K3 to Agent Zero, 2026-08-27; basis: goal-contract OD register, the 367-entry capability ledger, hxs-8 readiness, the week's governance evidence): every item carries the exact decision needed, the governor's recommendation, and what it blocks — 'Nothing here is decided for you.' DECIDED for the record (no action): OD-01 target host hxs-8 (owner selection; online; readiness evidence delivered); OD-02 Trinity ratification O1 adopt-as-corrected (active; her first commission produced the ledger); OD-13 secrets at rest RATIFIED 2026-08-27 — env-provision JWT_SECRET + API_KEY_SECRET and set STORAGE_ENCRYPTION_KEY at install, never accept defaults (the ledger proved plaintext-default persistence and a stale encrypted-store doc claim). OPEN — needed for Layer 1 (8): OD-03 acknowledge hxs-8 readiness evidence (04-rick-hxs8-readiness.md, SUITABLE-WITH-FINDINGS — memory resolved 32+16 GB both channels non-ECC, ports free, Node absent; blocks any host-dependent work); OD-04 deployment mode — recommendation native Node systemd service on hxs-8 (clean host, fewer moving parts; the runner-cli container flavor is BLOCKED, compose stays LAB-ONLY; blocks install shape); OD-05 FQDN + internal DNS — recommendation omniroute.hx.local.arpa via the fleet DNS, rick's plane at Layer 1 (blocks naming); OD-06 TLS termination — host TLS via a small reverse proxy or OmniRoute's own TLS, management and inference paths separated (P4 evidence shows the split exists; blocks transport security); OD-07 allowed clients/exposure — recommendation LAN bind only (192.168.50.0/24), management endpoints behind OmniRoute's own authN/authZ (the proven proxy.ts pipeline), no host firewall (owner rule), the O1 monitoring tripwire stands (blocks exposure); OD-08 initial backend(s) — recommendation exactly one local backend first: Qwen-X (ACTIVE, M8-signed, loopback-proven LAN health) — the Secure Core shape, Coder-X/Meta-X join at Layer 2 after their own M8s (blocks routing start); OD-09 backup/retention/RPO/RTO — plaintext SQLite snapshots to a managed dir + our own encryption if required (the product's backup encryption is write-only and its cloud upload a dead endpoint, CAP-P8-905/906; retention 20 snapshots matches its default; blocks data safety); OD-12 Layer 1 authorization — authorize after reviewing this packet + 18-independent-verification-report.md + the KK3 gate decision (blocks the install itself). OPEN — later layers (2): OD-10 Qdrant/memory disposition (Layer 3); OD-11 production-version policy (program-level — upgrade cadence from the pinned snapshot). DELIBERATE NON-DECISIONS recorded so they stay closed (7): no DeepSeek Harness anything (never existed, KDD-0006); no /opt/tkv-local/omniroute knowledge root (corpus + catalog stand); no host firewalls (the LAN plus OmniRoute authN/authZ is the boundary); no cloud models or remote inference anywhere in the program (local-model-first rule); no activation of OmniRoute agent-like surfaces (MCP/A2A/ACP/Conductor/copilot/tunnels/cloud agents — disabled-by-default, 8 BLOCKED entries, the copilot driver and Conductor hub the two highest-risk surfaces and stay off); no backup-encryption or cloud-upload reliance (proven nonfunctional); no ATEM routing assumption for Meta-X (no adapter exists)."
+  inferred_value: "INFERENCE: the Layer-1 gate instrument — OD-12 is the only door to installation (the KK3 gate decision: 'Layer 0 completion does not authorize Layer 1'), so this packet is what the owner's word acts on; the recommendation column is governor recommendation, the decided column is owner record, and the seven non-decisions keep foreclosed options from being re-litigated."
+  source:
+    author: "Kimi-K3 (governor)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/11-owner-decision-packet.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-27T11:12:00Z"
+  owner: "Agent Zero (decision authority); Kimi-K3 (governor, author)"
+  applies_to:
+    hosts: [hxs-8]
+    fqdns: []
+    services: []
+    agents: [kimi-k3, trinity, rick]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot]
+    models: [hx-qwen3.8-27b-64k]
+  version: "2026-08-27 Wave-0C single delivery (OD states at the KK3 gate)"
+  status: "active"
+  authority_level: "delegated-contract"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "kimi-k3"
+      note: "governor main session, Wave 0C (state log row 23, 2026-08-27T10:44Z); 09+11 registered dual-format and rendered in sync"
+    - predicate: "depends_on"
+      target: "DOC-goal-omniroute-trinity-layer0"
+      note: "the Goal Contract's OD register is this packet's basis (OD-13 added from the ledger's plaintext-secrets finding)"
+    - predicate: "governs"
+      target: "owner Layer-1 decisions OD-03..OD-09 + OD-12 (PILOT-OMNIROUTE-LAYER0-001)"
+      note: "the packet requests the owner's decisions; each open OD blocks only the work that depends on it (all Layer-1+); owner decisions land as re-ingestion events with their own receipts — never silent edits of this record"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-rick-hxs8-readiness"
+      note: "OD-03 evidence: hxs-8 readiness SUITABLE-WITH-FINDINGS (memory resolved 32+16 GB both channels non-ECC; ports free; Node absent — the single Layer-1 dependency)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-ev-18-independent-verification"
+      note: "OD-12 recommendation triad: authorize after reviewing this packet + the independent verification report + the KK3 gate decision"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-decision-19-kk3-gate"
+      note: "OD-12 recommendation triad: the KK3 gate decision (PASS — Layer 0 COMPLETE); the gate's PASS does NOT authorize Layer 1"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-ev-08-capability-ledger"
+      note: "basis (367 entries): OD-13 from CAP-P4-039/P5-030 (plaintext secrets); OD-09 from CAP-P8-905/906 (write-only backup encryption, dead --cloud endpoint); the 8 BLOCKED entries anchor non-decision 5"
+    - predicate: "references"
+      target: "DOC-kdd-0006-hxs2-coderx-backend-adoption"
+      note: "deliberate non-decision 1: no DeepSeek Harness anything — it never existed (KDD-0006)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-state-log"
+      note: "mint provenance: row 23 artifact (Wave-0C governor documents written, 2026-08-27T10:44Z)"
+  validation:
+    validated_at: "2026-08-27T11:12:00Z"
+    freshness: "current"
+    review_due: "on the owner's decision session — each decided OD flips by re-ingestion; OD-03 ack required before any host-dependent work"
+  sha256: "e88512f35102d19b551abb56d737204516ef031183b2b3a8697deddfe39da8b1"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/11-owner-decision-packet.md"
+notes:
+  typing_judgment: "Typed contract (dispatch latitude contract-or-evidence): the packet is the owner-facing DECISION INSTRUMENT carrying the OD register with blocking boundaries — the vehicle through which owner authority will be exercised on the program, not a reading of past events. authority_level delegated-contract (governor-issued under p11 + the approved plan; the decided items cite their owner ratifications). status active: the live instrument — 8 Layer-1-blocking decisions OPEN; it stays active through the owner's decision session, and each decision lands as a re-ingestion event with its own receipt."
+  od_open_states: "OPEN at cataloging (2026-08-27T11:12Z, per the packet and 10-control-manifest.yaml owner_decisions): OD-03 hxs-8 readiness acknowledgement (blocks any host-dependent work; evidence DOC-pilot-omniroute-rick-hxs8-readiness); OD-04 deployment mode (rec. native Node systemd service; blocks install shape); OD-05 FQDN + internal DNS (rec. omniroute.hx.local.arpa via fleet DNS; blocks naming); OD-06 TLS termination + path separation (blocks transport security); OD-07 allowed clients/exposure (rec. LAN bind only + OmniRoute authN/authZ + no host firewall; blocks exposure); OD-08 initial backends (rec. exactly one local backend first — Qwen-X; blocks routing start); OD-09 retention/RPO/RTO/backup (rec. plaintext snapshots + own encryption; blocks data safety); OD-12 Layer 1 authorization (blocks the install itself — the only door to Layer 1). OPEN later layers: OD-10 Qdrant/memory disposition (Layer 3); OD-11 production-version policy (program-level). DECIDED for record: OD-01 hxs-8; OD-02 O1 adopt-as-corrected; OD-13 secrets-at-rest RATIFIED 2026-08-27."
+  dual_format: "Registered in scripts/wiki/manifest.txt with sibling 11-owner-decision-packet.html rendered in sync (state log row 23); ONE record for the Markdown source of truth per the dual-format convention."

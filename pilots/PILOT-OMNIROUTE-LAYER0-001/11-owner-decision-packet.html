@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<!-- Generated from pilots/PILOT-OMNIROUTE-LAYER0-001/11-owner-decision-packet.md (sha256 e88512f35102d19b551abb56d737204516ef031183b2b3a8697deddfe39da8b1) by scripts/wiki/render.py on 2026-08-27T20:48Z.
+     Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Owner Decision Packet — OmniRoute program (Wave 0C)</title>
+<style>
+:root{color-scheme:light dark}
+body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.55;
+max-width:62rem;margin:0 auto;padding:1.5rem 2rem;color:#1a1a1a;background:#fff}
+h1,h2,h3,h4,h5,h6{line-height:1.25;margin-top:1.6em}
+h1{border-bottom:2px solid #444;padding-bottom:.3em}
+h2{border-bottom:1px solid #ccc;padding-bottom:.2em}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+code{background:#f0f0f0;padding:.1em .3em;border-radius:3px}
+pre{background:#f6f8fa;border:1px solid #ddd;border-radius:6px;padding:.8em;overflow-x:auto}
+pre code{background:none;padding:0}
+table{border-collapse:collapse;margin:1em 0;width:100%}
+th,td{border:1px solid #ccc;padding:.35em .6em;text-align:left;vertical-align:top}
+th{background:#f0f0f0}
+blockquote{border-left:4px solid #bbb;margin:1em 0;padding:.2em 1em;color:#444;background:#fafafa}
+a{color:#0645ad}
+.doc-meta{color:#666;font-size:.85em;border-bottom:1px dashed #bbb;padding-bottom:.6em;margin-bottom:1.2em}
+footer{margin-top:2.5em;border-top:1px solid #ccc;color:#666;font-size:.8em;padding-top:.8em}
+pre.mermaid{background:#fff;border:1px dashed #999}
+@media (prefers-color-scheme:dark){
+body{color:#ddd;background:#111} h1{border-color:#888} h2{border-color:#555}
+code{background:#2a2a2a} pre{background:#1b1b1b;border-color:#444}
+th{background:#222} th,td{border-color:#555} blockquote{color:#bbb;background:#191919;border-color:#666}
+a{color:#6fa8ff} .doc-meta,footer{color:#999}}
+</style>
+</head>
+<body>
+<main class="doc">
+<h1 id="owner-decision-packet-omniroute-program-wave-0c">Owner Decision Packet — OmniRoute program (Wave 0C)</h1>
+<table><thead><tr><th>Field</th><th>Value</th></tr></thead><tbody><tr><td>Date</td><td>2026-08-27 (UTC)</td></tr><tr><td>From</td><td>Kimi-K3 (governor)</td></tr><tr><td>For</td><td>Agent Zero</td></tr><tr><td>Basis</td><td>goal contract OD register, the capability ledger (367 entries), hxs-8 readiness, the week's governance evidence</td></tr></tbody></table>
+<p>Every item carries the exact decision needed, the governor's recommendation, and what it blocks. Nothing here is decided for you.</p>
+<h2 id="decided-for-the-record-no-action">Decided (for the record — no action)</h2>
+<ul><li><strong>OD-01 target host: hxs-8</strong> (your selection; online; readiness evidence delivered).</li><li><strong>OD-02 Trinity ratification: O1 adopt-as-corrected</strong> (active; her first commission produced the ledger).</li><li><strong>OD-13 secrets at rest: RATIFIED 2026-08-27</strong> — env-provision <code>JWT_SECRET</code> + <code>API_KEY_SECRET</code> and set <code>STORAGE_ENCRYPTION_KEY</code> at install, never accept defaults (the ledger proved the product's defaults persist secrets plaintext and its encrypted-store doc claim is stale).</li></ul>
+<h2 id="open-needed-for-layer-1">Open — needed for Layer 1</h2>
+<table><thead><tr><th>ID</th><th>Decision needed</th><th>Governor recommendation</th><th>Blocks</th></tr></thead><tbody><tr><td>OD-03</td><td>Acknowledge hxs-8 readiness evidence</td><td>Read <code>04-rick-hxs8-readiness.md</code> (SUITABLE-WITH-FINDINGS; memory resolved 32+16 GB both channels non-ECC; ports free; Node absent) and acknowledge</td><td>any host-dependent work</td></tr><tr><td>OD-04</td><td>Deployment mode</td><td><strong>Native Node systemd service</strong> on hxs-8 (clean host, fewer moving parts; the runner-cli container flavor is BLOCKED anyway; compose stays LAB-ONLY)</td><td>install shape</td></tr><tr><td>OD-05</td><td>FQDN + internal DNS</td><td><code>omniroute.hx.local.arpa</code> via the fleet DNS (rick's plane at Layer 1)</td><td>naming</td></tr><tr><td>OD-06</td><td>TLS termination</td><td>host TLS via a small reverse proxy or OmniRoute's own TLS; management and inference paths separated (P4 evidence shows the split exists)</td><td>transport security</td></tr><tr><td>OD-07</td><td>Allowed clients / exposure</td><td><strong>LAN bind only</strong> (192.168.50.0/24), management endpoints behind OmniRoute's own authN/authZ (its proven proxy.ts pipeline), <strong>no host firewall</strong> (your rule); the O1 monitoring tripwire stands</td><td>exposure</td></tr><tr><td>OD-08</td><td>Initial backend(s)</td><td><strong>Exactly one local backend first: Qwen-X</strong> (ACTIVE, M8-signed, loopback-proven LAN health) — the Secure Core shape; Coder-X/Meta-X join at Layer 2 after their own M8s</td><td>routing start</td></tr><tr><td>OD-09</td><td>Backup / retention / RPO / RTO</td><td>Plaintext SQLite snapshots to a managed dir + <strong>our own encryption</strong> if required — the product's backup encryption is write-only and its cloud upload is a dead endpoint (CAP-P8-905/906); retention 20 snapshots matches its default</td><td>data safety</td></tr><tr><td>OD-12</td><td><strong>Layer 1 authorization</strong></td><td>Authorize after reviewing this packet + <code>18-independent-verification-report.md</code> + the KK3 gate decision</td><td>the install itself</td></tr></tbody></table>
+<h2 id="open-later-layers">Open — later layers</h2>
+<table><thead><tr><th>ID</th><th>Decision needed</th><th>When</th></tr></thead><tbody><tr><td>OD-10</td><td>Qdrant / memory disposition (existing-service designation vs disabled)</td><td>Layer 3</td></tr><tr><td>OD-11</td><td>Production-version policy (upgrade cadence from the pinned snapshot)</td><td>program-level</td></tr></tbody></table>
+<h2 id="deliberate-non-decisions-recorded-so-they-stay-closed">Deliberate non-decisions (recorded so they stay closed)</h2>
+<ul><li>No DeepSeek Harness anything — it never existed (KDD-0006).</li><li>No <code>/opt/tkv-local/omniroute</code> knowledge root — corpus + catalog stand.</li><li>No host firewalls — the LAN plus OmniRoute authN/authZ is the boundary.</li><li>No cloud models or remote inference anywhere in the program (local-model-first rule).</li><li>No activation of OmniRoute agent-like surfaces (MCP/A2A/ACP/Conductor/copilot/tunnels/cloud agents) — disabled-by-default; 8 BLOCKED entries; the copilot driver and Conductor hub are the two highest-risk surfaces and stay off.</li><li>No backup encryption or cloud-upload reliance — proven nonfunctional.</li><li>No ATEM routing assumption for Meta-X (no adapter exists).</li></ul>
+</main>
+<footer>Source of truth: <code>pilots/PILOT-OMNIROUTE-LAYER0-001/11-owner-decision-packet.md</code> (sha256 <code>e88512f35102d19b551abb56d737204516ef031183b2b3a8697deddfe39da8b1</code>) · rendered 2026-08-27T20:48Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+
+</body>
+</html>

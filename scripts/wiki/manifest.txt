@@ -40,3 +40,13 @@ goals/2026-08-26-hxs3-muse-glimmer-tooling.md
 knowledge/decisions/KDD-0006-hxs2-coderx-backend-adoption.md
 knowledge/decisions/KDD-0007-hxs3-muse-glimmer-tooling-adoption.md
 docs/cicd-pipeline.md
+goals/2026-08-27-omniroute-trinity-layer0.md
+goals/2026-08-27-omniroute-layer1-secure-core.md
+agents/trinity/charter.md
+agents/trinity/profile.md
+knowledge/decisions/KDD-0008-trinity-omniroute-adoption.md
+knowledge/assessments/2026-08-27-second-brain-feature-review.md
+pilots/PILOT-OMNIROUTE-LAYER0-001/09-reconciled-program-packet.md
+pilots/PILOT-OMNIROUTE-LAYER0-001/11-owner-decision-packet.md
+pilots/PILOT-OMNIROUTE-LAYER0-001/19-kk3-gate-decision.md
+goals/2026-08-27-fleet-baseline-deployment.md

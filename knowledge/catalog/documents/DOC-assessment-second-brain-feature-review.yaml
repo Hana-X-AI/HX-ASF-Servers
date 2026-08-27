@@ -1,0 +1,81 @@
+document:
+  id: "DOC-assessment-second-brain-feature-review"
+  title: "2026-08-27-second-brain-feature-review.md — Second Brain feature review: assessed-continuously answer, 12 implemented feature-classes, deferred register, gap dispositions, cadence recommendation (Kimi-K3, owner-question review)"
+  type: "evidence"
+  declared_purpose: "Owner-question review (2026-08-27 UTC, author Kimi-K3 governor; the owner's three questions: 'Were Second Brain features/capabilities assessed for this run? Outcome? How many have we actually implemented to date?'; method: every line carries a live checkable pointer — file, record, or receipt; counting rule: a feature counts as implemented only if live in production with evidence — ratified-but-not-built does not count; truth-state FACT live evidence / AUTHORITY ratified decisions / INFERENCE labeled). §1 answer: assessed CONTINUOUSLY on three tracks — (1) the formal assessments (2026-08-25 capability read-only O1–O10, unified capability recommendations U1–U7 with UD decisions, hx-second-brain-guidance-001 review, KDD-0005 canonical split: Second Brain lives in this repo, /opt/tkv-local is source corpus); (2) the standing directive's mandatory 4-point evaluation, present in 73 artifacts across the repo (counted 2026-08-27), baked into pilots/_templates/; (3) per-decision gates (KDD-0006 through KDD-0008, the goal contracts). §2 outcome: 12 feature-classes IMPLEMENTED and live — canonical catalog core (254 records at writing, validator 4/4 PASS), standing directive, catalog schema + steward profile (U1), catalog validator (U2, 4 checks + --ci portable mode), local validation hooks (U3/U5 pilots -> live, shellcheck-clean, CI-gated), verification checklist + triage tiers (U7), p7-lite agent-performance ledger, Carol run-tier system (T-micro/T-standard/T-full + carry-forward window + ratified bundle calibration), dual-format wiki publishing (Q2, 42 documents rendered, --check drift gate), backend-capability records (the KDD-0006 capability-registry role), adoption-gate pattern (Trinity: candidate -> reconciliation -> charter/profile/KDD -> owner ratification -> catalog -> roster; KDD-0008, validated reusable), fleet standards-as-data (scripts/fleet/ fleet-standard.yaml + fleet-verify-baseline.sh, landed 2026-08-27, formally evaluated in §4); the CI/CD pipeline's review-and-gate machinery recorded separately as a defensible thirteenth Second Brain-class capability, not folded into the 12. §3 deferred register — none silently dropped: CI run receipts -> catalog evidence (revisit after a month of run history, docs/cicd-pipeline.md §Second Brain), executable custom agents .kimi-code/agents/ (phase-transition KDD required), Ollama MCP server (ratified loopback-era posture; the OmniRoute program is the traffic-plane gate), memory/Qdrant-side features (OD-10, OmniRoute Layer 3 territory), the unified doc's deferred-capability list (carried, untouched). §4 gap dispositions closed by this review: the fleet library's after-the-fact 4-point evaluation (opportunity yes — standards-as-data verification is a Second Brain pattern; capability catalog-adjacent verification evidence; disposition IMPLEMENTED, hxs-2 log row 47, matrix green on 5 hosts; reasoning: converts repeated admin judgment into declared checkable data, the same pattern class as validate.py), the CI-receipts deferral lifted from pipeline-doc-only into the review-level register, and this artifact established as the single place answering 'what's implemented'. §5 cadence recommendation (for owner ratification or amendment): refresh this review's implemented count and deferred register at every milestone close and every feature-wave close in one pass (the pattern the catalog's living-document rule already uses) — cost minutes per milestone, the answer always one file deep. §6 provenance: the three 2026-08-25 assessments, KDD-0005/0006/0008, 73 evaluated artifacts (grep count 2026-08-27), the week's state logs (hxs-1/hxs-2/hxs-3/OmniRoute pilots), live catalog state (254 records, validator 4/4); no secrets, all pointers checkable."
+  inferred_value: "INFERENCE: this artifact is the natural refresh target for the catalog's own living-document pattern — if the owner ratifies the §5 cadence, each refresh changes this record's hash on a predictable trigger (milestone/feature-wave close), making it the cheapest freshness signal in the assessment class; the 12-class count is defensible under the printed counting rule, and whether the CI/CD pipeline machinery counts as a thirteenth class is an owner framing call, not a catalog one."
+  source:
+    author: "Kimi-K3 (governor), owner-question review"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/knowledge/assessments/2026-08-27-second-brain-feature-review.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-27T05:58:00Z"
+  owner: "Agent Zero (decision authority for the §5 cadence recommendation — RATIFIED 2026-08-27, hxs-2 log row 55); Kimi-K3 (author)"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: [kimi-k3, carol]
+    repositories: [HX-ASF-Servers]
+    environments: [fleet, pilot]
+    models: []
+  version: "2026-08-27"
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "assesses"
+      target: "HX Second Brain feature set (12 implemented feature-classes + deferred register, as of 2026-08-27)"
+      note: "§2/§3: the implemented-count and deferred-register of record; counting rule printed in the document header — implemented means live in production with checkable evidence, ratified-but-not-built excluded"
+    - predicate: "references"
+      target: "DOC-assessment-capability-read-only"
+      note: "§1 track 1: the O1–O10 read-only capability assessment — one of the formal assessments cited as the continuous-assessment evidence base"
+    - predicate: "references"
+      target: "DOC-assessment-unified-capability-recommendations"
+      note: "§1 track 1 + §3: the U1–U7/UD reconciliation; the executable-custom-agents deferral (phase-transition KDD required) is carried here from its UD register"
+    - predicate: "references"
+      target: "DOC-assessment-hx-second-brain-guidance-001-review"
+      note: "§1 track 1: the roadmap document's review; §3 last row: its deferred-capability list carried untouched by this review"
+    - predicate: "references"
+      target: "DOC-kdd-0005-second-brain-canonical-home"
+      note: "§1 track 1: the canonical split — the Second Brain lives in this repo; /opt/tkv-local is source corpus"
+    - predicate: "references"
+      target: "DOC-kdd-0006-hxs2-coderx-backend-adoption"
+      note: "§2 row 10: the backend-capability records (DOC-backend-qwen-x/coder-x/meta-x/chat-x) fill the KDD-0006 capability-registry role"
+    - predicate: "references"
+      target: "DOC-kdd-0008-trinity-omniroute-adoption"
+      note: "§2 row 11: the adoption-gate pattern (candidate -> reconciliation -> charter/profile/KDD -> owner ratification -> catalog -> roster) validated as reusable on Trinity"
+    - predicate: "references"
+      target: "DOC-knowledge-agent-performance"
+      note: "§2 row 7: the p7-lite agent-performance ledger — accuracy counts, tier eligibility, 8-item review log, boundary calibration"
+    - predicate: "references"
+      target: "DOC-cicd-pipeline-doc"
+      note: "§3 rows 1-2: the pipeline (live since 2026-08-26) recorded as a Second Brain-class capability separate from the 12; its run-receipts-to-catalog deferral now carried at review level (docs/cicd-pipeline.md §Second Brain — revisit after a month of run history)"
+    - predicate: "references"
+      target: "DOC-pilot-hxs2-state-log"
+      note: "§4 item 1 evidence: fleet-library landing at hxs-2 log row 47 (baseline matrix green on 5 hosts); row 48 records this review's writing (rows 43-48 cataloged this wave)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-state-log"
+      note: "provenance: written by the governor at OmniRoute log row 9 (2026-08-27T05:45Z) in the same wave as the goal/profile/KDD remnant fixes this run re-hashes"
+    - predicate: "produced_by"
+      target: "kimi-k3"
+      note: "governor owner-question review, 2026-08-27 (cited at OmniRoute log row 9 and hxs-2 log row 48)"
+  validation:
+    validated_at: "2026-08-27T08:35:00Z"
+    freshness: "current"
+    review_due: "at each milestone/feature-wave close per the RATIFIED cadence (owner-ratified 2026-08-27, hxs-2 log row 55; the owner may amend anytime) — or on document revision"
+  sha256: "a69f2696a2d4a6d2f41ab873f845ca2e0a8001c83d10da19fd0f03672981979e"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/knowledge/assessments/2026-08-27-second-brain-feature-review.md"
+notes:
+  typing_judgment: "Typed evidence per the DOC-assessment-* precedent (DOC-assessment-capability-read-only: type evidence, authority agent-evidence) — the dispatch's 'type assessment per the existing assessment-record class' maps to that class: DOC-assessment-* id + type evidence, the schema enum carrying no assessment literal. The 12-class outcome and the §5 cadence are RECOMMENDATIONS to the owner, not decisions — the decision types do not apply. status adopted = adopted into the knowledge base as the Second Brain feature-review of record (the §4 'single place answering what's implemented'); authority agent-evidence, recommendation-level."
+  cadence_owner_pending: "The §5 cadence recommendation (refresh the implemented count + deferred register at every milestone close and every feature-wave close) is OWNER-PENDING — recommendation-level only; no ratified cadence exists at cataloging. Recorded as owner-pending per the dispatch; review_due carries the ratification/amendment trigger. SUPERSEDED 2026-08-27 by notes.cadence_ratified (owner ratified, hxs-2 log row 55) — field kept verbatim as flag history per the dispatch ('keep the flag's history')."
+  cadence_ratified: "RATIFIED 2026-08-27 — owner 'I agree with your recommendations please proceed' (hxs-2 log row 55): the implemented-count + deferred register refresh at every milestone close is standing practice; the owner may amend anytime. Record-level flip only: the source document is UNCHANGED (a69f2696… holds, re-verified 2026-08-27T08:35Z) — the §5 text stands as the now-ratified recommendation; no source rewrite per the originals rule. Prior state: notes.cadence_owner_pending above, kept as history."
+  derived_html: "Sibling 2026-08-27-second-brain-feature-review.html exists and the document is registered in the wiki manifest (line 47) — derived rendering under the ratified dual-format convention, covered by the DOC-scripts-wiki-dual-format-render one-record disposition, never separately cataloged; Markdown is the source of truth, never hand-edit HTML."
+  snapshot_counts: "The document's own counts are its 2026-08-27 writing-time snapshot: '254 records' (this record's addition takes the catalog to 255), '73 artifacts' carrying the standing-directive evaluation, '42 documents' dual-format rendered. The source is not rewritten (originals rule); the snapshot stands as the review-time state its counting was based on."
+  mid_run_drift: "MID-RUN DRIFT (governor/owner edit at 2026-08-27T05:51:35Z, during this ingestion): the source's pointers were linkified — §1/§2/§3 file and record references gained clickable github.com/hanax-ai/HX-ASF-Servers URLs and the §2 table's evidence column was retitled 'Implemented evidence (click to open)'. Presentation-only: the substance (12 feature-classes, counting rule, deferred register, §4 dispositions, §5 cadence, §6 provenance) is byte-identical in meaning to the cataloged text — VERIFIED by full re-read at 06:02Z. The 7374b397… first-hash state (minted 05:48Z at ingestion start) never entered the catalog as a validated state. Hash chain: 7374b397… (as-written, run start) -> 367ff64a… (linkified pointers, this record)."
+  batch18_f2_rehash: "RESOLVED 2026-08-27 (flag F-W1 of the governor's cleanup wave — OmniRoute pilot log row 17 + hxs-2 log row 54; review batch 18 finding F2 per hxs-2 log row 53: 'feature-review fleet-matrix overstatement', FIXED by governor): the source's §4 fleet-library disposition line now reads 'hxs-1 through hxs-4 all-PASS on the llm-host rules; hxs-8 is 1 PASS plus one honest REPORT — NTP still ntp.ubuntu.com, unchanged, the owner's pending call' (VERIFIED PRESENT at source line 51 this run). Hash chain: … -> 367ff64a… (linkified pointers, 0625Z wave) -> a69f2696… (batch-18 F2 precision edit, this record). F-W1 closed."

@@ -1,0 +1,60 @@
+document:
+  id: "DOC-fleet-script-library"
+  title: "scripts/fleet — HX fleet script library (README + seven scripts + fleet-standard.yaml; v0.1.2: Meta-X-verified 9/9 at v0.1, batch-17 H1-H4 hardened, batch-18 selftest corrections; shellcheck clean; mutators default non-mutating)"
+  type: "runbook"
+  declared_purpose: "Owner directive 2026-08-27 ('it would be a great idea for rick to script much of the repetitive work… a class library that can be called when needed… base verification rick can execute now across the fleet'; hxs-2 state log row 44). Codifies the proven patterns from servers/2026-08-26-fleet-time-and-mask-pass.md (audit, staged fail-closed change, verify, final sweep) and pilots/PILOT-OMNIROUTE-LAYER0-001/04-rick-hxs8-readiness.md (readiness inventory). Bash + native Ubuntu commands only; no new packages anywhere; no Python/pyyaml — the standards file is parsed with awk. Files: fleet-inventory.sh (READ-ONLY per-host inventory -> JSON/--human/--kv), fleet-verify-baseline.sh (READ-ONLY actual-vs-declared matrix against fleet-standard.yaml — the owner's 'base verification'), fleet-ntp-pin.sh (MUTATING with --apply; staged fail-closed NTP=time.cloudflare.com pin with FallbackNTP empty; --dry-run default; mktemp staging contract H3; already-compliant exit 0 H4), fleet-sleepmasks.sh (verify READ-ONLY default; apply MUTATING; the proven 4-target sleep-mask set), fleet-evidence-pull.sh (READ-ONLY remote default; timestamped tar-over-SSH pull + sha256 manifest; --prune the library's only destructive option — protected-roots refusal H2 before any network activity, verified-pull gate, %q-quoted remote path H1), fleet-hostkey-pin.sh (executor known_hosts only; NEVER accept-new, NEVER disables checking; pin only on exact fingerprint match), fleet-selftest.sh (offline 42-check self-test: syntax, --help, fixtures PASS/FAIL/REPORT/SKIP, fingerprint extraction, %q quoting contract, prune-guard refusal matrix, mock-transport pull/prune + ntp-pin stage/empty-diff replays), fleet-standard.yaml (data: host->class map hxs-1..4 llm-host / hxs-5 workstation / hxs-6..15 server-default + per-class rules eq/ne/contains/in, enforce/report — llm-host: Etc/UTC, NTP enabled+synchronized+time.cloudflare.com, 4 masks, ufw_conf in no,not-installed, secure_boot disabled). Credential boundary (hard rule): scripts NEVER handle credentials — no password reads, no credential paths, no secret storage, nothing in argv; SSH transport is the caller's (FLEET_SSH env or default ssh). Mutator work-order rule: --apply/apply run ONLY under an explicit work order naming the target host; both mutators default to non-mutating mode and print their exact rollback inverse in --help."
+  inferred_value: "INFERENCE: the fleet's first reusable operations tooling layer — it converts three individually-proven procedures into a callable, self-testing class library with a standards-as-data file, so fleet verification becomes re-runnable instead of re-constructed; its hardening history (Meta-X 9/9 -> batch-17 H1-H4 -> batch-18 F6/F7) is the fleet's reference example of the verify-then-harden loop closing with deterministic proofs."
+  source:
+    author: "Rick (Ubuntu Server Engineer); README + scripts; commissioned by Kimi-K3 per owner directive (hxs-2 state log row 44)"
+    provided_by: "Kimi-K3 (governor dispatch brief to Carol; combined wave)"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/scripts/fleet/"
+    section: "§whole-document (README.md + seven scripts + fleet-standard.yaml — one record for the library as a whole per the governor's brief)"
+    ingestion_date: "2026-08-27T06:50:00Z"
+  owner: "rick"
+  applies_to:
+    hosts: [hxs-1, hxs-2, hxs-3, hxs-4, hxs-5, hxs-8]
+    fqdns: []
+    services: [systemd-timesyncd.service]
+    agents: [rick, kimi-k3]
+    repositories: [HX-ASF-Servers]
+    environments: [fleet]
+  version: "v0.1.2 (2026-08-27): v0.1 Meta-X-verified 9/9 -> v0.1.1 batch-17 H1-H4 (hxs-2 log row 51) -> v0.1.2 batch-18 F6/F7 selftest corrections (row 53); selftest 42/42, shellcheck 0.10.0 CLEAN x7 (rick's proofs)"
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "rick"
+      note: "commissioned at hxs-2 state log row 44 (owner directive 2026-08-27); v0.1 landed row 47; H1-H4 hardening commissioned row 50, COMPLETE row 51; batch-18 F6/F7 selftest fixes row 53"
+    - predicate: "references"
+      target: "DOC-fleet-time-and-mask-pass"
+      note: "codifies its proven patterns (audit, staged fail-closed change, verify, final sweep) — README header; the timesyncd.conf pin and 4-target mask set are the library's llm-host rules"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-rick-hxs8-readiness"
+      note: "codifies the readiness-inventory pattern (README header)"
+    - predicate: "references"
+      target: "DOC-fleet-metax-verification-2026-08-27"
+      note: "the v0.1 verification stage (9/9 PASS, zero nonconformances; deterministic acceptance authority + Meta-X 72-cell AGREEMENT); its O1 observation RESOLVED by H1, its D2 26/26 superseded by v0.1.2 42/42 per the evidence's own Addendum A"
+    - predicate: "references"
+      target: "DOC-pilot-hxs2-state-log"
+      note: "governing provenance rows 44 (directive) / 47 (v0.1 PASS) / 49 (Meta-X 9/9) / 50-51 (batch-17 H1-H4 hardened v0.1.1) / 53 (batch-18 CLOSED, selftest v0.1.2)"
+    - predicate: "configures"
+      target: "fleet-standard.yaml declared posture (llm-host class rules)"
+      note: "the owner's standing directives as data: one timezone Etc/UTC, one NTP source time.cloudflare.com, proven 4-target mask set, no host firewalls (owner rule 2026-08-26), Secure Boot stays disabled (owner directive 2026-08-24) — enforce-level on llm-host, report-level where an owner call is pending (hxs-8 NTP). SUPERSEDED 2026-08-27 (rick's F-4, fleet pilot state log row 3 — the baseline wave): hxs-8 was pinned under L1-M1 (16:05:59Z) and the remaining server-default hosts under the owner's baseline GO — the amended standard now carries ntp_enabled + ntp_synchronized + ntp_server AND the 4-target mask set as ENFORCE on server-default too (SB + firewall report-only by absence of rules); the governor re-verified the fleet green 12/12 against the amended standard (llm-host 10/10 ×4, server-default 8/8 ×8, OVERALL hosts-with-FAIL=0)"
+  validation:
+    validated_at: "2026-08-27T20:42:00Z"
+    freshness: "current"
+    review_due: "on any library edit (per-file hashes + manifest digest in notes.checksum_method detect drift); Meta-X re-verification of the hardened library queued for the next natural checkpoint (hxs-2 log row 51)"
+  sha256: "879c9a7c6d04e346e6943c31e9e932c55fa8df7886f9c60908031a2c45e98dd6"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/scripts/fleet"
+notes:
+  record_class: "One record for the library as a whole (governor's brief). Type judgment per the brief's contract-or-runbook option: RUNBOOK — the library is living operational tooling plus its usage contract (README + self-verifying scripts + standards-as-data), not a negotiated delegated contract (the work-order class) and not a point-in-time execution record (the evidence class, which the verification file carries separately). The brief's required notes carried: v0.1 Meta-X-verified 9/9; v0.1.1 batch-17 H1-H4 hardened with 42-check selftest; shellcheck clean; mutators default non-mutating — all VERIFIED against README.md, fleet-standard.yaml, the evidence file + its Addendum A, and hxs-2 log rows 47-53 this run (proof execution itself — shellcheck/selftest runs — is rick's/governor's evidence as recorded; Carol does not execute repo tooling)."
+  checksum_method: "sha256 = digest of the content-sensitive per-file manifest of the NINE library files (README.md, fleet-inventory.sh, fleet-verify-baseline.sh, fleet-ntp-pin.sh, fleet-sleepmasks.sh, fleet-evidence-pull.sh, fleet-hostkey-pin.sh, fleet-selftest.sh, fleet-standard.yaml): '<sha256>  <filename>' lines, LC_ALL=C sort by filename, manifest text digested — captured 2026-08-27T06:50Z. Per-file sha256 at mint: README.md cea18826a0abf4e2fce49eaedefbdc6eedcab0e50569d4eb1ad326d51059184f; fleet-evidence-pull.sh 5c6bdd2ecbffe04183dab5e14b57dd36a082a624ec19271a2c2c83d92a8aa752; fleet-hostkey-pin.sh 36065a991bcfaa1fa4af75e55483d649aa3748ff908e82e32779b9baef8e9d1d; fleet-inventory.sh 9905b5beec86b2aafd1180dbbe6e5d6f6b74b0e725b8658d19ad3b73baf0d825; fleet-ntp-pin.sh 0017803d1fb5b1a5f832be4e775ea20282bf285b6ebedd8cbb5e9194587f366f; fleet-selftest.sh c051bfd58980d61bc57107d0001d7865520b6aae3e65bca1fbc04da94450ec9d; fleet-sleepmasks.sh 2ad337d98e89fbf675cf56467e0986880614fc54d6a74c758f1189d2e10a4f8c; fleet-standard.yaml fbaf1f91a55c647600e4c83506a9f50fab39baad0d721c0a0c6f3119220fd318; fleet-verify-baseline.sh 4de75badae5448a7e619bf3e5de7c768df826ebddba5dfb230c40b611c89f899. The tenth directory member (evidence-2026-08-27-metax-verification.md) is cataloged separately as DOC-fleet-metax-verification-2026-08-27 and is NOT part of this manifest. AMENDED 2026-08-27 (baseline wave, rick's F-4 — fleet pilot state log row 3): fleet-standard.yaml fbaf1f91… -> 4c298ea698abc202a7ce658ca534e1ee45ef8670de0b1000bcffd17d470137a4 — the ONLY changed file of the nine (README + all seven scripts re-hashed == the mint values this run); manifest digest 0c4474fd… -> 879c9a7c6d04e346e6943c31e9e932c55fa8df7886f9c60908031a2c45e98dd6 (recomputed 2026-08-27T20:3xZ with the mint construction — the mint digest was first reproduced EXACTLY from the recorded per-file hashes, validating the recomputation method). The amendment content: the stale 'hxs-8 on ntp.ubuntu.com / pending owner call' comment superseded (the L1-M1 pin 16:05:59Z + the owner's baseline GO recorded with the evidence pointer); the server-default class gained ntp_enabled + ntp_synchronized enforce + the 4-target mask set enforce; ntp_server lifted report -> enforce; Secure Boot + firewall remain report-only by absence of rules (hxs-6 SB owner-pending). Governor re-verification vs the amended standard (independent run): llm-host 10/10 ×4, server-default 8/8 ×8, OVERALL hosts=12 hosts-with-FAIL=0 (row 3)."
+  mid_run_chain: "MINT-TIME STABILIZATION (this wave): review batch 18 was executed live during this ingestion — fleet-selftest.sh moved through FOUR states between 06:36Z and 06:40:13Z (0a0b822b… -> ae552128… -> a4955b64… -> c051bfd5…; the batch-18 F6 eval-removal + F7 refusal-matrix corrections, hxs-2 log row 53, 06:45Z) and the evidence file gained its Addendum A at 06:44:57Z. Minting was held until the file was quiet (stable c051bfd5… from 06:40:13Z, verified unchanged at 06:47Z and 06:50Z); the transient selftest digests and the intermediate manifest digests cc9c9e1f…/a4955b64-era never entered the catalog as validated states (living-log precedent). Record minted at v0.1.2 content."
+  credential_hygiene: "The library's credential boundary is architectural (README §'Credential boundary'): no password reads, no credential paths, no secret storage, nothing in argv; transport via FLEET_SSH/default ssh; mutators use remote sudo -S with stdin passthrough or passwordless sudo. No credential value appears in any library file or in this record (profile §6)."
+  known_limits: "README field notes (carried for future revisions): firewall.ufw_conf is the authoritative firewall switch (ufw.service unit state informational — hxs-1 boot-enabled with firewall OFF, no owner-rule conflict); secure_boot degrades to unknown -> NOT-ESTABLISHED without mokutil; timedatectl queried single-property only (systemd 255 comma-join quirk); verify-baseline keys classes on fleet names (transport address mapping is the caller's); evidence-pull verifies counts, not per-file content equality with the remote. Batch-18 residual documented in the ntp-pin header: between diff-review and apply only the transport user or root can touch the staged file."

@@ -2,7 +2,8 @@
 
 - Goal ID: 2026-08-26-hxs3-muse-glimmer-tooling (this file's name)
 - Version: 1
-- Status: in-progress — M0 authorized 2026-08-26 (plan approved; D-items ratified; M1 commissioned)
+- Status: **in-progress — M0 authorized** (2026-08-26; historical — see transition)
+- Status transition 2026-08-27 **[current]**: **COMPLETE — PASS** — milestones M0/M1/M4/M5/M7/M8 all PASS; owner ACCEPT 2026-08-27 ("Meta-X is accepted into production", state log row 26); SC-06 multimodal **FORMALLY DEFERRED 2026-08-27** (hxs-1 SC-05 class — owner-decided, tracked, not forgotten; returns when the owner calls a vision-probes window). [open correction 2026-08-27: original status entry restored and the closure recorded as a dated transition per the append-only convention]
 - Owner: Agent-Zero
 - Created: 2026-08-26
 - Human authority: Agent-Zero

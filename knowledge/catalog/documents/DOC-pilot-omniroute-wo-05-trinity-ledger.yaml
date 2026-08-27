@@ -1,0 +1,65 @@
+document:
+  id: "DOC-pilot-omniroute-wo-05-trinity-ledger"
+  title: "05-work-order-trinity-ledger.yaml — WO-OMNI-TRINITY-LEDGER-001 (Wave 0B source-derived capability ledger, 8-partition DAG; Trinity's first commission; DISCHARGED — Wave 0B COMPLETE, state log row 21; deliverable DOC-pilot-omniroute-ev-08-capability-ledger)"
+  type: "work-order"
+  declared_purpose: "Delegated contract commissioning trinity (owner-ratified 2026-08-27, KDD-0008; her lane's FIRST commission — read-only source work, NOT Layer 1) for Wave 0B of GOAL-OMNI-TRINITY-LAYER0: produce the source-derived capability ledger for OmniRoute v3.8.51 across eight bounded partition tasks (P1 api-routing, P2 providers-protocol, P3 tools-streaming, P4 security, P5 persistence-config, P6 observability, P7 agent-surfaces — the disabled-by-default class with a control-plane-collision note per surface, P8 packaging-modes). Every capability entry carries 12 fields (the context packet's entry_schema keys — the WO's acceptance line was corrected 11 -> 12 with a labeled review-batch-19 correction 2026-08-27; the schema always carried 12): stable CAP-<partition>-<nnn> ID, exact file:line source references, purpose, owner_plane, architectural_plane, risk class, dependencies, required authorization, test contract, rollback-or-disable path, and a preliminary disposition (ACTIVE-CANDIDATE / AVAILABLE-DISABLED / LAB-ONLY / BLOCKED / NOT-APPLICABLE / NOT-ESTABLISHED — the last a valid, honest entry state). Nothing activates; the corpus stays read-only. Execution model contract: Coder-X ONLY (hxs-2, http://192.168.50.201:11434, alias hx-qwen3.6-coderx-64k, expected digest ec9ebe08a824…; owner-designated, candidate status — per-task identity/health re-verification via /api/version + /api/ps, digest match, size==size_vram, ctx 65536; on failure STOP and escalate to Kimi-K3, no substitution, NO cloud ever); deterministic checks first (every cited file:line must exist — grep-verifiable); Qwen-X independent review at Wave 0C (verifier independence: producer hxs-2 != verifier hxs-1). Boundaries: no write to the source tree; no install/build/run of OmniRoute code; no network beyond Coder-X and the local host; host contact read-only from hxs-5; at most 2 parallel sessions (Coder-X NUM_PARALLEL=1 serializes backend calls anyway); budgets <=90 min wall per partition, <=2 bounded corrections, escalate on third failure. Deliverable: pilots/PILOT-OMNIROUTE-LAYER0-001/ledger/ — one JSON + one .md summary per partition; the merge into 08-capability-ledger.md is governor work after all partitions; Carol catalogs at the Wave-0B wave."
+  inferred_value: "INFERENCE: the first exercise of the adoption-gate pattern's ratified lane under a real contract, and the factory's first capability-inventory artifact — the ledger is catalog-native knowledge (capability IDs with dispositions) that lands as Second Brain content at handoff (the WO's own second_brain_evaluation disposition: implemented); its per-partition isolation plus deterministic reference-checks make wrong file:line citations fail closed before any Wave-0C judgment."
+  source:
+    author: "Kimi-K3 (governor)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/05-work-order-trinity-ledger.yaml"
+    section: "§whole-document"
+    ingestion_date: "2026-08-27T06:41:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: [hxs-2, hxs-5]
+    fqdns: []
+    services: [ollama.service]
+    agents: [trinity, kimi-k3]
+    repositories: [HX-ASF-Servers, tkv-local]
+    environments: [pilot]
+    models: [hx-qwen3.6-coderx-64k]
+  version: ""
+  status: "adopted"
+  authority_level: "delegated-contract"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "kimi-k3"
+      note: "issued at OmniRoute pilot state log row 10 (2026-08-27T06:26Z) — 'Wave 0B ledger commissioned — Trinity's first work (P1+P2 in flight)'; sessions trinity-ledger-p1/p2-20260827-01 dispatched (background)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-cp-06-trinity-ledger"
+      note: "paired context packet (goal binding GOAL-OMNI-TRINITY-LAYER0 v1; entry schema, conventions, handoff clause)"
+    - predicate: "depends_on"
+      target: "DOC-goal-omniroute-trinity-layer0"
+      note: "parent goal GOAL-OMNI-TRINITY-LAYER0 (goal_file goals/2026-08-27-omniroute-trinity-layer0.md); Wave 0B milestone inside Layer 0 — no deployment, no mutation, no cloud inference"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-state-log"
+      note: "governing log; commissioned at row 10, DISCHARGED at row 21 (2026-08-27T09:44Z — WAVE 0B COMPLETE, all 8 partitions + merged ledger built); the Wave-0B handoff completes when Carol's Wave-0B closing receipt is cited here (profile §7/§8)"
+    - predicate: "references"
+      target: "DOC-tkv-corpus-omniroute"
+      note: "source_identity: /opt/tkv-local/OmniRoute-release-v3.8.51 READ-ONLY — identity VERIFIED 2026-08-27 by content-sensitive proof (13,098/13,098 git-blob identical to upstream @42a13fedef8b…; manifest 085fb94b…; package.json fe6c7dbe…; lockfile 58a9d071…)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-source-provenance-receipt"
+      note: "controlling source: the Wave 0B identity + inventory receipt the ledger's verified_facts_to_reuse derive from (row 6 artifact)"
+    - predicate: "references"
+      target: "DOC-backend-coder-x"
+      note: "execution backend per the model contract (alias hx-qwen3.6-coderx-64k ONLY, digest ec9ebe08a824…; per-task identity/health verification mandatory and recorded; stop-and-escalate, no substitution, no cloud)"
+    - predicate: "governs"
+      target: "DOC-pilot-omniroute-ev-08-capability-ledger"
+      note: "DISCHARGED by the Wave-0B deliverable 08-capability-ledger.{md,json} (367 entries x 12 fields + partition, 1,325 refs, dispositions 229/74/35/12/9/8; merged from the eight partition ledgers — cataloged THIS wave with their records DOC-pilot-omniroute-ev-p1..p8; state log row 21, 2026-08-27T09:44Z); the governs edge deferred at the in-execution cataloging is added here at the flip (M7-pair convention)"
+  validation:
+    validated_at: "2026-08-27T09:58:00Z"
+    freshness: "current"
+    review_due: "at Wave 0C (reconciliation packet + Qwen-X independent verification of the deliverable); the Wave-0B handoff CLOSES when this run's receipt is cited in the OmniRoute pilot state log (profile §7)"
+  sha256: "fe4587e475424bb656094c56684a5a1ebfa3a2921c69e4cf42147e6dc5a1e890"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/05-work-order-trinity-ledger.yaml"
+notes:
+  status_convention: "IN-EXECUTION WO/CP cataloging per the M7-pair convention (first established DOC-pilot-hxs3-wo-08-john-m7 / cp-09): status active = commissioned-not-complete (state log row 10, 2026-08-27T06:26Z; sessions trinity-ledger-p1/p2-20260827-01 in flight at run start). MID-RUN STATE at mint (2026-08-27T07:34Z): partitions P2 COMPLETE (state log row 12, 06:54Z — Trinity's first partition PASS: 23 entries, her deterministic self-check 110/110 + governor spot-check 8/8), P1 COMPLETE (row 13, 06:58Z — 42 entries, strategy count 19 VERIFIED EXACTLY from source, 21 wrong Coder-X line numbers caught and corrected by her deterministic check), P3 COMPLETE (row 15, 07:22Z — 26 entries, 106/106 refs + 99/99 symbol-at-line; latent discovery: src/lib/toolPolicy.ts allowlist/denylist engine DORMANT, zero call sites, AVAILABLE-DISABLED), and P4 COMPLETE (row 16, 07:32Z — 50 entries incl. the CRITICAL plaintext-secrets finding CAP-P4-039 for the Layer-1 owner-decision packet: auto-generated JWT_SECRET + API_KEY_SECRET persist plaintext in SQLite without STORAGE_ENCRYPTION_KEY); P5 + P6 in flight (both citation-contract partitions per the owner-ratified CP §citation_contract_p5_onward, row 14). The ledger partition artifacts themselves catalog at the Wave-0B wave per the handoff clause. The governs edge to the deliverable was DEFERRED until discharge, per the same convention. FLIPPED to adopted 2026-08-27T09:58Z (this run): WAVE 0B COMPLETE (state log row 21, 2026-08-27T09:44Z — all 8 partitions COMPLETE rows 12-21, merged ledger built); the deliverable is cataloged (DOC-pilot-omniroute-ev-08-capability-ledger + the eight partition records DOC-pilot-omniroute-ev-p1-api-routing .. ev-p8-packaging-modes) and the deferred governs edge is added above. Record sha256 re-verified UNCHANGED at the flip (fe4587e4… == live file, 2026-08-27T09:53Z)."
+  hash_crosscheck: "sha256 fe4587e475424bb656094c56684a5a1ebfa3a2921c69e4cf42147e6dc5a1e890 at mint (2026-08-27T07:16Z); state log row 10 records no WO/CP hashes — the catalog hash is the first recorded value (same pattern as the hxs-3 M7 pair). MID-RUN CHAIN: first hash 2960a8d1… at 06:41Z -> fe4587e4… at 07:16Z after the governor's labeled review-batch-19 correction at 07:06:09Z (acceptance_criteria '11 fields' -> '12 fields' — the CP entry_schema always carried 12 keys; the '11' wording was the defect, batch-19 F2, state log row 14); the pre-correction digest never entered the catalog as a validated state — the record is minted at the corrected content (living-document doctrine: current state with dated, labeled corrections; the correction text itself is quoted in the WO file's acceptance_criteria line). Batch-19 also revalidated P1/P2 deterministically (all entries carry all 12 keys — field-count-revalidation-2026-08-27.txt PASS, row 14) and appended labeled addenda to both partition .md files preserving the historical '11' claims."
+  boundaries_note: "Trinity is ACTIVE as a lane (KDD-0008, owner-ratified O1) — this WO is read-only source work, explicitly NOT Layer 1; Layer 1 still requires goal OD-12 authorization + OD-03 readiness acknowledgement (charter/goal authority matrix, unchanged). No protected resource is named and no credential content appears (profile §6)."

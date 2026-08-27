@@ -1,0 +1,47 @@
+document:
+  id: "DOC-tkv-corpus-ubuntu-mcp-server"
+  title: "/opt/tkv-local/ubuntu/ubuntu_mcp_server-master — community 'Secure Ubuntu MCP Server' source snapshot (v1.0.0 per its CHANGELOG; MIT; reference-only per governor disposition 2026-08-27)"
+  type: "corpus"
+  declared_purpose: "Community 'Secure Ubuntu MCP Server' — a security-first Model Context Protocol server for safe Ubuntu system operations (per its README: hardened, production-ready MCP server giving AI assistants secure, controlled access to Ubuntu system operations; path-traversal protection, command sanitization via shlex safe argument parsing, resource limits, comprehensive audit logging with user attribution, defense-in-depth fail-safe defaults). Python 3.9+; dependencies mcp>=1.9.0 + psutil>=5.9.0 (requirements.txt verified); MIT license (LICENSE verified, © 2025 Ubuntu MCP Server Contributors); version 1.0.0 dated 2025-06-20 per its CHANGELOG ([Unreleased] carries only initial-public-release preparation notes)."
+  inferred_value: "INFERENCE: mineable design reference for the fleet library's hardening lane — its shlex-based command validation and audit-logger design are the two patterns the governor named; as an MCP service it belongs to the deferred executable-agents class, not the current fleet phase."
+  source:
+    author: "upstream community project ('Ubuntu MCP Server Contributors' per LICENSE); mirrored into /opt/tkv-local by Agent Zero"
+    provided_by: "Kimi-K3 (governor dispatch brief; governor-reviewed 2026-08-27)"
+    origin: "/opt/tkv-local/ubuntu/ubuntu_mcp_server-master"
+    section: "§whole-document"
+    ingestion_date: "2026-08-27T06:41:00Z"
+  owner: "Agent Zero (vault)"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: []
+    repositories: [tkv-local]
+    environments: [fleet]
+  version: "v1.0.0 (CHANGELOG, 2025-06-20); master-archive snapshot, unpacked (no .git metadata present)"
+  status: "adopted"
+  authority_level: "upstream-reference"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "references"
+      target: "DOC-fleet-script-library"
+      note: "governor disposition 2026-08-27: its shlex command validation + audit-logger design are mineable for the fleet library — design mining only, no code adoption"
+    - predicate: "references"
+      target: "DOC-tkv-corpus-ubuntu"
+      note: "sits inside the /opt/tkv-local/ubuntu tree as a NEW 2026-08-27 addition; the ubuntu corpus record's 2,127-file manifest (2026-08-25) predates it — flagged to the governor, re-manifest of that record queued out of this wave's write set"
+  validation:
+    validated_at: "2026-08-27T06:41:00Z"
+    freshness: "current"
+    review_due: "2026-09-24 (corpus manifest re-hash) or on any corpus update"
+  sha256: "f151c1e46ad165bc47f222be64ae5eea1c62ceb67e65f7ec88867c382fed74b0"
+  canonical_location: "/opt/tkv-local/ubuntu/ubuntu_mcp_server-master"
+notes:
+  governor_disposition: "Governor-reviewed 2026-08-27, cataloged as REFERENCE ONLY: (1) its shlex command validation + audit-logger design are mineable for the fleet library (DOC-fleet-script-library); (2) service adoption is DEFERRED to the executable-agents phase transition, with a security review at that point; (3) it is NOT a knowledge source — nothing was installed or run, and no host contact occurred (cataloging was a read-only names-manifest hash). Per the AGENTS.md TKV rule its contents are reference material, not current truth — verify against the live environment before any use, and label per the truth-state rules."
+  record_class: "tkv-record class: type corpus (the schema enum has no 'reference-corpus' type — the reference-only disposition is carried here in notes.governor_disposition per the DOC-tkv-corpus-ubuntu-stig-baseline / DOC-tkv-corpus-deepseek-harness precedent: status adopted + upstream-reference + explicit reference-only context note)."
+  checksum_method: "sha256 = digest of the sorted relative-path file manifest (21 files, names only), NOT content hashes; captured 2026-08-27T06:35Z; paths relative to the tree root without './' prefix, LC_ALL=C sort, manifest text digested (per the DOC-tkv-corpus-ubuntu-stig-baseline method). .git internals excluded by convention — the tree is an unpacked master archive with no .git metadata present; .idea/ editor metadata also excluded from the manifest and from cataloging (4 .github/ workflow/config files are included — tool-metadata exclusion is limited to VCS internals and editor directories). Manifest re-hash scheduled 2026-09-24 (the standing corpus follow-up) stands."
+  upstream_provenance: "upstream URL/commit: unavailable — tree is not a git checkout (no .git metadata present); unpacked archive snapshot (same provenance class as DOC-tkv-corpus-ubuntu-stig-baseline). Identity claims verified locally this run: README title 'Secure Ubuntu MCP Server' + MIT badge; LICENSE MIT © 2025; requirements.txt exactly 'mcp>=1.9.0' + 'psutil>=5.9.0'; CHANGELOG [1.0.0] 2025-06-20."

@@ -1,0 +1,77 @@
+document:
+  id: "DOC-pilot-omniroute-decision-19-kk3-gate"
+  title: "PILOT-OMNIROUTE-LAYER0-001 19-kk3-gate-decision.md — KK3 gate decision: PASS — Layer 0 COMPLETE (7 carried conditions; Layer 1 NOT authorized)"
+  type: "decision"
+  declared_purpose: "The KK3 gate decision closing OmniRoute Layer 0 (governor Kimi-K3, 2026-08-27, Wave 0C close): Decision PASS — Layer 0 COMPLETE. Basis: authority reconciled (Trinity ratified O1 KDD-0008, roster updated, lane bounded; no candidate document stood as authority); source identity VERIFIED by content-sensitive proof (13,098/13,098 git-blob identical to upstream diegosouzapw/OmniRoute@42a13fedef8b…); capability ledger 367 entries / 8 partitions / 1,325 source refs / dispositions 229/74/35/12/9/8 — every reference producer-verified, governor spot-checks 8/8 on all partitions; program reconciliation (09-reconciled-program-packet.md + corrected 10-control-manifest.yaml); independent verification (18-independent-verification-report.md — Qwen-X VERIFIED, zero artifact discrepancies: recounts exact, 25/25 sample refs, schema exact, 40/40 structured verdicts sound, key numbers re-derived from corpus independently); catalog 271 records, validator 4/4 PASS, receipts closing every handoff; hxs-8 ONLINE with readiness evidence delivered (SUITABLE-WITH-FINDINGS; Node the single Layer-1 dependency). Validation against p11's acceptance criteria ALL PASS: Trinity's roster state accurately represented (candidate -> ratified, dated); candidate documents reconciled, never copied as authority; Coder-X identity/status/endpoint/profile/health/limits verified per task (0 identity failures; one eviction handled by re-verification, never substitution); no cloud model or remote inference anywhere; source identity reported with honest limits, then proven; source instructions/metadata/lockfile/license reviewed; ledger reproducible from exact references; every capability has owner/risk/test/dependency/disposition; every owner decision has a blocking boundary; zero host or service mutation; no deployment command ran; hxs-8's offline->online transition recorded truthfully; no secret value in prompts, logs, evidence, reports, catalog records, or model context (swept; the two credential classes policy-denied); all artifacts pass repository validation (validate.py 4/4; render --check in sync); independent verification complete and separate from production (Qwen-X ≠ Coder-X hosts); Carol's handoffs all receipted and cited; the decision recorded with exact evidence. SEVEN CONDITIONS CARRIED FORWARD (not failures — boundaries): (1) OD-13 is a hard Layer-1 requirement (owner-ratified) — env-provision JWT_SECRET + API_KEY_SECRET and set STORAGE_ENCRYPTION_KEY, never accept the product's plaintext defaults; (2) backup encryption and cloud upload treated as NONEXISTENT (write-only encryption; dead endpoint) — OD-09 plans around them; (3) agent-like surfaces stay disabled — copilot driver (executes model output as host CLI), Conductor hub, cloud agents/CLI, tunnels, MITM bridge — 8 BLOCKED entries stand unless the owner explicitly reverses one; (4) disabled-by-default is NOT code-enforced for skills execution and background jobs — Layer-1 config must set them explicitly; (5) no ATEM routing assumption for Meta-X (no adapter exists in v3.8.51); (6) hxs-8 host-dependent work still requires the owner's OD-03 acknowledgement of rick's readiness evidence; (7) Coder-X remains catalog-status candidate until its M8 — per-task identity/health verification mandatory on every use. Recommended next gate: the owner's review of 11-owner-decision-packet.md and, on his word, OD-12 — explicit Layer 1 authorization (the only door to installation); LAYER 0 COMPLETION DOES NOT AUTHORIZE LAYER 1. Provenance note: /opt/tkv-local/deepseek-harness-master exists as reference material; KDD-0006's scope is a DEPLOYED DeepSeek Harness (none exists anywhere) — the corpus item is inert reference, no contradiction."
+  inferred_value: "INFERENCE: the program's state anchor after Layer 0 — any 'is OmniRoute authorized yet' question resolves here: NO; Layer 0 is complete and independently verified, but installation waits on the owner's OD-12 against the 11 packet, and the seven carried conditions are the standing constraints every later-layer work order must inherit."
+  source:
+    author: "Kimi-K3 (governor)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/19-kk3-gate-decision.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-27T11:12:00Z"
+  owner: "Kimi-K3 (gate governor, decision author); Agent Zero (owner of the next gate, OD-12)"
+  applies_to:
+    hosts: [hxs-8]
+    fqdns: []
+    services: []
+    agents: [kimi-k3, trinity]
+    repositories: [HX-ASF-Servers, tkv-local]
+    environments: [pilot]
+    models: []
+  version: "2026-08-27 Wave-0C close (single decision)"
+  status: "active"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "decides"
+      target: "PILOT-OMNIROUTE-LAYER0-001 Layer 0 gate"
+      note: "PASS — Layer 0 COMPLETE (2026-08-27): the foundation is correct, reproducible, reviewable, and independent-verified; 7 conditions carried forward as boundaries; Layer 1 explicitly NOT authorized — the owner gate OD-12 is the only door to installation"
+    - predicate: "assesses"
+      target: "DOC-goal-omniroute-trinity-layer0"
+      note: "validation against p11's acceptance criteria (the goal's authorized/prohibited scope): ALL PASS, each with exact evidence recorded in the decision body"
+    - predicate: "produced_by"
+      target: "kimi-k3"
+      note: "governor main session, Wave 0C close (state log row 24, 2026-08-27T10:58Z); written and rendered dual-format"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-reconciled-program-packet"
+      note: "basis component: program reconciliation (the 09 packet)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-control-manifest"
+      note: "basis component: the corrected control manifest v1.1.0"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-ev-18-independent-verification"
+      note: "basis component: independent verification — Qwen-X VERIFIED, zero artifact discrepancies"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-owner-decision-packet"
+      note: "recommended next gate: the owner's review of this packet and, on his word, OD-12 explicit Layer 1 authorization"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-source-provenance-receipt"
+      note: "basis component: source identity VERIFIED by content-sensitive proof (13,098/13,098 git-blob identical)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-ev-08-capability-ledger"
+      note: "basis component: the 367-entry ledger (governor spot-checks 8/8 on all partitions); carried conditions 2/3/4/5 inherit its findings (CAP-P8-905/906; the 8 BLOCKED entries; skills/jobs not code-disabled; no ATEM adapter)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-rick-hxs8-readiness"
+      note: "basis component: hxs-8 ONLINE, SUITABLE-WITH-FINDINGS; carried condition 6 — OD-03 ack still required before host-dependent work"
+    - predicate: "references"
+      target: "DOC-kdd-0006-hxs2-coderx-backend-adoption"
+      note: "provenance note: the /opt/tkv-local/deepseek-harness-master checkout is inert reference material; KDD-0006's scope is a DEPLOYED Harness (none exists anywhere) — no contradiction"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-state-log"
+      note: "mint provenance: row 24 artifact (KK3 gate decision PASS — LAYER 0 COMPLETE, 2026-08-27T10:58Z)"
+  validation:
+    validated_at: "2026-08-27T11:12:00Z"
+    freshness: "current"
+    review_due: "final at delivery; the next gate is the owner's OD-12 decision (tracked by DOC-pilot-omniroute-owner-decision-packet) — re-ingest only on a gate amendment"
+  sha256: "4461be80e6b308e332c3c1143dce8ba890e3ae7f532439db06347b4a689d8453"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/19-kk3-gate-decision.md"
+notes:
+  decision_convention: "Typed decision per the KDD/decision-class convention (cf. DOC-pilot-hx1-decision-36-m8-acceptance): a gate decision by the governor with the evidence basis and exact acceptance-criteria validation recorded in the artifact. Unlike the hxs-1 M8 package this decision needs no owner signature — the KK3 gate is the governor's own; the PENDING owner gate is OD-12 (separate, tracked in DOC-pilot-omniroute-owner-decision-packet). status active: the decision is operative and its 7 carried conditions bind all later-layer work; no status flip is pending — an owner OD-12 grant would be a NEW decision event with its own record and receipt, not a flip of this record."
+  carried_conditions: "The 7 carried conditions (boundaries, not failures): (1) OD-13 hard Layer-1 secrets requirement (env-provision JWT_SECRET + API_KEY_SECRET + STORAGE_ENCRYPTION_KEY, never accept plaintext defaults); (2) backup encryption/cloud upload treated as nonexistent; (3) agent-like surfaces stay disabled (8 BLOCKED entries stand absent explicit owner reversal); (4) skills execution + background jobs need explicit Layer-1 deployment settings (disabled-by-default not code-enforced); (5) no ATEM assumption for Meta-X; (6) OD-03 owner ack required before hxs-8 host-dependent work; (7) Coder-X candidate until its M8 — per-task identity/health verification mandatory on every use."
+  dual_format: "Registered in scripts/wiki/manifest.txt with sibling 19-kk3-gate-decision.html rendered in sync (state log row 24); ONE record for the Markdown source of truth per the dual-format convention."

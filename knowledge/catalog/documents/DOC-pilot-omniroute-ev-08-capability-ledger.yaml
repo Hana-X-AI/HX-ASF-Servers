@@ -1,0 +1,90 @@
+document:
+  id: "DOC-pilot-omniroute-ev-08-capability-ledger"
+  title: "PILOT-OMNIROUTE-LAYER0-001 ledger/08-capability-ledger.{md,json} — Wave 0B merged capability ledger for OmniRoute v3.8.51 (367 entries x 12 schema fields + partition, 1,325 source refs; dispositions 229 ACTIVE-CANDIDATE / 74 AVAILABLE-DISABLED / 35 NOT-ESTABLISHED / 12 LAB-ONLY / 9 NOT-APPLICABLE / 8 BLOCKED)"
+  type: "evidence"
+  declared_purpose: "The Wave-0B deliverable of WO-OMNI-TRINITY-LEDGER-001 (state log row 21, 2026-08-27T09:44Z — WAVE 0B COMPLETE): the source-derived capability ledger for OmniRoute v3.8.51, merged deterministically by the governor from Trinity's eight partition JSONs (which remain the per-partition source of record alongside their summaries and reference-check outputs). Two forms, one artifact: 08-capability-ledger.md — the human-facing summary (producer/verification/source-identity header; disposition distribution; per-partition results; the five data-integrity/security findings for the owner-decision packet incl. the owner-ratified Layer-1 secrets requirement: env-provision JWT_SECRET + API_KEY_SECRET AND set STORAGE_ENCRYPTION_KEY, never accept defaults; the citation-contract measurement table — P1 baseline 35.6% vs P5 4.0% / P6 ~3% / P7 3.1% / P8 0.0%, experiment closed with proof; the drift register of bundled-doc claims refuted by source; the NOT-ESTABLISHED policy) and 08-capability-ledger.json — the machine form (all 367 entries, each carrying the 12 packet-schema fields + partition). Truth-state labels FACT / UPSTREAM / INFERENCE (+ AUTHORITY for HX governance decisions, P4/P6/P7 convention). Dispositions are preliminary by design — nothing is active because it appears here; Layer-1 activation decisions belong to the Wave-0C reconciliation packet, the Qwen-X independent verification, the KK3 gate, and the owner."
+  inferred_value: "INFERENCE: this is the factory's first complete capability-inventory artifact and the Wave-0C gate's decision substrate — its 367 stable CAP ids with preliminary dispositions and grep-verified file:line references turn 'what can OmniRoute v3.8.51 do' into catalog-native, re-checkable knowledge (the WO's second_brain_evaluation disposition: implemented); the five OD-packet findings (plaintext secrets at rest, write-only backup encryption + nonexistent cloud-backup endpoint, zero ATEM adapter, dormant capabilities worth deliberate decisions, owner-rule BLOCKED surfaces) are the highest-value Layer-1 decision inputs."
+  source:
+    author: "trinity (eight partition tasks, Coder-X bounded execution under the local-model contract); Kimi-K3 (governor — deterministic merge)"
+    provided_by: "Kimi-K3 (governor dispatch — Wave-0B closing wave)"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/ledger/ (08-capability-ledger.md + 08-capability-ledger.json)"
+    section: "§whole-document (md + json pair — one artifact, two forms)"
+    ingestion_date: "2026-08-27T09:58:00Z"
+  owner: "trinity"
+  applies_to:
+    hosts: [hxs-2, hxs-5]
+    fqdns: []
+    services: [ollama.service]
+    agents: [trinity, kimi-k3]
+    repositories: [HX-ASF-Servers, tkv-local]
+    environments: [pilot]
+    models: [hx-qwen3.6-coderx-64k]
+  version: "Wave 0B final (2026-08-27, state log row 21)"
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "trinity"
+      note: "her lane's first commission COMPLETE — eight partition tasks (state log rows 12-21: P2 row 12, P1 row 13, P3 row 15, P4 row 16, P5 row 18, P6 row 19, P7 row 20, P8 row 21); Coder-X bounded execution per the model contract (per-task identity/health verification, stop-and-escalate, no substitution, no cloud); governor deterministic merge at row 21 (2026-08-27T09:44Z)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-wo-05-trinity-ledger"
+      note: "DISCHARGES WO-OMNI-TRINITY-LEDGER-001 — the pair flips active -> adopted THIS wave and its deferred governs edges land on this record (M7-pair convention)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-cp-06-trinity-ledger"
+      note: "the entry schema (12 fields), conventions (stable CAP-P<n>-<nnn> ids, NOT-ESTABLISHED honest, corpus-root-relative refs) and the owner-ratified citation_contract_p5_onward this ledger was produced under"
+    - predicate: "depends_on"
+      target: "DOC-goal-omniroute-trinity-layer0"
+      note: "parent goal GOAL-OMNI-TRINITY-LAYER0 — Wave 0B milestone inside Layer 0 (read-only; no deployment, no mutation, no cloud inference); completion does not authorize Layer 1"
+    - predicate: "evidences"
+      target: "DOC-tkv-corpus-omniroute"
+      note: "1,325 source references into the identity-VERIFIED corpus /opt/tkv-local/OmniRoute-release-v3.8.51 (13,098/13,098 git-blob identical to upstream @42a13fedef8b…); every ref grep-verified by the producer's scripted pass, governor spot-checks 8/8 on all eight partitions"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-source-provenance-receipt"
+      note: "source-identity basis (VERIFIED 2026-08-27, content-sensitive proof) carried in the ledger header"
+    - predicate: "contains"
+      target: "DOC-pilot-omniroute-ev-p1-api-routing"
+      note: "PART 1 of 8 — P1 API/routing (42 entries, 59 refs; state log row 13)"
+    - predicate: "contains"
+      target: "DOC-pilot-omniroute-ev-p2-providers-protocol"
+      note: "PART 2 of 8 — P2 providers/protocol (23 entries, 110 refs; row 12)"
+    - predicate: "contains"
+      target: "DOC-pilot-omniroute-ev-p3-tools-streaming"
+      note: "PART 3 of 8 — P3 tools/streaming (26 entries, 106 refs; row 15)"
+    - predicate: "contains"
+      target: "DOC-pilot-omniroute-ev-p4-security"
+      note: "PART 4 of 8 — P4 security (50 entries, 146 refs; row 16)"
+    - predicate: "contains"
+      target: "DOC-pilot-omniroute-ev-p5-persistence-config"
+      note: "PART 5 of 8 — P5 persistence/config (37 entries, 155 refs; row 18)"
+    - predicate: "contains"
+      target: "DOC-pilot-omniroute-ev-p6-observability"
+      note: "PART 6 of 8 — P6 observability (55 entries, 225 refs; row 19)"
+    - predicate: "contains"
+      target: "DOC-pilot-omniroute-ev-p7-agent-surfaces"
+      note: "PART 7 of 8 — P7 agent-surfaces (60 entries, 227 refs; row 20)"
+    - predicate: "contains"
+      target: "DOC-pilot-omniroute-ev-p8-packaging-modes"
+      note: "PART 8 of 8 — P8 packaging/modes (74 entries, 297 refs; row 21)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-state-log"
+      note: "governing log; mint provenance row 21 (2026-08-27T09:44Z — WAVE 0B COMPLETE, merged ledger built); the Wave-0B handoff CLOSES when this run's receipt is cited there (profile §7/§8)"
+  validation:
+    validated_at: "2026-08-27T14:50:00Z"
+    freshness: "current"
+    review_due: "at Wave 0C (reconciliation packet + Qwen-X independent verification + KK3 gate decision); re-hash on any ledger edit"
+  sha256: "cf4fa156eb1dc27b06a9743c88f4795e435bde586fc276ed89a6eb8a263eccfc"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/ledger"
+notes:
+  checksum_method: "MULTI-FILE convention (DOC-fleet-script-library pattern): the sha256 field carries the digest of the content-sensitive 2-file manifest — '<sha256>  <filename>' lines for 08-capability-ledger.json + 08-capability-ledger.md, LC_ALL=C sort by filename, manifest text digested — captured 2026-08-27T14:50Z. Per-file sha256 at this capture: 08-capability-ledger.json 842e3b2535b91e2f4b26ff8a1e5d8d396f4c20e914f5e09bc227611741c3a763; 08-capability-ledger.md 9e8946a696e4cea9626211dd11ca9e5ff9685f99cf454eff47106ccf98ce2b61. Manifest-digest chain: 5f59674b… (Wave-0B mint; per-file json 74122cd7…, md 9915849c…) -> cf4fa156… (batch-22 md amendment F5 (state log row 26) + batch-23 governor deterministic re-merge of the json from the current partitions (state log row 27, 2026-08-27T14:39Z); recipe re-verified this run against the unchanged P1 record's mint digest). Both files live in the canonical ledger directory; neither is edited by the catalog (originals rule)."
+  corrections_batch22: "Batch-22 amendment (state log row 26, 2026-08-27T14:12Z, finding F5 — governor-applied to the md only): the P7 per-partition results line now reads collision breakdown orchestration ×9 / catalog ×4 / authority ×9 — distinct CAP IDs per the P7 §2 lists, batch-22 corrected (VERIFIED PRESENT this run, md line 35). The json is untouched by batch 22."
+  batch22_drift_flag: "RAISED AND RESOLVED THIS RUN (profile §9 open-correction path; historical record kept): at this run's 14:25Z verification the merged json was STALE vs the batch-22-corrected partition JSONs — it was frozen at the row-21 deterministic merge (2026-08-27T09:44Z) and its zero-field-mismatch state (Qwen-X F1, 10:41–10:53Z) predated the batch-22 partition edits (13:57Z P6 / 14:04Z P8). Divergences verified read-only at 14:25Z: (a) merged CAP-P6-005/010/049 required_authorization carried the batch-21 prose values vs partition 'none'; (b) merged CAP-P8-061 risk_class 'critical-adjacent — …' vs partition 'high — critical-adjacent: …'; (c) merged cross-references CAP-P8-006/063 (dependencies) + CAP-P8-036/064 (prose) vs the partition corrections 005/059/906/060 (six references in four classes). This run flagged and escalated the divergence to Kimi-K3 (receipt F-B22-1); the governor RESOLVED it mid-run as review-batch-23's CORRECTNESS FIX (state log row 27, 2026-08-27T14:39Z): deterministic re-merge from the current partition files. Resolution re-verified read-only this run (14:50Z): 367 entries x 13 keys; required_authorization ALL enum-valid (none 156 / owner 137 / layer-N 57 / specialist-review 15 / 2 qualified owner forms — row 27's counts exact); CAP-P6-005/010/049 'none', CAP-P8-061 'high — critical-adjacent: …' present; stale references gone (006/036/063/064 remain only as their own entry ids plus CAP-P8-009's legitimate 006 dependency); P6 + P8 partition entries match the merged file field-for-field with ZERO mismatches. Counts and schema were unaffected throughout: 367 entries / 1,325 refs / per-partition 42/23/26/50/37/55/60/74; dispositions 229/74/35/12/9/8 stand."
+  verification_at_mint: "Deterministic recomputation against the live json (2026-08-27T09:56Z, Carol scripted pass — read-only): 367 entries; every entry carries exactly 13 keys = the packet's 12 schema fields (id, name, purpose, source_refs, owner_plane, architectural_plane, risk_class, dependencies, required_authorization, test_contract, rollback_or_disable, preliminary_disposition) + partition; 367 unique CAP ids (CAP-P1-001 .. CAP-P8-906); 1,325 source_refs total; dispositions 229 ACTIVE-CANDIDATE / 74 AVAILABLE-DISABLED / 35 NOT-ESTABLISHED / 12 LAB-ONLY / 9 NOT-APPLICABLE / 8 BLOCKED — MATCHES the md's distribution table and state log row 21 exactly; per-partition counts 42/23/26/50/37/55/60/74 MATCH the eight partition JSONs entry-for-entry on count (the partition JSONs carry the same 12 fields without the partition key). Reference-level verification (every ref grep-verified 1,325/1,325 + symbol spot-checks; governor spot-checks 8/8 x8 partitions) is the producer's/governor's evidence per the state-log rows — Carol recomputes counts and hashes, not corpus greps (write-set scope; Wave-0C Qwen-X pass is the independent verification gate)."
+  od_packet_findings: "The five findings the md carries to the owner-decision packet (all verified present in the md text at mint): (1) plaintext secrets at rest — JWT_SECRET/API_KEY_SECRET persist plaintext in SQLite key_value (CAP-P4-039, CAP-P5-030); owner-ratified Layer-1 requirement 2026-08-27: env-provision both secrets AND set STORAGE_ENCRYPTION_KEY; (2) backup encryption theater end-to-end — server refuses encrypted schedules, CLI --encrypt write-only (no restore path), --cloud POSTs to a nonexistent endpoint (CAP-P8-905/906, CAP-P5-036); (3) zero ATEM adapter corpus-wide (P2, corroborated P3) — Meta-X traffic would be OpenAI-compatible only; (4) dormant capabilities worth deliberate decisions (toolPolicy engine, adaptive admission, session monitor, OTLP sink, npm self-update, desktop autoDownload); (5) owner-rule BLOCKED surfaces x8 (3 tunnels, Conductor hub, cloud agents/CLI, MITM bridge, runner-cli flavor)."
+  sibling_files_disposition: "The ledger directory also carries per-partition reference-check transcripts (P1/P4/P5/P6/P7/P8 *.reference-check.txt) and field-count-revalidation-2026-08-27.txt — producer/governor VERIFICATION outputs, NOT cataloged this wave (recorded disposition, profile §4): their results are carried in the partition summaries' self-verification sections and the state-log rows; cataloging them would duplicate verification transcripts, not knowledge. The eight partition json+md pairs are cataloged this wave as DOC-pilot-omniroute-ev-p1..p8 (contains edges above)."
+  protected_reference: "The ledger documents the plaintext-secrets FINDING (CAP-P4-039) as a capability/risk fact — it names the mechanism and the owner-ratified remediation; no secret VALUE appears in the artifact or in this record (profile §6)."

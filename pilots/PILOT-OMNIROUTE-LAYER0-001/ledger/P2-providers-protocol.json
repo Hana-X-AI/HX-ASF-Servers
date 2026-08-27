@@ -1,0 +1,465 @@
+{
+  "partition": "P2-providers-protocol",
+  "work_order": "WO-OMNI-TRINITY-LEDGER-001",
+  "producer": "trinity",
+  "produced_at": "2026-08-27T06:55:00Z",
+  "corpus": "/opt/tkv-local/OmniRoute-release-v3.8.51 (read-only; identity VERIFIED 2026-08-27, 07-source-provenance-receipt.md)",
+  "truth_states": "FACT = verified in source at the cited line; UPSTREAM = bundled-doc claim, drift-prone; INFERENCE = producer reasoning, labeled",
+  "entries": [
+    {
+      "id": "CAP-P2-001",
+      "name": "Static provider catalog registry (10 typed collections, 356 records)",
+      "source_refs": [
+        "src/shared/constants/providers.ts:5",
+        "src/shared/constants/providers/noauth.ts:5",
+        "src/shared/constants/providers/oauth.ts:7",
+        "src/shared/constants/providers/web-cookie.ts:5",
+        "src/shared/constants/providers/local.ts:5",
+        "src/shared/constants/providers/search.ts:5",
+        "src/shared/constants/providers/audio.ts:5",
+        "src/shared/constants/providers/upstream-proxy.ts:5",
+        "src/shared/constants/providers/cloud-agent.ts:5",
+        "src/shared/constants/providers/system.ts:5",
+        "src/shared/constants/providers/apikey/index.ts:14",
+        "src/lib/providers/catalog.ts:108"
+      ],
+      "purpose": "Canonical static registry of provider metadata (id, alias, auth type, icons, hints, serviceKinds) in 10 collections — noauth 13, oauth 25, web-cookie 35, local 14, search 16, audio 12, upstream-proxy 2, cloud-agent 3, system 1, apikey 235; 356 unique ids, zero duplicates [FACT, counted deterministically from source]; grouped into 9 dashboard categories by STATIC_PROVIDER_CATALOG_GROUPS (system excluded).",
+      "owner_plane": "config",
+      "architectural_plane": "management-plane",
+      "risk_class": "low — static in-repo data literal; wrong entries degrade display/routing metadata but hold no credentials",
+      "dependencies": ["src/shared/validation/providerSchema (validateProviders import at providers.ts:17)", "src/lib/providers/catalog.ts resolution order lines 168-178"],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: direct — enumerate collections, assert 356 unique ids and per-category counts; routed — resolve each id via resolveStaticProviderCatalogEntry (catalog.ts:195) and assert category round-trip; regression — doc counts (353/354) must NOT be asserted, source counts are the truth",
+      "rollback_or_disable": "Pure data; removing a record drops it from dashboard/catalog resolution (catalog.ts:195-212). No runtime toggle found; revert = git-level change [INFERENCE: no feature flag for registry content found in source]",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P2-002",
+      "name": "Runtime chat-model provider REGISTRY (272 entries)",
+      "source_refs": [
+        "open-sse/config/providers/index.ts:274",
+        "open-sse/config/providers/shared.ts:229",
+        "open-sse/config/providerRegistry.ts:34"
+      ],
+      "purpose": "Runtime per-provider configuration (format, baseUrl(s), headers, OAuth, models, alternateFormats) consumed by executors and URL builders; generateLegacyProviders() (providerRegistry.ts:34) re-projects it to the legacy PROVIDERS shape for backward compatibility. 272 plain key:provider entries, no spreads (index.ts lines 274-547) [FACT].",
+      "owner_plane": "provider-adapter",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "medium — wrong baseUrl/headers misroutes live traffic or leaks keys to the wrong upstream (see CAP-P2-004 guard history)",
+      "dependencies": ["open-sse/config/providers/registry/* per-provider modules", "open-sse/config/constants.ts (PROVIDERS/OAUTH_ENDPOINTS projection)"],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: direct — count REGISTRY keys (expect 272), spot-resolve entries through getRegistryEntry; routed — per-provider request-shape golden tests (tests/unit/executor-map-golden.test.ts pattern); negative — unknown provider id must not resolve",
+      "rollback_or_disable": "Per-entry removal from the object literal; consumers fall back to DefaultExecutor+OpenAI-compatible assumptions only when an entry exists — deleting an entry changes dispatch, so revert is source-level",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P2-003",
+      "name": "ExecutorRegistry — lazy provider-executor dispatch",
+      "source_refs": [
+        "open-sse/executors/registry.ts:20",
+        "open-sse/executors/registry.ts:41",
+        "open-sse/executors/index.ts:30",
+        "open-sse/executors/index.ts:244",
+        "open-sse/executors/index.ts:231",
+        "open-sse/executors/index.ts:242"
+      ],
+      "purpose": "Runtime alias→executor map; 144 aliases declared with lazy module loaders (119 dynamic imports) registering at boot and materializing on first use (#11220); getExecutor() (index.ts:244) resolves specialized executors, hard-blocks cloud-agent-only providers (jules, index.ts:231) and all search providers (derived set, index.ts:242) with HTTP 400, then falls back to DefaultExecutor.",
+      "owner_plane": "provider-adapter",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "high — dispatch seam for all upstream traffic; alias/dup registration throws at boot, and mis-resolution historically routed keys to the wrong host (#6699 comment, index.ts)",
+      "dependencies": ["open-sse/executors/base.ts BaseExecutor contract", "open-sse/config/searchRegistry.ts SEARCH_PROVIDERS (guard derivation)"],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: direct — golden snapshot tests/unit/executor-map-golden.test.ts pins alias keys/order/instances; negative — jules and any SEARCH_PROVIDERS key must throw 400 on chat path; routed — alias resolution returns the same class as canonical id",
+      "rollback_or_disable": "Aliases are removable from the lazyExecutors table (index.ts:30); duplicate-alias throw (registry.ts:22) prevents shadowing; no runtime disable flag found",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P2-004",
+      "name": "DefaultExecutor — OpenAI-compatible fallback dispatch",
+      "source_refs": [
+        "open-sse/executors/default.ts:1",
+        "open-sse/executors/index.ts:255",
+        "open-sse/config/constants.ts:1"
+      ],
+      "purpose": "Generic executor for any provider without a specialized class: resolves URL/headers from the REGISTRY/PROVIDERS config, applies per-provider URL normalizers (Azure, watsonx, OCI, SAP, Databricks, Snowflake, GigaChat), OAuth token refresh, Claude-Code-compatible headers, and param stripping — the OpenAI-compatible passthrough path.",
+      "owner_plane": "provider-adapter",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "high — silent fall-through to PROVIDERS.openai with the user's real key is the documented failure mode (#6699 comment, executors/index.ts); guards exist only for cloud-agent and search providers",
+      "dependencies": ["open-sse/config/providerRegistry.ts getRegistryEntry", "open-sse/services/tokenRefresh.ts", "open-sse/translator/paramSupport.ts stripUnsupportedParams"],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: routed — unknown-but-registered provider hits its configured baseUrl (mock upstream), never api.openai.com; negative — unconfigured provider must not receive another provider's credentials; persistence — per-provider defaultCache (index.ts:261) isolation",
+      "rollback_or_disable": "Per-provider specialized executor registration overrides the fallback; no global kill-switch for the fallback itself found in source",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P2-005",
+      "name": "Specialized provider executor classes (144 aliases / 119 modules)",
+      "source_refs": [
+        "open-sse/executors/index.ts:31",
+        "open-sse/executors/vertex.ts:1",
+        "open-sse/executors/bedrock.ts:1",
+        "open-sse/executors/claude-web.ts:1",
+        "open-sse/executors/codex.ts:1",
+        "open-sse/executors/auggie.ts:1"
+      ],
+      "purpose": "Provider-specific HTTP dispatch classes for native/quirky upstreams — cloud (bedrock, vertex, azure-openai), web-session (claude-web, gemini-web, chatgpt-web, deepseek-web), CLI/app bridges (auggie, codex-app-server, zcode, devin-cli), and regional providers — each overriding BaseExecutor request/response behavior.",
+      "owner_plane": "provider-adapter",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "medium — per-provider wire behavior incl. cookie/session reuse and fingerprinting; defects are provider-scoped, not systemic",
+      "dependencies": ["open-sse/executors/base.ts", "open-sse/executors/registry.ts registration seam"],
+      "required_authorization": "layer-N",
+      "test_contract": "Layer-N: routed — per-executor contract tests against recorded upstream fixtures (tests/fixtures/* pattern); negative — malformed upstream SSE must surface as provider error, not silent fallback",
+      "rollback_or_disable": "Remove the alias from lazyExecutors (index.ts:30) → provider drops to DefaultExecutor or 400 guard; per-connection disable via dashboard provider toggle [INFERENCE: connection-level disable path not traced this partition]",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P2-006",
+      "name": "TranslatorRegistry — hub-and-spoke format translation engine",
+      "source_refs": [
+        "open-sse/translator/registry.ts:20",
+        "open-sse/translator/registry.ts:35",
+        "open-sse/translator/bootstrap.ts:6",
+        "open-sse/translator/index.ts:306",
+        "open-sse/translator/index.ts:456",
+        "open-sse/translator/index.ts:794",
+        "open-sse/translator/index.ts:864",
+        "open-sse/translator/formats.ts:2"
+      ],
+      "purpose": "Pair-keyed ('from:to') request/response translator maps with side-effect bootstrap registration (9 request + 9 response modules); translateRequest/translateResponse use the direct pair or fall back to hub-and-spoke via OpenAI (index.ts:456, 817); 9 format identifiers (FORMATS, formats.ts:2): openai, openai-responses, openai-response (legacy alias), claude, gemini, codex, antigravity, kiro, cursor.",
+      "owner_plane": "provider-adapter",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "medium — semantic drift in translation corrupts payloads silently; the frozen acceptance corpus exists to catch it (tests/fixtures/translation/*)",
+      "dependencies": ["open-sse/translator/helpers/* (claudeHelper, geminiHelper, schemaCoercion, toolCallHelper)"],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: direct — pair registry lookups for all registered keys; routed — fixture-based translation goldens (tests/fixtures/translation/); negative — unregistered pair must use the OpenAI hub, never invent a mapping",
+      "rollback_or_disable": "needsTranslation (index.ts:864) short-circuits same-format traffic; removing a bootstrap import unregisters that pair — translation then falls through the hub [INFERENCE: no runtime translation kill-switch found]",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P2-007",
+      "name": "OpenAI↔Claude translation adapters",
+      "source_refs": [
+        "open-sse/translator/request/claude-to-openai.ts:557",
+        "open-sse/translator/request/openai-to-claude.ts:832",
+        "open-sse/translator/response/claude-to-openai.ts:405",
+        "open-sse/translator/response/openai-to-claude.ts:545"
+      ],
+      "purpose": "Bidirectional request and streaming-response translation between OpenAI Chat Completions and Anthropic Messages formats, incl. thinking blocks, tool calls, and cache-control handling (helpers/claudeHelper.ts).",
+      "owner_plane": "provider-adapter",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "medium — Anthropic-native semantics (thinking, tool_use) can be lossy in translation; errors are per-request",
+      "dependencies": ["CAP-P2-006 registry", "open-sse/translator/helpers/claudeHelper.ts", "open-sse/translator/helpers/toolCallHelper.ts"],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: routed — fixture goldens for both directions incl. streaming chunks and tool_use; negative — unsupported params stripped per STRIP_RULES, not silently passed",
+      "rollback_or_disable": "Unregister via bootstrap.ts import removal; native Claude-format clients can bypass by targeting a claude-format provider directly",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P2-008",
+      "name": "OpenAI↔Gemini translation adapters",
+      "source_refs": [
+        "open-sse/translator/request/gemini-to-openai.ts:237",
+        "open-sse/translator/request/openai-to-gemini.ts:841",
+        "open-sse/translator/response/gemini-to-openai.ts:820",
+        "open-sse/translator/response/openai-to-gemini.ts:14"
+      ],
+      "purpose": "Bidirectional OpenAI Chat Completions ↔ Google Gemini generateContent translation, incl. SSE response conversion (response/openai-to-gemini-sse.ts) and Gemini tool-schema sanitizing (helpers/geminiToolsSanitizer.ts).",
+      "owner_plane": "provider-adapter",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "medium — schema coercion for Gemini's stricter function-declaration format can drop tool fields",
+      "dependencies": ["CAP-P2-006 registry", "open-sse/translator/helpers/geminiHelper.ts", "open-sse/translator/helpers/schemaCoercion.ts"],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: routed — fixture goldens incl. malformed-function-call recovery (tests/fixtures/translation/gemini-malformed-*); negative — invalid schema must be coerced or rejected, never upstreamed raw",
+      "rollback_or_disable": "Unregister via bootstrap.ts import removal; hub fallback covers indirect paths",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P2-009",
+      "name": "Claude↔Gemini direct translation adapters",
+      "source_refs": [
+        "open-sse/translator/request/claude-to-gemini.ts:322",
+        "open-sse/translator/response/gemini-to-claude.ts:367",
+        "open-sse/translator/response/gemini-to-claude.ts:368"
+      ],
+      "purpose": "Direct Claude→Gemini request and Gemini→Claude response translation (Antigravity→Claude shares the gemini→claude response fn, registered at :368) so Anthropic-format clients can front Gemini upstreams without a double hop through OpenAI format.",
+      "owner_plane": "provider-adapter",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "medium — double-translation semantics (thinking/config mapping) are the most drift-prone of the registered pairs",
+      "dependencies": ["CAP-P2-006 registry", "CAP-P2-007 and CAP-P2-008 helpers"],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: routed — Claude-format request to a Gemini upstream round-trip fixture; negative — hub fallback must NOT engage for this pair (direct registration exists)",
+      "rollback_or_disable": "Unregister via bootstrap.ts; hub-and-spoke via OpenAI then covers the path automatically",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P2-010",
+      "name": "OpenAI Responses API adapters + Responses transformer",
+      "source_refs": [
+        "open-sse/translator/request/openai-responses.ts:895",
+        "open-sse/translator/request/openai-responses.ts:896",
+        "open-sse/translator/response/openai-responses.ts:1464",
+        "open-sse/translator/response/openai-responses.ts:1465",
+        "open-sse/transformer/responsesTransformer.ts:192",
+        "open-sse/utils/streamPayloadCollector.ts:72"
+      ],
+      "purpose": "Bidirectional Chat Completions ↔ Responses API translation (request/response pairs registered both ways), plus the streaming responsesTransformer converting Chat Completions SSE into Responses API SSE for Codex-style clients; legacy 'openai-response' identifier normalized to 'openai-responses' at streamPayloadCollector.ts:72.",
+      "owner_plane": "provider-adapter",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "medium — reasoning/state item semantics (reasoning replay, store markers) are subtle; corruption affects Codex-class clients",
+      "dependencies": ["CAP-P2-006 registry", "open-sse/translator/request/openai-responses/helpers.ts"],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: routed — Responses↔Chat round-trip fixtures incl. streaming item lifecycle; negative — corrupted request_id stripping (transformer threshold 200 chars) must not alter valid payloads",
+      "rollback_or_disable": "Unregister pairs via bootstrap.ts; transformer is engaged only for Responses-format client paths [INFERENCE: engagement condition not fully traced this partition]",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P2-011",
+      "name": "IDE/agent-format adapters (Kiro, Cursor, Antigravity)",
+      "source_refs": [
+        "open-sse/translator/request/openai-to-kiro.ts:1056",
+        "open-sse/translator/request/openai-to-cursor.ts:226",
+        "open-sse/translator/request/antigravity-to-openai.ts:374",
+        "open-sse/translator/request/openai-to-gemini.ts:850",
+        "open-sse/translator/response/kiro-to-openai.ts:211",
+        "open-sse/translator/response/cursor-to-openai.ts:30",
+        "open-sse/translator/response/openai-to-antigravity.ts:145"
+      ],
+      "purpose": "Translation pairs for vendor IDE/agent wire formats: openai→kiro, kiro→openai, openai→cursor, cursor→openai, antigravity→openai (request), openai→antigravity (request at openai-to-gemini.ts:850 and response at openai-to-antigravity.ts:145) — letting those client ecosystems ride the OpenAI hub.",
+      "owner_plane": "provider-adapter",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "medium — vendor-format drift tracks external IDE releases; failures are ecosystem-scoped",
+      "dependencies": ["CAP-P2-006 registry"],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: routed — per-format fixture round-trips; negative — unregistered direction must hub-fallback or error, never passthrough",
+      "rollback_or_disable": "Unregister via bootstrap.ts import removal",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P2-012",
+      "name": "Parameter-support stripping (STRIP_RULES)",
+      "source_refs": [
+        "open-sse/translator/paramSupport.ts:141",
+        "open-sse/translator/paramSupport.ts:251",
+        "open-sse/executors/default.ts:22"
+      ],
+      "purpose": "stripUnsupportedParams() removes request parameters a target provider does not support, driven by a declarative STRIP_RULES table (exported for tests at :251); invoked in the DefaultExecutor dispatch path.",
+      "owner_plane": "provider-adapter",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "medium — over-stripping silently degrades requests (dropped temperature/tools); under-stripping causes upstream 400s",
+      "dependencies": ["CAP-P2-002 REGISTRY entry metadata (supported params)"],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: direct — rule-table unit tests against __STRIP_RULES_FOR_TEST; routed — request to a restricted provider asserts stripped fields absent upstream",
+      "rollback_or_disable": "Rules are data rows in STRIP_RULES; removal restores passthrough for that param/provider pair",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P2-013",
+      "name": "Alternate-format protocol switch per connection",
+      "source_refs": [
+        "open-sse/config/providers/alternateFormats.ts:15",
+        "open-sse/config/providers/shared.ts:229"
+      ],
+      "purpose": "Providers may declare alternate wire protocols on the same host (e.g. OpenAI /v1/chat/completions and Anthropic /anthropic/v1/messages); the choice lives per-connection in providerSpecificData.targetFormat and must match a declared alternative, else the default format is used (alternateFormats.ts header comment).",
+      "owner_plane": "provider-adapter",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "medium — per-connection protocol selection swaps URL+auth headers; a bad match sends credentials under the wrong auth scheme",
+      "dependencies": ["CAP-P2-002 REGISTRY (alternateFormats declarations)", "CAP-P2-014 connection persistence (providerSpecificData)"],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: routed — switch a connection's targetFormat and assert URL/header/auth change; negative — undeclared targetFormat must fall back to default, never produce orphaned URL/auth",
+      "rollback_or_disable": "Reset the connection's providerSpecificData.targetFormat to the default format",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P2-014",
+      "name": "Provider connection persistence (SQLite provider_connections)",
+      "source_refs": [
+        "src/lib/db/providers.ts:242",
+        "src/lib/db/providers.ts:444",
+        "src/lib/db/providers.ts:902",
+        "src/lib/db/providers.ts:1099"
+      ],
+      "purpose": "CRUD + backoff/error state for user-configured provider connections (credentials references, priority, testStatus, providerSpecificData) in the SQLite layer; createProviderConnection at :444, updateProviderConnection at :902, cleanupProviderConnections at :1099.",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "data-plane",
+      "risk_class": "high — connection rows carry API keys/tokens (secret-handling surface) and drive live routing",
+      "dependencies": ["src/lib/db migration chain (provider_* migrations 003-162)", "encryption-at-rest mechanism (P5 partition scope)"],
+      "required_authorization": "layer-N",
+      "test_contract": "Layer-N: persistence — create/read/update/delete round-trip incl. restart survival; negative — secret values must never appear in logs/error strings [INFERENCE: encryption verified by P5, not this partition]",
+      "rollback_or_disable": "DELETE via management API (route.ts:406) removes connections; DB backup/restore per P5 runbooks",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P2-015",
+      "name": "OAuth provider flows (25 oauth-catalog providers)",
+      "source_refs": [
+        "src/lib/oauth/providers.ts:117",
+        "src/lib/oauth/providers.ts:133",
+        "src/shared/constants/providers/oauth.ts:7",
+        "src/app/api/oauth/[provider]/[action]/route.ts:1"
+      ],
+      "purpose": "OAuth authorization flow for catalog OAuth providers (claude, codex, github, cursor, kiro, gemini-business...): getProvider (:117) resolves provider config, generateAuthData (:133) builds auth URLs/state; token refresh consumed by executors via services/tokenRefresh.",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "management-plane",
+      "risk_class": "high — handles user OAuth tokens and redirect URIs; misconfiguration exposes tokens or breaks auth silently",
+      "dependencies": ["open-sse/services/tokenRefresh.ts", "src/app/api/oauth/[provider] route", "CAP-P2-014 persistence"],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N: routed — full auth-code flow against a loopback mock IdP; negative — state/nonce mismatch must abort; persistence — refresh survives restart",
+      "rollback_or_disable": "OAuth providers are optional; removing the connection disables the flow. No global OAuth kill-switch found",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P2-016",
+      "name": "Provider management API + key validation",
+      "source_refs": [
+        "src/app/api/providers/route.ts:49",
+        "src/app/api/providers/route.ts:105",
+        "src/app/api/providers/route.ts:349",
+        "src/app/api/providers/route.ts:406",
+        "src/lib/providers/validation.ts:176",
+        "src/app/api/v1/providers/[provider]/models/route.ts:1"
+      ],
+      "purpose": "Dashboard/management CRUD for providers and connections (GET :49, POST :105, PATCH :349, DELETE :406) with live key validation via validateProviderApiKey (validation.ts:176) and per-provider model listing under /api/v1/providers/[provider]/*.",
+      "owner_plane": "dashboard",
+      "architectural_plane": "management-plane",
+      "risk_class": "high — management endpoints mutate credential-bearing configuration; authN/authZ on these routes is P4 scope, flagged here as the coupling point",
+      "dependencies": ["CAP-P2-014 persistence", "P4 auth guards (not assessed here)"],
+      "required_authorization": "layer-N",
+      "test_contract": "Layer-N: direct — CRUD round-trip via API with auth enforced (P4 contract); negative — unauthenticated request must 401/403; routed — validateProviderApiKey against mock upstream",
+      "rollback_or_disable": "Routes are inherent to the dashboard; operator-level disable = do not expose management plane beyond the LAN boundary (HX exposure rule)",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P2-017",
+      "name": "Compatible provider nodes (operator-added OpenAI/Anthropic/CC-compatible endpoints)",
+      "source_refs": [
+        "src/lib/providers/catalog.ts:222",
+        "src/lib/providers/catalog.ts:251",
+        "src/lib/db/providers.ts:444",
+        "open-sse/services/claudeCodeCompatible.ts:1"
+      ],
+      "purpose": "Operator-defined compatible endpoints (openai-compatible / anthropic-compatible / claude-code-compatible) resolved through resolveCompatibleProviderCatalogEntry (catalog.ts:222) — the mechanism by which arbitrary LAN/self-hosted endpoints (e.g. an HX Ollama OpenAI-compatible server) become routable providers.",
+      "owner_plane": "config",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "medium — arbitrary baseUrl egress (SSRF-adjacent; private-host handling via isPrivateHost import at providerRegistry.ts:16); no upstream ToS risk for LAN endpoints",
+      "dependencies": ["CAP-P2-002 REGISTRY for type defaults", "CAP-P2-004 DefaultExecutor for dispatch", "CAP-P2-014 persistence"],
+      "required_authorization": "layer-N",
+      "test_contract": "Layer-N: routed — add a compatible node pointing at a mock LAN endpoint, assert chat round-trip; negative — private-host/egress rules per P4 must hold",
+      "rollback_or_disable": "Delete the provider node (management API DELETE); traffic stops immediately",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P2-018",
+      "name": "Local providers collection (ollama-local, lm-studio, vllm, llama-cpp + 10 more)",
+      "source_refs": [
+        "src/shared/constants/providers/local.ts:5",
+        "src/shared/constants/providers/local.ts:32",
+        "open-sse/config/ollamaModels.ts:1"
+      ],
+      "purpose": "First-class catalog for 14 local inference servers (ollama-local at local.ts:32, lm-studio, vllm, llama-cpp, triton, docker-model-runner, xinference, oobabooga, mlx-*, comfyui, sdwebui, lemonade, llamafile) with dedicated model-listing support (open-sse/config/ollamaModels.ts).",
+      "owner_plane": "provider-adapter",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "low — loopback/LAN endpoints, no external egress or ToS exposure; availability is the main failure mode",
+      "dependencies": ["CAP-P2-004 DefaultExecutor (OpenAI-compatible locals)", "CAP-P2-017 compatible nodes for custom locals"],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: routed — ollama-local chat + model listing against a live/mock Ollama; negative — server down must trip provider health, not hang requests",
+      "rollback_or_disable": "Remove the connection or leave the provider unconfigured; locals are inert without a reachable server",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P2-019",
+      "name": "Service-kind provider registries (search/audio/image/video/embedding/moderation/ocr/rerank/upscale/music)",
+      "source_refs": [
+        "open-sse/config/searchRegistry.ts:38",
+        "open-sse/config/audioRegistry.ts:1",
+        "open-sse/config/imageRegistry.ts:1",
+        "open-sse/config/videoRegistry.ts:1",
+        "open-sse/config/embeddingRegistry.ts:1",
+        "open-sse/config/moderationRegistry.ts:1",
+        "open-sse/config/ocrRegistry.ts:1",
+        "open-sse/config/rerankRegistry.ts:1",
+        "open-sse/config/upscaleRegistry.ts:1",
+        "open-sse/config/musicRegistry.ts:1"
+      ],
+      "purpose": "Non-chat capability registries: searchRegistry (19 providers, SEARCH_PROVIDERS at :38 — also the source of the chat-path 400 guard), plus audio, image, video, embedding, moderation, ocr, rerank, upscale, music registries defining per-kind provider configs and endpoints.",
+      "owner_plane": "provider-adapter",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "medium — search keys historically leakable to OpenAI endpoint (#10274 comment, executors/index.ts) before the derived guard; per-kind registries are data, defects are kind-scoped",
+      "dependencies": ["CAP-P2-003 executor guards (CHAT_UNSUPPORTED_SEARCH_PROVIDERS derivation)", "per-kind /v1/* handlers (P1 scope)"],
+      "required_authorization": "none",
+      "test_contract": "Layer-N: direct — registry key counts (search=19); negative — every SEARCH_PROVIDERS key must 400 on chat completions; routed — /v1/search round-trip per provider config",
+      "rollback_or_disable": "Registries are data; unused kinds are inert. Guard set auto-derives, so removing a search provider shrinks the guard consistently",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P2-020",
+      "name": "Web-cookie providers + web session contract (35 providers)",
+      "source_refs": [
+        "src/shared/constants/providers/web-cookie.ts:5",
+        "src/lib/providers/webSessionContract.ts:7",
+        "src/lib/providers/webCookieAuth.ts:1",
+        "open-sse/executors/claude-web.ts:1"
+      ],
+      "purpose": "Browser-session/cookie-authenticated providers (claude-web, chatgpt-web, gemini-web, grok-web, deepseek-web...) governed by a versioned WEB_SESSION_CONTRACT (webSessionContract.ts:7) and dedicated web executors; subscription-risk flagged in catalog metadata (riskNoticeVariant).",
+      "owner_plane": "provider-adapter",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "high — rides consumer web sessions against upstream ToS (subscription-risk class in source); session theft or upstream ban are the documented-shaped failures",
+      "dependencies": ["CAP-P2-005 web executors", "src/lib/providers/webCookieAuth.ts", "CAP-P2-014 session persistence"],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N: contract — buildWebSessionContract validates provider set; routed — recorded-fixture web executor behavior only (no live third-party session use without owner approval)",
+      "rollback_or_disable": "Web providers require an imported session to function; absent sessions they are inert. Delete connection/session to disable",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P2-021",
+      "name": "Cloud-agent providers (jules, devin, codex-cloud task APIs)",
+      "source_refs": [
+        "src/shared/constants/providers/cloud-agent.ts:5",
+        "src/shared/constants/providers/cloud-agent.ts:6",
+        "open-sse/executors/index.ts:231"
+      ],
+      "purpose": "Three cloud-agent task-API providers (jules :6, devin :16, plus codex-cloud family) exposed through the Cloud Agents task API rather than chat completions; chat path hard-blocked by the CHAT_UNSUPPORTED_CLOUD_AGENT_PROVIDERS guard (executors/index.ts:231).",
+      "owner_plane": "agent-surface",
+      "architectural_plane": "agent-surface",
+      "risk_class": "high — agent-surface class: delegates task execution to external cloud agents; HX policy keeps agent-like surfaces disabled by default",
+      "dependencies": ["Cloud Agents task API surface (P7 scope)", "CAP-P2-003 guard set"],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N: negative — chat completion to jules must return 400 with the cloud-agent message; contract — task-API surface assessed under P7 before any enablement",
+      "rollback_or_disable": "Disabled by construction for chat; enablement of the task API is a separate owner decision",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P2-022",
+      "name": "Upstream-proxy embedded services + provider plugin seam (cliproxyapi, 9router)",
+      "source_refs": [
+        "src/shared/constants/providers/upstream-proxy.ts:5",
+        "src/lib/services/providerPlugins/registry.ts:20",
+        "open-sse/config/providerPluginManifest.ts:19",
+        "open-sse/config/providerPluginManifestRegistry.ts:8"
+      ],
+      "purpose": "Two embedded upstream-proxy providers (cliproxyapi, 9router — 9router marked isEmbeddedService with riskNoticeVariant 'embedded-service') plus the ServiceProviderPlugin registry (registry.ts:20, currently typed Record<'9router',...> deliberately narrow) and the provider-plugin manifest generator (providerPluginManifest.ts) — the seam toward host.registerProvider-style extensibility.",
+      "owner_plane": "provider-adapter",
+      "architectural_plane": "agent-surface",
+      "risk_class": "high — spawns/manages child processes and embedded services (spawnArgs, ports, health loops); process-spawning surfaces are disabled-by-default per HX policy",
+      "dependencies": ["src/lib/services/installers/ninerouter", "src/lib/services/serviceBackends", "CAP-P2-003 executor entries for cliproxyapi/9router aliases"],
+      "required_authorization": "owner",
+      "test_contract": "Layer-N: contract — plugin registry shape and manifest generation from REGISTRY; negative — no child process may spawn without an explicit operator action [INFERENCE: spawn trigger path not traced this partition]",
+      "rollback_or_disable": "Embedded services run only when installed/enabled by the operator; uninstall/disable via the services surface. Plugin seam is inert with a single registered entry",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P2-023",
+      "name": "ATEM/native protocol adapter",
+      "source_refs": [
+        "open-sse/translator/formats.ts:2"
+      ],
+      "purpose": "Work order asks for an 'ATEM/native' protocol adapter. Searched: case-sensitive whole-word 'ATEM' across src/, open-sse/, packages/, docs/, config/ (grep -rInw) — zero matches; case-insensitive 'atem' sweep returns only substring noise (i18n strings, unrelated identifiers). No ATEM protocol, adapter, or format identifier exists in the corpus. The native (non-OpenAI) protocol paths that DO exist are claude, gemini, codex, antigravity, kiro, cursor (FORMATS, formats.ts:2) covered by CAP-P2-006/007/008/009/010/011.",
+      "owner_plane": "provider-adapter",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "low — absence verified; no capability to assess",
+      "dependencies": [],
+      "required_authorization": "none",
+      "test_contract": "N/A — nothing to prove; re-run the same grep on any future snapshot to confirm continued absence",
+      "rollback_or_disable": "N/A",
+      "preliminary_disposition": "NOT-ESTABLISHED"
+    }
+  ]
+}

@@ -103,7 +103,7 @@ X in a call-sign is always capital** (owner, 2026-08-26).
 | --- | --- | --- | --- | --- | --- |
 | **Qwen-X** | hxs-1 (192.168.50.200) | Deep reasoning & synthesis — Qwen 3.8 27B | `http://192.168.50.200:11434` | `-64k` operating (resident); `-32k` recovery; `-128k` extended | `DOC-backend-qwen-x` (active) |
 | **Coder-X** | hxs-2 (192.168.50.201) | Coding inference — Qwen3.6-27B-A3B CoderX | `http://192.168.50.201:11434` | `hx-qwen3.6-coderx-64k` operating (resident); `-32k` baseline; `-128k` extended (all frozen 2026-08-26, needle-proven) | `DOC-backend-coder-x` (candidate) |
-| **Meta-X** | hxs-3 (192.168.50.202) | Tooling agent — Muse Glimmer 30B | `http://192.168.50.202:11434` | `hx-muse-glimmer-64k` operating (resident); `-32k` baseline; `-128k` extended (all frozen 2026-08-26, needle-proven) | `DOC-backend-meta-x` (candidate) |
+| **Meta-X** | hxs-3 (192.168.50.202) | Tooling agent — Muse Glimmer 30B | `http://192.168.50.202:11434` | `hx-muse-glimmer-64k` operating (resident); `-32k` baseline; `-128k` extended (all frozen 2026-08-26, needle-proven) | `DOC-backend-meta-x` (**ACTIVE**, M8-signed 2026-08-27) |
 | **Chat-X** | hxs-4 (192.168.50.203) | Basic chat utility — Qwen 3.5 9B | loopback-only today (LAN posture per owner decision) | `hx-qwen3.5-9b-64k` default reference; `-32k` baseline (**A-1: needle-proven to 89.5% — thinking-model headroom, not ~95%**); `-128k` extended (frozen 2026-08-26) | `DOC-backend-chat-x` (active — owner-provisioned, not pilot-track) |
 
 `Chat-X` is owner-provisioned and working (2026-08-26): qwen3.5:9b-q4_K_M

@@ -1,0 +1,63 @@
+document:
+  id: "DOC-pilot-omniroute-ev-p7-agent-surfaces"
+  title: "PILOT-OMNIROUTE-LAYER0-001 ledger/P7-agent-surfaces.{md,json} — Wave 0B partition P7 agent-surfaces (60 entries, 227 refs; HIGHEST-RISK copilot LLM driver executes model output as host CLI; control-plane-collision notes per surface)"
+  type: "evidence"
+  declared_purpose: "Wave-0B partition deliverable P7 of WO-OMNI-TRINITY-LEDGER-001 (COMPLETE state log row 20, 2026-08-27T08:55Z): the source-derived capability ledger of OmniRoute v3.8.51's agent-facing surfaces — the disabled-by-default / control-plane-collision partition (every entry carries a collision note — orchestration / catalog / authority / disabled-by-default — inside its purpose field, the schema's 12 keys fixed). Two forms, one artifact: P7-agent-surfaces.json — 60 entries (54 capabilities + 6 NOT-ESTABLISHED), each carrying the packet's 12 schema fields, 227 source refs (34 AVAILABLE-DISABLED / 8 ACTIVE-CANDIDATE / 6 LAB-ONLY / 6 BLOCKED / 6 NOT-ESTABLISHED) — and P7-agent-surfaces.md — the human partition summary (startup receipt, collision breakdown, self-verification). Findings (per the md + state log row 20): collision breakdown — orchestration x9 (Conductor hub, cloud agents, mux installer, ACP spawner, A2A endpoint+task manager x2, MCP write tools, middleware/plugin hook engines x2), catalog x4 (memory engine, memory builtins, SKILL.md corpus, GitHub collector), authority x9 (3 tunnels, MITM, VNC harvest, copilot, OAuth imports, restart, Telegram public ingress CAP-P7-046), disabled-rule gaps x2 — batch-22 corrected totals from the md's own §2 lists (state log row 26, F5; the summary's earlier 8/3/8 undercounted them). HIGHEST-RISK: CAP-P7-053 copilot LLM driver — model output EXECUTES as host CLI commands (src/lib/copilot/tools.ts:4-8), confined only by the LOCAL_ONLY tier (routeGuard.ts:50); runners-up Conductor hub (external hub mirrors tasks into local A2A state) and ACP spawner (children inherit full gateway env). BLOCKED x6 by owner rules: 3 tunnels (LAN-boundary rule), Conductor hub + cloud agents (no-cloud rule), MITM bridge (trust-store/DNS mutation). Layer-1 decision-packet items: disabled-by-default NOT code-enforced for skills execution (no skillsEnabled default) and background jobs (OMNIROUTE_DISABLE_BACKGROUND_SERVICES default-off) — both need explicit deployment settings. Drift: OMNIROUTe_API_KEY env-var typo, agent-card version fallback, '32 scopes' vs 17 measured. Citation contract #3: 1/32 = 3.1% (residual class = file-attribution slips, not offset arithmetic)."
+  inferred_value: "INFERENCE: P7 is the partition that matters most to HX's own architecture — it maps every surface where OmniRoute's agent features would collide with the factory's control plane (KK3 orchestration, this catalog, owner authority), and its BLOCKED-by-owner-rules set is pre-adjudicated: those six entries are decided already, no Layer-1 debate needed."
+  source:
+    author: "trinity (Coder-X bounded execution under the local-model contract)"
+    provided_by: "Kimi-K3 (governor dispatch — Wave-0B closing wave)"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/ledger/ (P7-agent-surfaces.md + P7-agent-surfaces.json)"
+    section: "§whole-document (md + json pair — one artifact, two forms)"
+    ingestion_date: "2026-08-27T09:58:00Z"
+  owner: "trinity"
+  applies_to:
+    hosts: [hxs-2, hxs-5]
+    fqdns: []
+    services: [ollama.service]
+    agents: [trinity, kimi-k3]
+    repositories: [HX-ASF-Servers, tkv-local]
+    environments: [pilot]
+    models: [hx-qwen3.6-coderx-64k]
+  version: "Wave 0B final (2026-08-27, state log row 20)"
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "trinity"
+      note: "partition task COMPLETE 2026-08-27T08:55Z (state log row 20); third citation-contract run (1/32 = 3.1%); Coder-X identity/health PASS (ec9ebe08a824…, size==size_vram, ctx 65536; 2 analysis + 2 metadata calls; corroboration only; 1 citation corrected, 1 finding promoted)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-wo-05-trinity-ledger"
+      note: "commissioning work order (8-partition DAG; P7 designated the disabled-by-default class + control-plane-collision notes per surface) — DISCHARGED by the Wave-0B deliverable set this partition is part of"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-cp-06-trinity-ledger"
+      note: "entry schema (12 fields) + conventions + the owner-ratified §citation_contract_p5_onward"
+    - predicate: "evidences"
+      target: "DOC-tkv-corpus-omniroute"
+      note: "227 source refs into the identity-VERIFIED corpus; her checks 227/227 refs + 45/45 symbol checks; governor spot-check 8/8 (row 20)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-ev-08-capability-ledger"
+      note: "merged into the Wave-0B merged ledger as its P7 part (its contains edge; the partition json+md remain the per-partition source of record)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-state-log"
+      note: "governing log; completion provenance row 20 (2026-08-27T08:55Z)"
+    - predicate: "risks"
+      target: "HX control plane (orchestration / catalog / authority collisions)"
+      note: "the partition's purpose: every entry's collision note maps where an OmniRoute agent surface would duplicate or override factory functions — 6 BLOCKED by standing owner rules (no-cloud, LAN-boundary, no host mutation), 2 disabled-by-default gaps need explicit Layer-1 deployment settings"
+  validation:
+    validated_at: "2026-08-27T14:30:00Z"
+    freshness: "current"
+    review_due: "at Wave 0C (reconciliation packet + Qwen-X independent verification); re-hash on any ledger edit"
+  sha256: "c15a3cbdff74bcae8de617ffa7b18269cec29ac331fcb1cc73e9a4344f0e337a"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/ledger"
+notes:
+  checksum_method: "MULTI-FILE convention (DOC-fleet-script-library pattern): sha256 field = digest of the content-sensitive 2-file manifest ('<sha256>  <filename>' lines for P7-agent-surfaces.json + P7-agent-surfaces.md, LC_ALL=C sort by filename, manifest text digested), captured 2026-08-27T14:25Z. Per-file sha256 at this capture: P7-agent-surfaces.json f7ea1fd15230390b9dee65218540357af46f205d9ed1819eab817f8b7e105add (UNCHANGED since the Wave-0B mint); P7-agent-surfaces.md 0b7ec419799c96d99b3c29cdbf3d8c5e93137c82d211d68115b7b3ad3d02ed57. Manifest-digest chain: df4b65b5… (Wave-0B mint; per-file json f7ea1fd1…, md 39d45a2d…) -> c15a3cbd… (batch-22 md-only amendment, state log row 26 F5+F7; recipe re-verified this run against the unchanged P1 record's mint digest)."
+  corrections_batch22: "Batch-22 amendment (state log row 26, 2026-08-27T14:12Z — governor-applied to the md only; json untouched): F5 — the §10-summary collision totals now read orchestration 9 / catalog 4 / authority 9 with the section's own §2 lists as the counting basis (incl. CAP-P7-046 Telegram public ingress in authority; the 10-line summary's 8/3/8 undercounted its own lists); F7 — BOTH citation-contract baseline chains in the md are now P6-inclusive (P1 21/59 35.6% -> P5 1/25 4.0% -> P6 2/70 ~3% -> P7 1/32 3.1%; VERIFIED PRESENT this run at md lines 227 + 243)."
+  verification_at_mint: "Deterministic recomputation against the live json (2026-08-27T09:56Z, read-only): 60 entries, each exactly the 12 schema fields; 227 source_refs; dispositions 34 AVAILABLE-DISABLED / 8 ACTIVE-CANDIDATE / 6 LAB-ONLY / 6 BLOCKED / 6 NOT-ESTABLISHED (sums 60). Matches the merged ledger's P7 part (60) and the md header (54 capabilities + 6 NOT-ESTABLISHED)."
+  protected_reference: "No protected resource named; no credential content in the artifact or this record (profile §6)."

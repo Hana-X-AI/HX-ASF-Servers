@@ -1,0 +1,83 @@
+document:
+  id: "DOC-fleet-prework-remainder-2026-08-27"
+  title: "2026-08-27-fleet-prework-remainder.md — rick fleet pre-work remainder pass (PASS — 7 of 8 reachable and processed; identity ceremony EXACT-MATCH ×7 with ZERO first-sight acceptances (hxs-6 ALREADY-PINNED-VERIFIED, six PINNED-NEW-VERIFIED); machine-id MATCH ×7; zero changes on every target host; 7 refreshed pre-work records by prepend; F-1 hxs-11 UNREACHABLE, F-2 Secure Boot ENABLED on hxs-6 — explicitly an owner decision, F-3 hxs-10 pre-work hxs-9-prompt-line artifact)"
+  type: "evidence"
+  declared_purpose: "Rick's execution evidence for the governor-commissioned fleet pre-work remainder pass (task rick-fleet-prework-remainder-2026-08-27; commissioned 2026-08-27 per hxs-2 state log row 58, owner-directed; executed READ-ONLY from hxs-5 against hxs-6, hxs-9, hxs-10, hxs-11, hxs-12, hxs-13, hxs-14, hxs-15 — hxs-1..4 excluded as assessed production LLM hosts, hxs-8 done 2026-08-27, hxs-5/20/21 excluded per owner): reachability sweep (7/8; hxs-11 DOWN — ping 100% loss, TCP/22 no route, DNS NXDOMAIN both names), per-host identity ceremony (strict BatchMode probe, live ssh-keyscan fingerprint exact-compared against the owner pre-work console record, pin/verify, strict re-verify — hxs-6 ALREADY-PINNED-VERIFIED, the other six PINNED-NEW-VERIFIED, ZERO first-sight acceptances), hostname + peer IP + machine-id MATCH ×7 vs the discovery records, fleet-inventory + fleet-verify-baseline per host (all seven Ubuntu 24.04.4 LTS kernel 7.0.0-30-generic, 0 failed units, ufw ENABLED=no, sleep targets static, ollama absent, passwordless sudo live; baseline 1 PASS Etc/UTC + 1 REPORT ntp.ubuntu.com per host — the one-source pin stays the owner's per-host call), and 7 refreshed /opt/tkv-local/servers/<host>/pre-work-results.md written refresh-by-prepend (2026-08-27 assessment on top, the original 2026-08-13 human preparation record preserved verbatim below a marker line, prepend integrity verified). Boundary compliance: zero changes on every target host — the only writes anywhere were the six new host-key pins in hxs-5's known_hosts (verified against owner records) and the seven refreshed records. Evidence window 2026-08-27T16:2x-16:31Z. Flags for the governor: F-1 hxs-11 UNREACHABLE (owner to confirm offline/moved, hxs-3 maintenance-move precedent); F-2 Secure Boot ENABLED on hxs-6 live (known fleet state per both discovery records — hxs-6/hxs-7 the only two SB-on hosts — but against the owner standing SB-disabled-always directive 2026-08-24/25; BIOS-level remediation a separate authorized pass, NOT changed, explicitly an owner decision); F-3 hxs-10's pre-work file carries an hxs-9 prompt line in its verbatim raw output (prep-day copy/paste artifact; live identity verified clean; original preserved, flagged not fixed); F-4 informational — the six new pins were new to hxs-5's known_hosts (the 2026-08-13 collector ran elsewhere), all matched owner records exactly. Result: PASS — TASK COMPLETE (7/8 reachable; 1 reported unreachable, never forced)."
+  inferred_value: "INFERENCE: the fleet remainder's verified identity-and-baseline record — every reachable non-LLM host now has its host key pinned against the owner record (no TOFU anywhere in the fleet's remainder), a current live-state snapshot, and a refreshed pre-work record, so future drift on any of the seven is detectable by re-running the same per-host block; its three owner flags are the queue for the owner-disposition wave (hxs-11 investigation, hxs-6/hxs-7 Secure Boot, hxs-10 record hygiene), and its F-4 note closes the question of why six pins were new despite exact-match records."
+  source:
+    author: "Rick (Ubuntu OS plane)"
+    provided_by: "Kimi-K3 (governor dispatch to Carol — prework-registry wave)"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/servers/2026-08-27-fleet-prework-remainder.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-27T17:10:00Z"
+  owner: "rick"
+  applies_to:
+    hosts: [hxs-5, hxs-6, hxs-9, hxs-10, hxs-11, hxs-12, hxs-13, hxs-14, hxs-15]
+    fqdns: []
+    services: [systemd-timesyncd]
+    agents: [rick, kimi-k3]
+    repositories: [HX-ASF-Servers, tkv-local]
+    environments: [fleet]
+    models: []
+  version: "PASS — TASK COMPLETE (7/8 reachable; evidence window 2026-08-27T16:2x-16:31Z)"
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "rick"
+      note: "task rick-fleet-prework-remainder-2026-08-27, commissioned by the governor 2026-08-27 (hxs-2 state log row 58, owner-directed), executed from hxs-5 READ-ONLY everywhere; completion recorded at hxs-2 state log row 59 (2026-08-27T16:35Z)"
+    - predicate: "references"
+      target: "DOC-pilot-hxs2-state-log"
+      note: "governing log: row 58 (2026-08-27T16:20Z — owner advisory roster changes + the bounded read-only commission) and row 59 (2026-08-27T16:35Z — fleet pre-work COMPLETE 7/8 with the three owner flags)"
+    - predicate: "references"
+      target: "DOC-fleet-script-library"
+      note: "the hardened scripts/fleet/ helpers used this pass: fleet-hostkey-pin.sh (identity ceremony), fleet-inventory.sh (--kv harvest), fleet-verify-baseline.sh (server-default class: 1 PASS + 1 REPORT per host)"
+    - predicate: "evidences"
+      target: "DOC-tkv-hxs6-pre-work-results"
+      note: "hxs-6 (.205): ALREADY-PINNED-VERIFIED (entry pre-existing; exact match vs owner record); machine-id MATCH; refreshed refresh-by-prepend THIS pass — re-hashed THIS wave; carries F-2 (Secure Boot ENABLED — owner decision pending)"
+    - predicate: "evidences"
+      target: "DOC-tkv-hxs9-pre-work-results"
+      note: "hxs-9 (.208): PINNED-NEW-VERIFIED; machine-id MATCH; refreshed refresh-by-prepend THIS pass — re-hashed THIS wave"
+    - predicate: "evidences"
+      target: "DOC-tkv-hxs10-pre-work-results"
+      note: "hxs-10 (.209): PINNED-NEW-VERIFIED; machine-id MATCH (4448cf54…); refreshed refresh-by-prepend THIS pass — re-hashed THIS wave; carries F-3 (hxs-9 prompt line in the preserved original's raw output — record hygiene, flagged not fixed)"
+    - predicate: "evidences"
+      target: "DOC-tkv-hxs12-pre-work-results"
+      note: "hxs-12 (.211): PINNED-NEW-VERIFIED; machine-id MATCH; refreshed refresh-by-prepend THIS pass — re-hashed THIS wave"
+    - predicate: "evidences"
+      target: "DOC-tkv-hxs13-pre-work-results"
+      note: "hxs-13 (.212): PINNED-NEW-VERIFIED; machine-id MATCH; refreshed refresh-by-prepend THIS pass — re-hashed THIS wave"
+    - predicate: "evidences"
+      target: "DOC-tkv-hxs14-pre-work-results"
+      note: "hxs-14 (.213): PINNED-NEW-VERIFIED; machine-id MATCH; refreshed refresh-by-prepend THIS pass — re-hashed THIS wave"
+    - predicate: "evidences"
+      target: "DOC-tkv-hxs15-pre-work-results"
+      note: "hxs-15 (.214): PINNED-NEW-VERIFIED; machine-id MATCH; refreshed refresh-by-prepend THIS pass — re-hashed THIS wave"
+    - predicate: "risks"
+      target: "hxs-11"
+      note: "F-1: UNREACHABLE 2026-08-27 — registry/records IP 192.168.50.210 ping 100% loss, TCP/22 'No route to host', getent hxs-11 and hxs-11.hx.local.arpa both NXDOMAIN; reported not forced; owner to confirm offline/moved (hxs-3 maintenance-move precedent); a future attempt needs only a re-run of this pass's per-host block"
+    - predicate: "risks"
+      target: "hxs-6"
+      note: "F-2: Secure Boot ENABLED live (mokutil) — known fleet state (hxs-6/hxs-7 the only two SB-on hosts per both discovery records) but against the owner standing SB-disabled-always directive (2026-08-24/25); NOT changed here — BIOS-level remediation is a separate authorized pass and explicitly an owner decision"
+    - predicate: "risks"
+      target: "hxs-10"
+      note: "F-3: record hygiene — the preserved 2026-08-13 original's verbatim raw output carries an hxs-9 prompt line (prep-day copy/paste artifact); live identity verified clean this pass; original left untouched, flagged not fixed"
+    - predicate: "references"
+      target: "DOC-tkv-server-registry"
+      note: "registry rows confirmed the 192.168.50.20x IP pattern for all eight targets (§5 seq 1); the pass's roster exclusions implement the owner advisory carried in the registry record's notes (roster_advisory_20260827)"
+  validation:
+    validated_at: "2026-08-27T17:10:00Z"
+    freshness: "current"
+    review_due: "on the owner-disposition wave for F-1/F-2/F-3, or the next fleet pre-work / per-host remediation pass"
+  sha256: "f6465a488f0174d6a2a504ed4c68a73d26f0a6ccbc44246b58323ca07cf9388b"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/servers/2026-08-27-fleet-prework-remainder.md"
+notes:
+  typing_convention: "Typed evidence per the rick execution-report precedent (DOC-fleet-time-and-mask-pass; DOC-pilot-hxs2-ev-05-rick-os-readiness class): commissioned scope + per-host summary + flags + ceremony evidence + sanitized sequential command log + validation summary. Status adopted, authority agent-evidence — a completed, point-in-time execution record, not a living runbook."
+  credential_hygiene: "Source §5 documents the askpass-backed FLEET_SSH wrapper discipline (credential read at execution time from the credential-record row; never printed/logged/stored; helpers deleted at end and verified gone) and quotes no credential value; this record quotes none (profile §6; cf. DOC-protected-ssh-info-hxs1 for the protected-resource pattern)."
+  hash_crosscheck: "sha256 f6465a488f0174d6a2a504ed4c68a73d26f0a6ccbc44246b58323ca07cf9388b at mint (2026-08-27T17:10Z) — the first recorded hash for this artifact (hxs-2 state log row 59 records no file hash, same pattern as the other fleet evidence); re-verified == live at this run's close self-check."

@@ -2,7 +2,7 @@ document:
   id: "DOC-agents-roster-readme"
   title: "agents/README.md — agent roster authority and lane model"
   type: "roster"
-  declared_purpose: "Defines the agent roster as the authority on who exists and what they can do; lists current roster (kimi-k3 active Phase M, john, rick, carol active — bounded persistent role per state log row 38), horizontal vs vertical lane types, how to add an agent, and the manual-phase dispatch note."
+  declared_purpose: "Defines the agent roster as the authority on who exists and what they can do; lists current roster (kimi-k3 active Phase M, john, rick, carol active — bounded persistent role per state log row 38, trinity active — owner-ratified 2026-08-27 per KDD-0008 O1), horizontal vs vertical lane types, how to add an agent, and the manual-phase dispatch note."
   inferred_value: "INFERENCE: roster-first rule (from lessons-learned 2026-08-24) makes this the tie-breaker whenever vault profiles conflict with the roster."
   source:
     author: "Kimi-K3 / owner (repository governance)"
@@ -15,7 +15,7 @@ document:
     hosts: []
     fqdns: []
     services: []
-    agents: [kimi-k3, john, rick, carol]
+    agents: [kimi-k3, john, rick, carol, trinity]
     repositories: [HX-ASF-Servers]
     environments: [fleet]
   version: ""
@@ -34,13 +34,16 @@ document:
     - predicate: "references"
       target: "DOC-knowledge-lessons-learned"
       note: "roster-first rule originates from the 2026-08-24 'craig' incident"
+    - predicate: "references"
+      target: "DOC-kdd-0008-trinity-omniroute-adoption"
+      note: "ratification vehicle for the newest row: trinity ADDED at source line 25 (vertical, active — owner-ratified 2026-08-27, KDD-0008 O1 adopt-as-corrected) at the adoption gate 2026-08-27T04:14Z (pilot state log row 5; goal OD-02 closed)"
   validation:
-    validated_at: "2026-08-25T19:08:00Z"
+    validated_at: "2026-08-27T04:56:00Z"
     freshness: "current"
     review_due: "on roster change"
-  sha256: "4fc3714fe601ca8aa13d5ec19743bb3582392fd0ed5b09c96a04d8dccb80cdad"
+  sha256: "749dba85fa4aa40932c55cfee87bb03f2d9eb710e691ec3de0b1a609ac3613f3"
   canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/README.md"
 notes:
   review_batch_update: "2026-08-25 review batch (state log row 33): agent-authority precedence rule made explicit — roster and charters in agents/ outrank any vault profile; within a lane the charter defines ownership."
-  hash_history: "9d215552… (run 1) → ef8b1c1c… (row-33 review batch, validated 05:20Z) → 4fc3714f… (2026-08-25T07:10Z, this run). Latest change: state log row 38 (file mtime 05:44:22Z) — carol's entry updated for the bounded persistent role registration."
+  hash_history: "9d215552… (run 1) → ef8b1c1c… (row-33 review batch, validated 05:20Z) → 4fc3714f… (2026-08-25T07:10Z) → 749dba85… (2026-08-27T04:56Z, this run). Latest change: trinity roster row ADDED at source line 25 (file mtime 2026-08-27T04:14Z) — the governor's adoption-gate edit executing the owner ratification OD-02 O1 ('if so I ratify as corrected (O1). You may proceed.' — owner 2026-08-27, KDD-0008, pilot state log row 5; goal OD-02 closed). Ratification provenance: owner decision → KDD-0008 ratified → roster row + charter/profile flips + re-renders, all at 04:14–04:16Z. The record was hash-stale 04:14Z → this run per the write-race rule (sync queued behind the in-flight 0A wave, state log row 5; 0A receipt 2026-08-27T0441Z flagged it governor-queued)."
   corrections_batch5: "2026-08-25 corrections batch 5: governs note replaced with the ratified precedence rule per agents/README.md lines 12–15 (roster and charters together are the authority on who exists and what they can do and outrank any vault profile; within a lane the charter defines existence and scope; made explicit 2026-08-25) — supersedes the row-33 shorthand 'charters are the authority'. source.section backfilled (§whole-document); validated_at refreshed. Source file unchanged (sha256 stands)."

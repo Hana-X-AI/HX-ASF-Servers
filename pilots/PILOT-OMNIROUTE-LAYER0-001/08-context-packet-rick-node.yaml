@@ -1,0 +1,36 @@
+context_packet:
+  goal_id: "GOAL-OMNIROUTE-L1-SECURE-CORE"
+  goal_version: 1
+  work_order_id: "WO-L1-RICK-NODE-001"
+  session_id: "rick-l1-node-20260827-01"
+  role: "producer (Ubuntu OS plane: rick)"
+  milestone: "L1-M1 — Node runtime + NTP pin on hxs-8"
+  objective: >-
+    hxs-8 gets an engines-compliant, pinned, native Node.js runtime (no snap,
+    no Docker) with the install path chosen on evidence and recorded; the
+    pending one-source NTP pin closes the last fleet divergence.
+  current_state:
+    host: "hxs-8 (192.168.50.207), Ubuntu 24.04.4, kernel 7.0.0-30, boot 2026-08-27T01:40:06Z (maintenance), 46 GiB RAM (32 GB Samsung + 16 GB Micron DDR4, both channels, 2666 MT/s, non-ECC — rick's dmidecode evidence), 437 GB free, 0 failed units"
+    runtime_today: "no node/npm/npx present (readiness evidence); OmniRoute requires engines >=22.22.2 <23 || >=24.0.0 <27 (package.json, verified)"
+    ntp_today: "Etc/UTC timezone, but sourcing time from ntp.ubuntu.com (the one host outside the fleet pin) — the pending F-2 closure"
+    access: "SSH from hxs-5; askpass reads the credential-record row at execution time only; host key pinned (rick's own ceremony, verified against the owner's pre-work record)"
+    frozen_facts: "no Docker/containers/snap anywhere (owner rule); no OmniRoute install/start in this work order; no firewall changes"
+  owner_decisions:
+    - "OD-12 Layer 1 authorized; OD-03 acknowledged; OD-04 native no-docker; one-source NTP fleet rule"
+  constraints:
+    - "Only this scope: the Node toolchain (+ documented prerequisites) and the NTP pin. Nothing else."
+    - "Install path on evidence: official tarball vs NodeSource apt — choose on evidence, record the decision and the exact version pin; snap is rejected out of lane"
+    - "Everything reversible: pre-state hashes, exact steps with hashes, documented inverse"
+    - "No secrets in artifacts; sanitized command log; helpers deleted at task end"
+  evidence_requirements:
+    - "Install-path decision record (options compared, why the chosen one, why not the others)"
+    - "Exact versions (node/npm/npx) + the pin mechanism + engines-range verification output vs package.json"
+    - "Smoke: node --version, npm --version, node -e eval with no write effects"
+    - "Pre/post hashes (node presence before/after, timesyncd.conf diff)"
+    - "NTP: current server + synchronized state after the pin"
+    - "Documented inverse for every change; sanitized sequential command log"
+  consulted_records:
+    - "04-rick-hxs8-readiness.md (host state); servers/hxs-8/discovery.md (identity); fleet-time-and-mask-pass.md (the pin pattern); scripts/fleet/fleet-ntp-pin.sh (your own tool, --apply allowed here under this work order)"
+  handoff:
+    - "Deliverable 01-rick-l1-node-runtime.md goes to Carol for catalog receipt; handoff OPEN until the receipt is cited in the pilot state log; Trinity's install work order follows your runtime landing"
+  second_brain_evaluation: "Per the work order — the repeatable runtime recipe"

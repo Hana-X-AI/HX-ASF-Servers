@@ -1,0 +1,59 @@
+document:
+  id: "DOC-pilot-omniroute-ev-p3-tools-streaming"
+  title: "PILOT-OMNIROUTE-LAYER0-001 ledger/P3-tools-streaming.{md,json} — Wave 0B partition P3 tools/streaming (26 entries, 106 refs; full tool-call pipeline + SSE core + usage accounting; dormant toolPolicy engine zero call sites)"
+  type: "evidence"
+  declared_purpose: "Wave-0B partition deliverable P3 of WO-OMNI-TRINITY-LEDGER-001 (COMPLETE state log row 15, 2026-08-27T07:22Z): the source-derived capability ledger of OmniRoute v3.8.51's tool-calling pipeline, streaming core, and usage accounting. Two forms, one artifact: P3-tools-streaming.json — 26 entries (CAP-P3-*), each carrying the packet's 12 schema fields, 106 source refs (20 ACTIVE-CANDIDATE / 2 AVAILABLE-DISABLED / 1 LAB-ONLY / 3 NOT-ESTABLISHED) — and P3-tools-streaming.md — the human partition summary (startup receipt, pipeline/streaming/accounting analysis, scope-sweep note, self-verification). Findings (per the md + state log row 15): full tool-call pipeline evidenced (capability gate, shape normalization, name-alias ledger with streaming restore, id/result repair, byte-exact streamed-argument assembly, per-target structured-output translation with documented provider downgrades); streaming core (unified SSE transform with per-format DONE suppression, abort bridging with disconnect-vs-deadline discrimination, grace-period 499 guard, credential-leak-refusing 4xx passthrough, finish-reason mapping that never collapses aborted tool calls to stop); usage accounting (cache/thoughts folding, billing-field hygiene, SQLite persistence with dedup, double-write on pre-dispatch rejections). Latent discovery: src/lib/toolPolicy.ts allowlist/denylist engine DORMANT — zero call sites (AVAILABLE-DISABLED; a real capability for the Layer-2 decision). NOT-ESTABLISHED: ATEM-shaped handling (second partition corroborating zero ATEM corpus-wide); SSE Last-Event-ID resume; decoy tool cloaking (removed upstream v3.8.49, recorded against doc-drift resurrection)."
+  inferred_value: "INFERENCE: P3 is the agent-interop partition — the tool-call repair/assembly and abort-discrimination semantics are exactly the behaviors HX's agent lanes would depend on through any gateway, and the dormant toolPolicy engine is a pre-found policy-enforcement option for the Layer-2 decision that no doc scan would have surfaced."
+  source:
+    author: "trinity (Coder-X bounded execution under the local-model contract)"
+    provided_by: "Kimi-K3 (governor dispatch — Wave-0B closing wave)"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/ledger/ (P3-tools-streaming.md + P3-tools-streaming.json)"
+    section: "§whole-document (md + json pair — one artifact, two forms)"
+    ingestion_date: "2026-08-27T09:58:00Z"
+  owner: "trinity"
+  applies_to:
+    hosts: [hxs-2, hxs-5]
+    fqdns: []
+    services: [ollama.service]
+    agents: [trinity, kimi-k3]
+    repositories: [HX-ASF-Servers, tkv-local]
+    environments: [pilot]
+    models: [hx-qwen3.6-coderx-64k]
+  version: "Wave 0B final (2026-08-27, state log row 15)"
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "trinity"
+      note: "partition task COMPLETE 2026-08-27T07:22Z (state log row 15); Coder-X 2 bounded calls, one flagged gap (tool_choice) REFUTED deterministically at toResponses.ts:359; pre-citation-contract partition (baseline shape by design, row 14)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-wo-05-trinity-ledger"
+      note: "commissioning work order (8-partition DAG, per-task contract, acceptance criteria) — DISCHARGED by the Wave-0B deliverable set this partition is part of"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-cp-06-trinity-ledger"
+      note: "entry schema (12 fields) + conventions"
+    - predicate: "evidences"
+      target: "DOC-tkv-corpus-omniroute"
+      note: "106 source refs into the identity-VERIFIED corpus; her checks 106/106 refs exist + 99/99 symbol-at-line; governor spot-check 8/8 (row 15)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-ev-08-capability-ledger"
+      note: "merged into the Wave-0B merged ledger as its P3 part (its contains edge; the partition json+md remain the per-partition source of record)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-state-log"
+      note: "governing log; completion provenance row 15 (2026-08-27T07:22Z)"
+  validation:
+    validated_at: "2026-08-27T09:58:00Z"
+    freshness: "current"
+    review_due: "at Wave 0C (reconciliation packet + Qwen-X independent verification); re-hash on any ledger edit"
+  sha256: "99ea59920b4de5ba0ee63cd1e2a4918ad124d1f458eac322092443f58fc67a82"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/ledger"
+notes:
+  checksum_method: "MULTI-FILE convention (DOC-fleet-script-library pattern): sha256 field = digest of the content-sensitive 2-file manifest ('<sha256>  <filename>' lines for P3-tools-streaming.json + P3-tools-streaming.md, LC_ALL=C sort, manifest text digested), captured 2026-08-27T09:56Z. Per-file sha256 at mint: P3-tools-streaming.json 0744facca12e2ee1fadff40aaa26b8a040f89f8cc62d781178a35b78a7ae82a2; P3-tools-streaming.md 50dc446616dc772d540e16c0ea8075e1890bdfdea6bc3a6fea2dae00217c6e40."
+  verification_at_mint: "Deterministic recomputation against the live json (2026-08-27T09:56Z, read-only): 26 entries, each exactly the 12 schema fields; 106 source_refs; dispositions 20 ACTIVE-CANDIDATE / 2 AVAILABLE-DISABLED / 1 LAB-ONLY / 3 NOT-ESTABLISHED (sums 26). Matches the merged ledger's P3 part (26) and the md header/self-verification (26/26 entries x12 fields PASS)."
+  protected_reference: "No protected resource named; no credential content in the artifact or this record (profile §6)."

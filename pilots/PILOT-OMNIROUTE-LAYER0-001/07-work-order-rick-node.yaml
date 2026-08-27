@@ -1,0 +1,42 @@
+work_order:
+  task_id: "WO-L1-RICK-NODE-001"
+  parent_goal: "GOAL-OMNIROUTE-L1-SECURE-CORE"
+  goal_file: "goals/2026-08-27-omniroute-layer1-secure-core.md"
+  milestone: "L1-M1 — engines-compliant Node runtime on hxs-8 (+ the pending NTP pin)"
+  assigned_agent: "rick (Ubuntu OS plane)"
+  objective: >-
+    Give hxs-8 an engines-compliant Node.js runtime for OmniRoute
+    (required: >=22.22.2 <23 || >=24.0.0 <27, verified against v3.8.51
+    package.json) as a clean, pinned, native installation — no snap, no
+    Docker, no containers — with the install path chosen on evidence and
+    recorded for repeatability; and close the pending fleet item by pinning
+    hxs-8's NTP source to time.cloudflare.com (the owner's one-source rule).
+  owner_authorizations:
+    - "OD-12 Layer 1 authorized 2026-08-27; OD-03 readiness acknowledged"
+    - "OD-04 native systemd service; never Docker (owner rule)"
+    - "hxs-8 NTP one-source pin (owner's standing fleet rule; the F-2 carry from the fleet pass)"
+    - "NOT authorized: Docker/containers/snap, package installs beyond the Node toolchain and its documented prerequisites, firewall changes, any OmniRoute installation/start (Trinity's separate work order), any backend changes"
+  boundaries:
+    - "Execution path: session on hxs-5; hxs-8 (192.168.50.207) via SSH hxsa@192.168.50.207; askpass helper READS the credential from the credential-record row at execution time — never printed/logged/stored, helper deleted at task end; verify hostname + peer IP + machine-id against servers/hxs-8/discovery.md first; host key pinned (your own pinning ceremony from the readiness run)"
+    - "Install path decision on evidence: evaluate (a) official nodejs.org binary tarball (pinned, no repo added), (b) NodeSource apt repo (22 LTS), (c) snap — REJECTED (out-of-lane surface); pick the cleanest native, pinned, repeatable path and record why; pin the exact version (record it) within the engines range"
+    - "No Docker/containers/snap anywhere; no OmniRoute install or start; no other package installs; no firewall changes; no service changes beyond the NTP pin"
+    - "Everything versioned and reversible: pre-state captures (which node/npm/npx versions existed — expect absent; timesyncd.conf hash), the exact install steps with hashes, and a documented inverse for every change"
+  ntp_pin:
+    - "Apply the proven fleet pattern (scripts/fleet/fleet-ntp-pin.sh --apply may be used, or the manual staged pattern): /etc/systemd/systemd-timesyncd.conf -> NTP=time.cloudflare.com with FallbackNTP empty; daemon-reload + restart systemd-timesyncd only; verify current server + synchronized"
+  deliverable: "01-rick-l1-node-runtime.md in pilots/PILOT-OMNIROUTE-LAYER0-001/: install-path decision with evidence (why this path, why not the others), exact versions recorded (node/npm/npx + how pinned), engines-range verification vs package.json, runtime smoke (node --version, npm --version, a no-write node -e eval), pre/post hashes, the NTP pin evidence (config diff + current server + synchronized), the documented inverse, sanitized sequential command log, Task May Proceed receipt"
+  second_brain_evaluation:
+    opportunity_identified: "yes"
+    roadmap_capability_or_pattern: "engines-compliant runtime as a versioned, repeatable recipe — becomes the fleet pattern for future service runtimes"
+    disposition: "implemented — the install path + version pin become catalog content at handoff"
+    evidence_and_reasoning: "every future runtime install should be this recipe, not a re-derivation"
+  controlling_sources:
+    - "08-context-packet-rick-node.yaml (the paired context packet)"
+    - "04-rick-hxs8-readiness.md (the host's verified state)"
+    - "servers/BLUEPRINT-llm-server.md (native-service conventions)"
+    - "fleet-time-and-mask-pass.md (the proven NTP pin pattern)"
+    - "/opt/tkv-local/OmniRoute-release-v3.8.51/package.json (engines source of truth, READ-ONLY)"
+  budgets:
+    sessions: 1
+    transient_retry: 1
+  stop_conditions: "no clean native path exists within engines range (escalate, do not force snap/docker); unexpected host state vs the readiness baseline (re-verify first); any requirement to exceed scope (profile section 13 escalation)"
+  rollback_or_containment: "documented inverse for every change (path removal for a tarball install, package purge + repo-file removal for an apt path, timesyncd.conf restore); pre-state hashes recorded"

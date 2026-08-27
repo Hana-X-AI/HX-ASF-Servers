@@ -1,0 +1,60 @@
+document:
+  id: "DOC-pilot-omniroute-ev-p1-api-routing"
+  title: "PILOT-OMNIROUTE-LAYER0-001 ledger/P1-api-routing.{md,json} — Wave 0B partition P1 API/routing (42 entries, 59 refs; 688 route.ts files / 102 top-level domains; 19 public strategies VERIFIED EXACTLY + 1 internal quota-share)"
+  type: "evidence"
+  declared_purpose: "Wave-0B partition deliverable P1 of WO-OMNI-TRINITY-LEDGER-001 (COMPLETE state log row 13, 2026-08-27T06:58Z): the source-derived capability ledger of OmniRoute v3.8.51's API surface and routing plane. Two forms, one artifact: P1-api-routing.json — 42 entries (CAP-P1-001..042 + NOT-ESTABLISHED ids), each carrying the packet's 12 schema fields, 59 source refs — and P1-api-routing.md — the human partition summary (startup receipt, API-surface analysis, self-verification, batch-19 field-count addendum). Findings (per the md + state log row 13): the entire HTTP API is Next.js 16 App Router file-system registration — 688 route.ts files across 102 top-level domains; /api/v1 (98 routes) OpenAI-compatible traffic plane vs ~100 requireManagementAuth-gated management domains; JSON 404 catch-alls verified; no global middleware, no central route registry (NOT-ESTABLISHED x4 honest — REFINED by P4's proxy.ts finding, cross-partition refinement labeled); strategy count VERIFIED EXACTLY 19 public (ROUTING_STRATEGY_VALUES, routingStrategies.ts:1-21) + HANDLED_COMBO_STRATEGIES 20 dispatch implementations (19 public + internal quota-share), all 20 ledgered individually; docs drift labeled (open-sse/services/AGENTS.md says 17 STALE; root AGENTS.md + AUTO-COMBO.md say 19; source outranks); adjacent enums ledgered (8-name auto-router enum -> 5 RouterStrategy classes with eco->cost/fast->latency aliases; 9 account-fallback orderings)."
+  inferred_value: "INFERENCE: P1 is the ledger's map of every later partition's territory — the 102-domain route inventory and the exact 19-strategy count are the baseline any Wave-0C reconciliation or Layer-1 exposure decision diffs against; its batch-19 addendum is also the live example of the append-only correction convention applied to a deliverable (historical '11' claim preserved, labeled correction carries the 12-key truth)."
+  source:
+    author: "trinity (Coder-X bounded execution under the local-model contract)"
+    provided_by: "Kimi-K3 (governor dispatch — Wave-0B closing wave)"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/ledger/ (P1-api-routing.md + P1-api-routing.json)"
+    section: "§whole-document (md + json pair — one artifact, two forms)"
+    ingestion_date: "2026-08-27T09:58:00Z"
+  owner: "trinity"
+  applies_to:
+    hosts: [hxs-2, hxs-5]
+    fqdns: []
+    services: [ollama.service]
+    agents: [trinity, kimi-k3]
+    repositories: [HX-ASF-Servers, tkv-local]
+    environments: [pilot]
+    models: [hx-qwen3.6-coderx-64k]
+  version: "Wave 0B final (2026-08-27, state log row 13; batch-19 addendum appended)"
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "trinity"
+      note: "partition task COMPLETE 2026-08-27T06:58Z (state log row 13); Coder-X model contract honored (identity verified pre-call ec9ebe08a824…, resident, ctx 65536; 7 generate + 4 metadata calls; think:false correction for the reasoning-model empty-response class disclosed); 21 of Coder-X's drafted line numbers were wrong (excerpt-offset) — her deterministic check caught and corrected ALL to verified lines before writing (the producer!=verifier contract working)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-wo-05-trinity-ledger"
+      note: "commissioning work order (8-partition DAG, per-task contract, acceptance criteria) — DISCHARGED by the Wave-0B deliverable set this partition is part of"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-cp-06-trinity-ledger"
+      note: "entry schema (12 fields) + conventions (stable CAP-P1-<nnn> ids; NOT-ESTABLISHED honest; corpus-root-relative refs) — pre-citation-contract partition (baseline shape by design, state log row 14)"
+    - predicate: "evidences"
+      target: "DOC-tkv-corpus-omniroute"
+      note: "59 source refs into the identity-VERIFIED corpus; her deterministic self-check 42/42 entries x12 fields + all refs exist; governor spot-check 8/8 sampled refs verified at file:line (row 13)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-ev-08-capability-ledger"
+      note: "merged into the Wave-0B merged ledger as its P1 part (its contains edge; the partition json+md remain the per-partition source of record)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-state-log"
+      note: "governing log; completion provenance row 13 (2026-08-27T06:58Z)"
+  validation:
+    validated_at: "2026-08-27T09:58:00Z"
+    freshness: "current"
+    review_due: "at Wave 0C (reconciliation packet + Qwen-X independent verification); re-hash on any ledger edit"
+  sha256: "e819001ca3483e4b2f0b076f20f333b1692b93851925a84cabd495c55796abd6"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/ledger"
+notes:
+  checksum_method: "MULTI-FILE convention (DOC-fleet-script-library pattern): sha256 field = digest of the content-sensitive 2-file manifest ('<sha256>  <filename>' lines for P1-api-routing.json + P1-api-routing.md, LC_ALL=C sort, manifest text digested), captured 2026-08-27T09:56Z. Per-file sha256 at mint: P1-api-routing.json ca2e2dd1adcfc8bb2e3eb959f192645fd7a176d9d0657e41a52e5e3fb9126f6d; P1-api-routing.md f312f7a13e56b4e42bce0e707d1d0c68d538f48b53a149c4572bc39bd439f6db."
+  verification_at_mint: "Deterministic recomputation against the live json (2026-08-27T09:56Z, read-only): 42 entries, each exactly the 12 schema fields; 59 source_refs; dispositions 35 ACTIVE-CANDIDATE / 3 AVAILABLE-DISABLED / 4 NOT-ESTABLISHED (sums 42). Matches the merged ledger's P1 part (42) and the md header."
+  corrections_carried: "Batch-19 labeled addendum appended to the md (VERIFIED PRESENT at mint, tail of file): the header certification line's '11 schema fields' is a wording error — the packet's entry_schema always carried 12 keys and every entry carries all 12 (governor deterministic key-count PASS, field-count-revalidation-2026-08-27.txt); the historical '11' claim is preserved per the append-only convention and the addendum is the current resolution. Reviewed-at line: 2026-08-27T06:53Z."
+  protected_reference: "No protected resource named; no credential content in the artifact or this record (profile §6)."

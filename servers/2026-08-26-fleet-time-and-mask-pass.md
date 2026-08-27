@@ -203,3 +203,46 @@ Staging-file disposal: each apply command chained `install && rm -f /tmp/timesyn
 - **Handoff note:** per repo governance this material handoff requires Carol's catalog receipt; dispatch is the governor's lane. No git commit performed (owner gate: commits happen in governor waves).
 
 `PASS — TASK COMPLETE`
+
+---
+
+## Addendum — hxs-4 mask alignment (owner-authorized 2026-08-27)
+
+| Field | Value |
+| --- | --- |
+| Commission | Follow-up work order via governor, 2026-08-27: F-1 (above) owner-authorized for execution |
+| Target | hxs-4 (192.168.50.203) ONLY |
+| Authorized change (verbatim) | `sudo systemctl mask suspend.target hibernate.target hybrid-sleep.target suspend-then-hibernate.target` |
+| Boundaries | No packages, no reboots, no other units, no firewall, no endpoint changes; Chat-X parked posture otherwise untouched |
+| Result | **PASS** — F-1 closed |
+
+**Startup re-check:** knowledge directory `/opt/tkv-local/ubuntu` and credential record re-confirmed present at 2026-08-27T01:39:58Z; prior Knowledge Review Receipt (Section 1) stands — same release (Ubuntu 24.04.4 LTS, kernel 7.0.0-30-generic, proven live below), same configuration owner (systemd unit masks), same authority chain plus the 2026-08-27 owner authorization. Askpass/ssh helpers re-created (identical execution-time-only design), host identity re-verified live at 01:40:15Z: `host=hxs-4`, peer `192.168.50.203`, machine-id `a3244b92b98448ad83da8ecad6511889` (matches `servers/hxs-4/discovery.md`), pinned host key enforced.
+
+**Before (2026-08-27T01:40:15Z):** all five sleep-family targets `static` (unmasked) — suspend, hibernate, hybrid-sleep, suspend-then-hibernate, sleep; no mask symlinks under `/etc/systemd/system/` (only stock `*.target.wants` dirs, the same pre-change shape hxs-1/hxs-3 exhibited); ollama `curl -sS -m 5 localhost:11434/api/version` → `{"version":"0.32.15"}` (probe run on hxs-4; it is loopback-only); 0 failed units.
+
+**Change:** the authorized command ran at **2026-08-27T01:40:43Z** (hxs-4 clock; hxs-5 clock agrees), exit 0. systemd output: `Created symlink` → `/dev/null` for each of the four targets.
+
+**After (2026-08-27T01:40:57Z):**
+
+- `is-enabled` per target: suspend **masked**, hibernate **masked**, hybrid-sleep **masked**, suspend-then-hibernate **masked**;
+- symlinks verified: `/etc/systemd/system/{suspend,hibernate,hybrid-sleep,suspend-then-hibernate}.target -> /dev/null` (root root, mtime 01:40 = change time);
+- final `systemctl list-unit-files | grep -E 'suspend|hibernate|sleep'`: `hibernate.target masked`, `hybrid-sleep.target masked`, `suspend-then-hibernate.target masked`, `suspend.target masked`, `sleep.target static` — hxs-4 now carries the exact proven hxs-1/hxs-3 set (sleep.target untouched, matching those hosts; hxs-2's extra `sleep.target` mask remains its documented harmless superset);
+- ollama after: `{"version":"0.32.15"}` — undisturbed;
+- 0 failed units; uptime 1 day 9 h 17 m (no reboot).
+
+**Fleet mask posture after this addendum:** all four LLM hosts masked on the proven 4-target set; hxs-2 additionally masks `sleep.target` (superset, previously noted). F-1 is closed.
+
+**Command log (sanitized; all remote commands as hxsa@hxs-4, independent fresh SSH sessions, password via execution-time askpass only; A1 and A6 ran LOCALLY on hxs-5 — credential-helper lifecycle only, no remote contact):**
+
+| Seq | Timestamp (UTC) | Command | Exit |
+| ---: | --- | --- | ---: |
+| A1 | 01:39:58 | hxs-5: re-check knowledge dir + credential record; create helpers (mode 700); extraction smoke test `\| wc -c` → 10 | 0 |
+| A2 | 01:40:15 | hxs-4: identity (hostname/peer/machine-id); os-release/kernel; masks before; symlink listing; ollama before; failed units | 0 |
+| A3 | 01:40:1x | hxs-4: sudo pre-flight (`sudo -S true`) → SUDO_OK | 0 |
+| A4 | 01:40:43 | hxs-4: **MUTATION** `sudo -S systemctl mask suspend.target hibernate.target hybrid-sleep.target suspend-then-hibernate.target` | 0 |
+| A5 | 01:40:57 | hxs-4: is-enabled ×4; symlink listing; final list-unit-files; ollama after; failed; uptime | 0 |
+| A6 | 01:41:3x | hxs-5: `rm -f` both helpers; `ls` verify absent | 0 |
+
+**Rollback (exact inverse, ready, not needed):** `sudo systemctl unmask suspend.target hibernate.target hybrid-sleep.target suspend-then-hibernate.target` — restores the captured before-state (all `static`, no mask symlinks) exactly. Persistence: mask symlinks are on-disk state, effective immediately and at boot; no reboot performed or required.
+
+**Validation:** every commissioned check PASS (is-enabled ×4, symlinks ×4, final list-unit-files, ollama before/after identical). Failed/blocked/not-run: none. No other state on hxs-4 was modified; Chat-X's parked posture (preload/persistence/LAN) is untouched. Original document body above this addendum is preserved unchanged per the records contract (a governor-lane correction to the Section 9 probe count, landed 2026-08-27T00:58Z, is retained as-is). No git commit (governor wave follows). Helpers deleted and verified absent (A6). Credential value appears nowhere in this record.

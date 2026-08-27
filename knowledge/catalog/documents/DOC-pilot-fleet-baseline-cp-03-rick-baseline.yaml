@@ -1,0 +1,60 @@
+document:
+  id: "DOC-pilot-fleet-baseline-cp-03-rick-baseline"
+  title: "03-context-packet-rick-baseline.yaml — CP-03-fleet-baseline (execution-time facts for session rick-fleet-baseline-20260827-01: topology, standard summary, proven patterns, known host notes, output contract; DISCHARGED — BASELINE COMPLETE, state log row 3, 2026-08-27T20:28Z)"
+  type: "context-packet"
+  declared_purpose: "Session-binding packet pairing 02-work-order-rick-baseline.yaml (execution-time facts rick needs in-context). fleet_topology: 192.168.50.0/24, host .N = 199+N (hxs-6=.205 … hxs-15=.214); all Ubuntu 24.04 LTS, one admin user hxsa; ssh from hxs-5 with pinned host keys (StrictHostKeyChecking=yes); askpass supplies the credential at execution time. standard_summary: fleet-standard.yaml v0.1 — fresh hosts class server-default, the five re-verify hosts llm-host (hxs-8 server-default), posture already proven 08-26/08-27; one timezone (Etc/UTC), one NTP source (time.cloudflare.com), 4-target sleep mask set, no host firewalls (owner rule), Secure Boot posture per owner standing directive (record, never change). proven_patterns: ntp_pin — fleet-ntp-pin.sh <host> --apply (mktemp staging on the remote, diff reviewed, timesyncd restart only; proven ×5 2026-08-26/27, byte-identical timesyncd.conf sha256 e2b94d4b…); sleep_mask — the 4-target set, align drift only; selftest — fleet-selftest.sh must stay green (42-check battery incl. the hostile-path refusal matrix); evidence_doc — mirror servers/2026-08-26-fleet-time-and-mask-pass.md (per-host verdicts + full command log). known_host_notes: hxs-6 Secure Boot ENABLED (owner flag; RECORD ONLY; briefly DOWN 2026-08-24, recovered — confirm reachability first); hxs-9 PostgreSQL + Redis host (if services live, timesyncd restart still safe; anything beyond the two sanctioned classes -> skip + REPORT); hxs-10 Open WebUI host (same caution rule); hxs-11 SKIP (owner flag unreachable); hxs-12/13/14/15 per registry roles. secrets_reminder: NO credential value in any command echo, artifact, log, receipt, or model context; askpass helper 0700 deleted at end; the literal-credential sweep is governor-only. output_contract: per host one verdict line (PASS/REPORT/FAIL + one-line evidence) in the final summary; REPORT always names the declared direction (what owner decision or later pass would close it)."
+  inferred_value: "INFERENCE: the packet pre-stages the fleet's execution truth so the session never re-derives it — the .N=199+N mapping, the per-host caution register (SB record-only, workload-host caution, the hxs-11 skip), and the proven-×5 NTP pin pattern — and its output_contract is what makes the wave's 12-verdict summary auditable at a glance; the standard_summary's report-level NTP posture is a point-in-time statement superseded by the row-3 F-4 amendment (the packet itself is a preserved execution artifact)."
+  source:
+    author: "Kimi-K3 (governor)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-FLEET-BASELINE-001/03-context-packet-rick-baseline.yaml"
+    section: "§whole-document"
+    ingestion_date: "2026-08-27T20:42:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: [hxs-1, hxs-2, hxs-3, hxs-4, hxs-5, hxs-6, hxs-8, hxs-9, hxs-10, hxs-12, hxs-13, hxs-14, hxs-15]
+    fqdns: []
+    services: [systemd-timesyncd]
+    agents: [rick, kimi-k3]
+    repositories: [HX-ASF-Servers, tkv-local]
+    environments: [pilot, fleet]
+    models: []
+  version: ""
+  status: "adopted"
+  authority_level: "delegated-contract"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "kimi-k3"
+      note: "issued with the paired work order at fleet pilot state log row 1 (2026-08-27T19:40Z); session rick-fleet-baseline-20260827-01"
+    - predicate: "references"
+      target: "DOC-pilot-fleet-baseline-wo-02-rick-baseline"
+      note: "paired work order WO-02-fleet-baseline (scope, tasks per host class, boundaries, acceptance) — cataloged THIS wave, DISCHARGED at mint with this packet"
+    - predicate: "depends_on"
+      target: "DOC-goal-fleet-baseline-deployment"
+      note: "goal binding (owner directive GO 2026-08-27; owner-sequenced FIRST before OmniRoute L1-M3 closure) — cataloged THIS wave"
+    - predicate: "references"
+      target: "DOC-pilot-fleet-baseline-state-log"
+      note: "governing log; the handoff CLOSES when this run's receipt is cited there (profile §7)"
+    - predicate: "references"
+      target: "DOC-fleet-script-library"
+      note: "standard_summary's source: fleet-standard.yaml v0.1 at packet time — AMENDED at state log row 3 per rick's F-4 (the packet's report-level NTP summary for server-default is superseded; the amended standard is on the library record, re-hashed THIS wave)"
+    - predicate: "governs"
+      target: "DOC-fleet-baseline-wave-2026-08-27"
+      note: "output contract satisfied by the deliverable servers/2026-08-27-fleet-baseline-wave.md (per-host verdict lines 10 PASS + 2 REPORT with declared closing directions + 0 FAIL; full command log) — minted at the discharged state with the WO (the deliverable landed before cataloging)"
+  validation:
+    validated_at: "2026-08-27T20:42:00Z"
+    freshness: "current"
+    review_due: "DISCHARGED 2026-08-27 (BASELINE COMPLETE, state log row 3); the handoff CLOSES when this run's receipt is cited in the fleet pilot state log (profile §7)"
+  sha256: "59f08740a3b88af61a99de0d117ab14ddec74e8d048f739262d18cbb6973e2e7"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-FLEET-BASELINE-001/03-context-packet-rick-baseline.yaml"
+notes:
+  status_convention: "MINTED ALREADY-DISCHARGED (status adopted) with the paired WO per the wo-07 variant: the wave completed before cataloging (deliverable at row 2, 20:19Z; receipt + F-4 amendment at row 3, 20:28Z); the in-execution state never entered the catalog; the governs edge to the deliverable is minted in place."
+  hash_crosscheck: "sha256 59f08740a3b88af61a99de0d117ab14ddec74e8d048f739262d18cbb6973e2e7 at mint (2026-08-27T20:3xZ) — first recorded hash for this artifact; re-verified == live at this run's close self-check."
+  content_currency_note: "The packet's standard_summary reflects fleet-standard.yaml v0.1 at packet time (server-default NTP at report level, no sleep rules on the class); the F-4 amendment at state log row 3 (2026-08-27T20:28Z) lifted NTP to enforce and added the 4-target mask enforce on server-default — the packet is a point-in-time execution artifact and is preserved as-written (living-document doctrine: corrections land in the log and the standards record, not by rewriting execution artifacts)."
+  protected_reference: "The secrets reminder restates the mechanism-only discipline (askpass helper 0700, deleted at end; no credential value in any echo/artifact/log/receipt/model context) — no protected resource is named and no credential content appears (profile §6)."

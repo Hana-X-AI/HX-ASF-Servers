@@ -1,0 +1,77 @@
+document:
+  id: "DOC-pilot-omniroute-intent-authority-source-register"
+  title: "PILOT-OMNIROUTE-LAYER0-001 02-intent-authority-source-register.md — intent/authority receipt + authoritative source register (Wave 0A)"
+  type: "evidence"
+  declared_purpose: "Wave 0A intent and authority receipt plus the authoritative source register for the OmniRoute Layer 0 program (governor Kimi-K3, 2026-08-27; truth-state labels FACT / AUTHORITY / CANDIDATE / INFERENCE / NOT-ESTABLISHED). §1 intent/authority receipt (AUTHORITY): p11 authorizes Trinity adoption review and Layer 0 program-foundation work ONLY — no deployment, installation, mutation, exposure, provider activation, or Layer 1+ progression; owner selections recorded — hxs-8 as the OmniRoute target (OD-01 decided), Coder-X as Trinity's primary execution backend, local-model-only boundary; p11's stale hxs-8-offline premise corrected at the gate (FACT: online, ping 1.1 ms, SSH open; readiness commissioned to rick read-only, owner acknowledgement still required); Trinity roster state FACT — absent from agents/README.md (roster kimi-k3, john, rick, carol), candidate until the p11 adoption gate. §2 authoritative source register (the ratified split): the Goal Contract, AGENTS.md + agents/README.md + charters, KDD-0001..0007, BLUEPRINT-llm-server.md, and knowledge/catalog/ (245 records, validator 4/4) as AUTHORITY; /opt/tkv-local/OmniRoute-release-v3.8.51 (13,098 files, package 3.8.51, no .git) as PRIMARY SOURCE read-only; /opt/tkv-local/OmniRoute_old/ (4 HX evaluation docs + nested duplicates) as HISTORICAL EVIDENCE; the three agent-zero-docs omniroute candidate documents (profile 1,229 lines, plan 1,268, control manifest 443) as CANDIDATE review input preserved unchanged; github.com/diegosouzapw/OmniRoute @ release/v3.8.51 + omniroute.online as EXTERNAL REFERENCE; /opt/tkv-local/omniroute REJECTED as a knowledge root (NOT TO BE CREATED). §3 candidate-document reconciliation register (AUTHORITY-corrected, governor-verified, 6 items): knowledge_root rejected; DeepSeek Harness never existed (KDD-0006) — maps to KK3-orchestrated subagent sessions; unrostered roles (Cipher, independent QA) map to the p11 verifier contract; no host firewalls — owner rule, LAN boundary; OD-01 decided hxs-8; reported upstream commit 42a13fedef8b… REPORTED not verified locally (no .git), content-sensitive verification attempted in Wave 0B. §4 local-model identity and health receipts (FACT, 2026-08-27T03:5xZ live probes): Coder-X hxs-2 http://192.168.50.201:11434 alias hx-qwen3.6-coderx-64k digest ec9ebe08a824… (0.32.15; pin restored after F-M5-1-class interactive eviction 01:45Z; 0 :cloud tags; catalog status candidate; per-task re-verification, stop-and-escalate, NO cloud substitution); Qwen-X hxs-1 http://192.168.50.200:11434 alias hx-qwen3.8-27b-64k digest 766cd9469fb4… (0.32.15, resident, ACTIVE M8-signed; produces nothing it certifies); Meta-X alternate for structured checks; Chat-X excluded (parked). §5 Wave 0A in-flight register (Trinity adoption drafting + rick readiness background sessions; then this Carol catalog wave; owner gate OD-02)."
+  inferred_value: "INFERENCE: the single authority-reconciliation anchor for the whole Layer 0 program — every later wave's claims about what is AUTHORITY vs CANDIDATE trace to this register; its §3 corrections are applied (not re-litigated) by the adoption assessment and the Trinity drafts."
+  source:
+    author: "Kimi-K3 (governor, main session)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/02-intent-authority-source-register.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-27T04:06:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: [hxs-8, hxs-1, hxs-2]
+    fqdns: []
+    services: [ollama.service]
+    agents: [kimi-k3, trinity, rick, carol]
+    repositories: [HX-ASF-Servers, tkv-local]
+    environments: [pilot]
+    models: [mannix/qwen3.6-27b-a3b-coderx, hx-qwen3.6-coderx-64k, hx-qwen3.8-27b-64k]
+  version: ""
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "evidences"
+      target: "PILOT-OMNIROUTE-LAYER0-001 Wave 0A authority basis (state log row 2, 2026-08-27T03:47Z)"
+      note: "p11 read and plan-approved (Option A); owner selections hxs-8 / Coder-X / local-model-only recorded; stale hxs-8-offline premise corrected at the gate"
+    - predicate: "produced_by"
+      target: "kimi-k3"
+      note: "governor main session under DOC-goal-omniroute-trinity-layer0"
+    - predicate: "references"
+      target: "DOC-tkv-corpus-omniroute"
+      note: "§2 PRIMARY SOURCE row: /opt/tkv-local/OmniRoute-release-v3.8.51 read-only this program (13,098 files, package 3.8.51, no .git — commit 42a13fedef8b… carried REPORTED, not verified)"
+    - predicate: "references"
+      target: "DOC-tkv-omniroute-hx-evaluation"
+      note: "§2 HISTORICAL EVIDENCE row: /opt/tkv-local/OmniRoute_old/ wrapper — the 4 HX evaluation docs this record catalogs + nested duplicate of v3.8.51 + hidden v3.8.50 backup"
+    - predicate: "references"
+      target: "DOC-backend-coder-x"
+      note: "§4 execution-backend receipt: identity/health probed live 2026-08-27T03:5xZ (0.32.15, digest ec9ebe08a824…, 0 :cloud; pin restored after the 01:45Z interactive eviction); owner-designated for Trinity, candidate status, per-task re-verification"
+    - predicate: "references"
+      target: "DOC-backend-qwen-x"
+      note: "§4 independent-verifier receipt: resident exact 766cd9469fb4…, ACTIVE M8-signed; produces nothing it certifies"
+    - predicate: "references"
+      target: "DOC-kdd-0006-hxs2-coderx-backend-adoption"
+      note: "§3 item 2: the DeepSeek Harness never existed (owner 2026-08-26, KDD-0006); all Harness references map to KK3-orchestrated subagent sessions"
+    - predicate: "references"
+      target: "DOC-blueprint-llm-server"
+      note: "§2 AUTHORITY row: LLM-server contract incl. §5 boundary (no host firewalls; /24 LAN) and §8 capability table; §3 item 4 restates exposure as LAN + OmniRoute authn/authz"
+    - predicate: "references"
+      target: "/home/hxsa/opt/local-tkv/agent-zero-docs/prompts/p11.md"
+      note: "owner directive p11 (read 2026-08-27) — the program's authorizing directive; NOT cataloged (owner prompt store, not supplied for ingestion)"
+    - predicate: "references"
+      target: "/home/hxsa/opt/local-tkv/agent-zero-docs/pilots/omniroute/agent/codex_20260826_1508_trinity-expert-omniroute-engineer-steward-agent-profile.md"
+      note: "Trinity candidate profile (1,229 lines) — CANDIDATE review input, preserved unchanged; disposition: described by this register (no separate record this wave — flagged in the receipt)"
+    - predicate: "references"
+      target: "/home/hxsa/opt/local-tkv/agent-zero-docs/pilots/omniroute/plan/codex_20260826_1548_omniroute-v3.8.51-full-capability-phased-implementation-plan.md"
+      note: "candidate phased plan (1,268 lines) — CANDIDATE, preserved unchanged; same disposition class as the candidate profile"
+    - predicate: "references"
+      target: "/home/hxsa/opt/local-tkv/agent-zero-docs/pilots/omniroute/plan/codex_20260826_1548_omniroute-v3.8.51-implementation-control-manifest.yaml"
+      note: "candidate control manifest (443 lines) — CANDIDATE, preserved unchanged; same disposition class as the candidate profile"
+  validation:
+    validated_at: "2026-08-27T04:25:00Z"
+    freshness: "current"
+    review_due: "at Wave 0B close (commit-verification attempt outcome — launched per state log row 5) or on any authority-split change"
+  sha256: "4b93f88fab7f55afdc22e6bcddd1139893af5109252b8ac6a2d713fbde37094e"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/02-intent-authority-source-register.md"
+notes:
+  typing_judgment: "Typed evidence (schema judgment per the dispatch's 'evidence or contract' latitude): the document is a RECEIPT of intent/authority readings plus a REGISTER of source states and live model-identity probes at Wave 0A open — it records and evidences what is authoritative; it does not itself bind parties the way the server-records contract or the blueprint (type contract) do. authority_level agent-evidence (governor-produced evidence); its AUTHORITY-labeled contents cite the ratified sources rather than replacing them."
+  roster_state_caveat: "The register's §1 FACT ('Trinity absent from agents/README.md') was verified at Wave 0A open (03:4xZ); MID-RUN UPDATE: the owner ratified O1 at 04:14Z and the roster row was ADDED (agents/README.md line 25; state log row 5) — the register's candidate-era statement is true of its writing time; current roster truth lives in DOC-agents-roster-readme."
+  candidate_docs_disposition: "The three agent-zero-docs omniroute candidate documents are recorded as raw-path relations with explanatory notes (uncataloged; preserved unchanged; CANDIDATE truth-state) — their disposition is recorded HERE per the no-silent-attachment rule; whether they later get individual records is a governor disposition (flagged in this run's receipt)."

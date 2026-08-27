@@ -1,0 +1,62 @@
+document:
+  id: "DOC-pilot-fleet-baseline-wo-02-rick-baseline"
+  title: "02-work-order-rick-baseline.yaml — WO-02-fleet-baseline (fleet base verification + standard alignment: 7 fresh + 5 re-verify, two sanctioned mutation classes — rick, session rick-fleet-baseline-20260827-01; DISCHARGED — BASELINE COMPLETE, state log row 3, 2026-08-27T20:28Z; deliverable DOC-fleet-baseline-wave-2026-08-27)"
+  type: "work-order"
+  declared_purpose: "Delegated contract commissioning rick (agents/rick/charter.md + profile.md read FIRST) for milestone BASELINE-1 of goals/2026-08-27-fleet-baseline-deployment.md — commissioned 2026-08-27T19:40Z by governor Kimi-K3 on owner GO; session rick-fleet-baseline-20260827-01; priority high (owner sequencing: this wave gates OmniRoute L1-M3 closure). Controlling sources: scripts/fleet/fleet-standard.yaml (standards-as-data v0.1 — the declared expected state), scripts/fleet/README.md, servers/SERVER-REGISTRY.md (host truth), /opt/tkv-local/servers/<host>/ (per-host historical as-found evidence — cross-check, never current truth), servers/2026-08-26-fleet-time-and-mask-pass.md (the proven pattern + command-log shape). Hosts: fresh_7 hxs-6/hxs-9/hxs-10/hxs-12/hxs-13/hxs-14/hxs-15; reverify_5 hxs-1/hxs-2/hxs-3/hxs-4/hxs-8; excluded — hxs-5 (control plane, owner word), hxs-7 (replaced by hxs-20, provisioning), hxs-11 (owner flag unreachable — SKIP, do not probe repeatedly), hxs-20/hxs-21 (provisioning). Tasks per fresh host: identity + OS + kernel + uptime recorded against TKV discovery (drift = REPORT, both values kept); fleet-verify-baseline.sh; NTP check then fleet-ntp-pin.sh --apply where drifted (SANCTIONED MUTATION class 1 — mktemp staging, diff review, timesyncd restart only); sleep-target check then fleet-sleepmasks.sh align where drifted (SANCTIONED MUTATION class 2); fleet-selftest.sh green; refresh /opt/tkv-local/servers/<host>/pre-work-results.md (dated re-verification section, drift notes where found); hxs-6 ONLY — record Secure Boot state (expected ENABLED per owner flag — RECORD, never change; BIOS is an owner decision). Tasks per re-verify host: quick sweep — identity, NTP sync vs standard, mask state, selftest — confirm green; drift = REPORT (no mutation unless in a sanctioned class, then fix + record). Boundaries: read-only everything except the two sanctioned classes; stop-and-escalate on any other mutation need, any credential anomaly, or any host showing active production workload a restart could disturb (record + skip, verdict REPORT); secrets — askpass pattern from the credential record (awk on the SSH-password row), helper 0700 deleted at end, NO secret value in any artifact/log/receipt/model context, sudo -n where prepared else record; failure — per-host failure records FAIL/REPORT and CONTINUES the wave, systemic failure (library defect, auth failure on 2+ hosts) STOPS and escalates; transient_retry 1/1 per operation; model local only (Qwen-X), failure escalates, no cloud fallback. Deliverables: servers/2026-08-27-fleet-baseline-wave.md (evidence + per-host verdicts + full command log, shape of the 08-26 pass doc), refreshed TKV pre-work records per fresh host, pilot state-log rows for the governor handoff. Acceptance: every in-scope host carries a verdict (PASS / REPORT with declared direction / FAIL with evidence); both sanctioned mutation classes verified post-apply (re-check green); zero secret values in any artifact; handoff to the governor with a receipt-style summary."
+  inferred_value: "INFERENCE: the first fleet-wide execution of the standards-as-data contract the library codified — the WO's two-sanctioned-classes boundary is exactly the library's mutation surface (ntp-pin + sleepmasks), so the wave doubles as the library's first production proving run beyond the five proven hosts; the per-host-failure-CONTINUES vs systemic-failure-STOP split is the reusable shape for fleet waves."
+  source:
+    author: "Kimi-K3 (governor)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-FLEET-BASELINE-001/02-work-order-rick-baseline.yaml"
+    section: "§whole-document"
+    ingestion_date: "2026-08-27T20:42:00Z"
+  owner: "Kimi-K3"
+  applies_to:
+    hosts: [hxs-1, hxs-2, hxs-3, hxs-4, hxs-5, hxs-6, hxs-8, hxs-9, hxs-10, hxs-12, hxs-13, hxs-14, hxs-15]
+    fqdns: []
+    services: [systemd-timesyncd]
+    agents: [rick, kimi-k3]
+    repositories: [HX-ASF-Servers, tkv-local]
+    environments: [pilot, fleet]
+    models: []
+  version: ""
+  status: "adopted"
+  authority_level: "delegated-contract"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "kimi-k3"
+      note: "issued at fleet pilot state log row 1 (2026-08-27T19:40Z — 'Wave commissioned: rick fleet baseline (7 fresh + 5 re-verify)' on owner GO; the open 9->7 host-count correction caught while drafting this WO); session rick-fleet-baseline-20260827-01"
+    - predicate: "references"
+      target: "DOC-pilot-fleet-baseline-cp-03-rick-baseline"
+      note: "paired context packet CP-03-fleet-baseline (topology, standard summary, proven patterns, known host notes, secrets reminder, output contract) — cataloged THIS wave, DISCHARGED at mint with this WO"
+    - predicate: "depends_on"
+      target: "DOC-goal-fleet-baseline-deployment"
+      note: "parent goal (owner directive GO 2026-08-27; owner-sequenced FIRST before OmniRoute L1-M3 closure) — cataloged THIS wave"
+    - predicate: "references"
+      target: "DOC-pilot-fleet-baseline-state-log"
+      note: "governing log; commissioned at row 1 (19:40Z), COMPLETE at row 2 (20:19Z), receipt cited + F-4 fixed + re-verified at row 3 (20:28Z); the handoff CLOSES when this run's receipt is cited there (profile §7)"
+    - predicate: "references"
+      target: "DOC-fleet-script-library"
+      note: "controlling source: the commissioned tooling — fleet-standard.yaml v0.1 as the declared expected state (AMENDED at row 3 after the wave per rick's F-4; the library record re-hashed THIS wave), fleet-ntp-pin.sh + fleet-sleepmasks.sh as the two sanctioned mutation classes, fleet-selftest.sh as the green gate"
+    - predicate: "references"
+      target: "DOC-fleet-time-and-mask-pass"
+      note: "controlling source: the proven pattern + command-log shape (servers/2026-08-26-fleet-time-and-mask-pass.md) the deliverable mirrors"
+    - predicate: "governs"
+      target: "DOC-fleet-baseline-wave-2026-08-27"
+      note: "DISCHARGED by the deliverable servers/2026-08-27-fleet-baseline-wave.md (PASS — TASK COMPLETE: 12/12 verdicts — 10 PASS, 2 REPORT with declared closing directions, 0 FAIL; mutations only the two sanctioned classes, ntp ×7 + mask ×8, canary-first one-at-a-time each post-verified; selftest 42/42 at both gates; zero secret values; state log row 2, 2026-08-27T20:19Z) — minted at the discharged state per the wo-07 variant (the deliverable landed before cataloging)"
+  validation:
+    validated_at: "2026-08-27T20:42:00Z"
+    freshness: "current"
+    review_due: "DISCHARGED 2026-08-27 (BASELINE COMPLETE, state log row 3); the baseline handoff CLOSES when this run's receipt is cited in the fleet pilot state log (profile §7); the 2 REPORTs' owner decisions (hxs-6 storage, hxs-10 memory) ride the owner lane"
+  sha256: "231a212ed253cef48a224331f2ba8a33b28ec47136feadc3472dcda4dcc30749"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-FLEET-BASELINE-001/02-work-order-rick-baseline.yaml"
+notes:
+  status_convention: "MINTED ALREADY-DISCHARGED (status adopted) per the governor's dispatch and the DOC-pilot-omniroute-wo-07-rick-node precedent (M7-pair convention variant): the wave completed before cataloging — deliverable landed at state log row 2 (2026-08-27T20:19Z), receipt + F-4 amendment + re-verification at row 3 (20:28Z), both before this mint; the in-execution state never entered the catalog. The governs edge to the deliverable is minted in place (no deferral needed at a discharged mint)."
+  hash_crosscheck: "sha256 231a212ed253cef48a224331f2ba8a33b28ec47136feadc3472dcda4dcc30749 at mint (2026-08-27T20:3xZ) — the first recorded hash for this artifact (state log row 1 records no WO/CP hashes, same pattern as the earlier pairs); re-verified == live at this run's close self-check."
+  secrets_discipline: "The WO's secrets boundary is cataloged as existence + mechanism only: askpass pattern from the credential record (awk on the SSH-password row), helper 0700 deleted at end, NO secret value in any artifact/log/receipt/model context — the WO names no value (VERIFIED at ingestion; profile §6)."

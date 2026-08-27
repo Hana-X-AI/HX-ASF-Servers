@@ -1,0 +1,164 @@
+# fleet-standard.yaml — declared expected fleet state ("standards as data").
+# v0.1 — owner directive 2026-08-27 ("base verification rick can execute now
+# across the fleet"; hxs-2 state log row 44).
+#
+# Consumed by scripts/fleet/fleet-verify-baseline.sh. Parsed with awk — NO pyyaml
+# dependency. Keep to exactly this grammar:
+#
+#   host_classes:  two-space-indented "  <hostname>: <class>" entries
+#   rules:         list items introduced by "- class: <name>" then four-space
+#                  "    path: <json-path>" / "    op: <eq|ne|contains|in>" /
+#                  "    value: <single-token>" / "    level: <enforce|report>"
+#
+# (`in` takes a comma-separated value list, e.g. "no,not-installed".)
+#
+# Semantics:
+#   enforce  — actual must satisfy op; PASS or FAIL (FAIL fails the host run).
+#   report   — state is recorded against the declared direction (e.g. "expected
+#              once pinned" — an owner call is pending); verdict REPORT, never FAIL.
+#   Actual values of "unknown"/empty yield NOT-ESTABLISHED (visible, not a FAIL).
+#
+# Verdict paths refer to fleet-inventory.sh --kv output fields.
+
+version: 1
+
+host_classes:
+  hxs-1: llm-host
+  hxs-2: llm-host
+  hxs-3: llm-host
+  hxs-4: llm-host
+  hxs-5: workstation
+  hxs-6: server-default
+  hxs-7: server-default
+  hxs-8: server-default
+  hxs-9: server-default
+  hxs-10: server-default
+  hxs-11: server-default
+  hxs-12: server-default
+  hxs-13: server-default
+  hxs-14: server-default
+  hxs-15: server-default
+
+rules:
+  # llm-host — the proven LLM-server posture (fleet pass 2026-08-26 + hxs-4
+  # addendum 2026-08-27; owner directives: one timezone, one NTP source,
+  # proven 4-target mask set, no host firewalls, Secure Boot stays disabled).
+  - class: llm-host
+    path: time.timezone
+    op: eq
+    value: Etc/UTC
+    level: enforce
+  - class: llm-host
+    path: time.ntp_enabled
+    op: eq
+    value: yes
+    level: enforce
+  - class: llm-host
+    path: time.ntp_synchronized
+    op: eq
+    value: yes
+    level: enforce
+  - class: llm-host
+    path: time.ntp_server
+    op: contains
+    value: time.cloudflare.com
+    level: enforce
+  - class: llm-host
+    path: sleep_targets.suspend
+    op: eq
+    value: masked
+    level: enforce
+  - class: llm-host
+    path: sleep_targets.hibernate
+    op: eq
+    value: masked
+    level: enforce
+  - class: llm-host
+    path: sleep_targets.hybrid_sleep
+    op: eq
+    value: masked
+    level: enforce
+  - class: llm-host
+    path: sleep_targets.suspend_then_hibernate
+    op: eq
+    value: masked
+    level: enforce
+  # firewall: /etc/ufw/ufw.conf ENABLED= is the authoritative switch (the
+  # ufw.service oneshot can be boot-active while the firewall is OFF — unit
+  # state stays informational only; fleet pass 2026-08-27 proof: all hosts
+  # ENABLED=no, hxs-1's unit boot-enabled regardless).
+  - class: llm-host
+    path: firewall.ufw_conf
+    op: in
+    value: no,not-installed
+    level: enforce
+  - class: llm-host
+    path: security.secure_boot
+    op: eq
+    value: disabled
+    level: enforce
+  # workstation — hxs-5 executor: one timezone + one NTP source expected;
+  # sleep masks are report-only on this class (not an LLM host).
+  - class: workstation
+    path: time.timezone
+    op: eq
+    value: Etc/UTC
+    level: enforce
+  - class: workstation
+    path: time.ntp_enabled
+    op: eq
+    value: yes
+    level: enforce
+  - class: workstation
+    path: time.ntp_server
+    op: contains
+    value: time.cloudflare.com
+    level: enforce
+  # server-default — hxs-6..15: UTC enforced. AMENDED 2026-08-27 (rick's F-4,
+  # baseline wave): the one-source NTP pin is no longer "pending owner call" —
+  # hxs-8 was pinned under L1-M1 (16:05:59Z) and the remaining hosts under the
+  # owner's baseline GO 2026-08-27 (wave evidence servers/2026-08-27-fleet-
+  # baseline-wave.md: byte-identical timesyncd.conf sha256 e2b94d4b… ×12).
+  # NTP + the 4-target mask set are therefore enforce on this class now.
+  # Secure Boot and firewall stay report-only by absence of rules (hxs-6 SB
+  # ENABLED is an owner-pending BIOS decision).
+  - class: server-default
+    path: time.timezone
+    op: eq
+    value: Etc/UTC
+    level: enforce
+  - class: server-default
+    path: time.ntp_enabled
+    op: eq
+    value: yes
+    level: enforce
+  - class: server-default
+    path: time.ntp_synchronized
+    op: eq
+    value: yes
+    level: enforce
+  - class: server-default
+    path: time.ntp_server
+    op: contains
+    value: time.cloudflare.com
+    level: enforce
+  - class: server-default
+    path: sleep_targets.suspend
+    op: eq
+    value: masked
+    level: enforce
+  - class: server-default
+    path: sleep_targets.hibernate
+    op: eq
+    value: masked
+    level: enforce
+  - class: server-default
+    path: sleep_targets.hybrid_sleep
+    op: eq
+    value: masked
+    level: enforce
+  - class: server-default
+    path: sleep_targets.suspend_then_hibernate
+    op: eq
+    value: masked
+    level: enforce

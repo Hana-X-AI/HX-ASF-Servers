@@ -1,0 +1,4 @@
+FIELD-COUNT REVALIDATION (review batch 19) — 2026-08-27, governor, deterministic
+canonical: the context-packet entry_schema = 12 keys (always; the "11" wording in WO/CP/summaries was the defect)
+P1-api-routing: 42 entries — key-counts: {12: 42} => PASS (all 12)
+P2-providers-protocol: 23 entries — key-counts: {12: 23} => PASS (all 12)

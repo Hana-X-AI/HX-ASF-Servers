@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<!-- Generated from pilots/PILOT-OMNIROUTE-LAYER0-001/19-kk3-gate-decision.md (sha256 4461be80e6b308e332c3c1143dce8ba890e3ae7f532439db06347b4a689d8453) by scripts/wiki/render.py on 2026-08-27T20:48Z.
+     Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KK3 Gate Decision — OmniRoute Layer 0 (Wave 0C close)</title>
+<style>
+:root{color-scheme:light dark}
+body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.55;
+max-width:62rem;margin:0 auto;padding:1.5rem 2rem;color:#1a1a1a;background:#fff}
+h1,h2,h3,h4,h5,h6{line-height:1.25;margin-top:1.6em}
+h1{border-bottom:2px solid #444;padding-bottom:.3em}
+h2{border-bottom:1px solid #ccc;padding-bottom:.2em}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+code{background:#f0f0f0;padding:.1em .3em;border-radius:3px}
+pre{background:#f6f8fa;border:1px solid #ddd;border-radius:6px;padding:.8em;overflow-x:auto}
+pre code{background:none;padding:0}
+table{border-collapse:collapse;margin:1em 0;width:100%}
+th,td{border:1px solid #ccc;padding:.35em .6em;text-align:left;vertical-align:top}
+th{background:#f0f0f0}
+blockquote{border-left:4px solid #bbb;margin:1em 0;padding:.2em 1em;color:#444;background:#fafafa}
+a{color:#0645ad}
+.doc-meta{color:#666;font-size:.85em;border-bottom:1px dashed #bbb;padding-bottom:.6em;margin-bottom:1.2em}
+footer{margin-top:2.5em;border-top:1px solid #ccc;color:#666;font-size:.8em;padding-top:.8em}
+pre.mermaid{background:#fff;border:1px dashed #999}
+@media (prefers-color-scheme:dark){
+body{color:#ddd;background:#111} h1{border-color:#888} h2{border-color:#555}
+code{background:#2a2a2a} pre{background:#1b1b1b;border-color:#444}
+th{background:#222} th,td{border-color:#555} blockquote{color:#bbb;background:#191919;border-color:#666}
+a{color:#6fa8ff} .doc-meta,footer{color:#999}}
+</style>
+</head>
+<body>
+<main class="doc">
+<h1 id="kk3-gate-decision-omniroute-layer-0-wave-0c-close">KK3 Gate Decision — OmniRoute Layer 0 (Wave 0C close)</h1>
+<table><thead><tr><th>Field</th><th>Value</th></tr></thead><tbody><tr><td>Date</td><td>2026-08-27 (UTC)</td></tr><tr><td>Governor</td><td>Kimi-K3</td></tr><tr><td>Program</td><td>PILOT-OMNIROUTE-LAYER0-001 (p11)</td></tr><tr><td>Decision</td><td><strong>PASS — Layer 0 COMPLETE</strong></td></tr></tbody></table>
+<h2 id="basis">Basis</h2>
+<table><thead><tr><th>Component</th><th>Evidence</th></tr></thead><tbody><tr><td>Authority reconciled</td><td>Trinity ratified O1 (KDD-0008), roster updated, lane bounded; no candidate document stood as authority</td></tr><tr><td>Source identity</td><td>VERIFIED by content-sensitive proof — 13,098/13,098 git-blob identical to upstream <code>diegosouzapw/OmniRoute@42a13fedef8b…</code></td></tr><tr><td>Capability ledger</td><td>367 entries, 8 partitions, 1,325 source refs, dispositions 229/74/35/12/9/8; every reference producer-verified; governor spot-checks 8/8 on all partitions</td></tr><tr><td>Program reconciliation</td><td><code>09-reconciled-program-packet.md</code>; corrected <code>10-control-manifest.yaml</code></td></tr><tr><td>Independent verification</td><td><code>18-independent-verification-report.md</code> — <strong>Qwen-X: VERIFIED, zero artifact discrepancies</strong> (recounts exact, 25/25 sample refs, schema exact, 40/40 structured verdicts sound, key numbers re-derived from corpus independently)</td></tr><tr><td>Catalog</td><td>271 records, validator 4/4 PASS, receipts closing every handoff</td></tr><tr><td>hxs-8</td><td>ONLINE, readiness evidence delivered (SUITABLE-WITH-FINDINGS; Node the single Layer-1 dependency)</td></tr></tbody></table>
+<h2 id="validation-against-p11-s-acceptance-criteria-all-pass">Validation against p11's acceptance criteria (all PASS)</h2>
+<p>Trinity's roster state accurately represented (candidate → ratified, dated). Candidate documents reconciled, never copied as authority. Coder-X identity/status/endpoint/profile/health/limits verified per task (0 identity failures; one eviction handled by re-verification, never substitution). No cloud model or remote inference anywhere. Source identity reported with honest limits, then proven. Source instructions/metadata/lockfile/license reviewed. Ledger reproducible from exact references (deterministic recount matches). Every capability has owner/risk/test/dependency/disposition. Every owner decision has a blocking boundary (OD register). No host or service mutation occurred (zero). No deployment command ran. hxs-8 recorded as selected with its offline→online transition truthful (maintenance reboots + rick's readiness). No secret value in prompts, logs, evidence, reports, catalog records, or model context (swept; the two credential classes are policy-denied). All artifacts pass repository validation (validate.py 4/4; render --check in sync). Independent verification complete and separate from production (Qwen-X ≠ Coder-X hosts). Carol's handoffs all receipted and cited. This decision is recorded with exact evidence.</p>
+<h2 id="conditions-carried-forward-not-failures-boundaries">Conditions carried forward (not failures — boundaries)</h2>
+<ol><li><strong>OD-13 is a hard Layer-1 requirement</strong> (owner-ratified): env-provision <code>JWT_SECRET</code> + <code>API_KEY_SECRET</code> and set <code>STORAGE_ENCRYPTION_KEY</code>; never accept the product's plaintext defaults.</li><li>Backup encryption and cloud upload are treated as <strong>nonexistent</strong> (write-only encryption; dead endpoint) — OD-09 plans around them.</li><li>Agent-like surfaces stay disabled: copilot driver (executes model output as host CLI), Conductor hub, cloud agents/CLI, tunnels, MITM bridge — 8 BLOCKED entries stand unless the owner explicitly reverses one.</li><li>Disabled-by-default is <strong>not code-enforced</strong> for skills execution and background jobs — Layer-1 config must set them explicitly.</li><li>No ATEM routing assumption for Meta-X (no adapter exists in v3.8.51).</li><li>hxs-8 host-dependent work still requires the owner's OD-03 acknowledgement of rick's readiness evidence.</li><li>Coder-X remains catalog-status candidate until its M8 — per-task identity/health verification is mandatory on every use.</li></ol>
+<h2 id="decision">Decision</h2>
+<p><strong>PASS — Layer 0 COMPLETE.</strong> The foundation is correct, reproducible, reviewable, and independent-verified. Recommended next gate: the owner's review of <code>11-owner-decision-packet.md</code> and, on his word, OD-12 — explicit Layer 1 authorization (the only door to installation). <strong>Layer 0 completion does not authorize Layer 1.</strong></p>
+<h2 id="provenance-note">Provenance note</h2>
+<p><code>/opt/tkv-local/deepseek-harness-master</code> exists as reference material. KDD-0006's scope is a <em>deployed</em> DeepSeek Harness (none exists anywhere) — the corpus item is inert reference, no contradiction.</p>
+</main>
+<footer>Source of truth: <code>pilots/PILOT-OMNIROUTE-LAYER0-001/19-kk3-gate-decision.md</code> (sha256 <code>4461be80e6b308e332c3c1143dce8ba890e3ae7f532439db06347b4a689d8453</code>) · rendered 2026-08-27T20:48Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+
+</body>
+</html>

@@ -2,7 +2,7 @@ document:
   id: "DOC-tkv-hxs15-pre-work-results"
   title: "/opt/tkv-local/servers/hxs-15/pre-work-results.md — hxs-15 pre work results (pre-discovery preparation (2026-08, Phase 1))"
   type: "pre-work"
-  declared_purpose: "Human preparation record for hxs-15 completed before discovery ran: summary block (server hxs-15, IP 192.168.50.214, FQDN hxs-15.hx.local.arpa, admin account hxsa) followed by verbatim-preserved raw terminal evidence (declared hardware and pre-discovery checks); only the summary was added."
+  declared_purpose: "Human preparation record for hxs-15 completed before discovery ran: summary block (server hxs-15, IP 192.168.50.214, FQDN hxs-15.hx.local.arpa, admin account hxsa) followed by verbatim-preserved raw terminal evidence (declared hardware and pre-discovery checks); only the summary was added. REFRESHED 2026-08-27 (refresh-by-prepend): rick's read-only fleet pre-work remainder assessment (identity ceremony PINNED-NEW-VERIFIED, machine-id MATCH, live hardware/OS/network/time state, baseline 1 PASS + 1 REPORT) prepended on top; the original 2026-08-13 record preserved verbatim below the marker line. RE-VERIFIED 2026-08-27 (second refresh-by-prepend): rick's fleet baseline wave re-verification section (WO-02-fleet-baseline / PILOT-FLEET-BASELINE-001 — full baseline pass with the two sanctioned mutation classes) prepended on top; the earlier layers preserved below."
   source:
     author: "HX project (Claude Code era); collected read-only over SSH / human preparation record"
     provided_by: "Agent Zero"
@@ -17,7 +17,7 @@ document:
     agents: []
     repositories: [tkv-local]
     environments: [fleet]
-  version: "pre-discovery preparation (2026-08, Phase 1)"
+  version: "pre-discovery preparation (2026-08, Phase 1) + agent refresh 2026-08-27 (rick, fleet pre-work remainder pass) + agent re-verification 2026-08-27 (rick, fleet baseline wave)"
   status: "historical"
   authority_level: "historical-as-found"
   supersedes: []
@@ -34,8 +34,11 @@ document:
       target: "DOC-tkv-server-registry"
       note: "fleet registry row for hxs-15"
   validation:
-    validated_at: "2026-08-25T05:55:00Z"
-    freshness: "historical"
-    review_due: "historical record — no review cycle; cross-check before any operational use"
-  sha256: "919607c4994b88ddcfa56251d3f05662020cacca69edcd216d44139709212f8b"
+    validated_at: "2026-08-27T20:42:00Z"
+    freshness: "current"
+    review_due: "on the next fleet pre-work or per-host remediation pass; the below-marker original stays historical-as-found"
+  sha256: "86cfefe163d88285247323c6110e07c819317370374c0ac7c5c65ca58fc9f82b"
   canonical_location: "/opt/tkv-local/servers/hxs-15/pre-work-results.md"
+notes:
+  refresh_20260827: "REFRESH-BY-PREPEND recorded this run (provenance: hxs-2 state log rows 58-59; deliverable cataloged as DOC-fleet-prework-remainder-2026-08-27). Rick's 2026-08-27 read-only assessment sits on top: host-key ceremony PINNED-NEW-VERIFIED (new pin on hxs-5, exact match vs the owner pre-work console record — zero first-sight acceptance), hostname + peer IP + machine-id MATCH, passwordless sudo live, i5-7500 / 31.2 GiB / 2 DIMMs, Ubuntu 24.04.4 LTS kernel 7.0.0-30-generic, 0 failed units, ufw ENABLED=no, sleep targets static, ollama absent, NTP synchronized via ntp.ubuntu.com (REPORT-only per the server-default class — the one-source pin is the owner's per-host call). Freshness historical -> current: the record's top layer is a current verified live-state assessment (agent-evidence); the below-marker 2026-08-13 original keeps its historical-as-found truth state. Status/authority unchanged — the pre-work record class is anchored by the preserved original. Re-hash 919607c4… -> 815f09e5… (the prepend is the only delta; original preserved verbatim below the marker line)."
+  reverification_20260827_baseline: "RE-VERIFICATION-BY-PREPEND (second refresh layer) recorded this run (provenance: fleet pilot state log rows 2-3; deliverable cataloged as DOC-fleet-baseline-wave-2026-08-27; goal DOC-goal-fleet-baseline-deployment). Rick's fleet baseline wave re-verification section sits on top (WO-02-fleet-baseline / PILOT-FLEET-BASELINE-001, session rick-fleet-baseline-20260827-01): verdict PASS — baseline green, zero drift (NTP pinned 20:07:08Z, masks ALIGNED 20:07:09Z; 0 failed units; verify-baseline 0 FAIL). One-source NTP now fleet-wide on the in-scope 12 (conf e2b94d4b… ×12). Earlier layers preserved: the 16:29Z-class pre-work-remainder refresh and the 2026-08-13 original below their marker lines. Freshness stays current; status/authority unchanged. Re-hash 815f09e5… -> 86cfefe1… (the prepend is the only delta)."

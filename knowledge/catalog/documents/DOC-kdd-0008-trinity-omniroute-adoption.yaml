@@ -1,0 +1,75 @@
+document:
+  id: "DOC-kdd-0008-trinity-omniroute-adoption"
+  title: "KDD-0008 — Adopt Trinity as OmniRoute lifecycle engineer — RATIFIED 2026-08-27 (owner decision O1, adopt-as-corrected; OD-02 closed)"
+  type: "decision"
+  declared_purpose: "Ratified decision record (header: Date 2026-08-27, Status ratified 2026-08-27 — owner decision O1 adopt-as-corrected, Trinity's lane ACTIVE, Layer 1 still requires OD-12 + OD-03; Decider Agent-Zero; related goal 2026-08-27-omniroute-trinity-layer0; drafted Wave 0A as PROPOSED, ratified mid-wave per state log row 5; truth-state: roster/governance/correction claims AUTHORITY, candidate documents CANDIDATE preserved unchanged, option trade-offs INFERENCE labeled). Context: p11 commissioned Layer 0 with Wave 0A producing the Trinity adoption packet; the candidate material is a 1,229-line operating profile plus phased plan (1,268) and control manifest (443) prepared by codex 2026-08-26 against the OmniRoute v3.8.51 corpus; the roster before ratification was kimi-k3, rick, john, carol — Trinity absent (agents/README.md, verified at the M0 gate, state log row 1); the OmniRoute lane was empty and the surface is large (13,098 corpus files, 102 API domains per DOC-tkv-corpus-omniroute). Governor verification found seven candidate-vs-authority conflicts; the reconciliation register (assessment §3, C1-C7) is applied to the drafts, not re-litigated: C1 knowledge root /opt/tkv-local/omniroute rejected — corpus DOC-tkv-corpus-omniroute, catalog canonical (KDD-0005), Carol owns mutations; C2 DeepSeek Harness never existed — KK3-orchestrated subagent sessions (KDD-0006); C3 Cipher/Independent QA map to the p11 verifier contract (deterministic -> Qwen-X ACTIVE M8-signed -> owner); C4 no host firewalls (owner rule 2026-08-26) — LAN 192.168.50.0/24 boundary (BLUEPRINT §5); C5 target host hxs-8 selected by the owner (OD-01; readiness ack OD-03); C6 lane = OmniRoute lifecycle engineering only with explicit exclusions; C7 Coder-X primary execution backend (per-task identity/health verification, stop-and-escalate, no cloud substitution ever) + Qwen-X independent verifier. Honesty limit riding with the adoption: the pinned upstream commit is CANDIDATE-claimed provenance — the corpus is not a git checkout and upstream commit identity is unavailable; the drafts carry it unverified. Options considered: (1) adopt-as-corrected SELECTED — ratify the charter/profile drafts as produced, add trinity to the roster (vertical), record this KDD ratified; (2) adopt-with-changes-specified; (3) defer; (4) reject. Decision: RATIFIED 2026-08-27 — owner decision O1 (the §Decision body preserves the as-presented decision menu; the header records the outcome; state log row 5: owner 'if so I ratify as corrected (O1). You may proceed.'; gate executed — roster row added vertical/active, charter + profile flipped active, KDD flipped ratified, all re-rendered). Ratification activates the LANE ONLY — Layer 1 (any installation or host mutation) still requires separate owner authorization (OD-12) and hxs-8 readiness acknowledgement (OD-03). Consequences — enables: an accountable bounded engineering lane for the traffic plane; Layer 1 design under work orders once authorized; the adoption-gate pattern validated as reusable; the Coder-X execution + Qwen-X verification contract exercised on a standing lane. Forecloses: /opt/tkv-local/omniroute and any duplicate catalog; any DeepSeek Harness dependency; Trinity-instantiated subordinate agents or specialist cells as roster entities; Trinity self-acceptance; unapproved agent-like/memory/workflow/process-spawning feature enablement; cloud-model substitution for Coder-X. Rollback: adoption is reversible — remove agents/trinity/, revert the roster row, flip this KDD superseded or rejected, Carol records the disposition; documentation-only. Revisit if: the owner changes traffic-plane scope, the verifier contract, or the execution-backend designation; OmniRoute agent-like features are proposed (separate decision required); or the corpus identity changes (re-hash per DOC-tkv-corpus-omniroute review_due 2026-09-24)."
+  source:
+    author: "Kimi-K3 (record, governor-briefed Wave 0A drafting session); decider Agent-Zero (O1 DECIDED 2026-08-27 — ratified adopt-as-corrected, state log row 5)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0008-trinity-omniroute-adoption.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-27T04:06:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: [hxs-8]
+    fqdns: []
+    services: []
+    agents: [trinity, kimi-k3, rick, john, carol]
+    repositories: [HX-ASF-Servers, tkv-local]
+    environments: [pilot]
+    models: []
+  version: ""
+  status: "active"
+  authority_level: "ratified-governance"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "decides"
+      target: "DOC-goal-omniroute-trinity-layer0"
+      note: "OD-02 Trinity ratification DECIDED 2026-08-27: owner ratified O1 adopt-as-corrected (state log row 5 — 'if so I ratify as corrected (O1). You may proceed.'); Related goals: 2026-08-27-omniroute-trinity-layer0"
+    - predicate: "decides"
+      target: "trinity roster admission (agents/README.md, vertical, active)"
+      note: "roster row ADDED 2026-08-27T04:14Z per option 1 (VERIFIED PRESENT at source line 25 this run); ratification activates the lane only — Layer 1 still requires OD-12 + OD-03"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-trinity-adoption-assessment"
+      note: "full reconciliation (assessment §3 C1-C7, §4 lane overlap, §5 gate checklist G1-G12, §6 recommendation O1) — the evidence basis the owner ratified"
+    - predicate: "references"
+      target: "DOC-agent-trinity-charter"
+      note: "ratified as produced (option 1): charter flipped draft -> active 2026-08-27"
+    - predicate: "references"
+      target: "DOC-agent-trinity-profile"
+      note: "ratified as produced (option 1): profile flipped DRAFT -> ACTIVE 2026-08-27"
+    - predicate: "references"
+      target: "DOC-kdd-0005-second-brain-canonical-home"
+      note: "C1 authority: knowledge/catalog/ canonical; /opt/tkv-local/omniroute foreclosed"
+    - predicate: "references"
+      target: "DOC-kdd-0006-hxs2-coderx-backend-adoption"
+      note: "C2 authority: DeepSeek Harness never existed (owner-confirmed 2026-08-26)"
+    - predicate: "references"
+      target: "DOC-tkv-corpus-omniroute"
+      note: "the corpus surface (13,098 files, 102 API domains) and the commit-identity honesty limit; revisit trigger: corpus identity change (re-hash per its review_due 2026-09-24)"
+    - predicate: "references"
+      target: "DOC-backend-coder-x"
+      note: "C7: Trinity's primary execution backend designation (per-task verification, stop-and-escalate, no cloud substitution ever); revisit trigger: owner changes the designation"
+    - predicate: "references"
+      target: "DOC-backend-qwen-x"
+      note: "C3/C7: the independent local verifier (ACTIVE, M8-signed) of the p11 verifier contract"
+    - predicate: "references"
+      target: "DOC-agents-roster-readme"
+      note: "roster authority: the trinity row was ADDED to agents/README.md at the gate (2026-08-27T04:14Z, option 1, source line 25); RESOLVED 2026-08-27T04:56Z — the roster record's re-hash/sync (queued behind the 0A wave per the write-race rule) executed this wave: roster record re-hashed to 749dba85… with the ratification provenance"
+  validation:
+    validated_at: "2026-08-27T21:20:00Z"
+    freshness: "current"
+    review_due: "on the KDD's own revisit triggers (owner changes traffic-plane scope / verifier contract / execution-backend designation; OmniRoute agent-like feature enablement proposed — separate decision; corpus identity change — re-hash per DOC-tkv-corpus-omniroute review_due 2026-09-24)"
+  sha256: "4a87ec646e2233185d7e742b100f66f18f189b3cfdc59421ee24e798f8e79315"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0008-trinity-omniroute-adoption.md"
+notes:
+  header_verification: "Verified at re-verification 2026-08-27T04:25Z: KDD header fields read Date 2026-08-27, Status ratified 2026-08-27 — owner decision O1 (adopt as corrected), Trinity's lane ACTIVE, Layer 1 still requires OD-12 + OD-03; Decider Agent-Zero (source lines 3-5). Record status active + authority_level ratified-governance per the KDD-0001..0007 ratified-KDD convention. MID-RUN FLIP: at run start (04:05Z) the header read Status proposed and this record was prepared as draft + delegated-contract (the dispatch-brief mapping: enum has no proposed/candidate literal; pre-flip DOC-backend-meta-x convention); the owner decided OD-02 = O1 mid-run (state log row 5, 04:16Z) and the governor flipped the KDD header proposed -> ratified — the proposed-era record state never entered the catalog. Hash chain: a1513cc5… (proposed, first hash at run start) -> 872f59f5… (ratified, this record's minted content). The §Decision body preserves the as-presented decision menu ('PROPOSED — owner decision pending…' with options 1-4) while the header records the outcome — source-internal tension recorded openly (the menu is the historical question, the header the answer); flagged for the governor's next KDD touch, not blocking. RESOLVED 2026-08-27 (governor's row-7 cleanup, VERIFIED this wave): the §Decision intro now carries the DECIDED record + the O1 quote — '**DECIDED 2026-08-27 — owner chose RATIFY option 1 (adopt as corrected):** \"if so I ratify as corrected (O1). You may proceed.\" The governor executed the gate (roster row, charter/profile active, this KDD ratified; pilot state log row 5).' (source lines 78-80); the options menu below remains as the historical question as-presented. Hash chain: 872f59f5… (ratified, Wave 0A mint) -> 23f65b9f… (§Decision cleanup, this record). Carried-open flag: the §Context honesty limit (source lines 47-49) still carries the pinned commit as CANDIDATE-claimed — superseded for source identity by the 07 provenance receipt's VERIFIED content-sensitive proof (DOC-pilot-omniroute-source-provenance-receipt; DOC-tkv-corpus-omniroute notes.identity_verification); source wording refresh is the governor's lane at the next touch."
+  decision_recorded: "OD-02 CLOSED 2026-08-27T04:14Z: RATIFY option 1 — adopt-as-corrected. Executed by the governor (state log row 5): roster row added (agents/README.md line 25, trinity vertical active — VERIFIED PRESENT), charter draft -> active, profile DRAFT -> ACTIVE, KDD proposed -> ratified, all four re-rendered in sync. Lane ACTIVE only: Layer 1 (any installation or host mutation) still requires OD-12 authorization + OD-03 readiness acknowledgement."
+  wiki_rendering: "KDD-0008 is registered in the wiki manifest and rendered (state log rows 4-5: wiki-registered, rendered, and re-rendered in sync after the flip); wiki-sync verified at this run's validate.py close — dual-format membership and rendering remain the governor's lane (AGENTS.md documentation conventions; cf. DOC-kdd-0007 notes.wiki_rendering for the pre-resolution class)."
+  honesty_limit_resolution: "RESOLVED 2026-08-27 (governor's row-9 remnant fix, VERIFIED this wave) — the carried-open flag in notes.header_verification is closed: the §Context honesty limit (source lines 47-55) now carries the dated resolution in place — '**Resolution 2026-08-27: this honesty limit is CLOSED.** The snapshot's identity was VERIFIED by content-sensitive proof — 13,098/13,098 files git-blob identical to upstream diegosouzapw/OmniRoute@42a13fedef8b… (pilot log row 6; pilots/PILOT-OMNIROUTE-LAYER0-001/07-source-provenance-receipt.md). The drafting-time carry above stands as history.' The CANDIDATE-claimed paragraph above it is preserved as labeled history per the row-8 living-document doctrine. Hash chain: a1513cc5… (proposed, run-start state — never cataloged) -> 872f59f5… (ratified, Wave 0A mint) -> 23f65b9f… (§Decision DECIDED cleanup, 0532Z wave) -> 4a87ec64… (honesty-limit CLOSED resolution, this record)."
+  author_field_20260827: "AUTHOR-FIELD RESOLUTION (review-batch follow-up wave; OmniRoute state log row 44 queue item 'DOC-kdd-0008 — author = Agent-Zero, O1 decided'): the record's source.author decider clause read 'Agent-Zero (pending)' — an obsolete pre-decision state left from the PROPOSED era; the owner decision O1 was DECIDED 2026-08-27 (ratified adopt-as-corrected, state log row 5; the KDD header's own 'Decider: Agent-Zero' line + the §Decision DECIDED block — both long verified). The clause now records Agent-Zero as the completed decider. SOURCE UNCHANGED — sha256 4a87ec64… re-verified == live this run (record-side fix only); validated_at refreshed."

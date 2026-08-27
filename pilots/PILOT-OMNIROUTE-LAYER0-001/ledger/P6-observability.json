@@ -1,0 +1,1228 @@
+{
+  "partition": "P6-observability",
+  "work_order_id": "WO-OMNI-TRINITY-LEDGER-001",
+  "producer": "trinity",
+  "produced_at": "2026-08-27",
+  "corpus": "/opt/tkv-local/OmniRoute-release-v3.8.51 (READ-ONLY; identity VERIFIED 2026-08-27, 13,098/13,098 content-identical to upstream @42a13fe)",
+  "truth_states": "FACT = source-derived; UPSTREAM = in-tree doc claim; INFERENCE = labeled reasoning; AUTHORITY = HX governance decision",
+  "entries": [
+    {
+      "id": "CAP-P6-001",
+      "name": "healthz-lifecycle-phase-probe",
+      "source_refs": [
+        "src/app/healthz/route.ts:12",
+        "src/app/healthz/route.ts:17",
+        "src/lib/serverLifecycle.ts:7"
+      ],
+      "purpose": "Unauthenticated GET/HEAD /healthz maps the process lifecycle phase (starting/ready/stopping) to 200 'ok' only when ready, else 503 with the phase name as the plain-text body — the orchestrator-grade readiness signal. [FACT]",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "management-plane",
+      "risk_class": "low — read-only phase report; wrong phase reporting only misleads orchestrators, no data path",
+      "dependencies": [
+        "src/lib/serverLifecycle global phase flag"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Direct: GET /healthz during boot (expect 503 'starting'), after ready (200 'ok'), during shutdown (503 'stopping'); HEAD variant returns status with null body",
+      "rollback_or_disable": "Remove src/app/healthz/route.ts; path falls through to the /api catch-all (not applicable to /healthz top-level — verify 404)",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P6-002",
+      "name": "healthz-event-loop-lag-watchdog",
+      "source_refs": [
+        "src/lib/healthzLag.ts:4",
+        "src/lib/healthzLag.ts:14",
+        "src/lib/healthzLag.ts:33",
+        "src/app/healthz/route.ts:27"
+      ],
+      "purpose": "Every GET /healthz observes mean event-loop lag via node:perf_hooks monitorEventLoopDelay and logs a throttled [HEALTHZ] warning (10s suppression) when lag exceeds 200ms, on the premise that a 200 from a busy loop is not healthy (#10303). [FACT]",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "management-plane",
+      "risk_class": "low — warn-only telemetry; never changes the response",
+      "dependencies": [
+        "node:perf_hooks monitorEventLoopDelay"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Direct: block the event loop >200ms, GET /healthz, assert the throttled warning line; negative: second request within 10s does not re-warn",
+      "rollback_or_disable": "Delete the observeHealthzEventLoopLag() call at src/app/healthz/route.ts:27 — warn-only, no behavioral dependency",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P6-003",
+      "name": "public-liveness-api-health",
+      "source_refs": [
+        "src/app/api/health/route.ts:21",
+        "src/app/api/health/route.ts:23"
+      ],
+      "purpose": "GET /api/health is the canonical unauthenticated liveness probe returning only {status:'ok', timestamp} with no-store headers; the doc comment states version/uptime/memory are deliberately withheld from this public surface and reserved for authenticated /api/monitoring/health. [FACT]",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "management-plane",
+      "risk_class": "medium — public unauthenticated endpoint; any future field added here is instantly public on an exposed instance",
+      "dependencies": [
+        "Next.js route convention"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Direct: unauthenticated GET returns 200 {status,timestamp}; negative: response carries no version/memory/uptime keys",
+      "rollback_or_disable": "Remove src/app/api/health/route.ts; /api/health falls to the #6424 JSON catch-all",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P6-004",
+      "name": "public-db-ping-probe",
+      "source_refs": [
+        "src/app/api/health/ping/route.ts:18",
+        "src/app/api/health/ping/route.ts:21",
+        "src/app/api/health/ping/route.ts:23"
+      ],
+      "purpose": "GET /api/health/ping is an unauthenticated probe that calls pingDb() and returns {status,timestamp,latencyMs} at 200, or 503 {status:'error', error:'db_query_failed'} when the database does not answer — built for high-frequency polling where /api/monitoring/health is too expensive. [FACT]",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "management-plane",
+      "risk_class": "medium — public endpoint whose 503 reveals DB-health transitions (timing signal), deliberately accepted for probe use",
+      "dependencies": [
+        "src/lib/db/core pingDb (SQLite)"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Direct: GET returns 200 with latencyMs under normal DB; negative/fault: with DB broken returns 503 db_query_failed",
+      "rollback_or_disable": "Remove src/app/api/health/ping/route.ts; path falls to JSON catch-all 404",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P6-005",
+      "name": "monitoring-health-aggregated-observability-snapshot",
+      "source_refs": [
+        "src/app/api/monitoring/health/route.ts:21",
+        "src/app/api/monitoring/health/route.ts:28",
+        "src/app/api/monitoring/health/route.ts:37",
+        "src/app/api/monitoring/health/route.ts:95",
+        "src/app/api/monitoring/health/route.ts:189",
+        "src/app/api/monitoring/health/route.ts:247"
+      ],
+      "purpose": "GET /api/monitoring/health aggregates 8+ subsystems (circuit breakers, rate-limit status + learned limits, model lockouts, quota monitor, active sessions, credential health, local providers, adaptive + structural chat admission, dedup inflight) into one payload with a 1s TTL cache; anonymous callers receive only {status, setupComplete} (GHSA-mvf8-qc78-5mxm host-fingerprinting fix — full view requires management auth); DELETE resets all circuit breakers (auth required) and invalidates the cache. [FACT]",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "management-plane",
+      "risk_class": "high — the payload fingerprints host/version/pid/memory/provider config; the anonymous-vs-full split at line 37 is the control that keeps it safe, and DELETE mutates breaker state",
+      "dependencies": [
+        "@/shared/utils/circuitBreaker",
+        "open-sse rateLimitManager/accountFallback/quotaMonitor/sessionManager/requestDedup",
+        "@/lib/credentialHealth/cache",
+        "@/lib/localHealthCheck",
+        "admission runtime + chatBodyAdmission",
+        "SQLite settings/connections"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Direct (anonymous): GET returns only status/setupComplete; direct (management token): full payload with all subsystem keys; mutation: DELETE with auth resets breakers and reports resetCount; negative: unauthenticated DELETE is 401",
+      "rollback_or_disable": "Remove src/app/api/monitoring/health/route.ts — monitoring degrades to the per-subsystem endpoints; breaker reset reverts to per-module APIs",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P6-006",
+      "name": "graceful-degradation-registry-and-report",
+      "source_refs": [
+        "src/app/api/health/degradation/route.ts:8",
+        "src/app/api/health/degradation/route.ts:20",
+        "src/domain/degradation.ts:16",
+        "src/domain/degradation.ts:40"
+      ],
+      "purpose": "A domain registry tracks per-feature degradation levels (full/reduced/minimal/default) for services with external dependencies; GET /api/health/degradation exposes the report (or a summary view) so the dashboard can show which features are running degraded and why. [FACT]",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "management-plane",
+      "risk_class": "low — read-only status registry; misreported degradation hides operator signal but mutates nothing",
+      "dependencies": [
+        "src/domain/degradation registry",
+        "feature modules calling withDegradation"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Direct: GET returns active flag + per-feature report; seeded fault: degrade one registered feature and confirm it appears with its level and reason",
+      "rollback_or_disable": "Remove src/app/api/health/degradation/route.ts; registry keeps working internally, only the HTTP view disappears",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P6-007",
+      "name": "db-health-diagnosis-and-autorepair",
+      "source_refs": [
+        "src/app/api/db/health/route.ts:6",
+        "src/app/api/db/health/route.ts:12",
+        "src/app/api/db/health/route.ts:23",
+        "src/app/api/db/health/route.ts:29",
+        "src/lib/db/healthCheck.ts:31"
+      ],
+      "purpose": "GET /api/db/health (authenticated) runs runManagedDbHealthCheck({autoRepair:false}) reporting integrity/reference/stale-snapshot/invalid-state issues plus driver durability (sql.js WASM or :memory: flagged degraded); POST runs the same check with autoRepair:true, repairing issues and reporting repairedCount/backupCreated. [FACT]",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "data-plane",
+      "risk_class": "high — POST mutates the primary SQLite store (repair path); GET is read-only; both are management-authenticated",
+      "dependencies": [
+        "SQLite adapter via src/lib/db/core",
+        "backup subsystem for repair safety"
+      ],
+      "required_authorization": "layer-N",
+      "test_contract": "Direct: GET returns isHealthy + issues[] + driver block; mutation: POST on a seeded broken reference returns repairedCount>0 and backupCreated; negative: unauthenticated GET/POST return 401",
+      "rollback_or_disable": "Remove the route file; manual sqlite3 integrity_check remains as the offline fallback",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P6-008",
+      "name": "subsystem-health-endpoints",
+      "source_refs": [
+        "src/app/api/memory/health/route.ts:6",
+        "src/app/api/storage/health/route.ts:18",
+        "src/app/api/token-health/route.ts:11",
+        "src/app/api/token-health/route.ts:17"
+      ],
+      "purpose": "Specialized health routes: /api/memory/health (management-auth, verifies the memory extraction pipeline), /api/storage/health (DB driver/path/size/last-backup/retention from the DATA_DIR), and /api/token-health (aggregate OAuth-token health counts healthy/errored/lastCheck across active oauth connections). [FACT]",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "management-plane",
+      "risk_class": "low — read-only subsystem probes; memory/health is management-gated, storage and token-health expose only operational metadata",
+      "dependencies": [
+        "memory verify pipeline",
+        "fs + resolveDataDir",
+        "provider_connections oauth rows"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Direct: each endpoint returns its documented shape; negative (memory): unauthenticated returns the management-auth rejection",
+      "rollback_or_disable": "Remove the individual route.ts files; each subsystem keeps functioning without its probe",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P6-009",
+      "name": "local-provider-health-poller",
+      "source_refs": [
+        "src/lib/localHealthCheck.ts:31",
+        "src/lib/localHealthCheck.ts:32",
+        "src/lib/localHealthCheck.ts:33"
+      ],
+      "purpose": "Background poller for localhost provider_nodes: GET /models with a 5s timeout, exponential backoff 30s→60s→120s→300s on consecutive failures resetting to 30s on first success, 15s initial boot delay, health kept in-memory (no DB migration), Promise.allSettled so one slow node never blocks the sweep. [FACT]",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "management-plane",
+      "risk_class": "low — outbound loopback probes only; a false 'down' marking shifts routing away from a healthy local node (availability, not integrity)",
+      "dependencies": [
+        "provider_nodes in local DB",
+        "node fetch"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Direct: stand up a stub /models endpoint, watch it marked healthy; negative: kill it and observe backoff schedule and isHealthy=false; persistence: state is process-memory only (restart resets)",
+      "rollback_or_disable": "Env/code path: poller never starts when disabled by test/build guards; remove start call to disable permanently",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P6-010",
+      "name": "provider-health-matrix",
+      "source_refs": [
+        "src/lib/monitoring/providerHealthMatrix.ts:11",
+        "src/lib/monitoring/providerHealthMatrix.ts:21",
+        "src/app/api/providers/health-matrix/route.ts:21",
+        "src/app/api/providers/health-matrix/route.ts:22"
+      ],
+      "purpose": "GET /api/providers/health-matrix (management-auth) builds a per-account, per-model health matrix over 1h/24h/7d/30d windows — success rate, latency, lockout state/reason/remaining, cooldown/backoff, rate-limited-until — joining usage history, circuit breakers, model lockouts and web-session pool health. [FACT]",
+      "owner_plane": "dashboard",
+      "architectural_plane": "management-plane",
+      "risk_class": "low — read-only aggregation; management-gated so the per-account detail stays internal",
+      "dependencies": [
+        "usage history DB",
+        "circuitBreaker statuses",
+        "accountFallback lockouts",
+        "webSessionPoolHealth"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Direct: GET with range=24h returns account/model rows with the documented fields; negative: unauthenticated request rejected; boundary: range outside the enum rejected by zod",
+      "rollback_or_disable": "Remove the route + card; no runtime dependency (dashboard read path only)",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P6-011",
+      "name": "health-autopilot-remediation-actions",
+      "source_refs": [
+        "src/lib/monitoring/providerHealthAutopilot.ts:14",
+        "src/lib/monitoring/providerHealthAutopilot.ts:28",
+        "src/lib/monitoring/comboHealthAutopilot.ts:1"
+      ],
+      "purpose": "Provider and combo health autopilots analyze breaker/cooldown/lockout/error state and propose typed remediation actions (clear_provider_breaker, clear_connection_cooldown, clear_stale_connection_error, clear_model_lockout, reactivate/deactivate_connection) with risk labels, confirmation flags and precondition hashes; combo autopilot joins provider report + combo health + forecast. [FACT]",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "management-plane",
+      "risk_class": "medium — the actions mutate routing-affecting state (breakers, lockouts, connection activation) when executed; proposals themselves are read-only, precondition hash guards stale approvals",
+      "dependencies": [
+        "provider_connections DB",
+        "accountFallback clear functions",
+        "combo health + forecast services"
+      ],
+      "required_authorization": "layer-N",
+      "test_contract": "Direct: seed a locked-out model and confirm the report proposes clear_model_lockout with a preconditionsHash; negative: executing with a stale hash is rejected; mutation: execute reactivate_connection and verify the connection row flips active",
+      "rollback_or_disable": "Do not wire the execute endpoints (dashboard-only proposals); disabling autopilot removes proposals without changing underlying state",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P6-012",
+      "name": "credential-health-cache-and-token-health-sweep",
+      "source_refs": [
+        "src/lib/credentialHealth/cache.ts:12",
+        "src/lib/credentialHealth/cache.ts:22",
+        "src/lib/jobs/tokenHealthCheckJob.ts:16",
+        "src/lib/jobs/tokenHealthCheckJob.ts:18"
+      ],
+      "purpose": "An in-memory per-connection credential-health cache (status/lastError/consecutiveFailures/responseTime with TTL auto-expiry) feeds the monitoring payload, while the JobRegistry-run token_health_check job sweeps OAuth tokens every 60s (honoring OMNIROUTE_DISABLE_TOKEN_HEALTHCHECK, build phase, and test-process guards). [FACT]",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "management-plane",
+      "risk_class": "low — cache is read-through telemetry; the sweep touches live OAuth refresh paths so a bug there degrades credential freshness signal",
+      "dependencies": [
+        "provider_connections OAuth rows",
+        "JobRegistry",
+        "src/lib/tokenHealthCheck sweep"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Direct: cache read returns fresh entry; TTL expiry returns stale/miss; job: run handler once and assert recordsAffected==swept count; disable: OMNIROUTE_DISABLE_TOKEN_HEALTHCHECK set → handler no-ops with success",
+      "rollback_or_disable": "OMNIROUTE_DISABLE_TOKEN_HEALTHCHECK=true (documented kill switch); unregister the job from the registry",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P6-013",
+      "name": "embedded-services-health-checker",
+      "source_refs": [
+        "src/lib/services/healthCheck.ts:5",
+        "src/lib/services/healthCheck.ts:6",
+        "src/lib/services/healthCheck.ts:10",
+        "src/lib/services/healthCheck.ts:29"
+      ],
+      "purpose": "HealthChecker class polls embedded services' health URLs on an interval with a 5s fetch timeout, flips state to down after 3 consecutive failures, notifies via onChange callback, and unrefs its timer so the poller never keeps the process alive. [FACT]",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "management-plane",
+      "risk_class": "low — loopback/embedded-service probes; wrong state only affects service-status display and restart decisions",
+      "dependencies": [
+        "embedded service processes (services lane)"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Direct: point at a stub health URL, observe healthy transition; negative: 3 failed polls → down state via onChange; lifecycle: stop() resets to unknown",
+      "rollback_or_disable": "Do not instantiate HealthChecker for a service; no persistent state to roll back",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P6-014",
+      "name": "request-phase-telemetry-aggregator",
+      "source_refs": [
+        "src/shared/utils/requestTelemetry.ts:20",
+        "src/shared/utils/requestTelemetry.ts:29",
+        "src/shared/utils/requestTelemetry.ts:115",
+        "src/shared/utils/requestTelemetry.ts:123",
+        "src/shared/utils/requestTelemetry.ts:149"
+      ],
+      "purpose": "RequestTelemetry times 7 named request phases (parse, validate, policy, resolve, connect, stream, finalize) per request; a process-local aggregator keeps the last 1000 completed summaries (MAX_HISTORY, FIFO shift) and computes count/avg/p50/p95/p99 plus per-phase breakdowns over a sliding window (default 5min). [FACT]",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "management-plane",
+      "risk_class": "low — in-memory timing telemetry; loss on restart only erases percentile history",
+      "dependencies": [
+        "instrumented request pipeline calling recordTelemetry"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Direct: drive N requests, call getTelemetrySummary and verify count/percentile math on known durations; boundary: >1000 records evicts oldest",
+      "rollback_or_disable": "Stop calling recordTelemetry at the instrumentation points; aggregator idles empty (no flag exists — code-level disable)",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P6-015",
+      "name": "telemetry-summary-endpoint",
+      "source_refs": [
+        "src/app/api/telemetry/summary/route.ts:6",
+        "src/app/api/telemetry/summary/route.ts:10",
+        "src/app/api/telemetry/summary/route.ts:23"
+      ],
+      "purpose": "GET /api/telemetry/summary returns the request-telemetry window summary (windowMs query param, default 300000) joined with quota-monitor summary, active sessions, process uptime, memoryUsage, activeConnections and a derived errorRate. [FACT]",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "management-plane",
+      "risk_class": "medium — exposes process memoryUsage and uptime; on an anonymous-keyless deployment this leaks host operational detail (no publicView filtering seen here, unlike /api/monitoring/health) [INFERENCE: auth classification depends on the central P4 pipeline, not this file]",
+      "dependencies": [
+        "requestTelemetry aggregator",
+        "quotaMonitor",
+        "sessionManager"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Direct: GET ?windowMs=60000 returns count/percentiles plus uptime/memoryUsage keys; cross-check activeConnections equals session manager count",
+      "rollback_or_disable": "Remove src/app/api/telemetry/summary/route.ts; telemetry aggregation remains in-process",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P6-016",
+      "name": "otlp-genai-routing-event-sink",
+      "source_refs": [
+        "open-sse/services/routing/otel.ts:30",
+        "open-sse/services/routing/otel.ts:31",
+        "open-sse/services/routing/otel.ts:63",
+        "open-sse/services/routing/otel.ts:76",
+        "open-sse/services/routing/otel.ts:77",
+        "open-sse/services/routing/index.ts:65"
+      ],
+      "purpose": "Optional lightweight OpenTelemetry sink: when OMNIROUTE_OTEL_ENDPOINT or OTEL_EXPORTER_OTLP_ENDPOINT is set, routing events are forwarded as GenAI semantic-convention spans to a collector's OTLP/HTTP JSON /v1/traces endpoint via global fetch (no @opentelemetry SDK), buffered O(1) with oldest-dropped overflow (never backpressuring the data plane), batch default 64, service name 'omniroute'; explicitly documents that no secrets/prompts are serialized. [FACT]",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "management-plane",
+      "risk_class": "medium — egress of routing metadata (provider/model/token-usage attributes) to an operator-chosen collector; disabled by default so the shipped posture sends nothing",
+      "dependencies": [
+        "routing event pipeline (open-sse/services/routing)",
+        "network reachability to the collector"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Direct: set OMNIROUTE_OTEL_ENDPOINT to a capture stub, issue routed requests, assert GenAI-semconv spans arrive; negative: with env unset isRoutingOtelEnabled() is false and zero OTel code runs; overload: flood events and confirm oldest-dropped, never request-path blocking",
+      "rollback_or_disable": "Unset OMNIROUTE_OTEL_ENDPOINT / OTEL_EXPORTER_OTLP_ENDPOINT — documented as fully inert when unconfigured",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P6-017",
+      "name": "combo-metrics-inmemory-tracker",
+      "source_refs": [
+        "open-sse/services/comboMetrics.ts:1",
+        "open-sse/services/comboMetrics.ts:28",
+        "open-sse/services/comboMetrics.ts:407"
+      ],
+      "purpose": "In-memory per-combo metrics: total/success/failure/fallback counts, latency sums, strategy, intent counts, and per-model/per-target breakdowns (executionKey/stepId/provider/connection) readable via getComboMetrics for the dashboard. [FACT]",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "management-plane",
+      "risk_class": "low — process-local counters; restart resets history (dashboard reads go empty, no correctness impact)",
+      "dependencies": [
+        "combo dispatch path recording events"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Direct: run combo traffic, call getComboMetrics(comboName) and verify counts/latency averages; persistence: restart and confirm counters reset (documented in-memory design)",
+      "rollback_or_disable": "Remove recording calls at dispatch sites; getComboMetrics returns null (no flag — code-level)",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P6-018",
+      "name": "combo-health-aggregation-service",
+      "source_refs": [
+        "src/lib/usage/comboHealth.ts:1",
+        "src/lib/usage/comboHealth.ts:2",
+        "src/lib/usage/comboHealth.ts:3",
+        "src/lib/usage/comboHealth.ts:4"
+      ],
+      "purpose": "buildComboHealthResponse joins combo records, usage-history performance rows (requests/success/latency per model), quota snapshots (remaining %/exhaustion), and in-memory combo metrics into the combo-health dashboard view consumed by /api/usage/combo-health* endpoints. [FACT]",
+      "owner_plane": "dashboard",
+      "architectural_plane": "management-plane",
+      "risk_class": "low — read-only aggregation over existing stores",
+      "dependencies": [
+        "combos DB",
+        "usage_history",
+        "quota_snapshots",
+        "comboMetrics"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Direct: seed usage rows + quota snapshot, verify the response carries per-model performance and quota fields; cross-check the /api/usage/combo-health endpoint serves this builder's output",
+      "rollback_or_disable": "Remove the endpoint wiring; underlying data sources unaffected",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P6-019",
+      "name": "pino-structured-logger-with-redaction-hook",
+      "source_refs": [
+        "src/shared/utils/logger.ts:24",
+        "src/shared/utils/logger.ts:26",
+        "src/shared/utils/logger.ts:35",
+        "src/shared/utils/logger.ts:36",
+        "src/shared/utils/logger.ts:64"
+      ],
+      "purpose": "Primary logger is pino with ISO timestamps, base {service:'omniroute'}, level from APP_LOG_LEVEL (debug in dev, info in prod), a hooks.logMethod wrapper that runs every log call through redactLogArgs before emission, and a multi-target transport (stdout + optional file) whose error listener drops failed writes instead of crashing the process (#6360). [FACT]",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "management-plane",
+      "risk_class": "medium — the redaction hook is the last defense against credential leakage into logs; a regression here leaks secrets to disk/stdout",
+      "dependencies": [
+        "pino + pino transports",
+        "src/shared/utils/logRedaction",
+        "src/lib/logRotation config"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Direct: log a string containing 'Bearer abcdef...' and assert [REDACTED] in output; fault: delete the log directory mid-run and confirm the process survives with a stderr notice",
+      "rollback_or_disable": "Set APP_LOG_TO_FILE=false to drop the file target; removing the hook reverts to raw pino (never recommended)",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P6-020",
+      "name": "log-secret-redaction-net",
+      "source_refs": [
+        "src/shared/utils/logRedaction.ts:14",
+        "src/shared/utils/logRedaction.ts:17",
+        "src/shared/utils/logRedaction.ts:19",
+        "src/shared/utils/logRedaction.ts:36"
+      ],
+      "purpose": "Bounded-regex redaction library: a cheap SECRET_HINT pre-test skips clean strings, then five bounded patterns scrub Authorization/Bearer values, x-api-key/api_key values, Telegram bot tokens, and sk-* style keys to [REDACTED]; recursive object/error redaction is depth-6 / 2000-node capped with a circular guard — explicitly a complement to call-site maskers, not a replacement. [FACT]",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "management-plane",
+      "risk_class": "high — this is the safety net for every log line in the process; pattern regressions or ReDoS-prone edits either leak credentials or hang the logger",
+      "dependencies": [
+        "wired via pino logMethod hook (CAP-P6-019)"
+      ],
+      "required_authorization": "specialist-review",
+      "test_contract": "Direct: unit-feed each secret shape and assert redaction; negative: a 1MB clean string passes through unchanged (hint pre-test); adversarial: pathological input completes within the bounded patterns",
+      "rollback_or_disable": "Remove the hook wiring in logger.ts (reverts to unredacted logging — disable only the file, never the discipline)",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P6-021",
+      "name": "app-log-file-rotation-retention",
+      "source_refs": [
+        "src/lib/logEnv.ts:4",
+        "src/lib/logEnv.ts:6",
+        "src/lib/logEnv.ts:7",
+        "src/lib/logEnv.ts:66",
+        "src/lib/logRotation.ts:29",
+        "src/lib/logRotation.ts:38"
+      ],
+      "purpose": "File logging defaults ON (APP_LOG_TO_FILE!=='false') to DATA_DIR/logs/application/app.log, rotated at 50MB (APP_LOG_MAX_FILE_SIZE), retaining 7 days (APP_LOG_RETENTION_DAYS) and at most 20 rotated files (APP_LOG_MAX_FILES), with a 60s runtime rotation-check interval; the default path is DATA_DIR-anchored so a globally-installed CLI never silently no-ops (#6197). [FACT]",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "management-plane",
+      "risk_class": "medium — log files on disk accumulate request metadata; rotation caps bound disk growth, and a misconfigured path writes outside the data dir",
+      "dependencies": [
+        "fs access to DATA_DIR",
+        "pino file transport (CAP-P6-019)"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Direct: write past 50MB and observe rotation; retention: age files beyond 7 days and confirm cleanup; count: >20 rotated files pruned to 20",
+      "rollback_or_disable": "APP_LOG_TO_FILE=false (documented env kill switch)",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P6-022",
+      "name": "open-sse-tag-console-logger",
+      "source_refs": [
+        "open-sse/utils/logger.ts:1",
+        "open-sse/utils/logger.ts:26",
+        "open-sse/utils/logger.ts:53",
+        "open-sse/utils/logger.ts:62"
+      ],
+      "purpose": "The traffic-plane (open-sse) logger: tag-based or request-scoped console logging with levels debug/info/warn/error gated by APP_LOG_LEVEL (default info) and APP_LOG_FORMAT switching text '[LEVEL] [TAG] msg {meta}' vs single-line JSON, plus generateRequestId (req_<ts>_<counter>) for correlation. [FACT]",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "low — console-only output on the hot path; format/level misconfiguration affects log volume, not traffic",
+      "dependencies": [
+        "src/lib/logEnv getters"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Direct: APP_LOG_FORMAT=json emits parseable single-line JSON; level gate: APP_LOG_LEVEL=warn suppresses info lines",
+      "rollback_or_disable": "Code-level only (no disable flag); reverting the module restores console.* defaults",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P6-023",
+      "name": "legacy-structured-json-file-logger",
+      "source_refs": [
+        "src/shared/utils/structuredLogger.ts:19",
+        "src/shared/utils/structuredLogger.ts:27",
+        "src/shared/utils/structuredLogger.ts:31",
+        "src/shared/utils/structuredLogger.ts:49"
+      ],
+      "purpose": "A second structured logger (debug10/info20/warn30/error40/fatal50) emits human-readable dev output or production JSON and independently appends JSON lines to the app log file when APP_LOG_TO_FILE is enabled, pulling correlation IDs from middleware — parallel to the pino stack. [FACT]",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "management-plane",
+      "risk_class": "low — duplicate write path to the same app log (both this and pino append); its best-effort writeToFile swallows errors by design",
+      "dependencies": [
+        "src/lib/logEnv",
+        "correlationId middleware"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Direct: emit at each level and verify JSON-lines appended to APP_LOG_FILE_PATH; fault: unwritable path → app continues (silent catch)",
+      "rollback_or_disable": "APP_LOG_TO_FILE=false stops its file appends too; module removal reverts call sites to pino",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P6-024",
+      "name": "per-key-no-log-compliance-filter",
+      "source_refs": [
+        "src/lib/compliance/noLog.ts:16",
+        "src/lib/compliance/noLog.ts:22",
+        "src/lib/compliance/noLog.ts:30",
+        "src/lib/compliance/noLog.ts:45"
+      ],
+      "purpose": "Compliance no-log set: API key IDs from NO_LOG_API_KEY_IDS plus runtime setNoLog() calls (mirrored to an api_keys.no_log DB column when present, PRAGMA-verified once, 30s cache) are excluded from call logging — the mechanism for honoring per-key privacy requirements. [FACT]",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "data-plane",
+      "risk_class": "high — a regression here silently logs traffic the operator marked do-not-log (compliance breach); DB-column probe failure degrades to env-only set",
+      "dependencies": [
+        "api_keys.no_log column (migration-dependent)",
+        "callLogs writer honoring the set"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Direct: setNoLog(id,true) then drive traffic with that key and assert no call_log rows; persistence: restart with only env var set and confirm env-seeded keys still suppressed",
+      "rollback_or_disable": "Remove the key from NO_LOG_API_KEY_IDS / setNoLog(id,false) — logging resumes",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P6-025",
+      "name": "proxy-hybrid-ringbuffer-sqlite-logger",
+      "source_refs": [
+        "src/lib/proxyLogger.ts:13",
+        "src/lib/proxyLogger.ts:15",
+        "src/lib/proxyLogger.ts:33",
+        "src/lib/proxyLogger.ts:36"
+      ],
+      "purpose": "Proxy/event logger keeps a 200-entry in-memory ring buffer for real-time dashboard reads and persists the same entries to the SQLite proxy_logs table (skipped in cloud/build phases), capturing status, proxy level, provider, targetUrl, inbound clientIp AND outbound egressIp (the account's exit IP), latency, error, connection/combo/account, and TLS-fingerprint flag. [FACT]",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "data-plane",
+      "risk_class": "medium — persisted rows carry client and egress IPs plus target URLs (privacy surface); bounded by table max-rows retention settings",
+      "dependencies": [
+        "SQLite proxy_logs table",
+        "ensureProxyLogsColumns self-heal"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Direct: emit entries and verify both ring read and DB rows; persistence: restart and confirm hydration from DB; retention: table capped at PROXY_LOGS_TABLE_MAX_ROWS (default 100000, logEnv.ts:11)",
+      "rollback_or_disable": "Purge via /api/settings/purge-proxy-logs family; persistence is skipped automatically in cloud/build phases",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P6-026",
+      "name": "call-log-payload-sensitive-key-masking",
+      "source_refs": [
+        "src/lib/logPayloads.ts:1",
+        "src/lib/logPayloads.ts:3",
+        "src/lib/logPayloads.ts:31"
+      ],
+      "purpose": "Call-log payload writer masks a fixed SENSITIVE_KEYS set (api_key/apiKey, authorization, x-api-key, x-goog-api-key, access/refresh tokens, password, secret, token, cookie, storageState, runtimeKey) and runs bodies through sanitizePII before persisting — deliberately scoped to true credential field names so diagnostic fields like 'capabilities' survive. [FACT]",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "data-plane",
+      "risk_class": "high — call-log artifacts on disk would otherwise hold provider credentials and session cookies (web-impersonation providers surface secrets in bodies, per the in-source comment)",
+      "dependencies": [
+        "call-log artifact writer (P3 lane: usage/callLogArtifacts)",
+        "piiSanitizer"
+      ],
+      "required_authorization": "specialist-review",
+      "test_contract": "Direct: write a payload containing each sensitive key and assert masked artifact; negative: a body with 'capabilities' survives unmasked (documented non-goal)",
+      "rollback_or_disable": "Code-level only; removing the masker reverts to raw artifact writes (never recommended)",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P6-027",
+      "name": "client-apikey-redis-fixed-window-rate-limit",
+      "source_refs": [
+        "src/shared/utils/rateLimiter.ts:112",
+        "src/shared/utils/rateLimiter.ts:143",
+        "src/shared/utils/rateLimiter.ts:226",
+        "src/shared/utils/rateLimiter.ts:242",
+        "src/shared/utils/rateLimiter.ts:266",
+        "src/shared/utils/apiKeyPolicy.ts:628",
+        "src/shared/utils/apiKeyPolicy.ts:633",
+        "src/shared/utils/apiKeyPolicy.ts:642"
+      ],
+      "purpose": "Client-facing per-API-key request rate limiting: validateRateLimitAndThrottle builds rules (per-key custom rateLimits, else DEFAULT+ENV defaults plus maxRequestsPerDay/Minute) and enforces them via an atomic Redis Lua multi-rule fixed-window script (window keys with 2x TTL), falling back to a process-local in-memory store with bounded O(n) stale-window eviction when REDIS_URL is unset, failing OPEN on Redis eval errors, then applying an optional per-key throttleDelayMs (capped 300s). [FACT]",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "high — the only request-rate control on the client traffic plane; fail-open on Redis outage means limit bypass during cache failure, and in-memory fallback is per-process (limits multiply across replicas)",
+      "dependencies": [
+        "Redis via ioredis when REDIS_URL set (lazy import, key prefix 'omniroute:')",
+        "api key metadata (rateLimits, maxRequestsPerDay/Minute, throttleDelayMs)"
+      ],
+      "required_authorization": "layer-N",
+      "test_contract": "Direct: configure limit=2/60s on a key, 3rd request in-window gets 429 'Request limit exceeded (60s window)'; fallback: unset REDIS_URL and repeat against the in-memory store; fault: kill Redis mid-test → requests pass (documented fail-open); negative: throttleDelayMs adds measurable delay",
+      "rollback_or_disable": "Remove a key's rateLimits and defaults to disable per-key limiting; the check no-ops when no rules exist (rateLimiter.ts:230)",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P6-028",
+      "name": "api-key-token-limit-policy",
+      "source_refs": [
+        "src/shared/utils/apiKeyPolicy.ts:596",
+        "src/shared/utils/apiKeyPolicy.ts:600",
+        "src/shared/utils/apiKeyPolicy.ts:604",
+        "open-sse/services/tokenLimitCounter.ts:192",
+        "open-sse/services/tokenLimitCounter.ts:257"
+      ],
+      "purpose": "Per-key token budgets enforced in the policy chain: validateTokenLimit calls checkTokenLimits(apiKeyId, provider, model) and rejects breaches with 429 naming scope and used/limit tokens; recordTokenUsage increments billable-token windows post-request (provider/model-scoped counters with reset-log rows on window rollover). [FACT]",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "medium — token overspend control per key; check failure is fail-closed (503 'Token limit policy unavailable') unlike the rate limiter",
+      "dependencies": [
+        "tokenLimitCounter windows",
+        "usage accounting (P3) for billable tokens"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Direct: set a small per-model token limit and drive requests until 429 with 'Token limit exceeded for model ...'; negative: counter increments only for billable tokens (record path no-ops on <=0)",
+      "rollback_or_disable": "Clear the key's token-limit configuration; validateTokenLimit returns null when no breach/limit",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P6-029",
+      "name": "api-key-daily-weekly-usd-usage-limits",
+      "source_refs": [
+        "src/lib/usage/apiKeyUsageLimits.ts:11",
+        "src/lib/usage/apiKeyUsageLimits.ts:24",
+        "src/lib/usage/apiKeyUsageLimits.ts:30",
+        "src/app/api/keys/[id]/usage-limits/route.ts:7",
+        "src/app/api/keys/[id]/usage-limits/route.ts:18"
+      ],
+      "purpose": "Optional per-key cost ceilings (usageLimitEnabled with dailyUsageLimitUsd/weeklyUsageLimitUsd): status computed from spend rows with daily/weekly window boundaries (Fortaleza UTC-3 anchored), exposing dailySpentUsd/weeklySpentUsd and exceeded flags via the management endpoint GET /api/keys/[id]/usage-limits. [FACT]",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "medium — spend-capping control per client key; enforcement correctness depends on cost-calculator fidelity (cross-ref P3 usage accounting)",
+      "dependencies": [
+        "costCalculator",
+        "provider limits cache",
+        "quota reset events for window starts"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Direct: enable a $0.01 daily limit, drive billable traffic, assert dailyExceeded flips and the API reports it; boundary: window rolls at the documented UTC-3 midnight anchor",
+      "rollback_or_disable": "Set usageLimitEnabled=false on the key (status endpoint reports enabled:false)",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P6-030",
+      "name": "provider-adaptive-bottleneck-rate-limit-manager",
+      "source_refs": [
+        "open-sse/services/rateLimitManager.ts:4",
+        "open-sse/services/rateLimitManager.ts:7",
+        "open-sse/services/rateLimitManager.ts:78",
+        "open-sse/services/rateLimitManager.ts:88",
+        "open-sse/services/rateLimitManager.ts:93"
+      ],
+      "purpose": "Upstream-side adaptive limiting: per provider+connection Bottleneck limiters auto-learn limits from response headers (x-ratelimit-*, retry-after, anthropic-ratelimit-*), enabled by default for API-key providers and disabled for OAuth, togglable per connection; learned limits (max 200 entries) persist debounced every 60s, with a wedge watchdog replacing stuck limiters. [FACT]",
+      "owner_plane": "provider-adapter",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "medium — mislearned reservoirs throttle or burst against upstream quotas; per-process state means each replica learns independently",
+      "dependencies": [
+        "Bottleneck",
+        "provider response headers",
+        "resilience settings (request queue)"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Direct: drive responses carrying x-ratelimit-remaining/reset and verify the limiter reservoir updates (getLearnedLimits); negative: OAuth connection has no limiter by default; persistence: learned limits survive debounced save/restore",
+      "rollback_or_disable": "Per-connection dashboard toggle (disableRateLimitProtection); global: no kill switch — per-connection only",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P6-031",
+      "name": "provider-rate-limit-state-db-persistence",
+      "source_refs": [
+        "src/lib/db/providers/rateLimit.ts:18",
+        "src/lib/db/providers/rateLimit.ts:30",
+        "src/lib/db/providers/rateLimit.ts:33"
+      ],
+      "purpose": "Rate-limited-until state is persisted directly on provider_connections.rate_limited_until so cooldowns survive OAuth token refreshes (which must not clear the field) — sub2api-derived fix preventing premature retry of rate-limited accounts. [FACT]",
+      "owner_plane": "provider-adapter",
+      "architectural_plane": "data-plane",
+      "risk_class": "low — a stuck timestamp keeps an account parked (availability); OAuth flows are the corruption vector the design guards",
+      "dependencies": [
+        "provider_connections table"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Persistence: set a connection rate-limited, run the token-refresh path, assert rate_limited_until survives; negative: clearing sets NULL and re-enables the account",
+      "rollback_or_disable": "setConnectionRateLimitUntil(id, null) clears the cooldown",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P6-032",
+      "name": "provider-default-sliding-window-fallback",
+      "source_refs": [
+        "open-sse/services/providerDefaultRateLimit.ts:7",
+        "open-sse/services/providerDefaultRateLimit.ts:23",
+        "open-sse/services/providerDefaultRateLimit.ts:30"
+      ],
+      "purpose": "For providers that send no rate-limit headers (so the adaptive path learns nothing), a static sliding-window limiter enforces documented caps — currently only nvidia (40 req/60s plus a per-connection concurrency cap of 6) — with operator overrides resolved from resilience settings; no-op for every other provider. [FACT]",
+      "owner_plane": "provider-adapter",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "low — proactive throttling only; a wrong static entry under-throttles (upstream 429s) or over-throttles (lost throughput) one provider",
+      "dependencies": [
+        "SlidingWindowLimiter",
+        "ResilienceSettings.providerQuotaOverrides"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Direct: send 41 nvidia requests in 60s and observe the 41st delayed/queued by the window; negative: another provider sees zero behavior change (documented no-op)",
+      "rollback_or_disable": "Remove the PROVIDER_DEFAULT_RATE_LIMITS entry / override to null — path becomes a no-op",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P6-033",
+      "name": "per-model-concurrency-semaphore",
+      "source_refs": [
+        "open-sse/services/rateLimitSemaphore.ts:4",
+        "open-sse/services/rateLimitSemaphore.ts:8",
+        "open-sse/services/rateLimitSemaphore.ts:18",
+        "open-sse/services/rateLimitSemaphore.ts:35"
+      ],
+      "purpose": "Per-model FIFO concurrency gate for the round-robin combo strategy: at max concurrency requests queue instead of failing, rate-limited models pause their queue, and an optional maxQueueSize rejects over-deep waits with SEMAPHORE_QUEUE_FULL so the combo loop cascades immediately; all state is in-memory by design. [FACT]",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "medium — unbounded historical queue behavior can park requests under a wedged upstream; bounded queue option changes failover latency characteristics",
+      "dependencies": [
+        "combo round-robin dispatch (P1)"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Direct: hold maxConcurrency requests, issue one more and verify FIFO acquisition on release; negative: maxQueueSize=0 rejects immediately with SEMAPHORE_QUEUE_FULL; timeout: queued acquire rejects after timeoutMs",
+      "rollback_or_disable": "Omit maxQueueSize to restore historical unbounded queue; state resets on restart (documented)",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P6-034",
+      "name": "upstream-waf-burst-guard",
+      "source_refs": [
+        "open-sse/services/wafRateLimit.ts:9",
+        "open-sse/services/wafRateLimit.ts:28",
+        "open-sse/services/wafRateLimit.ts:31"
+      ],
+      "purpose": "agentrouter.org WAF guard: serializes outbound calls per provider with a minimum 500ms inter-request gap so request bursts do not trip the upstream content-filter WAF into 400 content-blocked responses; in-memory per-provider last-sent state, conservative default tuned below human latency perception. [FACT]",
+      "owner_plane": "provider-adapter",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "low — added latency floor (500ms) on one provider path; per-process state means replicas can still jointly burst",
+      "dependencies": [
+        "agentrouter provider executor"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Direct: fire two rapid agentrouter calls and measure >=500ms spacing; negative: non-agentrouter providers are unaffected",
+      "rollback_or_disable": "configureWafRateLimit({minGapMs:0}) or remove the guard call from the executor",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P6-035",
+      "name": "gemini-rpd-rpm-tpm-classifier-tracker",
+      "source_refs": [
+        "open-sse/services/geminiRateLimitTracker.ts:1",
+        "open-sse/services/geminiRateLimitTracker.ts:23",
+        "open-sse/services/geminiRateLimitTracker.ts:27"
+      ],
+      "purpose": "In-memory Gemini counters (daily RPD, sliding-60s RPM, sliding-60s TPM) fed by published per-model limits from geminiRateLimits.json, used to classify Gemini's identical 429 bodies as quota_exhausted vs rate_limit_exceeded vs token_rate_exceeded. [FACT]",
+      "owner_plane": "provider-adapter",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "low — classification only (error semantics/failover messaging); counters are per-process and reset daily by date key",
+      "dependencies": [
+        "geminiRateLimits.json published limits",
+        "Gemini executor instrumentation"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Direct: drive a model to its published RPD in the tracker, force a 429, assert classification quota_exhausted; negative: a fresh date key resets daily counts",
+      "rollback_or_disable": "Remove the instrumentation calls; classification falls back to generic 429 handling",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P6-036",
+      "name": "chat-body-admission-heavyweight-gate",
+      "source_refs": [
+        "src/shared/middleware/chatBodyAdmission.ts:10",
+        "src/shared/middleware/chatBodyAdmission.ts:55",
+        "src/shared/middleware/chatBodyAdmission.ts:60",
+        "src/shared/middleware/chatBodyAdmission.ts:65",
+        "src/shared/middleware/chatBodyAdmission.ts:77",
+        "src/shared/middleware/chatBodyAdmission.ts:90"
+      ],
+      "purpose": "Process-local admission gate for POST /v1/chat/completions: ONE global heavyweight budget shared by all keys/sessions (fake-credential-sharding resistant), reserving capacity before parsing and enforcing against bytes actually read (not Content-Length); heavyweight threshold 256KB (OMNIROUTE_CHAT_LARGE_BODY_BYTES), hard body cap 50MB, max 1 heavy in flight by default, bounded 2s queue wait (retryable 503 instead of instant rejection for agent fan-out), and a 4MB queued-bytes budget charging parked waiters' buffered bodies. [FACT]",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "high — this is the heap-exhaustion defense on the hottest path (#4380 class); misconfiguration either OOMs the process or serializes all chat traffic to concurrency 1",
+      "dependencies": [
+        "admissionBudget byte budget (CAP-P6-037)",
+        "resource pressure observation",
+        "gracefulShutdown request tracking"
+      ],
+      "required_authorization": "layer-N",
+      "test_contract": "Direct: two >256KB concurrent bodies → second waits then 200; load: exceed queue budget → retryable 503; negative: small bodies bypass the heavyweight path; boundary: >50MB body rejected pre-parse",
+      "rollback_or_disable": "OMNIROUTE_CHAT_MAX_HEAVY_IN_FLIGHT / OMNIROUTE_CHAT_ADMISSION_QUEUE_MS=0 restores legacy immediate-reject behavior; no full off switch (structural)",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P6-037",
+      "name": "ingest-byte-budget-autocalibration",
+      "source_refs": [
+        "src/shared/middleware/admissionBudget.ts:17",
+        "src/shared/middleware/admissionBudget.ts:24",
+        "src/shared/middleware/admissionBudget.ts:29",
+        "src/shared/middleware/admissionBudget.ts:30",
+        "src/shared/middleware/admissionBudget.ts:51",
+        "src/shared/middleware/admissionBudget.ts:101"
+      ],
+      "purpose": "Auto-derived process-wide ingest byte budget: min(V8 heap limit, cgroup constrainedMemory) × 0.25 heap fraction ÷ 8 amplification, clamped to [8MB, 2GB], with OMNIROUTE_CHAT_MAX_INFLIGHT_BYTES override — so the admission gate scales from a 512MB container to a 32GB host without env tuning, cached after first resolution. [FACT]",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "medium — the budget value IS the admission ceiling; a wrong cgroup read under-reserves (OOM risk) or over-reserves (needless 503s)",
+      "dependencies": [
+        "node:v8 getHeapStatistics",
+        "process.constrainedMemory (cgroup)"
+      ],
+      "required_authorization": "layer-N",
+      "test_contract": "Direct: on a constrained container verify budget == clamp(cgroup*0.25/8); override: OMNIROUTE_CHAT_MAX_INFLIGHT_BYTES=16MB yields source 'override'; boundary: sub-128MiB host hits the 8MB floor",
+      "rollback_or_disable": "OMNIROUTE_CHAT_MAX_INFLIGHT_BYTES override pins the budget manually (documented escape hatch)",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P6-038",
+      "name": "adaptive-admission-controller-shadow-mode",
+      "source_refs": [
+        "open-sse/services/admission/runtime.ts:33",
+        "open-sse/services/admission/runtime.ts:34",
+        "open-sse/services/admission/runtime.ts:36",
+        "open-sse/services/admission/runtime.ts:65"
+      ],
+      "purpose": "Adaptive admission layer: a cost-based concurrency controller (min 8 / initial 64 / max 1000, queue caps 128 count / 2000 cost, 5s max wait, 1s window) that ships in 'shadow' mode by default — it computes would-admit/would-queue/would-reject decisions for the health payload without enforcing, configurable via ADAPTIVE_ADMISSION_* env keys, integrated with resource-pressure signals. [FACT]",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "medium — enforcing mode changes production admission behavior globally; shadow mode is telemetry-only and safe",
+      "dependencies": [
+        "admission controller + config validation",
+        "resourcePressure utils"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Direct: read the snapshot in /api/monitoring/health and confirm mode 'shadow' with wouldAdmit counters moving under load; mutation: ADAPTIVE_ADMISSION_MODE=enforce turns decisions live (requires owner sign-off per HX governance)",
+      "rollback_or_disable": "ADAPTIVE_ADMISSION_MODE=shadow (the shipped default) or leave the env unset",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P6-039",
+      "name": "session-fingerprint-sticky-manager",
+      "source_refs": [
+        "open-sse/services/sessionManager.ts:39",
+        "open-sse/services/sessionManager.ts:42",
+        "open-sse/services/sessionManager.ts:45",
+        "open-sse/services/sessionManager.ts:63",
+        "open-sse/services/sessionManager.ts:103"
+      ],
+      "purpose": "Session fingerprinting for sticky routing and prompt-cache affinity: stable session IDs hashed from model/provider/system-prompt/first-message/tools signature, tracked in an in-memory map hard-capped at 200 sessions with 15-minute TTL eviction every 60s (oldest evicted over cap), plus per-API-key active-session sets for the dashboard. [FACT]",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "medium — sticky-routing state lives here; cap eviction silently re-homes long sessions to other accounts (cache-locality loss), and fingerprints derived from prompt content are a correlation surface",
+      "dependencies": [
+        "request bodies (system prompt, first user message, tools)",
+        "per-key session sets"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Direct: same conversation shape twice → identical session ID; boundary: create 201 sessions and verify oldest eviction below the 200 cap; TTL: idle 15min + sweep → session gone",
+      "rollback_or_disable": "Code-level only; removing generateSessionId calls reverts to non-sticky routing",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P6-040",
+      "name": "exclusive-connection-session-leases",
+      "source_refs": [
+        "src/app/api/v1/session-leases/route.ts:28",
+        "src/app/api/v1/session-leases/route.ts:32",
+        "src/app/api/v1/session-leases/route.ts:55",
+        "src/app/api/sessions/route.ts:32",
+        "src/app/api/sessions/route.ts:33"
+      ],
+      "purpose": "Client-facing lease protocol (POST /api/v1/session-leases, API-key authed): zod-discriminated acquire/renew/release actions with positive-safe generation counters and typed release reasons (OWNER_EXIT, CLIENT_CANCELLED) over exclusive provider connections; occupancy authority is the SQLite exclusive_connection_leases table, projected into the dashboard /api/sessions view alongside in-memory sessions. [FACT]",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "high — leases serialize exclusive account access; generation-counter or release bugs either double-book a connection (upstream account conflict) or wedge it leased forever",
+      "dependencies": [
+        "exclusiveConnectionLeases DB layer",
+        "apiKeyPolicy enforcement",
+        "leaseContext parsing"
+      ],
+      "required_authorization": "layer-N",
+      "test_contract": "Direct: acquire returns state+generation+expiry; fencing: renew with a stale generation rejected; lifecycle: release with OWNER_EXIT frees occupancy visible in /api/sessions; negative: unauthenticated POST is 401 LEASE_AUTHENTICATION_REQUIRED",
+      "rollback_or_disable": "Delete the lease rows server-side to force-release; clients without lease support are unaffected (opt-in protocol)",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P6-041",
+      "name": "quota-share-engine-enforcement",
+      "source_refs": [
+        "src/lib/quota/enforce.ts:5",
+        "src/lib/quota/enforce.ts:9",
+        "src/lib/quota/enforce.ts:30",
+        "src/lib/quota/enforce.ts:62",
+        "src/lib/quota/enforce.ts:146",
+        "src/lib/quota/enforce.ts:292",
+        "open-sse/handlers/chatCore.ts:2852",
+        "open-sse/handlers/embeddings.ts:388"
+      ],
+      "purpose": "Quota Sharing Engine hot-path gate: enforceQuotaShare (PRE-request; wired into chatCore and embeddings handlers) resolves the key's pool allocation and plan dimensions, applies per-(key,model) caps (hourly window, 429 'model-cap' with quota.exceeded webhook), fair-share decisions with a 0.5 saturation threshold, and blocks with sanitized 429s; recordConsumption tracks post-response usage fire-and-forget; the whole engine is FAIL-OPEN by design (B16) so quota-infrastructure errors never block traffic. [FACT]",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "high — fail-open means quota infra failure silently lifts all sharing limits; conversely a saturation-signal bug blocks paying traffic with 429s",
+      "dependencies": [
+        "QuotaStore (CAP-P6-042)",
+        "quotaPools/quotaModelCaps DB",
+        "plan resolver + saturation signals",
+        "spendRecorder"
+      ],
+      "required_authorization": "layer-N",
+      "test_contract": "Direct: allocate a key with a tiny pool cap and drive to 429; negative: break the store (DB down) and confirm requests still pass (B16); model-cap: cap one model, verify sibling models in the same pool unaffected",
+      "rollback_or_disable": "Remove the key's pool allocations (engine returns allow when no pool matches); no global kill switch beyond empty allocations",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P6-042",
+      "name": "quota-store-sliding-window-sqlite-redis",
+      "source_refs": [
+        "src/lib/quota/sqliteQuotaStore.ts:4",
+        "src/lib/quota/sqliteQuotaStore.ts:28",
+        "src/lib/quota/sqliteQuotaStore.ts:58",
+        "src/lib/quota/storeFactory.ts:4",
+        "src/lib/quota/storeFactory.ts:13",
+        "src/lib/quota/storeFactory.ts:80",
+        "src/app/api/settings/quota-store/route.ts:92"
+      ],
+      "purpose": "Quota consumption storage: sliding-window counter with 2 buckets per (apiKey, dimension) (effective = prev×(1−elapsed/window)+curr), per-key in-memory mutex serializing read-modify-write, SQLite default driver selectable to Redis via DB setting quotaStore.driver or QUOTA_STORE_DRIVER env (Redis URL via setting/env, invalid → sqlite fallback with warning, never throws); driver change via settings API resets the singleton. [FACT]",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "data-plane",
+      "risk_class": "medium — SQLite driver is single-process (sharing limits don't span replicas); the sliding window approximates rates (bounded drift vs fixed windows)",
+      "dependencies": [
+        "SQLite quota_consumption tables",
+        "optional Redis",
+        "settings API"
+      ],
+      "required_authorization": "layer-N",
+      "test_contract": "Direct: consume cost across a window boundary and verify the weighted-effective math; concurrency: parallel consumes serialize via mutex without lost updates; driver: set redis driver with bad URL → falls back to sqlite and logs",
+      "rollback_or_disable": "PUT /api/settings/quota-store driver=sqlite (default); singleton reset picks it up on next call",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P6-043",
+      "name": "quota-pools-and-allocations-crud",
+      "source_refs": [
+        "src/lib/db/quotaPools.ts:1",
+        "src/lib/db/quotaPools.ts:4",
+        "src/lib/db/quotaPools.ts:14",
+        "src/lib/db/quotaPools.ts:22"
+      ],
+      "purpose": "Persistence for quota_pools and quota_allocations: pools group provider connections with per-API-key weight+cap+policy allocations; every mutation is prepared-statement SQL, and pool changes fire serialized background maintenance that auto-mints/prunes the matching quotaShared-* combos without ever breaking pool CRUD on combo failure. [FACT]",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "data-plane",
+      "risk_class": "medium — allocation rows define who gets what share; the auto-combo hook silently changes routing-visible combos on pool edits (operational surprise vector)",
+      "dependencies": [
+        "quota pool tables",
+        "combo maintenance hook",
+        "model catalog cache invalidation"
+      ],
+      "required_authorization": "layer-N",
+      "test_contract": "Direct: create pool + allocation, verify rows and the auto-minted quotaShared-* combo; negative: combo-maintenance failure leaves pool CRUD successful (documented fire-and-forget); cleanup: pool deletion prunes its combos",
+      "rollback_or_disable": "DELETE the pool (guarded cleanup removes minted combos); allocations can be zeroed without deleting the pool",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P6-044",
+      "name": "active-session-quota-monitor",
+      "source_refs": [
+        "open-sse/services/quotaMonitor.ts:5",
+        "open-sse/services/quotaMonitor.ts:21",
+        "open-sse/services/quotaMonitor.ts:22",
+        "open-sse/services/quotaMonitor.ts:23",
+        "open-sse/services/quotaMonitor.ts:24"
+      ],
+      "purpose": "Per-connection active quota polling (opt-in via providerSpecificData.quotaMonitorEnabled, default false): adaptive interval 60s normal → 15s critical (≥80% warn, ≥95% exhausted), session-deduplicated alerts within a 5-minute suppression window, unref'd timers, and snapshots feeding the monitoring health payload. [FACT]",
+      "owner_plane": "provider-adapter",
+      "architectural_plane": "management-plane",
+      "risk_class": "low — outbound quota-API polling; wrong exhaustion classification parks accounts early (availability) but never blocks the request path directly",
+      "dependencies": [
+        "registered quota fetchers (quotaPreflight)",
+        "sessionManager session binding"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Direct: enable on a connection with a stub fetcher reporting 96% → status exhausted, 15s polling; alert: second alert within 5min suppressed; disable: flag off → monitor idles",
+      "rollback_or_disable": "providerSpecificData.quotaMonitorEnabled=false (the shipped default)",
+      "preliminary_disposition": "AVAILABLE-DISABLED"
+    },
+    {
+      "id": "CAP-P6-045",
+      "name": "internal-budget-guard-evaluator",
+      "source_refs": [
+        "src/lib/usage/budgetGuard.ts:1",
+        "src/lib/usage/budgetGuard.ts:4",
+        "src/lib/usage/budgetGuard.ts:31",
+        "src/lib/usage/budgetGuard.ts:49",
+        "src/lib/usage/budgetGuard.ts:50"
+      ],
+      "purpose": "Pure budget evaluator for internal limits: scoped (global/provider/model/pool), period (daily/weekly/monthly), typed (currency/tokens/requests) limits with a warning threshold returning allow/warn/deny — deny on exhaustion, deny on invalid config (non-finite usage or non-positive limit), warn past the threshold fraction. [FACT]",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "medium — deny decisions block traffic; invalid-config fail-closed (deny) is the safe direction but can wedge a misconfigured scope",
+      "dependencies": [
+        "budget limit configuration",
+        "usage/cost accounting inputs"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Direct: usage at 99% of limit → allow or warn per threshold; at 100% → deny 'Internal budget exhausted'; negative: disabled/absent limit → allow; invalid: limitValue<=0 → deny with config reason",
+      "rollback_or_disable": "Set enabled=false on the limit row (evaluateBudget returns allow for disabled limits)",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P6-046",
+      "name": "api-key-cost-budget-schedules",
+      "source_refs": [
+        "src/domain/costRules.ts:349",
+        "src/domain/costRules.ts:437",
+        "src/shared/utils/apiKeyPolicy.ts:590",
+        "src/shared/utils/apiKeyPolicy.ts:591",
+        "src/app/api/usage/budget/route.ts:7",
+        "src/app/api/usage/budget/route.ts:43"
+      ],
+      "purpose": "Per-API-key USD budgets with scheduled resets: setBudget configures daily/weekly/monthly limits + warning threshold + reset interval/time persisted in SQLite; checkBudget is enforced in the API-key policy chain where a budget-check failure fails CLOSED with 503 'Budget policy unavailable' and breaches deny the request; GET/POST /api/usage/budget (management-auth) exposes cost summaries and budget writes. [FACT]",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "high — spend control per key; the fail-closed 503 on budget-store error means a DB hiccup halts all budgeted keys' traffic (availability vs overspend tradeoff, deliberately closed)",
+      "dependencies": [
+        "SQLite domainState budget/cost tables",
+        "spend batch writer",
+        "usage cost accounting (P3)"
+      ],
+      "required_authorization": "layer-N",
+      "test_contract": "Direct: set $0.01 daily budget, drive spend, assert denial past limit; fault: break the budget store and confirm 503 (not silent allow); reset: window rollover zeroes the period per schedule",
+      "rollback_or_disable": "Delete the key's budget config; checkBudget passes with no budget present",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P6-047",
+      "name": "budget-reset-registry-job",
+      "source_refs": [
+        "src/lib/jobs/budgetResetJob.ts:4",
+        "src/lib/jobs/budgetResetJob.ts:20",
+        "src/lib/jobs/budgetResetJob.ts:29",
+        "src/lib/jobs/budgetResetJob.ts:34"
+      ],
+      "purpose": "JobRegistry interval job 'budget_reset' (default every 10min, floor 10s, OMNIROUTE_BUDGET_RESET_JOB_INTERVAL_MS) that syncs all budget schedules — processing due resets and recording run success/failure through the registry's safeRun rather than local try/catch. [FACT]",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "data-plane",
+      "risk_class": "low — a stalled job leaves expired budgets un-reset (deny persists past window); interval floor prevents hot-loop misconfiguration",
+      "dependencies": [
+        "JobRegistry",
+        "domain costRules syncAllBudgetSchedules"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Direct: seed a budget whose reset is due, run the handler, assert recordsAffected==resetCount; scheduling: registry shows the interval registration and run records",
+      "rollback_or_disable": "Disable the job in the registry (enabled:false); schedules then reset lazily never — budgets stay at last state",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P6-048",
+      "name": "relay-token-rate-limit",
+      "source_refs": [
+        "src/lib/db/relayProxies.ts:237",
+        "src/lib/db/relayProxies.ts:254",
+        "src/lib/db/relayProxies.ts:255",
+        "src/app/api/v1/relay/chat/completions/route.ts:265"
+      ],
+      "purpose": "Relay-surface token rate limiting: checkRateLimit enforces per-relay-token minute and day windows (epoch-aligned buckets read from SQLite relay usage rows) before dispatching /api/v1/relay/chat/completions, returning allowed/remaining/resetIn for client headers. [FACT]",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "medium — the relay plane's only quota guard; DB-window math errors either over-admit relay traffic or lock out valid relay tokens",
+      "dependencies": [
+        "relay_tokens + usage rows in SQLite",
+        "relay route wiring"
+      ],
+      "required_authorization": "layer-N",
+      "test_contract": "Direct: exceed the token's per-minute limit and assert rejection with resetIn; boundary: window rollover restores allowance; negative: unknown token id → allowed:false",
+      "rollback_or_disable": "Raise/remove the token's limits in relay_tokens; no global toggle",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P6-049",
+      "name": "registered-key-issuance-quota-check",
+      "source_refs": [
+        "src/app/api/v1/quotas/check/route.ts:11",
+        "src/app/api/v1/quotas/check/route.ts:21"
+      ],
+      "purpose": "GET /api/v1/quotas/check?provider=&accountId= (authenticated) pre-validates whether a new registered key may be issued for a provider/account without issuing it — the dry-run front door to registered-key quota enforcement. [FACT]",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "management-plane",
+      "risk_class": "low — read-only pre-check; the authoritative enforcement lives in the registered-keys issuance path itself",
+      "dependencies": [
+        "src/lib/db/registeredKeys checkQuota"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Direct: query a provider/account at its issuance cap → allowed:false with errorCode; negative: unauthenticated → 401",
+      "rollback_or_disable": "No runtime state; remove the route to drop the dry-run surface (issuance enforcement remains)",
+      "preliminary_disposition": "ACTIVE-CANDIDATE"
+    },
+    {
+      "id": "CAP-P6-900",
+      "name": "NOT-ESTABLISHED-prometheus-openmetrics-exporter",
+      "source_refs": [
+        "open-sse/services/routing/otel.ts:10"
+      ],
+      "purpose": "Searched for a Prometheus/OpenMetrics /metrics exporter: case-insensitive grep for 'prometheus|openmetrics' across src/, open-sse/, packages/, package.json returned zero matches; the only metrics-export-shaped surface found is the OTLP GenAI routing-event sink (CAP-P6-016), which is traces, not scrape metrics. [FACT — absence, grep-verified]",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "management-plane",
+      "risk_class": "low — absence of a scrape endpoint is an integration gap, not a defect; dashboards are HTML + JSON APIs instead",
+      "dependencies": [
+        "—"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Re-run the grep at any later snapshot to re-verify absence",
+      "rollback_or_disable": "n/a — nothing to disable",
+      "preliminary_disposition": "NOT-ESTABLISHED"
+    },
+    {
+      "id": "CAP-P6-901",
+      "name": "NOT-ESTABLISHED-distributed-session-store",
+      "source_refs": [
+        "open-sse/services/sessionManager.ts:39",
+        "open-sse/services/sessionManager.ts:46"
+      ],
+      "purpose": "Searched for a distributed/persistent session store: sessionManager state is a process-local Map with a local setInterval sweeper; no Redis/external session backend exists for sticky sessions (contrast: the quota store HAS an optional Redis driver, CAP-P6-042 — sessions do not). [FACT — absence in modules read; INFERENCE that no other session store exists, corroborated by Coder-X review]",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "low — multi-replica deployments lose stickiness coherence and split the 200-session cap per replica",
+      "dependencies": [
+        "—"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Grep sessionManager + redisQuotaStore contrast at any later snapshot",
+      "rollback_or_disable": "n/a",
+      "preliminary_disposition": "NOT-ESTABLISHED"
+    },
+    {
+      "id": "CAP-P6-902",
+      "name": "NOT-ESTABLISHED-per-ip-traffic-plane-rate-limit",
+      "source_refs": [
+        "src/shared/utils/apiKeyPolicy.ts:630",
+        "src/shared/utils/rateLimiter.ts:255"
+      ],
+      "purpose": "Searched for per-client-IP rate limiting on the /v1 traffic plane: the only client-plane request limiter keys on apiKeyInfo.id (rl:api_key:<id> window keys), so anonymous keyless traffic (REQUIRE_API_KEY=false default, P4) has no per-IP request-rate control on the inference path; the per-IP login throttle found by P4 (loginGuard) is management-plane only. [FACT — absence in policy chain; key-space is api_key by construction]",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "medium — on a keyless deployment the inference plane has no request-rate brake short of the structural admission gate (CAP-P6-036)",
+      "dependencies": [
+        "—"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Re-check apiKeyPolicy + rateLimiter key space at any later snapshot",
+      "rollback_or_disable": "n/a",
+      "preliminary_disposition": "NOT-ESTABLISHED"
+    },
+    {
+      "id": "CAP-P6-903",
+      "name": "NOT-ESTABLISHED-external-log-shipping-sink",
+      "source_refs": [
+        "src/lib/logEnv.ts:22",
+        "src/lib/proxyLogger.ts:13"
+      ],
+      "purpose": "Searched for external log shipping (syslog/fluentd/loki/HTTP drains): logging destinations are stdout, the local app.log file (DATA_DIR-anchored), and SQLite tables; no shipper configuration or drain endpoint exists in the modules read. [FACT — absence; corroborated by Coder-X review of the logging bundle]",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "management-plane",
+      "risk_class": "low — log aggregation must scrape files/stdout externally (acceptable on the single-host LAN posture)",
+      "dependencies": [
+        "—"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Grep logEnv/logRotation/proxyLogger destinations at any later snapshot",
+      "rollback_or_disable": "n/a",
+      "preliminary_disposition": "NOT-ESTABLISHED"
+    },
+    {
+      "id": "CAP-P6-904",
+      "name": "NOT-ESTABLISHED-opentelemetry-sdk-request-tracing",
+      "source_refs": [
+        "open-sse/services/routing/otel.ts:10",
+        "open-sse/services/routing/otel.ts:11"
+      ],
+      "purpose": "Searched for OpenTelemetry SDK-based request tracing (@opentelemetry/* packages): package.json carries no such dependency and the only OTel-shaped code is the deliberately SDK-free OTLP/HTTP routing-event sink (CAP-P6-016); the request pipeline itself is not span-instrumented. [FACT — absence; dependency-free design stated in the module doc]",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "management-plane",
+      "risk_class": "low — end-to-end distributed tracing of requests is unavailable; only routing events can be exported",
+      "dependencies": [
+        "—"
+      ],
+      "required_authorization": "none",
+      "test_contract": "Re-check package.json dependencies at any later snapshot",
+      "rollback_or_disable": "n/a",
+      "preliminary_disposition": "NOT-ESTABLISHED"
+    },
+    {
+      "id": "CAP-P6-905",
+      "name": "NOT-ESTABLISHED-quota-fail-closed-option",
+      "source_refs": [
+        "src/lib/quota/enforce.ts:9",
+        "src/lib/quota/enforce.ts:58"
+      ],
+      "purpose": "Searched for a configuration to make quota-share enforcement fail-CLOSED: the engine documents fail-open as a fixed design decision (B16 — 'any error from store/plan/saturation is caught and treated as allow'), and grep for QUOTA_FAIL*/failClosed/fail_closed across src/lib/quota and quotaMonitor returned no toggle. [FACT — absence, grep-verified]",
+      "owner_plane": "omniroute-core",
+      "architectural_plane": "traffic-plane",
+      "risk_class": "medium — an operator who needs hard quota guarantees (billing-critical) cannot flip the failure posture without a code change",
+      "dependencies": [
+        "—"
+      ],
+      "required_authorization": "owner",
+      "test_contract": "Re-grep the quota engine for a posture flag at any later snapshot",
+      "rollback_or_disable": "n/a",
+      "preliminary_disposition": "NOT-ESTABLISHED"
+    }
+  ]
+}

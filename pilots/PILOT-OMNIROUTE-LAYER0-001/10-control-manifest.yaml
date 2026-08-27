@@ -1,0 +1,108 @@
+schema_version: "1.1.0"
+manifest_id: hx-omniroute-layer0-control
+title: OmniRoute v3.8.51 Implementation Control Manifest (Wave 0C re-issue)
+status: active
+prepared_at: "2026-08-27T10:45Z"
+supersedes: >-
+  The candidate manifest codex_20260826_1548 (v1.0.0), preserved unchanged at
+  /home/hxsa/opt/local-tkv/agent-zero-docs/pilots/omniroute/plan/. Corrections:
+  DeepSeek Harness removed (never existed, KDD-0006); knowledge_root
+  /opt/tkv-local/omniroute rejected (canonical catalog + verified corpus path);
+  host-firewall controls removed (owner rule — LAN boundary + service authN/authZ);
+  roster-true roles (Cipher/Independent QA mapped to the verifier contract);
+  OD-01 decided (hxs-8); OD-02 ratified (Trinity active); OD-13 added
+  (secrets-at-rest requirement, owner-ratified 2026-08-27).
+
+source_identity:
+  product: OmniRoute
+  package: omniroute
+  version: "3.8.51"
+  branch: release/v3.8.51
+  commit: 42a13fedef8bb6806c1c4382b2c65539e871e88c
+  identity_state: VERIFIED — content-sensitive proof 2026-08-27 (13,098/13,098
+    git-blob identical to upstream; manifest 085fb94b…; lockfile 58a9d071…;
+    package fe6c7dbe…; upstream head c9f11d86b55d past snapshot, documented)
+  local_path: /opt/tkv-local/OmniRoute-release-v3.8.51 (READ-ONLY)
+  upstream: "https://github.com/diegosouzapw/OmniRoute/tree/release/v3.8.51"
+  license: MIT
+  node_engine: ">=22.22.2 <23 || >=24.0.0 <27"
+  release_posture: pre_lts_characterization_baseline
+
+hx_authority:
+  human_authority: Agent Zero
+  logical_orchestrator: KK3
+  execution_substrate: KK3-orchestrated subagent sessions
+  traffic_plane: OmniRoute (bounded; never an orchestrator or knowledge authority)
+  omniroute_steward: trinity (owner-ratified 2026-08-27, KDD-0008 O1)
+  knowledge_steward: carol (catalog at knowledge/catalog/ — the only knowledge authority)
+  execution_backend: Coder-X (owner-designated; per-task identity/health verification; stop-and-escalate; no substitution, no cloud)
+  independent_verifier: Qwen-X (ACTIVE, M8-signed; producer host != verifier host always)
+  forbidden_authority_transfer:
+    - OmniRoute must not replace KK3 orchestration.
+    - OmniRoute agent, conductor, pipeline, cloud-agent, or sidecar features must not self-authorize work (disabled-by-default; 8 BLOCKED ledger entries).
+    - OmniRoute memory and context connectors must not replace Carol or the catalog.
+    - No host firewalls anywhere (owner rule); exposure boundary is the 192.168.50.0/24 LAN plus service authN/authZ.
+    - No cloud models or remote inference for any program work (local-model-first rule).
+    - No second Second Brain, catalog, work-state registry, or knowledge authority.
+    - No /opt/tkv-local/omniroute knowledge root.
+
+completion_semantics:
+  allowed_states:
+    - ACTIVE
+    - AVAILABLE-DISABLED
+    - LAB-ONLY
+    - BLOCKED
+    - NOT-APPLICABLE
+    - NOT-ESTABLISHED
+  ledger_state:
+    entries: 367
+    source_refs: 1325
+    distribution: {ACTIVE-CANDIDATE: 229, AVAILABLE-DISABLED: 74, NOT-ESTABLISHED: 35, LAB-ONLY: 12, NOT-APPLICABLE: 9, BLOCKED: 8}
+    artifacts:
+      - pilots/PILOT-OMNIROUTE-LAYER0-001/ledger/08-capability-ledger.md
+      - pilots/PILOT-OMNIROUTE-LAYER0-001/ledger/08-capability-ledger.json
+  final_gate:
+    not_established_count_tracked: true
+    definition: >-
+      Every source-discovered capability and top-level API domain has an owner,
+      layer, security classification, target disposition, test contract,
+      evidence receipt, rollback, and final state. Capability completeness does
+      not require unsafe, redundant, unowned, or credential-dependent features
+      to be active.
+
+owner_decisions:
+  - {id: OD-01, decision: target_host, status: DECIDED — hxs-8 (online, readiness evidence delivered), owner: Agent Zero}
+  - {id: OD-02, decision: trinity_ratification, status: DECIDED — O1 adopt-as-corrected (active), owner: Agent Zero}
+  - {id: OD-03, decision: hxs8_readiness_acknowledgement, status: OPEN, required_before: host_dependent_work}
+  - {id: OD-04, decision: deployment_mode, status: OPEN, required_before: layer_1, recommendation: native Node systemd service}
+  - {id: OD-05, decision: fqdn_internal_dns, status: OPEN, required_before: layer_1}
+  - {id: OD-06, decision: tls_termination_path_separation, status: OPEN, required_before: layer_1}
+  - {id: OD-07, decision: allowed_clients_exposure, status: OPEN, required_before: layer_1, recommendation: LAN bind + OmniRoute authN/authZ, no host firewall}
+  - {id: OD-08, decision: initial_backends, status: OPEN, required_before: layer_1, recommendation: exactly one local backend (Qwen-X) first}
+  - {id: OD-09, decision: retention_rpo_rto_backup, status: OPEN, required_before: layer_1, note: backup encryption and remote upload effectively nonexistent per ledger — plaintext snapshots + own encryption if required}
+  - {id: OD-10, decision: qdrant_memory_disposition, status: OPEN, required_before: layer_3}
+  - {id: OD-11, decision: production_version_policy, status: OPEN, note: snapshot pinned at 42a13fe; upgrade per release with re-verification}
+  - {id: OD-12, decision: layer_1_authorization, status: OPEN, required_before: layer_1}
+  - {id: OD-13, decision: secrets_at_rest, status: RATIFIED 2026-08-27, rule: env-provision JWT_SECRET + API_KEY_SECRET and set STORAGE_ENCRYPTION_KEY at install; never accept defaults}
+
+layer_map:
+  - {layer: 0, name: Foundation, state: COMPLETE (KK3 gate decision PASS 2026-08-27T10:58Z — 19-kk3-gate-decision.md), exit: owner review + explicit L1 authorization (OD-12 — still required)}
+  - {layer: 1, name: Secure Core Gateway, entry: OD-12 + OD-03 + Node present, gate: direct/routed parity, restart, backup, rollback}
+  - {layer: 2, name: Governed Routing & Resilience, entry: layer_1 gate, gate: failure matrix + route policy pass}
+  - {layer: 3, name: Intelligence Quality & Modalities, entry: layer_2 gate + OD-10, gate: quality delta + data-boundary gates}
+  - {layer: 4, name: Agent & Ecosystem Integration, entry: layer_3 gate, note: collision class — most surfaces stay disabled or blocked by design, gate: ledger collision table closed entry-by-entry}
+
+non_negotiables_enforced_this_phase:
+  - no install/start/deploy of OmniRoute
+  - no package/build/migration/compose/container/service-start commands
+  - no host/runtime/service/network/DNS/TLS/credential/database/backend mutation
+  - no OmniRoute management or inference endpoint created
+  - no remote providers or provider credentials
+  - no workload on hxs-cp; no hxs-8 substitution
+  - no Trinity-active before the adoption gate (gate executed 2026-08-27, O1)
+  - no provenance claims beyond content-sensitive proof
+  - no duplicate knowledge authority; no /opt/tkv-local/omniroute
+  - no OmniRoute agent-like/memory/process-spawning enablement
+  - no cloud models or remote inference; no secrets in any artifact or model context
+  - no Layer 1 without a new explicit owner authorization
+  - source snapshot read-only throughout; candidate originals preserved unchanged

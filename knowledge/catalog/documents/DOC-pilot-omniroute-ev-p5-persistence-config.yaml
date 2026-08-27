@@ -1,0 +1,60 @@
+document:
+  id: "DOC-pilot-omniroute-ev-p5-persistence-config"
+  title: "PILOT-OMNIROUTE-LAYER0-001 ledger/P5-persistence-config.{md,json} — Wave 0B partition P5 persistence/config (37 entries, 155 refs; 160 migrations vs docs' 148-153 drift; citation contract PROVEN 4.0% vs 35.6% baseline; batch-20 INFERENCE labels carried)"
+  type: "evidence"
+  declared_purpose: "Wave-0B partition deliverable P5 of WO-OMNI-TRINITY-LEDGER-001 (COMPLETE state log row 18, 2026-08-27T08:02Z): the source-derived capability ledger of OmniRoute v3.8.51's persistence and configuration plane — FIRST partition under the owner-ratified citation_contract_p5_onward. Two forms, one artifact: P5-persistence-config.json — 37 entries, each carrying the packet's 12 schema fields, 155 source refs (28 ACTIVE-CANDIDATE / 3 AVAILABLE-DISABLED / 1 LAB-ONLY / 1 NOT-APPLICABLE / 4 NOT-ESTABLISHED) — and P5-persistence-config.md — the human partition summary (startup receipt, storage/backup/config analysis, contract measurement, self-verification, batch-20 addendum). Findings (per the md + state log row 18): better-sqlite3 + node:sqlite fallback, WAL, busy_timeout 2s; 160 versioned migrations in per-file transactions (AGENTS.md's 148-153 claim = drift #2); restart fully convergent (seed->migrate->pragmas->health->schedulers); backup native SQLite API with throttle/shrink guards, restore forces awaited pre-restore snapshot + integrity_check + WAL purge; config precedence DB > env > default (2 env-wins exceptions); 52 feature flags inventoried (7 require restart); payload rules runtime > DB > file. P2 edge ANSWERED: connection-row credentials AES-256-GCM-wired but plaintext-passthrough by default — active only with STORAGE_ENCRYPTION_KEY (AVAILABLE-DISABLED, owner decision at Layer 1); secrets.ts plaintext persistence re-confirmed with exact refs (CAP-P5-030). CITATION CONTRACT MEASUREMENT (owner's approved experiment): Coder-X-drafted wrong line numbers 1/25 = 4.0% vs P1 baseline 21/59 = 35.6% — an ~89% reduction in the offset-arithmetic failure class; contract EARNED its skill candidacy at Wave 0C."
+  inferred_value: "INFERENCE: P5 is the state-of-the-system partition — restart convergence, backup/restore guards, and the DB>env>default precedence are the facts a Layer-1 install design and any disaster-recovery runbook stand on; its batch-20 INFERENCE-label correction set is also the ledger's truth-state discipline applied to itself (bounded-negative-search conclusions labeled as reasoning, never presented as verified fact)."
+  source:
+    author: "trinity (Coder-X bounded execution under the local-model contract)"
+    provided_by: "Kimi-K3 (governor dispatch — Wave-0B closing wave)"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/ledger/ (P5-persistence-config.md + P5-persistence-config.json)"
+    section: "§whole-document (md + json pair — one artifact, two forms)"
+    ingestion_date: "2026-08-27T09:58:00Z"
+  owner: "trinity"
+  applies_to:
+    hosts: [hxs-2, hxs-5]
+    fqdns: []
+    services: [ollama.service]
+    agents: [trinity, kimi-k3]
+    repositories: [HX-ASF-Servers, tkv-local]
+    environments: [pilot]
+    models: [hx-qwen3.6-coderx-64k]
+  version: "Wave 0B final (2026-08-27, state log row 18; batch-20 INFERENCE-label corrections carried)"
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "trinity"
+      note: "partition task COMPLETE 2026-08-27T08:02Z (state log row 18) — FIRST citation-contract run (numbered excerpts, anchor citation, drafted-wrong-line measurement vs the P1/P2 baseline)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-wo-05-trinity-ledger"
+      note: "commissioning work order (8-partition DAG, per-task contract, acceptance criteria) — DISCHARGED by the Wave-0B deliverable set this partition is part of"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-cp-06-trinity-ledger"
+      note: "entry schema (12 fields) + conventions + the owner-ratified §citation_contract_p5_onward this partition first executed (state log row 14)"
+    - predicate: "evidences"
+      target: "DOC-tkv-corpus-omniroute"
+      note: "155 source refs into the identity-VERIFIED corpus; her checks 155/155 refs + 105/105 symbol-at-line; governor spot-check 8/8 (row 18)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-ev-08-capability-ledger"
+      note: "merged into the Wave-0B merged ledger as its P5 part (its contains edge; the partition json+md remain the per-partition source of record)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-state-log"
+      note: "governing log; completion provenance row 18 (2026-08-27T08:02Z)"
+  validation:
+    validated_at: "2026-08-27T09:58:00Z"
+    freshness: "current"
+    review_due: "at Wave 0C (reconciliation packet + Qwen-X independent verification; citation-contract skill candidacy); re-hash on any ledger edit"
+  sha256: "a8073cfa3495f837e48c40bc9cc4992805212d91ac6ad12dc4b1b2c4c9a42a79"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/ledger"
+notes:
+  checksum_method: "MULTI-FILE convention (DOC-fleet-script-library pattern): sha256 field = digest of the content-sensitive 2-file manifest ('<sha256>  <filename>' lines for P5-persistence-config.json + P5-persistence-config.md, LC_ALL=C sort, manifest text digested), captured 2026-08-27T09:56Z. Per-file sha256 at mint: P5-persistence-config.json 5e4a5c924c122778b44e550a003093615c48b82337549c03c59a4457cfbde04c; P5-persistence-config.md fa9f23de07cffa33f84f1ac191b2abee9c9bf169762ee22783a1aac2bdb66b05. The catalog hash is the FIRST recorded value for both files (minted at the batch-20-corrected content — pre-correction digests never entered the catalog as validated states)."
+  verification_at_mint: "Deterministic recomputation against the live json (2026-08-27T09:56Z, read-only): 37 entries, each exactly the 12 schema fields; 155 source_refs; dispositions 28 ACTIVE-CANDIDATE / 3 AVAILABLE-DISABLED / 1 LAB-ONLY / 1 NOT-APPLICABLE / 4 NOT-ESTABLISHED (sums 37). Matches the merged ledger's P5 part (37) and the md header."
+  corrections_carried: "Batch-20 F3 corrections carried in BOTH files (VERIFIED PRESENT at mint): CAP-P5-034..037 now carry declared INFERENCE labels (bounded-negative-search form — 'NOT-ESTABLISHED (INFERENCE — bounded negative search; the search evidence is FACT)'; conclusions + 12-field schema unchanged, JSON re-validated 37/37 x12 by the governor) and CAP-P5-009 adjudicated FACT (encryptConnectionFields call sites verified on all write paths — providers.ts:717/:955/_updateConnectionRow :595; the finding's inclusion of it as producer reasoning over-reached). The md's addendum records both dispositions; the catalog mints at the corrected content."
+  protected_reference: "The partition documents credential-encryption wiring and the plaintext-persistence finding as capability/risk facts — mechanism and remediation only; no secret VALUE appears in the artifact or in this record (profile §6)."
