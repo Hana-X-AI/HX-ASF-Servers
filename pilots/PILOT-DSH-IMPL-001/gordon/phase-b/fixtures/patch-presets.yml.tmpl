@@ -1,0 +1,27 @@
+# Gordon Phase B fixture: agent-presets row (the launcher appends the shipped
+# preset root when this row exists — profile-boot.ts:159-167) + omni route.
+- insert:
+    - id: agent-presets
+      name: '@deepseek-ai/dsh-agent-presets'
+
+- id: llm-pi-ai
+  config:
+    providers:
+      omniroute:
+        displayName: OmniRoute (HX qualification route)
+        apiKeyEnv: __KEY_ENV__
+        api: openai-completions
+        baseURL: __BASE_URL__
+        compat:
+          supportsDeveloperRole: false
+          maxTokensField: max_tokens
+        retryPolicy:
+          mode: normal
+          maxRetries: __MAX_RETRIES__
+        models:
+__MODELS_YAML__
+
+- id: agent-default-model
+  config:
+    provider: omniroute
+    model: __MODEL_ID__

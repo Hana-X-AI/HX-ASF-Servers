@@ -209,6 +209,48 @@
 
 ---
 
+## Phase B families (Gates 6–7) — NOT_RUN, PENDING-PHASE-B
+
+Initialized 2026-08-28 (plan §Phase B: 19 families; Gordon's Gates 6–7).
+Candidate identity: PENDING-PHASE-B — Morpheus's activation changes the
+composition and the frontend dist, so a FRESH §8.3 freeze precedes execution.
+Test IDs per `06-gordon-phase-b-testplan.md`; scripts `gordon/phase-b/`.
+Package paths relative to `/opt/tkv-local/deepseek-harness-master`.
+
+| # | Family | Packages enumerated from the tree | Planned tests | Disposition |
+| --- | --- | --- | --- | --- |
+| 1 | plan | `plan/plan-mode` | G6-03 | NOT_RUN |
+| 2 | goal | `goal/goal`, `goal-round-driver`, `command-goal`, `tool-goal` | G6-01, G6-02, G6-21 (command-goal census) | NOT_RUN |
+| 3 | todo | `todo/tool-todo` | G6-04 | NOT_RUN |
+| 4 | workflow | `workflow/workflow`, `workflow-worker-thread`, `tool-workflow`, `tool-ralph` | G6-05, G6-20 | NOT_RUN |
+| 5 | skill | `skill/skill`, `skill-filesystem`, `tool-skill`, `skill-badge` | G6-06; skill-badge AVAILABLE_DISABLED in base (disabled row) | NOT_RUN |
+| 6 | hooks | `hooks/hook-protocol`, `hooks-claude-code`, `hooks-codex` | G6-07; codex bridge composition census | NOT_RUN |
+| 7 | guard | `guard/repeat-tool-reminder`, `guard/timeout-policy` | G6-08, G6-09 (cross-ref G5-07) | NOT_RUN |
+| 8 | jobs | `jobs/jobs`, `jobs-local`, `tool-jobs` | G6-10 (+ G5-13 Phase A evidence) | NOT_RUN |
+| 9 | schedule | `schedule/schedule` | G6-11 (fixture-mounted row) | NOT_RUN |
+| 10 | subagent (12) | `subagent/subagent`, `subagent-acp`, `subagent-claude-code`, `subagent-codex`, `subagent-dsh-sdk`, `subagent-fork-in-process`, `subagent-in-process-driver`, `subagent-spawn-in-process`, `tool-subagent`, `tool-subagent-control`, `tool-subagent-report` (+ `tool-subagent-fork`, `tool-subagent-list-agents` subpaths) | G6-12, G6-13, G6-14; acp/claude-code/codex/dsh-sdk backends: NOT_RUN with Phase C interop pointer (external CLIs / live interop) | NOT_RUN |
+| 11 | preset | `preset/agent-presets`, `preset/persona` | G6-15, G6-16 | NOT_RUN |
+| 12 | bundle | `bundle/base`, `bundle/headless`, `bundle/web-app` (composition layers) | G6-17 (+ Phase A composition evidence) | NOT_RUN |
+| 13 | extensions | vendored Cordis plugin runtime (`vendor/cordis`, `vendor/loader`, `vendor/include`, `vendor/hmr`) | G6-18 | NOT_RUN |
+| 14 | mcp | `mcp/mcp-client` | G6-19 | NOT_RUN |
+| 15 | session-query | `session-query/session-query`, `session-query-sqlite`, `session-log-export`, `tool-session-query` | G7-05, G7-06; tool-session-query census | NOT_RUN |
+| 16 | lsp | `lsp/lsp`, `lsp-stdio`, `tool-lsp` | G7-11 (census; AVAILABLE_DISABLED unless mounted) | NOT_RUN |
+| 17 | code-runtime | `code-runtime/code-runtime`, `code-runtime-python`, `code-runtime-worker-thread` | G7 (worker-thread mounts in headless+web; python backend census; run_code surface Phase B+) | NOT_RUN |
+| 18 | terminal | `terminal/terminal`, `terminal-bash`, `tool-terminal` | G7-18 | NOT_RUN |
+| 19 | feedback | `feedback/command-feedback`, `feedback/message-feedback` | G6-21, G7-17 | NOT_RUN |
+| + | client + apps/web + packages/web | `apps/web`, `packages/client/*` (~40: connection, hmr, locale, modules, runtime, ui-* ×35, web), `packages/web` (search/fetch providers — dispositioned against local-only doctrine, owner flagged; `web`, `web-search-deepseek`, `tool-web` rows disabled in the landed composition) | G7-01..04, G7-12, G7-13, G7-20; web-search-* DEFERRED_BY_POLICY (external services, local-only doctrine, owner flagged) | NOT_RUN |
+| + | api | `api/gateway`, `api/remotes` | G7-02 | NOT_RUN |
+| + | sdk | `sdk/client`, `sdk/protocol`, `sdk/server`, `python/sdk`, `python/sdk-runtime` | G7-14, G7-15 | NOT_RUN |
+| + | carried rows | G4-06(b) corrupted-current-session resume → G7-07 evaluation; G2-10/G5-10 web dist → G7-01/G7-12 closure | G7-01, G7-07, G7-12 | NOT_RUN |
+| + | cookbook Phase B recipes | `adding-a-tool` → G6-22; `adding-a-package` → G6-23; `adding-a-conversation-node` → G7-09; `adding-a-settings-card` → G7-08 | G6-22, G6-23, G7-08, G7-09 | NOT_RUN |
+
+**ACP placement note:** the plan assigns the `acp` family to Phase C while
+Gate 7's description covers ACP; this plan covers the live routed ACP turn as
+G7-16 (executable via the acp-demo example) and leaves the acp family's full
+interop qualification to Phase C per the arc plan.
+
+---
+
 ## Cross-cutting rows
 
 | Row | Tests | Disposition | Notes |

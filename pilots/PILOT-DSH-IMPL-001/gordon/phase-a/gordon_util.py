@@ -69,6 +69,34 @@ def blocked(reason: str) -> None:
     pytest.skip(f"BLOCKED: {reason}")
 
 
+# --------------------------------------------------------------------------
+# Evidence de-patterning (governor directive 2026-08-28): the repo's
+# secret-boundary sweep (HX-ASF-Servers scripts/validate.py SECRET_PATTERNS)
+# tripped twice on captured literals (an su `Password:` prompt in a stderr
+# tail). De-pattern at WRITE time so evidence lands scan-clean without
+# governor edits. Patterns mirror the scanner exactly.
+# --------------------------------------------------------------------------
+_DEPATTERN_RULES: list[tuple[re.Pattern, str]] = [
+    (re.compile(r"BEGIN [A-Z0-9 ]*PRIVATE KEY"), "<redacted:private-key-block>"),
+    (re.compile(r"AKIA[0-9A-Z]{16}"), "<redacted:aws-access-key-id>"),
+    (re.compile(r"xox[baprs]-[0-9A-Za-z-]+"), "<redacted:slack-token>"),
+    (re.compile(r"ghp_[0-9A-Za-z]{36}"), "<redacted:github-pat>"),
+    # The scanner's "password assignment" family. The prompt literal becomes
+    # `Password<colon>` per the governor's rule; assignments lose their value.
+    (re.compile(r"(?i)\bpassword\s*:\s*\S+"), "Password<colon>"),
+    (re.compile(r"(?i)\bpassword\s*=\s*\S+"), "password<equals>"),
+    (re.compile(r"(?i)\bpassword\s*:$"), "Password<colon>"),
+]
+
+
+def depattern(text: str) -> str:
+    """Rewrite scanner-tripping literals into scan-safe placeholders."""
+    out = text
+    for pattern, replacement in _DEPATTERN_RULES:
+        out = pattern.sub(replacement, out)
+    return out
+
+
 @dataclass(frozen=True)
 class Cfg:
     """Resolved environment contract for one suite run."""
@@ -133,8 +161,8 @@ class RunRecord:
             "env_names": self.env_names,
             "cwd": self.cwd,
             "exit_code": self.exit_code,
-            "stdout_tail": self.stdout[-4000:],
-            "stderr_tail": self.stderr[-4000:],
+            "stdout_tail": depattern(self.stdout[-4000:]),
+            "stderr_tail": depattern(self.stderr[-4000:]),
             "duration_s": round(self.duration_s, 3),
         }
 
@@ -353,9 +381,9 @@ class Evidence:
         safe = re.sub(r"[^A-Za-z0-9_.-]", "_", f"{test_id}-{name}")
         path = self.root / safe
         if isinstance(content, bytes):
-            path.write_bytes(content)
+            path.write_bytes(depattern(content.decode("utf-8", errors="replace")).encode())
         else:
-            path.write_text(content)
+            path.write_text(depattern(content))
         return str(path)
 
     def record(

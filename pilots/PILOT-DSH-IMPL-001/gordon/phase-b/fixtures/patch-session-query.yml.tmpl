@@ -1,0 +1,29 @@
+# Gordon Phase B fixture: session-query search enabled (shipped default is
+# openAt: never with :memory:; this restatement enables first-search with a
+# durable scratch path) + omni route.
+- id: session-query-sqlite
+  config:
+    path: '__QUERY_PATH__'
+    openAt: first-search
+
+- id: llm-pi-ai
+  config:
+    providers:
+      omniroute:
+        displayName: OmniRoute (HX qualification route)
+        apiKeyEnv: __KEY_ENV__
+        api: openai-completions
+        baseURL: __BASE_URL__
+        compat:
+          supportsDeveloperRole: false
+          maxTokensField: max_tokens
+        retryPolicy:
+          mode: normal
+          maxRetries: __MAX_RETRIES__
+        models:
+__MODELS_YAML__
+
+- id: agent-default-model
+  config:
+    provider: omniroute
+    model: __MODEL_ID__

@@ -1,0 +1,29 @@
+# Gordon Phase B fixture: hooks-claude-code bridge with a fixture hooks.json
+# (SessionStart echo) + omni route.
+- insert:
+    - id: hooks-claude-code
+      name: '@deepseek-ai/dsh-hooks-claude-code'
+      config:
+        path: __HOOKS_JSON__
+
+- id: llm-pi-ai
+  config:
+    providers:
+      omniroute:
+        displayName: OmniRoute (HX qualification route)
+        apiKeyEnv: __KEY_ENV__
+        api: openai-completions
+        baseURL: __BASE_URL__
+        compat:
+          supportsDeveloperRole: false
+          maxTokensField: max_tokens
+        retryPolicy:
+          mode: normal
+          maxRetries: __MAX_RETRIES__
+        models:
+__MODELS_YAML__
+
+- id: agent-default-model
+  config:
+    provider: omniroute
+    model: __MODEL_ID__
