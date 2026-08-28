@@ -5,7 +5,9 @@
 #                       directive 2026-08-28: "coderabbit should run on every commit
 #                       regardless of the type"; main pushes review the pushed range
 #                       BEFORE..HEAD, branch pushes review vs origin/main; skips
-#                       cleanly until the API key secret is configured)
+#                       cleanly until the API key secret is configured; blocking =
+#                       critical+major+minor per owner directive 2026-08-28 — ALL
+#                       issues block, zero-tolerance)
 #   pr-manage         — auto-PR, auto-label, auto-merge, PR-comment notifications
 #                         (non-main pushes)
 # Auto-merge is the GitHub platform feature: it fires only when the required checks
@@ -159,9 +161,12 @@ jobs:
               print("::error::no complete event from CodeRabbit CLI (auth/service failure) %s"
                     % "; ".join(errors))
               sys.exit(1)
-          blocking = counts["critical"] + counts["major"]
+          # Owner directive 2026-08-28: ALL findings block — minor through critical.
+          # "we are introducing problems in our codebase that coderabbit can find
+          # and fix" — the gate enforces zero-tolerance, not severity triage.
+          blocking = counts["critical"] + counts["major"] + counts["minor"]
           if blocking:
-              print("::error::%d blocking finding(s) (critical/major) — fix on this branch and re-push"
+              print("::error::%d blocking finding(s) (critical/major/minor — owner directive: all issues block) — fix and re-push"
                     % blocking)
               sys.exit(1)
           PYEOF
