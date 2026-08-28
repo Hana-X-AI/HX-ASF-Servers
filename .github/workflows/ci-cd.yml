@@ -124,9 +124,9 @@ jobs:
           for attempt in 1 2 3; do
             "${CMD[@]}" > "$RUNNER_TEMP/findings.jsonl" || true
             WAIT=$(python3 - "$RUNNER_TEMP/findings.jsonl" <<'PYEOF'
-          import json, sys
+          import json, os, sys
           complete, wait = False, 0
-          try:
+          if os.path.exists(sys.argv[1]):
               for line in open(sys.argv[1]):
                   line = line.strip()
                   if not line:
@@ -147,6 +147,7 @@ jobs:
           print(0 if complete else min(wait, 780))
           PYEOF
           )
+            case "$WAIT" in ''|*[!0-9]*) WAIT=0 ;; esac
             if [ "$WAIT" -le 0 ]; then break; fi
             if [ "$attempt" -eq 3 ]; then
               echo "::notice::CodeRabbit rate limit persists after retries — parser stays fail-closed"
