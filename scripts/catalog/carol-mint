@@ -198,8 +198,19 @@ def iter_records():
             yield name[:-5], os.path.join(DOCS, name)
 
 
-def cmd_index(note=""):
+def cmd_index(note="", rebuild_titles=False):
     with MintLock():
+        # Preserve hand-maintained (compressed) index titles by default: the
+        # standing compressed lookup surface is a maintained artifact, not a
+        # mechanical copy of document titles. --rebuild-titles regenerates them.
+        existing_titles = {}
+        if os.path.isfile(INDEX) and not rebuild_titles:
+            try:
+                for entry in (load_yaml(INDEX).get("index", {}).get("documents") or []):
+                    if entry.get("id") and entry.get("title"):
+                        existing_titles[entry["id"]] = entry["title"]
+            except Exception:
+                pass
         entries = []
         for doc_id, path in iter_records():
             try:
@@ -209,7 +220,7 @@ def cmd_index(note=""):
                 fail("index rebuild: %s unreadable: %s" % (path, e))
             entries.append({
                 "id": doc.get("id", doc_id),
-                "title": doc.get("title", ""),
+                "title": existing_titles.get(doc.get("id", doc_id), doc.get("title", "")),
                 "type": doc.get("type", ""),
                 "authority_level": doc.get("authority_level", ""),
                 "freshness": (doc.get("validation") or {}).get("freshness", ""),
@@ -218,9 +229,12 @@ def cmd_index(note=""):
         idx = load_yaml(INDEX) if os.path.isfile(INDEX) else {"index": {"schema_version": 1}}
         idx["index"]["document_count"] = len(entries)
         idx["index"]["documents"] = entries
-        idx["index"]["updated"] = "%s (carol-mint %s%s)" % (utcshort(), VERSION, (" — " + note) if note else "")
+        idx["index"]["updated"] = "%s (carol-mint %s%s%s)" % (
+            utcshort(), VERSION, (" — " + note) if note else "",
+            "" if rebuild_titles else " [titles preserved]")
         dump_yaml_atomic(INDEX, idx)
-        print("index rebuilt: %d records" % len(entries))
+        print("index rebuilt: %d records (%d titles preserved)" % (
+            len(entries), sum(1 for e in entries if e["id"] in existing_titles)))
         return 0
 
 
@@ -361,10 +375,12 @@ def main(argv):
     while i < len(args):
         if args[i].startswith("--"):
             key = args[i][2:].replace("-", "_")
-            if i + 1 >= len(args):
-                fail("option %s needs a value" % args[i])
-            opt[key] = args[i + 1]
-            i += 2
+            if i + 1 >= len(args) or args[i + 1].startswith("--"):
+                opt[key] = True
+                i += 1
+            else:
+                opt[key] = args[i + 1]
+                i += 2
         else:
             pos.append(args[i])
             i += 1
@@ -373,7 +389,7 @@ def main(argv):
     if cmd == "new" and len(pos) == 1 and "source" in opt and "type" in opt:
         return cmd_new(pos[0], opt["source"], opt["type"], opt.get("title", ""))
     if cmd == "index":
-        return cmd_index(opt.get("note", ""))
+        return cmd_index(opt.get("note", ""), rebuild_titles=bool(opt.get("rebuild_titles")))
     if cmd == "receipt" and len(pos) == 1 and "items" in opt:
         return cmd_receipt(pos[0], opt["items"].split(","), opt.get("validator", "PENDING"))
     if cmd == "sweep-stale":

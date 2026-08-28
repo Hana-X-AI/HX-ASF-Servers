@@ -108,12 +108,22 @@ out="$(python3 "$TOOL" re-mint DOC-fix-beta 2>&1)"; rc=$?
 if [ $rc -eq 1 ] && printf '%s' "$out" | grep -q "single-writer"; then ok "refusal: lock contention"; else bad "refusal lock: rc=$rc out=[$out]"; fi
 wait 2>/dev/null
 
-# 8. index rebuild: count matches; idempotent
+# 8. index rebuild: count matches; idempotent; hand-maintained titles preserved
 python3 "$TOOL" index >/dev/null 2>&1
 n1="$(grep -c '^  - id:' "$fx/index.yaml")"
+python3 - <<'PY'
+import yaml, os
+p = "%s/documents/DOC-fix-alpha.yaml" % os.environ["CAROL_MINT_ROOT"]
+d = yaml.safe_load(open(p))
+d["document"]["title"] = "alpha CHANGED title"
+yaml.safe_dump(d, open(p, "w"), sort_keys=False)
+PY
 python3 "$TOOL" index >/dev/null 2>&1
 n2="$(grep -c '^  - id:' "$fx/index.yaml")"
-if [ "$n1" = 4 ] && [ "$n2" = 4 ]; then ok "index rebuild count + idempotent"; else bad "index: n1=$n1 n2=$n2"; fi
+kept="$(grep -c 'DOC-fix-alpha fixture' "$fx/index.yaml")"
+python3 "$TOOL" index --rebuild-titles >/dev/null 2>&1
+rebuilt="$(grep -c 'alpha CHANGED title' "$fx/index.yaml")"
+if [ "$n1" = 4 ] && [ "$n2" = 4 ] && [ "$kept" = 1 ] && [ "$rebuilt" = 1 ]; then ok "index count + idempotent + titles preserved/rebuilt"; else bad "index: n1=$n1 n2=$n2 kept=$kept rebuilt=$rebuilt"; fi
 
 # 9. sweep-stale detects drift and tags living
 echo "beta two" > "$fx/src/b.md"
