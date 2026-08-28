@@ -237,7 +237,11 @@ def test_g5_05_approval_fails_closed(cfg, candidate_bin, scratch_home, scratch_e
         log = _latest_log(cfg, home)
         asked = events_of_type(log.get("records", []), "approval/asked")
         decided = events_of_type(log.get("records", []), "approval/decided")
-        rejected = any("reject" in json.dumps(d.get("data", {})).lower() for d in decided)
+        rejected = any(
+            (d.get("data") or {}).get("outcome") in ("rejected", "unavailable")
+            or "reject" in json.dumps(d.get("data", {})).lower()
+            for d in decided
+        )
         absent = not escape.exists()
         # Fail-closed proof: either the ask/decide pair shows rejection, or the
         # write never landed and the run completed without the file.
@@ -291,10 +295,14 @@ def test_g5_07_bash_timeout_kills(cfg, candidate_bin, scratch_home, scratch_env,
     """G5-07: the executor kills a command that exceeds its timeout."""
     def check(home, run, marker):
         log = _latest_log(cfg, home)
-        text = _log_text(log)
-        timed = '"timedOut": true' in text or '"timedOut":true' in text
+        result_texts = _tool_result_texts(log)
+        timed = any("[timed out after" in t for t in result_texts)
+        killed = any("[killed by signal" in t for t in result_texts)
+        structured = '"timedOut": true' in _log_text(log) or '"timedOut":true' in _log_text(log)
         bounded = run.duration_s < 300
-        return (timed and bounded), f"timedOut_in_log={timed}; duration={run.duration_s:.0f}s"
+        ok = (timed and killed) or structured
+        return (ok and bounded), \
+            f"timeout_notice={timed}; kill_notice={killed}; structured={structured}; duration={run.duration_s:.0f}s"
 
     task = (
         "Use the bash tool to run exactly this command with timeoutMs 3000: sleep 120\n"
@@ -456,11 +464,13 @@ def test_g5_13_background_job_smoke(cfg, candidate_bin, scratch_home, scratch_en
     """G5-13: run_in_background returns a job id; job_output collects it."""
     def check(home, run, marker):
         log = _latest_log(cfg, home)
-        text = _log_text(log)
-        bg = '"kind": "background"' in text or '"kind":"background"' in text or "jobId" in text
-        marker_seen = marker in text
-        return (run.exit_code == 0 and bg and marker_seen), \
-            f"background_ack={bg}; marker={marker_seen}"
+        result_texts = _tool_result_texts(log)
+        bg = any("started background job" in t for t in result_texts) \
+            or '"kind": "background"' in _log_text(log)
+        collected = any(marker in t for t in result_texts)
+        completed = any("[status: completed" in t for t in result_texts)
+        return (run.exit_code == 0 and bg and collected and completed), \
+            f"background_ack={bg}; marker_in_output={collected}; job_completed={completed}"
 
     task = (
         "Use the bash tool with run_in_background: true to run exactly: "

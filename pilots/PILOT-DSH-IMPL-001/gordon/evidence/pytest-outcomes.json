@@ -1,4 +1,5 @@
 {
-  "test_g5_containment.py::test_g5_01_bash_execution": "BLOCKED (sandbox backend absent on hxs-15 (defect D1))",
-  "test_g5_containment.py::test_g5_03_workspace_escape_denied": "BLOCKED (sandbox backend absent on hxs-15 (defect D1))"
+  "test_g5_containment.py::test_g5_05_approval_fails_closed": "PASS",
+  "test_g5_containment.py::test_g5_07_bash_timeout_kills": "PASS",
+  "test_g5_containment.py::test_g5_13_background_job_smoke": "PASS"
 }

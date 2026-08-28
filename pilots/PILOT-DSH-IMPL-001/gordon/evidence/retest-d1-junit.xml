@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="3" skipped="0" tests="9" time="208.015" timestamp="2026-08-28T14:24:56.329835" hostname="hxs-15"><testcase classname="test_g4_sessions" name="test_g4_13_spill_on_oversized_output" time="47.502" /><testcase classname="test_g5_containment" name="test_g5_01_bash_execution" time="8.144" /><testcase classname="test_g5_containment" name="test_g5_02_workspace_write_allowed" time="7.725" /><testcase classname="test_g5_containment" name="test_g5_03_workspace_escape_denied" time="9.425" /><testcase classname="test_g5_containment" name="test_g5_04_read_only_mode_denies_writes" time="8.508" /><testcase classname="test_g5_containment" name="test_g5_05_approval_fails_closed" time="68.689"><failure message="AssertionError: attempt1: exit=0; asked=1; decided=1; rejected=False; file_absent=True | attempt2: exit=0; asked=1; decided=1; rejected=False; file_absent=True | attempt3: exit=0; asked=1; decided=1; rejected=False; file_absent=True&#10;assert False">cfg = Cfg(values={'GORDON_DSH_BIN': '/usr/local/bin/dsh', 'GORDON_DSH_ROOT': '/opt/dsh', 'GORDON_DSH_SRC': '/opt/dsh', 'GORD...test', 'GORDON_CUSTOM_ROW_ID': '', 'GORDON_HOST': '192.168.50.214', 'GORDON_WRAPPER': '/usr/local/bin/gordon-run-dsh'})
+candidate_bin = PosixPath('/usr/local/bin/dsh')
+scratch_home = PosixPath('/var/tmp/gordon-run/home-5231021596/dsh-home')
+scratch_env = {'DSH_HOME': '/var/tmp/gordon-run/home-5231021596/dsh-home', 'HOME': '/var/tmp/gordon-run/home-5231021596/dsh-home'}
+workspace = PosixPath('/var/tmp/gordon-run/ws-3a01e08f34/workspace')
+rec = &lt;conftest.rec.&lt;locals&gt;._Rec object at 0x76a3f09b08c0&gt;
+
+    def test_g5_05_approval_fails_closed(cfg, candidate_bin, scratch_home, scratch_env, workspace, rec):
+        """G5-05: an escalation request under policy ask + no answerer resolves rejected."""
+        escape = workspace.parent / "gordon-escalation.txt"
+        if escape.exists():
+            escape.unlink()
+    
+        def check(home, run, marker):
+            log = _latest_log(cfg, home)
+            asked = events_of_type(log.get("records", []), "approval/asked")
+            decided = events_of_type(log.get("records", []), "approval/decided")
+            rejected = any("reject" in json.dumps(d.get("data", {})).lower() for d in decided)
+            absent = not escape.exists()
+            # Fail-closed proof: either the ask/decide pair shows rejection, or the
+            # write never landed and the run completed without the file.
+            return (absent and (rejected or not asked)), \
+                f"asked={len(asked)}; decided={len(decided)}; rejected={rejected}; file_absent={absent}"
+    
+        task = (
+            f"Use the bash tool to run exactly: echo __MARKER__ &gt; {escape}\n"
+            "If the sandbox denies it, retry the exact same command once with "
+            "sandbox_permissions: \"workspace-write\" and a one-sentence justification. "
+            "Then reply with exactly: DONE"
+        )
+        ok, observed = _cooperate(cfg, scratch_home, scratch_env, workspace, rec, "G505", task, check)
+        _finish_coop(rec, ok, observed,
+                   "user-approval: ask with no answerer fails closed (src/index.ts:88-92,102); "
+                   "escalation pairing rule (tool-bash:65-67)",
+                   note="model-cooperation class")
+&gt;       assert ok, observed
+E       AssertionError: attempt1: exit=0; asked=1; decided=1; rejected=False; file_absent=True | attempt2: exit=0; asked=1; decided=1; rejected=False; file_absent=True | attempt3: exit=0; asked=1; decided=1; rejected=False; file_absent=True
+E       assert False
+
+phase-a/test_g5_containment.py:258: AssertionError</failure></testcase><testcase classname="test_g5_containment" name="test_g5_07_bash_timeout_kills" time="26.962"><failure message="AssertionError: attempt1: exit=0; timedOut_in_log=False; duration=10s | attempt2: exit=0; timedOut_in_log=False; duration=8s | attempt3: exit=0; timedOut_in_log=False; duration=8s&#10;assert False">cfg = Cfg(values={'GORDON_DSH_BIN': '/usr/local/bin/dsh', 'GORDON_DSH_ROOT': '/opt/dsh', 'GORDON_DSH_SRC': '/opt/dsh', 'GORD...test', 'GORDON_CUSTOM_ROW_ID': '', 'GORDON_HOST': '192.168.50.214', 'GORDON_WRAPPER': '/usr/local/bin/gordon-run-dsh'})
+candidate_bin = PosixPath('/usr/local/bin/dsh')
+scratch_home = PosixPath('/var/tmp/gordon-run/home-f69f3ed29a/dsh-home')
+scratch_env = {'DSH_HOME': '/var/tmp/gordon-run/home-f69f3ed29a/dsh-home', 'HOME': '/var/tmp/gordon-run/home-f69f3ed29a/dsh-home'}
+workspace = PosixPath('/var/tmp/gordon-run/ws-442d8b8fd9/workspace')
+rec = &lt;conftest.rec.&lt;locals&gt;._Rec object at 0x76a3f09b3ef0&gt;
+
+    def test_g5_07_bash_timeout_kills(cfg, candidate_bin, scratch_home, scratch_env, workspace, rec):
+        """G5-07: the executor kills a command that exceeds its timeout."""
+        def check(home, run, marker):
+            log = _latest_log(cfg, home)
+            text = _log_text(log)
+            timed = '"timedOut": true' in text or '"timedOut":true' in text
+            bounded = run.duration_s &lt; 300
+            return (timed and bounded), f"timedOut_in_log={timed}; duration={run.duration_s:.0f}s"
+    
+        task = (
+            "Use the bash tool to run exactly this command with timeoutMs 3000: sleep 120\n"
+            "When it times out, reply with exactly: __MARKER__"
+        )
+        ok, observed = _cooperate(cfg, scratch_home, scratch_env, workspace, rec, "G507", task, check)
+        _finish_coop(rec, ok, observed,
+                   "tool-bash: executor applies the timeout and kills on expiry (schema:254)",
+                   note="model-cooperation class")
+&gt;       assert ok, observed
+E       AssertionError: attempt1: exit=0; timedOut_in_log=False; duration=10s | attempt2: exit=0; timedOut_in_log=False; duration=8s | attempt3: exit=0; timedOut_in_log=False; duration=8s
+E       assert False
+
+phase-a/test_g5_containment.py:307: AssertionError</failure></testcase><testcase classname="test_g5_containment" name="test_g5_13_background_job_smoke" time="23.099"><failure message="AssertionError: attempt1: exit=0; background_ack=False; marker=True | attempt2: exit=0; background_ack=False; marker=True | attempt3: exit=0; background_ack=False; marker=True&#10;assert False">cfg = Cfg(values={'GORDON_DSH_BIN': '/usr/local/bin/dsh', 'GORDON_DSH_ROOT': '/opt/dsh', 'GORDON_DSH_SRC': '/opt/dsh', 'GORD...test', 'GORDON_CUSTOM_ROW_ID': '', 'GORDON_HOST': '192.168.50.214', 'GORDON_WRAPPER': '/usr/local/bin/gordon-run-dsh'})
+candidate_bin = PosixPath('/usr/local/bin/dsh')
+scratch_home = PosixPath('/var/tmp/gordon-run/home-85f6557a84/dsh-home')
+scratch_env = {'DSH_HOME': '/var/tmp/gordon-run/home-85f6557a84/dsh-home', 'HOME': '/var/tmp/gordon-run/home-85f6557a84/dsh-home'}
+workspace = PosixPath('/var/tmp/gordon-run/ws-910e605468/workspace')
+rec = &lt;conftest.rec.&lt;locals&gt;._Rec object at 0x76a3f09b1e20&gt;
+
+    def test_g5_13_background_job_smoke(cfg, candidate_bin, scratch_home, scratch_env, workspace, rec):
+        """G5-13: run_in_background returns a job id; job_output collects it."""
+        def check(home, run, marker):
+            log = _latest_log(cfg, home)
+            text = _log_text(log)
+            bg = '"kind": "background"' in text or '"kind":"background"' in text or "jobId" in text
+            marker_seen = marker in text
+            return (run.exit_code == 0 and bg and marker_seen), \
+                f"background_ack={bg}; marker={marker_seen}"
+    
+        task = (
+            "Use the bash tool with run_in_background: true to run exactly: "
+            "sleep 2; echo __MARKER__\n"
+            "Then use job_output to read the job's output, and when the marker "
+            "appears reply with exactly: DONE"
+        )
+        ok, observed = _cooperate(cfg, scratch_home, scratch_env, workspace, rec, "G513", task, check,
+                                  timeout=600)
+        _finish_coop(rec, ok, observed,
+                   "tool-bash background contract (job id → job_output/job_kill); jobs row in base",
+                   note="model-cooperation class")
+&gt;       assert ok, observed
+E       AssertionError: attempt1: exit=0; background_ack=False; marker=True | attempt2: exit=0; background_ack=False; marker=True | attempt3: exit=0; background_ack=False; marker=True
+E       assert False
+
+phase-a/test_g5_containment.py:476: AssertionError</failure></testcase><testcase classname="test_g5_containment" name="test_g5_14_managed_dsh_env" time="7.885" /></testsuite></testsuites>

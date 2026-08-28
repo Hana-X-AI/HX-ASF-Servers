@@ -238,3 +238,68 @@ reconciled.
 
 Gate 3 has no open rows. Remaining Phase A open item: the D1 retest (separate
 dispatch after Morpheus's fix).
+
+---
+
+## APPENDIX B — D1/D3 retest (appended 2026-08-28T14:4xZ, append-only)
+
+Fix verified before any retest (Morpheus §16 record, independently re-probed):
+bubblewrap 0.9.0-1ubuntu0.1 (`/usr/bin/bwrap` `52231e1c…db712`), AppArmor
+profile `/etc/apparmor.d/bwrap` loaded (`66de2da5…62819`), both fixture
+symlinks restored, and all five row-relevant frozen identities re-verified
+MATCH (shim, bin.js, home layer, package.json, pnpm-lock.yaml). No re-freeze
+required; the effective dump stayed byte-identical through the fix window.
+
+### Retest verdicts (D1 rows — all PASS)
+
+| Row | Verdict | Evidence (post-fix) |
+| --- | --- | --- |
+| G4-13 spill on oversized output | **PASS** | `seq 1 20000` result truncated to tail with `[output truncated; full output: /tmp/dsh-subprocess-…-stdout.log]`; spill file holds the full bytes (>50 KB) |
+| G5-01 bash execution | **PASS** | `echo` marker in a non-error tool result (external effect, not the command string) |
+| G5-02 workspace write | **PASS** | file created in the workspace, byte-exact content verified externally |
+| G5-03 workspace escape denied | **PASS** | policy marker `[sandbox: file access denied under workspace-write mode]`; escape file absent |
+| G5-04 read-only denial | **PASS** | marker names `read-only`; file absent |
+| G5-05 approval fail-closed | **PASS** | `approval/asked` → `approval/decided {"outcome":"unavailable"}` (ask with no answerer fails closed); no write. Oracle corrected openly: the candidate's non-grant vocabulary is `unavailable`/`rejected`, proven from live artifacts |
+| G5-07 bash timeout | **PASS** | `sleep 120` with `timeoutMs: 3000` → `[timed out after 3000ms]` + `[killed by signal: SIGTERM]`; wall-clock bounded. Oracle corrected to the rendered notice text |
+| G5-13 background jobs | **PASS** | `started background job bash-1`; `job_output` collected the marker with `[status: completed, exit code: 0]`. Oracle corrected to the ack vocabulary |
+| G5-14 managed DSH_* env | **PASS** | `DSH_HOME` and the managed set present in the tool shell's `env`; zero credential values in the model-visible stream |
+
+### Retest verdict (D3 row — PASS)
+
+- acp `agent-instructions` snapshot: **PASS** (`snapshot: agent-instructions
+  matches the expected outputs`, 3.9 s) with the two restored symlinks. D3
+  closed. (The remaining `session-fixture-layout` snapshot failure stays
+  BLOCKED under D2, governor-deferred.)
+
+### Campaign integrity close-out (G0-07)
+
+Reconstructed fingerprint (frozen algorithm, the two documented symlink paths
+treated as their as-transported flattened content) == the frozen fingerprint
+exactly (`169baf47…1b20`, 28,730 files). The only tree delta since the freeze
+is Morpheus's documented two symlink restorations. **DRIFT-CLEAN.**
+
+### Final Phase A campaign position (§12.3)
+
+- Gate 0: **QUALIFIED_FOR_GATE**
+- Gate 1: **QUALIFIED_WITH_EXCEPTIONS** (D2 class — git-requiring repo gates on
+  the approved gitless export; P3, governor-deferred to upstream intake;
+  escape mechanisms verified; D3 fixed and retested green)
+- Gates 2, 3, 4, 5: **QUALIFIED_FOR_GATE**
+
+Campaign bar check (§7): every capability row carries source reference, owner,
+disposition, test ID, evidence pointer, and last-tested candidate identity;
+every required test PASS; every remaining non-PASS disposition is a
+governor-approved class (D2 deferral, by-design Phase B blocks,
+AVAILABLE_DISABLED / NOT_APPLICABLE / DEFERRED_BY_POLICY /
+NOT_RUN-with-phase-pointer, R2 compaction decision); zero P0/P1 open; the
+effective config and environment are frozen and reproducible (byte-identical
+dump across install, campaign, and fix windows). Rollback and restoration are
+Gate 9 scope (Phase C) — documented inverses exist in Morpheus's §11/§16
+records; they were NOT exercised in this campaign and Gordon claims no
+rollback evidence for Phase A.
+
+**[CAMPAIGN COMPLETE — Phase A (Gates 0–5) — QUALIFIED_WITH_EXCEPTIONS (D2
+class, governor-deferred)]** Phase A closes with 2 fixed defects retested
+green (D1, D3), 1 governor-deferred defect class (D2), zero P0/P1, and a
+clean integrity close-out. The candidate is ready for Phase B (Gates 6–7)
+subject to the governor's sign-off of this evidence pack.

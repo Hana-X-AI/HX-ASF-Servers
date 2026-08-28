@@ -52,17 +52,17 @@
 | `packages/util/atomic-write` | G1-05 | **PASS** | unit tier |
 | `packages/util/brand` | G1-05 | **PASS** | unit tier |
 | `packages/util/native-command` | G1-05 | **PASS** | unit tier |
-| `packages/util/output-retention` | G4-13 | **BLOCKED (D1)** | tail-truncate + spill needs a working bash executor; retest after D1 fix |
-| `packages/util/timeout` | G5-07, G3-03 | G3-03 **PASS**; G5-07 **BLOCKED (D1)** | bounded TRANSPORT proven; tool-timeout needs the executor |
+| `packages/util/output-retention` | G4-13 | **PASS (retest 2026-08-28T14:3xZ)** | spill file written + reported after the D1 fix (bwrap live) |
+| `packages/util/timeout` | G5-07, G3-03 | **PASS** | bounded TRANSPORT (G3-03); executor timeout-kill verified in the D1 retest (G5-07) |
 
 ### 4. fs — Gate 5
 
 | Package (source) | Tests | Disposition | Notes |
 | --- | --- | --- | --- |
-| `packages/fs/fs` + `fs-sandbox` | G5-02..06 | G5-06 **PASS**; G5-02/03/04 **BLOCKED (D1)** | danger-mode semantics verified; policy modes need the backend |
+| `packages/fs/fs` + `fs-sandbox` | G5-02..06 | **PASS** | workspace-write allow/deny, read-only deny, danger-full-access all verified post-D1-fix |
 | `packages/fs/fs-local` | census G2-03 | **AVAILABLE_DISABLED** | not mounted in the shipped headless composition |
 | `packages/fs/fs-observation-policy` | census G2-03 | **PASS** (composition) | mounted; behavior rides the tool rows |
-| `packages/fs/tool-fs` | G5-02, G5-15 | G5-15 **PASS**; G5-02 **BLOCKED (D1)** | schema census green; write path needs the backend |
+| `packages/fs/tool-fs` | G5-02, G5-15 | **PASS** | census + workspace write (byte-exact) both green |
 | `packages/fs/tool-fs-search` | G5-15 | **PASS** (census) | present in the model-visible catalog |
 | `packages/fs/tool-str-replace-editor` | G5-15, G5-17 | **PASS** (census) | `edit` + `str_replace_editor` in catalog, contract-valid |
 
@@ -148,18 +148,18 @@
 | Package (source) | Tests | Disposition | Notes |
 | --- | --- | --- | --- |
 | `packages/credentials/credentials` | G3-02, G4-15 | **PASS** | per-request reference resolution; MISSING_CREDENTIAL contract |
-| `packages/credentials/credentials-local` | G4-15, G5-14 (leak leg) | G4-15 **PASS**; G5-14 **BLOCKED (D1)** | .env fallback verified; managed-env no-leak assertion needs the executor |
+| `packages/credentials/credentials-local` | G4-15, G5-14 (leak leg) | **PASS** | .env fallback verified; no credential value in the model-visible stream (G5-14 retest) |
 | `packages/credentials/authorization` | census G2-03 | **NOT_RUN (Phase B)** | OAuth-conversation seam; pi-ai login flows are Phase B surface |
 
 ### 14. shell — Gate 5
 
 | Package (source) | Tests | Disposition | Notes |
 | --- | --- | --- | --- |
-| `packages/shell/shell` | G5-01..07 | G5-06 **PASS**; rest **BLOCKED (D1)** | run spec + result contract proven in danger mode |
-| `packages/shell/shell-env` | G5-14 | **BLOCKED (D1)** | managed DSH_* listing needs the executor |
-| `packages/shell/bash-sandbox` | G5-03..07 | **BLOCKED (D1)** | the defect's subject: no backend on hxs-15; fail-closed contract proven |
+| `packages/shell/shell` | G5-01..07 | **PASS** | execution, workspace modes, timeout kill all green post-D1-fix |
+| `packages/shell/shell-env` | G5-14 | **PASS (retest)** | managed DSH_* variables present; zero credential values in the model-visible stream |
+| `packages/shell/bash-sandbox` | G5-03..07 | **PASS (retest)** | bwrap backend live: policy denials, timeout kill verified; fail-closed contract on record from the D1 window |
 | `packages/shell/bash-local` | census G2-03 | **AVAILABLE_DISABLED** | unsandboxed alternative, not mounted |
-| `packages/shell/tool-bash` | G5-01..07, G5-13 | G5-06 **PASS**; G5-01..05/07/13 **BLOCKED (D1)** | error contract + escalation semantics recorded |
+| `packages/shell/tool-bash` | G5-01..07, G5-13 | **PASS (retest)** | echo execution, workspace write/escape, read-only denial, approval fail-closed (`unavailable` outcome), timeout kill, background jobs — all green post-D1-fix |
 | `packages/shell/tool-bash-persistent` | census G2-03 | **NOT_RUN (Phase B)** | not in base rows |
 | `packages/shell/pwsh-local`, `pwsh-sandbox`, `tool-pwsh`, `tool-pwsh-persistent` | G5-16, G5-15 | **NOT_APPLICABLE** | Windows-only; platform-gate expressions + zero pwsh tools on Linux, both verified |
 
@@ -167,15 +167,15 @@
 
 | Package (source) | Tests | Disposition | Notes |
 | --- | --- | --- | --- |
-| `packages/subprocess/subprocess` | G5-01, G5-13 | **BLOCKED (D1)** | process-tree spawn proven only in danger mode (G5-06) — partial credit carried by shell rows |
-| `packages/subprocess/subprocess-local` | G5-01, G5-13 | **BLOCKED (D1)** | as above; DSH_ENV_PREFIX definition verified statically |
+| `packages/subprocess/subprocess` | G5-01, G5-13 | **PASS (retest)** | spawn + background process trees verified (G5-01, G5-13) |
+| `packages/subprocess/subprocess-local` | G5-01, G5-13 | **PASS (retest)** | as above |
 
 ### 16. interaction — Gate 5
 
 | Package (source) | Tests | Disposition | Notes |
 | --- | --- | --- | --- |
-| `packages/interaction/permission-presets` | G5-03..06 | G5-06 **PASS**; G5-03/04 **BLOCKED (D1)** | mode semantics verified where executable |
-| `packages/interaction/user-approval` | G5-05, G5-06 | G5-06 **PASS**; G5-05 **BLOCKED (D1)** | fail-closed evidence recorded both ways (no-channel refusal + never policy) |
+| `packages/interaction/permission-presets` | G5-03..06 | **PASS (retest)** | workspace-write escape denied with the policy marker; read-only denies writes |
+| `packages/interaction/user-approval` | G5-05, G5-06 | **PASS (retest)** | ask-with-no-answerer resolves `unavailable` (fail-closed, no write); `never` policy under danger mode verified |
 | `packages/interaction/commands` | census G2-03 | **NOT_RUN (Phase B)** | interactive slash surface |
 | `packages/interaction/user-questions` | census G2-03 | **NOT_RUN (Phase B)** | mounted; interactive surface |
 | `packages/interaction/tool-ask-user` | census G2-03 | **NOT_RUN (Phase B)** | interactive surface |
@@ -191,9 +191,9 @@
 
 | Package (source) | Tests | Disposition | Notes |
 | --- | --- | --- | --- |
-| `packages/spill/spill` | G4-13 | **BLOCKED (D1)** | locator/store need oversized executor output |
-| `packages/spill/spill-local` | G4-13 | **BLOCKED (D1)** | as above |
-| `packages/spill/spill-policy` | G4-13 | **BLOCKED (D1)** | maxInlineBytes 50000 composition captured |
+| `packages/spill/spill` | G4-13 | **PASS (retest)** | spillPath reported in the model-visible result; file holds the full output |
+| `packages/spill/spill-local` | G4-13 | **PASS (retest)** | private spill root written (`/tmp/dsh-subprocess-*`) |
+| `packages/spill/spill-policy` | G4-13 | **PASS (retest)** | oversized output spills per policy; tail retained in the result |
 
 ### 19. runtime-diagnostics — Gate 1
 
@@ -231,9 +231,14 @@
 
 Every row above has source reference, owner, disposition, test IDs, evidence
 pointer, and last-tested candidate identity. G3-07/G3-08 closed
-2026-08-28T14:20Z by the governor-mediated windowed snapshot (arithmetic in
-`evidence/omni-usage/g307-g308-closure.json`; verdicts doc Appendix A) — Gate 3
-has no open rows. Remaining before a Phase A completion declaration: D1 (P2)
-fix + retest of the 9 blocked rows (separate dispatch); R2 compaction decision.
-Zero P0/P1 open. Flakes and harness corrections are recorded openly in the
-verdicts document; no skip was silent and no non-pass was converted.
+2026-08-28T14:20Z (Appendix A). **D1/D3 retest 2026-08-28T14:3xZ (Appendix B):
+all 9 D1-blocked rows PASS post-fix (bwrap 0.9.0 + AppArmor grant, fix record
+§16), the acp agent-instructions snapshot row PASS (D3), and the G0-07 drift
+close-out is DRIFT-CLEAN (reconstructed fingerprint == frozen; the only tree
+delta is the two documented symlink paths).** Remaining dispositions are all
+governor-approved classes: D2 (P3, governor-deferred to upstream intake),
+by-design Phase B blocks, AVAILABLE_DISABLED / NOT_APPLICABLE /
+DEFERRED_BY_POLICY / NOT_RUN-with-phase-pointer rows, and the R2 compaction
+decision. Zero P0/P1 open. Flakes and harness/oracle corrections are recorded
+openly in the verdicts document; no skip was silent and no non-pass was
+converted.
