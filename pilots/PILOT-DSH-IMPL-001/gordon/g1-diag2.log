@@ -1,0 +1,28 @@
+=== PUBLINT ===
+publint-rc=0
+=== HYGIENE ===
+run-gates: PASS runtime closure (0.99s)
+run-gates: start vendored links
+run-gates: PASS client packages (9.23s)
+run-gates: PASS vendored links (1.12s)
+run-gates: PASS knip (19.48s)
+run-gates: PASS optional dependency imports (16.76s)
+
+run-gates: 12 passed, 1 failed, 0 skipped in 20.73s.
+run-gates: unsuccessful gates:
+  - FAILED vendor rescope (0.94s, exit 1)
+    pnpm run rescope-vendor:check
+[ELIFECYCLE] Command failed with exit code 1.
+hygiene-rc=1
+=== SNAPSHOT ===
+ [31m❯[39m scripts/session-fixture-layout.snapshot.ts [2m([22m[2m1 test[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 11[2mms[22m[39m
+[31m   [31m×[31m keeps every session-format JSONL fixture projected into canonical packed layout[39m[32m 10[2mms[22m[39m
+ [31m❯[39m examples/acp-agent/tests/acp.snapshot.ts [2m([22m[2m93 tests[22m[2m | [22m[31m1 failed[39m[2m | [22m[33m2 skipped[39m[2m)[22m[33m 142478[2mms[22m[39m
+[31m     [31m×[31m snapshot: agent-instructions matches the expected outputs[39m[33m 7467[2mms[22m[39m
+[41m[1m FAIL [22m[49m scripts/session-fixture-layout.snapshot.ts[2m > [22mkeeps every session-format JSONL fixture projected into canonical packed layout
+[31m[1mError[22m: Command failed: git ls-files -z --cached --others --exclude-standard -- *.jsonl
+[41m[1m FAIL [22m[49m examples/acp-agent/tests/acp.snapshot.ts[2m > [22msnapshot scenarios[2m > [22msnapshot: agent-instructions matches the expected outputs
+[2m Test Files [22m [1m[31m2 failed[39m[22m[2m | [22m[1m[32m11 passed[39m[22m[90m (13)[39m
+[2m      Tests [22m [1m[31m2 failed[39m[22m[2m | [22m[1m[32m124 passed[39m[22m[2m | [22m[33m2 skipped[39m[90m (128)[39m
+[ELIFECYCLE] Command failed with exit code 1.
+snapshot-rc=1

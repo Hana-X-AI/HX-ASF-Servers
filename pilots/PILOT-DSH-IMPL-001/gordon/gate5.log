@@ -1,0 +1,81 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0
+rootdir: /home/hxsa/gordon/phase-a
+collected 16 items
+
+phase-a/test_g5_containment.py .s.ss.sFFs.ss...                          [100%]
+
+=================================== FAILURES ===================================
+___________________________ test_g5_08_sigint_drill ____________________________
+
+cfg = Cfg(values={'GORDON_DSH_BIN': '/usr/local/bin/dsh', 'GORDON_DSH_ROOT': '/opt/dsh', 'GORDON_DSH_SRC': '/opt/dsh', 'GORD...test', 'GORDON_CUSTOM_ROW_ID': '', 'GORDON_HOST': '192.168.50.214', 'GORDON_WRAPPER': '/usr/local/bin/gordon-run-dsh'})
+candidate_bin = PosixPath('/usr/local/bin/dsh')
+scratch_home = PosixPath('/var/tmp/gordon-run/home-9a752cdc56/dsh-home')
+scratch_env = {'DSH_HOME': '/var/tmp/gordon-run/home-9a752cdc56/dsh-home', 'HOME': '/var/tmp/gordon-run/home-9a752cdc56/dsh-home'}
+workspace = PosixPath('/var/tmp/gordon-run/ws-ae9618ebd7/workspace')
+rec = <conftest.rec.<locals>._Rec object at 0x71b8ff275250>
+
+    def test_g5_08_sigint_drill(cfg, candidate_bin, scratch_home, scratch_env, workspace, rec):
+        """G5-08: SIGINT mid-run exits 130; the log stays a parseable prefix."""
+        proc = _spawn_long_run(cfg, scratch_home, scratch_env, workspace, "G508")
+        time.sleep(25)
+        proc.send_signal(signal.SIGINT)
+        try:
+            _, stderr = proc.communicate(timeout=90)
+        except subprocess.TimeoutExpired:
+            proc.kill()
+            proc.communicate()
+            stderr = "TIMEOUT after SIGINT"
+        logs = find_session_artifacts(scratch_home, cfg)
+        parsed = read_session_log(cfg, logs[-1]) if logs else {"records": [], "error": "none"}
+        observed = (f"exit={proc.returncode}; artifacts={len(logs)}; "
+                    f"records={len(parsed.get('records', []))}; stderr={stderr[-200:]}")
+        ok = proc.returncode == 130 and parsed.get("header") is not None
+        rec.finish("PASS" if ok else "FAIL",
+                   "profile-boot.ts:222 SIGINT→interrupt(130); committed prefix parses",
+                   observed)
+>       assert ok, observed
+E       AssertionError: exit=0; artifacts=1; records=93; stderr=
+E       assert False
+
+phase-a/test_g5_containment.py:315: AssertionError
+___________________________ test_g5_09_sigkill_drill ___________________________
+
+cfg = Cfg(values={'GORDON_DSH_BIN': '/usr/local/bin/dsh', 'GORDON_DSH_ROOT': '/opt/dsh', 'GORDON_DSH_SRC': '/opt/dsh', 'GORD...test', 'GORDON_CUSTOM_ROW_ID': '', 'GORDON_HOST': '192.168.50.214', 'GORDON_WRAPPER': '/usr/local/bin/gordon-run-dsh'})
+candidate_bin = PosixPath('/usr/local/bin/dsh')
+scratch_home = PosixPath('/var/tmp/gordon-run/home-8bf735b7a4/dsh-home')
+scratch_env = {'DSH_HOME': '/var/tmp/gordon-run/home-8bf735b7a4/dsh-home', 'HOME': '/var/tmp/gordon-run/home-8bf735b7a4/dsh-home'}
+workspace = PosixPath('/var/tmp/gordon-run/ws-4d9a645d4d/workspace')
+rec = <conftest.rec.<locals>._Rec object at 0x71b8ff0e5a60>
+
+    def test_g5_09_sigkill_drill(cfg, candidate_bin, scratch_home, scratch_env, workspace, rec):
+        """G5-09: SIGKILL mid-run; next cold boot works; killed log parses (G4-05)."""
+        proc = _spawn_long_run(cfg, scratch_home, scratch_env, workspace, "G509")
+        time.sleep(25)
+        proc.kill()
+        proc.communicate()
+        killed_logs = find_session_artifacts(scratch_home, cfg)
+        parsed = read_session_log(cfg, killed_logs[-1]) if killed_logs else {"records": []}
+        # Cold boot afterwards must work: a plain dump is enough (no provider call).
+        run = run_candidate(cfg, ["--profile", "headless", "--dump-default-config"],
+                            env_extra=scratch_env, timeout=120)
+        rec.commands.append(run)
+        observed = (f"killed_exit={proc.returncode}; killed_records={len(parsed.get('records', []))}; "
+                    f"cold_boot_dump_exit={run.exit_code}")
+        ok = proc.returncode == -signal.SIGKILL and run.exit_code == 0 and parsed.get("header") is not None
+        rec.finish("PASS" if ok else "FAIL",
+                   "scanner torn-tail finish (format.ts:337-344); checkpoint-policy durability; "
+                   "cold boot unaffected",
+                   observed)
+>       assert ok, observed
+E       AssertionError: killed_exit=0; killed_records=136; cold_boot_dump_exit=0
+E       assert False
+
+phase-a/test_g5_containment.py:337: AssertionError
+-------- generated xml file: /home/hxsa/gordon/evidence/gate5-junit.xml --------
+=========================== short test summary info ============================
+SKIPPED [6] phase-a/gordon_util.py:69: BLOCKED: sandbox backend absent on hxs-15 (defect D1)
+SKIPPED [1] phase-a/gordon_util.py:69: BLOCKED: web frontend dist absent by Phase A boundary
+FAILED phase-a/test_g5_containment.py::test_g5_08_sigint_drill - AssertionErr...
+FAILED phase-a/test_g5_containment.py::test_g5_09_sigkill_drill - AssertionEr...
+============== 2 failed, 7 passed, 7 skipped in 213.91s (0:03:33) ==============

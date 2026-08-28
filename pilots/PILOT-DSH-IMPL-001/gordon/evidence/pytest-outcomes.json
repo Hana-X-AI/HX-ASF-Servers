@@ -1,0 +1,4 @@
+{
+  "test_g5_containment.py::test_g5_01_bash_execution": "BLOCKED (sandbox backend absent on hxs-15 (defect D1))",
+  "test_g5_containment.py::test_g5_03_workspace_escape_denied": "BLOCKED (sandbox backend absent on hxs-15 (defect D1))"
+}

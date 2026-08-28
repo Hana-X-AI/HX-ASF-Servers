@@ -1,0 +1,8 @@
+{
+  "dump_exit": 0,
+  "pi_ai_row": true,
+  "deepseek_row": true,
+  "omni_base_in_dump": true,
+  "omni_base_in_settings": false,
+  "declared_seam_env": "auto"
+}

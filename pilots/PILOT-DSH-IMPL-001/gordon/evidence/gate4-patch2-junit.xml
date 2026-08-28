@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="5.288" timestamp="2026-08-28T13:03:49.751967" hostname="hxs-15"><testcase classname="test_g4_sessions" name="test_g4_06a_corrupt_sibling_resilience" time="5.234"><failure message="AssertionError: exit=0; marker_in_assistant_message=False; turn_end_completed=False; artifact=session.jsonl.zstd; stderr=&#10;assert False">cfg = Cfg(values={'GORDON_DSH_BIN': '/usr/local/bin/dsh', 'GORDON_DSH_ROOT': '/opt/dsh', 'GORDON_DSH_SRC': '/opt/dsh', 'GORD...test', 'GORDON_CUSTOM_ROW_ID': '', 'GORDON_HOST': '192.168.50.214', 'GORDON_WRAPPER': '/usr/local/bin/gordon-run-dsh'})
+candidate_bin = PosixPath('/usr/local/bin/dsh')
+scratch_home = PosixPath('/var/tmp/gordon-run/home-23100ba7ec/dsh-home')
+scratch_env = {'DSH_HOME': '/var/tmp/gordon-run/home-23100ba7ec/dsh-home', 'HOME': '/var/tmp/gordon-run/home-23100ba7ec/dsh-home'}
+workspace = PosixPath('/var/tmp/gordon-run/ws-502973a43b/workspace')
+rec = &lt;conftest.rec.&lt;locals&gt;._Rec object at 0x764f99d3a450&gt;
+
+    def test_g4_06a_corrupt_sibling_resilience(cfg, candidate_bin, scratch_home, scratch_env, workspace, rec):
+        """G4-06(a): a corrupted sibling session log does not break boot or a new run.
+    
+        The sibling must be a valid zstd FRAME with corrupt JSONL inside: the
+        backend rejects extension/content-encoding mismatches at its root on
+        contact (first-run evidence: `.jsonl` under a zstd-configured backend
+        fails loud by design)."""
+        sessions_root = scratch_home / "sessions" / project_key(str(workspace)) / encode_segment("session-corrupt-seed")
+        sessions_root.mkdir(parents=True, exist_ok=True)
+        # The candidate must create the REAL session's sibling directory under the
+        # same project dir: the chain must be dsh-writable (0755 hxsa blocks it).
+        for level in (scratch_home / "sessions",
+                      scratch_home / "sessions" / project_key(str(workspace)),
+                      sessions_root):
+            level.chmod(0o777)
+        plain = sessions_root / "seed.jsonl"
+        plain.write_bytes(
+            b'{"type":"session","version":0,"id":"session-corrupt-seed","createdAt":1,"delegationDepth":0}\n'
+            b'{"type":"turn/start","seq":0,"time":1,"data":{}}\n'
+            b'{"corrupted":'
+        )
+        bad = sessions_root / "session.jsonl.zstd"
+        from gordon_util import run_host
+    
+        packed = run_host(["zstd", "-q", "-f", str(plain), "-o", str(bad)], timeout=30)
+        rec.commands.append(packed)
+        plain.unlink()
+        run, marker = _routed_run(cfg, scratch_home, scratch_env, workspace, rec, "G406A")
+        ok_run, observed_run, _log = assert_marker_run(cfg, scratch_home, run, marker)
+        rec.finish("PASS" if ok_run else "FAIL",
+                   "corruption is per-artifact: boot + a fresh session proceed with a "
+                   "corrupt (framed) sibling present",
+                   observed_run)
+&gt;       assert ok_run, observed_run
+E       AssertionError: exit=0; marker_in_assistant_message=False; turn_end_completed=False; artifact=session.jsonl.zstd; stderr=
+E       assert False
+
+phase-a/test_g4_sessions.py:190: AssertionError</failure></testcase></testsuite></testsuites>

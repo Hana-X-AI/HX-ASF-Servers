@@ -1,0 +1,221 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0
+rootdir: /home/hxsa/gordon/phase-a
+collected 9 items
+
+phase-a/test_g1_static.py ...FFFF..                                      [100%]
+
+=================================== FAILURES ===================================
+_______________________________ test_g1_04_build _______________________________
+
+cfg = Cfg(values={'GORDON_DSH_BIN': '/usr/local/bin/dsh', 'GORDON_DSH_ROOT': '/opt/dsh', 'GORDON_DSH_SRC': '/opt/dsh', 'GORD...test', 'GORDON_CUSTOM_ROW_ID': '', 'GORDON_HOST': '192.168.50.214', 'GORDON_WRAPPER': '/usr/local/bin/gordon-run-dsh'})
+scratch_copy = PosixPath('/home/hxsa/gordon/scratch/g1-source-copy')
+rec = <conftest.rec.<locals>._Rec object at 0x77699b473bc0>
+
+    def test_g1_04_build(cfg, scratch_copy, rec):
+        """G1-04: pnpm run build produces lib/types and the bundled runtime."""
+>       _run_gate(cfg, scratch_copy, rec, _pnpm(cfg, scratch_copy) + ["run", "build"],
+                  timeout=2400, oracle="root script: tsx scripts/build.ts")
+
+phase-a/test_g1_static.py:101: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+cfg = Cfg(values={'GORDON_DSH_BIN': '/usr/local/bin/dsh', 'GORDON_DSH_ROOT': '/opt/dsh', 'GORDON_DSH_SRC': '/opt/dsh', 'GORD...test', 'GORDON_CUSTOM_ROW_ID': '', 'GORDON_HOST': '192.168.50.214', 'GORDON_WRAPPER': '/usr/local/bin/gordon-run-dsh'})
+copy = PosixPath('/home/hxsa/gordon/scratch/g1-source-copy')
+rec = <conftest.rec.<locals>._Rec object at 0x77699b473bc0>
+argv = ['/opt/node-v24.20.0/bin/pnpm', 'run', 'build'], timeout = 2400
+oracle = 'root script: tsx scripts/build.ts', ok_exit = 0
+
+    def _run_gate(cfg, copy: Path, rec, argv: list[str], timeout: float, oracle: str, ok_exit: int = 0):
+        import os
+    
+        node_bin = str(Path(cfg.node).parent)
+        run = run_host(
+            argv,
+            cwd=str(copy),
+            timeout=timeout,
+            env_extra={"CI": "true", "PATH": f"{node_bin}:{os.environ.get('PATH', '')}"},
+        )
+        rec.commands.append(run)
+        observed = f"exit={run.exit_code}; stderr tail: {run.stderr[-600:]}"
+        ok = run.exit_code == ok_exit
+        rec.finish("PASS" if ok else "FAIL", oracle, observed, note=REVIEW_NOTE)
+>       assert ok, observed
+E       AssertionError: exit=1; stderr tail:  repositoryCommitHash (/home/hxsa/gordon/scratch/g1-source-copy/scripts/client-build-environment.ts:49:29)
+E             at main (/home/hxsa/gordon/scratch/g1-source-copy/scripts/build.ts:39:29)
+E             at <anonymous> (/home/hxsa/gordon/scratch/g1-source-copy/scripts/build.ts:53:23)
+E             at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+E             at async node:internal/modules/esm/loader:647:26
+E             at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+E           status: 128,
+E           signal: null,
+E           output: [ null, '', null ],
+E           pid: 17361,
+E           stdout: '',
+E           stderr: null
+E         }
+E         
+E         Node.js v24.20.0
+E         
+E       assert False
+
+phase-a/test_g1_static.py:67: AssertionError
+____________________________ test_g1_05_unit_tests _____________________________
+
+cfg = Cfg(values={'GORDON_DSH_BIN': '/usr/local/bin/dsh', 'GORDON_DSH_ROOT': '/opt/dsh', 'GORDON_DSH_SRC': '/opt/dsh', 'GORD...test', 'GORDON_CUSTOM_ROW_ID': '', 'GORDON_HOST': '192.168.50.214', 'GORDON_WRAPPER': '/usr/local/bin/gordon-run-dsh'})
+scratch_copy = PosixPath('/home/hxsa/gordon/scratch/g1-source-copy')
+rec = <conftest.rec.<locals>._Rec object at 0x77699b3fdd00>
+
+    def test_g1_05_unit_tests(cfg, scratch_copy, rec):
+        """G1-05: pnpm run test (keyless vitest unit tier). Skips recorded, not suppressed."""
+>       _run_gate(cfg, scratch_copy, rec, _pnpm(cfg, scratch_copy) + ["run", "test"],
+                  timeout=3600, oracle="root script vitest run; docs/testing.md unit tier")
+
+phase-a/test_g1_static.py:112: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+cfg = Cfg(values={'GORDON_DSH_BIN': '/usr/local/bin/dsh', 'GORDON_DSH_ROOT': '/opt/dsh', 'GORDON_DSH_SRC': '/opt/dsh', 'GORD...test', 'GORDON_CUSTOM_ROW_ID': '', 'GORDON_HOST': '192.168.50.214', 'GORDON_WRAPPER': '/usr/local/bin/gordon-run-dsh'})
+copy = PosixPath('/home/hxsa/gordon/scratch/g1-source-copy')
+rec = <conftest.rec.<locals>._Rec object at 0x77699b3fdd00>
+argv = ['/opt/node-v24.20.0/bin/pnpm', 'run', 'test'], timeout = 3600
+oracle = 'root script vitest run; docs/testing.md unit tier', ok_exit = 0
+
+    def _run_gate(cfg, copy: Path, rec, argv: list[str], timeout: float, oracle: str, ok_exit: int = 0):
+        import os
+    
+        node_bin = str(Path(cfg.node).parent)
+        run = run_host(
+            argv,
+            cwd=str(copy),
+            timeout=timeout,
+            env_extra={"CI": "true", "PATH": f"{node_bin}:{os.environ.get('PATH', '')}"},
+        )
+        rec.commands.append(run)
+        observed = f"exit={run.exit_code}; stderr tail: {run.stderr[-600:]}"
+        ok = run.exit_code == ok_exit
+        rec.finish("PASS" if ok else "FAIL", oracle, observed, note=REVIEW_NOTE)
+>       assert ok, observed
+E       AssertionError: exit=1; stderr tail: 8|[39m   [35mconst[39m explicit [33m=[39m environment[[33mCLIENT_COMMIT_HASH_VARIABLE[39m]
+E             [90m 49|[39m   const value = explicit ?? execFileSync('git', ['rev-parse', 'HEAD'],…
+E             [90m   |[39m                             [31m^[39m
+E             [90m 50|[39m     cwd[33m:[39m root[33m,[39m
+E             [90m 51|[39m     encoding[33m:[39m [32m'utf8'[39m[33m,[39m
+E         [90m [2m❯[22m officialClientBuildEnvironment scripts/client-build-environment.ts:[2m71:29[22m[39m
+E         [90m [2m❯[22m scripts/release/families.spec.ts:[2m105:33[22m[39m
+E         
+E         [31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/8]⎯[22m[39m
+E         
+E         
+E       assert False
+
+phase-a/test_g1_static.py:67: AssertionError
+__________________________ test_g1_06_snapshot_replay __________________________
+
+cfg = Cfg(values={'GORDON_DSH_BIN': '/usr/local/bin/dsh', 'GORDON_DSH_ROOT': '/opt/dsh', 'GORDON_DSH_SRC': '/opt/dsh', 'GORD...test', 'GORDON_CUSTOM_ROW_ID': '', 'GORDON_HOST': '192.168.50.214', 'GORDON_WRAPPER': '/usr/local/bin/gordon-run-dsh'})
+scratch_copy = PosixPath('/home/hxsa/gordon/scratch/g1-source-copy')
+rec = <conftest.rec.<locals>._Rec object at 0x77699b4a5040>
+
+    def test_g1_06_snapshot_replay(cfg, scratch_copy, rec):
+        """G1-06: pnpm run test:snapshot (keyless replay; fixtures replay on Linux)."""
+>       _run_gate(cfg, scratch_copy, rec, _pnpm(cfg, scratch_copy) + ["run", "test:snapshot"],
+                  timeout=3600, oracle="docs/testing.md snapshot tier; vitest.snapshot.config.ts")
+
+phase-a/test_g1_static.py:118: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+cfg = Cfg(values={'GORDON_DSH_BIN': '/usr/local/bin/dsh', 'GORDON_DSH_ROOT': '/opt/dsh', 'GORDON_DSH_SRC': '/opt/dsh', 'GORD...test', 'GORDON_CUSTOM_ROW_ID': '', 'GORDON_HOST': '192.168.50.214', 'GORDON_WRAPPER': '/usr/local/bin/gordon-run-dsh'})
+copy = PosixPath('/home/hxsa/gordon/scratch/g1-source-copy')
+rec = <conftest.rec.<locals>._Rec object at 0x77699b4a5040>
+argv = ['/opt/node-v24.20.0/bin/pnpm', 'run', 'test:snapshot'], timeout = 3600
+oracle = 'docs/testing.md snapshot tier; vitest.snapshot.config.ts', ok_exit = 0
+
+    def _run_gate(cfg, copy: Path, rec, argv: list[str], timeout: float, oracle: str, ok_exit: int = 0):
+        import os
+    
+        node_bin = str(Path(cfg.node).parent)
+        run = run_host(
+            argv,
+            cwd=str(copy),
+            timeout=timeout,
+            env_extra={"CI": "true", "PATH": f"{node_bin}:{os.environ.get('PATH', '')}"},
+        )
+        rec.commands.append(run)
+        observed = f"exit={run.exit_code}; stderr tail: {run.stderr[-600:]}"
+        ok = run.exit_code == ok_exit
+        rec.finish("PASS" if ok else "FAIL", oracle, observed, note=REVIEW_NOTE)
+>       assert ok, observed
+E       AssertionError: exit=1; stderr tail: :1,"step":2,"chunk":{"type":"finish","reason":{"kind":"tool-calls"}}}}[22m
+E         
+E         [36m [2m❯[22m packages/test-support/acp-snapshot/src/suite.ts:[2m1338:16[22m[39m
+E             [90m1336|[39m             const fixture = scrubSessionSnapshot(await readFile(join(d…
+E             [90m1337|[39m             expect(normalizeSessionLog(harvested, ctx), `${fixtureFile…
+E             [90m1338|[39m               .toEqual(normalizeSessionLog(fixture, fixtureContext(fix…
+E             [90m   |[39m                [31m^[39m
+E             [90m1339|[39m           }
+E             [90m1340|[39m         }
+E         
+E         [31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯[22m[39m
+E         
+E         
+E       assert False
+
+phase-a/test_g1_static.py:67: AssertionError
+______________________________ test_g1_07_hygiene ______________________________
+
+cfg = Cfg(values={'GORDON_DSH_BIN': '/usr/local/bin/dsh', 'GORDON_DSH_ROOT': '/opt/dsh', 'GORDON_DSH_SRC': '/opt/dsh', 'GORD...test', 'GORDON_CUSTOM_ROW_ID': '', 'GORDON_HOST': '192.168.50.214', 'GORDON_WRAPPER': '/usr/local/bin/gordon-run-dsh'})
+scratch_copy = PosixPath('/home/hxsa/gordon/scratch/g1-source-copy')
+rec = <conftest.rec.<locals>._Rec object at 0x77699b4a4a10>
+
+    def test_g1_07_hygiene(cfg, scratch_copy, rec):
+        """G1-07: pnpm run hygiene (knip + publint + constraints + NodeNext check)."""
+>       _run_gate(cfg, scratch_copy, rec, _pnpm(cfg, scratch_copy) + ["run", "hygiene"],
+                  timeout=1800, oracle="root script: scripts/run-gates.ts hygiene")
+
+phase-a/test_g1_static.py:124: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+cfg = Cfg(values={'GORDON_DSH_BIN': '/usr/local/bin/dsh', 'GORDON_DSH_ROOT': '/opt/dsh', 'GORDON_DSH_SRC': '/opt/dsh', 'GORD...test', 'GORDON_CUSTOM_ROW_ID': '', 'GORDON_HOST': '192.168.50.214', 'GORDON_WRAPPER': '/usr/local/bin/gordon-run-dsh'})
+copy = PosixPath('/home/hxsa/gordon/scratch/g1-source-copy')
+rec = <conftest.rec.<locals>._Rec object at 0x77699b4a4a10>
+argv = ['/opt/node-v24.20.0/bin/pnpm', 'run', 'hygiene'], timeout = 1800
+oracle = 'root script: scripts/run-gates.ts hygiene', ok_exit = 0
+
+    def _run_gate(cfg, copy: Path, rec, argv: list[str], timeout: float, oracle: str, ok_exit: int = 0):
+        import os
+    
+        node_bin = str(Path(cfg.node).parent)
+        run = run_host(
+            argv,
+            cwd=str(copy),
+            timeout=timeout,
+            env_extra={"CI": "true", "PATH": f"{node_bin}:{os.environ.get('PATH', '')}"},
+        )
+        rec.commands.append(run)
+        observed = f"exit={run.exit_code}; stderr tail: {run.stderr[-600:]}"
+        ok = run.exit_code == ok_exit
+        rec.finish("PASS" if ok else "FAIL", oracle, observed, note=REVIEW_NOTE)
+>       assert ok, observed
+E       AssertionError: exit=1; stderr tail:  module '/home/hxsa/gordon/scratch/g1-source-copy/packages/typert/registry/.dsh-built-invariant-PQEKTw/lib/invariant.js' imported from /home/hxsa/gordon/scratch/g1-source-copy/packages/typert/registry/.dsh-built-invariant-PQEKTw/probe.mjs
+E         
+E         == FAILED publint (4.05s) ==
+E         command: pnpm run publint
+E         outcome: exit 1
+E         $ tsx scripts/publint-all.ts
+E         run-gates: unsuccessful gates:
+E           - FAILED vendor rescope (0.87s, exit 1)
+E             pnpm run rescope-vendor:check
+E           - FAILED publint (4.05s, exit 1)
+E             pnpm run publint
+E           - FAILED built package invariants (1.80s, exit 1)
+E             pnpm run verify-built-package-invariants
+E         
+E       assert False
+
+phase-a/test_g1_static.py:67: AssertionError
+-------- generated xml file: /home/hxsa/gordon/evidence/gate1-junit.xml --------
+=========================== short test summary info ============================
+FAILED phase-a/test_g1_static.py::test_g1_04_build - AssertionError: exit=1; ...
+FAILED phase-a/test_g1_static.py::test_g1_05_unit_tests - AssertionError: exit=1; stderr tail: 8|[39m   [35mconst[39m explicit [33m=[39m environment[[33mCLIENT_COMMIT_HASH_VARIABLE[39m]
+FAILED phase-a/test_g1_static.py::test_g1_06_snapshot_replay - AssertionError: exit=1; stderr tail: :1,"step":2,"chunk":{"type":"finish","reason":{"kind":"tool-calls"}}}}[22m
+FAILED phase-a/test_g1_static.py::test_g1_07_hygiene - AssertionError: exit=1...
+=================== 4 failed, 5 passed in 661.63s (0:11:01) ====================

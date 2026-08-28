@@ -62,11 +62,16 @@ def seam_provider(cfg) -> str:
 
 
 def require_routing_inputs(cfg, model_key: str) -> str:
-    """Presence-gated inputs for a routed run. Never reads secret values."""
-    if not cfg.omni_key_present():
+    """Presence-gated inputs for a routed run. Never reads secret values.
+    The key may arrive governor-exported (executor env) or through the landed
+    /var/lib/dsh/.env read by the service user inside the wrapper."""
+    from gordon_util import key_source_available
+
+    if not key_source_available(cfg):
         blocked(
             f"credential value absent: governor must export the variable named "
-            f"{cfg.omni_key_env_name} at execution time (existence checked, value never read)"
+            f"{cfg.omni_key_env_name} or leave /var/lib/dsh/.env readable by the "
+            f"service user (existence checked, value never read)"
         )
     model_id = cfg.model_ids()[model_key]
     if not model_id:
@@ -85,6 +90,7 @@ def seam_fixture_for(
     max_retries: int = 1,
     base_url: str | None = None,
     model_id: str | None = None,
+    model_ids: list[str] | None = None,
     key_env: str | None = None,
     context_window: int = 65_536,
     max_tokens: int = 8_192,
@@ -96,13 +102,24 @@ def seam_fixture_for(
     seam = seam_choice(cfg)
     url = base_url or cfg.omni_base_url
     mid = model_id or cfg.model_ids()[model_key] or "gordon-unset-model"
+    ids = model_ids or [mid]
+    indent = "          " if seam == "pi-ai" else "      "
+    models_yaml = "\n".join(
+        line
+        for entry in ids
+        for line in (
+            f"{indent}- id: {entry}",
+            f"{indent}  name: {entry}",
+            f"{indent}  contextWindow: {context_window}",
+            f"{indent}  maxTokens: {max_tokens}",
+        )
+    )
     mapping = {
         "KEY_ENV": key_env or cfg.omni_key_env_name,
         "BASE_URL": url,
         "MODEL_ID": mid,
         "MAX_RETRIES": str(max_retries),
-        "CTX": str(context_window),
-        "MAX_TOKENS": str(max_tokens),
+        "MODELS_YAML": models_yaml,
     }
     template = "patch-pi-ai-route.yml.tmpl" if seam == "pi-ai" else "patch-deepseek-route.yml.tmpl"
     return render_fixture(template, mapping, dest_dir)
@@ -132,12 +149,14 @@ def run_routed_headless(
     timeout: float = 300.0,
     extra_args: list[str] | None = None,
     env_extra: dict[str, str] | None = None,
+    key_mode: str = "with-key",
 ):
     env = dict(scratch_env)
     if env_extra:
         env.update(env_extra)
     args = ["--profile", "headless", "--patch", str(patch), *(extra_args or []), task]
-    return run_candidate(cfg, args, env_extra=env, cwd=str(workspace), timeout=timeout)
+    return run_candidate(cfg, args, env_extra=env, cwd=str(workspace), timeout=timeout,
+                         key_mode=key_mode)
 
 
 def assert_marker_run(cfg, scratch_home, run, marker: str) -> tuple[bool, str, dict]:
@@ -233,17 +252,19 @@ def test_g3_02_missing_credential_fails_loud(cfg, candidate_bin, scratch_home, s
     observed = f"exit={run.exit_code}; stderr={run.stderr[-300:]}"
     ok = run.exit_code == 1 and "MISSING_CREDENTIAL" in run.stderr
     rec.finish("PASS" if ok else "FAIL",
-               "llm-deepseek/src/index.ts:427-431 LlmError MISSING_CREDENTIAL; "
-               "headless fail path prints `dsh: <code>: <message>`",
+               "llm-pi-ai/src/index.ts:183-187 and llm-deepseek/src/index.ts:427-431: "
+               "LlmError MISSING_CREDENTIAL; headless fail path prints `dsh: <code>: <message>`",
                observed)
     assert ok, observed
 
 
 def test_g3_03_provider_down_transport(cfg, candidate_bin, scratch_home, scratch_env, workspace, rec):
     """G3-03: unreachable provider → bounded TRANSPORT failure, exit 1."""
-    if not cfg.omni_key_present():
-        blocked(f"credential value absent ({cfg.omni_key_env_name}); down-drill still "
-                "needs a key-shaped value to pass credential resolution")
+    from gordon_util import key_source_available
+
+    if not key_source_available(cfg):
+        blocked(f"credential value absent ({cfg.omni_key_env_name} or landed .env); "
+                "down-drill still needs a key-shaped value to pass credential resolution")
     patch = seam_fixture_for(cfg, scratch_home, max_retries=1, base_url=DOWN_URL)
     started = time.monotonic()
     run = run_routed_headless(
@@ -421,8 +442,10 @@ def test_g3_08_usage_reconciliation(cfg, scratch_home, rec):
 
 def test_g3_09_retry_events_durable(cfg, candidate_bin, scratch_home, scratch_env, workspace, rec):
     """G3-09: llm-retry writes durable llm/retry events before the final failure."""
-    if not cfg.omni_key_present():
-        blocked(f"credential value absent ({cfg.omni_key_env_name})")
+    from gordon_util import key_source_available
+
+    if not key_source_available(cfg):
+        blocked(f"credential value absent ({cfg.omni_key_env_name} or landed .env)")
     patch = seam_fixture_for(cfg, scratch_home, max_retries=2, base_url=DOWN_URL)
     run = run_routed_headless(
         cfg, scratch_env, workspace, patch,
@@ -484,12 +507,18 @@ def test_g3_11_catalog_self_consistency(cfg, candidate_bin, scratch_env, rec):
 
 
 def _dump_with_fixture(cfg, scratch_env, rec):
+    import uuid
     from pathlib import Path as _P
 
-    dest = _P(cfg.scratch) / "g311"
+    # The patch file must be readable by the service user: /home/<executor> is
+    # 0750, so render on the dsh-traversable /var/tmp chain.
+    dest = _P("/var/tmp/gordon-run") / f"dumpfix-{uuid.uuid4().hex[:8]}"
     dest.mkdir(parents=True, exist_ok=True)
-    patch = seam_fixture_for(cfg, dest, model_key="qwen",
-                             model_id=cfg.model_ids()["qwen"] or "gordon-unset-model")
+    dest.chmod(0o777)
+    patch = seam_fixture_for(
+        cfg, dest, model_key="qwen",
+        model_ids=[mid for mid in cfg.model_ids().values() if mid] or None,
+    )
     run = run_candidate(
         cfg, ["--profile", "headless", "--patch", str(patch), "--dump-config"],
         env_extra=scratch_env,
@@ -508,5 +537,80 @@ def test_g3_12_no_cloud_baseurl(cfg, candidate_bin, scratch_env, rec):
     rec.finish("PASS" if ok else "FAIL",
                "llm-deepseek PUBLIC_BASE_URL must not be the effective endpoint "
                "(local-only doctrine; dynamic leg is G3-07 attribution)",
+               observed)
+    assert ok, observed
+
+
+def test_g3_13_cookbook_adapter_contract(cfg, candidate_bin, scratch_home, scratch_env, workspace, rec):
+    """G3-13 (owner directive, cookbook first-class): the recipe
+    docs/cookbook/adding-an-llm-adapter.md as known-answer oracle against the
+    as-configured OmniRoute seam.
+
+    Leg A (declared shapes): the landed route carries the recipe-conformant
+    fields — provider route with api protocol, baseURL, apiKeyEnv as a
+    credential REFERENCE, compat switches, declared model capacities; the
+    default model's provider resolves to that registered route.
+    Leg B (secrets are cordis-native): no key-shaped value in the composed
+    config; the credential stays a name.
+    Leg C (protocol obligation, executable): on a routed run, usage is emitted
+    BEFORE finish — the last usage-bearing assistant/message precedes the
+    final turn/end in the durable log."""
+    import re as _re
+
+    # Leg A + B: real-home composition (read-only).
+    run = run_candidate(cfg, ["--profile", "headless", "--dump-config"], env_extra={})
+    rec.commands.append(run)
+    rec.artifact("g313-dump.yml", run.stdout)
+    dump = run.stdout
+    shape_checks = {
+        "route_present_once": dump.count("omniroute") >= 2,  # route key + default-model provider
+        "api_openai_completions": "openai-completions" in dump,
+        "base_url": "http://192.168.50.207:20128/v1" in dump,
+        "api_key_reference": "apiKeyEnv: OMNIROUTE_API_KEY" in dump,
+        "compat_developer_role": "supportsDeveloperRole: false" in dump,
+        "compat_max_tokens_field": "maxTokensField: max_tokens" in dump,
+        "context_window": "contextWindow: 65536" in dump,
+        "max_tokens": "maxTokens: 8192" in dump,
+        "default_model_route": _re.search(
+            r"id: agent-default-model(?:.|\n)*?provider: omniroute", dump) is not None,
+    }
+    # Leg B: no key-shaped assignment anywhere in the dump (names allowed).
+    leak_pattern = _re.compile(r"(?i)(api[_-]?key|token|secret)\s*:\s*['\"]?[A-Za-z0-9_+/.=-]{20,}")
+    leaks = [m.group(0) for m in leak_pattern.finditer(dump)
+             if "apiKeyEnv" not in m.group(0)]
+    shape_ok = all(shape_checks.values()) and not leaks
+
+    # Leg C: routed run, usage-before-finish in the durable stream.
+    marker = f"GORDON-G313-{nonce()}"
+    require_routing_inputs(cfg, "qwen")
+    patch = seam_fixture_for(cfg, scratch_home, model_key="qwen", max_retries=1)
+    run2 = run_routed_headless(
+        cfg, scratch_env, workspace, patch,
+        f"Reply with exactly this token and nothing else: {marker}",
+    )
+    rec.commands.append(run2)
+    register_call(cfg, {"tag": "G313", "model_key": "qwen",
+                        "model_id": cfg.model_ids()["qwen"], "marker": marker,
+                        "ts": int(time.time()), "exit": run2.exit_code})
+    usage_seq = finish_seq = None
+    artifacts = find_session_artifacts(scratch_home, cfg)
+    if artifacts:
+        log = read_session_log(cfg, artifacts[-1])
+        for event in log["records"]:
+            if event.get("type") == "assistant/message" and isinstance(
+                (event.get("data") or {}).get("usage"), dict
+            ):
+                usage_seq = event.get("seq")
+            if event.get("type") == "turn/end":
+                finish_seq = event.get("seq")
+    order_ok = usage_seq is not None and finish_seq is not None and usage_seq < finish_seq
+    observed = (
+        f"shape={json.dumps(shape_checks)}; secret_leaks={leaks}; "
+        f"run2_exit={run2.exit_code}; usage_seq={usage_seq}; finish_seq={finish_seq}"
+    )
+    ok = shape_ok and run2.exit_code == 0 and order_ok
+    rec.finish("PASS" if ok else "FAIL",
+               "docs/cookbook/adding-an-llm-adapter.md: declared shapes, cordis-native "
+               "secrets, usage BEFORE finish; landed route per Morpheus receipt §7-8",
                observed)
     assert ok, observed

@@ -58,6 +58,7 @@ ENV_DEFAULTS: dict[str, str] = {
     "GORDON_MODEL_META": "ollama-local/hx-muse-glimmer-64k:latest",
     "GORDON_CUSTOM_ROW_ID": "",  # custom seam: composed row id of the adapter
     "GORDON_HOST": "192.168.50.214",
+    "GORDON_WRAPPER": "/var/lib/dsh/gordon/bin/run-dsh",
 }
 
 
@@ -195,16 +196,40 @@ def base_env(cfg: Cfg, extra: dict[str, str] | None = None) -> dict[str, str]:
 
 
 def candidate_argv(
-    cfg: Cfg, args: list[str], env: dict[str, str], runner: list[str] | None = None
+    cfg: Cfg, args: list[str], env: dict[str, str], runner: list[str] | None = None,
+    key_mode: str = "with-key",
 ) -> list[str]:
-    """Full wrapped argv: privilege prefix + `env -i` + controlled assignments.
+    """Full wrapped argv: privilege prefix + key-source wrapper + `env -i`.
 
-    Shared by run_candidate and the signal-drill Popen sites so every candidate
-    process sees exactly the same environment discipline under sudo env_reset.
+    The wrapper (deployed test tooling, `fixtures/run-dsh-wrapper.sh` →
+    `$GORDON_SCRATCH/bin/run-dsh`) runs as the service user. In `with-key`
+    mode it sources the landed `/var/lib/dsh/.env` (readable by that user,
+    never by Gordon's context) and appends only OMNIROUTE_API_KEY to the
+    assignment list; `no-key` mode never sources. The value never enters the
+    executor's environment, logs, or evidence.
     """
     prefix = _runner_prefix(cfg) if runner is None else runner
     assignments = [f"{key}={value}" for key, value in sorted(env.items())]
+    wrapper = cfg.wrapper
+    if Path(wrapper).exists():
+        return prefix + [wrapper, key_mode, *assignments, "--", cfg.dsh_bin, *args]
     return prefix + ["env", "-i", *assignments, cfg.dsh_bin, *args]
+
+
+def key_source_available(cfg: Cfg) -> bool:
+    """Presence-only credential check: governor-exported executor env, or the
+    landed `/var/lib/dsh/.env` readable by the service user (its native
+    resolution path). The value is never read."""
+    if cfg.omni_key_present():
+        return True
+    try:
+        prefix = _runner_prefix(cfg)
+    except Exception:
+        return False
+    proc = subprocess.run(
+        prefix + ["test", "-r", "/var/lib/dsh/.env"], capture_output=True, timeout=30
+    )
+    return proc.returncode == 0
 
 
 def run_candidate(
@@ -215,6 +240,7 @@ def run_candidate(
     cwd: str | None = None,
     timeout: float = 180.0,
     runner: list[str] | None = None,
+    key_mode: str = "with-key",
 ) -> RunRecord:
     """Run the candidate binary as the service user and record the atom.
 
@@ -224,19 +250,22 @@ def run_candidate(
     controlled set (Morpheus's execution contract, receipt §10).
     """
     env = base_env(cfg, env_extra)
-    argv = candidate_argv(cfg, args, env, runner)
+    argv = candidate_argv(cfg, args, env, runner, key_mode)
+    # Default cwd must be traversable by the service user (its home and the
+    # executor's scratch areas are not); /var/tmp is sticky-world-writable.
+    effective_cwd = cwd or "/var/tmp"
     started = time.monotonic()
     proc = subprocess.run(
         argv,
         capture_output=True,
         text=True,
-        cwd=cwd or str(cfg.scratch),
+        cwd=effective_cwd,
         timeout=timeout,
     )
     return RunRecord(
         argv=[cfg.dsh_bin, *args],
         env_names=sorted(env.keys()),
-        cwd=cwd or str(cfg.scratch),
+        cwd=effective_cwd,
         exit_code=proc.returncode,
         stdout=proc.stdout,
         stderr=proc.stderr,
@@ -266,6 +295,43 @@ def run_host(
         stderr=proc.stderr,
         duration_s=time.monotonic() - started,
     )
+
+
+def sandbox_unavailable(text: str) -> bool:
+    """Whether the text carries the sandbox-backend-absent error contract
+    (`SandboxUnavailableError` / 'no sandbox backend is usable on this host').
+    Live finding 2026-08-28 on hxs-15: no bwrap, no landlock prebuilt binary —
+    defect D1 (Morpheus provisioning). The candidate fails CLOSED with this
+    exact error; rows needing a working executor are BLOCKED on D1, never
+    false-passed and never blamed on the policy engine."""
+    return "SandboxUnavailableError" in text or "no sandbox backend is usable" in text
+
+
+def is_queue_transient(run: RunRecord) -> bool:
+    """Whether a failed routed run hit a gateway-side transient (OmniRoute
+    queue/bottleneck deadline, model load contention) rather than a candidate
+    defect. Observed live 2026-08-28 on hxs-15 waves: `requestQueue.maxWaitMs`
+    / Bottleneck messages from the gateway. Doctrine §9: repetition bounds the
+    intermittent; every attempt is still recorded."""
+    text = f"{run.stdout}\n{run.stderr}"
+    markers = ("requestqueue", "bottleneck", "queue wait", "maxwaitms",
+               "currently loading", "model is loading", "timed out waiting")
+    low = text.lower()
+    return any(marker in low for marker in markers)
+
+
+def staged_sources(cfg: "Cfg", home: Path) -> list[str]:
+    """Source paths of a home's session artifacts as seen through the runner
+    (layout assertions must use these, never staged copy paths)."""
+    prefix = _runner_prefix(cfg)
+    proc = subprocess.run(
+        prefix + ["find", str(home / "sessions"), "-type", "f", "(", "-name",
+                  "session.jsonl", "-o", "-name", "session.jsonl.zstd", ")"],
+        capture_output=True, text=True, timeout=60,
+    )
+    if proc.returncode != 0:
+        return []
+    return sorted(line.strip() for line in proc.stdout.splitlines() if line.strip())
 
 
 class Evidence:
@@ -399,26 +465,22 @@ def _by_mtime(paths: list[Path]) -> list[Path]:
 def find_session_artifacts(home: Path, cfg: "Cfg | None" = None) -> list[Path]:
     """List session artifacts under a harness home, oldest to newest.
 
-    The persistence backend creates its root mode 0700 owned by the service
-    user (session-persistence-jsonl/src/index.ts:536), so a non-root,
-    non-service-user executor cannot enumerate it directly. With `cfg` given,
-    fall back to a runner-assisted staged copy (scratch only).
+    Ownership is mixed: the sessions root may be executor-created while
+    per-session dirs are dsh-private (0700), and pathlib's rglob silently
+    skips unreadable subdirs — a plain listing can miss artifacts without
+    error. With `cfg` given, always use the runner-assisted staged listing
+    (the service user sees the whole tree); without `cfg`, plain rglob.
     """
+    if cfg is not None:
+        return _stage_artifacts_as_service_user(cfg, home)
     root = home / "sessions"
     try:
-        if root.is_dir():
-            found = list(root.rglob("session.jsonl.zstd")) + list(root.rglob("session.jsonl"))
-            if found:
-                return _by_mtime(found)
+        if not root.is_dir():
             return []
-        if cfg is None:
-            return []
-    except PermissionError:
-        if cfg is None:
-            raise
-    if cfg is None:
+    except OSError:
         return []
-    return _stage_artifacts_as_service_user(cfg, home)
+    found = list(root.rglob("session.jsonl.zstd")) + list(root.rglob("session.jsonl"))
+    return _by_mtime(found)
 
 
 def _stage_artifacts_as_service_user(cfg: "Cfg", home: Path) -> list[Path]:
@@ -431,7 +493,9 @@ def _stage_artifacts_as_service_user(cfg: "Cfg", home: Path) -> list[Path]:
     import hashlib
 
     prefix = _runner_prefix(cfg)
-    staging = cfg.scratch / "staged" / hashlib.sha256(str(home).encode()).hexdigest()[:12]
+    # Staging must sit on a dsh-traversable chain: the service user copies the
+    # files, so /home/<executor> (0750) is out; /var/tmp/gordon-run is 0777.
+    staging = Path("/var/tmp/gordon-run/staged") / hashlib.sha256(str(home).encode()).hexdigest()[:12]
     shutil.rmtree(staging, ignore_errors=True)
     staging.mkdir(parents=True, exist_ok=True)
     staging.chmod(0o777)
@@ -449,8 +513,12 @@ def _stage_artifacts_as_service_user(cfg: "Cfg", home: Path) -> list[Path]:
         # -p preserves mtime: the recency ordering find_session_artifacts
         # returns must reflect the artifact, not the copy time.
         copied = subprocess.run(prefix + ["cp", "-p", source, str(dest)], capture_output=True, timeout=60)
-        if copied.returncode == 0:
-            staged.append(dest)
+        if copied.returncode != 0:
+            continue
+        # Artifacts are 0600/0700 dsh-private; the staged copy must be readable
+        # by the executor. The service user owns the copy, so it can chmod it.
+        subprocess.run(prefix + ["chmod", "a+r", str(dest)], capture_output=True, timeout=30)
+        staged.append(dest)
     return _by_mtime(staged)
 
 
@@ -469,24 +537,35 @@ def read_file_bytes(cfg: "Cfg", path: Path) -> bytes:
 def zstd_decode(cfg: Cfg, path: Path) -> bytes:
     """Decode a .jsonl.zstd artifact.
 
-    Primary: the candidate's own Node `node:zlib` streaming decompressor
-    (handles the concatenated-frame container written by the backend).
-    Fallback: the `zstd` CLI. Otherwise BLOCKED with the dependency named.
+    The artifact is dsh-private, so bytes are fetched through the
+    runner-assisted path first. Decode: the candidate's own Node `node:zlib`
+    frame-wise decoder (fixtures/decode-zstd.mjs — the backend writes
+    concatenated frames, receipt §9), fallback `zstd` CLI. Otherwise BLOCKED
+    with the dependency named.
     """
+    import tempfile
+
+    raw = read_file_bytes(cfg, path)
     decoder = SUITE_DIR / "fixtures" / "decode-zstd.mjs"
-    if Path(cfg.node).exists() and decoder.exists():
-        proc = subprocess.run(
-            [cfg.node, str(decoder), str(path)], capture_output=True, timeout=60
+    with tempfile.NamedTemporaryFile(suffix=".zstd", delete=False) as tmp:
+        tmp.write(raw)
+        tmp_path = tmp.name
+    try:
+        if Path(cfg.node).exists() and decoder.exists():
+            proc = subprocess.run(
+                [cfg.node, str(decoder), tmp_path], capture_output=True, timeout=60
+            )
+            if proc.returncode == 0:
+                return proc.stdout
+        if shutil.which("zstd"):
+            proc = subprocess.run(["zstd", "-dc", tmp_path], capture_output=True, timeout=60)
+            if proc.returncode == 0:
+                return proc.stdout
+        blocked(
+            "no zstd decoder available: candidate node:zlib decode failed and no zstd CLI on PATH"
         )
-        if proc.returncode == 0:
-            return proc.stdout
-    if shutil.which("zstd"):
-        proc = subprocess.run(["zstd", "-dc", str(path)], capture_output=True, timeout=60)
-        if proc.returncode == 0:
-            return proc.stdout
-    blocked(
-        "no zstd decoder available: candidate node:zlib decode failed and no zstd CLI on PATH"
-    )
+    finally:
+        Path(tmp_path).unlink(missing_ok=True)
     return b""  # unreachable: blocked() skips the test
 
 
@@ -556,3 +635,14 @@ def events_of_type(records: list[dict[str, Any]], type_name: str) -> list[dict[s
 def latest_request_header(records: list[dict[str, Any]]) -> dict[str, Any] | None:
     headers = events_of_type(records, "request/header")
     return headers[-1] if headers else None
+
+
+def epoch_header(event: dict[str, Any]) -> dict[str, Any]:
+    """The EpochHeader payload of a `request/header` event.
+
+    The event's data is `{header: EpochHeader, reason}` — verified against a
+    live artifact on hxs-15 (G2-15 first run): fields are config, system,
+    tools, adapterDefaults."""
+    data = event.get("data") or {}
+    header = data.get("header")
+    return header if isinstance(header, dict) else {}

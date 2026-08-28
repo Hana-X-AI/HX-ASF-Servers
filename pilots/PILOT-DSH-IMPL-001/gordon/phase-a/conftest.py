@@ -62,14 +62,28 @@ def rec(evidence: Evidence, request: pytest.FixtureRequest):
     return _Rec()
 
 
+def _dsh_writable_dir(tag: str) -> Path:
+    """A directory the service user can traverse and write.
+
+    pytest's tmp_path chain is 0700-owned by the executor, which blocks the
+    candidate outright (EACCES on profile init). Scratch dirs for candidate
+    use live under /var/tmp with a 0777 chain instead."""
+    import uuid
+
+    root = Path("/var/tmp/gordon-run")
+    root.mkdir(parents=True, exist_ok=True)
+    root.chmod(0o777)
+    path = root / f"{tag}-{uuid.uuid4().hex[:10]}"
+    path.mkdir()
+    path.chmod(0o777)
+    return path
+
+
 @pytest.fixture()
-def scratch_home(cfg: Cfg, tmp_path: Path) -> Path:
-    """Per-test scratch DSH_HOME. The directory must be writable by the
-    service user; tmp_path is executor-owned, so chmod broadly (scratch only,
-    never the candidate or the real home)."""
-    home = tmp_path / "dsh-home"
+def scratch_home(cfg: Cfg) -> Path:
+    """Per-test scratch DSH_HOME, writable by the service user."""
+    home = _dsh_writable_dir("home") / "dsh-home"
     home.mkdir()
-    tmp_path.chmod(0o777)
     home.chmod(0o777)
     return home
 
@@ -81,9 +95,9 @@ def scratch_env(scratch_home: Path) -> dict[str, str]:
 
 
 @pytest.fixture()
-def workspace(cfg: Cfg, tmp_path: Path) -> Path:
+def workspace(cfg: Cfg) -> Path:
     """Per-test scratch working directory (the session cwd under test)."""
-    ws = tmp_path / "workspace"
+    ws = _dsh_writable_dir("ws") / "workspace"
     ws.mkdir()
     ws.chmod(0o777)
     return ws

@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="0" skipped="0" tests="1" time="308.833" timestamp="2026-08-28T13:28:43.879255" hostname="hxs-15"><testcase classname="test_g5_containment" name="test_g5_09_sigkill_drill" time="308.816" /></testsuite></testsuites>

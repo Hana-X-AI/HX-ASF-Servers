@@ -13,6 +13,7 @@ import pytest
 
 from gordon_util import (
     blocked,
+    epoch_header,
     find_session_artifacts,
     latest_request_header,
     nonce,
@@ -113,7 +114,9 @@ def test_g2_05_profile_auto_init(cfg, candidate_bin, scratch_home, scratch_env, 
     observed["bundles"] = bundles
     ok = (
         run.exit_code == 0
-        and all(v for k, v in observed.items() if k != "bundles")
+        and observed["package_json"]
+        and observed["cordis_patch_yml"]
+        and observed["pnpm_workspace_yaml"]
         and bundles == ["@deepseek-ai/dsh-base", "@deepseek-ai/dsh-headless"]
     )
     rec.finish("PASS" if ok else "FAIL",
@@ -309,8 +312,9 @@ def test_g2_15_system_prompt_assembly(cfg, candidate_bin, scratch_home, scratch_
 
     Requires routing (Gate 3 seam). Model-cooperation class: none (deterministic
     given a completed routed run)."""
-    from test_g3_providers import seam_fixture_for
+    from test_g3_providers import require_routing_inputs, seam_fixture_for
 
+    require_routing_inputs(cfg, "qwen")
     patch = seam_fixture_for(cfg, scratch_home, model_key="qwen", max_retries=0)
     task = f"Reply with exactly: GORDON-G215-{nonce()}"
     run = run_candidate(
@@ -320,21 +324,18 @@ def test_g2_15_system_prompt_assembly(cfg, candidate_bin, scratch_home, scratch_
     )
     rec.commands.append(run)
     if run.exit_code != 0:
-        rec.finish("BLOCKED", "routed run required (Gate 3 seam + key)",
-                   f"exit={run.exit_code}; stderr={run.stderr[-300:]}",
-                   note="rerun after G3 routing is green")
-        blocked("routed run failed; see G3 dispositions first")
+        rec.finish("FAIL", "routed run completes (routing inputs verified present)",
+                   f"exit={run.exit_code}; stderr={run.stderr[-300:]}")
+        pytest.fail(f"routed run failed: exit={run.exit_code}")
     artifacts = find_session_artifacts(scratch_home, cfg)
     if not artifacts:
         rec.finish("FAIL", "session artifact after routed run", "no artifact found")
         pytest.fail("no session artifact under scratch home")
     log = read_session_log(cfg, artifacts[-1])
     rec.artifact("session-log.json", json.dumps(log)[:200000])
-    header = latest_request_header(log["records"])
-    persona_found = False
-    if header and isinstance(header.get("data"), dict):
-        system = header["data"].get("system") or ""
-        persona_found = "coding agent" in system and str(workspace) in system
+    header_event = latest_request_header(log["records"])
+    system = epoch_header(header_event).get("system") or "" if header_event else ""
+    persona_found = bool(system) and "coding agent" in system and str(workspace) in system
     ok = persona_found
     rec.finish("PASS" if ok else "FAIL",
                "headless bundle persona (cordis.patch.yml); model-visible ⟺ logged (repo AGENTS.md)",

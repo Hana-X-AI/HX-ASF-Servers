@@ -3,7 +3,7 @@
 # provider.ts:48-50 (protocol registry). compat switches mirror the landed
 # machine layer (03-morpheus-phase-a-install.md §7: unrecognized endpoints
 # default to a wire shape gateways reject; countered natively).
-# Rendered at runtime; placeholders are __NAME__ style.
+# Rendered at runtime; placeholder tokens use double-underscore delimiters.
 - id: llm-pi-ai
   config:
     providers:
@@ -19,10 +19,7 @@
           mode: normal
           maxRetries: __MAX_RETRIES__
         models:
-          - id: __MODEL_ID__
-            name: __MODEL_ID__
-            contextWindow: __CTX__
-            maxTokens: __MAX_TOKENS__
+__MODELS_YAML__
 
 - id: agent-default-model
   config:

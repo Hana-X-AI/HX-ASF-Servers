@@ -17,8 +17,8 @@
 set -u
 
 SUITE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-SCRATCH="${GORDON_SCRATCH:-/var/lib/dsh/gordon}"
-EVIDENCE="${GORDON_EVIDENCE_DIR:-$SCRATCH/evidence}"
+SCRATCH="${GORDON_SCRATCH:-/home/hxsa/gordon/scratch}"
+EVIDENCE="${GORDON_EVIDENCE_DIR:-/home/hxsa/gordon/evidence}"
 VENV="$SCRATCH/venv"
 KEY_ENV_NAME="${GORDON_OMNI_KEY_ENV:-OMNIROUTE_API_KEY}"
 

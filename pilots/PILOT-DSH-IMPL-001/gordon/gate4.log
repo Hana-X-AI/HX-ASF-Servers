@@ -1,0 +1,331 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0
+rootdir: /home/hxsa/gordon/phase-a
+collected 17 items
+
+phase-a/test_g4_sessions.py FFFFFs.FF.F.
+
+=================================== FAILURES ===================================
+__________________________ test_g4_01_artifact_layout __________________________
+
+cfg = Cfg(values={'GORDON_DSH_BIN': '/usr/local/bin/dsh', 'GORDON_DSH_ROOT': '/opt/dsh', 'GORDON_DSH_SRC': '/opt/dsh', 'GORD...test', 'GORDON_CUSTOM_ROW_ID': '', 'GORDON_HOST': '192.168.50.214', 'GORDON_WRAPPER': '/usr/local/bin/gordon-run-dsh'})
+candidate_bin = PosixPath('/usr/local/bin/dsh')
+scratch_home = PosixPath('/var/tmp/gordon-run/home-e4b010ae5e/dsh-home')
+scratch_env = {'DSH_HOME': '/var/tmp/gordon-run/home-e4b010ae5e/dsh-home', 'HOME': '/var/tmp/gordon-run/home-e4b010ae5e/dsh-home'}
+workspace = PosixPath('/var/tmp/gordon-run/ws-4ac870b333/workspace')
+rec = <conftest.rec.<locals>._Rec object at 0x70cb0386ad20>
+
+    def test_g4_01_artifact_layout(cfg, candidate_bin, scratch_home, scratch_env, workspace, rec):
+        """G4-01: session artifact lands at the derived per-project path."""
+        from gordon_util import staged_sources
+    
+        run, marker = _routed_run(cfg, scratch_home, scratch_env, workspace, rec, "G401")
+        sources = staged_sources(cfg, scratch_home)
+        expected_dir = str(scratch_home / "sessions" / project_key(str(workspace)))
+        in_layout = any(source.startswith(expected_dir + "/") for source in sources)
+        zstd_suffix = any(source.endswith("session.jsonl.zstd") for source in sources)
+        observed = (
+            f"exit={run.exit_code}; sources={sources}; "
+            f"expected_project_dir={expected_dir}; zstd_suffix={zstd_suffix}"
+        )
+        ok = run.exit_code == 0 and bool(sources) and in_layout and zstd_suffix
+        rec.finish("PASS" if ok else "FAIL",
+                   "format.ts:176-208 projectDir/sessionDir/logPath; default zstd suffix "
+                   "(layout asserted on source paths, not staged copies)",
+                   observed)
+>       assert ok, observed
+E       AssertionError: exit=1; sources=['/var/tmp/gordon-run/home-e4b010ae5e/dsh-home/sessions/--var-tmp-gordon-run-ws-4ac870b333-workspace--/session-860d861d-6711-488f-b242-b91c5bb099e7/session.jsonl.zstd', '/var/tmp/gordon-run/home-e4b010ae5e/dsh-home/sessions/--var-tmp-gordon-run-ws-4ac870b333-workspace--/session-e6ff4492-a7c6-4e1f-92f0-2c4fdc250b53/session.jsonl.zstd', '/var/tmp/gordon-run/home-e4b010ae5e/dsh-home/sessions/--var-tmp-gordon-run-ws-4ac870b333-workspace--/session-f1113562-f55c-4b1e-8e53-de2d08166941/session.jsonl.zstd']; expected_project_dir=/var/tmp/gordon-run/home-e4b010ae5e/dsh-home/sessions/--var-tmp-gordon-run-ws-4ac870b333-workspace--; zstd_suffix=True
+E       assert False
+
+phase-a/test_g4_sessions.py:81: AssertionError
+__________________________ test_g4_02_header_contract __________________________
+
+cfg = Cfg(values={'GORDON_DSH_BIN': '/usr/local/bin/dsh', 'GORDON_DSH_ROOT': '/opt/dsh', 'GORDON_DSH_SRC': '/opt/dsh', 'GORD...test', 'GORDON_CUSTOM_ROW_ID': '', 'GORDON_HOST': '192.168.50.214', 'GORDON_WRAPPER': '/usr/local/bin/gordon-run-dsh'})
+candidate_bin = PosixPath('/usr/local/bin/dsh')
+scratch_home = PosixPath('/var/tmp/gordon-run/home-dc00128447/dsh-home')
+scratch_env = {'DSH_HOME': '/var/tmp/gordon-run/home-dc00128447/dsh-home', 'HOME': '/var/tmp/gordon-run/home-dc00128447/dsh-home'}
+workspace = PosixPath('/var/tmp/gordon-run/ws-d0702597ed/workspace')
+rec = <conftest.rec.<locals>._Rec object at 0x70cb03890950>
+
+    def test_g4_02_header_contract(cfg, candidate_bin, scratch_home, scratch_env, workspace, rec):
+        """G4-02: header line carries the format contract fields."""
+        run, marker = _routed_run(cfg, scratch_home, scratch_env, workspace, rec, "G402")
+        artifacts = find_session_artifacts(scratch_home, cfg)
+        if not artifacts:
+            rec.finish("FAIL", "session artifact", "none found")
+            pytest.fail("no session artifact")
+        log = read_session_log(cfg, artifacts[-1])
+        rec.artifact("g402-log.json", json.dumps(log)[:200000])
+        header = log["header"] or {}
+        checks = {
+            "type_session": header.get("type") == "session",
+            "version_0": header.get("version") == 0,
+            "id_string": isinstance(header.get("id"), str) and header["id"].startswith("session-"),
+            "created_at_epoch": isinstance(header.get("createdAt"), (int, float)),
+            "delegation_depth": isinstance(header.get("delegationDepth"), int),
+        }
+        observed = json.dumps(checks)
+        ok = run.exit_code == 0 and all(checks.values())
+        rec.finish("PASS" if ok else "FAIL",
+                   "format.ts:33-44 isHeaderLine; core/session types.ts SESSION_FORMAT_VERSION=0",
+                   observed)
+>       assert ok, observed
+E       AssertionError: {"type_session": true, "version_0": true, "id_string": true, "created_at_epoch": true, "delegation_depth": true}
+E       assert False
+
+phase-a/test_g4_sessions.py:106: AssertionError
+________________________ test_g4_03_event_stream_audit _________________________
+
+cfg = Cfg(values={'GORDON_DSH_BIN': '/usr/local/bin/dsh', 'GORDON_DSH_ROOT': '/opt/dsh', 'GORDON_DSH_SRC': '/opt/dsh', 'GORD...test', 'GORDON_CUSTOM_ROW_ID': '', 'GORDON_HOST': '192.168.50.214', 'GORDON_WRAPPER': '/usr/local/bin/gordon-run-dsh'})
+candidate_bin = PosixPath('/usr/local/bin/dsh')
+scratch_home = PosixPath('/var/tmp/gordon-run/home-ee4b007969/dsh-home')
+scratch_env = {'DSH_HOME': '/var/tmp/gordon-run/home-ee4b007969/dsh-home', 'HOME': '/var/tmp/gordon-run/home-ee4b007969/dsh-home'}
+workspace = PosixPath('/var/tmp/gordon-run/ws-5743ebcd8e/workspace')
+rec = <conftest.rec.<locals>._Rec object at 0x70cb038df980>
+
+    def test_g4_03_event_stream_audit(cfg, candidate_bin, scratch_home, scratch_env, workspace, rec):
+        """G4-03: turn lifecycle events present; seq contiguous from 0."""
+        run, marker = _routed_run(cfg, scratch_home, scratch_env, workspace, rec, "G403")
+        ok_run, observed_run, log = assert_marker_run(cfg, scratch_home, run, marker)
+        contiguous, seq_note = seqs_contiguous(log.get("records", [])) if log else (False, "no log")
+        types = {r.get("type") for r in log.get("records", [])} if log else set()
+        lifecycle = {"turn/start", "assistant/message", "turn/end"} <= types
+        observed = f"{observed_run}; lifecycle={lifecycle}; seq: {seq_note}"
+        ok = ok_run and contiguous and lifecycle
+        rec.finish("PASS" if ok else "FAIL",
+                   "headless summarize (turn/start, assistant/message, turn/end); "
+                   "scanner seq rule (format.ts:362-376)",
+                   observed)
+>       assert ok, observed
+E       AssertionError: exit=1; marker_in_assistant_message=False; turn_end_completed=False; artifact=960b8cf3d6e8f372-session.jsonl.zstd; stderr=equestQueue.maxWaitMs=15000ms) for ollama-local/hx-qwen3.8-27b-64k:latest. Bottleneck applies this deadline only after dispatch; it does not bound queue wait and is not an upstream-generated timeout.
+E         ; lifecycle=False; seq: 21 events contiguous from 0
+E       assert False
+
+phase-a/test_g4_sessions.py:122: AssertionError
+________________________ test_g4_04_restart_durability _________________________
+
+cfg = Cfg(values={'GORDON_DSH_BIN': '/usr/local/bin/dsh', 'GORDON_DSH_ROOT': '/opt/dsh', 'GORDON_DSH_SRC': '/opt/dsh', 'GORD...test', 'GORDON_CUSTOM_ROW_ID': '', 'GORDON_HOST': '192.168.50.214', 'GORDON_WRAPPER': '/usr/local/bin/gordon-run-dsh'})
+candidate_bin = PosixPath('/usr/local/bin/dsh')
+scratch_home = PosixPath('/var/tmp/gordon-run/home-c57eaa6f88/dsh-home')
+scratch_env = {'DSH_HOME': '/var/tmp/gordon-run/home-c57eaa6f88/dsh-home', 'HOME': '/var/tmp/gordon-run/home-c57eaa6f88/dsh-home'}
+workspace = PosixPath('/var/tmp/gordon-run/ws-18d1e4a00a/workspace')
+rec = <conftest.rec.<locals>._Rec object at 0x70cb038e4650>
+
+    def test_g4_04_restart_durability(cfg, candidate_bin, scratch_home, scratch_env, workspace, rec):
+        """G4-04: run-1 artifact is byte-identical after run 2 in the same home."""
+        run1, _ = _routed_run(cfg, scratch_home, scratch_env, workspace, rec, "G404A")
+        artifacts1 = find_session_artifacts(scratch_home, cfg)
+        if not artifacts1:
+            rec.finish("FAIL", "run-1 artifact", "none found")
+            pytest.fail("no run-1 artifact")
+        first = artifacts1[-1]
+        before = read_file_bytes(cfg, first)
+        run2, _ = _routed_run(cfg, scratch_home, scratch_env, workspace, rec, "G404B")
+        artifacts2 = find_session_artifacts(scratch_home, cfg)
+        # Staging mode rebuilds the staging dir per listing, so re-resolve the same
+        # session by its stable artifact name (staged names hash the source path).
+        reread = next((a for a in artifacts2 if a.name == first.name), None)
+        after = read_file_bytes(cfg, reread) if reread else b""
+        observed = (
+            f"run1_exit={run1.exit_code}; run2_exit={run2.exit_code}; "
+            f"first_artifact_stable={before == after and bool(after)}; artifacts_total={len(artifacts2)}"
+        )
+        ok = (run1.exit_code == 0 and run2.exit_code == 0 and reread is not None
+              and before == after and len(artifacts2) >= 2)
+        rec.finish("PASS" if ok else "FAIL",
+                   "append-only per-session logs (format.ts module doc); a later run must "
+                   "not mutate an earlier session's artifact",
+                   observed)
+>       assert ok, observed
+E       AssertionError: run1_exit=1; run2_exit=1; first_artifact_stable=True; artifacts_total=4
+E       assert False
+
+phase-a/test_g4_sessions.py:150: AssertionError
+____________________ test_g4_06a_corrupt_sibling_resilience ____________________
+
+cfg = Cfg(values={'GORDON_DSH_BIN': '/usr/local/bin/dsh', 'GORDON_DSH_ROOT': '/opt/dsh', 'GORDON_DSH_SRC': '/opt/dsh', 'GORD...test', 'GORDON_CUSTOM_ROW_ID': '', 'GORDON_HOST': '192.168.50.214', 'GORDON_WRAPPER': '/usr/local/bin/gordon-run-dsh'})
+candidate_bin = PosixPath('/usr/local/bin/dsh')
+scratch_home = PosixPath('/var/tmp/gordon-run/home-225bf88b32/dsh-home')
+scratch_env = {'DSH_HOME': '/var/tmp/gordon-run/home-225bf88b32/dsh-home', 'HOME': '/var/tmp/gordon-run/home-225bf88b32/dsh-home'}
+workspace = PosixPath('/var/tmp/gordon-run/ws-9f735dd8d8/workspace')
+rec = <conftest.rec.<locals>._Rec object at 0x70cb038e5b50>
+
+    def test_g4_06a_corrupt_sibling_resilience(cfg, candidate_bin, scratch_home, scratch_env, workspace, rec):
+        """G4-06(a): a corrupted sibling session log does not break boot or a new run.
+    
+        The sibling must be a valid zstd FRAME with corrupt JSONL inside: the
+        backend rejects extension/content-encoding mismatches at its root on
+        contact (first-run evidence: `.jsonl` under a zstd-configured backend
+        fails loud by design)."""
+        sessions_root = scratch_home / "sessions" / project_key(str(workspace)) / encode_segment("session-corrupt-seed")
+        sessions_root.mkdir(parents=True, exist_ok=True)
+        plain = sessions_root / "seed.jsonl"
+        plain.write_bytes(
+            b'{"type":"session","version":0,"id":"session-corrupt-seed","createdAt":1,"delegationDepth":0}\n'
+            b'{"type":"turn/start","seq":0,"time":1,"data":{}}\n'
+            b'{"corrupted":'
+        )
+        bad = sessions_root / "session.jsonl.zstd"
+        from gordon_util import run_host
+    
+        packed = run_host(["zstd", "-q", "-f", str(plain), "-o", str(bad)], timeout=30)
+        rec.commands.append(packed)
+        plain.unlink()
+        run, marker = _routed_run(cfg, scratch_home, scratch_env, workspace, rec, "G406A")
+        ok_run, observed_run, _log = assert_marker_run(cfg, scratch_home, run, marker)
+        rec.finish("PASS" if ok_run else "FAIL",
+                   "corruption is per-artifact: boot + a fresh session proceed with a "
+                   "corrupt (framed) sibling present",
+                   observed_run)
+>       assert ok_run, observed_run
+E       AssertionError: exit=1; marker_in_assistant_message=False; turn_end_completed=False; artifact=session.jsonl.zstd; stderr=dsh: EACCES: permission denied, mkdir '/var/tmp/gordon-run/home-225bf88b32/dsh-home/sessions/--var-tmp-gordon-run-ws-9f735dd8d8-workspace--/session-188e8221-7648-4fdb-bbcf-d6d8d100bafc'
+E         
+E       assert False
+
+phase-a/test_g4_sessions.py:180: AssertionError
+______________________ test_g4_08_session_title_recorded _______________________
+
+cfg = Cfg(values={'GORDON_DSH_BIN': '/usr/local/bin/dsh', 'GORDON_DSH_ROOT': '/opt/dsh', 'GORDON_DSH_SRC': '/opt/dsh', 'GORD...test', 'GORDON_CUSTOM_ROW_ID': '', 'GORDON_HOST': '192.168.50.214', 'GORDON_WRAPPER': '/usr/local/bin/gordon-run-dsh'})
+candidate_bin = PosixPath('/usr/local/bin/dsh')
+scratch_home = PosixPath('/var/tmp/gordon-run/home-b080e9bd9d/dsh-home')
+scratch_env = {'DSH_HOME': '/var/tmp/gordon-run/home-b080e9bd9d/dsh-home', 'HOME': '/var/tmp/gordon-run/home-b080e9bd9d/dsh-home'}
+workspace = PosixPath('/var/tmp/gordon-run/ws-a530819ce2/workspace')
+rec = <conftest.rec.<locals>._Rec object at 0x70cb0372e2a0>
+
+    def test_g4_08_session_title_recorded(cfg, candidate_bin, scratch_home, scratch_env, workspace, rec):
+        """G4-08: the title family produces a session/title record after a routed run."""
+        run, marker = _routed_run(cfg, scratch_home, scratch_env, workspace, rec, "G408")
+        artifacts = find_session_artifacts(scratch_home, cfg)
+        if not artifacts:
+            rec.finish("FAIL", "session artifact", "none found")
+            pytest.fail("no session artifact")
+        log = read_session_log(cfg, artifacts[-1])
+        titles = events_of_type(log["records"], "session/title")
+        title_requests = events_of_type(log["records"], "session/title-llm-request")
+        observed = (
+            f"exit={run.exit_code}; title_events={len(titles)}; "
+            f"title_llm_requests={len(title_requests)}"
+        )
+        ok = run.exit_code == 0 and (titles or title_requests)
+        rec.finish("PASS" if ok else "FAIL",
+                   "base rows session-title + session-title-first-prompt-llm; event types "
+                   "session/title, session/title-llm-request (known-event-types.ts)",
+                   observed,
+                   note="title LLM call adds one OmniRoute usage row; counted in G3-07")
+>       assert ok, observed
+E       AssertionError: exit=1; title_events=1; title_llm_requests=1
+E       assert False
+
+phase-a/test_g4_sessions.py:231: AssertionError
+_____________________ test_g4_09_telemetry_runtime_posture _____________________
+
+cfg = Cfg(values={'GORDON_DSH_BIN': '/usr/local/bin/dsh', 'GORDON_DSH_ROOT': '/opt/dsh', 'GORDON_DSH_SRC': '/opt/dsh', 'GORD...test', 'GORDON_CUSTOM_ROW_ID': '', 'GORDON_HOST': '192.168.50.214', 'GORDON_WRAPPER': '/usr/local/bin/gordon-run-dsh'})
+candidate_bin = PosixPath('/usr/local/bin/dsh')
+scratch_home = PosixPath('/var/tmp/gordon-run/home-360feb99a0/dsh-home')
+scratch_env = {'DSH_HOME': '/var/tmp/gordon-run/home-360feb99a0/dsh-home', 'HOME': '/var/tmp/gordon-run/home-360feb99a0/dsh-home'}
+workspace = PosixPath('/var/tmp/gordon-run/ws-5ac8a2ca94/workspace')
+rec = <conftest.rec.<locals>._Rec object at 0x70cb03730950>
+
+    def test_g4_09_telemetry_runtime_posture(cfg, candidate_bin, scratch_home, scratch_env, workspace, rec):
+        """G4-09: switch set → no export attempts, fast exit; FULL mode against a
+        closed OTLP endpoint still exits inside the bounded drain."""
+        # Leg 1: switch set (base_env already exports DSH_TELEMETRY_DISABLED=1).
+        run1, marker1 = _routed_run(cfg, scratch_home, scratch_env, workspace, rec, "G409A")
+        # Leg 2: switch unset + FULL mode + closed collector.
+        env = {"DSH_TELEMETRY_DISABLED": "", "DSH_TELEMETRY_MODE": "FULL",
+               "DSH_TELEMETRY_OTLP_URL": "http://127.0.0.1:9/v1/logs"}
+        started = time.monotonic()
+        run2, marker2 = _routed_run(cfg, scratch_home, scratch_env, workspace, rec, "G409B",
+                                    env_extra=env)
+        elapsed2 = time.monotonic() - started
+        observed = (
+            f"leg1_exit={run1.exit_code} (switch set); leg2_exit={run2.exit_code}; "
+            f"leg2_elapsed={elapsed2:.1f}s; leg2_stderr={run2.stderr[-200:]}"
+        )
+        # Bounded drain per base bundle: exporter timeout 1s, shutdown bound 3s.
+        ok = run1.exit_code == 0 and run2.exit_code == 0 and elapsed2 < 120
+        rec.finish("PASS" if ok else "FAIL",
+                   "base rows 129-161: switch disables telemetry; FULL mode against an "
+                   "unreachable collector is bounded (~1s exporter, 3s shutdown)",
+                   observed)
+>       assert ok, observed
+E       AssertionError: leg1_exit=1 (switch set); leg2_exit=1; leg2_elapsed=249.5s; leg2_stderr=equestQueue.maxWaitMs=15000ms) for ollama-local/hx-qwen3.8-27b-64k:latest. Bottleneck applies this deadline only after dispatch; it does not bound queue wait and is not an upstream-generated timeout.
+E         
+E       assert False
+
+phase-a/test_g4_sessions.py:256: AssertionError
+_____________________ test_g4_11_settings_driven_selection _____________________
+
+cfg = Cfg(values={'GORDON_DSH_BIN': '/usr/local/bin/dsh', 'GORDON_DSH_ROOT': '/opt/dsh', 'GORDON_DSH_SRC': '/opt/dsh', 'GORD...test', 'GORDON_CUSTOM_ROW_ID': '', 'GORDON_HOST': '192.168.50.214', 'GORDON_WRAPPER': '/usr/local/bin/gordon-run-dsh'})
+candidate_bin = PosixPath('/usr/local/bin/dsh')
+scratch_home = PosixPath('/var/tmp/gordon-run/home-a990646b48/dsh-home')
+scratch_env = {'DSH_HOME': '/var/tmp/gordon-run/home-a990646b48/dsh-home', 'HOME': '/var/tmp/gordon-run/home-a990646b48/dsh-home'}
+workspace = PosixPath('/var/tmp/gordon-run/ws-893d726b2d/workspace')
+rec = <conftest.rec.<locals>._Rec object at 0x70cb03730350>
+
+                   observed)
+        assert ok, observed
+    
+    
+    def test_g4_11_settings_driven_selection(cfg, candidate_bin, scratch_home, scratch_env, workspace, rec):
+        """G4-11: the agent-default-model settings section selects the model per era."""
+        require_routing_inputs(cfg, "qwen")
+        require_routing_inputs(cfg, "coder")
+        ids = cfg.model_ids()
+        provider = seam_provider(cfg)
+        # Era 1: settings selects qwen on the fixture route.
+        patch = seam_fixture_for(cfg, scratch_home, model_key="qwen", max_retries=1)
+        (scratch_home / "settings.yaml").write_text(
+            f"agent-default-model:\n  provider: {provider}\n  model: {ids['qwen']}\n"
+        )
+        run1 = run_routed_headless(cfg, scratch_env, workspace, patch,
+                                   f"Reply with exactly: GORDON-G411A-{nonce()}")
+        rec.commands.append(run1)
+        # Era 2: settings selects coder; same composition, new run.
+        (scratch_home / "settings.yaml").write_text(
+            f"agent-default-model:\n  provider: {provider}\n  model: {ids['coder']}\n"
+        )
+        run2 = run_routed_headless(cfg, scratch_env, workspace, patch,
+                                   f"Reply with exactly: GORDON-G411B-{nonce()}")
+        rec.commands.append(run2)
+        register_call(cfg, {"tag": "G411A", "model_key": "qwen", "model_id": ids["qwen"],
+                            "marker": "settings-era-1", "ts": int(time.time()), "exit": run1.exit_code})
+        register_call(cfg, {"tag": "G411B", "model_key": "coder", "model_id": ids["coder"],
+                            "marker": "settings-era-2", "ts": int(time.time()), "exit": run2.exit_code})
+        artifacts = find_session_artifacts(scratch_home, cfg)
+        models_seen = []
+        for artifact in artifacts:
+            log = read_session_log(cfg, artifact)
+            header = None
+            for rec_event in log["records"]:
+                if rec_event.get("type") == "request/header":
+                    header = rec_event
+            if header:
+                config = epoch_header(header).get("config") or {}
+                models_seen.append(config.get("model"))
+        observed = f"exits={run1.exit_code},{run2.exit_code}; header_models={models_seen}"
+        ok = (run1.exit_code == 0 and run2.exit_code == 0
+              and ids["qwen"] in models_seen and ids["coder"] in models_seen)
+>       rec.finish("PASS" if ok else "FAIL",
+                   "agent-default-model settings section (live per-Agent read): each era's "
+                   "selection appears in that era's request/header config",
+                   observed)
+E                  AssertionError: exits=1,1; header_models=['ollama-local/hx-qwen3.8-27b-64k:latest']
+E                  assert False
+
+phase-a/test_g4_sessions.py:333: AssertionError
+-------- generated xml file: /home/hxsa/gordon/evidence/gate4-junit.xml --------
+=========================== short test summary info ============================
+SKIPPED [1] phase-a/gordon_util.py:69: BLOCKED: no headless resume entry in the pinned CLI; reassigned to Phase B Gate 7
+FAILED phase-a/test_g4_sessions.py::test_g4_01_artifact_layout - AssertionErr...
+FAILED phase-a/test_g4_sessions.py::test_g4_02_header_contract - AssertionErr...
+FAILED phase-a/test_g4_sessions.py::test_g4_03_event_stream_audit - Assertion...
+FAILED phase-a/test_g4_sessions.py::test_g4_04_restart_durability - Assertion...
+FAILED phase-a/test_g4_sessions.py::test_g4_06a_corrupt_sibling_resilience - ...
+FAILED phase-a/test_g4_sessions.py::test_g4_08_session_title_recorded - Asser...
+FAILED phase-a/test_g4_sessions.py::test_g4_09_telemetry_runtime_posture - As...
+FAILED phase-a/test_g4_sessions.py::test_g4_11_settings_driven_selection - As...
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! KeyboardInterrupt !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+/usr/lib/python3.12/selectors.py:415: KeyboardInterrupt
+(to show a full traceback on KeyboardInterrupt use --full-trace)
+============= 8 failed, 3 passed, 1 skipped in 2438.64s (0:40:38) ==============

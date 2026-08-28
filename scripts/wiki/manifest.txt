@@ -52,3 +52,4 @@ pilots/PILOT-OMNIROUTE-LAYER0-001/19-kk3-gate-decision.md
 goals/2026-08-27-fleet-baseline-deployment.md
 pilots/PILOT-DSH-IMPL-001/02-gordon-phase-a-testplan.md
 pilots/PILOT-DSH-IMPL-001/gordon/coverage-ledger.md
+pilots/PILOT-DSH-IMPL-001/04-gordon-phase-a-verdicts.md

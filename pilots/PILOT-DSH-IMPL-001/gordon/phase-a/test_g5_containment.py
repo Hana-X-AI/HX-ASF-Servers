@@ -24,11 +24,13 @@ from gordon_util import (
     base_env,
     blocked,
     candidate_argv,
+    epoch_header,
     events_of_type,
     find_session_artifacts,
     nonce,
     read_session_log,
     run_candidate,
+    sandbox_unavailable,
 )
 from test_g3_providers import (
     register_call,
@@ -40,27 +42,39 @@ from test_g3_providers import (
 
 def _cooperate(cfg, scratch_home, scratch_env, workspace, rec, tag: str, task: str,
                check, env_extra: dict | None = None, timeout: float = 420.0):
-    """Model-cooperation runner: up to two recorded attempts.
+    """Model-cooperation runner: up to three recorded attempts, with spacing
+    on gateway queue transients (doctrine §9: repetition bounds the
+    intermittent; every attempt is recorded).
 
-    `check(scratch_home, run) -> (ok: bool, detail: str)`.
+    `check(scratch_home, run, marker) -> (ok: bool, detail: str)`.
     """
-    require_routing_inputs(cfg, "qwen")
+    from gordon_util import is_queue_transient
+
+    require_routing_inputs(cfg, "coder")
     attempts = []
-    for attempt in (1, 2):
+    for attempt in (1, 2, 3):
         marker = f"GORDON-{tag}A{attempt}-{nonce()}"
-        patch = seam_fixture_for(cfg, scratch_home, model_key="qwen", max_retries=1)
+        patch = seam_fixture_for(cfg, scratch_home, model_key="coder", max_retries=1)
         run = run_routed_headless(
             cfg, scratch_env, workspace, patch, task.replace("__MARKER__", marker),
             timeout=timeout, env_extra=env_extra,
         )
         rec.commands.append(run)
-        register_call(cfg, {"tag": f"{tag}A{attempt}", "model_key": "qwen",
-                            "model_id": cfg.model_ids()["qwen"], "marker": marker,
+        register_call(cfg, {"tag": f"{tag}A{attempt}", "model_key": "coder",
+                            "model_id": cfg.model_ids()["coder"], "marker": marker,
                             "ts": int(time.time()), "exit": run.exit_code})
         ok, detail = check(scratch_home, run, marker)
         attempts.append(f"attempt{attempt}: exit={run.exit_code}; {detail}")
+        if ok == "SANDBOX-D1":
+            return "SANDBOX-D1", " | ".join(attempts)
         if ok:
             return True, " | ".join(attempts)
+        log_text = _log_text(_latest_log(cfg, scratch_home))
+        if sandbox_unavailable(log_text):
+            return "SANDBOX-D1", " | ".join(attempts)
+        if is_queue_transient(run):
+            import os
+            time.sleep(float(os.environ.get("GORDON_QUEUE_SPACING_S", "25")))
     return False, " | ".join(attempts)
 
 
@@ -73,24 +87,60 @@ def _log_text(log: dict) -> str:
     return json.dumps(log.get("records", []))
 
 
+
+def _finish_coop(rec, result, observed, oracle, note=""):
+    """Map a _cooperate outcome to a disposition; the SANDBOX-D1 sentinel is
+    BLOCKED with the provisioning defect named, never a false pass/fail."""
+    if result == "SANDBOX-D1":
+        rec.finish(
+            "BLOCKED",
+            oracle + " — requires a usable sandbox backend; defect D1 "
+            "(no bwrap, no landlock prebuilt binary on hxs-15)",
+            observed,
+            note="retest after Morpheus provisions a backend (D1)",
+        )
+        blocked("sandbox backend absent on hxs-15 (defect D1)")
+    rec.finish("PASS" if result else "FAIL", oracle, observed, note=note)
+
+
+def _tool_result_texts(log: dict) -> list[str]:
+    """Text blocks of tool/result events (the model-visible tool output only —
+    never tool/call arguments or assistant prose, which quote the marker)."""
+    out = []
+    for event in log.get("records", []):
+        if event.get("type") != "tool/result":
+            continue
+        data = event.get("data") or {}
+        message = data.get("message") or {}
+        for block in message.get("content") or []:
+            if isinstance(block, dict) and block.get("type") == "tool-result":
+                for inner in block.get("content") or []:
+                    if isinstance(inner, dict) and inner.get("type") == "text":
+                        out.append(inner.get("text") or "")
+    return out
+
+
 def test_g5_01_bash_execution(cfg, candidate_bin, scratch_home, scratch_env, workspace, rec):
     """G5-01: the bash tool executes and returns output (external effect)."""
     def check(home, run, marker):
         log = _latest_log(cfg, home)
-        text = _log_text(log)
-        called = '"name": "bash"' in text or '"name":"bash"' in text or "bash" in json.dumps(
-            [ (e.get("data") or {}).get("name") for e in log.get("records", []) if isinstance(e.get("data"), dict) ])
-        marker_seen = marker in text
-        return (run.exit_code == 0 and marker_seen), f"bash_called={called}; marker={marker_seen}"
+        result_texts = _tool_result_texts(log)
+        called = any('"name": "bash"' in json.dumps(e.get("data") or {}) or '"name":"bash"' in json.dumps(e.get("data") or {})
+                     for e in log.get("records", []) if e.get("type") == "tool/call")
+        # The marker must appear in a NON-ERROR tool result (the echo stdout),
+        # not in the command's own arguments or the model's narration.
+        marker_in_output = any(marker in t for t in result_texts)
+        error_results = sum(1 for t in result_texts if "no sandbox backend is usable" in t)
+        return (run.exit_code == 0 and called and marker_in_output),             f"bash_called={called}; marker_in_tool_result={marker_in_output}; sandbox_error_results={error_results}"
 
     task = (
         "Use the bash tool to run this exact command: echo __MARKER__\n"
         "Then reply with exactly: DONE"
     )
     ok, observed = _cooperate(cfg, scratch_home, scratch_env, workspace, rec, "G501", task, check)
-    rec.finish("PASS" if ok else "FAIL",
+    _finish_coop(rec, ok, observed,
                "tool-bash schema (command, description); result returns stdout",
-               observed, note="model-cooperation class")
+               note="model-cooperation class")
     assert ok, observed
 
 
@@ -109,10 +159,10 @@ def test_g5_02_workspace_write_allowed(cfg, candidate_bin, scratch_home, scratch
         "Then reply with exactly: DONE"
     )
     ok, observed = _cooperate(cfg, scratch_home, scratch_env, workspace, rec, "G502", task, check)
-    rec.finish("PASS" if ok else "FAIL",
+    _finish_coop(rec, ok, observed,
                "sandbox-policy workspace-write mode text (sandbox-policy/src/index.ts:42-43); "
                "external byte-identical assert",
-               observed, note="model-cooperation class")
+               note="model-cooperation class")
     assert ok, observed
 
 
@@ -125,20 +175,25 @@ def test_g5_03_workspace_escape_denied(cfg, candidate_bin, scratch_home, scratch
     def check(home, run, marker):
         log = _latest_log(cfg, home)
         text = _log_text(log)
-        denied = "[sandbox: file access denied" in text
+        if sandbox_unavailable(text):
+            # The unavailable error renders in the denial dialect; a policy
+            # denial cannot be distinguished without a backend.
+            return "SANDBOX-D1", "sandbox backend unavailable (D1)"
+        called = any(e.get("type") == "tool/call" for e in log.get("records", []))
+        denied = "[sandbox: file access denied under workspace-write mode]" in text
         absent = not escape.exists()
-        return (absent and (denied or run.exit_code == 0)), \
-            f"denial_marker={denied}; escape_file_absent={absent}; exit={run.exit_code}"
+        return (called and denied and absent), \
+            f"bash_attempted={called}; policy_denial={denied}; escape_file_absent={absent}"
 
     task = (
         f"Use the bash tool to run exactly: echo __MARKER__ > {escape}\n"
         "If the sandbox denies it, reply with exactly: DONE"
     )
     ok, observed = _cooperate(cfg, scratch_home, scratch_env, workspace, rec, "G503", task, check)
-    rec.finish("PASS" if ok else "FAIL",
+    _finish_coop(rec, ok, observed,
                "tool-bash denial marker `[sandbox: file access denied under <mode> mode]`; "
                "no file outside the workspace",
-               observed, note="model-cooperation class; denial may be reported in the tool result")
+               note="model-cooperation class; denial may be reported in the tool result")
     assert ok, observed
 
 
@@ -151,9 +206,13 @@ def test_g5_04_read_only_mode_denies_writes(cfg, candidate_bin, scratch_home, sc
     def check(home, run, marker):
         log = _latest_log(cfg, home)
         text = _log_text(log)
+        if sandbox_unavailable(text):
+            return "SANDBOX-D1", "sandbox backend unavailable (D1)"
+        called = any(e.get("type") == "tool/call" for e in log.get("records", []))
         denied = "[sandbox: file access denied under read-only mode]" in text
         absent = not target.exists()
-        return (absent and denied), f"read_only_denial={denied}; file_absent={absent}"
+        return (called and denied and absent), \
+            f"bash_attempted={called}; read_only_denial={denied}; file_absent={absent}"
 
     task = (
         f"Use the bash tool to run exactly: echo __MARKER__ > {target}\n"
@@ -161,10 +220,10 @@ def test_g5_04_read_only_mode_denies_writes(cfg, candidate_bin, scratch_home, sc
     )
     ok, observed = _cooperate(cfg, scratch_home, scratch_env, workspace, rec, "G504", task, check,
                               env_extra={"DSH_PERMISSION_MODE": "read-only"})
-    rec.finish("PASS" if ok else "FAIL",
+    _finish_coop(rec, ok, observed,
                "sandbox-policy read-only mode text (src/index.ts:40-41); base row env seam "
                "DSH_PERMISSION_MODE",
-               observed, note="model-cooperation class")
+               note="model-cooperation class")
     assert ok, observed
 
 
@@ -192,10 +251,10 @@ def test_g5_05_approval_fails_closed(cfg, candidate_bin, scratch_home, scratch_e
         "Then reply with exactly: DONE"
     )
     ok, observed = _cooperate(cfg, scratch_home, scratch_env, workspace, rec, "G505", task, check)
-    rec.finish("PASS" if ok else "FAIL",
+    _finish_coop(rec, ok, observed,
                "user-approval: ask with no answerer fails closed (src/index.ts:88-92,102); "
                "escalation pairing rule (tool-bash:65-67)",
-               observed, note="model-cooperation class")
+               note="model-cooperation class")
     assert ok, observed
 
 
@@ -221,10 +280,10 @@ def test_g5_06_danger_full_access_semantics(cfg, candidate_bin, scratch_home, sc
     finally:
         if outside.exists():
             outside.unlink()
-    rec.finish("PASS" if ok else "FAIL",
+    _finish_coop(rec, ok, observed,
                "base approval row expression (never under danger-full-access); "
                "sandbox-policy danger-full-access mode text",
-               observed, note="model-cooperation class; scratch area only, cleaned up")
+               note="model-cooperation class; scratch area only, cleaned up")
     assert ok, observed
 
 
@@ -242,17 +301,22 @@ def test_g5_07_bash_timeout_kills(cfg, candidate_bin, scratch_home, scratch_env,
         "When it times out, reply with exactly: __MARKER__"
     )
     ok, observed = _cooperate(cfg, scratch_home, scratch_env, workspace, rec, "G507", task, check)
-    rec.finish("PASS" if ok else "FAIL",
+    _finish_coop(rec, ok, observed,
                "tool-bash: executor applies the timeout and kills on expiry (schema:254)",
-               observed, note="model-cooperation class")
+               note="model-cooperation class")
     assert ok, observed
 
 
 def _spawn_long_run(cfg, scratch_home, scratch_env, workspace, tag: str):
-    """Spawn a routed headless run intended to be signalled mid-flight."""
-    require_routing_inputs(cfg, "qwen")
-    patch = seam_fixture_for(cfg, scratch_home, model_key="qwen", max_retries=1)
-    env = base_env(cfg, scratch_env)
+    """Spawn a routed headless run intended to be signalled mid-flight.
+
+    Runs under DSH_PERMISSION_MODE=danger-full-access: the drills qualify
+    signal handling and log durability, not sandboxing, and the workspace-write
+    sandbox backend is absent on hxs-15 (defect D1 — under it the bash tool
+    fails closed in seconds and there is no long flight to signal)."""
+    require_routing_inputs(cfg, "coder")
+    patch = seam_fixture_for(cfg, scratch_home, model_key="coder", max_retries=1)
+    env = base_env(cfg, {**scratch_env, "DSH_PERMISSION_MODE": "danger-full-access"})
     task = (
         "Use the bash tool to run: sleep 300. Do not finish before it does."
     )
@@ -269,6 +333,14 @@ def test_g5_08_sigint_drill(cfg, candidate_bin, scratch_home, scratch_env, works
     """G5-08: SIGINT mid-run exits 130; the log stays a parseable prefix."""
     proc = _spawn_long_run(cfg, scratch_home, scratch_env, workspace, "G508")
     time.sleep(25)
+    if proc.poll() is not None:
+        _, early_err = proc.communicate()
+        observed = f"run exited before signal: rc={proc.returncode}; stderr={(early_err or '')[-250:]}"
+        if sandbox_unavailable(early_err or ""):
+            rec.finish("BLOCKED", "no long flight to signal (defect D1)", observed)
+            blocked("sandbox backend absent on hxs-15 (defect D1)")
+        rec.finish("FAIL", "run stays in flight until signalled", observed)
+        pytest.fail(observed)
     proc.send_signal(signal.SIGINT)
     try:
         _, stderr = proc.communicate(timeout=90)
@@ -291,6 +363,14 @@ def test_g5_09_sigkill_drill(cfg, candidate_bin, scratch_home, scratch_env, work
     """G5-09: SIGKILL mid-run; next cold boot works; killed log parses (G4-05)."""
     proc = _spawn_long_run(cfg, scratch_home, scratch_env, workspace, "G509")
     time.sleep(25)
+    if proc.poll() is not None:
+        _, early_err = proc.communicate()
+        observed = f"run exited before signal: rc={proc.returncode}; stderr={(early_err or '')[-250:]}"
+        if sandbox_unavailable(early_err or ""):
+            rec.finish("BLOCKED", "no long flight to kill (defect D1)", observed)
+            blocked("sandbox backend absent on hxs-15 (defect D1)")
+        rec.finish("FAIL", "run stays in flight until killed", observed)
+        pytest.fail(observed)
     proc.kill()
     proc.communicate()
     killed_logs = find_session_artifacts(scratch_home, cfg)
@@ -390,9 +470,9 @@ def test_g5_13_background_job_smoke(cfg, candidate_bin, scratch_home, scratch_en
     )
     ok, observed = _cooperate(cfg, scratch_home, scratch_env, workspace, rec, "G513", task, check,
                               timeout=600)
-    rec.finish("PASS" if ok else "FAIL",
+    _finish_coop(rec, ok, observed,
                "tool-bash background contract (job id → job_output/job_kill); jobs row in base",
-               observed, note="model-cooperation class")
+               note="model-cooperation class")
     assert ok, observed
 
 
@@ -414,24 +494,24 @@ def test_g5_14_managed_dsh_env(cfg, candidate_bin, scratch_home, scratch_env, wo
         "Then reply with exactly: __MARKER__"
     )
     ok, observed = _cooperate(cfg, scratch_home, scratch_env, workspace, rec, "G514", task, check)
-    rec.finish("PASS" if ok else "FAIL",
+    _finish_coop(rec, ok, observed,
                "shell-env managed DSH_* variables (src/index.ts:71-75); credential "
                "values must never appear in the model-visible stream",
-               observed, note="model-cooperation class; includes a live leak assertion")
+               note="model-cooperation class; includes a live leak assertion")
     assert ok, observed
 
 
 def test_g5_15_tool_catalog_census(cfg, candidate_bin, scratch_home, scratch_env, workspace, rec):
     """G5-15: the model-visible tool list in request/header matches composition."""
-    require_routing_inputs(cfg, "qwen")
+    require_routing_inputs(cfg, "coder")
     marker = f"GORDON-G515-{nonce()}"
-    patch = seam_fixture_for(cfg, scratch_home, model_key="qwen", max_retries=1)
+    patch = seam_fixture_for(cfg, scratch_home, model_key="coder", max_retries=1)
     run = run_routed_headless(
         cfg, scratch_env, workspace, patch,
         f"Reply with exactly this token and nothing else: {marker}",
     )
     rec.commands.append(run)
-    register_call(cfg, {"tag": "G515", "model_key": "qwen", "model_id": cfg.model_ids()["qwen"],
+    register_call(cfg, {"tag": "G515", "model_key": "coder", "model_id": cfg.model_ids()["coder"],
                         "marker": marker, "ts": int(time.time()), "exit": run.exit_code})
     log = _latest_log(cfg, scratch_home)
     rec.artifact("g515-log.json", json.dumps(log)[:200000])
@@ -441,17 +521,19 @@ def test_g5_15_tool_catalog_census(cfg, candidate_bin, scratch_home, scratch_env
             header = event
     tool_names = []
     if header:
-        for tool in (header.get("data") or {}).get("tools") or []:
+        for tool in epoch_header(header).get("tools") or []:
             if isinstance(tool, dict) and "name" in tool:
                 tool_names.append(tool["name"])
     rec.artifact("g515-tools.json", json.dumps(tool_names, indent=2))
     expected_core = {"bash", "write", "read"}
     present = set(tool_names)
-    found = {name for name in expected_core if any(name in t for t in present)}
-    observed = f"exit={run.exit_code}; tools={sorted(present)[:40]}"
-    ok = run.exit_code == 0 and bool(tool_names) and found
+    found = expected_core & present
+    pwsh = [name for name in present if "pwsh" in name]
+    observed = f"exit={run.exit_code}; tools={sorted(present)[:40]}; pwsh={pwsh}"
+    ok = run.exit_code == 0 and bool(tool_names) and found == expected_core and not pwsh
     rec.finish("PASS" if ok else "FAIL",
-               "base bundle tool rows vs request/header tools (model-visible ⟺ logged)",
+               "base bundle tool rows vs request/header tools (model-visible ⟺ logged); "
+               "no pwsh tools on Linux",
                observed,
                note=f"expected core {sorted(expected_core)} found {sorted(found)}; full list in artifact")
     assert ok, observed
@@ -470,4 +552,51 @@ def test_g5_16_pwsh_disabled_on_linux(cfg, candidate_bin, scratch_env, rec):
                "expression; runtime effect cross-proven by G5-15 census: no pwsh tools)",
                observed,
                note="pwsh family ledger disposition: NOT_APPLICABLE on Linux, this row is its evidence")
+    assert ok, observed
+
+
+def test_g5_17_cookbook_tool_contract(cfg, candidate_bin, scratch_home, scratch_env, workspace, rec):
+    """G5-17 (owner directive, cookbook first-class): docs/cookbook/adding-a-tool.md
+    as known-answer oracle — every model-facing tool in the request header
+    satisfies the recipe's minimal shape: name, description, parameters."""
+    require_routing_inputs(cfg, "coder")
+    marker = f"GORDON-G517-{nonce()}"
+    patch = seam_fixture_for(cfg, scratch_home, model_key="coder", max_retries=1)
+    run = run_routed_headless(
+        cfg, scratch_env, workspace, patch,
+        f"Reply with exactly this token and nothing else: {marker}",
+    )
+    rec.commands.append(run)
+    register_call(cfg, {"tag": "G517", "model_key": "coder",
+                        "model_id": cfg.model_ids()["coder"], "marker": marker,
+                        "ts": int(time.time()), "exit": run.exit_code})
+    log = _latest_log(cfg, scratch_home)
+    header = None
+    for event in log.get("records", []):
+        if event.get("type") == "request/header":
+            header = event
+    tools = (epoch_header(header).get("tools") or []) if header else []
+    violations = []
+    for tool in tools:
+        if not isinstance(tool, dict):
+            violations.append(f"non-dict tool entry: {type(tool)}")
+            continue
+        name = tool.get("name")
+        desc = tool.get("description")
+        params = tool.get("parameters")
+        if not isinstance(name, str) or not name:
+            violations.append("tool without a name")
+        if not isinstance(desc, str) or not desc.strip():
+            violations.append(f"{name}: empty description")
+        if not isinstance(params, dict):
+            violations.append(f"{name}: parameters not an object")
+    rec.artifact("g517-tool-census.json", json.dumps(
+        {"count": len(tools), "violations": violations,
+         "names": [t.get("name") for t in tools if isinstance(t, dict)]}, indent=2))
+    observed = f"exit={run.exit_code}; tools={len(tools)}; violations={violations[:6]}"
+    ok = run.exit_code == 0 and bool(tools) and not violations
+    rec.finish("PASS" if ok else "FAIL",
+               "docs/cookbook/adding-a-tool.md minimal shape (name/description/"
+               "parameters) over the model-visible tool census",
+               observed)
     assert ok, observed

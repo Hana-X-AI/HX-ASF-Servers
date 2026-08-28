@@ -1,0 +1,15 @@
+[31m     [31m×[31m runs as Git's custom driver and commits a clean composed record[39m[32m 112[2mms[22m[39m
+[31m     [31m×[31m sees a paired link target added by the other branch[39m[32m 116[2mms[22m[39m
+[31m     [31m×[31m leaves an ordinary recoverable conflict when the configured runtime is unavailable[39m[32m 113[2mms[22m[39m
+[31m     [31m×[31m falls back before a broken driver entrypoint can replace the launcher[39m[32m 101[2mms[22m[39m
+[31m     [31m×[31m keeps a clean text fallback unresolved until the explicit resolver confirms it[39m[32m 109[2mms[22m[39m
+[31m     [31m×[31m leaves a staged merge when the pre-merge-commit hook rejects it[39m[32m 120[2mms[22m[39m
+[31m     [31m×[31m contains no tracked or unignored documentation copies[39m[32m 14[2mms[22m[39m
+[41m[1m FAIL [22m[49m [30m[45m thread-safe [49m[39m scripts/project-doc-site.spec.ts[2m > [22mwebsite source layout[2m > [22mcontains no tracked or unignored documentation copies
+[41m[1m FAIL [22m[49m [30m[45m thread-safe [49m[39m scripts/translation-pairing-merge.spec.ts[2m > [22mtranslation pairing merge composition[2m > [22mruns as Git's custom driver and commits a clean composed record
+[41m[1m FAIL [22m[49m [30m[45m thread-safe [49m[39m scripts/translation-pairing-merge.spec.ts[2m > [22mtranslation pairing merge composition[2m > [22msees a paired link target added by the other branch
+[41m[1m FAIL [22m[49m [30m[45m thread-safe [49m[39m scripts/translation-pairing-merge.spec.ts[2m > [22mtranslation pairing merge composition[2m > [22mleaves an ordinary recoverable conflict when the configured runtime is unavailable
+[41m[1m FAIL [22m[49m [30m[45m thread-safe [49m[39m scripts/translation-pairing-merge.spec.ts[2m > [22mtranslation pairing merge composition[2m > [22mfalls back before a broken driver entrypoint can replace the launcher
+[41m[1m FAIL [22m[49m [30m[45m thread-safe [49m[39m scripts/translation-pairing-merge.spec.ts[2m > [22mtranslation pairing merge composition[2m > [22mkeeps a clean text fallback unresolved until the explicit resolver confirms it
+[41m[1m FAIL [22m[49m [30m[45m thread-safe [49m[39m scripts/translation-pairing-merge.spec.ts[2m > [22mtranslation pairing merge composition[2m > [22mleaves a staged merge when the pre-merge-commit hook rejects it
+done

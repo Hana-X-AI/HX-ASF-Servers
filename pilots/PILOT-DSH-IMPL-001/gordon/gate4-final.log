@@ -1,0 +1,158 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0
+rootdir: /home/hxsa/gordon/phase-a
+collected 17 items
+
+phase-a/test_g4_sessions.py ....Fs......F..F.                            [100%]
+
+=================================== FAILURES ===================================
+____________________ test_g4_06a_corrupt_sibling_resilience ____________________
+
+cfg = Cfg(values={'GORDON_DSH_BIN': '/usr/local/bin/dsh', 'GORDON_DSH_ROOT': '/opt/dsh', 'GORDON_DSH_SRC': '/opt/dsh', 'GORD...test', 'GORDON_CUSTOM_ROW_ID': '', 'GORDON_HOST': '192.168.50.214', 'GORDON_WRAPPER': '/usr/local/bin/gordon-run-dsh'})
+candidate_bin = PosixPath('/usr/local/bin/dsh')
+scratch_home = PosixPath('/var/tmp/gordon-run/home-517ae62604/dsh-home')
+scratch_env = {'DSH_HOME': '/var/tmp/gordon-run/home-517ae62604/dsh-home', 'HOME': '/var/tmp/gordon-run/home-517ae62604/dsh-home'}
+workspace = PosixPath('/var/tmp/gordon-run/ws-d2fbb8c223/workspace')
+rec = <conftest.rec.<locals>._Rec object at 0x7e2b78c8e0f0>
+
+    def test_g4_06a_corrupt_sibling_resilience(cfg, candidate_bin, scratch_home, scratch_env, workspace, rec):
+        """G4-06(a): a corrupted sibling session log does not break boot or a new run.
+    
+        The sibling must be a valid zstd FRAME with corrupt JSONL inside: the
+        backend rejects extension/content-encoding mismatches at its root on
+        contact (first-run evidence: `.jsonl` under a zstd-configured backend
+        fails loud by design)."""
+        sessions_root = scratch_home / "sessions" / project_key(str(workspace)) / encode_segment("session-corrupt-seed")
+        sessions_root.mkdir(parents=True, exist_ok=True)
+        plain = sessions_root / "seed.jsonl"
+        plain.write_bytes(
+            b'{"type":"session","version":0,"id":"session-corrupt-seed","createdAt":1,"delegationDepth":0}\n'
+            b'{"type":"turn/start","seq":0,"time":1,"data":{}}\n'
+            b'{"corrupted":'
+        )
+        bad = sessions_root / "session.jsonl.zstd"
+        from gordon_util import run_host
+    
+        packed = run_host(["zstd", "-q", "-f", str(plain), "-o", str(bad)], timeout=30)
+        rec.commands.append(packed)
+        plain.unlink()
+        run, marker = _routed_run(cfg, scratch_home, scratch_env, workspace, rec, "G406A")
+        ok_run, observed_run, _log = assert_marker_run(cfg, scratch_home, run, marker)
+        rec.finish("PASS" if ok_run else "FAIL",
+                   "corruption is per-artifact: boot + a fresh session proceed with a "
+                   "corrupt (framed) sibling present",
+                   observed_run)
+>       assert ok_run, observed_run
+E       AssertionError: exit=1; marker_in_assistant_message=False; turn_end_completed=False; artifact=session.jsonl.zstd; stderr=dsh: EACCES: permission denied, mkdir '/var/tmp/gordon-run/home-517ae62604/dsh-home/sessions/--var-tmp-gordon-run-ws-d2fbb8c223-workspace--/session-b4ba1764-dd39-41b4-a660-885d55b14d77'
+E         
+E       assert False
+
+phase-a/test_g4_sessions.py:184: AssertionError
+_____________________ test_g4_13_spill_on_oversized_output _____________________
+
+cfg = Cfg(values={'GORDON_DSH_BIN': '/usr/local/bin/dsh', 'GORDON_DSH_ROOT': '/opt/dsh', 'GORDON_DSH_SRC': '/opt/dsh', 'GORD...test', 'GORDON_CUSTOM_ROW_ID': '', 'GORDON_HOST': '192.168.50.214', 'GORDON_WRAPPER': '/usr/local/bin/gordon-run-dsh'})
+candidate_bin = PosixPath('/usr/local/bin/dsh')
+scratch_home = PosixPath('/var/tmp/gordon-run/home-239b5c7fda/dsh-home')
+scratch_env = {'DSH_HOME': '/var/tmp/gordon-run/home-239b5c7fda/dsh-home', 'HOME': '/var/tmp/gordon-run/home-239b5c7fda/dsh-home'}
+workspace = PosixPath('/var/tmp/gordon-run/ws-83a1aa6bdd/workspace')
+rec = <conftest.rec.<locals>._Rec object at 0x7e2b78ccf590>
+
+    def test_g4_13_spill_on_oversized_output(cfg, candidate_bin, scratch_home, scratch_env, workspace, rec):
+        """G4-13: an oversized tool result spills to a file with the path reported.
+    
+        Model-cooperation class: the model must run the instructed bash command.
+        One recorded re-run per doctrine §9."""
+        attempts = []
+        ok = False
+        observed = ""
+        for attempt in (1, 2):
+            tag = f"G413-{attempt}"
+            marker = f"GORDON-{tag}-{nonce()}"
+            task = (
+                "Use the bash tool to run exactly: seq 1 20000. "
+                f"Then reply with exactly this token: {marker}"
+            )
+            run, _ = _routed_run(cfg, scratch_home, scratch_env, workspace, rec, tag, task=task)
+            artifacts = find_session_artifacts(scratch_home, cfg)
+            spill_found = False
+            spill_paths = []
+            if artifacts:
+                log = read_session_log(cfg, artifacts[-1])
+                for event in log["records"]:
+                    data = event.get("data")
+                    if isinstance(data, dict):
+                        text = json.dumps(data)
+                        if "spill" in text.lower():
+                            import re as _re
+    
+                            spill_paths += _re.findall(r'"spillPath":\s*"([^"]+)"', text)
+                for candidate in spill_paths:
+                    try:
+                        if len(read_file_bytes(cfg, Path(candidate))) > 50_000:
+                            spill_found = True
+                    except OSError:
+                        continue
+            observed = (f"attempt={attempt}; exit={run.exit_code}; "
+                        f"spill_paths={spill_paths}; spill_file_ok={spill_found}")
+            attempts.append(observed)
+            if run.exit_code == 0 and spill_found:
+                ok = True
+                break
+        rec.finish("PASS" if ok else "FAIL",
+                   "spill-policy maxInlineBytes 50000; tool-bash: tail-truncated, full "
+                   "output saved, path reported",
+                   " | ".join(attempts),
+                   note="model-cooperation class; attempts recorded per doctrine")
+>       assert ok, " | ".join(attempts)
+E       AssertionError: attempt=1; exit=0; spill_paths=[]; spill_file_ok=False | attempt=2; exit=0; spill_paths=[]; spill_file_ok=False
+E       assert False
+
+phase-a/test_g4_sessions.py:413: AssertionError
+____________________ test_g4_17_agent_instructions_context _____________________
+
+cfg = Cfg(values={'GORDON_DSH_BIN': '/usr/local/bin/dsh', 'GORDON_DSH_ROOT': '/opt/dsh', 'GORDON_DSH_SRC': '/opt/dsh', 'GORD...test', 'GORDON_CUSTOM_ROW_ID': '', 'GORDON_HOST': '192.168.50.214', 'GORDON_WRAPPER': '/usr/local/bin/gordon-run-dsh'})
+candidate_bin = PosixPath('/usr/local/bin/dsh')
+scratch_home = PosixPath('/var/tmp/gordon-run/home-56e5601440/dsh-home')
+scratch_env = {'DSH_HOME': '/var/tmp/gordon-run/home-56e5601440/dsh-home', 'HOME': '/var/tmp/gordon-run/home-56e5601440/dsh-home'}
+workspace = PosixPath('/var/tmp/gordon-run/ws-e0333fd1a0/workspace')
+rec = <conftest.rec.<locals>._Rec object at 0x7e2b78cddbe0>
+
+    def test_g4_17_agent_instructions_context(cfg, candidate_bin, scratch_home, scratch_env, workspace, rec):
+        """G4-17: AGENTS.md content reaches the model-visible request (context family).
+    
+        The fixture workspace carries an AGENTS.md with a static marker; the
+        request records (request/header or request/context) must contain it."""
+        import shutil as _shutil
+    
+        marker = "GORDON-AGENTS-MD-MARKER-7f3a9c"
+        fixture = Path(__file__).parent / "fixtures" / "workspace-AGENTS.md"
+        _shutil.copy(fixture, workspace / "AGENTS.md")
+        run, _ = _routed_run(cfg, scratch_home, scratch_env, workspace, rec, "G417")
+        artifacts = find_session_artifacts(scratch_home, cfg)
+        if not artifacts:
+            rec.finish("FAIL", "session artifact", "none found")
+            pytest.fail("no session artifact")
+        log = read_session_log(cfg, artifacts[-1])
+        request_records = [
+            r for r in log["records"]
+            if r.get("type") in ("request/header", "request/context")
+        ]
+        found = marker in json.dumps(request_records)
+        observed = f"exit={run.exit_code}; marker_in_request_records={found}"
+        ok = run.exit_code == 0 and found
+        rec.finish("PASS" if ok else "FAIL",
+                   "agent-instructions row (base bundle, maxBytes 65536); model-visible "
+                   "⟺ logged (repo AGENTS.md)",
+                   observed)
+>       assert ok, observed
+E       AssertionError: exit=0; marker_in_request_records=False
+E       assert False
+
+phase-a/test_g4_sessions.py:533: AssertionError
+-------- generated xml file: /home/hxsa/gordon/evidence/gate4-junit.xml --------
+=========================== short test summary info ============================
+SKIPPED [1] phase-a/gordon_util.py:69: BLOCKED: no headless resume entry in the pinned CLI; reassigned to Phase B Gate 7
+FAILED phase-a/test_g4_sessions.py::test_g4_06a_corrupt_sibling_resilience - ...
+FAILED phase-a/test_g4_sessions.py::test_g4_13_spill_on_oversized_output - As...
+FAILED phase-a/test_g4_sessions.py::test_g4_17_agent_instructions_context - A...
+============= 3 failed, 13 passed, 1 skipped in 128.94s (0:02:08) ==============

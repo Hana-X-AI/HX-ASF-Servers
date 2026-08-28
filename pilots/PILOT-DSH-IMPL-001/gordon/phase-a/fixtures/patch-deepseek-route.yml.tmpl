@@ -6,7 +6,7 @@
 # order), so this fixture re-enables the row explicitly for fixture homes only.
 # NOTE: the DeepSeek wire dialect against OmniRoute is unqualified — this seam
 # is a fallback for the GORDON_SEAM=deepseek comparison run only.
-# Rendered at runtime; placeholders are __NAME__ style.
+# Rendered at runtime; placeholder tokens use double-underscore delimiters.
 - id: llm-deepseek
   disabled: false
   config:
@@ -16,10 +16,7 @@
       mode: normal
       maxRetries: __MAX_RETRIES__
     models:
-      - id: __MODEL_ID__
-        name: __MODEL_ID__
-        contextWindow: __CTX__
-        maxTokens: __MAX_TOKENS__
+__MODELS_YAML__
 
 - id: agent-default-model
   config:

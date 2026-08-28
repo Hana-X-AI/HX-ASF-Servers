@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="0" skipped="0" tests="1" time="5.545" timestamp="2026-08-28T13:05:44.227828" hostname="hxs-15"><testcase classname="test_g4_sessions" name="test_g4_06a_corrupt_sibling_resilience" time="5.505" /></testsuite></testsuites>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="2" time="50.238" timestamp="2026-08-28T13:27:06.557103" hostname="hxs-15"><testcase classname="test_g5_containment" name="test_g5_08_sigint_drill" time="25.155" /><testcase classname="test_g5_containment" name="test_g5_09_sigkill_drill" time="25.025"><failure message="Failed: run exited before signal: rc=0; stderr=">cfg = Cfg(values={'GORDON_DSH_BIN': '/usr/local/bin/dsh', 'GORDON_DSH_ROOT': '/opt/dsh', 'GORDON_DSH_SRC': '/opt/dsh', 'GORD...test', 'GORDON_CUSTOM_ROW_ID': '', 'GORDON_HOST': '192.168.50.214', 'GORDON_WRAPPER': '/usr/local/bin/gordon-run-dsh'})
+candidate_bin = PosixPath('/usr/local/bin/dsh')
+scratch_home = PosixPath('/var/tmp/gordon-run/home-9731a8c631/dsh-home')
+scratch_env = {'DSH_HOME': '/var/tmp/gordon-run/home-9731a8c631/dsh-home', 'HOME': '/var/tmp/gordon-run/home-9731a8c631/dsh-home'}
+workspace = PosixPath('/var/tmp/gordon-run/ws-7f3c4c0623/workspace')
+rec = &lt;conftest.rec.&lt;locals&gt;._Rec object at 0x7235d998e2a0&gt;
+
+    def test_g5_09_sigkill_drill(cfg, candidate_bin, scratch_home, scratch_env, workspace, rec):
+        """G5-09: SIGKILL mid-run; next cold boot works; killed log parses (G4-05)."""
+        proc = _spawn_long_run(cfg, scratch_home, scratch_env, workspace, "G509")
+        time.sleep(25)
+        if proc.poll() is not None:
+            _, early_err = proc.communicate()
+            observed = f"run exited before signal: rc={proc.returncode}; stderr={(early_err or '')[-250:]}"
+            if sandbox_unavailable(early_err or ""):
+                rec.finish("BLOCKED", "no long flight to kill (defect D1)", observed)
+                blocked("sandbox backend absent on hxs-15 (defect D1)")
+            rec.finish("FAIL", "run stays in flight until killed", observed)
+&gt;           pytest.fail(observed)
+E           Failed: run exited before signal: rc=0; stderr=
+
+phase-a/test_g5_containment.py:342: Failed</failure></testcase></testsuite></testsuites>

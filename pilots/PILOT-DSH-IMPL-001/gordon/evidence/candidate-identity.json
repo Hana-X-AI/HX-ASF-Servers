@@ -1,0 +1,10 @@
+{
+  "dsh_bin": "/usr/local/bin/dsh",
+  "dsh_root": "/opt/dsh",
+  "dsh_src": "/opt/dsh",
+  "id_dsh": "uid=999(dsh) gid=988(dsh) groups=988(dsh)",
+  "real_home": "/var/lib/dsh",
+  "review_baseline_version": "0.1.1-rc.2",
+  "service_uid": "999",
+  "service_user": "dsh"
+}
