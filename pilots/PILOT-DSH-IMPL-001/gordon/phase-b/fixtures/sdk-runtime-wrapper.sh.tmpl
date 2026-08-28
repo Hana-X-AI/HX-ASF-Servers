@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Gordon G7-15 fixture: single-executable runtime shim for the Python SDK's
+# HarnessConfig.runtime_bin (which spawns one argv element). Rendered with the
+# pinned node path and the built dsh-jsonrpc-agent bin. Test tooling, scratch.
+exec __NODE__ __SDK_BIN__ "$@"

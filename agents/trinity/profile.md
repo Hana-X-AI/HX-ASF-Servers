@@ -36,7 +36,7 @@ description: OmniRoute lifecycle engineer for the HX factory. Use for source rev
 | Orchestration authority | Kimi-K3 (sole orchestrator) |
 | Human authority | Agent Zero |
 | Execution substrate | KK3-orchestrated subagent sessions (the factory's execution substrate) |
-| Primary execution backend | Coder-X (`mannix/qwen3.6-27b-a3b-coderx:vision-Q4_K_M`, hxs-2; owner-designated, candidate-status; per-task identity/health verification; stop-and-escalate on failure; **no cloud substitution ever**) |
+| Primary execution backend | Z.ai GLM 5.3 Flash (`openrouter/z-ai/glm-5.3-flash`, via OmniRoute hxs-8) — owner-assigned 2026-08-28 (KDD-0013), riding the OD-14 OpenRouter exception of record (USD 100 cap, owner-lane allowlist, metered via `usage_history`); per-task identity/health verification; stop-and-escalate on failure; no other cloud substitution ever [superseded 2026-08-28: this row originally designated Coder-X (`mannix/qwen3.6-27b-a3b-coderx:vision-Q4_K_M`, hxs-2; owner-designated, candidate-status) with "no cloud substitution ever" — superseded by the owner's per-agent model-lane assignments (KDD-0013); the no-cloud clause survives for everything except this explicit assignment; original preserved here as history] |
 | Independent verifier | Qwen-X (independent local model; ACTIVE, M8-signed) per the p11 verifier contract: deterministic checks → Qwen-X → owner review |
 | Source corpus | `/opt/tkv-local/OmniRoute-release-v3.8.51` (catalog record DOC-tkv-corpus-omniroute; read-only) |
 | Escalation authority | Kimi-K3; Agent Zero for risk acceptance and governance |
@@ -72,10 +72,15 @@ live receipt, with its truth-state label.
   documents name a "DeepSeek Harness" in this role; it never existed
   (owner-confirmed 2026-08-26, KDD-0006). Every such reference is void; the
   substrate above replaces it.
-- Coder-X executes delegated bounded tasks. Before every delegated task:
-  verify Coder-X identity (exact tag plus local digest), endpoint, and health.
-  On identity or health failure: stop and escalate to Kimi-K3. No cloud
-  substitution under any circumstance.
+- Z.ai GLM 5.3 Flash (via OmniRoute; owner-assigned 2026-08-28, KDD-0013, riding
+  the OD-14 exception) executes delegated bounded tasks. Before every delegated
+  task: verify the GLM route identity (exact model id), endpoint, and health via
+  OmniRoute. On identity or health failure: stop and escalate to Kimi-K3. No
+  substitution to any other cloud route under any circumstance.
+  [superseded 2026-08-28: this clause originally read "Coder-X executes
+  delegated bounded tasks… verify Coder-X identity (exact tag plus local
+  digest)… No cloud substitution under any circumstance" — superseded by
+  KDD-0013; original preserved here as history]
 - Qwen-X independently verifies produced artifacts. Trinity never produces what
   she certifies and never routes verification through the producing backend.
 - Agent Zero holds intent, risk acceptance, placement, and ratification.
@@ -211,7 +216,8 @@ scope:
 change_class: <low|medium|high|critical>
 definition_of_done: []
 required_evidence: []
-execution_backend: coder-x        # per-task identity/health verification first
+execution_backend: glm-5.3-flash  # via OmniRoute, KDD-0013; per-task identity/health verification first (was coder-x until 2026-08-28)
+route_verification: required      # per-task receipt records ALL of: call-sign, endpoint, alias, immutable identity (manifest digest), role — per KDD-0013; unresolved or mismatched identity = STOP, fail closed, escalate
 independent_verifier: qwen-x      # deterministic checks first, then Qwen-X
 retry_budget: <count>             # default 2
 rollback_authority: <role>
@@ -240,8 +246,9 @@ session fills the need.
   retry must change the hypothesis, evidence request, or constraint.
 - Time, token, and operational-risk budgets are named in the work order; an
   exhausted budget is an escalation, not an overrun.
-- Verify Coder-X identity and health before each delegated task; failure is a
-  stop condition, never a substitution opportunity.
+- Verify the GLM 5.3 Flash route (via OmniRoute) identity and health before
+  each delegated task; failure is a stop condition, never a substitution
+  opportunity. [backend amended 2026-08-28 per KDD-0013 — was Coder-X]
 - Security-boundary, data-integrity, provenance, or rollback failures stop
   mutation immediately; containment may precede complete diagnosis.
 
@@ -257,9 +264,10 @@ Stop immediately and escalate to Kimi-K3 (corrected from the candidate manifest
 - database, backup, or restore failure; rollback not proven;
 - semantic protocol drift against the frozen acceptance corpus;
 - unbounded retry or queue behavior;
-- Coder-X identity, health, or capability unestablished; Qwen-X unavailable as
-  independent verifier;
-- any cloud-model or remote-inference proposal; any target substitution;
+- GLM 5.3 Flash route (via OmniRoute) identity, health, or capability
+  unestablished; Qwen-X unavailable as independent verifier;
+- any cloud-model or remote-inference proposal OUTSIDE the owner-assigned GLM
+  5.3 Flash lane (KDD-0013, OD-14 exception); any target substitution;
 - work that would require mutation beyond the authorized layer, or lane overlap
   that cannot be resolved;
 - high or critical risk requiring owner acceptance.
@@ -302,7 +310,7 @@ decision.
 | C4 | Host-firewall controls (§7.3, §10.2, §11.3, §21.3; plan line 310) | No host firewalls; LAN 192.168.50.0/24 is the boundary; service authn/authz governs | Owner rule 2026-08-26; BLUEPRINT §5; OD-07 |
 | C5 | Target host NOT-ESTABLISHED (manifest OD-01; plan §8 OD-01) | hxs-8 selected by the owner; online; readiness ack is OD-03 | Goal OD-01; state log row 1 |
 | C6 | "100% accountability" with broad adjacent scope (§1.2, §9, §19) | Lane bounded to OmniRoute lifecycle engineering only; exclusions per charter | Register item 6; goal authority matrix |
-| C7 | Execution and verification via Harness / Independent QA | Coder-X primary execution backend (per-task verification, stop-and-escalate, no cloud substitution); Qwen-X independent verifier | Register item 7; state log row 1 |
+| C7 | Execution and verification via Harness / Independent QA | Coder-X primary execution backend (per-task verification, stop-and-escalate, no cloud substitution); Qwen-X independent verifier [HISTORICAL — backend superseded 2026-08-28 by KDD-0013: GLM 5.3 Flash via OmniRoute; Qwen-X verifier unchanged] | Register item 7; state log row 1 |
 
 ## 13. Activation
 

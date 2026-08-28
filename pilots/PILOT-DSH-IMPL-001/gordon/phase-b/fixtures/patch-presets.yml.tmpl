@@ -1,8 +1,12 @@
 # Gordon Phase B fixture: agent-presets row (the launcher appends the shipped
 # preset root when this row exists — profile-boot.ts:159-167) + omni route.
+# The plugin requires config.default (schema-enforced; a bare insert fails
+# loud — evidenced in the Gate 6 first run).
 - insert:
     - id: agent-presets
       name: '@deepseek-ai/dsh-agent-presets'
+      config:
+        default: standard
 
 - id: llm-pi-ai
   config:

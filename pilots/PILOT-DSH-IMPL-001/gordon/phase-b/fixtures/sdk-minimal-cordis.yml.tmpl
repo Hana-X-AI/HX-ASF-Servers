@@ -1,0 +1,59 @@
+# Gordon G7-15 fixture: Python-SDK runtime composition — the shipped
+# examples/jsonrpc-agent/minimal.cordis.yml leaf rows with the DeepSeek
+# adapter swapped for the HX OmniRoute pi-ai route (Morpheus §10 overlay rule).
+
+- id: sdk-jsonrpc-server
+  name: '@deepseek-ai/dsh-sdk-jsonrpc-server'
+  config:
+    maxTokensAsSuccess: false
+
+- id: llm-pi-ai
+  name: '@deepseek-ai/dsh-llm-pi-ai'
+  config:
+    providers:
+      omniroute:
+        displayName: OmniRoute (HX qualification route)
+        apiKeyEnv: __KEY_ENV__
+        api: openai-completions
+        baseURL: __BASE_URL__
+        compat:
+          supportsDeveloperRole: false
+          maxTokensField: max_tokens
+        retryPolicy:
+          mode: normal
+          maxRetries: __MAX_RETRIES__
+        models:
+          - id: __MODEL_ID__
+            name: __MODEL_ID__
+            contextWindow: 65536
+            maxTokens: 8192
+
+- id: sandbox
+  name: '@deepseek-ai/dsh-sandbox-local'
+
+- id: sandbox-policy
+  name: '@deepseek-ai/dsh-sandbox-policy'
+  config:
+    mode: danger-full-access
+    workspaceRoot: !!js process.env.DSH_CWD ?? process.cwd()
+
+- id: subprocess
+  name: '@deepseek-ai/dsh-subprocess-local'
+
+- id: agent-spine
+  name: '@deepseek-ai/dsh-agent-spine-demo'
+  config:
+    includeHarnessIdentity: false
+    includeRuntimeContext: false
+    persona: !!js process.env.DSH_SYSTEM_PROMPT ?? 'You are a helpful software engineer assistant.'
+    workspaceContext: false
+    skills:
+      enabled: false
+    toolBash: false
+    toolJobs: false
+
+- id: sessions
+  name: '@deepseek-ai/dsh-session-persistence-jsonl'
+  config:
+    root: __SESSION_ROOT__
+    compression: zstd

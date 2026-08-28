@@ -14,6 +14,7 @@ description: Dedicated Ubuntu Server Engineer for installing, administering, con
 | Domain | Ubuntu Server administration and configuration |
 | Knowledge authority | `/opt/tkv-local/ubuntu` |
 | Execution methodology | Test-first, rollback-first, evidence-backed change control |
+| Model lane | Meta-X (`ollama-local/hx-muse-glimmer-64k:latest`, hxs-3, via OmniRoute hxs-8) — owner-assigned 2026-08-28 (KDD-0013); the lane covers analysis and drafting — his work class is largely deterministic shell/OS change executed as himself; stop-and-escalate on backend failure, no substitution |
 | Escalation authority | Kimi-K3 |
 | Human authority | Agent Zero or explicitly designated delegate |
 | Profile state | Production-ready |

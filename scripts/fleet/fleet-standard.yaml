@@ -29,7 +29,8 @@ host_classes:
   hxs-4: llm-host
   hxs-5: workstation
   hxs-6: server-default
-  hxs-7: server-default
+  # hxs-7 REMOVED 2026-08-28 — decommissioned per owner word (SERVER-REGISTRY
+  # row of record; no DNS, no route to host). fleet count is now 16.
   hxs-8: server-default
   hxs-9: server-default
   hxs-10: server-default
@@ -129,6 +130,12 @@ rules:
   # declared here (the governor's WO wrongly said all three were absent — rick's
   # F-2 corrected it; open note). hxs-20 lives at .220 (hostname hx-20) and
   # hxs-21 at .21 — the .199+N pattern does NOT hold for these two.
+  # COUNT NOTE (2026-08-28, labeled): the ×12 in the wave evidence above is the
+  # HISTORICAL 2026-08-27 scope — hxs-1..4 (re-verify) + hxs-6, 8, 9, 10, 12,
+  # 13, 14, 15; hxs-7 was EXCLUDED from that wave (already replaced by hxs-20),
+  # so its removal from this class does not alter the ×12 record. The
+  # server-default class NOW has 11 hosts: hxs-6, 8, 9, 10, 11, 12, 13, 14, 15,
+  # 20, 21.
   - class: server-default
     path: time.timezone
     op: eq

@@ -17,6 +17,7 @@ import pytest
 
 from conftest import (
     FIXTURES,
+    ApiClient,
     cooperate,
     finish_coop,
     latest_log,
@@ -32,14 +33,44 @@ from gordon_util import (
     render_fixture,
     run_candidate,
 )
-from test_g3_providers import seam_fixture_for
+from test_g3_providers import register_call, require_routing_inputs, seam_fixture_for
 
 SUITE_DIR = Path(__file__).resolve().parent
 
 
+def _rpc_ok(body: dict) -> bool:
+    return isinstance(body, dict) and body.get("type") == "server-response" \
+        and (body.get("result") or {}).get("ok") is True
+
+
+def _rpc_value(body: dict):
+    return (body.get("result") or {}).get("value")
+
+
+def _wait_turn_end(api: "ApiClient", session_id: str, timeout: float = 300.0) -> list[dict]:
+    """Poll session.history until a turn/end event lands (bounded)."""
+    deadline = time.monotonic() + timeout
+    events: list[dict] = []
+    while time.monotonic() < deadline:
+        status, body = api.rpc("session.history", {"sessionId": session_id})
+        if status == 200 and _rpc_ok(body):
+            events = [entry.get("event", {})
+                      for entry in ((_rpc_value(body) or {}).get("events", []))]
+            if any(e.get("type") == "turn/end" for e in events):
+                return events
+        time.sleep(3)
+    return events
+
+
 def seam_fixture_b(cfg, dest: Path, template: str, extra: dict[str, str] | None = None,
                    model_key: str = "coder", max_retries: int = 1) -> Path:
-    """Render a Phase B fixture template (route + extra rows)."""
+    """Render a Phase B fixture template (route + extra rows).
+
+    Fix of record 2026-08-28 (Gate 6 first run): gordon_util.render_fixture
+    reads templates from phase-a/fixtures (its own SUITE_DIR); Phase B
+    templates live in phase-b/fixtures. Render locally here instead."""
+    import re as _re
+
     ids = cfg.model_ids()
     indent = "          "
     models_yaml = "\n".join(
@@ -59,13 +90,23 @@ def seam_fixture_b(cfg, dest: Path, template: str, extra: dict[str, str] | None 
         "MAX_RETRIES": str(max_retries),
         "MODELS_YAML": models_yaml,
         "NODE": cfg.node,
+        "DSH_ROOT": cfg.dsh_root,
         "MCP_FIXTURE": os.environ.get(
             "GORDON_MCP_FIXTURE",
             "/opt/dsh/packages/mcp/mcp-client/tests/fixture-server.ts",
         ),
     }
     mapping.update(extra or {})
-    return render_fixture(template, mapping, dest)
+    text = (FIXTURES / template).read_text()
+    for key, value in mapping.items():
+        text = text.replace(f"__{key}__", value)
+    leftovers = _re.findall(r"__[A-Z_]+__", text)
+    if leftovers:
+        blocked(f"fixture {template} has unresolved placeholders: {sorted(set(leftovers))}")
+    dest.mkdir(parents=True, exist_ok=True)
+    out = dest / template.replace(".tmpl", "")
+    out.write_text(text)
+    return out
 
 
 def test_g6_01_goal_lifecycle(cfg, candidate_bin, scratch_home, scratch_env, workspace, rec):
@@ -90,24 +131,42 @@ def test_g6_01_goal_lifecycle(cfg, candidate_bin, scratch_home, scratch_env, wor
 
 
 def test_g6_02_goal_round_driver(cfg, candidate_bin, scratch_home, scratch_env, workspace, rec):
-    """G6-02: the round driver continues an open goal into a later turn."""
+    """G6-02: the round driver continues an open goal into a later turn.
+
+    Task-design fix of record (Gate 6 first run): the first wording let the
+    model set max_goal_rounds=1 and complete in turn 1 (both contract-correct
+    product behaviors — goal/change + round-limit block evidenced). The task
+    now pins max_goal_rounds and forbids turn-1 completion; the oracle is the
+    goal-round user message (source kind 'goal', round >= 1) and/or a second
+    turn carrying the continuation."""
     def check(home, run, marker):
         log = latest_log(cfg, home)
+        records = log.get("records", [])
         text = log_text(log)
-        # The driver renders a continuation prompt for open goals (prompt.ts);
-        # a second turn carrying the goal without a new user message is the
-        # continuation proof.
-        continuation = "goal" in text.lower() and text.count("turn/start") >= 2
-        return (run.exit_code == 0 and continuation), \
-            f"turn_starts={text.count('turn/start')}; goal_mentions={text.lower().count('goal')}"
+        round_msgs = [
+            e for e in records
+            if e.get("type") == "user/message"
+            and isinstance((e.get("data") or {}).get("source"), dict)
+            and (e["data"]["source"].get("kind") == "goal")
+            and (e["data"]["source"].get("round") or 0) >= 1
+        ]
+        turns = text.count("turn/start")
+        round_events = [e for e in records if (e.get("type") or "").startswith("goal/")]
+        return (run.exit_code == 0 and (bool(round_msgs) or turns >= 2)), \
+            (f"goal_round_messages={len(round_msgs)}; turn_starts={turns}; "
+             f"goal_events={len(round_events)}")
 
-    task = ("Use the create_goal tool to create a goal titled __MARKER__ with "
-            "the objective to reply DONE in the next round. Complete it if you "
-            "can, then reply with exactly: DONE")
+    task = ("Use the create_goal tool to create a goal with objective "
+            "\"record the token __MARKER__ now, then reply DONE in a later "
+            "round\" and max_goal_rounds set to 5. IMPORTANT: do NOT complete "
+            "the goal in this first turn — leave it active so the goal round "
+            "driver can continue it. Just acknowledge the goal is set.")
     ok, observed = cooperate(cfg, scratch_home, scratch_env, workspace, rec, "G602", task, check)
     finish_coop(rec, ok, observed,
-                "goal-round-driver/src/index.ts + renderGoalRoundPrompt (continuation section)",
-                note="model-cooperation class; round identity recorded in artifacts")
+                "goal-round-driver/src/index.ts + renderGoalRoundPrompt: a goal left "
+                "active+armed is driven into a later round (goal-round user message, "
+                "source {kind:'goal', round>=1})",
+                note="model-cooperation class; first-run task-design correction of record")
     assert ok, observed
 
 
@@ -356,28 +415,92 @@ def test_g6_12_subagent_spawn(cfg, candidate_bin, scratch_home, scratch_env, wor
     assert ok, observed
 
 
-def test_g6_13_subagent_fork(cfg, candidate_bin, scratch_home, scratch_env, workspace, rec):
-    """G6-13: a fork delegation inherits the parent's history (one-shot)."""
-    def check(home, run, marker):
+def test_g6_13_subagent_fork(cfg, candidate_bin, scratch_home, scratch_env, workspace, rec, web_boot):
+    """G6-13: fork delegation and the completed-turn-prefix contract.
+
+    Finding of record (Gate 6 first run): a fork made DURING the parent's
+    first turn seeds nothing — the provider seeds only a completed-turn prefix
+    (subagent-fork-in-process: "Only pass a seed when there's a completed turn
+    to inherit"; 4/4 attempts evidenced contract-correct empty-seed behavior).
+    The inheritance proof needs a completed turn before the fork, which a
+    headless one-shot cannot produce; leg B uses the traced web session entry
+    (two prompts) for the multi-turn case."""
+    # Leg A (headless boundary contract): fork during turn 1 → empty seed.
+    def check_a(home, run, marker):
         artifacts = find_session_artifacts(home, cfg)
-        fork_child = False
+        child_seen = False
+        child_seed = False
         for artifact in artifacts:
             log = read_session_log(cfg, artifact)
             header = log.get("header") or {}
             if header.get("origin") == "subagent":
-                records_text = log_text(log)
-                if "ALPHA-SEED" in records_text:
-                    fork_child = True
-        return (run.exit_code == 0 and fork_child), f"fork_inherited_seed={fork_child}"
+                child_seen = True
+                if marker in log_text(log):
+                    child_seed = True
+        return (run.exit_code == 0 and child_seen), \
+            f"fork_child={child_seen}; seed_in_turn1_child={child_seed}"
 
-    task = ("Remember this exact token: ALPHA-SEED-__MARKER__. Then use the "
-            "subagent_fork tool to ask a forked child what token you were told "
-            "to remember. Report its answer, then reply DONE")
-    ok, observed = cooperate(cfg, scratch_home, scratch_env, workspace, rec, "G613", task, check,
-                             timeout=600)
-    finish_coop(rec, ok, observed,
-                "tool-subagent-fork (one-shot fork inherits the parent request prefix)",
-                note="model-cooperation class")
+    task_a = ("Remember this exact token: ALPHA-SEED-__MARKER__. Then IMMEDIATELY, "
+              "in this same turn, use the subagent_fork tool to ask a forked child "
+              "what token you were told to remember. Report its answer, then reply DONE")
+    ok_a, observed_a = cooperate(cfg, scratch_home, scratch_env, workspace, rec,
+                                 "G613A", task_a, check_a, timeout=600)
+    if ok_a == "SANDBOX-D1":
+        blocked("sandbox backend absent (defect D1 semantics)")
+    # Leg B (web two-turn inheritance): turn 1 completes; turn 2 forks.
+    from conftest import ApiClient
+
+    seed = f"ALPHA-SEED-G613B-{nonce()}"
+    child_carries = False
+    observed_b = "not-run"
+    require_routing_inputs(cfg, "coder")
+    patch = seam_fixture_for(cfg, scratch_home, model_key="coder", max_retries=1)
+    boot = web_boot(scratch_env, str(workspace), patches=[str(patch)])
+    try:
+        if boot.wait_bound(120):
+            api = ApiClient(boot.port)
+            _, created = api.rpc("session.create", {"cwd": str(workspace)})
+            session_id = (_rpc_value(created) or {}).get("sessionId")
+            register_call(cfg, {"tag": "G613B", "model_key": "coder",
+                                "model_id": cfg.model_ids()["coder"], "marker": seed,
+                                "ts": int(time.time()), "entry": "web-api"})
+            api.rpc("session.prompt", {
+                "sessionId": session_id, "mode": "queue",
+                "content": [{"type": "text", "text":
+                             (f"Remember this exact token: {seed}. "
+                              "Reply with exactly: NOTED")}],
+            })
+            _wait_turn_end(api, session_id, timeout=300)
+            api.rpc("session.prompt", {
+                "sessionId": session_id, "mode": "queue",
+                "content": [{"type": "text", "text":
+                             ("Use the subagent_fork tool to ask a forked child what "
+                              "exact token you were told to remember. Report its answer, "
+                              "then reply DONE")}],
+            })
+            _wait_turn_end(api, session_id, timeout=600)
+            # The fork child is a separate durable session with origin subagent.
+            artifacts = find_session_artifacts(scratch_home, cfg)
+            for artifact in artifacts:
+                log = read_session_log(cfg, artifact)
+                header = log.get("header") or {}
+                if header.get("origin") == "subagent" and seed in log_text(log):
+                    child_carries = True
+            observed_b = f"fork_child_carries_seed={child_carries}"
+        else:
+            observed_b = "web boot did not bind"
+    finally:
+        boot.stop()
+    observed = f"legA: {observed_a} | legB: {observed_b}"
+    ok = bool(ok_a) and child_carries
+    rec.finish("PASS" if ok else "FAIL",
+               "tool-subagent-fork: one-shot fork seeds the parent's COMPLETED-turn "
+               "prefix (inheritsParentContext=true); a mid-first-turn fork seeds "
+               "nothing (documented boundary, leg A); after a completed turn the "
+               "child inherits (leg B)",
+               observed,
+               note="first-run contract finding of record; leg B enters via the "
+                    "traced web session (multi-turn entry)")
     assert ok, observed
 
 
@@ -466,20 +589,17 @@ def test_g6_16_persona_scope(cfg, candidate_bin, scratch_home, scratch_env, work
 
 
 def test_g6_17_bundle_layer_precedence(cfg, candidate_bin, scratch_home, scratch_env, rec):
-    """G6-17: the profile cordis.patch.yml wins over the bundle row config."""
-    patch = scratch_home / "patch-title.yml"
-    patch.write_text(
-        "- id: session-title\n"
-        "  config:\n"
-        "    fallbackMaxWords: 9\n"
-        "    fallbackMaxBytes: 99\n"
-        "    maxTitleBytes: 99\n"
-    )
+    """G6-17: the profile cordis.patch.yml wins over the bundle row config.
+
+    Harness fix of record (Gate 6 first run): the first dump auto-inits
+    profiles/headless as the service user (0700), so the executor could not
+    write the patch afterwards (EACCES). Pre-create the dir 0777 instead."""
     profile_patch = scratch_home / "profiles" / "headless" / "cordis.patch.yml"
+    profile_patch.parent.mkdir(parents=True, exist_ok=True)
+    profile_patch.parent.chmod(0o777)
     run1 = run_candidate(cfg, ["--profile", "headless", "--dump-config"],
                          env_extra=scratch_env)
     rec.commands.append(run1)
-    profile_patch.parent.mkdir(parents=True, exist_ok=True)
     profile_patch.write_text(
         "- id: session-title\n"
         "  config:\n"
@@ -503,16 +623,22 @@ def test_g6_17_bundle_layer_precedence(cfg, candidate_bin, scratch_home, scratch
 
 
 def test_g6_18_live_recomposition(cfg, candidate_bin, scratch_home, scratch_env, workspace, rec, web_boot):
-    """G6-18: editing the profile user layer recomposes a long-lived boot (HMR)."""
+    """G6-18: editing the profile user layer recomposes a long-lived boot (HMR).
+
+    Harness fix of record (Gate 6 first run): the profile dir must be
+    service-user writable (boot rewrites the constant cordis.yml anchor) AND
+    executor writable (this test edits the patch) — pre-create 0777."""
     patch = seam_fixture_for(cfg, scratch_home, model_key="coder", max_retries=1)
     profile_patch = scratch_home / "profiles" / "web" / "cordis.patch.yml"
     profile_patch.parent.mkdir(parents=True, exist_ok=True)
+    profile_patch.parent.chmod(0o777)
     profile_patch.write_text("[]\n")
     boot = web_boot(scratch_env, str(workspace), patches=[str(patch)])
     try:
         if not boot.wait_bound(120):
-            rec.finish("FAIL", "web boot binds", "no listener; log: " + boot.boot_log()[-300:])
+            rec.finish("FAIL", "web boot binds", "no listener")
             pytest.fail("web boot did not bind")
+        pid_before = boot.proc.pid if boot.proc else -1
         profile_patch.write_text(
             "- id: session-title\n"
             "  config:\n"
@@ -521,19 +647,43 @@ def test_g6_18_live_recomposition(cfg, candidate_bin, scratch_home, scratch_env,
             "    maxTitleBytes: 111\n"
         )
         time.sleep(6)
+        # The live process must be the same process, still serving (no restart),
+        # and the composition must carry the edited layer.
+        health, _ = boot.http_get("/")
+        pid_after = boot.proc.pid if boot.proc else -2
         dump = run_candidate(cfg, ["--profile", "web", "--dump-config"],
                              env_extra=scratch_env)
         rec.commands.append(dump)
         recomposed = "fallbackMaxWords: 11" in dump.stdout
-        observed = f"bound_port={boot.port}; recomposed_live_layer={recomposed}"
-        ok = recomposed
+        # Negative leg (in-process reaction probe): an invalid value must fail
+        # loud on the refresh path (assertPositiveInteger / schema), never be
+        # silently skipped; the server keeps serving the last-good config.
+        profile_patch.write_text(
+            "- id: session-title\n"
+            "  config:\n"
+            "    fallbackMaxWords: 0\n"
+        )
+        time.sleep(6)
+        health2, _ = boot.http_get("/")
+        profile_patch.write_text("[]\n")
+        observed = (f"bound_port={boot.port}; pid_stable={pid_before == pid_after}; "
+                    f"health_after_edit={health}; health_after_invalid={health2}; "
+                    f"recomposed_layer={recomposed}")
+        ok = recomposed and pid_before == pid_after and health == 200 and health2 == 200
         rec.finish("PASS" if ok else "FAIL",
                    "profile-boot watchUserPatches: user-layer edits recompose a "
-                   "long-lived surface without restart",
-                   observed)
+                   "long-lived surface without restart (hmr.registerConfig → "
+                   "Include entry.update, app-boot/src/index.ts:232-265); same "
+                   "process still serving; the edited layer composes; an invalid "
+                   "layer cannot take the surface down (last-good kept)",
+                   observed,
+                   note="external observables of record: pid stability + serve "
+                        "health across valid and invalid edits + fresh-dump "
+                        "composition; boot log captured (HMR output as-found)")
         assert ok, observed
     finally:
-        boot.stop()
+        boot_log = boot.stop()
+        rec.artifact("g618-boot-log.txt", boot.boot_log()[-8000:])
 
 
 def test_g6_19_mcp_round_trip(cfg, candidate_bin, scratch_home, scratch_env, workspace, rec):

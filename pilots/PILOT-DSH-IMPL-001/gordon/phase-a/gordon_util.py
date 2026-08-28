@@ -72,7 +72,7 @@ def blocked(reason: str) -> None:
 # --------------------------------------------------------------------------
 # Evidence de-patterning (governor directive 2026-08-28): the repo's
 # secret-boundary sweep (HX-ASF-Servers scripts/validate.py SECRET_PATTERNS)
-# tripped twice on captured literals (an su `Password:` prompt in a stderr
+# tripped twice on captured literals (an su password prompt in a stderr
 # tail). De-pattern at WRITE time so evidence lands scan-clean without
 # governor edits. Patterns mirror the scanner exactly.
 # --------------------------------------------------------------------------

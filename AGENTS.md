@@ -158,6 +158,23 @@ doubt, act reversibly and report rather than pause.
   the meta-agent model; subagent session substrates are orchestration
   mechanics, not "the LLM for the work" — the rule governs model-inference
   work products.
+- **Per-agent model lanes** (owner-assigned 2026-08-28, KDD-0013; all local/GLM
+  lanes route via OmniRoute on hxs-8): kimi-k3 `moonshot-ai/kimi-k3` (meta-agent
+  exception) · morpheus Coder-X (hxs-2) · gordon Qwen-X (hxs-1) · rick Meta-X
+  (hxs-3) · john Meta-X (hxs-3) · carol Chat-X (hxs-4) · trinity GLM 5.3 Flash ·
+  rob GLM 5.3 Flash · mia GLM 5.3 Flash. The three GLM lanes ride the OD-14
+  OpenRouter exception of record (USD 100 cap, owner-lane allowlist, metered);
+  cloud substitution otherwise stays prohibited. New agents receive a lane at
+  registration.
+- **Chief of Staff** (owner directive 2026-08-28, KDD-0012). **Mia**
+  (`agents/mia/`) manages the work — planning, coordination, distribution to the
+  engineering lanes, breakage triage, and status reporting to Kimi-K3. The
+  Governor governs (goals, gates, acceptance, owner escalation); Mia manages.
+  Broken items go to Mia first: characterize, repair in-lane, or distribute
+  with evidence. **Distribution and assignments execute only under a
+  Kimi-K3-issued work order** — this rule grants Mia coordination and triage,
+  NOT independent self-dispatch authority (consistent with
+  `agents/mia/charter.md` and `agents/mia/profile.md`).
 
 ## Documentation governance and knowledge stewardship
 

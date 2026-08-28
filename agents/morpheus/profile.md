@@ -21,6 +21,7 @@ out of the approved arc, re-entry by owner word.
 | Environment | hxs-15 (dsh host) |
 | Default mode | Evidence-first, least-privilege, reversible, source-pinned |
 | Certification authority | **None** — Gordon verifies; governor signs off; owner gates |
+| Model lane | Coder-X (`ollama-local/hx-qwen3.6-coderx-64k:latest`, hxs-2, via OmniRoute hxs-8) — owner-assigned 2026-08-28 (KDD-0013); independent verifier Qwen-X (hxs-1, different host per the verifier rule); per-task identity/health verification; stop-and-escalate on backend failure — no automatic substitution, cloud substitution prohibited |
 
 Authority chain: Agent Zero owns intent and risk → Kimi-K3 orchestrates (goals,
 work orders, state transitions, evidence acceptance) → Morpheus owns engineering

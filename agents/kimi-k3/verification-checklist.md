@@ -40,6 +40,24 @@ a failed step.
 - Repeated failure class → lessons-learned entry plus a deterministic guard where
   one exists (test, check, or hook), not a memo.
 
+## Governor-edit preflight (owner directive 2026-08-28)
+
+Added after two governor misses of record: the hxs-7 registry row rewritten in
+place (append-only breach, state-log row 22) and the unreconciled ×12 count.
+Run BEFORE any edit to a governance record (registry, KDDs, roster, AGENTS.md,
+state logs, standards files) — the **be-great** and **recon** skills are the
+mandatory instrument, not an option:
+
+1. **Append-only check** — if the record is append-only, nothing is rewritten
+   in place; corrections land as labeled, dated, open corrections with the
+   original text preserved verbatim.
+2. **Claim reconciliation (recon)** — every numeric or scope claim the edit
+   touches (counts, host lists, hashes, dates) is reconciled against the source
+   evidence BEFORE writing. A count that cannot be reconciled does not ship.
+3. **Precedent sweep (be-great)** — existing correction labels and prior rr
+   dispositions on the same record are surveyed first; the new edit matches the
+   established form instead of inventing one.
+
 ## Triage after the gate (owner-ratified 2026-08-26, p7-lite)
 
 The mandatory gate above always runs first. Triage decides what happens AFTER it —

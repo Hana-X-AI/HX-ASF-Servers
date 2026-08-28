@@ -151,6 +151,8 @@ The headless CLI has no resume entry (Gordon's G4-06(b), BLOCKED-by-design in Ph
 
 Handoff state: **OPEN** — the governor cites on acceptance; defects to Morpheus; retest through Gordon only.
 
+**Pointer (appended 2026-08-28T21:2xZ, post-outage freeze window):** all §9/§10 identities re-verified MATCH on hxs-15, EXCEPT the headless-dump row, which is SUPERSEDED per the OPEN CORRECTION in §13.1 (new value `c88664a8…ded4e`; byte-exact record-artifact explanation in §13.3). Refreshed identities with full hashes: §13.2.
+
 ## 11. Sanitized sequential command log (Phase B window)
 
 All local commands as hxsa@hxs-5; remote as hxsa@hxs-15 (askpass execution-time credential; `sudo -n` on-host). No secret values in any row.
@@ -179,3 +181,81 @@ All local commands as hxsa@hxs-5; remote as hxsa@hxs-15 (askpass execution-time 
 - **Deferred (unchanged):** D2 class; R1 advisory debt; codex/claude-code providers (cloud-tied).
 
 `PASS — PHASE B CANDIDATE ACTIVE; HANDOFF OPEN (Morpheus does not certify own work)`
+
+## 13. Post-outage fresh freeze + headless-dump hash OPEN CORRECTION (2026-08-28T21:2xZ) — labeled, append-only
+
+Work order: KK3 issue 2026-08-28 (state-log row 24; Assignment Packet A via Mia): (1) fresh freeze on hxs-15 against the §9/§10 identity set; (2) explain the headless-dump hash record gap (state-log row 16) with discriminating evidence; (3) record both append-only here. Bounds honored: hxs-15 only; executor hxs-5 as hxsa (askpass lane: 0700 helper reading the governed credential-record row at execution time only, SSH_ASKPASS_REQUIRE=force, StrictHostKeyChecking=yes, sudo -n on-host; helper deleted and verified absent at end); non-mutating to configuration, services, and the tree — the only writes were dsh's own constant profile-root rewrites at `/var/lib/dsh/profiles/*/cordis.yml` (mechanism of record in §13.3-F1; mtimes 21:19:49Z/21:19:50Z) plus transient `/tmp` scratch on both hosts (removed, verified absent). No service was down; nothing mismatched beyond the known headless row, so no stop/escalate condition triggered.
+
+### 13.1 OPEN CORRECTION — §9 row "effective dump — headless profile" (and its §10 reference)
+
+- **Recorded value** `6f52cd6d296098e1c8c0e35df51dc1b737511ddef517113f5184a14ce17fdf39` (§9 and §11 seq 11) is **SUPERSEDED** by **`c88664a83a87f00106b81c8153d273713cc9addbb9b9efd5b13bc19d1b5ded4e`** (full hash, re-baselined this window).
+- **Reason:** invocation/record artifact at §11 seq 11 — the hashed byte stream was the dump's 76-byte stderr warning line merged ahead of its stdout (a `2>&1`-class capture), not the dump alone. Byte-exact proof in §13.3-F3. The dump CONTENT at 15:1x was already the correct Phase B composition — the same stdout bytes that hash `c88664a8` today; only the recorded hash described the wrong stream.
+- The §10 composition row's "headless dump `6f52cd6d…17fdf39`" reference is superseded by the same value.
+- **Original 15:1x capture bytes: unrecoverable** (§11 seq 12 cleanup removed the scratch dumps) — stated plainly per the work order. The explanation is bounded to mechanism + reproduction attempts; the governor's ruling of record (mechanism-level explanation plus labeled re-baseline to the content-verified current dump SUFFICES) is satisfied with margin, because one reproduction landed byte-exact.
+- Nothing else in §9/§10 changes; every other identity re-verified MATCH in the fresh freeze (§13.2).
+
+### 13.2 Fresh freeze (2026-08-28T21:18–21:24Z, hxs-15; hash values are full sha256)
+
+[wording correction 2026-08-28, labeled per the append-only rule: this heading originally read "all values sha256 in full" — only the hash values are full sha256; the table also carries non-hash values (file counts, service states, listeners). Original wording preserved here.]
+
+| Identity | Value | Verdict |
+| --- | --- | --- |
+| `/opt/dsh/package.json` anchor | `4adbdffa373754a048a214c5de3ec0671ac6e1f3c1521ec5b37e8fad1a4986d7` | MATCH |
+| `/opt/dsh/pnpm-lock.yaml` anchor | `6f20c268e76df1294c16f016ab10a7fa1271608b4db0f4fafe8f7c21ec90013e` | MATCH |
+| launcher `/usr/local/bin/dsh` | `0b68259fb4e95869689ef680a781d82bf0b0a95a50ba9bc1a03243b852efcdba` | MATCH |
+| built `/opt/dsh/apps/cli/lib/bin.js` | `c0226687bb20f45c603ec6fe50f3de16d1c3510c3a803304ec575ef9bc366c62` | MATCH |
+| home layer `/var/lib/dsh/cordis.patch.yml` | `d4ac2f191cda7980ee79db45248546e0349015ea392719b1f96a65155b40f83f` | MATCH |
+| hx-standard `agent.cordis.yml` | `56c710375f9b41c44cac8c2cf6e388f09abc5d627f7751a95a382b9e66c89eb0` | MATCH |
+| hx-standard `preset.yml` | `c5b863c84dbb51513d9545a58b3afc6acba236cff1f91587c2699bd2e2084677` | MATCH |
+| frontend dist `/opt/dsh/apps/web/dist` | 114 files | MATCH |
+| client build record `/opt/dsh/.dsh-build/client-build-environment.json` | `7dd6b82094c89bc90452adaac0b641906461d133d2f449db174dd1e5f566ec8f` (214 B) | RECORDED (first full hash of record for this file) |
+| forwarder `/usr/local/libexec/hx-dsh-lan-forward.mjs` | `bb6185660dbdc5bff8762607a5db095ce4d2e538bfe534e26fab29a15d632cd0` | MATCH |
+| `dsh-web.service` | `4e659cd5b0a75f3d88defe87938161417a130d892766bdf21fa45d55554b6c53` | MATCH |
+| `hx-dsh-lan-forward.service` | `c32578526596229763b444790b8bf7690a15112e6a257737c35f5da62db257ca` | MATCH |
+| service state | both units enabled + active; `NRestarts=0` ×2; ActiveEnterTimestamp 2026-08-28T16:34:37Z both (post-boot auto-recovery); 0 failed units host-wide | MATCH |
+| listeners | `127.0.0.1:3080` (dsh) + `192.168.50.214:3080` (forwarder); wildcard `:3080` count 0 | MATCH |
+| sandbox backend | bubblewrap 0.9.0-1ubuntu0.1 (only dpkg add of record); `/usr/bin/bwrap` `52231e1caf55bcbc667b269f49c63599a6f7db4767ae6a039580d0ff853db712`; `/etc/apparmor.d/bwrap` `66de2da55f4e573cfa4d747f836fd2846cd5641f3e3be4ffa19be7732db62819`, loaded (`aa-status` lists `bwrap`) | MATCH |
+| key mechanisms (hashes only — NEVER values) | `/var/lib/dsh/.env` `596ea242e3105f2d49a562dfcf72624c97a112676aec90c51fd46bec521680cc`; `/etc/dsh-omniroute.env` `596ea242e3105f2d49a562dfcf72624c97a112676aec90c51fd46bec521680cc` | MATCH |
+| `dsh --version` | 0.1.1-rc.2 | MATCH |
+| **effective dump — headless profile** | **`c88664a83a87f00106b81c8153d273713cc9addbb9b9efd5b13bc19d1b5ded4e`** — run twice, identical both runs (373 lines) | **RE-BASELINE (supersedes §9 row per §13.1)** |
+| effective dump — web profile | `e5e0e5371bb99cec83ef036795c02ace8a5fcb72e4d055565d5a472de0711b38` — run twice, identical both runs (543 lines) | MATCH |
+| dump idempotency / sensitivity | identical hashes across repeats per profile; identical from `cwd=/`; identical with a bogus `DSH_CLIENT_COMMIT_HASH` set | PROVEN |
+| profile root anchors `/var/lib/dsh/profiles/{headless,web}/cordis.yml` | both `c300dcf2ebc5f02062d6591268d29d3db6fe45e0cb138f5467276fe2ba06076e` — byte-identical to each other (mechanism: §13.3-F1) | MATCH |
+
+Headless-dump content re-verified by me this window (reproducing the governor's row-16 check): diff vs the Phase A evidence dump (`dedda886…d518d34`, held in Gordon's evidence) shows EXACTLY the documented Phase B additions — session-query `path: !!js dshHomePath('session-query.sqlite')` + `openAt: first-search` with its fifth provenance comment, and the `schedule` + `time-context` inserts; `apiKeyEnv: OMNIROUTE_API_KEY` name only; zero secret values.
+
+### 13.3 Hash-gap explanation (mechanism + discriminating evidence)
+
+**F1 — hypothesis (a) "stale composed-profile cache" is ruled out by construction: no composition cache exists in the dump path (source-cited).** `runDumpConfig` (`apps/cli/src/dump-config.ts:30-52`) reads every patch layer fresh at invocation (`loadOptionalPatches`/`loadOverlayPatches` → `readFileSync`). `prepareProfile` (`apps/cli/src/profile-boot.ts:98-103`) REWRITES `profiles/<name>/cordis.yml` with the constant empty-root anchor (`profile-boot.ts:60-64`) on EVERY invocation, dump or boot — the vendored Loader can otherwise bake composed rows into it, and the rewrite is the deliberate guard. `renderConfigDump` (`packages/boot/app-boot/src/index.ts:379-442`) then composes over that constant root and renders; it reads no state besides the layer files. Byte proof: a locally computed sha256 of the source constant equals `c300dcf2ebc5f02062d6591268d29d3db6fe45e0cb138f5467276fe2ba06076e` — exactly the live hash of BOTH profile roots on hxs-15. Their byte-identity to each other is by construction (same constant), not by composition convergence. Refinement of record for state-log row 19: those two files are the constant root anchor rewritten per invocation, not "composed profile caches"; the governor's byte-identity observation stands, the label is corrected.
+
+**F2 — at 15:1x the dump's stdout was already the correct Phase B composition.** The home layer `d4ac2f19…40f83f` was installed at §11 seq 5 (15:0x); the seq-6 web dump (`e5e0e537…71b38`, re-verified byte-identical this window) proves the layer was in effect from 15:0x. With no cache (F1), unchanged render code (`bin.js` `c0226687…366c62`, MATCH), and unchanged layer files (all MATCH), any genuine `dsh --profile headless --dump-config` at 15:1x had to emit exactly the stdout bytes that hash `c88664a8…ded4e` today. The recorded `6f52cd6d…17fdf39` therefore described different BYTES, never a different composition.
+
+**F3 — those bytes are byte-exactly identified: the seq-11 hash was computed over a merged stdout+stderr capture (hypothesis (b), PROVEN).** Since Phase B, every headless dump emits a 76-byte stderr warning BEFORE the stdout write: `dsh: [/var/lib/dsh/cordis.patch.yml] patch: entry "agent-presets" not found` — the home layer's `agent-presets` patch (§4 row 2, `default: hx-standard`) has no target row in the headless composition (that row exists only via the web-app bundle), and `renderConfigDump`'s documented warn path reports unmatched patches during composition, before `process.stdout.write` emits the dump (`app-boot/src/index.ts:424-441`, `dump-config.ts:51`). Reproduction this window: `sha256( <that warning line> + <current canonical dump> )` = **`6f52cd6d296098e1c8c0e35df51dc1b737511ddef517113f5184a14ce17fdf39`** — EXACTLY the recorded §11 seq-11 value. The current dump's own stderr is exactly this one line (76 bytes, verified ×2). So the 15:1x hash measured a `2>&1`-class capture (warning first, dump second), while the content I verified and asserted regression-clean was the stdout — which was then, and is now, the correct Phase B composition.
+
+**F4 — alternatives ruled out with evidence.** `--dump-default-config` (bundle layers only) hashes `a0a0e9f380872097cb7f8b7356f36433a2afeb8de5044a9e63d4ed47b4bee9f5` live — identical to Gordon's Phase A G2-03 evidence file (bundle layers unchanged), ≠ `6f52cd6d`. A home-less scratch-`DSH_HOME` headless dump (fresh template profile layer, no home layer) was predicted and observed to equal the same `a0a0e9f3…` (an empty profile patch layer is render-invisible) and carries the shipped `deepseek-official/deepseek-v4-flash` default model — the discriminator a home-less dump would have shown; it is not the observed composition. Unknown profile names fail loud (`dsh: profile "…" does not exist`), so no wrong-profile dump can exist. Byte transforms of the canonical dump — CRLF `e513e149…653c`, extra trailing newline `db041099…e293`, stripped trailing newline `7d05a3d0…1571`, stderr SUFFIXED `f833484a…03f4` — none matches `6f52cd6d`. Hypothesis (c) dump non-determinism is REFUTED: identical hashes ×2 per profile in my window (and ×2 in the governor's), insensitive to cwd and to the commit-hash env; the dump path does not even load the layered environment (`bin.ts:45-48` never calls `loadLayeredEnv`), so there is no env input to drift.
+
+**F5 — why only the headless row was affected.** The web composition contains the `agent-presets` row (web-app bundle), so the home-layer patch matches, no warning is emitted (0 stderr), and the seq-6 web hash was clean stdout — it matched then and matches now. The headless composition lacks the row, so only headless dumps carry the warning, and only the headless seq-11 hash captured it. **Datum for Gates 6–7:** this warning is benign and upstream-designed (`parsePatchList`: an unmatched patch in a shared overlay "stays a per-entry Loader warning, so one overlay shared across surfaces does not have to match every tree"); it will appear on every headless `--dump-config` stderr until/unless the row is split — recorded so it is not mistaken for a defect, and so future dump hashing always separates stdout from stderr.
+
+**Re-baseline:** the §9 headless-dump identity is re-baselined to `c88664a83a87f00106b81c8153d273713cc9addbb9b9efd5b13bc19d1b5ded4e` — content-verified by the governor (row 16) and re-verified by me (§13.2 diff); idempotent and environment-insensitive (§13.2, F4).
+
+### 13.4 Second Brain disposition (standing directive)
+
+(1) Opportunity identified: none new beyond the Phase A §13 record (session stores + dump discipline as future substrates). (2) The applicable pattern is the existing one: evidence-first receipts with hash identities — this window extended it with a byte-exact artifact explanation. (3) Disposition: deferred as before (Carol frozen by owner directive); the corrected mechanism facts (constant profile-root anchor; unmatched-patch warning on headless dumps) are recorded here for the catalog when Carol unfreezes. (4) Evidence: this section and §13.2–13.3.
+
+### 13.5 Sanitized sequential command log (this window)
+
+All local commands as hxsa@hxs-5; remote as hxsa@hxs-15 (askpass execution-time credential; StrictHostKeyChecking=yes; sudo -n on-host). No secret values in any row; key material touched by hash only.
+
+| Seq | UTC | Where | Command (sanitized) | Exit |
+| ---: | --- | --- | --- | --- |
+| 13 | 21:0x | hxs-5 | Read state log rows 14–24 (full), governor row-16 detail; be-great mechanism survey of the pinned source: `dump-config.ts`, `profile-boot.ts`, app-boot `index.ts`/`profile.ts`, `args.ts`, `bin.ts`; local sha256 of the profile-root constant → `c300dcf2…6076e` (later confirmed live) | 0 |
+| 14 | 21:1x | hxs-5 | Re-verify knowledge-root identities (plan `d9df4ff2…f3d5`, corpus anchors `4adbdffa…4986d7`/`6f20c268…90013e` — all MATCH); hash Gordon evidence dumps (Phase A headless dump = `dedda886…d518d34` confirmed) | 0 |
+| 15 | 21:17 | hxs-5 | Create askpass helper (0700, execution-time credential row read); extraction smoke `\| wc -c` → 10 | 0 |
+| 16 | 21:17 | hxs-15 | SSH + `sudo -n` smoke: hostname hxs-15, SUDO_OK | 0 |
+| 17 | 21:1x | hxs-15 | Fresh freeze reads: all §9/§10 identities, service state (`enabled`/`active`, NRestarts 0 ×2), listeners (LAN+loopback, wildcard count 0), bwrap + AppArmor presence/hashes, key-mechanism hashes only — all MATCH | 0 |
+| 18 | 21:1x | hxs-15 | Dumps ×2 per profile: headless `c88664a8…ded4e` ×2 (373 lines, 5 provenance comments, 76-byte stderr warning), web `e5e0e537…71b38` ×2 (543 lines, 6 comments, 0 stderr); sensitivity re-proofs (cwd=/, bogus commit-hash env → identical); `--dump-default-config` datum `a0a0e9f3…`; profile-root re-hash post-dump (constant, mtimes recorded) | 0 |
+| 19 | 21:2x | hxs-15 | Reproductions: scratch-`DSH_HOME` headless dump = `a0a0e9f3…` (predicted, home-less discriminator confirmed); unknown-profile dump fails loud; byte transforms — stderr-PREFIXED capture = `6f52cd6d…17fdf39` EXACT (record gap explained); CRLF/extra-newline/stripped/stderr-suffixed transforms all ≠ | 0 |
+| 20 | 21:2x | hxs-5/15 | Fetch current dump to hxs-5; diff vs Phase A evidence dump = exactly the documented Phase B additions; zero secret values confirmed; cleanup: remote scratch + repro home + local copy removed (verified absent); profile roots re-verified constant | 0 |
+| 21 | 21:2x | hxs-5 | Askpass helper deleted (verified absent, no residue); write §13 + §10 pointer (append-only); `python3 scripts/validate.py` → 4/4 PASS | 0 |
+
+`PASS — POST-OUTAGE FREEZE COMPLETE; HEADLESS-DUMP ROW CORRECTED OPENLY (append-only); HANDOFF REMAINS OPEN (Morpheus does not certify own work)`

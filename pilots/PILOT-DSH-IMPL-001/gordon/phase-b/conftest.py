@@ -57,6 +57,198 @@ FIXTURES = Path(__file__).resolve().parent / "fixtures"
 
 
 @pytest.fixture(scope="session")
+def candidate_bin(cfg: Cfg) -> Path:
+    """The candidate binary (mirrors phase-a conftest; authoring-gap fix of
+    record 2026-08-28: the Phase B conftest referenced this fixture without
+    defining it — caught at first execution-window collection, fixed here)."""
+    path = Path(cfg.dsh_bin)
+    if not path.exists():
+        found = shutil.which("dsh")
+        if found:
+            return Path(found)
+        blocked(f"candidate binary not at {path} and no `dsh` on PATH (Morpheus handoff pending)")
+    return path
+
+
+def run_as_dsh_argv(cfg: Cfg, argv: list[str], *, env_extra: dict[str, str] | None = None,
+                    cwd: str | None = None, timeout: float = 300.0,
+                    key_mode: str = "with-key"):
+    """Run an arbitrary argv as the service user under the same controlled-env
+    contract as run_candidate (used for node/Python drivers that are not the
+    dsh binary itself: SDK runtimes, ACP drivers). Key by mechanism only."""
+    from gordon_util import RunRecord, _runner_prefix, base_env
+
+    env = base_env(cfg, env_extra)
+    prefix = _runner_prefix(cfg)
+    assignments = [f"{k}={v}" for k, v in sorted(env.items())]
+    wrapper = cfg.wrapper
+    if Path(wrapper).exists():
+        full = prefix + [wrapper, key_mode, *assignments, "--", *argv]
+    else:
+        full = prefix + ["env", "-i", *assignments, *argv]
+    effective_cwd = cwd or "/var/tmp"
+    started = time.monotonic()
+    proc = subprocess.run(full, capture_output=True, text=True,
+                          cwd=effective_cwd, timeout=timeout)
+    return RunRecord(
+        argv=argv,
+        env_names=sorted(env.keys()),
+        cwd=effective_cwd,
+        exit_code=proc.returncode,
+        stdout=proc.stdout,
+        stderr=proc.stderr,
+        duration_s=time.monotonic() - started,
+    )
+
+
+# --------------------------------------------------------------------------
+# Web API client (Morpheus §10 envelope of record): POST /api/<ns.method>
+# {"type":"client-request","rpcId","method","payload"} → server-response;
+# no-envelope GET legs (session.export, WS downlinks).
+# --------------------------------------------------------------------------
+
+class ApiClient:
+    """Minimal wire client for the traced /api envelope (stdlib only)."""
+
+    def __init__(self, port: int, host: str = "127.0.0.1"):
+        self.port = port
+        self.host = host
+        self.base = f"http://{host}:{port}"
+
+    def rpc(self, method: str, payload: dict, timeout: float = 30.0) -> tuple[int, dict]:
+        body = json.dumps({
+            "type": "client-request",
+            "rpcId": f"gordon-{nonce()}",
+            "method": method,
+            "payload": payload,
+        }).encode()
+        req = urllib.request.Request(
+            f"{self.base}/api/{method}", data=body,
+            headers={"Content-Type": "application/json"}, method="POST",
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=timeout) as resp:
+                return resp.status, json.loads(resp.read().decode())
+        except urllib.error.HTTPError as exc:
+            raw = exc.read().decode(errors="replace")
+            try:
+                return exc.code, json.loads(raw)
+            except json.JSONDecodeError:
+                return exc.code, {"_httpError": exc.code, "_body": raw[:500]}
+
+    def get(self, path: str, timeout: float = 30.0) -> tuple[int, bytes, dict]:
+        req = urllib.request.Request(f"{self.base}{path}", method="GET")
+        try:
+            with urllib.request.urlopen(req, timeout=timeout) as resp:
+                return resp.status, resp.read(), dict(resp.headers)
+        except urllib.error.HTTPError as exc:
+            return exc.code, exc.read(), dict(exc.headers)
+
+
+class WsDownlink:
+    """Minimal RFC 6455 client for the /api/events.* downlinks (stdlib only).
+
+    Server→client frames are unmasked; client frames must be masked. Supports
+    text + continuation frames, ping→pong, and close. Bounded reads only.
+    """
+
+    def __init__(self, port: int, path: str, host: str = "127.0.0.1", timeout: float = 60.0):
+        import base64
+
+        self.sock = socket.create_connection((host, port), timeout=timeout)
+        key = base64.b64encode(os.urandom(16)).decode()
+        request = (
+            f"GET {path} HTTP/1.1\r\n"
+            f"Host: {host}:{port}\r\n"
+            "Upgrade: websocket\r\n"
+            "Connection: Upgrade\r\n"
+            f"Sec-WebSocket-Key: {key}\r\n"
+            "Sec-WebSocket-Version: 13\r\n"
+            "\r\n"
+        )
+        self.sock.sendall(request.encode())
+        response = self._read_http_head()
+        self.status = int(response.split(" ", 2)[1]) if " " in response else 0
+        self.head = response
+
+    def _read_exact(self, count: int) -> bytes:
+        buf = b""
+        while len(buf) < count:
+            chunk = self.sock.recv(count - len(buf))
+            if not chunk:
+                raise ConnectionError("downlink closed mid-frame")
+            buf += chunk
+        return buf
+
+    def _read_http_head(self) -> str:
+        buf = b""
+        while b"\r\n\r\n" not in buf:
+            chunk = self.sock.recv(1)
+            if not chunk:
+                break
+            buf += chunk
+            if len(buf) > 16384:
+                break
+        return buf.decode(errors="replace")
+
+    def read_message(self, timeout: float = 60.0) -> dict | None:
+        """Read one complete text message as JSON; None on close frame."""
+        self.sock.settimeout(timeout)
+        payload = b""
+        while True:
+            head = self._read_exact(2)
+            fin = head[0] & 0x80
+            opcode = head[0] & 0x0F
+            length = head[1] & 0x7F
+            if length == 126:
+                length = int.from_bytes(self._read_exact(2), "big")
+            elif length == 127:
+                length = int.from_bytes(self._read_exact(8), "big")
+            mask = head[1] & 0x80
+            mask_key = self._read_exact(4) if mask else b""
+            data = bytearray(self._read_exact(length))
+            if mask:
+                for i in range(length):
+                    data[i] ^= mask_key[i % 4]
+            if opcode == 0x8:
+                return None
+            if opcode == 0x9:  # ping → pong
+                pong = bytearray([0x8A, 0x80 | len(data)])
+                pong_key = os.urandom(4)
+                pong.extend(pong_key)
+                pong.extend(b ^ pong_key[i % 4] for i, b in enumerate(data))
+                self.sock.sendall(bytes(pong))
+                continue
+            if opcode in (0x1, 0x0):
+                payload += bytes(data)
+                if fin:
+                    return json.loads(payload.decode())
+
+    def collect_until(self, predicate, timeout_s: float = 300.0,
+                      max_frames: int = 2000) -> list[dict]:
+        """Collect decoded frames until predicate(frame) or the bound elapses."""
+        frames: list[dict] = []
+        deadline = time.monotonic() + timeout_s
+        while time.monotonic() < deadline and len(frames) < max_frames:
+            try:
+                frame = self.read_message(timeout=max(1.0, deadline - time.monotonic()))
+            except (TimeoutError, socket.timeout, ConnectionError, json.JSONDecodeError):
+                break
+            if frame is None:
+                break
+            frames.append(frame)
+            if predicate(frame):
+                break
+        return frames
+
+    def close(self) -> None:
+        try:
+            self.sock.close()
+        except OSError:
+            pass
+
+
+@pytest.fixture(scope="session")
 def cfg() -> Cfg:
     return Cfg.from_env()
 

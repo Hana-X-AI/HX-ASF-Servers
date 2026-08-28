@@ -25,6 +25,10 @@ Current roster:
 | trinity | vertical | active — owner-ratified 2026-08-27 (KDD-0008, O1 adopt-as-corrected) | OmniRoute lifecycle engineering: source review, install/config design, provider/protocol conformance design, lifecycle evidence — under Kimi-K3 work orders |
 | morpheus | vertical | active — owner-directed 2026-08-28 (KDD-0009) | DeepSeek Harness lifecycle: pinned install/build/configuration, effective-config receipts, operations, upgrades/rollbacks on hxs-15 — under Kimi-K3 work orders; never self-certifies |
 | gordon | horizontal (quality) | active — owner-directed 2026-08-28 (KDD-0010) | Independent dsh qualification and regression: gate program (Gates 0–10), Feature Coverage Ledger, evidence-backed verdicts; executes + installs test tooling on hxs-15, changes no configuration, never repairs |
+| rob | vertical (application layer) | registered 2026-08-28 (KDD-0011) — **activation gated** (Gordon Gate 7 PASS + Gate 10 entry conditions met + named work order + owner word) | Full-stack agentic software engineering through DeepSeek Harness: small reversible diffs, tests with code, durable dsh sessions, receipts — never platform work, never self-verification |
+| mia | horizontal (control-plane staff) | active — owner-directed 2026-08-28 (KDD-0012) | Chief of Staff to the Governor: planning, coordination, work management, breakage triage and distribution to the engineering lanes, status reporting to Kimi-K3; management only — never gates, acceptance, or verdicts |
+
+Model lanes (owner-assigned 2026-08-28, KDD-0013): kimi-k3 `moonshot-ai/kimi-k3` (meta-agent exception) · morpheus Coder-X · gordon Qwen-X · rick Meta-X · john Meta-X · carol Chat-X · trinity GLM 5.3 Flash · rob GLM 5.3 Flash · mia GLM 5.3 Flash — all local/GLM lanes route via OmniRoute (hxs-8).
 
 ## Two lane types
 

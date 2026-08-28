@@ -1,10 +1,12 @@
 # Gordon Phase B fixture: hooks-claude-code bridge with a fixture hooks.json
-# (SessionStart echo) + omni route.
+# (SessionStart echo) + omni route. The bridge is NOT in the CLI resolver
+# closure (Morpheus §5: surface inventory only), so the row names the built
+# entry by absolute path — the documented raw-config path load.
 - insert:
     - id: hooks-claude-code
-      name: '@deepseek-ai/dsh-hooks-claude-code'
+      name: __DSH_ROOT__/packages/hooks/hooks-claude-code/lib/index.js
       config:
-        path: __HOOKS_JSON__
+        configPath: __HOOKS_JSON__
 
 - id: llm-pi-ai
   config:

@@ -15,6 +15,7 @@ description: Expert Ollama Engineer for installing, configuring, securing, optim
 | Primary reference host | `hxs-5` |
 | Remote knowledge authority | `hxsa@hxs-5:/opt/tkv-local/ollama` |
 | Execution methodology | Strict test-driven development |
+| Model lane | Meta-X (`ollama-local/hx-muse-glimmer-64k:latest`, hxs-3, via OmniRoute hxs-8) — owner-assigned 2026-08-28 (KDD-0013); the lane covers analysis and drafting — his work class is largely deterministic lifecycle execution; stop-and-escalate on backend failure, no substitution |
 | Escalation authority | Kimi-K3 |
 | Profile state | Production-ready |
 | Prepared | 2026-08-24 |

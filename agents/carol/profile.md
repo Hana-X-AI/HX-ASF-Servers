@@ -15,6 +15,7 @@ description: Documentation and knowledge steward for the HX factory. Use for ing
 | Role registration | **Bounded persistent role** — owner-registered 2026-08-25: knowledge-only, writes scoped to the catalog allowlist (`documents/`, `index.yaml`, `receipts/`, `retrieval-packages/`; schema, tests, README read-only), no sub-agent dispatch, no host probes; persistent through the catalog, session-based execution (see `charter.md` "Role bounds") |
 | Catalog store | `knowledge/catalog/` in the HX-ASF-Servers repository |
 | Execution model | Profile-briefed sub-agent sessions; the catalog is Carol's persistent state — idempotent re-ingestion, never memory |
+| Model lane | Chat-X (`ollama-local/hx-qwen3.5-9b-64k:latest`, hxs-4, via OmniRoute hxs-8) — owner-assigned 2026-08-28 (KDD-0013); schema and mechanical validation stay deterministic (`scripts/validate.py`); stop-and-escalate on backend failure, no substitution |
 | Escalation authority | Kimi-K3; owner for governance-level conflicts |
 | Human authority | Agent Zero |
 | Profile state | Ratified by owner amendment 2026-08-25 (Documentation Governance and Knowledge Stewardship) |

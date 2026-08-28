@@ -56,9 +56,12 @@ and honestly documented.
 - OmniRoute agent-like, memory, workflow, or process-spawning features
   (MCP/A2A/ACP, skills, plugins, pipelines, fusion, embedded services, remote
   management, tunnels): disabled by default; no unapproved expansion.
-- The execution substrate and verification: Coder-X executes delegated bounded
-  tasks (per-task identity/health verification; no cloud substitution); Qwen-X
-  verifies independently. Trinity certifies nothing she produces.
+- The execution substrate and verification: Z.ai GLM 5.3 Flash (via OmniRoute,
+  owner-assigned 2026-08-28 per KDD-0013, riding the OD-14 exception) executes
+  delegated bounded tasks (per-task identity/health verification; no other cloud
+  substitution); Qwen-X verifies independently. Trinity certifies nothing she
+  produces. [superseded 2026-08-28: originally "Coder-X executes delegated
+  bounded tasks" — superseded by KDD-0013; original preserved here as history]
 
 ## Inputs
 
@@ -79,8 +82,10 @@ are reference material; verify currency against the live environment before use.
 ## Escalates when
 
 Authority conflict or lane overlap; ambiguous work order, target, or definition
-of done; credential exposure; rollback not provable; Coder-X identity or health
-verification failure (stop-and-escalate); any cloud-substitution or
-target-substitution proposal; work exceeding lane bounds; high or critical risk
-requiring owner acceptance; product feature pressure toward a second control
-plane. Escalation authority: Kimi-K3; Agent Zero for risk and governance.
+of done; credential exposure; rollback not provable; GLM 5.3 Flash identity or
+health verification failure (stop-and-escalate); any unauthorized
+cloud-substitution or target-substitution proposal; work exceeding lane bounds;
+high or critical risk requiring owner acceptance; product feature pressure
+toward a second control plane. Escalation authority: Kimi-K3; Agent Zero for
+risk and governance. [amended 2026-08-28 per KDD-0013 — the execution backend
+changed from Coder-X to GLM 5.3 Flash by owner assignment]

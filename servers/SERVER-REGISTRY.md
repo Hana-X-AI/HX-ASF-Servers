@@ -72,6 +72,15 @@ COMPLETE    - consolidation is complete and verified
 | hxs-20 | hxs-20.hx.local.arpa | 192.168.50.220 | Intel Core i5-7500, 4c/4t | 32 GB DDR4 non-ECC (2×16 GB Samsung @2400, first live reading 2026-08-28) | none recorded (owner-supplied discovery carries no GPU evidence) | 238.5 GB NVMe root, sole device | COMPLETE (first live inventory 2026-08-28) | MCP services (replaces hxs-7 per owner advisory 2026-08-27) | FastMCP runtime + custom HX MCP servers (target) | READY (baseline-green 2026-08-28) |
 | hxs-21 | hxs-21.hx.local.arpa | 192.168.50.21 | Intel Core i5-7500, 4c/4t | 32 GB DDR4 non-ECC (2×16 GB Hynix @2400, mixed revisions, first live reading 2026-08-28) | none recorded (owner-supplied discovery carries no GPU evidence) | 238.5 GB NVMe root, sole device | COMPLETE (first live inventory 2026-08-28) | Standby — designated future control-plane machine (owner advisory 2026-08-27: eventually replaces the hxs-5 machine) | none assigned yet | READY (baseline-green 2026-08-28) |
 
+**Open correction — hxs-7 decommission (2026-08-28, labeled per the append-only
+governance rule).** Owner disposition 2026-08-28: "there is no 7 any longer."
+Effective 2026-08-28, hxs-7 is **DECOMMISSIONED**: no DNS record (FQDN
+NXDOMAIN), no route to host; the MCP-services role recorded in its row above
+was already replaced by hxs-20 (owner advisory 2026-08-27; ONLINE 2026-08-28,
+baseline-green). The row above is preserved unchanged as the as-found and
+as-assigned record; THIS correction is the operative lifecycle state. Fleet
+active count: 16.
+
 ## Role assignment record — historical
 
 Roles were assigned by the project owner on 2026-08-13, ratifying the mapping in
@@ -99,8 +108,24 @@ Phase 1 (discovery): COMPLETE, verified 2026-08-13 — 15 of 15 records accepted
 (historical baseline scope: the original fifteen-server fleet). Current registry:
 **17 rows accepted** — hxs-20 and hxs-21 added 2026-08-28 after rick's first live
 inventory (baseline-green; their discovery records cataloged as DOC-hxs20-discovery
-and DOC-hxs21-discovery).
+and DOC-hxs21-discovery). [Correction appended 2026-08-28, labeled: of the 17
+accepted rows, hxs-7 is DECOMMISSIONED per the open correction above — **16
+active rows**; the accepted-row count is preserved as acceptance history.]
 Phase 2 (consolidation): READY.
+
+## Verification — 2026-08-28 (DISCOVERED, post-outage FQDN census)
+
+Checked from hxs-5 (192.168.50.204) after the 2026-08-28 power event and the
+owner's router DNS loader re-run:
+
+- FQDN: 16 names resolve via 192.168.50.1 — hxs-1..6, hxs-8..15, hxs-20
+  (.220), hxs-21 (.21). **hxs-7 has no record (NXDOMAIN)** — consistent with
+  decommission.
+- Ping: all 16 registered hosts respond. One live UNREGISTERED address:
+  **192.168.50.10** — no DNS record (forward or reverse), TCP 22/80/443
+  closed; unidentified device, reported for owner identification, not probed
+  further.
+- Total fleet count of record: **16 active servers**.
 
 ## Verification — 2026-08-24 (DISCOVERED)
 
