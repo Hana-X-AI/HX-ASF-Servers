@@ -88,7 +88,7 @@ owner_decisions:
 
 layer_map:
   - {layer: 0, name: Foundation, state: COMPLETE (KK3 gate decision PASS 2026-08-27T10:58Z — 19-kk3-gate-decision.md), exit: owner review + explicit L1 authorization (OD-12 — still required)}
-  - {layer: 1, name: Secure Core Gateway, entry: OD-12 + OD-03 + Node present, gate: direct/routed parity, restart, backup, rollback}
+  - {layer: 1, name: Secure Core Gateway, entry: OD-12 + OD-03 + Node present, gate: direct/routed parity, restart, backup, rollback, state: COMPLETE (owner ACCEPT 2026-08-28 — 05-trinity-l1-gate.md), exit: owner review + explicit L2 authorization (not granted — Layer-2+ stays frozen)}
   - {layer: 2, name: Governed Routing & Resilience, entry: layer_1 gate, gate: failure matrix + route policy pass}
   - {layer: 3, name: Intelligence Quality & Modalities, entry: layer_2 gate + OD-10, gate: quality delta + data-boundary gates}
   - {layer: 4, name: Agent & Ecosystem Integration, entry: layer_3 gate, note: collision class — most surfaces stay disabled or blocked by design, gate: ledger collision table closed entry-by-entry}

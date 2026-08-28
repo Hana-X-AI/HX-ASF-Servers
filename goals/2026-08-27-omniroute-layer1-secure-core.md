@@ -2,7 +2,7 @@
 
 - Goal ID: 2026-08-27-omniroute-layer1-secure-core (this file's name)
 - Version: 1
-- Status: in-progress — M0 authorized 2026-08-27 (OD-12 owner-authorized; OD-03 acknowledged)
+- Status: COMPLETE 2026-08-28 — owner ACCEPT verdict on the L1-M3 gate (05-trinity-l1-gate.md); L2 authorization not granted — Layer-2+ work stays frozen
 - Owner: Agent Zero
 - Created: 2026-08-27
 - Human authority: Agent Zero
