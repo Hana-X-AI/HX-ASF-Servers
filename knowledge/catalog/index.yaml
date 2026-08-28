@@ -4,8 +4,8 @@
 index:
   schema_version: 1
   initialized: 2026-08-25 (Carol instantiation, owner amendment)
-  updated: "2026-08-28T0058Z (T-standard run — batch-10-followup wave (provenance: OmniRoute pilot state log rows 50-51, 2026-08-28T00:26Z/00:41Z — row 50 rr batch-10 disposition (drop-in HARDENED live to 0600 root:root, bind = pre-gate task, 2 verified skips, 5 catalog items QUEUED to this wave); row 51 dispositions-closing receipt cited (293) + this wave dispatched; carry-forward: receipt 2026-08-28T0037Z-carol-dispositions-closing.md + validate.py 4/4 PASS at 00:37Z): 0 added, 6 updated (DOC-pilot-omniroute-control-manifest — declared_purpose 'six allowed states' -> SEVEN with the enum spelled out (stale wording labeled; source unchanged 493b32e7… re-verified); DOC-pilot-omniroute-decision-19-kk3-gate — declared_purpose item (3) copilot-driver membership labeled HISTORICAL wrong-member (AVAILABLE-DISABLED; BLOCKED = CAP-P7-036/037/038/048/049/051 + CAP-P8-037/045; '8 BLOCKED entries' + carried_conditions stand; source unchanged 5cf0c005… re-verified); DOC-pilot-omniroute-wo-09-trinity-install — rr47 entry fixed twice: the invalid '23:4xZ' timestamp -> exact 2026-08-27T23:40Z (per the wave's freshness line + validated_at), and the 0640 treatment -> least-privilege APPLIED IN FACT (hardened live to 0600 root:root 2026-08-28T00:11Z, content sha256 05638010… unchanged, no restart, NO residual exception — the WO's own addenda record it); re-hash 9da37eeb… -> 2e04e2a3…; receipt 2026-08-27T2104Z-carol-baseline-wave.md — second labeled erratum appended: the preserved Index summary '5 added, 10 updated' -> '5 added, 9 updated' per the first erratum (preserved text + both addenda stand); DOC-pilot-omniroute-cp-12-trinity-gate — re-hash eeae2d63… -> 01f88ab4…: the bind note amended — bind-to-IP is now a PRE-GATE TASK inside the gate WO (apply during the gate's restart sequence, post-bind verification in the acceptance package; the owner-lane-queue framing superseded, labeled); DOC-pilot-omniroute-state-log advanced rows 1-50 -> 1-51 (73b97faa… -> db5ef95f… — row 51: closing receipt cited + this wave dispatched; F-2 the owner dispositions document lives in agent-zero-docs, F-3 the backup-encryption-wrapper the one remaining owner-open decision); count 293 unchanged)"
-  document_count: 293
+  updated: "2026-08-28T0225Z (T-micro run — discovery-mints wave (provenance: OmniRoute pilot state log row 57, 2026-08-28T02:12Z — rick-3host receipt cited (296), batch-11 fully cataloged, THIS micro-wave dispatched: mint the two owner-supplied discovery files (the rick-3host receipt's F-1) + the log to rows 1-57, then the batch-11 commit per row 54; carry-forward: receipt 2026-08-28T0206Z-carol-rick-3host-wave.md + validate.py 4/4 PASS at 02:06Z): 2 added (DOC-hxs20-discovery + DOC-hxs21-discovery — discovery, adopted, historical-as-found — the two owner-supplied interactive-evidence discovery files (status IN PROGRESS; hardware fields largely 'unavailable from supplied evidence' — SUPERSEDED IN FACT by rick's 2026-08-28 first live inventory, cross-referenced to DOC-fleet-baseline-hxs11-20-21-2026-08-28 and the new pre-work records; the .220 / .21 addressing pattern-break per the registry note; hxs-21's 44-updates capture likewise superseded in fact (0 live post-reboot, mechanism not established)), 1 updated (DOC-pilot-omniroute-state-log advanced rows 1-56 -> 1-57 (91cc8b3f… -> fe12331b… — row 57: batch-11 fully cataloged, the discovery mints + commit next, the owner-lane roll-up at the mark (SB set hxs-6/7/11/21 record-only, hx-20 rename + .21 placement network decisions, hxs-21 update mechanism, the row-52 items))); count 296 -> 298)"
+  document_count: 298
   documents:
   - id: DOC-a01-origin-codex-20260824-2125
     title: codex_20260824_2125_hx-1-ollama-pilot-qwen3.8-amendment.md — original source of Amendment A01 (agent-zero-docs)
@@ -175,6 +175,12 @@ index:
     authority_level: agent-evidence
     freshness: current
     canonical_location: /home/hxsa/opt/local-tkv/agent-zero-docs/tool-belt/codex_20260825_2207_hx-asf-servers-read-only-project-capability-assessment.md
+  - id: DOC-fleet-baseline-hxs11-20-21-2026-08-28
+    title: "servers/2026-08-28-fleet-baseline-hxs11-20-21.md — rick three-host baseline wave (PASS — TASK COMPLETE: 3/3 hosts carry verdicts — hxs-11 PASS post-maintenance, hxs-20 REPORT at .220/hostname hx-20, hxs-21 REPORT at .21 — both REPORTs close via the governor's registry/standard updates; Etc/UTC ×3, one NTP source ×3 fleet-identical conf sha256 e2b94d4b…, proven 4-target mask set ×3; SB ENABLED on hxs-11 + hxs-21 owner-lane record-only; TOFU-with-corroboration pins recorded for the two new hosts)"
+    type: evidence
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/servers/2026-08-28-fleet-baseline-hxs11-20-21.md
   - id: DOC-fleet-baseline-wave-2026-08-27
     title: "servers/2026-08-27-fleet-baseline-wave.md — rick fleet baseline wave (PASS — TASK COMPLETE: 12/12 in-scope hosts carry verdicts — 10 PASS, 2 REPORT with declared closing directions, 0 FAIL; one timezone Etc/UTC ×12, one NTP source ×12 — timesyncd.conf sha256 e2b94d4b… byte-identical ×12, NTPSynchronized ×12; proven 4-target sleep-mask set ×12; mutations only the two sanctioned classes — NTP pin ×7, mask align ×8, canary-first; selftest 42/42 at both gates; zero secret values)"
     type: evidence
@@ -289,6 +295,18 @@ index:
     authority_level: owner-directive
     freshness: current
     canonical_location: /home/hxsa/opt/local-tkv/agent-zero-docs/pilots/hxs-3/meta/codex_20260825_2332_hxs-3-muse-glimmer-30b-tooling-pilot-and-deepseek-harness-registration.md
+  - id: DOC-hxs20-discovery
+    title: "servers/hxs-20/discovery.md — hxs-20 discovery (owner-supplied interactive evidence 2026-08-28, status IN PROGRESS; hardware fields largely unavailable from supplied evidence — superseded in fact by rick's 2026-08-28 first live inventory; live at .220 with hostname hx-20)"
+    type: discovery
+    authority_level: historical-as-found
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/servers/hxs-20/discovery.md
+  - id: DOC-hxs21-discovery
+    title: "servers/hxs-21/discovery.md — hxs-21 discovery (owner-supplied interactive evidence 2026-08-28, status IN PROGRESS; hardware fields largely unavailable from supplied evidence — superseded in fact by rick's 2026-08-28 first live inventory; live at .21 outside the fleet block; 44 updates recorded at capture)"
+    type: discovery
+    authority_level: historical-as-found
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/servers/hxs-21/discovery.md
   - id: DOC-hxs8-discovery-repo
     title: "servers/hxs-8/discovery.md — hxs-8 discovery, REPO maintained copy (2026-08-12 baseline entries + labeled 2026-08-27 addenda: post-upgrade memory 46 GiB visible — 32 GB Samsung + 16 GB Micron DDR4 SODIMMs both channels, 2666 MT/s configured, non-ECC; the living hxs-8 host record)"
     type: discovery
@@ -1052,7 +1070,7 @@ index:
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/07-source-provenance-receipt.md
   - id: DOC-pilot-omniroute-state-log
-    title: PILOT-OMNIROUTE-LAYER0-001 01-state-log.md — governor state-transition log (rows 1–51 at re-validation)
+    title: PILOT-OMNIROUTE-LAYER0-001 01-state-log.md — governor state-transition log (rows 1–57 at re-validation)
     type: other
     authority_level: agent-evidence
     freshness: current
@@ -1511,7 +1529,7 @@ index:
     title: /opt/tkv-local/servers/hxs-11/pre-work-results.md — hxs-11 pre work results (pre-discovery preparation (2026-08, Phase 1))
     type: pre-work
     authority_level: historical-as-found
-    freshness: historical
+    freshness: current
     canonical_location: /opt/tkv-local/servers/hxs-11/pre-work-results.md
   - id: DOC-tkv-hxs12-discovery
     title: /opt/tkv-local/servers/hxs-12/discovery.md — hxs-12 discovery (Discovery date 2026-08-12)
@@ -1579,6 +1597,18 @@ index:
     authority_level: historical-as-found
     freshness: historical
     canonical_location: /opt/tkv-local/servers/hxs-2/pre-work-results.md
+  - id: DOC-tkv-hxs20-pre-work-results
+    title: "/opt/tkv-local/servers/hxs-20/pre-work-results.md — hxs-20 pre-work results (agent re-verification 2026-08-28: first-live machine-id + TOFU D-record fingerprint; REPORT — baseline green; live at .220 with hostname hx-20)"
+    type: pre-work
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /opt/tkv-local/servers/hxs-20/pre-work-results.md
+  - id: DOC-tkv-hxs21-pre-work-results
+    title: "/opt/tkv-local/servers/hxs-21/pre-work-results.md — hxs-21 pre-work results (agent re-verification 2026-08-28: first-live machine-id + TOFU D-record fingerprint; REPORT — baseline green; live at .21 outside the fleet block; Secure Boot ENABLED record-only)"
+    type: pre-work
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /opt/tkv-local/servers/hxs-21/pre-work-results.md
   - id: DOC-tkv-hxs3-discovery
     title: /opt/tkv-local/servers/hxs-3/discovery.md — hxs-3 discovery (Discovery date 2026-08-12)
     type: discovery

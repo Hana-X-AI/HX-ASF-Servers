@@ -38,6 +38,8 @@ host_classes:
   hxs-13: server-default
   hxs-14: server-default
   hxs-15: server-default
+  hxs-20: server-default
+  hxs-21: server-default
 
 rules:
   # llm-host — the proven LLM-server posture (fleet pass 2026-08-26 + hxs-4
@@ -122,6 +124,11 @@ rules:
   # NTP + the 4-target mask set are therefore enforce on this class now.
   # Secure Boot and firewall stay report-only by absence of rules (hxs-6 SB
   # ENABLED is an owner-pending BIOS decision).
+  # AMENDED 2026-08-28 (rick's hxs-11/20/21 wave): hxs-20 + hxs-21 added to
+  # server-default (both baseline-green at 01:16-01:17Z). hxs-11 was ALREADY
+  # declared here (the governor's WO wrongly said all three were absent — rick's
+  # F-2 corrected it; open note). hxs-20 lives at .220 (hostname hx-20) and
+  # hxs-21 at .21 — the .199+N pattern does NOT hold for these two.
   - class: server-default
     path: time.timezone
     op: eq

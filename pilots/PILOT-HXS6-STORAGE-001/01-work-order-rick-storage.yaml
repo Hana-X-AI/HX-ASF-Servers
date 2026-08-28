@@ -17,13 +17,13 @@ phase_1_verification_read_only:
   - identity: hostname, peer IP, machine-id vs servers/hxs-6/discovery.md
   - device map: lsblk -o NAME,SIZE,TYPE,FSTYPE,LABEL,UUID,MOUNTPOINT; nvme list; blkid; pvs/vgs/lvs -o +devices; findmnt / (prove the LIVE root's source device)
   - PROVE: the active root filesystem is NOT on ubuntu-vg/ubuntu-lv (if it IS, STOP — the disposition cannot apply; escalate to owner with evidence)
-  - signatures on nvme1n1: partition table, filesystems, LVM metadata; any user data (read-only scan: file count, top-level names, newest mtime — no content reads beyond directory listing)
+  - "signatures on nvme1n1: partition table, filesystems, LVM metadata; any user data (read-only scan: file count, top-level names, newest mtime — no content reads beyond directory listing)"
   - verdict: RETAINABLE-DATA-FOUND (stop, escalate) or CLEAR-TO-REFORMAT
   - evidence doc: servers/hxs-6/2026-08-28-storage-device-map.md
 
 governor_gate:
-  - governor reviews the device map against the two proofs (root-not-on-LVM; zero retainable data)
-  - only then authorizes phase 2, citing owner disposition #4
+  - "two recorded approvals are REQUIRED before phase 2 is released, both appended to the pilot state log: (1) the OWNER's explicit GO for the destructive phase (owner disposition 2026-08-27 #4 authorizes the operation's preparation and intent; it is not by itself the release), and (2) the GOVERNOR's approval after reviewing rick's phase-1 device map against the two proofs (root-not-on-LVM; zero retainable data)"
+  - "the state-log entry releasing phase 2 must cite BOTH: the owner's GO (timestamp + words) and the governor's gate approval (device-map evidence reference); without both, phase 2 stays locked"
 
 phase_2_execution_gated:
   - deactivate and remove the stale LVM stack (lvchange -an ubuntu-vg; lvremove ubuntu-vg/ubuntu-lv; vgremove ubuntu-vg; pvremove the PV) — ONLY after the phase-1 proof

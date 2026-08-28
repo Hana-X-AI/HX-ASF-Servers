@@ -2,7 +2,7 @@ document:
   id: "DOC-tkv-hxs11-pre-work-results"
   title: "/opt/tkv-local/servers/hxs-11/pre-work-results.md — hxs-11 pre work results (pre-discovery preparation (2026-08, Phase 1))"
   type: "pre-work"
-  declared_purpose: "Human preparation record for hxs-11 completed before discovery ran: summary block (server hxs-11, IP 192.168.50.210, FQDN hxs-11.hx.local.arpa, admin account hxsa) followed by verbatim-preserved raw terminal evidence (declared hardware and pre-discovery checks); only the summary was added."
+  declared_purpose: "Human preparation record for hxs-11 completed before discovery ran: summary block (server hxs-11, IP 192.168.50.210, FQDN hxs-11.hx.local.arpa, admin account hxsa) followed by verbatim-preserved raw terminal evidence (declared hardware and pre-discovery checks); only the summary was added. REFRESHED 2026-08-28 (first refresh-by-prepend): rick's fleet baseline wave re-verification section (session rick-fleet-baseline-20260828-01 — full baseline with the two sanctioned mutation classes; verdict REPORT — baseline green with Secure Boot ENABLED recorded) prepended on top; the original 2026-08 preparation record and its owner-console host-key fingerprint record preserved verbatim below the marker."
   source:
     author: "HX project (Claude Code era); collected read-only over SSH / human preparation record"
     provided_by: "Agent Zero"
@@ -17,7 +17,7 @@ document:
     agents: []
     repositories: [tkv-local]
     environments: [fleet]
-  version: "pre-discovery preparation (2026-08, Phase 1)"
+  version: "pre-discovery preparation (2026-08, Phase 1) + agent re-verification 2026-08-28 (rick, fleet baseline wave)"
   status: "historical"
   authority_level: "historical-as-found"
   supersedes: []
@@ -34,8 +34,10 @@ document:
       target: "DOC-tkv-server-registry"
       note: "fleet registry row for hxs-11"
   validation:
-    validated_at: "2026-08-25T05:55:00Z"
-    freshness: "historical"
-    review_due: "historical record — no review cycle; cross-check before any operational use"
-  sha256: "1358c6b3a78383ec5091cd802b3e6ca905f2961dd85b98f84badb000f8dae668"
+    validated_at: "2026-08-28T01:36:00Z"
+    freshness: "current"
+    review_due: "on the next fleet pre-work or per-host pass; the below-marker original stays historical-as-found"
+  sha256: "1c8356e12417a1bafe6b8248f2f78275800739ca00aa477fb080034472319d25"
   canonical_location: "/opt/tkv-local/servers/hxs-11/pre-work-results.md"
+notes:
+  refresh_20260828: "FIRST REFRESH-BY-PREPEND recorded this run (provenance: OmniRoute state log rows 54-56; deliverable cataloged THIS wave as DOC-fleet-baseline-hxs11-20-21-2026-08-28; the host returned from owner-flagged maintenance — the 2026-08-27 pre-work remainder pass had skipped it as unreachable). Rick's 2026-08-28 fleet baseline wave re-verification section sits on top (session rick-fleet-baseline-20260828-01): verdict REPORT — baseline green (host-key ceremony PINNED-NEW-VERIFIED 01:13Z — no prior pin existed on hxs-5, the live ED25519 fingerprint EXACTLY MATCHED the owner pre-work console record preserved in this file below (SHA256:l/PvbuOeocV2GGUscDKS/VuyGZGfOgu2FKhdavZimUo; the first strict-check failure kept as evidence); live hostname + machine-id 159714e4… + eno1 .210 MATCH the 2026-08-12 discovery; uptime since 00:43:32Z consistent with the owner's maintenance completion; passwordless sudo live; DIMM topology 2×16 GB Samsung MATCH discovery; Secure Boot ENABLED — RECORDED ONLY, same class as hxs-6 (owner flag; BIOS is an owner decision, NOT changed); failed units 0; 5 upgradable packages (owner maintenance lane); ollama absent; ufw ENABLED=no; NTP pinned 01:15:38Z + masks ALIGNED 01:15:39Z (the two sanctioned classes); post-apply 8 PASS 0 FAIL vs the OFFICIAL fleet-standard.yaml — hxs-11 IS declared server-default there (the wave WO's 'all three hosts absent' was wrong for hxs-11; rick's F-2 recorded it; the governor's standard amendment note carries the open correction). Drift notes vs discovery: NONE beyond the Secure Boot item — identity, memory, single NVMe, no-GPU all MATCH. Freshness historical -> current: the top layer is a current verified live-state assessment (agent-evidence); the below-marker 2026-08 original keeps its historical-as-found truth state (status/authority unchanged — the pre-work record class is anchored by the preserved original). Re-hash 1358c6b3… -> 1c8356e1… (the prepend is the only delta; original preserved verbatim below the marker; the owner-console fingerprint in the original is PUBLIC host-key material, not a credential secret — contains_secret_values false, profile §6)."

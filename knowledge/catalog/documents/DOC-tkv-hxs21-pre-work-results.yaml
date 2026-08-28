@@ -1,0 +1,60 @@
+document:
+  id: "DOC-tkv-hxs21-pre-work-results"
+  title: "/opt/tkv-local/servers/hxs-21/pre-work-results.md — hxs-21 pre-work results (agent re-verification 2026-08-28: first-live machine-id + TOFU D-record fingerprint; REPORT — baseline green; live at .21 outside the fleet block; Secure Boot ENABLED record-only)"
+  type: "pre-work"
+  declared_purpose: "First agent re-verification record for hxs-21 (file created 2026-08-28 by rick's fleet baseline wave, session rick-fleet-baseline-20260828-01 — NO human pre-discovery preparation record exists for this host; the file opens with the agent re-verification section): verdict REPORT — baseline green (8/8 PASS post-change vs the server-default rules) with addressing drift + Secure Boot ENABLED recorded (owner/governor close them). Addressing (FACT, supersedes the work-order IP, both values kept): the WO carried hxs-21 = 192.168.50.220 per the fleet .199+N pattern; live — .220 answers as hx-20 (hxs-20); the owner-supplied servers/hxs-21/discovery.md records eno1 = 192.168.50.21 and .21 answers with hostname hxs-21; the discovery address is the real one — the fleet pattern does NOT hold for hxs-21, and .21 is also OUTSIDE the fleet .200-.214 block (the discovery already flagged 'must be verified before fleet registration'). Identity/OS (FACT, verified live against the owner-supplied discovery): the host-key ceremony 2026-08-28T01:14Z — TOFU-with-corroboration (D-record): no fingerprint exists in any HX record for this host (precedent rick F-05, owner-authorized), the live ED25519 key pinned ONLY on immediate corroboration vs the discovery (hostname hxs-21 MATCH the recorded prompt, eno1 .21 MATCH), StrictHostKeyChecking=yes on every connection; the presented host key ED25519 SHA256:3ygj6lZMictGTCBZuq1R04VbnECUN4XS0Lq2Pr3gYk8 recorded so future hxs-21 tasks pin strict — a mismatch must halt the session. Live hostname hxs-21 (MATCH); machine-id 773a45171ba5413fa70d4b3215c43f97 (FIRST LIVE reading — the discovery had none); Ubuntu 24.04.4 LTS kernel 7.0.0-30-generic MATCH; uptime since 2026-08-28 00:43:18 UTC (the host rebooted after the owner's 00:20:51Z evidence session); CPU i5-7500 4c/4t; memory 32 GB (2×16 GB Hynix DDR4 @ 2400 MT/s — DIMM1 HMA82GS6DJR8N-XN + DIMM3 HMA82GS6DJR8N-VK, mixed part revisions) via sudo -n dmidecode; single NVMe 238.5G (p1 vfat /boot/efi, p2 ext4 /) — all FIRST LIVE readings; passwordless sudo CONFIRMED LIVE (the owner-prepared /etc/sudoers.d/90-hx-admin works); Secure Boot ENABLED — RECORDED ONLY (same class as hxs-6/hxs-11; BIOS remediation is an owner decision, NOT changed); ufw ENABLED=no; failed units 0; ollama absent (expected). Mutations applied (the two sanctioned classes only): NTP pin 01:17:26Z (stock -> NTP=time.cloudflare.com, FallbackNTP=; ~0 s server contact 162.159.200.1, NTPSynchronized=yes, conf sha256 e2b94d4b… fleet-identical) + sleep-mask align 01:17:27Z (4 symlinks -> /dev/null, ALIGNED with the proven 4-target set); post-apply re-check 8/8 PASS vs the server-default rule set, 0 failed units — hxs-21 was NOT declared in the official fleet-standard.yaml host_classes at execution (script verdict SKIP, recorded; the matrix ran against the session run-standard = official + exactly 2 class lines; the governor added the host to the official file the same wave). Drift notes vs servers/hxs-21/discovery.md (REPORT, both values kept — discovery preserved unchanged): updates pending — the discovery (evidence 00:20:51Z) records 44 updates immediately available incl. 1 security update; live at 01:17Z reads 0 upgradable from current apt lists (the host rebooted 00:43:18Z between the two readings — the updates were applied in that window, mechanism not established from read-only evidence); all other supplied facts corroborated live (Ubuntu 24.04.4 / 7.0.0-30, eno1 .21, SSH on 22, ufw inactive+disabled, the sudo drop-in functional); the previously-unavailable facts (machine-id, CPU, DIMMs, storage topology, Secure Boot) are now established."
+  inferred_value: "INFERENCE: the second new-host identity floor of the wave — same value as hxs-20's record (first-live machine-id, TOFU D-record, real address) plus two owner-lane facts that must travel with the host forever: the .21 address sits outside the fleet block (a registration-time decision, not a defect) and Secure Boot is ENABLED (the fleet's fourth SB-on host, recorded never changed)."
+  source:
+    author: "rick (session rick-fleet-baseline-20260828-01)"
+    provided_by: "rick via Kimi-K3 (fleet baseline wave; deliverable of the evidence doc servers/2026-08-28-fleet-baseline-hxs11-20-21.md)"
+    origin: "/opt/tkv-local/servers/hxs-21/pre-work-results.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-28T01:36:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: [hxs-21]
+    fqdns: [hxs-21.hx.local.arpa]
+    services: []
+    agents: [rick]
+    repositories: [tkv-local]
+    environments: [fleet]
+  version: "agent re-verification 2026-08-28 (rick, fleet baseline wave) — first record for the host (no human pre-discovery preparation record exists)"
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond vault access"
+    contains_secret_values: false
+  relations:
+    - predicate: "describes"
+      target: "hxs-21 (hxs-21.hx.local.arpa, 192.168.50.21)"
+      note: "first record for the host — the identity floor (first-live machine-id, TOFU D-record fingerprint, real address outside the fleet block); verify against the live host before operational use"
+    - predicate: "references"
+      target: "DOC-fleet-baseline-hxs11-20-21-2026-08-28"
+      note: "the wave evidence this file is a deliverable of (cataloged THIS wave)"
+    - predicate: "references"
+      target: "DOC-server-registry"
+      note: "the fleet registry row for hxs-21 (written by the governor at state log row 56: Standby — designated future control-plane machine per owner advisory 2026-08-27 (eventually replaces the hxs-5 machine), none assigned yet, READY baseline-green — the authoritative registry record)"
+    - predicate: "references"
+      target: "owner-supplied discovery servers/hxs-21/discovery.md (not cataloged)"
+      note: "the identity basis the TOFU ceremony corroborated against (owner-supplied interactive evidence 2026-08-28; its eno1 .21 + prompt proven real; it already flagged 'must be verified before fleet registration') — catalogs when supplied to a wave"
+    - predicate: "references"
+      target: "DOC-tkv-server-registry"
+      note: "the TKV mirror's registry row for hxs-21 (mirror of the same row-56 write; the record is SUPERSEDED — consumers use DOC-server-registry)"
+    - predicate: "risks"
+      target: "hxs-21 Secure Boot ENABLED (owner BIOS decision)"
+      note: "recorded only, never changed — same class as hxs-6/hxs-7/hxs-11 (the fleet's SB-on set is now those three plus hxs-21); BIOS remediation is an owner decision per the standing directive"
+  validation:
+    validated_at: "2026-08-28T01:36:00Z"
+    freshness: "current"
+    review_due: "on the next fleet pre-work or per-host pass; on any identity/addressing change (re-addressing the .21 placement is an owner call — never a sanctioned class); the update-application mechanism (44 -> 0 across the 00:43:18Z reboot) rides the owner maintenance lane"
+  sha256: "2976b449ec3c2031716d6e886555dcd7ac550c241959fa56717759443306ccd7"
+  canonical_location: "/opt/tkv-local/servers/hxs-21/pre-work-results.md"
+notes:
+  mint_provenance: "Minted in the rick-3host catalog wave (governor dispatch; OmniRoute state log rows 54-56): the file was created 2026-08-28T01:21Z by rick's fleet baseline wave (seq 21) — the FIRST record for the host; verified on disk complete at mint (addressing + identity + mutations + drift sections, terminal drift-notes block)."
+  tofu_d_record: "The host-key ceremony is a TOFU-with-corroboration D-record: NO fingerprint existed in any HX record for this host — the live ED25519 key was pinned ONLY on immediate corroboration against the owner-supplied discovery (hostname hxs-21 MATCH the recorded prompt, eno1 .21 MATCH; precedent rick F-05, hxs-2/hxs-3, owner-authorized); StrictHostKeyChecking=yes on every connection. The presented fingerprint ED25519 SHA256:3ygj6lZMictGTCBZuq1R04VbnECUN4XS0Lq2Pr3gYk8 is PUBLIC host-key material, not a credential secret — recorded so future tasks pin strict; a mismatch must halt the session. contains_secret_values false (profile §6)."
+  addressing_note: "The fleet .199+N pattern does NOT hold for hxs-21: the work order carried .220 (which answers as hx-20 — hxs-20); live truth is 192.168.50.21 with hostname hxs-21 (the owner-supplied discovery's recorded eno1 + prompt — proven real) — and .21 sits OUTSIDE the fleet .200-.214 block (the discovery already flagged 'must be verified before fleet registration'). Both values kept everywhere; the governor recorded .21 in BOTH registry copies at state log row 56 with the dated pattern-break addressing note. Any re-address is an owner call, NOT a sanctioned class."
+  sb_note: "Secure Boot ENABLED — RECORDED ONLY, never changed (the wave's F-3): same class as hxs-6/hxs-7/hxs-11 (the fleet's SB-on set is now those three plus hxs-21); BIOS remediation is an owner decision per the standing SB-disabled directive; hxs-20 is disabled (compliant)."
+  no_secrets: "Per the server records contract no credentials, private keys, or secret values appear in server records — verified at mint (the file carries the public host-key fingerprint only; the wave's askpass discipline is mechanism-only and appears in no file; contains_secret_values false)."

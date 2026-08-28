@@ -11,7 +11,11 @@ exist in this repository.
 - Hardware, storage, and GPU fields: `DISCOVERED`, as-found evidence dated 2026-08-13.
 - Assigned Role and Workload / Model: `TARGET-STATE`, ratified by the owner on
   2026-08-13. Role-specific implementation is deferred to a later owner-authorized
-  phase.
+  phase. [exception noted 2026-08-28: where a workload has since been DEPLOYED and
+  owner-accepted, the cell carries `CURRENT-STATE` marked with its acceptance date
+  and the superseded target preserved as history — currently hxs-1 (Qwen 3.8 27B,
+  owner disposition 2026-08-27 #1), hxs-3 (Meta-X tooling specialist, production
+  ACTIVE 2026-08-27), and hxs-5 (control plane, owner advisory 2026-08-27)]
 - Reachability and DNS state: see the dated verification block at the bottom.
 
 ## Rules
@@ -54,7 +58,7 @@ COMPLETE    - consolidation is complete and verified
 | hxs-4 | hxs-4.hx.local.arpa | 192.168.50.203 | Intel Core i7-14700F, 20c/28t | 32 GB DDR5 non-ECC | 1x RTX 5060 Ti 16311 MiB + 1x RTX 5060 8151 MiB, 24462 MiB total | 931.5 GB NVMe root; 476.9 GB NVMe unallocated | COMPLETE | Retrieval & AI utility | Qdrant + Web-UI; Qwen2.5-3B; BGE-M3 / Nomic embeddings and BGE-Reranker-v2-m3 via TEI or Infinity | READY |
 | hxs-5 | hxs-5.hx.local.arpa | 192.168.50.204 | Intel Core i5-7500, 4c/4t | 32 GB DDR4 non-ECC | none, Intel HD 630 integrated only | 238.5 GB NVMe root, sole device | COMPLETE | Control plane (replaced hxs-cp per owner advisory 2026-08-27) | HX factory control plane (Kimi-K3 governor host) | READY |
 | hxs-6 | hxs-6.hx.local.arpa | 192.168.50.205 | Intel Core i5-8500T, 6c/6t | 15.9 GB DDR4 non-ECC | none, Intel UHD 630 integrated only | 238.5 GB NVMe root, sole device | COMPLETE | Ingestion — crawling | Crawl4AI (+ MCP) | READY |
-| hxs-7 | hxs-7.hx.local.arpa | 192.168.50.206 | Intel Core i5-8500T, 6c/6t | 15.9 GB DDR4 non-ECC, single channel | none, Intel UHD 630 integrated only | 238.5 GB NVMe root, sole device | COMPLETE | MCP services (REPLACED BY hxs-20 per owner advisory 2026-08-27 — hxs-20 currently being provisioned; no pre-work until ready) | FastMCP runtime + custom HX MCP servers | READY |
+| hxs-7 | hxs-7.hx.local.arpa | 192.168.50.206 | Intel Core i5-8500T, 6c/6t | 15.9 GB DDR4 non-ECC, single channel | none, Intel UHD 630 integrated only | 238.5 GB NVMe root, sole device | COMPLETE | MCP services (REPLACED BY hxs-20 per owner advisory 2026-08-27 — hxs-20 ONLINE 2026-08-28, baseline-green) | FastMCP runtime + custom HX MCP servers | READY |
 | hxs-8 | hxs-8.hx.local.arpa | 192.168.50.207 | Intel Core i5-9400T, 6c/6t | 16 GB DDR4 non-ECC, single channel | none, Intel UHD 630 integrated only | 476.9 GB NVMe root, sole device | COMPLETE | API gateway & control | LiteLLM gateway, PostgreSQL-backed on hxs-9 | READY |
 | hxs-9 | hxs-9.hx.local.arpa | 192.168.50.208 | Intel Core i5-7500, 4c/4t | 32 GB DDR4 non-ECC | none, Intel HD 630 integrated only | 238.5 GB NVMe root, sole device | COMPLETE | State services | PostgreSQL + Redis; LiteLLM database; LangGraph checkpoints | READY |
 | hxs-10 | hxs-10.hx.local.arpa | 192.168.50.209 | Intel Core i5-7500, 4c/4t | 16 GB DDR4 non-ECC (owner disposition 2026-08-27 #5: current state is 16 GB, OS reads 15 GiB ≈ nominal 16 GB; supersedes the 32 GB recorded 2026-08-13 — two independent readings found 1×16 GB; DIMM topology not inferred; preserved as history) | none, Intel HD 630 integrated only | 238.5 GB NVMe root, sole device | COMPLETE | Web application | Open WebUI; CopilotKit / AG-UI | READY |
@@ -63,6 +67,8 @@ COMPLETE    - consolidation is complete and verified
 | hxs-13 | hxs-13.hx.local.arpa | 192.168.50.212 | Intel Core i5-6500, 4c/4t | 32 GB DDR4 non-ECC, 2133 MT/s | none, Intel HD 530 integrated only | 238.5 GB SATA SSD root, sole device | COMPLETE | Automation | n8n (+ MCP) | READY |
 | hxs-14 | hxs-14.hx.local.arpa | 192.168.50.213 | Intel Core i5-7500, 4c/4t | 32 GB DDR4 non-ECC | none, Intel HD 630 integrated only | 238.5 GB NVMe root, sole device, aftermarket | COMPLETE | Development | Prompt engineering; LangGraph and client development | READY |
 | hxs-15 | hxs-15.hx.local.arpa | 192.168.50.214 | Intel Core i5-7500, 4c/4t, no VT-x | 32 GB DDR4 non-ECC | none, Intel HD 630 integrated only | 238.5 GB NVMe root, sole device, aftermarket | COMPLETE | Test & integration | QA, regression, integration testing, benchmarks | READY |
+| hxs-20 | hx-20.hx.local.arpa | 192.168.50.220 | Intel Core i5-7500, 4c/4t | 32 GB DDR4 non-ECC (2×16 GB Samsung @2400, first live reading 2026-08-28) | none recorded (owner-supplied discovery carries no GPU evidence) | 238.5 GB NVMe root, sole device | COMPLETE (first live inventory 2026-08-28) | MCP services (replaces hxs-7 per owner advisory 2026-08-27) | FastMCP runtime + custom HX MCP servers (target) | READY (baseline-green 2026-08-28) |
+| hxs-21 | hxs-21.hx.local.arpa | 192.168.50.21 | Intel Core i5-7500, 4c/4t | 32 GB DDR4 non-ECC (2×16 GB Hynix @2400, mixed revisions, first live reading 2026-08-28) | none recorded (owner-supplied discovery carries no GPU evidence) | 238.5 GB NVMe root, sole device | COMPLETE (first live inventory 2026-08-28) | Standby — designated future control-plane machine (owner advisory 2026-08-27: eventually replaces the hxs-5 machine) | none assigned yet | READY (baseline-green 2026-08-28) |
 
 ## Role assignment record — historical
 
@@ -70,8 +76,12 @@ Roles were assigned by the project owner on 2026-08-13, ratifying the mapping in
 `governance/fleet-architecture-v0.3.html` (source repository). This registry records
 that decision; it did not make it. `hxs-cp` was the control plane, deliberately outside
 the fifteen-server fleet, and held no row here; **hxs-5 replaced hxs-cp as the control
-plane per owner advisory 2026-08-27** (and hxs-21 is being provisioned to eventually
-replace the hxs-5 machine).
+plane per owner advisory 2026-08-27** (and hxs-21, ONLINE 2026-08-28 at 192.168.50.21,
+is being provisioned to eventually replace the hxs-5 machine).
+
+**Addressing note (2026-08-28):** the `.199+N` pattern does NOT hold for the two new
+hosts — hxs-20 lives at 192.168.50.220 (hostname `hx-20`) and hxs-21 at 192.168.50.21
+(outside the .200–.214 block). Verified live by rick's 2026-08-28 baseline wave.
 
 **Superseded assignment (hxs-3), dated 2026-08-27.** hxs-3's original workload target
 was **gpt-oss / LightRAG** (the 2026-08-13 role mapping). That assignment was superseded

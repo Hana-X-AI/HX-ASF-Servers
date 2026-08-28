@@ -1,0 +1,57 @@
+document:
+  id: "DOC-hxs20-discovery"
+  title: "servers/hxs-20/discovery.md — hxs-20 discovery (owner-supplied interactive evidence 2026-08-28, status IN PROGRESS; hardware fields largely unavailable from supplied evidence — superseded in fact by rick's 2026-08-28 first live inventory; live at .220 with hostname hx-20)"
+  type: "discovery"
+  declared_purpose: "Phase 1 discovery record for hxs-20 (Discovery date 2026-08-28) built from OWNER-SUPPLIED interactive terminal evidence — explicitly NOT produced by the project collector and NOT independently verified over SSH at writing (the file's own caveat: the supplied session included human preparation changes to sudo and firewall state before the final checks — those values are prepared state, not an untouched as-found baseline; facts not present in the evidence are explicitly unavailable). Identity: record identity hxs-20; observed shell prompt hx-20 (a direct hostname/hostnamectl result was NOT supplied — the on-host hostname remained to be verified; the file itself flags the host identity NOT closed because the owner-selected record name and the observed prompt differ); FQDN / manufacturer / model / baseboard / serial / machine-id / chassis type / BIOS-UEFI / boot mode / Secure Boot ALL unavailable from supplied evidence. CPU: model, sockets, physical cores, threads, NUMA, virtualization unavailable; architecture x86_64. Memory: installed RAM, DIMM layout, type/speed, ECC unavailable; 1 percent in use per the system-information summary; swap present, 0 percent used, capacity and backing unavailable. GPU / accelerators: all fields unavailable. Storage: a single 232.64 GB root filesystem at 4.7 percent used (device model/serial/type, partition layout, filesystem type, additional storage, LVM, RAID, SMART all unavailable). Network: primary interface eno1 with IPv4 192.168.50.220 (prefix length, MAC, gateway, DNS, link speed, IPv6, other interfaces unavailable); SSH active on TCP port 22 (listener scope not supplied). Operating system: Ubuntu 24.04.4 LTS, kernel 7.0.0-30-generic, x86_64; timezone unavailable (the summary timestamp displayed in UTC); update state 0 updates can be applied immediately (Expanded Security Maintenance for Applications not enabled); reboot-required unavailable; reported system temperature 47.9 C. Relevant software/services: openssh-server active on port 22; passwordless sudo configured for hxsa in /etc/sudoers.d/90-hx-admin (the drop-in and complete sudoers configuration passed visudo, sudo -n true returned 0); firewall — ufw reports inactive, ufw.service disabled and inactive (consistent with the HX no-host-firewall rule), the loaded nftables ruleset contains IPv4 and IPv6 filter chains with ACCEPT policies and no filtering rules shown, firewalld inactive or absent; other software, services, failed units, and diagnostic tooling unavailable. Capability summary: CPU/memory/GPU unavailable (1 percent memory in use per the summary); storage root filesystem 232.64 GB at 4.7 percent used, device topology unavailable; network eno1 carries 192.168.50.220; constraints — host identity is not closed (record name hxs-20 vs observed prompt hx-20), hardware/firmware/detailed storage discovery remains incomplete, ufw inactive and disabled, SSH active on TCP 22, ESM Applications not enabled. Notes: evidence timestamp 2026-08-28 00:24:04 UTC; last-login line 2026-08-28 00:21:10 UTC from 192.168.50.115; the Ubuntu summary reported load 0.07, 144 processes, 0 users logged in; NO role, workload, or model is assigned in the record (role assignment is not performed in this file); Second Brain opportunity: no new capability identified (the record applies the existing per-host discovery pattern; catalog intake remains Carol's governed lane). Discovery Status: IN PROGRESS."
+  inferred_value: "INFERENCE: the owner-supplied baseline that rick's wave corroborated against — its recorded prompt (hx-20) and eno1 (.220) proved real against the work order's pattern addressing, and its 'identity not closed' flag is exactly what the first live inventory then established (first-live machine-id, i5-7500, 2×16 GB Samsung @2400, single NVMe 238.5G p1 vfat + p2 ext4, Secure Boot disabled, passwordless sudo live). The two records read as one chain: supplied baseline -> verified live state; the discovery's IN PROGRESS status is closed in fact by the follow-up, not by editing the file."
+  source:
+    author: "Agent Zero (owner-supplied interactive terminal evidence)"
+    provided_by: "Agent Zero"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/servers/hxs-20/discovery.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-28T02:15:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: [hxs-20]
+    fqdns: [hx-20.hx.local.arpa]
+    services: [ssh.service, ufw.service]
+    agents: []
+    repositories: [HX-ASF-Servers]
+    environments: [fleet]
+  version: "Discovery date 2026-08-28 (owner-supplied evidence 00:24:04Z; status IN PROGRESS)"
+  status: "adopted"
+  authority_level: "historical-as-found"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "describes"
+      target: "hxs-20 (record name; observed prompt hx-20, hx-20.hx.local.arpa, 192.168.50.220)"
+      note: "the owner-supplied baseline (status IN PROGRESS); preserved per the server records contract — verify against the live host before operational use; rick's first live inventory carries the current verified state"
+    - predicate: "references"
+      target: "DOC-tkv-hxs20-pre-work-results"
+      note: "the superseding-in-fact layer: rick's 2026-08-28 first live inventory established every hardware field this file records as unavailable (machine-id 7b5cd0b8…, i5-7500, 2×16 GB Samsung M471A2K43DB1/CB1-CTD @2400, single NVMe 238.5G p1 vfat + p2 ext4, Secure Boot disabled, passwordless sudo live) plus the TOFU D-record host-key pin"
+    - predicate: "references"
+      target: "DOC-fleet-baseline-hxs11-20-21-2026-08-28"
+      note: "the wave evidence: this file is the identity basis the TOFU-with-corroboration ceremony corroborated against (prompt hx-20 MATCH, eno1 .220 MATCH, boot 00:23:48Z consistent with the owner session 00:21-00:24Z) — cataloged THIS wave"
+    - predicate: "references"
+      target: "DOC-server-registry"
+      note: "the fleet registry row for hxs-20 (written at state log row 56: MCP services replacing hxs-7, READY baseline-green) + the dated .199+N pattern-break addressing note (.220 with hostname hx-20 recorded as hx-20.hx.local.arpa — the addressing closure for this file's open identity flag)"
+    - predicate: "references"
+      target: "DOC-pilot-omniroute-state-log"
+      note: "provenance: owner word row 54 (hxs-11/20/21 online and ready), rick's receipt row 55, the registry writes + this mint's wave row 56, the batch-11 fully-cataloged row 57"
+  validation:
+    validated_at: "2026-08-28T02:15:00Z"
+    freshness: "current"
+    review_due: "on any amendment to this file or a new collector-run discovery for hxs-20 (the file's IN PROGRESS status stands; corrections land as labeled addenda or new evidence layers, never silent rewrites)"
+  sha256: "9ab855105337d92735cffeafb7713042cb997d96c2cccd1c37212e3e44ab62af"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/servers/hxs-20/discovery.md"
+notes:
+  mint_provenance: "Minted in the discovery-mints micro-wave (the rick-3host receipt's F-1; OmniRoute state log row 57 — 'discovery mints + commit next'). File verified on disk complete (112 lines, terminal 'Role assignment is not performed in this file.') at mint."
+  authority_judgment: "authority_level historical-as-found per the as-found evidence class (the enum's as-found branch): the content is owner-supplied interactive-session evidence — NOT produced by the project collector and NOT independently verified at writing (the file's own caveat; the supplied session changed sudo + ufw state before verification — prepared state, not an untouched as-found baseline). status adopted + freshness current: it is the current record of the owner-supplied baseline for hxs-20; rick's first live inventory is the independent-verification layer that followed (cross-referenced above), not an edit to this file."
+  supersession_note: "The hardware fields this file records as 'unavailable from supplied evidence' are SUPERSEDED IN FACT by rick's 2026-08-28 first live inventory (dispatch item 1): machine-id 7b5cd0b865e5462682a619a5b0c9d894 (first live reading), CPU i5-7500 4c/4t, memory 32 GB (2×16 GB Samsung DDR4 @ 2400 MT/s — DIMM1 M471A2K43DB1-CTD + DIMM3 M471A2K43CB1-CTD), single NVMe 238.5G (p1 vfat /boot/efi, p2 ext4 /), Secure Boot disabled, passwordless sudo CONFIRMED LIVE — see DOC-tkv-hxs20-pre-work-results and DOC-fleet-baseline-hxs11-20-21-2026-08-28 (both cataloged in the same wave). What remains open from this file is only what the live pass also could not establish (GPU evidence — none recorded; MAC/link speed) — recorded, not inferred."
+  addressing_note: "The addressing pattern-break per the registry note (both copies, dated 2026-08-28): the fleet .199+N pattern does NOT hold for hxs-20 — it lives at 192.168.50.220 with hostname hx-20 (this file's recorded eno1 + prompt, proven real by rick's wave; the work order's .219 was silent); the registry records the host as hx-20.hx.local.arpa. The rename hx-20 -> hxs-20 is NOT a sanctioned mutation class and was NOT performed — owner/governor registration call."
+  no_secrets: "Per the server records contract no credentials, private keys, or secret values appear in server records — verified at mint (the file records the sudo drop-in's existence and validation only, mechanism not values; contains_secret_values false, profile §6)."
