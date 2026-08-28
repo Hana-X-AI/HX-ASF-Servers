@@ -82,7 +82,7 @@ jobs:
   coderabbit-review:
     name: coderabbit-review
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     steps:
       - name: Checkout (full history for the base diff)
         uses: actions/checkout@v4
@@ -112,13 +112,49 @@ jobs:
             BASE="$BEFORE"
             if [ -z "$BASE" ] || [ "$BASE" = "0000000000000000000000000000000000000000" ]; then BASE="HEAD~1"; fi
             echo "main push — reviewing pushed range $BASE..HEAD"
-            coderabbit review --agent --light --committed --base-commit "$BASE" \
-              --api-key "$CODERABBIT_API_KEY" > "$RUNNER_TEMP/findings.jsonl" || true
+            CMD=(coderabbit review --agent --light --committed --base-commit "$BASE" --api-key "$CODERABBIT_API_KEY")
           else
             git fetch origin main --depth=1 >/dev/null 2>&1 || true
-            coderabbit review --agent --light --base origin/main \
-              --api-key "$CODERABBIT_API_KEY" > "$RUNNER_TEMP/findings.jsonl" || true
+            CMD=(coderabbit review --agent --light --base origin/main --api-key "$CODERABBIT_API_KEY")
           fi
+          # The org's included-review quota is shared between CI and local CLI
+          # runs. A recoverable rate_limit gets bounded retries at the
+          # service-provided waitTime (zero-tolerance era: main must not red-X
+          # on a quota collision); after retries the parser stays fail-closed.
+          for attempt in 1 2 3; do
+            "${CMD[@]}" > "$RUNNER_TEMP/findings.jsonl" || true
+            WAIT=$(python3 - "$RUNNER_TEMP/findings.jsonl" <<'PYEOF'
+          import json, sys
+          complete, wait = False, 0
+          try:
+              for line in open(sys.argv[1]):
+                  line = line.strip()
+                  if not line:
+                      continue
+                  try:
+                      ev = json.loads(line)
+                  except ValueError:
+                      continue
+                  if ev.get("type") == "complete":
+                      complete = True
+                  elif ev.get("type") == "error" and ev.get("errorType") == "rate_limit" and ev.get("recoverable"):
+                      w = str(ev.get("metadata", {}).get("waitTime", "")).split()
+                      if len(w) == 2:
+                          try:
+                              wait = int(float(w[0]) * (60 if w[1].lower().startswith("min") else 1)) + 20
+                          except ValueError:
+                              wait = 0
+          print(0 if complete else min(wait, 780))
+          PYEOF
+          )
+            if [ "$WAIT" -le 0 ]; then break; fi
+            if [ "$attempt" -eq 3 ]; then
+              echo "::notice::CodeRabbit rate limit persists after retries — parser stays fail-closed"
+              break
+            fi
+            echo "::notice::CodeRabbit rate limit (attempt $attempt) — retrying after ${WAIT}s"
+            sleep "$WAIT"
+          done
 
       - name: Parse findings and enforce the gate
         if: steps.review.outputs.skipped == 'false'
