@@ -142,6 +142,10 @@ jobs:
                       findings += 1
                       sev = (ev.get("severity") or "info").lower()
                       counts[sev] = counts.get(sev, 0) + 1
+                      # Findings must be human-readable in the job log itself —
+                      # a count with no content sends the owner hunting (owner
+                      # directive 2026-08-28). Dump each event, truncated.
+                      print("FINDING: %s" % json.dumps(ev)[:1500])
                   elif t == "complete":
                       complete_status = ev.get("status")
                   elif t == "error":
