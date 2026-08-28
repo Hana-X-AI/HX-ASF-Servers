@@ -1,0 +1,73 @@
+document:
+  id: "DOC-hxs6-configuration"
+  title: "servers/hxs-6/configuration.md — hxs-6 configured state (owner-authorized server implementation, SCOPED to additional-storage provisioning; SECOND configuration.md of its class in HX-ASF-Servers — hxs-3's is the first-of-class; ext4 hxs-6-data @ /srv/data live 2026-08-28)"
+  type: "contract"
+  declared_purpose: "Server configuration record per the server records contract (servers/AGENTS.md — 'What did HX configure this server to become?'), the SECOND of its class in this repository (the first-of-class pattern is servers/hxs-3/configuration.md, DOC-hxs3-configuration), written 2026-08-28 at the phase-2 completion of PILOT-HXS6-STORAGE-001 (WO-01) — Phase: owner-authorized server implementation, SCOPED to additional-storage provisioning only; Configuration date 2026-08-28 (executed and recorded same day under the pilot, WO-01); Assigned role: Ingestion — crawling (copied from SERVER-REGISTRY.md, owner-ratified 2026-08-13, TARGET-STATE); Primary workload/model: Crawl4AI (+ MCP) per registry — explicitly NOT IMPLEMENTED by this record (role implementation remains a later owner-authorized phase; this record covers the storage plane only); Approved by Agent-Zero (owner) — disposition 2026-08-27 #4; GO 2026-08-28T05:36Z (pilot state-log row 2); the discard ruling + governor gate approval 2026-08-28T06:07Z (row 4). Discovery Reference: servers/hxs-6/discovery.md (as-found record dated 2026-08-12, preserved unchanged; known drift recorded openly — the discovery lists a single NVMe and no LVM; the second NVMe (added after 2026-02-26, before 2026-08-12 or between discovery and this provisioning) is the subject of this record — the baseline-wave F-1, 2026-08-27). Role Objective: the registry TARGET-STATE (ingestion/crawling node, Crawl4AI + MCP) is DEFERRED — nothing in this record installs or configures that workload; this record's scope: provision the additional 238.5 GB NVMe as bulk storage available for the owner's approved use (TBD by owner). Final Configuration — STORAGE (the material change): OS disk UNCHANGED (/dev/nvme0n1 KXG60ZNV256G TOSHIBA 256GB, serial 49FF70BNF0AN — p1 vfat /boot/efi, p2 ext4 /; UUIDs, mounts, and the swap file byte-identical to discovery/baseline); data disk PROVISIONED 2026-08-28 (/dev/nvme1n1 PC SN740 NVMe WD 256GB, serial 22170Z804761, WWN eui.e8238fa6bf530001001b448b4b6f22e2): new GPT (disk GUID A5165993-E225-455F-B67F-C44FE20F77E0), single partition p1 (238.5 GiB, type 8300, PARTUUID 7f5e765b-a27e-4fd2-9fdd-6614d6e4cdc4); ext4 LABEL hxs-6-data, UUID c9241770-b75d-4a71-881c-b1fd1349f647; mounted /srv/data (0755, hxsa:hxsa), fstab by UUID with defaults,nofail,noatime (pre-change fstab backup on host: /etc/fstab.hx-bak-20260828); prior content (the foreign lived-in Ubuntu system, 397,773 entries — servers/hxs-6/2026-08-28-storage-device-map.md §4) DISCARDED by explicit owner ruling 2026-08-28 after the phase-1 evidence — retain/archive foreclosed by the owner; LVM: none host-wide (the stale ubuntu-vg/ubuntu-lv removed under the dual gate). Operating System / Network (UNCHANGED by this record): Ubuntu 24.04.4 LTS (noble), kernel 7.0.0-30-generic; hostname hxs-6; machine-id 0b899c5612f44c63ac468d2dd8dba5b5; IPv4 192.168.50.205/24 on eno1; SSH :22; no host firewall (owner rule); time Etc/UTC with NTP pinned time.cloudflare.com (fleet baseline wave 2026-08-27); the sleep-target mask set ×4 applied the same wave; Secure Boot ENABLED — recorded-only, remediation is an owner BIOS decision (the baseline-wave F-5). Validation: base system healthy (0 failed units before and after; no reboot — uptime since 2026-08-25 16:23:10 UTC); identity discipline (serial/WWN re-matched live immediately before the LVM teardown (06:10:40Z PASS) and again before wipefs (06:13:35Z MATCH); destructive commands only on the identity-validated path); pre-change proofs (proof 1 — root/boot-critical on nvme0n1 only — and proof 2 — the exclusive LVM topology — PASS, governor-approved at state-log row 4); destructive steps (lvchange/lvremove/vgremove/pvremove/wipefs/sgdisk/mkfs) all OK, zero retries; final state (/srv/data mounted rw,noatime from /dev/nvme1n1p1 (ext4 hxs-6-data); fstab by UUID; findmnt --verify 0 errors; probe file write/read/remove as unprivileged hxsa OK). Material Change Record (four dated rows): 2026-08-28T06:11:34Z — the stale LVM ubuntu-vg/ubuntu-lv on the second NVMe REMOVED (dual-gate released, state-log row 4; lvchange -an, lvremove, vgremove, pvremove /dev/nvme1n1p3; validation pvs/vgs/lvs empty host-wide; rollback NONE — destructive, owner discard ruling); 06:13:35Z — old GPT + vfat/ext4/LVM signatures WIPED (wipefs -a on disk + 3 partitions; validation zero signatures on re-probe; rollback none); 06:14:05Z — bare disk -> new GPT, single 238.5 GiB partition, ext4 hxs-6-data (sgdisk -o -n 1:0:0 -t 1:8300; mkfs.ext4 -L hxs-6-data; validation blkid/lsblk confirm UUID c9241770-…; rollback = repartition/reformat of the dataless volume; unresolved: mkfs defaults kept (5% reserved blocks) — tuning is a later decision); 06:14:53Z — no /srv/data -> mount + fstab persistence (fstab +1 line with the backup /etc/fstab.hx-bak-20260828; mount /srv/data; chown/chmod; validation findmnt --verify 0 errors + probe OK; rollback = remove the fstab line, umount /srv/data, restore the backup). Sources: servers/hxs-6/discovery.md (as-found 2026-08-12, preserved); servers/hxs-6/2026-08-28-storage-device-map.md (the phase-1 verification + phase-2 execution evidence); pilots/PILOT-HXS6-STORAGE-001/ (00-goal.md, 01-work-order-rick-storage.yaml (WO-01), 02-state-log.md); servers/2026-08-27-fleet-baseline-wave.md (the F-1 storage drift + F-5 Secure Boot); servers/SERVER-REGISTRY.md (the assigned role, owner-maintained)."
+  inferred_value: "INFERENCE: the second configuration.md of its class proves the first-of-class pattern generalizes — the same contract shape (owner-authorized implementation phase, role copied from the registry, discovery preserved, material changes + validation documented) held for a destructive-class storage operation exactly as it did for the LLM-backend implementation, and the record's explicit scope discipline (the Ingestion-crawling role is copied from the registry but NOT implemented here) is the honest answer to 'what is hxs-6 today': a host whose storage plane was provisioned under an owner-ratified destructive pilot, whose role workload still awaits its own owner-authorized phase."
+  source:
+    author: "rick (session rick-hxs6-storage-20260828-01) per the server records contract implementation phase; approved by Agent-Zero (owner — disposition 2026-08-27 #4; GO 2026-08-28T05:36Z; discard ruling 2026-08-28T06:07Z)"
+    provided_by: "Kimi-K3 (governor, closeout catalog dispatch)"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/servers/hxs-6/configuration.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-28T06:30:00Z"
+  owner: "Agent Zero"
+  applies_to:
+    hosts: [hxs-6]
+    fqdns: [hxs-6.hx.local.arpa]
+    services: []
+    agents: [rick, kimi-k3]
+    repositories: [HX-ASF-Servers]
+    environments: [fleet, pilot]
+    models: []
+  version: "Configuration date 2026-08-28 (storage provisioning executed + recorded same day under PILOT-HXS6-STORAGE-001, WO-01)"
+  status: "active"
+  authority_level: "ratified-governance"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "configures"
+      target: "hxs-6"
+      note: "the configured-state record for the host's storage plane: the provisioned data disk (ext4 hxs-6-data UUID c9241770-… on /dev/nvme1n1p1, new GPT A5165993-…, /srv/data 0755 hxsa:hxsa mounted rw,noatime, fstab by UUID with the pre-change backup), the unchanged OS disk, the removed stale LVM, and the record's explicit scope boundary (the Ingestion-crawling role copied from the registry is NOT implemented here — a later owner-authorized phase)"
+    - predicate: "references"
+      target: "DOC-hxs3-configuration"
+      note: "the FIRST configuration.md of its class (the pattern this record follows — owner-authorized implementation phase, role copied from the owner-maintained registry, discovery preserved, material changes + validation documented); this record is the SECOND of the class and the pattern's first generalization beyond an LLM-backend host"
+    - predicate: "references"
+      target: "DOC-hxs6-storage-device-map-2026-08-28"
+      note: "the evidence this record is built from (phase-1 verification verdict RETAINABLE-DATA-FOUND + phase-2 execution + final state) — cataloged THIS wave; the prior content's discard is recorded here as the explicit owner ruling with retain/archive foreclosed"
+    - predicate: "produced_by"
+      target: "DOC-pilot-hxs6-storage-wo-01-rick-storage"
+      note: "written at the phase-2 completion of WO-01 (state-log row 5, 2026-08-28T06:23Z) from live + pilot evidence — cataloged THIS wave, DISCHARGED at mint"
+    - predicate: "references"
+      target: "DOC-pilot-hxs6-storage-state-log"
+      note: "the pilot's living state log (rows 1-5: the draft-held pilot, the owner GO, the RETAINABLE-DATA-FOUND verdict + escalation, the dual-gate release, phase-2 PASS) — cataloged THIS wave as a LIVING record per profile §12"
+    - predicate: "references"
+      target: "DOC-goal-hxs6-storage-provisioning"
+      note: "the pilot goal (owner disposition 2026-08-27 #4 + the non-negotiable verify-first ordering) — cataloged THIS wave"
+    - predicate: "references"
+      target: "DOC-tkv-hxs6-discovery"
+      note: "the as-found discovery class record for hxs-6 (2026-08-12, preserved unchanged); this record's Discovery Reference section carries the known drift openly (discovery lists a single NVMe and no LVM — the second NVMe is this record's subject; the drift was the baseline wave's F-1)"
+    - predicate: "references"
+      target: "DOC-server-registry"
+      note: "role source: Assigned Role 'Ingestion — crawling' copied from SERVER-REGISTRY.md (owner-ratified 2026-08-13, TARGET-STATE), not assigned by this record; the registry's hxs-6 storage cell now carries this record's final state (both copies, re-minted THIS wave)"
+    - predicate: "references"
+      target: "DOC-fleet-baseline-wave-2026-08-27"
+      note: "the baseline wave's F-1 (storage drift — the second NVMe + LVM not in the 08-13 discovery, this record's subject) and F-5 (Secure Boot ENABLED on hxs-6, recorded-only — carried unchanged in this record; BIOS is an owner decision)"
+    - predicate: "references"
+      target: "HX server records contract (servers/AGENTS.md — not cataloged)"
+      note: "the contract this record class answers ('What did HX configure this server to become?'); written under its owner-authorized server implementation phase"
+  validation:
+    validated_at: "2026-08-28T06:30:00Z"
+    freshness: "current"
+    review_due: "on any material change to hxs-6's configured state (its Material Change Record must grow with the change); at the owner-authorized Ingestion-crawling role implementation phase (this record then gains the workload section); on the mkfs reserved-blocks tuning decision (later owner call)"
+  sha256: "8c70e0b4b4dd27a3d9e2fb4543ff0ecb08632ad1fcb99b7cc5294bd86f1a5be2"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/servers/hxs-6/configuration.md"
+notes:
+  typing_judgment: "Type contract + status active per the first-of-class precedent (DOC-hxs3-configuration notes.typing_judgment): a configuration record is the per-server configured-state contract and stays active as the living configured-state record. This is the SECOND configuration.md under HX-ASF-Servers servers/ and the class's first generalization beyond an LLM-backend host (storage plane). SECOND-BRAIN note (per the file's own Sources structure): the record covers the storage plane only — the registry TARGET-STATE role (Ingestion-crawling, Crawl4AI + MCP) is explicitly NOT implemented; the role-implementation phase is a later owner-authorized phase and will grow this record's Material Change Record."
+  authority_basis: "authority_level ratified-governance per the record's evidence basis (the DOC-hxs3-configuration precedent): creation owner-authorized at the implementation phase — owner disposition 2026-08-27 #4 (reformat and make available), the owner GO 2026-08-28T05:36Z ('hxs-6 disk wipe: have Rick do it now.'), and the owner's discard ruling 2026-08-28T06:07Z ('Discard — wipe it now', retain/archive foreclosed) with the governor's device-map gate approval — the dual gate satisfied at pilot state-log row 4; the assigned role copied from the owner-maintained registry; every material configuration decision owner-ratified (the discard ruling is itself the owner decision on the destructive class)."
+  scope_discipline: "The record's scope line is load-bearing and verified present at mint (source lines 3-6 + Role Objective): Phase 'owner-authorized server implementation (scoped: additional-storage provisioning only)'; Primary workload/model 'Crawl4AI (+ MCP) per registry — NOT IMPLEMENTED by this record; role implementation remains a later owner-authorized phase. This record covers the storage plane only.' The Ingestion-crawling role text is copied from SERVER-REGISTRY.md per the records contract (the registry assigns roles, configuration.md copies them) — this record implements NO role workload."
+  minor_source_note: "MINOR (recorded, not fixed — catalog lane never edits a source): the file's Sources line cites the pilot state log at 'rows 1–4' while the log now carries row 5 (PHASE 2 COMPLETE, 2026-08-28T06:23Z) — the configuration.md was written during phase 2 before row 5 landed; the mismatch is cosmetic and the file's own timeline explains it. Flagged for the governor's next natural touch (same class as the earlier source-status corrections); the configuration record's content is otherwise complete and the final state is verified."
+  no_secrets: "Per the server records contract no credentials, private keys, or secret values appear in server records — verified at mint (the fstab line, UUIDs, serials, and WWN are identifiers, not secrets; the foreign system's stored credential file is recorded by existence only in the evidence record, never read, and is destroyed; contains_secret_values false, profile §6)."

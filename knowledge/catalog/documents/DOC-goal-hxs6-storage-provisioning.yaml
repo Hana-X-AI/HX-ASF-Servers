@@ -1,0 +1,59 @@
+document:
+  id: "DOC-goal-hxs6-storage-provisioning"
+  title: "Goal 2026-08-28-hxs6-storage-provisioning — hxs-6 additional-storage provisioning (owner disposition 2026-08-27 #4: reformat the additional drive and make it available, verify-first non-negotiable ordering; DRAFT-held at writing, then EXECUTED COMPLETE — GO row 2, discard ruling + dual gate row 4, phase 2 PASS row 5)"
+  type: "goal"
+  declared_purpose: "Durable work-state record (Goal ID = the file name 2026-08-28-hxs6-storage-provisioning, KDD-0002; version 1; status line at writing: 'DRAFT — held for owner GO (prepared per the owner's consolidated direction \"prepare a separately controlled storage operation\"; NOT dispatched)'; owner Agent-Zero; created 2026-08-28; agent lanes kimi-k3 (governor), rick (executor), carol (catalog)). Intent: owner disposition 2026-08-27 #4 — the additional drive in hxs-6 is EXPECTED; reformat it and make it available for storage or another approved use; the trigger evidence is rick's baseline wave (2026-08-27), which found a second NVMe (nvme1n1) plus an LVM ubuntu-vg/ubuntu-lv that the 2026-08-13 discovery never recorded. Non-negotiable ordering (the owner's own words): before ANY destructive operation, verify the exact target device and confirm it contains no data that must be retained; the ubuntu-vg name is the Ubuntu installer's default — the verification must PROVE the live root filesystem does not depend on that LVM before anything is wiped. Acceptance: (1) device-map evidence published and reviewed (governor gate) showing zero retainable data; (2) final state recorded — filesystem, mount point, ownership, intended use; (3) the hxs-6 registry + TKV records updated and Carol catalogs. Boundaries: destructive class; a governor gate between verification and execution; no other host, device, or partition in scope; no Docker; the local-model rule for the executor. EXECUTION RECORD (the goal's own completion, appended at cataloging with the goal file unchanged at 'DRAFT — held for owner GO' — see notes.status_mapping): the owner GO landed 2026-08-28T05:36Z (pilot state-log row 2 — 'hxs-6 disk wipe: have Rick do it now.'); phase 1 executed read-only with verdict RETAINABLE-DATA-FOUND (row 3 — the target disk carries a complete FOREIGN lived-in Ubuntu system, not the expected empty drive; the operation STOPPED and escalated per the WO); the owner ruled on the inventory 'Discard — wipe it now' 2026-08-28 (retain/archive foreclosed) and the governor approved the device map — the dual gate satisfied at row 4 (the acceptance item-1 gate did its designed job: it produced the owner's explicit retain/discard decision on evidence); phase 2 executed 06:10-06:15Z with dual identity revalidation PASS (row 5) — final state ext4 hxs-6-data (UUID c9241770-…) mounted at /srv/data live, verified 06:15:24Z (acceptance item 2 met); the registry + TKV records carry the new storage cell (acceptance item 3 — Carol catalogs THIS wave). The goal is COMPLETE at the pilot's row-5 arc close."
+  inferred_value: "INFERENCE: the smallest possible destructive-class goal and the clearest demonstration of why the verify-first ordering is non-negotiable — the goal's own acceptance gate ('device-map evidence showing zero retainable data') produced the one answer the operation did not expect (a foreign lived-in system), and the goal's design absorbed it cleanly: STOP, escalate, owner decides, dual-gate release, identity-anchored execution. The goal file staying at 'DRAFT — held for owner GO' through execution is itself the recorded evidence that the GO was a deliberate, later owner act (row 2), not a formality."
+  source:
+    author: "Kimi-K3 (goal record) / Agent Zero (owner disposition #4 + GO + discard ruling)"
+    provided_by: "Kimi-K3 (governor, closeout catalog dispatch)"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS6-STORAGE-001/00-goal.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-28T06:30:00Z"
+  owner: "Agent Zero (human authority); Kimi-K3 (governor)"
+  applies_to:
+    hosts: [hxs-6]
+    fqdns: []
+    services: []
+    agents: [kimi-k3, rick, carol]
+    repositories: [HX-ASF-Servers]
+    environments: [pilot, fleet]
+    models: []
+  version: "1"
+  status: "historical"
+  authority_level: "ratified-governance"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "governs"
+      target: "DOC-pilot-hxs6-storage-state-log"
+      note: "the pilot's living state log (rows 1-5: drafted-held row 1, owner GO row 2 (05:36Z), phase-1 verdict RETAINABLE-DATA-FOUND + escalation row 3 (05:59Z), owner discard ruling + governor gate approval row 4 (06:07Z — the dual gate satisfied), phase-2 PASS row 5 (06:23Z)) — cataloged THIS wave as a LIVING record per profile §12"
+    - predicate: "references"
+      target: "DOC-pilot-hxs6-storage-wo-01-rick-storage"
+      note: "the work order that executed the goal (WO-01-hxs6-storage: phase-1 read-only verification with the complete-topology + exclusive-LVM + stable-identity requirements, the dual gate, the gated destructive phase, the records phase) — cataloged THIS wave, DISCHARGED at mint (all phases COMPLETE)"
+    - predicate: "references"
+      target: "DOC-hxs6-storage-device-map-2026-08-28"
+      note: "acceptance item 1's evidence: the device-map document (verdict RETAINABLE-DATA-FOUND — the gate produced the owner's explicit retain/discard decision: 'Discard — wipe it now', retain/archive foreclosed) + the phase-2 execution and final state — cataloged THIS wave"
+    - predicate: "references"
+      target: "DOC-hxs6-configuration"
+      note: "acceptance item 2's record: the configured final state (ext4 hxs-6-data @ /srv/data live; second-of-class configuration.md, storage scope) — cataloged THIS wave"
+    - predicate: "references"
+      target: "DOC-server-registry"
+      note: "acceptance item 3's target: the hxs-6 storage cell now carries the final state in both registry copies ('238.5 GB NVMe root + 238.5 GB NVMe data (ext4 hxs-6-data @ /srv/data; added 2026-08-28 WO-01/PILOT-HXS6-STORAGE-001 — supersedes as-found \"238.5 GB NVMe root, sole device\")' — re-minted THIS wave)"
+    - predicate: "references"
+      target: "DOC-fleet-baseline-wave-2026-08-27"
+      note: "the goal's trigger evidence: the baseline wave's F-1 REPORT (the second NVMe nvme1n1 + LVM ubuntu-vg/ubuntu-lv not in the 08-13 discovery — 'owner confirmation closes'); the owner confirmed (disposition #4) and this goal is the confirmation's execution"
+  validation:
+    validated_at: "2026-08-28T06:30:00Z"
+    freshness: "current"
+    review_due: "terminal-closed 2026-08-28 (the pilot's row-5 arc close; acceptance items 1-3 all met with the item-1 gate consumed by the owner's discard ruling); review on any post-closure amendment (a goal status-line update is the governor's lane — see notes.status_mapping)"
+  sha256: "d4cfe905b7d30b20d0497477044e8b4d2864baf23e40e064137bfea1e9128135"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS6-STORAGE-001/00-goal.md"
+notes:
+  status_mapping: "The file's own status line reads 'DRAFT — held for owner GO (prepared per the owner's consolidated direction \"prepare a separately controlled storage operation\"; NOT dispatched)' (source line 5, VERIFIED PRESENT at mint). Mapped to status historical per the terminal-closed precedent (DOC-goal-hxs3-muse-glimmer-tooling / DOC-goal-omniroute-trinity-layer0 closures): the goal is COMPLETE at the pilot's row-5 arc close (owner GO row 2, discard ruling + dual gate row 4, phase-2 PASS row 5; acceptance items 1-3 all met — item 1's gate was consumed by the owner's explicit retain/discard decision, which is the decision the gate exists to produce). The 'DRAFT-held' line is stale-but-honest history (the GO was a deliberate later owner act); a status-line update on the goal file (dated transition, same class as the earlier goal status corrections) is the GOVERNOR's lane — FLAGGED for the governor in this run's receipt, not edited by the catalog lane. authority_level ratified-governance per the two-goal convention (governor-authored durable state record ratified through owner disposition #4 + the owner GO + the owner discard ruling)."
+  acceptance_accounting: "Acceptance item 1 as designed reads 'device-map evidence published and reviewed (governor gate) showing zero retainable data'. As executed, the device map showed RETAINABLE-DATA-FOUND — the opposite of the anticipated answer — and the goal's design absorbed it: the WO's verdict class STOPPED the operation (row 3), the governor escalated the inventory to the owner, and the owner made the explicit retain/discard decision the gate exists to produce ('Discard — wipe it now', retain/archive foreclosed, row 4). The item is met by the decision path, not by the anticipated zero-finding — recorded openly here so no future reader mistakes the verdict class for a failure of the goal."
+  protected_reference: "No protected resource is named and no credential content appears in the goal file or this record (profile §6); the execution's askpass discipline and the foreign system's stored credential file are recorded as mechanism/existence only on the evidence record."

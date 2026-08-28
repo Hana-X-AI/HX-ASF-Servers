@@ -1,11 +1,8 @@
-# Catalog index — fast lookup surface. Detail lives in documents/DOC-<slug>.yaml.
-# Governed by agents/carol/profile.md. Updated by Carol on every ingestion; each
-# update is proven by a receipt in receipts/.
 index:
   schema_version: 1
   initialized: 2026-08-25 (Carol instantiation, owner amendment)
-  updated: "2026-08-28T0452Z (T-standard run — registry-scope wave (provenance: rr CI findings + the living-contract wave's receipt; the registry source gained the Phase-1 footer scope line today (governor edit, repo only — '15 of 15 (historical baseline scope: the original fifteen-server fleet). Current registry: 17 rows accepted — hxs-20 and hxs-21 added 2026-08-28'; the TKV copy has no count line); carry-forward: receipt 2026-08-28T0352Z-carol-living-contract.md + validate.py 4/4 PASS at 03:52Z): 0 added, 2 updated (DOC-server-registry — (a) the exception-note class correction in notes.current_state_exception_20260828 (labeled): class (a) DEPLOYED and owner-accepted = hxs-1 and hxs-3 ONLY (the literal CURRENT-STATE: prefix), class (b) owner-advised ROLE changes with NO deployment claim = hxs-5 AND hxs-7 (the batch-11 note's single-class list is the superseded era form, preserved as history); the exception LOCATION corrected in the same note (labeled): the REPO source carries the exception ONLY on the TARGET-STATE header bullet (repo line 14, VERIFIED — the earlier Rules-line occurrence is gone), the TKV mirror carries it on the manual-approval rule line (tkv line 10, VERIFIED); (b) scope sync to the 17-row registry: title + declared_purpose + version now carry 17 rows (hxs-1..hxs-15 + hxs-20 + hxs-21 added 2026-08-28 baseline-green, cataloged as DOC-hxs20-discovery/DOC-hxs21-discovery), applies_to.hosts += hxs-20 + hxs-21, applies_to.fqdns += hxs-20.hx.local.arpa + hxs-21.hx.local.arpa, version includes 2026-08-28; (c) RE-MINT via scripts/catalog/carol-mint (adoption dogfood — the tool's single-writer lock + atomic write; stamp notes.minted_by): ace0fb39… -> 00e2ab28… (the Phase-1 footer edit); DOC-tkv-server-registry — RE-MINT via carol-mint confirm-current (the TKV file unchanged since the batch-7 re-hash: b0726e46… == live, freshness-only stamp per the confirm-before-stamping instruction); count 298 unchanged; NOTE: the OmniRoute living record is left at its consolidation point per profile §12 — rows 62-64 ride the next consolidation (daily 04:00Z when changed / arc close / owner call), no per-wave re-mint)"
-  document_count: 298
+  updated: '2026-08-28T0659Z (carol-mint 1.0.0 — hxs6-storage-closeout wave (receipt 2026-08-28T0659Z-carol-hxs6-storage-closeout.md): 5 added (DOC-hxs6-storage-device-map-2026-08-28 — evidence, adopted, agent-evidence; DOC-hxs6-configuration — contract, active, ratified-governance, second-of-class; DOC-goal-hxs6-storage-provisioning — goal, historical, ratified-governance; DOC-pilot-hxs6-storage-wo-01-rick-storage — work-order, adopted, delegated-contract, DISCHARGED at mint; DOC-pilot-hxs6-storage-state-log — other, active, agent-evidence, freshness LIVING at the arc-close consolidation), 2 re-minted via carol-mint (DOC-server-registry 00e2ab28… -> fd05c4a1… + DOC-tkv-server-registry b0726e46… -> fe69cf66… — the hxs-6 storage cell in both copies; the RETAINABLE-DATA-FOUND verdict + owner discard ruling ride the registry records'' notes as provenance); the OmniRoute living record left at its consolidation point (rows 62+ ride the next consolidation per profile §12); count 298 -> 303 [titles preserved])'
+  document_count: 303
   documents:
   - id: DOC-a01-origin-codex-20260824-2125
     title: codex_20260824_2125_hx-1-ollama-pilot-qwen3.8-amendment.md — original source of Amendment A01 (agent-zero-docs)
@@ -104,7 +101,7 @@ index:
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/assessments/2026-08-25-hx-second-brain-guidance-001-review.md
   - id: DOC-assessment-second-brain-feature-review
-    title: "2026-08-27-second-brain-feature-review.md — Second Brain feature review: assessed-continuously answer, 12 implemented feature-classes, deferred register, gap dispositions, cadence recommendation (Kimi-K3, owner-question review)"
+    title: '2026-08-27-second-brain-feature-review.md — Second Brain feature review: assessed-continuously answer, 12 implemented feature-classes, deferred register, gap dispositions, cadence recommendation (Kimi-K3, owner-question review)'
     type: evidence
     authority_level: agent-evidence
     freshness: current
@@ -128,7 +125,7 @@ index:
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/servers/BLUEPRINT-llm-server.md
   - id: DOC-backend-meta-x
-    title: "Backend-capability record — Meta-X (hxs-3, http://192.168.50.202:11434 LIVE since M4 2026-08-26; muse-glimmer:30b frozen de878ce33ad8…; operating hx-muse-glimmer-64k (M7); status ACTIVE, M8-signed 2026-08-27; LIMIT parallel_tool_calling: false)"
+    title: 'Backend-capability record — Meta-X (hxs-3, http://192.168.50.202:11434 LIVE since M4 2026-08-26; muse-glimmer:30b frozen de878ce33ad8…; operating hx-muse-glimmer-64k (M7); status ACTIVE, M8-signed 2026-08-27; LIMIT parallel_tool_calling: false)'
     type: registry
     authority_level: ratified-governance
     freshness: current
@@ -152,19 +149,19 @@ index:
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/catalog/tests/cat-001-acceptance.md
   - id: DOC-ci-cd-workflow
-    title: ".github/workflows/ci-cd.yml — p8 CI/CD pipeline definition (owner-ratified 2026-08-26; 18 steps across gates / coderabbit-review / pr-manage; trigger every push to any branch)"
+    title: .github/workflows/ci-cd.yml — p8 CI/CD pipeline definition (owner-ratified 2026-08-26; 18 steps across gates / coderabbit-review / pr-manage; trigger every push to any branch)
     type: contract
     authority_level: ratified-governance
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/.github/workflows/ci-cd.yml
   - id: DOC-cicd-pipeline-doc
-    title: "docs/cicd-pipeline.md — CI/CD pipeline human-facing documentation (p8, owner-ratified 2026-08-26; step list, lifecycle, review-fix loop, conventions, setup, deviations D1–D4)"
+    title: docs/cicd-pipeline.md — CI/CD pipeline human-facing documentation (p8, owner-ratified 2026-08-26; step list, lifecycle, review-fix loop, conventions, setup, deviations D1–D4)
     type: runbook
     authority_level: ratified-governance
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/docs/cicd-pipeline.md
   - id: DOC-coderabbit-config
-    title: ".coderabbit.yaml — CodeRabbit review configuration (p8, owner-ratified 2026-08-26; keys verified against the live official schema.v2)"
+    title: .coderabbit.yaml — CodeRabbit review configuration (p8, owner-ratified 2026-08-26; keys verified against the live official schema.v2)
     type: contract
     authority_level: ratified-governance
     freshness: current
@@ -176,43 +173,43 @@ index:
     freshness: current
     canonical_location: /home/hxsa/opt/local-tkv/agent-zero-docs/tool-belt/codex_20260825_2207_hx-asf-servers-read-only-project-capability-assessment.md
   - id: DOC-fleet-baseline-hxs11-20-21-2026-08-28
-    title: "servers/2026-08-28-fleet-baseline-hxs11-20-21.md — rick three-host baseline wave (PASS — TASK COMPLETE: 3/3 hosts carry verdicts — hxs-11 PASS post-maintenance, hxs-20 REPORT at .220/hostname hx-20, hxs-21 REPORT at .21 — both REPORTs close via the governor's registry/standard updates; Etc/UTC ×3, one NTP source ×3 fleet-identical conf sha256 e2b94d4b…, proven 4-target mask set ×3; SB ENABLED on hxs-11 + hxs-21 owner-lane record-only; TOFU-with-corroboration pins recorded for the two new hosts)"
+    title: 'servers/2026-08-28-fleet-baseline-hxs11-20-21.md — rick three-host baseline wave (PASS — TASK COMPLETE: 3/3 hosts carry verdicts — hxs-11 PASS post-maintenance, hxs-20 REPORT at .220/hostname hx-20, hxs-21 REPORT at .21 — both REPORTs close via the governor''s registry/standard updates; Etc/UTC ×3, one NTP source ×3 fleet-identical conf sha256 e2b94d4b…, proven 4-target mask set ×3; SB ENABLED on hxs-11 + hxs-21 owner-lane record-only; TOFU-with-corroboration pins recorded for the two new hosts)'
     type: evidence
     authority_level: agent-evidence
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/servers/2026-08-28-fleet-baseline-hxs11-20-21.md
   - id: DOC-fleet-baseline-wave-2026-08-27
-    title: "servers/2026-08-27-fleet-baseline-wave.md — rick fleet baseline wave (PASS — TASK COMPLETE: 12/12 in-scope hosts carry verdicts — 10 PASS, 2 REPORT with declared closing directions, 0 FAIL; one timezone Etc/UTC ×12, one NTP source ×12 — timesyncd.conf sha256 e2b94d4b… byte-identical ×12, NTPSynchronized ×12; proven 4-target sleep-mask set ×12; mutations only the two sanctioned classes — NTP pin ×7, mask align ×8, canary-first; selftest 42/42 at both gates; zero secret values)"
+    title: 'servers/2026-08-27-fleet-baseline-wave.md — rick fleet baseline wave (PASS — TASK COMPLETE: 12/12 in-scope hosts carry verdicts — 10 PASS, 2 REPORT with declared closing directions, 0 FAIL; one timezone Etc/UTC ×12, one NTP source ×12 — timesyncd.conf sha256 e2b94d4b… byte-identical ×12, NTPSynchronized ×12; proven 4-target sleep-mask set ×12; mutations only the two sanctioned classes — NTP pin ×7, mask align ×8, canary-first; selftest 42/42 at both gates; zero secret values)'
     type: evidence
     authority_level: agent-evidence
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/servers/2026-08-27-fleet-baseline-wave.md
   - id: DOC-fleet-metax-verification-2026-08-27
-    title: "evidence-2026-08-27-metax-verification.md — Meta-X verification of the fleet script library v0.1 (9/9 artifacts PASS, zero nonconformances; Meta-X's first production support task; full local-model contract recorded; Addendum A — accepted selftest v0.1.2 42/42, O1 RESOLVED)"
+    title: evidence-2026-08-27-metax-verification.md — Meta-X verification of the fleet script library v0.1 (9/9 artifacts PASS, zero nonconformances; Meta-X's first production support task; full local-model contract recorded; Addendum A — accepted selftest v0.1.2 42/42, O1 RESOLVED)
     type: evidence
     authority_level: agent-evidence
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/scripts/fleet/evidence-2026-08-27-metax-verification.md
   - id: DOC-fleet-prework-remainder-2026-08-27
-    title: "2026-08-27-fleet-prework-remainder.md — rick fleet pre-work remainder pass (PASS — 7 of 8 reachable and processed; identity ceremony EXACT-MATCH ×7 with ZERO first-sight acceptances (hxs-6 ALREADY-PINNED-VERIFIED, six PINNED-NEW-VERIFIED); machine-id MATCH ×7; zero changes on every target host; 7 refreshed pre-work records by prepend; F-1 hxs-11 UNREACHABLE, F-2 Secure Boot ENABLED on hxs-6 — explicitly an owner decision, F-3 hxs-10 pre-work hxs-9-prompt-line artifact)"
+    title: 2026-08-27-fleet-prework-remainder.md — rick fleet pre-work remainder pass (PASS — 7 of 8 reachable and processed; identity ceremony EXACT-MATCH ×7 with ZERO first-sight acceptances (hxs-6 ALREADY-PINNED-VERIFIED, six PINNED-NEW-VERIFIED); machine-id MATCH ×7; zero changes on every target host; 7 refreshed pre-work records by prepend; F-1 hxs-11 UNREACHABLE, F-2 Secure Boot ENABLED on hxs-6 — explicitly an owner decision, F-3 hxs-10 pre-work hxs-9-prompt-line artifact)
     type: evidence
     authority_level: agent-evidence
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/servers/2026-08-27-fleet-prework-remainder.md
   - id: DOC-fleet-script-library
-    title: "scripts/fleet — HX fleet script library (README + seven scripts + fleet-standard.yaml; v0.1.2: Meta-X-verified 9/9 at v0.1, batch-17 H1-H4 hardened, batch-18 selftest corrections; shellcheck clean; mutators default non-mutating)"
+    title: 'scripts/fleet — HX fleet script library (README + seven scripts + fleet-standard.yaml; v0.1.2: Meta-X-verified 9/9 at v0.1, batch-17 H1-H4 hardened, batch-18 selftest corrections; shellcheck clean; mutators default non-mutating)'
     type: runbook
     authority_level: agent-evidence
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/scripts/fleet
   - id: DOC-fleet-time-and-mask-pass
-    title: "2026-08-26-fleet-time-and-mask-pass.md — rick fleet time+mask pass (PASS — TASK COMPLETE: Etc/UTC ×4 with hxs-3 changed 2026-08-26T23:52:40Z; NTP=time.cloudflare.com pinned ×4 with FallbackNTP empty and one shared timesyncd.conf sha256 e2b94d4b…a349dc2; hxs-2 hybrid-sleep.target masked 23:56:20Z aligning to the proven hxs-1/hxs-3 set; ollama undisturbed 14/14 probes; F-1 hxs-4 sleep masks CLOSED 2026-08-27T01:40:43Z — owner-authorized addendum: suspend/hibernate/hybrid-sleep/suspend-then-hibernate masked ×4 (/dev/null symlinks verified, sleep.target static), all four LLM hosts now on the proven 4-target set)"
+    title: '2026-08-26-fleet-time-and-mask-pass.md — rick fleet time+mask pass (PASS — TASK COMPLETE: Etc/UTC ×4 with hxs-3 changed 2026-08-26T23:52:40Z; NTP=time.cloudflare.com pinned ×4 with FallbackNTP empty and one shared timesyncd.conf sha256 e2b94d4b…a349dc2; hxs-2 hybrid-sleep.target masked 23:56:20Z aligning to the proven hxs-1/hxs-3 set; ollama undisturbed 14/14 probes; F-1 hxs-4 sleep masks CLOSED 2026-08-27T01:40:43Z — owner-authorized addendum: suspend/hibernate/hybrid-sleep/suspend-then-hibernate masked ×4 (/dev/null symlinks verified, sleep.target static), all four LLM hosts now on the proven 4-target set)'
     type: evidence
     authority_level: agent-evidence
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/servers/2026-08-26-fleet-time-and-mask-pass.md
   - id: DOC-goal-fleet-baseline-deployment
-    title: "Goal 2026-08-27-fleet-baseline-deployment — bring every in-scope fleet host to the declared baseline (owner directive GO 2026-08-27, owner-sequenced FIRST — OmniRoute L1-M3 closure follows; 7 fresh + 5 re-verify, two sanctioned mutation classes; ACTIVE — acceptance items 1-3 met per the wave evidence, item 4 is this catalog wave)"
+    title: Goal 2026-08-27-fleet-baseline-deployment — bring every in-scope fleet host to the declared baseline (owner directive GO 2026-08-27, owner-sequenced FIRST — OmniRoute L1-M3 closure follows; 7 fresh + 5 re-verify, two sanctioned mutation classes; ACTIVE — acceptance items 1-3 met per the wave evidence, item 4 is this catalog wave)
     type: goal
     authority_level: ratified-governance
     freshness: current
@@ -235,6 +232,12 @@ index:
     authority_level: ratified-governance
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/goals/2026-08-26-hxs3-muse-glimmer-tooling.md
+  - id: DOC-goal-hxs6-storage-provisioning
+    title: 'Goal 2026-08-28-hxs6-storage-provisioning — hxs-6 additional-storage provisioning (owner disposition 2026-08-27 #4: reformat the additional drive and make it available, verify-first non-negotiable ordering; DRAFT-held at writing, then EXECUTED COMPLETE — GO row 2, discard ruling + dual gate row 4, phase 2 PASS row 5)'
+    type: goal
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS6-STORAGE-001/00-goal.md
   - id: DOC-goal-ollama-audit-hxs5
     title: Goal 2026-08-24-ollama-audit-hxs5 — read-only Ollama infrastructure and performance audit on hxs-5 (process pilot)
     type: goal
@@ -242,7 +245,7 @@ index:
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/goals/2026-08-24-ollama-audit-hxs5.md
   - id: DOC-goal-omniroute-layer1-secure-core
-    title: "Goal 2026-08-27-omniroute-layer1-secure-core — OmniRoute Layer 1 secure core gateway on hxs-8 (native, owner-authorized OD-12; all four backends OD-08 amended; OD-13 secrets; LAN-only OD-07; local-model-only; the Layer-1 gate)"
+    title: Goal 2026-08-27-omniroute-layer1-secure-core — OmniRoute Layer 1 secure core gateway on hxs-8 (native, owner-authorized OD-12; all four backends OD-08 amended; OD-13 secrets; LAN-only OD-07; local-model-only; the Layer-1 gate)
     type: goal
     authority_level: ratified-governance
     freshness: current
@@ -277,8 +280,20 @@ index:
     authority_level: owner-directive
     freshness: current
     canonical_location: /home/hxsa/opt/local-tkv/agent-zero-docs/pilots/hxs-2/hxs-2-deployment.md
+  - id: DOC-hxs20-discovery
+    title: servers/hxs-20/discovery.md — hxs-20 discovery (owner-supplied interactive evidence 2026-08-28, status IN PROGRESS; hardware fields largely unavailable from supplied evidence — superseded in fact by rick's 2026-08-28 first live inventory; live at .220 with hostname hx-20)
+    type: discovery
+    authority_level: historical-as-found
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/servers/hxs-20/discovery.md
+  - id: DOC-hxs21-discovery
+    title: servers/hxs-21/discovery.md — hxs-21 discovery (owner-supplied interactive evidence 2026-08-28, status IN PROGRESS; hardware fields largely unavailable from supplied evidence — superseded in fact by rick's 2026-08-28 first live inventory; live at .21 outside the fleet block; 44 updates recorded at capture)
+    type: discovery
+    authority_level: historical-as-found
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/servers/hxs-21/discovery.md
   - id: DOC-hxs3-configuration
-    title: "servers/hxs-3/configuration.md — hxs-3 configured state (owner-authorized server implementation, server records contract; FIRST configuration.md in HX-ASF-Servers; pilot M1/M4/web-search/M7/fleet-time/M8)"
+    title: servers/hxs-3/configuration.md — hxs-3 configured state (owner-authorized server implementation, server records contract; FIRST configuration.md in HX-ASF-Servers; pilot M1/M4/web-search/M7/fleet-time/M8)
     type: contract
     authority_level: ratified-governance
     freshness: current
@@ -295,20 +310,20 @@ index:
     authority_level: owner-directive
     freshness: current
     canonical_location: /home/hxsa/opt/local-tkv/agent-zero-docs/pilots/hxs-3/meta/codex_20260825_2332_hxs-3-muse-glimmer-30b-tooling-pilot-and-deepseek-harness-registration.md
-  - id: DOC-hxs20-discovery
-    title: "servers/hxs-20/discovery.md — hxs-20 discovery (owner-supplied interactive evidence 2026-08-28, status IN PROGRESS; hardware fields largely unavailable from supplied evidence — superseded in fact by rick's 2026-08-28 first live inventory; live at .220 with hostname hx-20)"
-    type: discovery
-    authority_level: historical-as-found
+  - id: DOC-hxs6-configuration
+    title: servers/hxs-6/configuration.md — hxs-6 configured state (owner-authorized server implementation, SCOPED to additional-storage provisioning; SECOND configuration.md of its class in HX-ASF-Servers — hxs-3's is the first-of-class; ext4 hxs-6-data @ /srv/data live 2026-08-28)
+    type: contract
+    authority_level: ratified-governance
     freshness: current
-    canonical_location: /home/hxsa/opt/HX-ASF-Servers/servers/hxs-20/discovery.md
-  - id: DOC-hxs21-discovery
-    title: "servers/hxs-21/discovery.md — hxs-21 discovery (owner-supplied interactive evidence 2026-08-28, status IN PROGRESS; hardware fields largely unavailable from supplied evidence — superseded in fact by rick's 2026-08-28 first live inventory; live at .21 outside the fleet block; 44 updates recorded at capture)"
-    type: discovery
-    authority_level: historical-as-found
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/servers/hxs-6/configuration.md
+  - id: DOC-hxs6-storage-device-map-2026-08-28
+    title: 'servers/hxs-6/2026-08-28-storage-device-map.md — hxs-6 storage device map: phase-1 read-only verification (verdict RETAINABLE-DATA-FOUND — complete FOREIGN lived-in Ubuntu system, 397,773 entries) + phase-2 execution (owner discard ruling + governor gate, dual identity revalidation R1/R2 PASS, disclosed guard defect) + final state (ext4 hxs-6-data @ /srv/data live) — PASS — PHASE 2 COMPLETE'
+    type: evidence
+    authority_level: agent-evidence
     freshness: current
-    canonical_location: /home/hxsa/opt/HX-ASF-Servers/servers/hxs-21/discovery.md
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/servers/hxs-6/2026-08-28-storage-device-map.md
   - id: DOC-hxs8-discovery-repo
-    title: "servers/hxs-8/discovery.md — hxs-8 discovery, REPO maintained copy (2026-08-12 baseline entries + labeled 2026-08-27 addenda: post-upgrade memory 46 GiB visible — 32 GB Samsung + 16 GB Micron DDR4 SODIMMs both channels, 2666 MT/s configured, non-ECC; the living hxs-8 host record)"
+    title: 'servers/hxs-8/discovery.md — hxs-8 discovery, REPO maintained copy (2026-08-12 baseline entries + labeled 2026-08-27 addenda: post-upgrade memory 46 GiB visible — 32 GB Samsung + 16 GB Micron DDR4 SODIMMs both channels, 2666 MT/s configured, non-ECC; the living hxs-8 host record)'
     type: discovery
     authority_level: agent-evidence
     freshness: current
@@ -434,7 +449,7 @@ index:
     freshness: current
     canonical_location: /home/hxsa/opt/local-tkv/agent-zero-docs/pilots/hxs-3/meta/doc-1.md
   - id: DOC-pilot-fleet-baseline-cp-03-rick-baseline
-    title: "03-context-packet-rick-baseline.yaml — CP-03-fleet-baseline (execution-time facts for session rick-fleet-baseline-20260827-01: topology, standard summary, proven patterns, known host notes, output contract; DISCHARGED — BASELINE COMPLETE, state log row 3, 2026-08-27T20:28Z)"
+    title: '03-context-packet-rick-baseline.yaml — CP-03-fleet-baseline (execution-time facts for session rick-fleet-baseline-20260827-01: topology, standard summary, proven patterns, known host notes, output contract; DISCHARGED — BASELINE COMPLETE, state log row 3, 2026-08-27T20:28Z)'
     type: context-packet
     authority_level: delegated-contract
     freshness: current
@@ -446,7 +461,7 @@ index:
     freshness: living
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-FLEET-BASELINE-001/01-state-log.md
   - id: DOC-pilot-fleet-baseline-wo-02-rick-baseline
-    title: "02-work-order-rick-baseline.yaml — WO-02-fleet-baseline (fleet base verification + standard alignment: 7 fresh + 5 re-verify, two sanctioned mutation classes — rick, session rick-fleet-baseline-20260827-01; DISCHARGED — BASELINE COMPLETE, state log row 3, 2026-08-27T20:28Z; deliverable DOC-fleet-baseline-wave-2026-08-27)"
+    title: '02-work-order-rick-baseline.yaml — WO-02-fleet-baseline (fleet base verification + standard alignment: 7 fresh + 5 re-verify, two sanctioned mutation classes — rick, session rick-fleet-baseline-20260827-01; DISCHARGED — BASELINE COMPLETE, state log row 3, 2026-08-27T20:28Z; deliverable DOC-fleet-baseline-wave-2026-08-27)'
     type: work-order
     authority_level: delegated-contract
     freshness: current
@@ -530,7 +545,7 @@ index:
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/23-kk3-m6-capacity-decision.md
   - id: DOC-pilot-hx1-decision-36-m8-acceptance
-    title: '36-kk3-m8-acceptance-reconciliation.md — M8 acceptance reconciliation + KK3 gate verdict (recommended ACCEPT); owner verdict ACCEPT 2026-08-26 — pilot closed as PASS (SC-09)'
+    title: 36-kk3-m8-acceptance-reconciliation.md — M8 acceptance reconciliation + KK3 gate verdict (recommended ACCEPT); owner verdict ACCEPT 2026-08-26 — pilot closed as PASS (SC-09)
     type: decision
     authority_level: agent-evidence
     freshness: current
@@ -602,7 +617,7 @@ index:
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/29-esme-m6b-profiles.md
   - id: DOC-pilot-hx1-ev-30-esme-m7a-reboot-cycles
-    title: '30-esme-m7a-reboot-cycles.md — Esme M7a three cold-reboot recovery cycles at the 64K operating profile (AC-007 PASS 3/3)'
+    title: 30-esme-m7a-reboot-cycles.md — Esme M7a three cold-reboot recovery cycles at the 64K operating profile (AC-007 PASS 3/3)
     type: evidence
     authority_level: agent-evidence
     freshness: current
@@ -734,7 +749,7 @@ index:
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/12-context-packet-john-websearch.yaml
   - id: DOC-pilot-hxs2-cp-15-john-m5
-    title: "15-context-packet-john-m5.yaml — context packet for WO-HXS2-JOHN-M5-001 (session john-m5-hxs2-20260826-01; hxs-2 M5: coding + tool protocol + API readiness + vision evidence-only on Coder-X; DISCHARGED — M5 COMPLETE PASS, state log row 31, 2026-08-26T19:55Z)"
+    title: '15-context-packet-john-m5.yaml — context packet for WO-HXS2-JOHN-M5-001 (session john-m5-hxs2-20260826-01; hxs-2 M5: coding + tool protocol + API readiness + vision evidence-only on Coder-X; DISCHARGED — M5 COMPLETE PASS, state log row 31, 2026-08-26T19:55Z)'
     type: context-packet
     authority_level: delegated-contract
     freshness: current
@@ -752,7 +767,7 @@ index:
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/07-esme-m4-install.md
   - id: DOC-pilot-hxs2-ev-08-esme-m6-escalation-xid31
-    title: "08-esme-m6-escalation-xid31.md — Esme (john) M6 PAUSED AT DRIFT CHECK: Xid 31 runner crash on hxs-2 (escalation to Kimi-K3; RESOLVED — owner RESUME ARMED)"
+    title: '08-esme-m6-escalation-xid31.md — Esme (john) M6 PAUSED AT DRIFT CHECK: Xid 31 runner crash on hxs-2 (escalation to Kimi-K3; RESOLVED — owner RESUME ARMED)'
     type: evidence
     authority_level: agent-evidence
     freshness: current
@@ -770,13 +785,13 @@ index:
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/10-esme-chatx-ladder-profiles.md
   - id: DOC-pilot-hxs2-ev-13-esme-websearch-enable
-    title: "13-esme-websearch-enable.md — Esme (john) fleet web-search enablement: OLLAMA_NO_CLOUD removal on hxs-1/2/3/4 (PASS — TASK COMPLETE)"
+    title: '13-esme-websearch-enable.md — Esme (john) fleet web-search enablement: OLLAMA_NO_CLOUD removal on hxs-1/2/3/4 (PASS — TASK COMPLETE)'
     type: evidence
     authority_level: agent-evidence
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/13-esme-websearch-enable.md
   - id: DOC-pilot-hxs2-ev-16-esme-m5-validation
-    title: "16-esme-m5-validation.md — Esme M5 functional validation on Coder-X (PASS: coding 10/10 = 100% vs ratified >=90% specialist bar with evaluator review concur 10/10; tool protocol 0 forbidden/malformed executed of 51 events + 100% schema conformance of 29 decisions; API readiness PASS; vision probes evidence-only for the deferred D8-vision decision; F-M5-1 residency eviction explained + restored)"
+    title: '16-esme-m5-validation.md — Esme M5 functional validation on Coder-X (PASS: coding 10/10 = 100% vs ratified >=90% specialist bar with evaluator review concur 10/10; tool protocol 0 forbidden/malformed executed of 51 events + 100% schema conformance of 29 decisions; API readiness PASS; vision probes evidence-only for the deferred D8-vision decision; F-M5-1 residency eviction explained + restored)'
     type: evidence
     authority_level: agent-evidence
     freshness: current
@@ -794,31 +809,31 @@ index:
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/02-work-order-rick-m1.yaml
   - id: DOC-pilot-hxs2-wo-05-john-m4
-    title: "05-work-order-john-m4.yaml — WO-HXS2-JOHN-M4-001 (hxs-2 M4: Ollama install + exact-tag pull + identity freeze + D5-budget systemd)"
+    title: '05-work-order-john-m4.yaml — WO-HXS2-JOHN-M4-001 (hxs-2 M4: Ollama install + exact-tag pull + identity freeze + D5-budget systemd)'
     type: work-order
     authority_level: delegated-contract
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/05-work-order-john-m4.yaml
   - id: DOC-pilot-hxs2-wo-07-john-m6
-    title: "07-work-order-john-m6.yaml — WO-HXS2-JOHN-M6-001 (hxs-2 M6+M6b: context ladder 32K/64K/128K on the exact digest + three-profile freeze, hxs-1 pattern; DISCHARGED — milestone complete)"
+    title: '07-work-order-john-m6.yaml — WO-HXS2-JOHN-M6-001 (hxs-2 M6+M6b: context ladder 32K/64K/128K on the exact digest + three-profile freeze, hxs-1 pattern; DISCHARGED — milestone complete)'
     type: work-order
     authority_level: delegated-contract
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/07-work-order-john-m6.yaml
   - id: DOC-pilot-hxs2-wo-09-john-chatx
-    title: "09-work-order-john-chatx.yaml — WO-HXS4-JOHN-L1-001 (Chat-X bounded alignment: pin 0.32.9 → 0.32.15 + ladder 32K/64K/128K + three-profile freeze; DISCHARGED — milestone complete)"
+    title: '09-work-order-john-chatx.yaml — WO-HXS4-JOHN-L1-001 (Chat-X bounded alignment: pin 0.32.9 → 0.32.15 + ladder 32K/64K/128K + three-profile freeze; DISCHARGED — milestone complete)'
     type: work-order
     authority_level: delegated-contract
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/09-work-order-john-chatx.yaml
   - id: DOC-pilot-hxs2-wo-11-john-websearch
-    title: "11-work-order-john-websearch.yaml — WO-FLEET-JOHN-WS-001 (fleet change: enable Ollama Cloud web search on all four hosts — NO_CLOUD removal; DISCHARGED — complete)"
+    title: '11-work-order-john-websearch.yaml — WO-FLEET-JOHN-WS-001 (fleet change: enable Ollama Cloud web search on all four hosts — NO_CLOUD removal; DISCHARGED — complete)'
     type: work-order
     authority_level: delegated-contract
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/11-work-order-john-websearch.yaml
   - id: DOC-pilot-hxs2-wo-14-john-m5
-    title: "14-work-order-john-m5.yaml — WO-HXS2-JOHN-M5-001 (hxs-2 M5: coding >=90% + evaluator review, tool protocol 100% denied / >=95% conformance, vision probes evidence-only; DISCHARGED — M5 COMPLETE PASS, state log row 31, 2026-08-26T19:55Z)"
+    title: '14-work-order-john-m5.yaml — WO-HXS2-JOHN-M5-001 (hxs-2 M5: coding >=90% + evaluator review, tool protocol 100% denied / >=95% conformance, vision probes evidence-only; DISCHARGED — M5 COMPLETE PASS, state log row 31, 2026-08-26T19:55Z)'
     type: work-order
     authority_level: delegated-contract
     freshness: current
@@ -842,13 +857,13 @@ index:
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/09-context-packet-john-m7.yaml
   - id: DOC-pilot-hxs3-cp-11-john-m5
-    title: "11-context-packet-john-m5.yaml — context packet for WO-HXS3-JOHN-M5-001 (session john-m5-hxs3-20260826-01; hxs-3 M5: tool protocol + one-call-per-turn invariant, structured output, system-policy, denial, reasoning_strength probe-only on Meta-X; DISCHARGED — milestone complete)"
+    title: '11-context-packet-john-m5.yaml — context packet for WO-HXS3-JOHN-M5-001 (session john-m5-hxs3-20260826-01; hxs-3 M5: tool protocol + one-call-per-turn invariant, structured output, system-policy, denial, reasoning_strength probe-only on Meta-X; DISCHARGED — milestone complete)'
     type: context-packet
     authority_level: delegated-contract
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/11-context-packet-john-m5.yaml
   - id: DOC-pilot-hxs3-cp-14-john-m8
-    title: "14-context-packet-john-m8.yaml — context packet for WO-HXS3-JOHN-M8-001 (session john-m8-hxs3-20260827-01; hxs-3 M8: Meta-X sign-off gate — persistence proof 3 cold reboots, endpoint boundary, consumer-proof, first configuration.md, acceptance reconciliation; DISCHARGED — milestone complete)"
+    title: '14-context-packet-john-m8.yaml — context packet for WO-HXS3-JOHN-M8-001 (session john-m8-hxs3-20260827-01; hxs-3 M8: Meta-X sign-off gate — persistence proof 3 cold reboots, endpoint boundary, consumer-proof, first configuration.md, acceptance reconciliation; DISCHARGED — milestone complete)'
     type: context-packet
     authority_level: delegated-contract
     freshness: current
@@ -878,7 +893,7 @@ index:
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/12-esme-m5-validation.md
   - id: DOC-pilot-hxs3-ev-15-esme-m8-signoff
-    title: "15-esme-m8-signoff.md — Esme (john) M8 sign-off gate on Meta-X (hxs-3) (PASS — TASK COMPLETE; persistence 3/3 cold reboots 98 s deterministic, endpoint boundary, consumer-proof, first configuration.md, acceptance reconciliation)"
+    title: 15-esme-m8-signoff.md — Esme (john) M8 sign-off gate on Meta-X (hxs-3) (PASS — TASK COMPLETE; persistence 3/3 cold reboots 98 s deterministic, endpoint boundary, consumer-proof, first configuration.md, acceptance reconciliation)
     type: evidence
     authority_level: agent-evidence
     freshness: current
@@ -896,29 +911,41 @@ index:
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/02-work-order-rick-m1.yaml
   - id: DOC-pilot-hxs3-wo-05-john-m4
-    title: "05-work-order-john-m4.yaml — WO-HXS3-JOHN-M4-001 (hxs-3 M4: Ollama install + exact muse-glimmer:30b pull + identity freeze + D5-budget systemd)"
+    title: '05-work-order-john-m4.yaml — WO-HXS3-JOHN-M4-001 (hxs-3 M4: Ollama install + exact muse-glimmer:30b pull + identity freeze + D5-budget systemd)'
     type: work-order
     authority_level: delegated-contract
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/05-work-order-john-m4.yaml
   - id: DOC-pilot-hxs3-wo-08-john-m7
-    title: "08-work-order-john-m7.yaml — WO-HXS3-JOHN-M7-001 (hxs-3 M7: context ladder 32K/64K/128K on the exact digest + three-profile freeze, hxs-1 pattern; DISCHARGED — milestone complete)"
+    title: '08-work-order-john-m7.yaml — WO-HXS3-JOHN-M7-001 (hxs-3 M7: context ladder 32K/64K/128K on the exact digest + three-profile freeze, hxs-1 pattern; DISCHARGED — milestone complete)'
     type: work-order
     authority_level: delegated-contract
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/08-work-order-john-m7.yaml
   - id: DOC-pilot-hxs3-wo-10-john-m5
-    title: "10-work-order-john-m5.yaml — WO-HXS3-JOHN-M5-001 (hxs-3 M5: tool protocol + one-call-per-turn invariant per KDD-0007, structured output, system-policy, denial, reasoning_strength probe-only; DISCHARGED — milestone complete)"
+    title: '10-work-order-john-m5.yaml — WO-HXS3-JOHN-M5-001 (hxs-3 M5: tool protocol + one-call-per-turn invariant per KDD-0007, structured output, system-policy, denial, reasoning_strength probe-only; DISCHARGED — milestone complete)'
     type: work-order
     authority_level: delegated-contract
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/10-work-order-john-m5.yaml
   - id: DOC-pilot-hxs3-wo-13-john-m8
-    title: "13-work-order-john-m8.yaml — WO-HXS3-JOHN-M8-001 (hxs-3 M8: Meta-X sign-off gate — 3 cold reboots pre-approved per-cycle, endpoint boundary, consumer-proof, first configuration.md, acceptance reconciliation; DISCHARGED — milestone complete)"
+    title: '13-work-order-john-m8.yaml — WO-HXS3-JOHN-M8-001 (hxs-3 M8: Meta-X sign-off gate — 3 cold reboots pre-approved per-cycle, endpoint boundary, consumer-proof, first configuration.md, acceptance reconciliation; DISCHARGED — milestone complete)'
     type: work-order
     authority_level: delegated-contract
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/13-work-order-john-m8.yaml
+  - id: DOC-pilot-hxs6-storage-state-log
+    title: PILOT-HXS6-STORAGE-001 02-state-log.md — governor state-transition log (rows 1–5 at consolidation; LIVING record per profile §12 — snapshot at the pilot's arc close)
+    type: other
+    authority_level: agent-evidence
+    freshness: living
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS6-STORAGE-001/02-state-log.md
+  - id: DOC-pilot-hxs6-storage-wo-01-rick-storage
+    title: '01-work-order-rick-storage.yaml — WO-01-hxs6-storage (hxs-6 additional-storage provisioning, DESTRUCTIVE CLASS: phase-1 read-only verification with complete-topology + exclusive-LVM + stable-identity requirements, the dual gate (owner GO + governor device-map approval), the gated destructive phase, records phase; DISCHARGED — all phases COMPLETE, pilot state log rows 1-5; deliverable DOC-hxs6-storage-device-map-2026-08-28)'
+    type: work-order
+    authority_level: delegated-contract
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS6-STORAGE-001/01-work-order-rick-storage.yaml
   - id: DOC-pilot-ollama-audit-plan
     title: PILOT-KK3-JOHN-OLLAMA-AUDIT-001 plan.md — Kimi-K3 and John Ollama audit process pilot plan (read-only, hxs-5)
     type: plan
@@ -926,115 +953,115 @@ index:
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-KK3-JOHN-OLLAMA-AUDIT-001/plan.md
   - id: DOC-pilot-omniroute-19-kimi-code-provider-setup
-    title: "PILOT-OMNIROUTE-LAYER0-001 19-kimi-code-omniroute-provider-setup.md — Kimi Code -> OmniRoute provider setup (reference, owner-approved 2026-08-27; implementation deferred until baseline completes — baseline now COMPLETE; the L1-M3 closure of the gateway itself remains owner-gated)"
+    title: PILOT-OMNIROUTE-LAYER0-001 19-kimi-code-omniroute-provider-setup.md — Kimi Code -> OmniRoute provider setup (reference, owner-approved 2026-08-27; implementation deferred until baseline completes — baseline now COMPLETE; the L1-M3 closure of the gateway itself remains owner-gated)
     type: runbook
     authority_level: ratified-governance
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/19-kimi-code-omniroute-provider-setup.md
   - id: DOC-pilot-omniroute-control-manifest
-    title: "PILOT-OMNIROUTE-LAYER0-001 10-control-manifest.yaml — OmniRoute v3.8.51 implementation control manifest v1.1.0 (corrected Wave-0C re-issue)"
+    title: PILOT-OMNIROUTE-LAYER0-001 10-control-manifest.yaml — OmniRoute v3.8.51 implementation control manifest v1.1.0 (corrected Wave-0C re-issue)
     type: contract
     authority_level: delegated-contract
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/10-control-manifest.yaml
   - id: DOC-pilot-omniroute-cp-06-trinity-ledger
-    title: "06-context-packet-trinity-ledger.yaml — context packet for WO-OMNI-TRINITY-LEDGER-001 (Wave 0B capability ledger, partitions P1–P8; DISCHARGED — Wave 0B COMPLETE, state log row 21; deliverable DOC-pilot-omniroute-ev-08-capability-ledger)"
+    title: 06-context-packet-trinity-ledger.yaml — context packet for WO-OMNI-TRINITY-LEDGER-001 (Wave 0B capability ledger, partitions P1–P8; DISCHARGED — Wave 0B COMPLETE, state log row 21; deliverable DOC-pilot-omniroute-ev-08-capability-ledger)
     type: context-packet
     authority_level: delegated-contract
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/06-context-packet-trinity-ledger.yaml
   - id: DOC-pilot-omniroute-cp-08-rick-node
-    title: "08-context-packet-rick-node.yaml — context packet for WO-L1-RICK-NODE-001 (session rick-l1-node-20260827-01; L1-M1 Node runtime + NTP pin on hxs-8; DISCHARGED — L1-M1 COMPLETE, state log row 34; deliverable DOC-pilot-omniroute-ev-01-rick-l1-node-runtime)"
+    title: 08-context-packet-rick-node.yaml — context packet for WO-L1-RICK-NODE-001 (session rick-l1-node-20260827-01; L1-M1 Node runtime + NTP pin on hxs-8; DISCHARGED — L1-M1 COMPLETE, state log row 34; deliverable DOC-pilot-omniroute-ev-01-rick-l1-node-runtime)
     type: context-packet
     authority_level: delegated-contract
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/08-context-packet-rick-node.yaml
   - id: DOC-pilot-omniroute-cp-10-trinity-install
-    title: "10-context-packet-trinity-install.yaml — context packet for WO-L1-TRINITY-INSTALL-001 (session trinity-l1-install-20260827-01; L1-M2 pinned install + OD-13 secrets + four-backend registration — trinity's first mutating commission; DISCHARGED — L1-M2 COMPLETE, state log row 37, 2026-08-27T17:38Z)"
+    title: 10-context-packet-trinity-install.yaml — context packet for WO-L1-TRINITY-INSTALL-001 (session trinity-l1-install-20260827-01; L1-M2 pinned install + OD-13 secrets + four-backend registration — trinity's first mutating commission; DISCHARGED — L1-M2 COMPLETE, state log row 37, 2026-08-27T17:38Z)
     type: context-packet
     authority_level: delegated-contract
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/10-context-packet-trinity-install.yaml
   - id: DOC-pilot-omniroute-cp-12-trinity-gate
-    title: "12-context-packet-trinity-gate.yaml — context packet for WO-L1-GATE-001 (session trinity-l1-gate-20260827-01; L1-M3 the Secure Core gate: deep parity per reachable backend, restart ×2, cold reboot, backup+restore, rehearsed rollback, hygiene close-out, configuration.md, owner sign-off package; READY-TO-DISPATCH — the gate is HELD for the owner's word, the cold-reboot carrier)"
+    title: '12-context-packet-trinity-gate.yaml — context packet for WO-L1-GATE-001 (session trinity-l1-gate-20260827-01; L1-M3 the Secure Core gate: deep parity per reachable backend, restart ×2, cold reboot, backup+restore, rehearsed rollback, hygiene close-out, configuration.md, owner sign-off package; READY-TO-DISPATCH — the gate is HELD for the owner''s word, the cold-reboot carrier)'
     type: context-packet
     authority_level: delegated-contract
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/12-context-packet-trinity-gate.yaml
   - id: DOC-pilot-omniroute-decision-19-kk3-gate
-    title: "PILOT-OMNIROUTE-LAYER0-001 19-kk3-gate-decision.md — KK3 gate decision: PASS — Layer 0 COMPLETE (7 carried conditions; Layer 1 NOT authorized)"
+    title: 'PILOT-OMNIROUTE-LAYER0-001 19-kk3-gate-decision.md — KK3 gate decision: PASS — Layer 0 COMPLETE (7 carried conditions; Layer 1 NOT authorized)'
     type: decision
     authority_level: agent-evidence
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/19-kk3-gate-decision.md
   - id: DOC-pilot-omniroute-ev-01-rick-l1-node-runtime
-    title: "PILOT-OMNIROUTE-LAYER0-001 01-rick-l1-node-runtime.md — rick L1-M1 Node runtime + NTP pin on hxs-8 (PASS — TASK COMPLETE: Node v24.20.0 official tarball, sha256 + GPG-verified, /opt/node-v24.20.0 + /usr/local/bin symlinks; NTP pinned, timesyncd.conf byte-identical to the four LLM hosts — one-source ×5)"
+    title: 'PILOT-OMNIROUTE-LAYER0-001 01-rick-l1-node-runtime.md — rick L1-M1 Node runtime + NTP pin on hxs-8 (PASS — TASK COMPLETE: Node v24.20.0 official tarball, sha256 + GPG-verified, /opt/node-v24.20.0 + /usr/local/bin symlinks; NTP pinned, timesyncd.conf byte-identical to the four LLM hosts — one-source ×5)'
     type: evidence
     authority_level: agent-evidence
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/01-rick-l1-node-runtime.md
   - id: DOC-pilot-omniroute-ev-03-trinity-l1-install
-    title: "PILOT-OMNIROUTE-LAYER0-001 03-trinity-l1-install.md — trinity L1-M2 install record: OmniRoute v3.8.51 live on hxs-8 (PASS — TASK COMPLETE: omniroute.service active+enabled on 0.0.0.0:20128, built from the read-only verified corpus byte-identical, OD-13 secrets verified by method — 0 plaintext rows / enc:v1: ciphertext / bcrypt management credential, three backends parity byte-identical ×3, Chat-X registered posture-blocked, cloudEnabled set explicit false, backup via systemd timer daily 03:17 UTC keep-20)"
+    title: 'PILOT-OMNIROUTE-LAYER0-001 03-trinity-l1-install.md — trinity L1-M2 install record: OmniRoute v3.8.51 live on hxs-8 (PASS — TASK COMPLETE: omniroute.service active+enabled on 0.0.0.0:20128, built from the read-only verified corpus byte-identical, OD-13 secrets verified by method — 0 plaintext rows / enc:v1: ciphertext / bcrypt management credential, three backends parity byte-identical ×3, Chat-X registered posture-blocked, cloudEnabled set explicit false, backup via systemd timer daily 03:17 UTC keep-20)'
     type: evidence
     authority_level: agent-evidence
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/03-trinity-l1-install.md
   - id: DOC-pilot-omniroute-ev-08-capability-ledger
-    title: "PILOT-OMNIROUTE-LAYER0-001 ledger/08-capability-ledger.{md,json} — Wave 0B merged capability ledger for OmniRoute v3.8.51 (367 entries x 12 schema fields + partition, 1,325 source refs; dispositions 229 ACTIVE-CANDIDATE / 74 AVAILABLE-DISABLED / 35 NOT-ESTABLISHED / 12 LAB-ONLY / 9 NOT-APPLICABLE / 8 BLOCKED)"
+    title: PILOT-OMNIROUTE-LAYER0-001 ledger/08-capability-ledger.{md,json} — Wave 0B merged capability ledger for OmniRoute v3.8.51 (367 entries x 12 schema fields + partition, 1,325 source refs; dispositions 229 ACTIVE-CANDIDATE / 74 AVAILABLE-DISABLED / 35 NOT-ESTABLISHED / 12 LAB-ONLY / 9 NOT-APPLICABLE / 8 BLOCKED)
     type: evidence
     authority_level: agent-evidence
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/ledger
   - id: DOC-pilot-omniroute-ev-18-independent-verification
-    title: "PILOT-OMNIROUTE-LAYER0-001 18-independent-verification-report.md — Qwen-X independent verification of Layer 0 (VERIFIED, zero discrepancies; producer hxs-2 ≠ verifier hxs-1)"
+    title: PILOT-OMNIROUTE-LAYER0-001 18-independent-verification-report.md — Qwen-X independent verification of Layer 0 (VERIFIED, zero discrepancies; producer hxs-2 ≠ verifier hxs-1)
     type: evidence
     authority_level: agent-evidence
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/18-independent-verification-report.md
   - id: DOC-pilot-omniroute-ev-p1-api-routing
-    title: "PILOT-OMNIROUTE-LAYER0-001 ledger/P1-api-routing.{md,json} — Wave 0B partition P1 API/routing (42 entries, 59 refs; 688 route.ts files / 102 top-level domains; 19 public strategies VERIFIED EXACTLY + 1 internal quota-share)"
+    title: PILOT-OMNIROUTE-LAYER0-001 ledger/P1-api-routing.{md,json} — Wave 0B partition P1 API/routing (42 entries, 59 refs; 688 route.ts files / 102 top-level domains; 19 public strategies VERIFIED EXACTLY + 1 internal quota-share)
     type: evidence
     authority_level: agent-evidence
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/ledger
   - id: DOC-pilot-omniroute-ev-p2-providers-protocol
-    title: "PILOT-OMNIROUTE-LAYER0-001 ledger/P2-providers-protocol.{md,json} — Wave 0B partition P2 providers/protocol (23 entries, 110 refs; static registry 356/355 vs runtime 272 vs doc claims: 353/354 RECONCILABLE via the 2026-08-27 counting-basis addendum — 356−2dep / 356−2dep−1sys, pending upstream confirmation; 268/339 MISMATCH stand; zero ATEM adapter corpus-wide)"
+    title: 'PILOT-OMNIROUTE-LAYER0-001 ledger/P2-providers-protocol.{md,json} — Wave 0B partition P2 providers/protocol (23 entries, 110 refs; static registry 356/355 vs runtime 272 vs doc claims: 353/354 RECONCILABLE via the 2026-08-27 counting-basis addendum — 356−2dep / 356−2dep−1sys, pending upstream confirmation; 268/339 MISMATCH stand; zero ATEM adapter corpus-wide)'
     type: evidence
     authority_level: agent-evidence
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/ledger
   - id: DOC-pilot-omniroute-ev-p3-tools-streaming
-    title: "PILOT-OMNIROUTE-LAYER0-001 ledger/P3-tools-streaming.{md,json} — Wave 0B partition P3 tools/streaming (26 entries, 106 refs; full tool-call pipeline + SSE core + usage accounting; dormant toolPolicy engine zero call sites)"
+    title: PILOT-OMNIROUTE-LAYER0-001 ledger/P3-tools-streaming.{md,json} — Wave 0B partition P3 tools/streaming (26 entries, 106 refs; full tool-call pipeline + SSE core + usage accounting; dormant toolPolicy engine zero call sites)
     type: evidence
     authority_level: agent-evidence
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/ledger
   - id: DOC-pilot-omniroute-ev-p4-security
-    title: "PILOT-OMNIROUTE-LAYER0-001 ledger/P4-security.{md,json} — Wave 0B partition P4 security (50 entries, 146 refs; CRITICAL plaintext-secrets finding CAP-P4-039; central proxy.ts authz pipeline fail-closed; batch-20 reviewed-at correction carried)"
+    title: PILOT-OMNIROUTE-LAYER0-001 ledger/P4-security.{md,json} — Wave 0B partition P4 security (50 entries, 146 refs; CRITICAL plaintext-secrets finding CAP-P4-039; central proxy.ts authz pipeline fail-closed; batch-20 reviewed-at correction carried)
     type: evidence
     authority_level: agent-evidence
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/ledger
   - id: DOC-pilot-omniroute-ev-p5-persistence-config
-    title: "PILOT-OMNIROUTE-LAYER0-001 ledger/P5-persistence-config.{md,json} — Wave 0B partition P5 persistence/config (37 entries, 155 refs; 160 migrations vs docs' 148-153 drift; citation contract PROVEN 4.0% vs 35.6% baseline; batch-20 INFERENCE labels carried)"
+    title: PILOT-OMNIROUTE-LAYER0-001 ledger/P5-persistence-config.{md,json} — Wave 0B partition P5 persistence/config (37 entries, 155 refs; 160 migrations vs docs' 148-153 drift; citation contract PROVEN 4.0% vs 35.6% baseline; batch-20 INFERENCE labels carried)
     type: evidence
     authority_level: agent-evidence
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/ledger
   - id: DOC-pilot-omniroute-ev-p6-observability
-    title: "PILOT-OMNIROUTE-LAYER0-001 ledger/P6-observability.{md,json} — Wave 0B partition P6 observability (55 entries, 225 refs; 8 rate-limit mechanisms with exact fail-open/fail-closed semantics; batch-22 authorization-enum restoration carried)"
+    title: PILOT-OMNIROUTE-LAYER0-001 ledger/P6-observability.{md,json} — Wave 0B partition P6 observability (55 entries, 225 refs; 8 rate-limit mechanisms with exact fail-open/fail-closed semantics; batch-22 authorization-enum restoration carried)
     type: evidence
     authority_level: agent-evidence
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/ledger
   - id: DOC-pilot-omniroute-ev-p7-agent-surfaces
-    title: "PILOT-OMNIROUTE-LAYER0-001 ledger/P7-agent-surfaces.{md,json} — Wave 0B partition P7 agent-surfaces (60 entries, 227 refs; HIGHEST-RISK copilot LLM driver executes model output as host CLI; control-plane-collision notes per surface)"
+    title: PILOT-OMNIROUTE-LAYER0-001 ledger/P7-agent-surfaces.{md,json} — Wave 0B partition P7 agent-surfaces (60 entries, 227 refs; HIGHEST-RISK copilot LLM driver executes model output as host CLI; control-plane-collision notes per surface)
     type: evidence
     authority_level: agent-evidence
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/ledger
   - id: DOC-pilot-omniroute-ev-p8-packaging-modes
-    title: "PILOT-OMNIROUTE-LAYER0-001 ledger/P8-packaging-modes.{md,json} — Wave 0B partition P8 packaging/modes (74 entries, 297 refs; encrypted CLI backups WRITE-ONLY; --cloud backup POSTs to a nonexistent endpoint; citation contract FINAL 0.0%)"
+    title: PILOT-OMNIROUTE-LAYER0-001 ledger/P8-packaging-modes.{md,json} — Wave 0B partition P8 packaging/modes (74 entries, 297 refs; encrypted CLI backups WRITE-ONLY; --cloud backup POSTs to a nonexistent endpoint; citation contract FINAL 0.0%)
     type: evidence
     authority_level: agent-evidence
     freshness: current
@@ -1046,13 +1073,13 @@ index:
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/02-intent-authority-source-register.md
   - id: DOC-pilot-omniroute-owner-decision-packet
-    title: "PILOT-OMNIROUTE-LAYER0-001 11-owner-decision-packet.md — owner decision packet (3 decided-for-record, 8 open Layer-1 decisions with recommendations, 2 later-layer, 7 deliberate non-decisions; Wave 0C)"
+    title: PILOT-OMNIROUTE-LAYER0-001 11-owner-decision-packet.md — owner decision packet (3 decided-for-record, 8 open Layer-1 decisions with recommendations, 2 later-layer, 7 deliberate non-decisions; Wave 0C)
     type: contract
     authority_level: delegated-contract
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/11-owner-decision-packet.md
   - id: DOC-pilot-omniroute-reconciled-program-packet
-    title: "PILOT-OMNIROUTE-LAYER0-001 09-reconciled-program-packet.md — reconciled program packet (all 10 p11 §0C components; Wave 0C)"
+    title: PILOT-OMNIROUTE-LAYER0-001 09-reconciled-program-packet.md — reconciled program packet (all 10 p11 §0C components; Wave 0C)
     type: contract
     authority_level: agent-evidence
     freshness: current
@@ -1082,19 +1109,19 @@ index:
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/03-trinity-adoption-assessment.md
   - id: DOC-pilot-omniroute-wo-05-trinity-ledger
-    title: "05-work-order-trinity-ledger.yaml — WO-OMNI-TRINITY-LEDGER-001 (Wave 0B source-derived capability ledger, 8-partition DAG; Trinity's first commission; DISCHARGED — Wave 0B COMPLETE, state log row 21; deliverable DOC-pilot-omniroute-ev-08-capability-ledger)"
+    title: 05-work-order-trinity-ledger.yaml — WO-OMNI-TRINITY-LEDGER-001 (Wave 0B source-derived capability ledger, 8-partition DAG; Trinity's first commission; DISCHARGED — Wave 0B COMPLETE, state log row 21; deliverable DOC-pilot-omniroute-ev-08-capability-ledger)
     type: work-order
     authority_level: delegated-contract
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/05-work-order-trinity-ledger.yaml
   - id: DOC-pilot-omniroute-wo-07-rick-node
-    title: "07-work-order-rick-node.yaml — WO-L1-RICK-NODE-001 (L1-M1: engines-compliant pinned Node runtime on hxs-8 + the pending one-source NTP pin; DISCHARGED — L1-M1 COMPLETE, state log row 34; deliverable DOC-pilot-omniroute-ev-01-rick-l1-node-runtime)"
+    title: '07-work-order-rick-node.yaml — WO-L1-RICK-NODE-001 (L1-M1: engines-compliant pinned Node runtime on hxs-8 + the pending one-source NTP pin; DISCHARGED — L1-M1 COMPLETE, state log row 34; deliverable DOC-pilot-omniroute-ev-01-rick-l1-node-runtime)'
     type: work-order
     authority_level: delegated-contract
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/07-work-order-rick-node.yaml
   - id: DOC-pilot-omniroute-wo-09-trinity-install
-    title: "09-work-order-trinity-install.yaml — WO-L1-TRINITY-INSTALL-001 (L1-M2: pinned OmniRoute install on hxs-8 + OD-13 secrets design + four-backend registration — trinity's first MUTATING commission; DISCHARGED — L1-M2 COMPLETE, state log row 37, 2026-08-27T17:38Z; deliverable DOC-pilot-omniroute-ev-03-trinity-l1-install)"
+    title: '09-work-order-trinity-install.yaml — WO-L1-TRINITY-INSTALL-001 (L1-M2: pinned OmniRoute install on hxs-8 + OD-13 secrets design + four-backend registration — trinity''s first MUTATING commission; DISCHARGED — L1-M2 COMPLETE, state log row 37, 2026-08-27T17:38Z; deliverable DOC-pilot-omniroute-ev-03-trinity-l1-install)'
     type: work-order
     authority_level: delegated-contract
     freshness: current
@@ -1142,7 +1169,7 @@ index:
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/scripts/wiki/render.py
   - id: DOC-server-registry
-    title: "servers/SERVER-REGISTRY.md — HX fleet registry, REPO copy (source of truth for discovery lifecycle + manual role assignment; 17 rows (hxs-1..hxs-15 + hxs-20 + hxs-21 added 2026-08-28, baseline-green); amended 2026-08-27/28; living document mirrored at /opt/tkv-local/servers/SERVER-REGISTRY.md)"
+    title: servers/SERVER-REGISTRY.md — HX fleet registry, REPO copy (source of truth for discovery lifecycle + manual role assignment; 17 rows (hxs-1..hxs-15 + hxs-20 + hxs-21 added 2026-08-28, baseline-green); amended 2026-08-27/28; living document mirrored at /opt/tkv-local/servers/SERVER-REGISTRY.md)
     type: registry
     authority_level: ratified-governance
     freshness: current
@@ -1321,20 +1348,14 @@ index:
     authority_level: historical-as-found
     freshness: historical
     canonical_location: /opt/tkv-local/skill-expert
-  - id: DOC-tkv-corpus-ubuntu
-    title: /opt/tkv-local/ubuntu — Ubuntu knowledge corpus (ubuntu.com-main web-application tree)
-    type: corpus
-    authority_level: upstream-reference
-    freshness: current
-    canonical_location: /opt/tkv-local/ubuntu
   - id: DOC-tkv-corpus-ubuntu-mcp-server
-    title: "/opt/tkv-local/ubuntu/ubuntu_mcp_server-master — community 'Secure Ubuntu MCP Server' source snapshot (v1.0.0 per its CHANGELOG; MIT; reference-only per governor disposition 2026-08-27)"
+    title: /opt/tkv-local/ubuntu/ubuntu_mcp_server-master — community 'Secure Ubuntu MCP Server' source snapshot (v1.0.0 per its CHANGELOG; MIT; reference-only per governor disposition 2026-08-27)
     type: corpus
     authority_level: upstream-reference
     freshness: current
     canonical_location: /opt/tkv-local/ubuntu/ubuntu_mcp_server-master
   - id: DOC-tkv-corpus-ubuntu-refs-ubuntu-24-04
-    title: "/opt/tkv-local/ubuntu/refs-ubuntu-24.04 — rick's ratified Ubuntu 24.04 (noble) reference pack (13 files + MANIFEST.md: noble-pinned man pages, netplan stable, 3 Server Guide chapters; per-file sha256; retrieval gaps labeled)"
+    title: '/opt/tkv-local/ubuntu/refs-ubuntu-24.04 — rick''s ratified Ubuntu 24.04 (noble) reference pack (13 files + MANIFEST.md: noble-pinned man pages, netplan stable, 3 Server Guide chapters; per-file sha256; retrieval gaps labeled)'
     type: corpus
     authority_level: upstream-reference
     freshness: current
@@ -1345,6 +1366,12 @@ index:
     authority_level: upstream-reference
     freshness: current
     canonical_location: /opt/tkv-local/canonical-ubuntu-24.04-lts-stig-baseline-main
+  - id: DOC-tkv-corpus-ubuntu
+    title: /opt/tkv-local/ubuntu — Ubuntu knowledge corpus (ubuntu.com-main web-application tree)
+    type: corpus
+    authority_level: upstream-reference
+    freshness: current
+    canonical_location: /opt/tkv-local/ubuntu
   - id: DOC-tkv-corpus-zod
     title: /opt/tkv-local/zod-main — Upstream source snapshot of Zod (README at packages/zod/README.md; root README is a pointer) (670 files)
     type: corpus
@@ -1598,13 +1625,13 @@ index:
     freshness: historical
     canonical_location: /opt/tkv-local/servers/hxs-2/pre-work-results.md
   - id: DOC-tkv-hxs20-pre-work-results
-    title: "/opt/tkv-local/servers/hxs-20/pre-work-results.md — hxs-20 pre-work results (agent re-verification 2026-08-28: first-live machine-id + TOFU D-record fingerprint; REPORT — baseline green; live at .220 with hostname hx-20)"
+    title: '/opt/tkv-local/servers/hxs-20/pre-work-results.md — hxs-20 pre-work results (agent re-verification 2026-08-28: first-live machine-id + TOFU D-record fingerprint; REPORT — baseline green; live at .220 with hostname hx-20)'
     type: pre-work
     authority_level: agent-evidence
     freshness: current
     canonical_location: /opt/tkv-local/servers/hxs-20/pre-work-results.md
   - id: DOC-tkv-hxs21-pre-work-results
-    title: "/opt/tkv-local/servers/hxs-21/pre-work-results.md — hxs-21 pre-work results (agent re-verification 2026-08-28: first-live machine-id + TOFU D-record fingerprint; REPORT — baseline green; live at .21 outside the fleet block; Secure Boot ENABLED record-only)"
+    title: '/opt/tkv-local/servers/hxs-21/pre-work-results.md — hxs-21 pre-work results (agent re-verification 2026-08-28: first-live machine-id + TOFU D-record fingerprint; REPORT — baseline green; live at .21 outside the fleet block; Secure Boot ENABLED record-only)'
     type: pre-work
     authority_level: agent-evidence
     freshness: current

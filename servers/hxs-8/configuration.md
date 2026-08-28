@@ -33,8 +33,13 @@ preserved unchanged. Do not modify the discovery record.
   orchestration, memory-governance, or agent authority of its own (its
   agent-like surfaces stay disabled per the goal).
 - The backends remain the capability owners; hxs-8 never substitutes for them
-  and never routes to cloud providers for HX workloads. Model reference stays
-  alias-only per the backend records (`DOC-backend-*`).
+  and never routes to cloud providers for HX workloads — with ONE
+  owner-authorized exception: the OpenRouter free-tier connection `main`
+  (OD-14, 2026-08-27, state-log row 39; USD 100 spend cap). Local-only remains
+  the rule for agent work; the OR catalog is reachable through the gateway and
+  no model allowlist currently constrains it — allowlist/scrub decisions
+  remain owner-lane of record. Model reference stays alias-only per the
+  backend records (`DOC-backend-*`).
 - Exposure posture (OD-07): primary listener bound to the LAN interface only,
   a separate loopback listener for local semantics, OmniRoute's own
   authN/authZ, no host firewall (owner rule) — the private LAN
@@ -104,7 +109,7 @@ preserved unchanged. Do not modify the discovery record.
   (recorded by sha256, never value). Verified by method: 0 plaintext rows in
   the DB `secrets` namespace; connection credential fields `enc:v1:`
   AES-256-GCM ciphertext; management password bcrypt at rest
-- Management password: owner-reset 2026-08-27T18:20–18:26Z (owner's
+- Management credential — owner-reset 2026-08-27T18:20–18:26Z (owner's
   interactive session; current drop-in hash `05638010…`, governor-recorded
   state log row 50; "distinct dashboard password at next rotation" remains a
   standing owner-lane decision)
