@@ -250,3 +250,54 @@ here per the open-correction rule.
 **(b) APPROVED PATH TAKEN: bubblewrap via apt.** Rationale beyond the approval itself: the source pins bwrap as the chain's PREFERRED rung — `sandbox-local/src/index.ts:155` "Linux prefers `bwrap` (its mount profile is closest to the harness's…)"; rung 1 repaired gives the shipped chain its first-choice backend with a one-package dpkg footprint. Evidence and probe results: appended below at execution.
 
 <!-- 16.2 execution evidence, 16.3 D3, 16.4 identities, 16.5 C1 closure, 16.6 fix receipt appended at execution -->
+
+**Execution (b), with one completing mechanism the approval implies.** `apt-get install -y bubblewrap` → **0.9.0-1ubuntu0.1** (noble-updates/main; the ONLY package added — dpkg 694→695; the 691→694 delta since §11 is Gordon's authorized test tooling, other lane). First probe then FAILED as `bwrap: setting up uid map: Permission denied` — diagnosis (all evidence live): `kernel.apparmor_restrict_unprivileged_userns=1` (Ubuntu noble default) mediates uid-map writes by AppArmor profile; raw userns creation works but `unshare -Ur` is denied; the bubblewrap package ships NO profile and is not setuid; the host carries 116 loaded profiles (23 enforce, incl. userns grants for crun/ch-run/buildah/flatpak et al.) but none for bwrap. Completing the install therefore required Ubuntu's own designed grant: `/etc/apparmor.d/bwrap` written **mirroring the host's vendor `crun`/`ch-run` idiom verbatim** (`profile bwrap /usr/bin/bwrap flags=(unconfined) { userns, … }`) and loaded via `apparmor_parser -r`. The host-wide sysctl stays **1** — mediation remains ON; exactly one binary path received exactly one permission. This is recorded here prominently for the governor: it is the completion of "install bubblewrap via apt" on a noble host, not a separate policy change; the inverse is below.
+
+**D1 identities (hash-recorded):** `/usr/bin/bwrap` sha256 `52231e1caf55bcbc667b269f49c63599a6f7db4767ae6a039580d0ff853db712` (72,160 B, root:root 0755, NOT setuid); cached .deb `bubblewrap_0.9.0-1ubuntu0.1_amd64.deb` sha256 `1b506492bd9c7fd0cdb4f02ac822f1d3e336b0aead5113c1239baf8db5db562a`; `/etc/apparmor.d/bwrap` sha256 `66de2da55f4e573cfa4d747f836fd2846cd5641f3e3be4ffa19be7732db62819` (root:root 0644; loaded, `aa-status` lists bwrap).
+
+**D1 probe evidence (bounded; Gordon retests systematically):**
+1. *dsh's own functional probe, verbatim args* (`bwrap --ro-bind / / --dev /dev --unshare-pid --proc /proc --die-with-parent -- true`, as dsh) → exit 0, **USABLE**.
+2. *Confined execution under the exact workspace-write profile* (`… --tmpfs /tmp --bind /var/lib/dsh/workspace /var/lib/dsh/workspace --`): write inside workspace succeeds (`D1-CONFINED-WRITE-OK`), exit 0.
+3. *Escalation inside confinement refused*: `touch /opt/dsh/.probe-escape` and `touch /etc/.probe-escape` both fail `Read-only file system` (exit 1); host-side confirms neither file exists. Probe artifacts cleaned.
+4. *Landed-chain dsh smoke* (headless, default composition, workspace-write): task "Use the bash tool to run exactly: echo D1-DSH-BWRAP-OK" → exit 0, stderr 0; durable log `session-0ece7b1c-c78b-4bff-b85a-d34446c486bd` (41 events) carries `tool/call` + `tool/result` `"name":"bash"`, marker present, `turn/end` completed — the path that failed CLOSED with `SandboxUnavailableError` in Gordon's D1 evidence now executes confined. **Fail-closed posture untouched: no config, sandbox code, or approval surface was modified — proven by the effective dump being byte-identical (§16.5).**
+
+**D1 inverse:** `sudo apparmor_parser -R /etc/apparmor.d/bwrap && sudo rm /etc/apparmor.d/bwrap`; `sudo apt-get remove -y bubblewrap` (removes the only added package). The dsh side needs no inverse: with no usable backend the chain returns to the proven fail-closed posture.
+
+### 16.3 D3 (P3) — flattened fixture symlinks: restored
+
+Survey identified the fixture contract (`examples/acp-agent/tests/acp.snapshot.ts:431`: "Both portable AGENTS.md fixtures are symlinks to a sibling AGENTS.canonical.md") and enumerated all 8 flattened-symlink candidates in the export (heuristic: tiny regular files whose content names an existing sibling). Exactly the two fixture links were restored on hxs-15 (as dsh; `rm` + `ln -s AGENTS.canonical.md AGENTS.md` in each directory); the other six (`CLAUDE.md → AGENTS.md` ×5 at root/packages/examples/vendor/.agents-notes, `.claude/skills → ../.agents/skills` ×1) are the same D2-class distribution artifact and are **recorded, not fixed** (minimal set; D2 owns the distribution class at upstream intake; no runtime impact proven).
+
+| Path (under /opt/dsh) | Before | After |
+| --- | --- | --- |
+| `examples/acp-agent/tests/snapshots/agent-instructions/workspace/AGENTS.md` | 19 B regular, sha256 `b991fee5…d4bdb` (content `AGENTS.canonical.md`) | symlink → `AGENTS.canonical.md`; resolves to canonical sha256 `5f95ba95…4b7c7` ("Root snapshot instruction.") |
+| `…/workspace/nested/AGENTS.md` | 19 B regular, same hash `b991fee5…d4bdb` | symlink → `AGENTS.canonical.md`; resolves to canonical sha256 `ba0e4295…89d71` ("Nested snapshot instruction.") |
+
+Tree effect in corpus scope (all `node_modules` excluded): symlinks **0 → 2** (exactly these two), regular files −2. `readlink` targets are the bare relative `AGENTS.canonical.md`, matching the flattened content byte-for-byte. Inverse: replace each symlink with a regular file containing `AGENTS.canonical.md` (19 B, no trailing newline) — restores the as-transported state.
+
+### 16.4 Identities after the fix window (what changed, what did not)
+
+| Identity | State |
+| --- | --- |
+| package.json / pnpm-lock.yaml anchors | UNCHANGED (`4adbdffa…4986d7`, `6f20c268…90013e` — re-verified this window, hxs-5 corpus and hxs-15 tree) |
+| launcher `/usr/local/bin/dsh`, built `bin.js`, home layer `cordis.patch.yml` | UNCHANGED (`0b68259f…efcdba`, `c0226687…366c62`, `14f15b72…03f6016` — re-verified live) |
+| effective dump | UNCHANGED — new dump sha256 `dedda886…d518d34`, byte-identical to §9 (proves zero config drift from the fix window) |
+| tree | CHANGED: +2 symlinks (§16.3); Gordon's G0-07 fingerprint drifts only at those two paths |
+| host | CHANGED: +bubblewrap 0.9.0-1ubuntu0.1 (`/usr/bin/bwrap` `52231e1c…db712`), +`/etc/apparmor.d/bwrap` (`66de2da5…62819`, loaded); dpkg 694→695; sysctl unchanged (=1) |
+| sessions/config/credential files | UNTOUCHED (`/var/lib/dsh` content, `/etc/dsh-omniroute.env`, `/var/lib/dsh/.env` — no access needed this window beyond smoke runs) |
+
+### 16.5 §15-C1 closure (re-count executed)
+
+Re-ran `dsh --profile headless --dump-config` (candidate unfrozen): **4 provenance comments** "patched by /var/lib/dsh/cordis.patch.yml", attached to rows `agent-default-model`, `llm-pi-ai`, `web`, `llm-deepseek`. All six §8 row operations are in effect in the dump (the six target rows show the intended config/`disabled: true`); `web-search-deepseek` and `tool-web` are toggled by the same layer but the dump does not emit individual provenance comments for them. Mapping is now of record; the §9 count (4) and the §8 operations (6) are both confirmed as reported, and the dump is byte-identical to install time. C1 closed.
+
+### 16.6 Fix receipt
+
+| Field | Value |
+| --- | --- |
+| D1 | FIXED — rung 1 (bwrap, the chain's preferred backend) provisioned per the governor's advance approval + Ubuntu's designed userns grant; confined execution proven, in-confinement escalation refused, landed-chain bash smoke green, fail-closed posture unmodified (no dsh config touched) |
+| D3 | FIXED — exactly the two fixture symlinks restored; corpus-scope symlink count 0→2; targets byte-identical to the flattened content |
+| D2 | untouched (governor deferral); six related flattened links recorded in §16.3 for that review |
+| Config drift | none — effective dump byte-identical (`dedda886…d518d34`) |
+| New identities | §16.2 (bwrap binary, .deb, AppArmor profile) and §16.3 (two symlink paths) |
+| Inverses | §16.2 (parser -R + rm profile; apt remove) and §16.3 (restore 19 B files) |
+| Residual risk | R4 (new): the AppArmor grant is host config OUTSIDE the dsh lane's ownership boundary (rick's OS plane) — recorded here with evidence and inverse for the governor's review; kernel/apparmor updates could also re-mediate bwrap → the chain would fail closed again (safe direction) |
+| Retest readiness | Gordon may retest G4-13 + G5-01..05/07/13/14 (D1) and the acp `agent-instructions` snapshot (D3) immediately; no candidate freeze needed — the composition is unchanged |
