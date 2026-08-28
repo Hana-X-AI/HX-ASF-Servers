@@ -11,11 +11,13 @@ exist in this repository.
 - Hardware, storage, and GPU fields: `DISCOVERED`, as-found evidence dated 2026-08-13.
 - Assigned Role and Workload / Model: `TARGET-STATE`, ratified by the owner on
   2026-08-13. Role-specific implementation is deferred to a later owner-authorized
-  phase. [exception noted 2026-08-28: where a workload has since been DEPLOYED and
-  owner-accepted, the cell carries `CURRENT-STATE` marked with its acceptance date
-  and the superseded target preserved as history — currently hxs-1 (Qwen 3.8 27B,
-  owner disposition 2026-08-27 #1), hxs-3 (Meta-X tooling specialist, production
-  ACTIVE 2026-08-27), and hxs-5 (control plane, owner advisory 2026-08-27)]
+  phase. [exception noted 2026-08-28, amended 2026-08-28: two classes of deviation
+  from pure TARGET-STATE — (a) DEPLOYED and owner-accepted workloads: the cell is
+  prefixed `CURRENT-STATE:` with acceptance date and the superseded target preserved
+  as history (hxs-1: Qwen 3.8 27B, owner disposition 2026-08-27 #1; hxs-3: Meta-X
+  tooling specialist, production ACTIVE 2026-08-27); (b) owner-advised ROLE changes:
+  no deployment claim, the advisory is recorded inline (hxs-5: control plane,
+  owner advisory 2026-08-27; hxs-7: replaced by hxs-20, same advisory)]
 - Reachability and DNS state: see the dated verification block at the bottom.
 
 ## Rules
@@ -52,9 +54,9 @@ COMPLETE    - consolidation is complete and verified
 
 | Server | FQDN | IP  | CPU | RAM | GPU / VRAM | Primary Storage | Discovery | Assigned Role | Workload / Model | Phase 2 |
 | ------ | ---- | --- | --- | --- | ---------- | --------------- | --------- | ------------- | ---------------- | ------- |
-| hxs-1 | hxs-1.hx.local.arpa | 192.168.50.200 | Intel Core Ultra 9 285K, 24c/24t | 128 GB DDR5 non-ECC | 2x RTX 4070 Ti SUPER, 16376 MiB each, 32752 MiB total | 3.6 TB NVMe root; 3.6 TB NVMe + 7.3 TB SATA unallocated | COMPLETE | Deep reasoning & synthesis | Qwen 3.8 27B (`hx-qwen3.8-27b-64k`, deployed and owner-accepted per owner disposition 2026-08-27 #1; supersedes "unreleased, slot reserved" recorded 2026-08-13 — preserved as history) | READY |
+| hxs-1 | hxs-1.hx.local.arpa | 192.168.50.200 | Intel Core Ultra 9 285K, 24c/24t | 128 GB DDR5 non-ECC | 2x RTX 4070 Ti SUPER, 16376 MiB each, 32752 MiB total | 3.6 TB NVMe root; 3.6 TB NVMe + 7.3 TB SATA unallocated | COMPLETE | Deep reasoning & synthesis | CURRENT-STATE: Qwen 3.8 27B (`hx-qwen3.8-27b-64k`, deployed and owner-accepted per owner disposition 2026-08-27 #1; supersedes "unreleased, slot reserved" recorded 2026-08-13 — preserved as history) | READY |
 | hxs-2 | hxs-2.hx.local.arpa | 192.168.50.201 | Intel Core i7-5960X, 8c/16t | 66 GB non-ECC | 2x RTX 5060 Ti, 16311 MiB each, 32622 MiB total | 3.6 TB NVMe root; 2x 596.2 GB SATA HDD unallocated | COMPLETE | Coding | Qwen2.5-Coder-32B, AWQ Int4, TP=2, max-model-len 16–24K | READY |
-| hxs-3 | hxs-3.hx.local.arpa | 192.168.50.202 | Intel Core i7-5960X, 8c/16t | 66 GB non-ECC | 2x RTX 5060 Ti, 16311 MiB each, 32622 MiB total | 3.6 TB NVMe root; 1.8 TB SATA SSD unallocated | COMPLETE | Agent intelligence | Meta-X tooling specialist — Muse Glimmer 30B (`hx-muse-glimmer-64k`, production ACTIVE 2026-08-27), primary tool agent for the RAG pipeline (one-call-per-turn contract) | READY |
+| hxs-3 | hxs-3.hx.local.arpa | 192.168.50.202 | Intel Core i7-5960X, 8c/16t | 66 GB non-ECC | 2x RTX 5060 Ti, 16311 MiB each, 32622 MiB total | 3.6 TB NVMe root; 1.8 TB SATA SSD unallocated | COMPLETE | Agent intelligence | CURRENT-STATE: Meta-X tooling specialist — Muse Glimmer 30B (`hx-muse-glimmer-64k`, production ACTIVE 2026-08-27), primary tool agent for the RAG pipeline (one-call-per-turn contract) | READY |
 | hxs-4 | hxs-4.hx.local.arpa | 192.168.50.203 | Intel Core i7-14700F, 20c/28t | 32 GB DDR5 non-ECC | 1x RTX 5060 Ti 16311 MiB + 1x RTX 5060 8151 MiB, 24462 MiB total | 931.5 GB NVMe root; 476.9 GB NVMe unallocated | COMPLETE | Retrieval & AI utility | Qdrant + Web-UI; Qwen2.5-3B; BGE-M3 / Nomic embeddings and BGE-Reranker-v2-m3 via TEI or Infinity | READY |
 | hxs-5 | hxs-5.hx.local.arpa | 192.168.50.204 | Intel Core i5-7500, 4c/4t | 32 GB DDR4 non-ECC | none, Intel HD 630 integrated only | 238.5 GB NVMe root, sole device | COMPLETE | Control plane (replaced hxs-cp per owner advisory 2026-08-27) | HX factory control plane (Kimi-K3 governor host) | READY |
 | hxs-6 | hxs-6.hx.local.arpa | 192.168.50.205 | Intel Core i5-8500T, 6c/6t | 15.9 GB DDR4 non-ECC | none, Intel UHD 630 integrated only | 238.5 GB NVMe root, sole device | COMPLETE | Ingestion — crawling | Crawl4AI (+ MCP) | READY |
@@ -67,7 +69,7 @@ COMPLETE    - consolidation is complete and verified
 | hxs-13 | hxs-13.hx.local.arpa | 192.168.50.212 | Intel Core i5-6500, 4c/4t | 32 GB DDR4 non-ECC, 2133 MT/s | none, Intel HD 530 integrated only | 238.5 GB SATA SSD root, sole device | COMPLETE | Automation | n8n (+ MCP) | READY |
 | hxs-14 | hxs-14.hx.local.arpa | 192.168.50.213 | Intel Core i5-7500, 4c/4t | 32 GB DDR4 non-ECC | none, Intel HD 630 integrated only | 238.5 GB NVMe root, sole device, aftermarket | COMPLETE | Development | Prompt engineering; LangGraph and client development | READY |
 | hxs-15 | hxs-15.hx.local.arpa | 192.168.50.214 | Intel Core i5-7500, 4c/4t, no VT-x | 32 GB DDR4 non-ECC | none, Intel HD 630 integrated only | 238.5 GB NVMe root, sole device, aftermarket | COMPLETE | Test & integration | QA, regression, integration testing, benchmarks | READY |
-| hxs-20 | hx-20.hx.local.arpa | 192.168.50.220 | Intel Core i5-7500, 4c/4t | 32 GB DDR4 non-ECC (2×16 GB Samsung @2400, first live reading 2026-08-28) | none recorded (owner-supplied discovery carries no GPU evidence) | 238.5 GB NVMe root, sole device | COMPLETE (first live inventory 2026-08-28) | MCP services (replaces hxs-7 per owner advisory 2026-08-27) | FastMCP runtime + custom HX MCP servers (target) | READY (baseline-green 2026-08-28) |
+| hxs-20 | hxs-20.hx.local.arpa | 192.168.50.220 | Intel Core i5-7500, 4c/4t | 32 GB DDR4 non-ECC (2×16 GB Samsung @2400, first live reading 2026-08-28) | none recorded (owner-supplied discovery carries no GPU evidence) | 238.5 GB NVMe root, sole device | COMPLETE (first live inventory 2026-08-28) | MCP services (replaces hxs-7 per owner advisory 2026-08-27) | FastMCP runtime + custom HX MCP servers (target) | READY (baseline-green 2026-08-28) |
 | hxs-21 | hxs-21.hx.local.arpa | 192.168.50.21 | Intel Core i5-7500, 4c/4t | 32 GB DDR4 non-ECC (2×16 GB Hynix @2400, mixed revisions, first live reading 2026-08-28) | none recorded (owner-supplied discovery carries no GPU evidence) | 238.5 GB NVMe root, sole device | COMPLETE (first live inventory 2026-08-28) | Standby — designated future control-plane machine (owner advisory 2026-08-27: eventually replaces the hxs-5 machine) | none assigned yet | READY (baseline-green 2026-08-28) |
 
 ## Role assignment record — historical
@@ -80,8 +82,12 @@ plane per owner advisory 2026-08-27** (and hxs-21, ONLINE 2026-08-28 at 192.168.
 is being provisioned to eventually replace the hxs-5 machine).
 
 **Addressing note (2026-08-28):** the `.199+N` pattern does NOT hold for the two new
-hosts — hxs-20 lives at 192.168.50.220 (hostname `hx-20`) and hxs-21 at 192.168.50.21
-(outside the .200–.214 block). Verified live by rick's 2026-08-28 baseline wave.
+hosts — hxs-20 lives at 192.168.50.220 (on-host hostname `hx-20`) and hxs-21 at
+192.168.50.21 (outside the .200–.214 block). Verified live by rick's 2026-08-28
+baseline wave. **Router DNS repaired 2026-08-28 (owner):** `hxs-21.hx.local.arpa`
+and `hxs-20.hx.local.arpa` resolve correctly (verified); `hx-20.hx.local.arpa` does
+NOT resolve — the canonical FQDN for hxs-20 is `hxs-20.hx.local.arpa` regardless of
+the on-host hostname.
 
 **Superseded assignment (hxs-3), dated 2026-08-27.** hxs-3's original workload target
 was **gpt-oss / LightRAG** (the 2026-08-13 role mapping). That assignment was superseded

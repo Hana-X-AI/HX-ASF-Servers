@@ -267,3 +267,32 @@ recompute-and-compare, never discovery.
 3. **Never guess.** Conflicts are preserved, ranked, and escalated.
 4. **No secrets in the catalog.** Existence, owner, retrieval mechanism only.
 5. **Receipts close handoffs.** No catalog receipt, no completed handoff.
+
+## 12. LIVING freshness class (amendment 2026-08-28, owner-ratified)
+
+**Owner decision 2026-08-28 (option B, rr-churn review):** the per-wave exact-hash
+re-mint of high-churn living documents is replaced by snapshot-at-consolidation.
+Driver: the largest single class of review findings was metadata about the
+metadata — re-hash bookkeeping feeding the next batch — with hours of wave time
+spent below the value line. (Recorded by the governor as a motivating example for
+the DeepSeek Harness pivot: conventions that cost more to maintain than to
+enforce belong in software.)
+
+**Class `living`** (added to the schema freshness enum):
+- **Qualifying documents:** pilot state logs and any source appending more than
+  ~5 entries per workday. Records for all other documents keep exact-hash
+  currency per wave (unchanged).
+- **Semantics:** the record's `validated_at` + `sha256` reflect the LAST
+  CONSOLIDATION, not the live source. `notes.living_document` carries the
+  last-consolidated hash, the words "source may be ahead", and the next
+  consolidation due.
+- **Consolidation triggers:** (a) daily 04:00Z when the source changed that
+  day; (b) work-arc close (handoff, owner-visible milestone); (c) owner call.
+- **Receipt wording:** "CATALOG CURRENT (living documents snapshotted at
+  <ts>)" — the exact-currency claim no longer covers LIVING records.
+- **Consumer guard:** a LIVING record is evidence of the source AS OF its
+  snapshot. It must never be cited as proof of the source's current content;
+  current rows are read from the source itself.
+
+This amendment supersedes the "living-log doctrine" mid-run absorb practice for
+state-log records: waves no longer re-mint them per batch; consolidations do.

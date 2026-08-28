@@ -4,7 +4,7 @@
 index:
   schema_version: 1
   initialized: 2026-08-25 (Carol instantiation, owner amendment)
-  updated: "2026-08-28T0225Z (T-micro run — discovery-mints wave (provenance: OmniRoute pilot state log row 57, 2026-08-28T02:12Z — rick-3host receipt cited (296), batch-11 fully cataloged, THIS micro-wave dispatched: mint the two owner-supplied discovery files (the rick-3host receipt's F-1) + the log to rows 1-57, then the batch-11 commit per row 54; carry-forward: receipt 2026-08-28T0206Z-carol-rick-3host-wave.md + validate.py 4/4 PASS at 02:06Z): 2 added (DOC-hxs20-discovery + DOC-hxs21-discovery — discovery, adopted, historical-as-found — the two owner-supplied interactive-evidence discovery files (status IN PROGRESS; hardware fields largely 'unavailable from supplied evidence' — SUPERSEDED IN FACT by rick's 2026-08-28 first live inventory, cross-referenced to DOC-fleet-baseline-hxs11-20-21-2026-08-28 and the new pre-work records; the .220 / .21 addressing pattern-break per the registry note; hxs-21's 44-updates capture likewise superseded in fact (0 live post-reboot, mechanism not established)), 1 updated (DOC-pilot-omniroute-state-log advanced rows 1-56 -> 1-57 (91cc8b3f… -> fe12331b… — row 57: batch-11 fully cataloged, the discovery mints + commit next, the owner-lane roll-up at the mark (SB set hxs-6/7/11/21 record-only, hx-20 rename + .21 placement network decisions, hxs-21 update mechanism, the row-52 items))); count 296 -> 298)"
+  updated: "2026-08-28T0352Z (T-standard run — living-contract wave (provenance: OmniRoute pilot state log rows 60-61, 2026-08-28T03:25Z/03:31Z — row 60: OWNER RATIFIES the living-document contract change, option B: the per-wave exact-hash re-mint of high-churn living documents is REPLACED by snapshot-at-consolidation (the churn loop closed by design; the DSH-pivot rationale recorded per the owner's framing); row 61: batch-7 receipt cited (298), her F-1 chronology catch recorded openly, THIS contract wave dispatched; agents/carol/profile.md §12 (owner-ratified amendment, dual-format re-rendered); carry-forward: receipt 2026-08-28T0324Z-carol-batch7.md + validate.py 4/4 PASS at 03:24Z): 0 added, 1 schema change (knowledge/catalog/schema.yaml — validation.freshness enum gains 'living' [current, aging, stale, superseded, historical, living]; the existing five values unchanged; scripts/validate.py reads the enum from this file — no code change needed, governor-verified) + 4 re-marks (DOC-pilot-omniroute-state-log — FINAL EXACT RE-MINT to rows 1-61 (694695d4… -> f46d6c1f…, absorbing rows 60-61: the owner ratification itself + the batch-7 receipt citation with her F-1 chronology recorded) then marked freshness: living — LAST CONSOLIDATION 2026-08-28T03:35Z at f46d6c1f…; DOC-pilot-fleet-baseline-state-log marked living — consolidation 03:36Z at 0c4261b3… (== live, rows 1-4); DOC-pilot-hxs2-state-log marked living — consolidation 03:36Z at ecede1e3… (== live, rows 1-60); DOC-pilot-hxs3-state-log marked living — consolidation 03:36Z at d9d6a085… (== live, rows 1-30); each notes.living_document now carries the last-consolidated hash + 'source may be ahead' + next consolidation due (daily 04:00Z when changed; work-arc close; owner call — profile §12) with the pre-contract hash chain preserved as the audit trail and the consumer guard stated; each review_due now carries the consolidation triggers, superseding the per-transition re-hash practice; index freshness lines for all four read 'living'); count 298 unchanged)"
   document_count: 298
   documents:
   - id: DOC-a01-origin-codex-20260824-2125
@@ -443,7 +443,7 @@ index:
     title: PILOT-FLEET-BASELINE-001 01-state-log.md — governor state-transition log (rows 1–4 at re-validation)
     type: other
     authority_level: agent-evidence
-    freshness: current
+    freshness: living
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-FLEET-BASELINE-001/01-state-log.md
   - id: DOC-pilot-fleet-baseline-wo-02-rick-baseline
     title: "02-work-order-rick-baseline.yaml — WO-02-fleet-baseline (fleet base verification + standard alignment: 7 fresh + 5 re-verify, two sanctioned mutation classes — rick, session rick-fleet-baseline-20260827-01; DISCHARGED — BASELINE COMPLETE, state log row 3, 2026-08-27T20:28Z; deliverable DOC-fleet-baseline-wave-2026-08-27)"
@@ -785,7 +785,7 @@ index:
     title: PILOT-HXS2-CODERX-BACKEND-001 01-state-log.md — governor state-transition log (rows 1–60 at re-validation)
     type: other
     authority_level: agent-evidence
-    freshness: current
+    freshness: living
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS2-CODERX-BACKEND-001/01-state-log.md
   - id: DOC-pilot-hxs2-wo-02-rick-m1
     title: 02-work-order-rick-m1.yaml — WO-HXS2-RICK-M1-001 (hxs-2 M1 OS readiness verification + staged designs; two authorized mutations)
@@ -887,7 +887,7 @@ index:
     title: PILOT-HXS3-MUSE-GLIMMER-TOOLING-001 01-state-log.md — governor state-transition log (rows 1–30 at re-validation)
     type: other
     authority_level: agent-evidence
-    freshness: current
+    freshness: living
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/01-state-log.md
   - id: DOC-pilot-hxs3-wo-02-rick-m1
     title: 02-work-order-rick-m1.yaml — WO-HXS3-RICK-M1-001 (hxs-3 M1 OS readiness verification; blueprint mask set from the start)
@@ -1070,10 +1070,10 @@ index:
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/07-source-provenance-receipt.md
   - id: DOC-pilot-omniroute-state-log
-    title: PILOT-OMNIROUTE-LAYER0-001 01-state-log.md — governor state-transition log (rows 1–57 at re-validation)
+    title: PILOT-OMNIROUTE-LAYER0-001 01-state-log.md — governor state-transition log (rows 1–61 at re-validation)
     type: other
     authority_level: agent-evidence
-    freshness: current
+    freshness: living
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/01-state-log.md
   - id: DOC-pilot-omniroute-trinity-adoption-assessment
     title: PILOT-OMNIROUTE-LAYER0-001 03-trinity-adoption-assessment.md — Trinity adoption reconciliation report (verdict ADOPT-AS-CORRECTED; gate checklist G1-G12)

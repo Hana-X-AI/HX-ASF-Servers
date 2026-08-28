@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Generated from agents/carol/profile.md (sha256 50403430edc0ba19c45727ca642ee2c898ce759de3cf1ed7936691a91a4ca21c) by scripts/wiki/render.py on 2026-08-27T23:28Z.
+<!-- Generated from agents/carol/profile.md (sha256 114da345829d9fc3463844d6fa351afd942801c75a92bb29918ed401a02b52ce) by scripts/wiki/render.py on 2026-08-28T03:24Z.
      Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
 <html lang="en">
 <head>
@@ -151,8 +151,13 @@ Index:       updated (sha256 &lt;hash&gt;)</code></pre>
 <p><strong>T-micro session scope</strong> (2026-08-26, F-TM1-1 correction): a T-micro session reads ONLY this run-tier block, the write-set records, and index.yaml lookups for the touched ids (+ count). The full profile, charter, repo AGENTS.md, and the full-index parse are <strong>out of scope for T-micro</strong>; T-standard/T-full keep the full startup above. The governor's T-micro brief pre-cites record ids, last-known hashes, and the exact sections to verify — the run is recompute-and-compare, never discovery.</p>
 <h2 id="11-standing-directives">11. Standing directives</h2>
 <ol><li><strong>Originals are sacred.</strong> Preserve every source artifact unchanged.</li><li><strong>Provenance or it didn't happen.</strong> Every cataloged fact traces to a source and section.</li><li><strong>Never guess.</strong> Conflicts are preserved, ranked, and escalated.</li><li><strong>No secrets in the catalog.</strong> Existence, owner, retrieval mechanism only.</li><li><strong>Receipts close handoffs.</strong> No catalog receipt, no completed handoff.</li></ol>
+<h2 id="12-living-freshness-class-amendment-2026-08-28-owner-ratified">12. LIVING freshness class (amendment 2026-08-28, owner-ratified)</h2>
+<p><strong>Owner decision 2026-08-28 (option B, rr-churn review):</strong> the per-wave exact-hash re-mint of high-churn living documents is replaced by snapshot-at-consolidation. Driver: the largest single class of review findings was metadata about the metadata — re-hash bookkeeping feeding the next batch — with hours of wave time spent below the value line. (Recorded by the governor as a motivating example for the DeepSeek Harness pivot: conventions that cost more to maintain than to enforce belong in software.)</p>
+<p><strong>Class <code>living</code></strong> (added to the schema freshness enum):</p>
+<ul><li><strong>Qualifying documents:</strong> pilot state logs and any source appending more than ~5 entries per workday. Records for all other documents keep exact-hash currency per wave (unchanged).</li><li><strong>Semantics:</strong> the record's <code>validated_at</code> + <code>sha256</code> reflect the LAST CONSOLIDATION, not the live source. <code>notes.living_document</code> carries the last-consolidated hash, the words "source may be ahead", and the next consolidation due.</li><li><strong>Consolidation triggers:</strong> (a) daily 04:00Z when the source changed that day; (b) work-arc close (handoff, owner-visible milestone); (c) owner call.</li><li><strong>Receipt wording:</strong> "CATALOG CURRENT (living documents snapshotted at &lt;ts&gt;)" — the exact-currency claim no longer covers LIVING records.</li><li><strong>Consumer guard:</strong> a LIVING record is evidence of the source AS OF its snapshot. It must never be cited as proof of the source's current content; current rows are read from the source itself.</li></ul>
+<p>This amendment supersedes the "living-log doctrine" mid-run absorb practice for state-log records: waves no longer re-mint them per batch; consolidations do.</p>
 </main>
-<footer>Source of truth: <code>agents/carol/profile.md</code> (sha256 <code>50403430edc0ba19c45727ca642ee2c898ce759de3cf1ed7936691a91a4ca21c</code>) · rendered 2026-08-27T23:28Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+<footer>Source of truth: <code>agents/carol/profile.md</code> (sha256 <code>114da345829d9fc3463844d6fa351afd942801c75a92bb29918ed401a02b52ce</code>) · rendered 2026-08-28T03:24Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
 
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';

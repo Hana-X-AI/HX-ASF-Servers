@@ -48,7 +48,7 @@ schema:
       required: true
       fields:
         validated_at: iso8601
-        freshness: {enum: [current, aging, stale, superseded, historical]}
+        freshness: {enum: [current, aging, stale, superseded, historical, living]}
         review_due: {note: "ISO date or event trigger"}
     sha256: {required: true, note: "checksum of the source artifact"}
     canonical_location: {required: true, note: "authoritative path, may be outside the repo"}
