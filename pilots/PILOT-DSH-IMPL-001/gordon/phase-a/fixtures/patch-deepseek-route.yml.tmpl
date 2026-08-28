@@ -1,0 +1,21 @@
+# Gordon fixture: llm-deepseek route repointed at OmniRoute.
+# Oracle: packages/llm/llm-deepseek/src/index.ts:79-81 (apiKeyEnv), :109-110
+# (baseURL), adapter.ts:71-72 (/chat/completions appended), :159-179 (Config schema).
+# Rendered at runtime; placeholders are __NAME__ style.
+- id: llm-deepseek
+  config:
+    apiKeyEnv: __KEY_ENV__
+    baseURL: __BASE_URL__
+    retryPolicy:
+      mode: normal
+      maxRetries: __MAX_RETRIES__
+    models:
+      - id: __MODEL_ID__
+        name: __MODEL_ID__
+        contextWindow: __CTX__
+        maxTokens: 4096
+
+- id: agent-default-model
+  config:
+    provider: deepseek-official
+    model: __MODEL_ID__

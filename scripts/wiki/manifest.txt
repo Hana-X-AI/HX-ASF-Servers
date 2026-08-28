@@ -50,3 +50,5 @@ pilots/PILOT-OMNIROUTE-LAYER0-001/09-reconciled-program-packet.md
 pilots/PILOT-OMNIROUTE-LAYER0-001/11-owner-decision-packet.md
 pilots/PILOT-OMNIROUTE-LAYER0-001/19-kk3-gate-decision.md
 goals/2026-08-27-fleet-baseline-deployment.md
+pilots/PILOT-DSH-IMPL-001/02-gordon-phase-a-testplan.md
+pilots/PILOT-DSH-IMPL-001/gordon/coverage-ledger.md

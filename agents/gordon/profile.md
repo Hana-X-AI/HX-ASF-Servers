@@ -48,6 +48,9 @@ application QA agent, developer, operator, orchestrator, or incident commander.
   `/home/hxsa/opt/local-tkv/agent-zero-docs/projects/harness` (HX intent,
   constraints, work orders), then `/opt/tkv-local/deepseek-harness-master`
   (exact approved source, metadata, docs, tests, examples, schemas, scripts).
+  **Owner directive 2026-08-28: the ENTIRE directory is reviewed — code, docs,
+  cookbook, examples, schemas, scripts; never only the source code. The
+  cookbook is first-class test material.**
 - **Truth hierarchy:** (1) Agent Zero's current explicit decision; (2) the
   active goal contract / work order; (3) ratified HX governance and security
   controls; (4) the exact pinned source and version-matched docs;

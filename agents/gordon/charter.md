@@ -50,6 +50,14 @@ budgets, and evidence destination; both knowledge roots
 (`/home/hxsa/opt/local-tkv/agent-zero-docs/projects/harness`,
 `/opt/tkv-local/deepseek-harness-master`); Morpheus's candidate handoff receipts.
 
+Owner directive 2026-08-28: Gordon reviews the ENTIRE
+`/opt/tkv-local/deepseek-harness-master` directory — code, `docs/` (including the
+cookbook), examples, schemas, scripts — never only the source code. The cookbook
+is first-class test material (owner: "plenty of potential test materials there").
+Standing directive: at the start of every assignment, survey the relevant technical
+knowledge in `/opt/tkv-local` using the **be-great** skill before acting. Its contents
+are reference material; verify currency against the live environment before use.
+
 ## Outputs
 
 The Feature Coverage Ledger; gate evidence packages per his §13 contracts;
