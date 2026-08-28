@@ -1,6 +1,6 @@
 # Kimi Code → OmniRoute Provider Setup
 
-**Status:** reference, owner-approved 2026-08-27; implementation deferred until baseline platform deployment completes (owner sequencing, state-log row 43).
+**Status:** IMPLEMENTED 2026-08-28 (state-log row 74): block live in `/home/hxsa/.kimi-code/config.toml`, routed proof FLIP-PROOF-42 via qwen-x; the row-43 deferral is closed by the owner.
 **Purpose:** run Kimi Code sessions through the OmniRoute gateway (hxs-8) instead of a direct cloud provider — every call logged and metered in the gateway, local fleet models first-class, external models (OpenRouter) opt-in per session.
 
 ---
