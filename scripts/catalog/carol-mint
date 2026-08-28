@@ -1,0 +1,391 @@
+#!/usr/bin/env python3
+"""carol-mint — mechanical catalog minting tool (SPEC: scripts/catalog/carol-mint-SPEC.md).
+
+Mechanizes the deterministic 90% of catalog waves: re-mint, scaffold, index,
+receipt skeleton, stale sweep, living consolidation, write-set gate. It NEVER
+writes semantic fields (declared_purpose, relations notes, conflict flags) —
+those stay with the agent. All catalog mutations take an exclusive flock and
+are atomic (temp + rename). Root override for tests: CAROL_MINT_ROOT.
+"""
+import fcntl
+import hashlib
+import os
+import shutil
+import sys
+import tempfile
+import time
+
+try:
+    import yaml
+except ImportError:
+    print("carol-mint: pyyaml required", file=sys.stderr)
+    sys.exit(2)
+
+VERSION = "1.0.0"
+ROOT = os.environ.get("CAROL_MINT_ROOT", "/home/hxsa/opt/HX-ASF-Servers/knowledge/catalog")
+DOCS = os.path.join(ROOT, "documents")
+INDEX = os.path.join(ROOT, "index.yaml")
+SCHEMA = os.path.join(ROOT, "schema.yaml")
+RECEIPTS = os.path.join(ROOT, "receipts")
+LOCK = os.path.join(ROOT, ".mint.lock")
+
+REQUIRED_DOC_FIELDS = ["id", "title", "type", "declared_purpose", "validation", "sha256", "canonical_location"]
+
+
+def fail(msg, rc=1):
+    print("carol-mint: REFUSED — %s" % msg, file=sys.stderr)
+    sys.exit(rc)
+
+
+def utcnow():
+    return time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+
+
+def utcshort():
+    return time.strftime("%Y-%m-%dT%H%MZ", time.gmtime())
+
+
+def sha256_file(path):
+    h = hashlib.sha256()
+    with open(path, "rb") as fh:
+        for chunk in iter(lambda: fh.read(65536), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def load_yaml(path):
+    with open(path, encoding="utf-8") as fh:
+        return yaml.safe_load(fh)
+
+
+def dump_yaml_atomic(path, data):
+    """Atomic write: temp file in same dir + rename. No line wrapping."""
+    fd, tmp = tempfile.mkstemp(dir=os.path.dirname(path), prefix=".mint-", suffix=".tmp")
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as fh:
+            yaml.safe_dump(data, fh, sort_keys=False, allow_unicode=True, width=10 ** 6)
+        os.replace(tmp, path)
+    except BaseException:
+        os.unlink(tmp)
+        raise
+
+
+class MintLock:
+    def __init__(self):
+        self.fh = None
+
+    def __enter__(self):
+        os.makedirs(ROOT, exist_ok=True)
+        self.fh = open(LOCK, "a+", encoding="utf-8")
+        try:
+            fcntl.flock(self.fh.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError:
+            fail("catalog is locked by another carol-mint process (single-writer rule)")
+        self.fh.seek(0)
+        self.fh.truncate()
+        self.fh.write("pid %d %s\n" % (os.getpid(), utcnow()))
+        self.fh.flush()
+        return self
+
+    def __exit__(self, *exc):
+        fcntl.flock(self.fh.fileno(), fcntl.LOCK_UN)
+        self.fh.close()
+
+
+def record_path(doc_id):
+    return os.path.join(DOCS, "%s.yaml" % doc_id)
+
+
+def load_record(doc_id):
+    path = record_path(doc_id)
+    if not os.path.isfile(path):
+        fail("unknown record %s (no %s)" % (doc_id, path))
+    data = load_yaml(path)
+    if not isinstance(data, dict) or "document" not in data:
+        fail("record %s is not a catalog document" % doc_id)
+    return data
+
+
+def freshness_enum():
+    try:
+        schema = load_yaml(SCHEMA)
+        return schema["schema"]["fields"]["validation"]["fields"]["freshness"]["enum"]
+    except Exception as e:
+        fail("cannot read freshness enum from schema.yaml: %s" % e)
+
+
+def stamp(notes, what):
+    notes["minted_by"] = "carol-mint %s @ %s — %s" % (VERSION, utcnow(), what)
+    return notes
+
+
+def living_consolidate_note(doc, live_hash):
+    notes = doc.setdefault("notes", {})
+    living = notes.get("living_document", "")
+    prefix = ""
+    if living:
+        prefix = living.rstrip() + "\n"
+    notes["living_document"] = (
+        "%sconsolidation %s at %s… — source may be ahead; next due: daily 04:00Z when changed, "
+        "work-arc close, owner call (profile §12)" % (prefix, utcnow(), live_hash[:12])
+    )
+
+
+def cmd_re_mint(doc_id, note, set_freshness=None):
+    with MintLock():
+        data = load_record(doc_id)
+        doc = data["document"]
+        src = doc.get("canonical_location")
+        if not src or not os.path.isfile(src):
+            fail("source missing for %s: %s" % (doc_id, src))
+        live = sha256_file(src)
+        recorded = doc.get("sha256", "")
+        if live == recorded and not set_freshness:
+            print("%s: current (sha %s…)" % (doc_id, live[:12]))
+            return 0
+        before = recorded
+        doc["sha256"] = live
+        doc.setdefault("validation", {})["validated_at"] = utcnow()
+        if set_freshness:
+            if set_freshness not in freshness_enum():
+                fail("freshness %r not in schema enum" % set_freshness)
+            doc["validation"]["freshness"] = set_freshness
+        if doc["validation"].get("freshness") == "living":
+            living_consolidate_note(data, live)
+        stamp(data.setdefault("notes", {}), "re-mint %s%s" % (
+            ("%s… -> %s…" % (before[:12], live[:12])) if before != live else "freshness-only",
+            (" — " + note) if note else ""))
+        dump_yaml_atomic(record_path(doc_id), data)
+        print("%s: re-minted %s… -> %s…" % (doc_id, before[:12], live[:12]))
+        return 0
+
+
+def cmd_new(doc_id, source, rtype, title):
+    with MintLock():
+        if os.path.isfile(record_path(doc_id)):
+            fail("record %s already exists" % doc_id)
+        if not os.path.isfile(source):
+            fail("source missing: %s" % source)
+        now = utcnow()
+        data = {
+            "document": {
+                "id": doc_id,
+                "title": title or "%s (scaffolded by carol-mint)" % doc_id,
+                "type": rtype,
+                "declared_purpose": "PENDING-AGENT",
+                "source": {"origin": os.path.abspath(source), "ingestion_date": now},
+                "owner": "Agent Zero",
+                "applies_to": {"hosts": [], "fqdns": [], "services": [], "agents": [],
+                               "repositories": [], "environments": []},
+                "status": "adopted",
+                "security": {"classification": "internal", "contains_secret_values": False},
+                "relations": [],
+                "validation": {"validated_at": now, "freshness": "current"},
+                "sha256": sha256_file(source),
+                "canonical_location": os.path.abspath(source),
+            },
+            "notes": {},
+        }
+        stamp(data["notes"], "scaffold")
+        dump_yaml_atomic(record_path(doc_id), data)
+        print("%s: scaffolded (declared_purpose PENDING-AGENT — an agent must fill it before the wave's gate passes)" % doc_id)
+        return 0
+
+
+def iter_records():
+    for name in sorted(os.listdir(DOCS)):
+        if name.startswith("DOC-") and name.endswith(".yaml"):
+            yield name[:-5], os.path.join(DOCS, name)
+
+
+def cmd_index(note=""):
+    with MintLock():
+        entries = []
+        for doc_id, path in iter_records():
+            try:
+                data = load_yaml(path)
+                doc = data["document"]
+            except Exception as e:
+                fail("index rebuild: %s unreadable: %s" % (path, e))
+            entries.append({
+                "id": doc.get("id", doc_id),
+                "title": doc.get("title", ""),
+                "type": doc.get("type", ""),
+                "authority_level": doc.get("authority_level", ""),
+                "freshness": (doc.get("validation") or {}).get("freshness", ""),
+                "canonical_location": doc.get("canonical_location", ""),
+            })
+        idx = load_yaml(INDEX) if os.path.isfile(INDEX) else {"index": {"schema_version": 1}}
+        idx["index"]["document_count"] = len(entries)
+        idx["index"]["documents"] = entries
+        idx["index"]["updated"] = "%s (carol-mint %s%s)" % (utcshort(), VERSION, (" — " + note) if note else "")
+        dump_yaml_atomic(INDEX, idx)
+        print("index rebuilt: %d records" % len(entries))
+        return 0
+
+
+def cmd_sweep_stale():
+    stale = 0
+    for doc_id, _ in iter_records():
+        data = load_record(doc_id)
+        doc = data["document"]
+        src = doc.get("canonical_location")
+        if not src or not os.path.isfile(src):
+            print("%s: SOURCE-MISSING (%s)" % (doc_id, src))
+            stale += 1
+            continue
+        live = sha256_file(src)
+        if live != doc.get("sha256", ""):
+            freshness = (doc.get("validation") or {}).get("freshness", "")
+            tag = " [living — expected between consolidations]" if freshness == "living" else ""
+            print("%s: stale %s… != live %s…%s" % (doc_id, doc.get("sha256", "")[:12], live[:12], tag))
+            stale += 1
+    print("sweep-stale: %d stale of %d records" % (stale, len(list(iter_records()))))
+    return 0 if stale == 0 else 1
+
+
+def cmd_consolidate():
+    moved = 0
+    for doc_id, _ in iter_records():
+        data = load_record(doc_id)
+        doc = data["document"]
+        if (doc.get("validation") or {}).get("freshness") != "living":
+            continue
+        src = doc.get("canonical_location")
+        if not src or not os.path.isfile(src):
+            print("%s: SKIP (source missing)" % doc_id)
+            continue
+        if sha256_file(src) != doc.get("sha256", ""):
+            cmd_re_mint(doc_id, note="living consolidation", set_freshness=None)
+            moved += 1
+    print("consolidate: %d living records re-minted" % moved)
+    return 0
+
+
+def cmd_receipt(wave, items, validator_line="PENDING"):
+    with MintLock():
+        os.makedirs(RECEIPTS, exist_ok=True)
+        lines = [
+            "# Carol receipt — %s" % wave,
+            "",
+            "- Wave: %s" % wave,
+            "- Window: %s (carol-mint %s)" % (utcnow(), VERSION),
+            "- Result: PENDING-AGENT",
+            "",
+            "## Records",
+            "",
+        ]
+        for doc_id in items:
+            data = load_record(doc_id)
+            doc = data["document"]
+            lines.append("- `%s` — %s (sha %s…, validated_at %s, freshness %s)" % (
+                doc_id, doc.get("title", "")[:80], doc.get("sha256", "")[:12],
+                (doc.get("validation") or {}).get("validated_at", ""),
+                (doc.get("validation") or {}).get("freshness", "")))
+        lines += ["", "## Validator", "", validator_line, "", "## Flags", "", "PENDING-AGENT", ""]
+        path = os.path.join(RECEIPTS, "%s-carol-%s.md" % (utcshort(), wave))
+        if os.path.isfile(path):
+            fail("receipt %s already exists" % path)
+        fd, tmp = tempfile.mkstemp(dir=RECEIPTS, prefix=".mint-", suffix=".tmp")
+        with os.fdopen(fd, "w", encoding="utf-8") as fh:
+            fh.write("\n".join(lines))
+        os.replace(tmp, path)
+        print("receipt skeleton: %s" % path)
+        return 0
+
+
+def cmd_gate(ids):
+    enum = freshness_enum()
+    problems = []
+    check_ids = ids or [doc_id for doc_id, _ in iter_records()]
+    for doc_id in check_ids:
+        try:
+            data = load_record(doc_id)
+        except SystemExit:
+            problems.append("%s: missing/unreadable" % doc_id)
+            continue
+        doc = data["document"]
+        for field in REQUIRED_DOC_FIELDS:
+            if field not in doc:
+                problems.append("%s: missing required field %s" % (doc_id, field))
+        fr = (doc.get("validation") or {}).get("freshness")
+        if fr not in enum:
+            problems.append("%s: freshness %r not in enum" % (doc_id, fr))
+        if str(doc.get("declared_purpose", "")).startswith("PENDING-AGENT"):
+            problems.append("%s: declared_purpose PENDING-AGENT (agent must fill)" % doc_id)
+        src = doc.get("canonical_location")
+        if not src or not os.path.isfile(src):
+            problems.append("%s: canonical_location missing on disk" % doc_id)
+        elif sha256_file(src) != doc.get("sha256", "") and fr != "living":
+            problems.append("%s: source hash drift (non-living record)" % doc_id)
+        for rel in doc.get("relations") or []:
+            tgt = str((rel or {}).get("target", ""))
+            if tgt.startswith("DOC-"):
+                bare = tgt.split()[0].split("(")[0].rstrip(",;")
+                if not os.path.isfile(record_path(bare)):
+                    problems.append("%s: relation target %s unresolved" % (doc_id, bare))
+    if os.path.isfile(INDEX):
+        idx_ids = {d.get("id") for d in (load_yaml(INDEX).get("index", {}).get("documents") or [])}
+        disk_ids = {doc_id for doc_id, _ in iter_records()}
+        if idx_ids != disk_ids:
+            problems.append("index 1:1 mismatch: %d index ids vs %d disk records" % (len(idx_ids), len(disk_ids)))
+    if problems:
+        for p in problems:
+            print("GATE-FAIL  %s" % p)
+        print("gate: %d problem(s)" % len(problems))
+        return 1
+    print("gate: PASS (%d records checked)" % len(check_ids))
+    return 0
+
+
+USAGE = """carol-mint %s — mechanical catalog minting (single-writer, atomic, no semantics)
+
+  re-mint <DOC-id> [--note "..."] [--set-freshness X]   re-hash one record from source
+  new <DOC-id> --source <path> --type <t> [--title ..]  scaffold a record (PENDING-AGENT)
+  index [--note "..."]                                  rebuild index.yaml from documents/
+  receipt <wave> --items <DOC-id...> [--validator "..."]  receipt skeleton
+  sweep-stale                                           list records whose source drifted
+  consolidate                                           re-mint changed freshness=living records
+  gate [--ids <DOC-id...>]                              write-set validation ladder
+""" % VERSION
+
+
+def main(argv):
+    if len(argv) < 2 or argv[1] in ("-h", "--help"):
+        print(USAGE)
+        return 0
+    cmd, args = argv[1], argv[2:]
+    opt = {}
+    pos = []
+    i = 0
+    while i < len(args):
+        if args[i].startswith("--"):
+            key = args[i][2:].replace("-", "_")
+            if i + 1 >= len(args):
+                fail("option %s needs a value" % args[i])
+            opt[key] = args[i + 1]
+            i += 2
+        else:
+            pos.append(args[i])
+            i += 1
+    if cmd == "re-mint" and len(pos) == 1:
+        return cmd_re_mint(pos[0], opt.get("note", ""), opt.get("set_freshness"))
+    if cmd == "new" and len(pos) == 1 and "source" in opt and "type" in opt:
+        return cmd_new(pos[0], opt["source"], opt["type"], opt.get("title", ""))
+    if cmd == "index":
+        return cmd_index(opt.get("note", ""))
+    if cmd == "receipt" and len(pos) == 1 and "items" in opt:
+        return cmd_receipt(pos[0], opt["items"].split(","), opt.get("validator", "PENDING"))
+    if cmd == "sweep-stale":
+        return cmd_sweep_stale()
+    if cmd == "consolidate":
+        return cmd_consolidate()
+    if cmd == "gate":
+        id_list = opt["ids"].split(",") if "ids" in opt else pos
+        return cmd_gate(id_list)
+    print(USAGE)
+    return 2
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv))
