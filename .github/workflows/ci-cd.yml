@@ -158,6 +158,13 @@ jobs:
           with open("/tmp/cr-summary.md", "w") as fh:
               fh.write(summary)
           if complete_status is None:
+              # A generated-only diff (e.g. wiki HTML re-render) yields
+              # "No files to review" from the service — nothing was in scope,
+              # so the gate passes vacuously. Any OTHER missing-complete
+              # (auth/service failure) stays fail-closed.
+              if any("no files to review" in e.lower() for e in errors):
+                  print("::notice::CodeRabbit: no reviewable files in this range (generated-only diff) — gate passes vacuously")
+                  sys.exit(0)
               print("::error::no complete event from CodeRabbit CLI (auth/service failure) %s"
                     % "; ".join(errors))
               sys.exit(1)
