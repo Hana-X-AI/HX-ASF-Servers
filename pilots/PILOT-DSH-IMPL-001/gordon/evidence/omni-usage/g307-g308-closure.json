@@ -1,0 +1,85 @@
+{
+  "snapshot_file": "omni-usage/snapshot-20260828T1355Z.json",
+  "provenance": "governor read-only query on hxs-8 storage.sqlite (ro mode)",
+  "window": "2026-08-28T10:50Z..2026-08-28T13:55Z",
+  "attribution": {
+    "api_key_name": "kimi-code-hxsa",
+    "rows": 474,
+    "note": "shared HX client key: window rows are a superset of the dsh suite register"
+  },
+  "register": {
+    "calls": 128,
+    "by_model": {
+      "landed-default": 2,
+      "hx-qwen3.8-27b-64k:latest": 58,
+      "hx-qwen3.6-coderx-64k:latest": 64,
+      "hx-muse-glimmer-64k:latest": 4
+    },
+    "exit_codes": {
+      "0": 82,
+      "1": 46
+    },
+    "ts_range": [
+      1787915262,
+      1787924980
+    ],
+    "by_model_resolved": {
+      "hx-qwen3.6-coderx-64k:latest": 66,
+      "hx-qwen3.8-27b-64k:latest": 58,
+      "hx-muse-glimmer-64k:latest": 4
+    },
+    "label_note": "register label 'landed-default' (2 calls, G3-04R) resolves to hx-qwen3.6-coderx-64k:latest \u2014 the landed default model (Morpheus receipt \u00a78)"
+  },
+  "snapshot": {
+    "rows": 474,
+    "by_model": {
+      "hx-qwen3.8-27b-64k:latest": 266,
+      "hx-qwen3.6-coderx-64k:latest": 202,
+      "hx-muse-glimmer-64k:latest": 6
+    },
+    "success": {
+      "1": 234,
+      "0": 240
+    },
+    "ts_range": [
+      1787914439.936,
+      1787924980.04
+    ]
+  },
+  "assertions": {
+    "attributed_rows_ge_register": true,
+    "attributed_rows": 474,
+    "register_calls": 128,
+    "per_model": {
+      "hx-muse-glimmer-64k:latest": {
+        "register": 4,
+        "snapshot": 6,
+        "snapshot_ge_register": true
+      },
+      "hx-qwen3.6-coderx-64k:latest": {
+        "register": 66,
+        "snapshot": 202,
+        "snapshot_ge_register": true
+      },
+      "hx-qwen3.8-27b-64k:latest": {
+        "register": 58,
+        "snapshot": 266,
+        "snapshot_ge_register": true
+      }
+    },
+    "window_covers_register": true,
+    "nonce_discipline": "every registered call carries a unique nonce; semantic cache cannot serve it (Trinity gate record)"
+  },
+  "g3_08_omni_side": {
+    "success_rows": 234,
+    "tokens_input_total": 1334010,
+    "tokens_output_total": 40702,
+    "success_rows_with_zero_tokens": 0,
+    "latency_ms_median": 4236,
+    "input_tokens_median": 7712,
+    "dsh_side_reference": "G3-08 artifact: assistant/message usage non-zero (inputTokens ~7.5K class, outputTokens 50+ class)",
+    "order_of_magnitude_match": true
+  },
+  "verdict": "PASS",
+  "closed_at_utc": "2026-08-28T14:20Z"
+}

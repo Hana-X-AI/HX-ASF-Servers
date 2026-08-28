@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Generated from pilots/PILOT-DSH-IMPL-001/04-gordon-phase-a-verdicts.md (sha256 d5193fa98f3e059672a36515dbd48391ad2a6ba94090def5d7c8f3aea019cc6f) by scripts/wiki/render.py on 2026-08-28T13:55Z.
+<!-- Generated from pilots/PILOT-DSH-IMPL-001/04-gordon-phase-a-verdicts.md (sha256 8f3190e5ee968c243341857474aeefd62f04825ac2ecc3dc33e330815eab0f72) by scripts/wiki/render.py on 2026-08-28T14:13Z.
      Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
 <html lang="en">
 <head>
@@ -64,8 +64,16 @@ a{color:#6fa8ff} .doc-meta,footer{color:#999}}
 <h2 id="campaign-close">Campaign close</h2>
 <p>[GATE VERDICT — Gate 0 — PASS] · [GATE VERDICT — Gate 1 — PASS WITH NAMED BLOCKS] · [GATE VERDICT — Gate 2 — PASS] · [GATE VERDICT — Gate 3 — PASS] · [GATE VERDICT — Gate 4 — PASS] · [GATE VERDICT — Gate 5 — PASS WITH NAMED BLOCKS]</p>
 <p>Phase A gate completion per my §7 completion rule is NOT yet declarable: D1 (P2) rejects the affected gate (Gate 5 execution rows) until Morpheus's fix lands and the blocked rows retest green; G3-07 awaits the governor's snapshots. No P0/P1 open. Stop conditions: none triggered. Campaign verdict: <strong>PHASE A GATES EXECUTED — 2 items outstanding (D1 retest, G3-07 snapshot closure) — evidence pack attached; the Feature Coverage Ledger carries the per-family dispositions.</strong></p>
+<hr>
+<h2 id="appendix-a-g3-07-g3-08-closure-appended-2026-08-28t14-20z-append-only">APPENDIX A — G3-07/G3-08 closure (appended 2026-08-28T14:20Z, append-only)</h2>
+<p><strong>[GATE VERDICT — Gate 3 — PASS (closed)]</strong> The governor-mediated usage_history snapshot landed (<code>gordon/evidence/omni-usage/snapshot-20260828T1355Z.json</code>; provenance: governor read-only query on hxs-8 <code>storage.sqlite</code>, ro mode; window 2026-08-28T10:50Z..13:55Z). Delivery-path note: the file was written to <code>~/pilots/...</code> and copied into the repo evidence area by Gordon (content unmodified). Closure artifact with full arithmetic: <code>gordon/evidence/omni-usage/g307-g308-closure.json</code>.</p>
+<p><strong>G3-07 — PASS.</strong> Assertion and arithmetic (register = <code>routed-calls.jsonl</code>, 128 calls, each unique-nonce so every call is a genuine backend round-trip — semantic cache cannot serve it):</p>
+<table><thead><tr><th>Measure</th><th>Register</th><th>Snapshot (kimi-code-hxsa, window)</th><th>Holds</th></tr></thead><tbody><tr><td>Attributed rows, all models</td><td>128</td><td>474</td><td>474 ≥ 128 ✓</td></tr><tr><td>hx-qwen3.8-27b-64k (Qwen-X)</td><td>58</td><td>266</td><td>✓</td></tr><tr><td>hx-qwen3.6-coderx-64k (Coder-X, incl. 2 G3-04R landed-default calls, receipt §8)</td><td>66</td><td>202</td><td>✓</td></tr><tr><td>hx-muse-glimmer-64k (Meta-X)</td><td>4</td><td>6</td><td>✓</td></tr></tbody></table>
+<p>Snapshot window covers every register timestamp (first 10:53:59Z, last 13:49:40Z). Attribution note recorded openly: <code>kimi-code-hxsa</code> is a shared HX client key, so the 474 window rows are a superset of the dsh register (240 failure rows are consistent with the campaign's queue-504 waves and deliberate failure drills; register exit codes: 82 green / 46 failed).</p>
+<p><strong>G3-08 — PASS (Omni-side leg closed).</strong> 234 success rows, zero zero-token success rows; tokens_input total 1,334,010; tokens_output total 40,702; input-tokens median 7,712 — the same class as the dsh-side <code>assistant/message.usage</code> evidence (system-prompt-heavy ~7.5K input, 50+ output). Both sides non-zero for the same window; orders of magnitude reconciled.</p>
+<p>Gate 3 has no open rows. Remaining Phase A open item: the D1 retest (separate dispatch after Morpheus's fix).</p>
 </main>
-<footer>Source of truth: <code>pilots/PILOT-DSH-IMPL-001/04-gordon-phase-a-verdicts.md</code> (sha256 <code>d5193fa98f3e059672a36515dbd48391ad2a6ba94090def5d7c8f3aea019cc6f</code>) · rendered 2026-08-28T13:55Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+<footer>Source of truth: <code>pilots/PILOT-DSH-IMPL-001/04-gordon-phase-a-verdicts.md</code> (sha256 <code>8f3190e5ee968c243341857474aeefd62f04825ac2ecc3dc33e330815eab0f72</code>) · rendered 2026-08-28T14:13Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
 
 </body>
 </html>

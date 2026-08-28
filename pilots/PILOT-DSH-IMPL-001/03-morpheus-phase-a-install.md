@@ -214,3 +214,39 @@ here per the open-correction rule.
   entries including hidden ones, preserves both directories. rick's runtime
   scaffold (Node, pnpm, dsh user, the then-empty dirs) remains his lane's
   baseline, as before.
+
+## 16. D1/D3 fix record (2026-08-28)
+
+### 16.1 Knowledge-review receipt (emitted FIRST, fix window)
+
+| Field | Value |
+| --- | --- |
+| goal / work-order ids | GOAL-DSH-IMPL-001; KK3 fix work order 2026-08-28 (D1 + D3; D2 deferred by governor); defect register `04-gordon-phase-a-verdicts.md` (Gordon campaign closed, candidate unfrozen for this window) |
+| target environment | hxs-15 (192.168.50.214) — ONLY; the landed Phase A candidate per §10 (unmoved since install; Gordon G0 re-verified all seven receipt identities MATCH at campaign start) |
+| knowledge root 1 (HX decisions) | same roots as §1 (identities unchanged — re-hashed at receipt time: plan `d9df4ff2…f3d5`, morpheus source `3158ecbc…dc02`) |
+| knowledge root 2 (approved source) | same corpus identity (§2 anchors re-verified MATCH on hxs-5: package.json `4adbdffa…4986d7`, pnpm-lock.yaml `6f20c268…90013e`); fix-specific survey: `native/landlock-run/README.md` + `packages/{entry,linux-x64}/package.json`, `packages/sandbox/sandbox-local/src/index.ts` (chain order + probes), `examples/acp-agent/tests/acp.snapshot.ts:431` (symlink fixture contract) |
+| installed runtime identity (pre-state) | the §10 candidate: launcher sha256 `0b68259f…efcdba`, bin.js `c0226687…366c62`, home layer `14f15b72…03f6016`; Node v24.20.0, pnpm 11.7.0, dsh uid 999; bwrap ABSENT; landlock-run `bin/` ABSENT (manifests only) — Gordon's D1 host probe re-verified below |
+| effective profiles/bundles/patches | unchanged — §8 home layer (this fix touches NO dsh config) |
+| persistence backend | unchanged (§1) |
+| upstream sources | none beyond the pinned corpus (local-only) |
+| allowed changes | hxs-15 only; D1: ONE sandbox rung fixed per the work order ((a) evaluated first, (b) bubblewrap via apt with the governor's advance dpkg approval); D3: restore EXACTLY the two fixture symlinks; NO config changes; NO weakening of the fail-closed posture; minimal change set per the candidate-freeze note |
+| protected constraints | unchanged from §1 + the work order's explicit: do NOT weaken fail-closed, do NOT touch any other config, keep the change set minimal, re-record every identity the fix changes |
+| required tests | Gordon retests G4-13 + G5-01..05/07/13/14 (D1) and the acp `agent-instructions` snapshot (D3) after this window; my own bounded probes below are install verification, not qualification |
+| known drift/conflicts | (1) D2 deferred (governor) — the six OTHER flattened symlinks found in this survey (root/packages/examples/vendor/.agents `CLAUDE.md → AGENTS.md` ×5, `.claude/skills → ../.agents/skills` dir-link ×1) are the same distribution defect class and are recorded here but NOT fixed (minimal set; D2 revisits the distribution at upstream intake); no runtime impact proven (the harness reads AGENTS.md real content; Gordon's G4 evidence). (2) §15-C1 re-count was deferred until the campaign closed — it closes in this window (§16.5) |
+| rollback state | pre-state: bwrap absent (dpkg baseline captured), two flattened 19-byte regular files (hashes captured), everything else per §10; inverses documented per fix below |
+| **proceed_status** | **MAY_PROCEED** |
+
+### 16.2 D1 (P2) — sandbox backend: mechanism evaluation and fix
+
+**(a) The pinned distribution's own materialization mechanisms — evaluated, all unsound within the approved constraints:**
+
+| Mechanism | Evidence (from the pinned source) | Verdict |
+| --- | --- | --- |
+| optional native dep (the designed path) | entry package `@deepseek-ai/node-addon-landlock-run@0.1.1` declares `optionalDependencies` on the platform packages (`workspace:*` in the monorepo); the platform package's `files` expects `bin/` — the prebuilt binary is **git-ignored by design** ("Binaries are git-ignored and built natively per architecture — locally for your own machine, by CI's per-arch runners as the builders of record", `native/landlock-run/README.md`); our approved export therefore ships manifests only | The mechanism works as designed; the artifact it resolves is absent from the source distribution BY DESIGN — nothing to provision through it without an external artifact |
+| postinstall fetch | "There is no install-time build fallback on purpose" (same README) | Does not exist (deliberate upstream decision) |
+| explicit package from npm | published `@deepseek-ai/node-addon-landlock-run-linux-x64@0.1.1` would be an artifact OUTSIDE the approved snapshot identity; wiring it into the workspace rewrites the pinned lockfile (prohibited) or places invisible-to-pnpm drift in `node_modules` | Unsound: breaks the pin doctrine the install is anchored on |
+| build from pinned source (`pnpm build:native`) | needs `musl-tools` via apt (same README) — a dpkg change OUTSIDE the governor's advance approval, which names bubblewrap | Not approved; would escalate rather than self-extend |
+
+**(b) APPROVED PATH TAKEN: bubblewrap via apt.** Rationale beyond the approval itself: the source pins bwrap as the chain's PREFERRED rung — `sandbox-local/src/index.ts:155` "Linux prefers `bwrap` (its mount profile is closest to the harness's…)"; rung 1 repaired gives the shipped chain its first-choice backend with a one-package dpkg footprint. Evidence and probe results: appended below at execution.
+
+<!-- 16.2 execution evidence, 16.3 D3, 16.4 identities, 16.5 C1 closure, 16.6 fix receipt appended at execution -->

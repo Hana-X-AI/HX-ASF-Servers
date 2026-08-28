@@ -222,7 +222,7 @@
 | Repo real-API e2e tier | G1-09 | **DEFERRED_BY_POLICY** | DeepSeek-cloud keys barred; HX e2e ran via OmniRoute in Gate 3 |
 | Corrupted-current-session resume | G4-06(b) | **BLOCKED-by-design** | Phase B Gate 7 |
 | Web frontend dist | G2-10, G5-10 | **BLOCKED-by-design** | Phase B boundary (receipt §5) |
-| usage_history routed evidence | G3-07, G3-08 | **BLOCKED (governor-mediated)** | snapshot request in the verdicts doc |
+| usage_history routed evidence | G3-07, G3-08 | **PASS (closed 2026-08-28T14:20Z)** | windowed snapshot (474 attributed rows ≥ 128 register calls; per-model ✓; zero zero-token success rows; input median 7,712 matches dsh-side class) — arithmetic in `evidence/omni-usage/g307-g308-closure.json`; verdicts doc Appendix A |
 | Live compaction trigger | census only | **NOT_RUN** | fixture-cost drill; governor decision (R2) |
 | Telemetry reporting | G2-13, G4-09 | **AVAILABLE_DISABLED** | default-off + switch + bounded drain proven |
 | Upstream advisory debt (38: 15H/20M/3L) | informational | recorded | receipt R1; governor risk register |
@@ -230,8 +230,10 @@
 ## Ledger close-out rule status
 
 Every row above has source reference, owner, disposition, test IDs, evidence
-pointer, and last-tested candidate identity. Open before a Phase A completion
-declaration: D1 (P2) fix + retest of the 9 blocked rows; G3-07/G3-08 snapshot
-closure (governor-mediated); R2 compaction decision. Zero P0/P1 open. Flakes
-and harness corrections are recorded openly in the verdicts document; no skip
-was silent and no non-pass was converted.
+pointer, and last-tested candidate identity. G3-07/G3-08 closed
+2026-08-28T14:20Z by the governor-mediated windowed snapshot (arithmetic in
+`evidence/omni-usage/g307-g308-closure.json`; verdicts doc Appendix A) — Gate 3
+has no open rows. Remaining before a Phase A completion declaration: D1 (P2)
+fix + retest of the 9 blocked rows (separate dispatch); R2 compaction decision.
+Zero P0/P1 open. Flakes and harness corrections are recorded openly in the
+verdicts document; no skip was silent and no non-pass was converted.

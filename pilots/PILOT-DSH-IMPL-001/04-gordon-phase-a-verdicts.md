@@ -199,3 +199,42 @@ snapshots. No P0/P1 open. Stop conditions: none triggered. Campaign verdict:
 **PHASE A GATES EXECUTED — 2 items outstanding (D1 retest, G3-07 snapshot
 closure) — evidence pack attached; the Feature Coverage Ledger carries the
 per-family dispositions.**
+
+---
+
+## APPENDIX A — G3-07/G3-08 closure (appended 2026-08-28T14:20Z, append-only)
+
+**[GATE VERDICT — Gate 3 — PASS (closed)]** The governor-mediated usage_history
+snapshot landed (`gordon/evidence/omni-usage/snapshot-20260828T1355Z.json`;
+provenance: governor read-only query on hxs-8 `storage.sqlite`, ro mode; window
+2026-08-28T10:50Z..13:55Z). Delivery-path note: the file was written to
+`~/pilots/...` and copied into the repo evidence area by Gordon (content
+unmodified). Closure artifact with full arithmetic:
+`gordon/evidence/omni-usage/g307-g308-closure.json`.
+
+**G3-07 — PASS.** Assertion and arithmetic (register =
+`routed-calls.jsonl`, 128 calls, each unique-nonce so every call is a genuine
+backend round-trip — semantic cache cannot serve it):
+
+| Measure | Register | Snapshot (kimi-code-hxsa, window) | Holds |
+| --- | --- | --- | --- |
+| Attributed rows, all models | 128 | 474 | 474 ≥ 128 ✓ |
+| hx-qwen3.8-27b-64k (Qwen-X) | 58 | 266 | ✓ |
+| hx-qwen3.6-coderx-64k (Coder-X, incl. 2 G3-04R landed-default calls, receipt §8) | 66 | 202 | ✓ |
+| hx-muse-glimmer-64k (Meta-X) | 4 | 6 | ✓ |
+
+Snapshot window covers every register timestamp (first 10:53:59Z, last
+13:49:40Z). Attribution note recorded openly: `kimi-code-hxsa` is a shared HX
+client key, so the 474 window rows are a superset of the dsh register (240
+failure rows are consistent with the campaign's queue-504 waves and deliberate
+failure drills; register exit codes: 82 green / 46 failed).
+
+**G3-08 — PASS (Omni-side leg closed).** 234 success rows, zero
+zero-token success rows; tokens_input total 1,334,010; tokens_output total
+40,702; input-tokens median 7,712 — the same class as the dsh-side
+`assistant/message.usage` evidence (system-prompt-heavy ~7.5K input, 50+
+output). Both sides non-zero for the same window; orders of magnitude
+reconciled.
+
+Gate 3 has no open rows. Remaining Phase A open item: the D1 retest (separate
+dispatch after Morpheus's fix).
