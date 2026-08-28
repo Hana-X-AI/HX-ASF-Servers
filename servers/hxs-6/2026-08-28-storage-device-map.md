@@ -185,3 +185,46 @@ Second Brain statement (standing directive): (1) opportunity identified: none ne
 ---
 
 **End of phase 1. Rick stops here per WO-01: no destructive command was issued, and none will be, without the governor's dual-gate release.**
+
+---
+
+# PHASE 2 — EXECUTION (destructive, dual-gate released)
+
+| Field | Value |
+| --- | --- |
+| Authority | Owner discard ruling 2026-08-28 ("Discard — wipe it now", retain/archive foreclosed) + governor device-map approval — BOTH recorded in pilot state-log row 4 (2026-08-28T06:07Z); verified by rick before any destructive command |
+| Executor | Rick, same session rick-hxs6-storage-20260828-01; hxsa@hxs-5 → hxsa@hxs-6, askpass discipline unchanged |
+| Window | 2026-08-28T06:10–06:15Z (UTC) |
+
+## Identity revalidation transcripts (sysfs method per row 4; nvme-cli absent)
+
+**REVALIDATION #1 — 2026-08-28T06:10:40Z, immediately before LVM teardown:** sysfs `/sys/block/nvme1n1/device/{model,serial}` → `PC SN740 NVMe WD 256GB`, `22170Z804761`; lsblk `-o SERIAL,WWN` → `22170Z804761`, `eui.e8238fa6bf530001001b448b4b6f22e2`; sysfs wwid (path `/sys/block/nvme1n1/wwid`) → `eui.e8238fa6bf530001001b448b4b6f22e2` (06:11:34Z). All MATCH the phase-1 stable identity. Live LVM state confirmed: PV `/dev/nvme1n1p3` UUID `rrc7yi-VWet-0zoq-Tu9L-INbS-y7fe-WQgrbe`, LV on `/dev/nvme1n1p3(0)` — unchanged from phase 1. **PASS.**
+
+**REVALIDATION #2 — 2026-08-28T06:13:35Z, after teardown + device-map re-verify, immediately before wipefs:** sysfs serial `22170Z804761`, wwid `eui.e8238fa6bf530001001b448b4b6f22e2`; lsblk `-dn -o SERIAL,WWN /dev/nvme1n1` → `22170Z804761 eui.e8238fa6bf530001001b448b4b6f22e2`. **MATCH.** Recorded openly: a first guard run (06:12:00Z) printed ABORT — false negative caused by trailing-space padding in the sysfs attributes against an untrimmed string comparison; the printed values matched the expected identity verbatim in both sources, and no destructive command followed that abort. The rerun with trimmed comparison printed MATCH. Guard defect, not an identity event.
+
+## Destructive steps executed (all on the identity-validated path; no retries)
+
+| Step | UTC | Command | Result |
+| --- | --- | --- | --- |
+| B1 | 06:11:34 | `lvchange -an ubuntu-vg` | OK |
+| B2 | 06:11:34 | `lvremove -y ubuntu-vg/ubuntu-lv` | OK — "successfully removed" |
+| B3 | 06:11:35 | `vgremove ubuntu-vg` | OK — "successfully removed" |
+| B4 | 06:11:35 | `pvremove -y /dev/nvme1n1p3` (only after live PV-UUID guard re-matched `rrc7yi-VWet-0zoq-Tu9L-INbS-y7fe-WQgrbe` in the same session) | OK — "Labels … successfully wiped" |
+| B5 | 06:11:35 | post-teardown `pvs/vgs/lvs` | all empty — LVM stack gone host-wide |
+| D1 | 06:13:35 | `wipefs -a /dev/nvme1n1p1 /dev/nvme1n1p2 /dev/nvme1n1p3 /dev/nvme1n1` | OK — vfat magic (p1), ext4 magic (p2), GPT primary+secondary, PMBR signature erased; kernel re-read table, partition nodes retired |
+| D2 | 06:13:35 | post-wipe probe (`wipefs` list, `blkid`, `lsblk`) | zero signatures; bare disk |
+| E1 | 06:14:05 | `sgdisk -o -n 1:0:0 -t 1:8300 /dev/nvme1n1` | OK — new GPT disk GUID `A5165993-E225-455F-B67F-C44FE20F77E0`; partition 1 sectors 2048–500118158 (238.5 GiB), type 8300, PARTUUID `7f5e765b-a27e-4fd2-9fdd-6614d6e4cdc4` |
+| E3 | 06:14:06 | `mkfs.ext4 -L hxs-6-data /dev/nvme1n1p1` | OK — UUID `c9241770-b75d-4a71-881c-b1fd1349f647`, 62,514,513 4k blocks, 15,630,336 inodes, 1 GiB journal, device blocks discarded (TRIM) |
+| F1–F7 | 06:14:53 | `mkdir -p /srv/data`; fstab backup `/etc/fstab.hx-bak-20260828`; append `UUID=c9241770-b75d-4a71-881c-b1fd1349f647 /srv/data ext4 defaults,nofail,noatime 0 2`; `findmnt --verify` (0 errors, 2 benign warnings — swap.img-is-file pre-existing, daemon-reload informational); `mount /srv/data`; `chown hxsa:hxsa` + `chmod 0755`; probe file write/read/remove as unprivileged hxsa | all OK |
+
+## Final state (verified 2026-08-28T06:15:24Z)
+
+- **Filesystem:** ext4, LABEL `hxs-6-data`, UUID `c9241770-b75d-4a71-881c-b1fd1349f647`, on `/dev/nvme1n1p1` (sole partition of the WD SN740, serial `22170Z804761`, WWN `eui.e8238fa6bf530001001b448b4b6f22e2` — identity confirmed again at final capture).
+- **Mount point:** `/srv/data`, mode `0755`, owner `hxsa:hxsa`; mounted `rw,noatime` via fstab; 234 GB total, 222 GB available.
+- **fstab:** `UUID=c9241770-b75d-4a71-881c-b1fd1349f647 /srv/data ext4 defaults,nofail,noatime 0 2` (pre-change copy: `/etc/fstab.hx-bak-20260828` on hxs-6).
+- **Intended use:** bulk storage for approved use, TBD by owner.
+- **Unchanged:** OS disk nvme0n1 (serial `49FF70BNF0AN`) — `/`, `/boot/efi`, swap file, its UUIDs and mounts byte-identical to phase 1. LVM: none host-wide. Failed systemd units: 0. No reboot performed (uptime since 2026-08-25 16:23:10 UTC).
+- Probe: wrote, read back, and removed `/srv/data/.hx-probe` as unprivileged hxsa — OK; nothing else written to the new filesystem.
+- Note: `systemctl daemon-reload` deliberately not run (not in the WO; systemd-fstab-generator regenerates from fstab at boot regardless). mkfs defaults kept, including 5% reserved blocks — tuning is a later owner/governor decision.
+
+`PASS — PHASE 2 COMPLETE` (all WO phase_2_execution_gated items executed; zero failures; zero retries on destructive steps)
