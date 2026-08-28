@@ -1,8 +1,11 @@
-# ci-cd.yml — HX-ASF-Servers (p8, owner-ratified 2026-08-26)
+# ci-cd.yml — HX-ASF-Servers (p8, owner-ratified 2026-08-26; amended 2026-08-28)
 # Trigger: every push to any branch. 18 steps total across three jobs.
 #   gates             — deterministic quality gates (all pushes; happy path ≈3 min)
-#   coderabbit-review — CodeRabbit CLI review gate (non-main pushes; skips cleanly
-#                       until the CODERABBIT_API_KEY secret is configured)
+#   coderabbit-review — CodeRabbit CLI review gate (ALL pushes incl. main — owner
+#                       directive 2026-08-28: "coderabbit should run on every commit
+#                       regardless of the type"; main pushes review the pushed range
+#                       BEFORE..HEAD, branch pushes review vs origin/main; skips
+#                       cleanly until the API key secret is configured)
 #   pr-manage         — auto-PR, auto-label, auto-merge, PR-comment notifications
 #                         (non-main pushes)
 # Auto-merge is the GitHub platform feature: it fires only when the required checks
@@ -76,7 +79,6 @@ jobs:
 
   coderabbit-review:
     name: coderabbit-review
-    if: github.ref_name != 'main'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -95,6 +97,8 @@ jobs:
         id: review
         env:
           CODERABBIT_API_KEY: ${{ secrets.CODERABBIT_API_KEY || secrets.CODERABBIT_API_KEY_2 }}
+          BEFORE: ${{ github.event.before }}
+          BRANCH: ${{ github.ref_name }}
         run: |
           if [ -z "${CODERABBIT_API_KEY:-}" ]; then
             echo "::notice::CODERABBIT_API_KEY not configured — review skipped (see docs/cicd-pipeline.md setup)"
@@ -102,9 +106,17 @@ jobs:
             exit 0
           fi
           echo "skipped=false" >> "$GITHUB_OUTPUT"
-          git fetch origin main --depth=1 >/dev/null 2>&1 || true
-          coderabbit review --agent --light --base origin/main \
-            --api-key "$CODERABBIT_API_KEY" > "$RUNNER_TEMP/findings.jsonl" || true
+          if [ "$BRANCH" = "main" ]; then
+            BASE="$BEFORE"
+            if [ -z "$BASE" ] || [ "$BASE" = "0000000000000000000000000000000000000000" ]; then BASE="HEAD~1"; fi
+            echo "main push — reviewing pushed range $BASE..HEAD"
+            coderabbit review --agent --light --committed --base-commit "$BASE" \
+              --api-key "$CODERABBIT_API_KEY" > "$RUNNER_TEMP/findings.jsonl" || true
+          else
+            git fetch origin main --depth=1 >/dev/null 2>&1 || true
+            coderabbit review --agent --light --base origin/main \
+              --api-key "$CODERABBIT_API_KEY" > "$RUNNER_TEMP/findings.jsonl" || true
+          fi
 
       - name: Parse findings and enforce the gate
         if: steps.review.outputs.skipped == 'false'

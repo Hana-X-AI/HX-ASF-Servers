@@ -279,9 +279,10 @@ the DeepSeek Harness pivot: conventions that cost more to maintain than to
 enforce belong in software.)
 
 **Class `living`** (added to the schema freshness enum):
-- **Qualifying documents:** pilot state logs and any source appending more than
-  ~5 entries per workday. Records for all other documents keep exact-hash
-  currency per wave (unchanged).
+- **Qualifying documents:** pilot state logs and any source appending **more
+  than 5 entries per workday** (i.e., 6 or more; exactly 5 does not qualify —
+  boundary made exact 2026-08-28 per review). Records for all other documents
+  keep exact-hash currency per wave (unchanged).
 - **Semantics:** the record's `validated_at` + `sha256` reflect the LAST
   CONSOLIDATION, not the live source. `notes.living_document` carries the
   last-consolidated hash, the words "source may be ahead", and the next
