@@ -176,3 +176,41 @@ All local commands as hxsa@hxs-5; remote as hxsa@hxs-15 over independent SSH ses
 
 `PASS — PHASE A CANDIDATE INSTALLED; HANDOFF OPEN (Morpheus does not certify own work)`
 
+
+## 15. Governor corrections (rr batch 2026-08-28) — labeled, append-only
+
+The original receipt text above is preserved unchanged; corrections are appended
+here per the open-correction rule.
+
+- **C1 (§9 patched-row count) — DISCREPANCY OF RECORD; re-count scheduled.** §9
+  reports 4 "patched by" provenance comments in the dump; §8 documents six row
+  operations (2 config + 4 disabled). The authoritative re-count requires
+  re-running `dsh --profile headless --dump-config`, which EXECUTES the
+  candidate — deferred until Gordon's live campaign closes (the candidate is
+  frozen). The verified count and the row-operation↔provenance-comment mapping
+  will be appended here at that point. Until then both numbers stand as
+  reported, labeled unverified-reconciliation.
+- **C2 (§10 Source row, byte-identity) — VALID, corrected.** The 7,903-file
+  manifest diff MATCH was taken at TRANSPORT time (pre-install, pre-build). The
+  final `/opt/dsh` tree = the transported corpus PLUS generated paths
+  (`node_modules` ~1.4 GB, built `lib/` dirs) with no corpus counterpart. The
+  anchors (`package.json`, `pnpm-lock.yaml`) remained byte-identical
+  post-install (§4/§10). Read "byte-identical copy" as "byte-identical
+  transport at install start"; no post-build manifest exists because generated
+  content has nothing to match against.
+- **C3 (§6 launcher, DSH_HOME export) — INVALID as filed; verbatim evidence of
+  record.** The §6 table abbreviated the shim. The ACTUAL launcher (read live
+  2026-08-28; hash unchanged vs §6) is 9 lines and ends:
+  `DSH_HOME=${DSH_HOME:-/var/lib/dsh}` / `export DSH_HOME` /
+  `exec /usr/local/bin/node /opt/dsh/apps/cli/lib/bin.js "$@"` — the export
+  precedes the exec. The §9 boot smoke independently proves the data root
+  resolved to `/var/lib/dsh` (sessions persisted there). No change required;
+  the verbatim content is now of record against the abbreviation.
+- **C4 (§11 rollback command) — VALID, corrected.** The documented inverse used
+  brace expansion (non-portable in `sh`) and `/opt/dsh/*` (misses dotfiles).
+  Corrected inverse: `sudo rm /usr/local/bin/dsh`;
+  `sudo find /opt/dsh -mindepth 1 -delete`;
+  `sudo find /var/lib/dsh -mindepth 1 -delete` — portable, removes all child
+  entries including hidden ones, preserves both directories. rick's runtime
+  scaffold (Node, pnpm, dsh user, the then-empty dirs) remains his lane's
+  baseline, as before.
