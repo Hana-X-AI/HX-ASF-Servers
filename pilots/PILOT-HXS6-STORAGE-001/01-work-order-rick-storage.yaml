@@ -15,20 +15,22 @@ controlling_sources:
 
 phase_1_verification_read_only:
   - identity: hostname, peer IP, machine-id vs servers/hxs-6/discovery.md
-  - device map: lsblk -o NAME,SIZE,TYPE,FSTYPE,LABEL,UUID,MOUNTPOINT; nvme list; blkid; pvs/vgs/lvs -o +devices; findmnt / (prove the LIVE root's source device)
-  - PROVE: the active root filesystem is NOT on ubuntu-vg/ubuntu-lv (if it IS, STOP — the disposition cannot apply; escalate to owner with evidence)
-  - "signatures on nvme1n1: partition table, filesystems, LVM metadata; any user data (read-only scan: file count, top-level names, newest mtime — no content reads beyond directory listing)"
-  - "EXCLUSIVE LVM TOPOLOGY PROOF (required before any erase): vgs/lvs/pvs output must show (a) ubuntu-vg contains ONLY ubuntu-lv — no other logical volumes; (b) every extent of ubuntu-vg maps to the /dev/nvme1n1 PV and no other PV (pvs -o pv_name,vg_name,pv_size + lvs -o lv_name,vg_name,devices + pvdisplay -m); (c) the exact PV path intended for pvremove (record it verbatim, e.g. /dev/nvme1n1 or a partition on it). Any extra LV, any extent on another PV, or any ambiguity = STOP, escalate"
+  - device map: lsblk -o NAME,SIZE,TYPE,FSTYPE,LABEL,UUID,MOUNTPOINT,SERIAL,WWN; nvme list; nvme id-ctrl on the target disk (serial + wwn, recorded verbatim as the STABLE IDENTITY); blkid; pvs/vgs/lvs -o +devices; findmnt / and findmnt /boot /boot/efi; swapon --show
+  - "COMPLETE TARGET-DISK TOPOLOGY (required before any erase): enumerate EVERY partition, PV, VG, LV, filesystem, and mountpoint on the target disk — not only the ubuntu-vg stack. Any partition, PV, VG, filesystem, or signature on the target disk that is not accounted for in the evidence doc = STOP, escalate"
+  - "PROVE: the active root filesystem AND every mounted/boot-critical source (/, /boot, /boot/efi, active swap) are NOT on the target disk or any child partition of it (findmnt source devices must map outside the target). It is not enough that / is not ubuntu-vg/ubuntu-lv — / could be a plain partition on the target disk. Any boot-critical source on the target = STOP, escalate"
+  - "signatures on the target disk: partition table, filesystems, LVM metadata; any user data (read-only scan: file count, top-level names, newest mtime — no content reads beyond directory listing)"
+  - "EXCLUSIVE LVM TOPOLOGY PROOF (required before any erase): vgs/lvs/pvs output must show (a) ubuntu-vg contains ONLY ubuntu-lv — no other logical volumes; (b) every extent of ubuntu-vg maps to the target-disk PV and no other PV (pvs -o pv_name,vg_name,pv_size + lvs -o lv_name,vg_name,devices + pvdisplay -m); (c) the exact PV path intended for pvremove, recorded verbatim TOGETHER WITH the disk's stable serial/WWN from nvme id-ctrl (kernel names like /dev/nvme1n1 are NOT stable across re-enumeration — the stable identity is the anchor, the path is its current alias). Any extra LV, any extent on another PV, or any ambiguity = STOP, escalate"
   - verdict: RETAINABLE-DATA-FOUND (stop, escalate) or CLEAR-TO-REFORMAT
-  - evidence doc: servers/hxs-6/2026-08-28-storage-device-map.md
+  - evidence doc: servers/hxs-6/2026-08-28-storage-device-map.md (carries the complete topology + stable serial/WWN identity)
 
 governor_gate:
   - "two recorded approvals are REQUIRED before phase 2 is released, both appended to the pilot state log: (1) the OWNER's explicit GO for the destructive phase (owner disposition 2026-08-27 #4 authorizes the operation's preparation and intent; it is not by itself the release), and (2) the GOVERNOR's approval after reviewing rick's phase-1 device map against the two proofs (root-not-on-LVM; zero retainable data)"
   - "the state-log entry releasing phase 2 must cite BOTH: the owner's GO (timestamp + words) and the governor's gate approval (device-map evidence reference); without both, phase 2 stays locked"
 
 phase_2_execution_gated:
-  - "deactivate and remove the stale LVM stack (lvchange -an ubuntu-vg; lvremove ubuntu-vg/ubuntu-lv; vgremove ubuntu-vg; pvremove <the EXACT PV path recorded in the topology proof> — passed explicitly, never a glob or assumed path) — ONLY after the phase-1 proof and the dual gate; the state-log release entry must cite the exclusive LVM topology evidence alongside the owner GO and governor approval"
-  - "wipe signatures on /dev/nvme1n1 (wipefs -a) — only after the LVM stack is fully removed and the device map re-verified"
+  - "IDENTITY REVALIDATION immediately before any destructive command (kernel names are not stable — the phase-1 path may now alias a different device): re-read nvme id-ctrl on the current path and lsblk -o SERIAL,WWN; the live serial/WWN must MATCH the phase-1 recorded stable identity. Any mismatch = ABORT, record fresh evidence, escalate. The destructive commands use ONLY the path whose live stable identity was just matched, never the stale phase-1 path"
+  - "deactivate and remove the stale LVM stack (lvchange -an ubuntu-vg; lvremove ubuntu-vg/ubuntu-lv; vgremove ubuntu-vg; pvremove <the identity-validated PV path> — passed explicitly, never a glob or assumed path) — ONLY after the phase-1 proof, the dual gate, and a PASSING identity revalidation recorded in the same state-log entry; the release entry cites the exclusive LVM topology evidence + the serial/WWN match alongside the owner GO and governor approval"
+  - "wipe signatures on the target disk (wipefs -a on the identity-validated path) — only after the LVM stack is fully removed, the device map re-verified, and the serial/WWN identity re-matched a second time"
   - new GPT + single partition; mkfs.ext4 -L hxs-6-data
   - mount point /srv/data (0755, hxsa:hxsa); fstab by UUID with nofail,noatime; mount; write/verify/remove a probe file
   - record final state: filesystem, mount point, ownership, intended use ("bulk storage for approved use, TBD by owner")
