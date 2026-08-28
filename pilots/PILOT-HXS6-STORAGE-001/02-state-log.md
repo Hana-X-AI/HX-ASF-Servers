@@ -1,7 +1,7 @@
 # PILOT-HXS6-STORAGE-001 — State Log
 
 **Pilot:** hxs-6 additional-storage provisioning (owner disposition 2026-08-27 #4)
-**Goal:** 00-goal.md · **Status:** ACTIVE — phase 2 (destructive) RELEASED (row 4); rick executing
+**Goal:** 00-goal.md · **Status:** (derived current summary — the authoritative transitions are the dated rows below) ACTIVE — phase 2 (destructive) RELEASED (row 4); rick executing
 **Convention:** append-only; open corrections labeled in-row.
 
 | # | UTC | Entry | Detail |
