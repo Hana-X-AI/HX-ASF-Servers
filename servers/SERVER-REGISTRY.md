@@ -95,7 +95,11 @@ by owner decision: hxs-3 is now the **Meta-X tooling specialist** (Muse Glimmer 
 `hx-muse-glimmer-64k`, production ACTIVE 2026-08-27 — see the hxs-3 row). The gpt-oss/
 LightRAG target is preserved here as history; it is no longer the current assignment.
 
-Phase 1 (discovery): COMPLETE, verified 2026-08-13 — 15 of 15 records accepted.
+Phase 1 (discovery): COMPLETE, verified 2026-08-13 — 15 of 15 records accepted
+(historical baseline scope: the original fifteen-server fleet). Current registry:
+**17 rows accepted** — hxs-20 and hxs-21 added 2026-08-28 after rick's first live
+inventory (baseline-green; their discovery records cataloged as DOC-hxs20-discovery
+and DOC-hxs21-discovery).
 Phase 2 (consolidation): READY.
 
 ## Verification — 2026-08-24 (DISCOVERED)
