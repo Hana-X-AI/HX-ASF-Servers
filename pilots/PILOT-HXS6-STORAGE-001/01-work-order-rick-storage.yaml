@@ -1,0 +1,44 @@
+# WO-01 — rick: hxs-6 additional-storage provisioning (DESTRUCTIVE CLASS)
+# DRAFT — held for owner GO. Prepared per owner disposition 2026-08-27 #4.
+# Pilot: pilots/PILOT-HXS6-STORAGE-001 | Goal: 00-goal.md
+
+id: WO-01-hxs6-storage
+executor: rick (agents/rick/charter.md + agents/rick/profile.md — read FIRST)
+session: rick-hxs6-storage-<date>-01 (assigned at dispatch)
+target: hxs-6 (192.168.50.205)
+priority: normal — no downstream blocker
+
+controlling_sources:
+  - owner disposition 2026-08-27 #4 (reformat and make available; verify-first ordering)
+  - servers/2026-08-27-fleet-baseline-wave.md (rick's REPORT: nvme1n1 + LVM ubuntu-vg/ubuntu-lv found, not in 08-13 discovery)
+  - servers/SERVER-REGISTRY.md hxs-6 row; /opt/tkv-local/servers/hxs-6/ records
+
+phase_1_verification_read_only:
+  - identity: hostname, peer IP, machine-id vs servers/hxs-6/discovery.md
+  - device map: lsblk -o NAME,SIZE,TYPE,FSTYPE,LABEL,UUID,MOUNTPOINT; nvme list; blkid; pvs/vgs/lvs -o +devices; findmnt / (prove the LIVE root's source device)
+  - PROVE: the active root filesystem is NOT on ubuntu-vg/ubuntu-lv (if it IS, STOP — the disposition cannot apply; escalate to owner with evidence)
+  - signatures on nvme1n1: partition table, filesystems, LVM metadata; any user data (read-only scan: file count, top-level names, newest mtime — no content reads beyond directory listing)
+  - verdict: RETAINABLE-DATA-FOUND (stop, escalate) or CLEAR-TO-REFORMAT
+  - evidence doc: servers/hxs-6/2026-08-28-storage-device-map.md
+
+governor_gate:
+  - governor reviews the device map against the two proofs (root-not-on-LVM; zero retainable data)
+  - only then authorizes phase 2, citing owner disposition #4
+
+phase_2_execution_gated:
+  - deactivate and remove the stale LVM stack (lvchange -an ubuntu-vg; lvremove ubuntu-vg/ubuntu-lv; vgremove ubuntu-vg; pvremove the PV) — ONLY after the phase-1 proof
+  - wipe signatures on /dev/nvme1n1 (wipefs -a)
+  - new GPT + single partition; mkfs.ext4 -L hxs-6-data
+  - mount point /srv/data (0755, hxsa:hxsa); fstab by UUID with nofail,noatime; mount; write/verify/remove a probe file
+  - record final state: filesystem, mount point, ownership, intended use ("bulk storage for approved use, TBD by owner")
+
+phase_3_records:
+  - servers/hxs-6/configuration.md created (second of its class pattern) or device-map doc updated with final state
+  - registry + TKV hxs-6 storage cell updated (append-only, dated)
+  - pilot state-log rows; Carol catalogs
+
+boundaries:
+  read_only_except: phase 2, and only after the governor gate
+  secrets: askpass pattern; no value in artifacts
+  failure: phase-1 anomaly → stop + escalate, never guess; phase-2 failure mid-way → stop, capture state, escalate (no retry loops on destructive steps)
+  model: local only; no cloud

@@ -81,6 +81,10 @@ Supporting seams: executor dispatch registry (144 aliases / 119 lazy modules, `o
 
 No reconciliation path (hidden=4, deprecated=2, system=1) lands exactly on any doc figure [FACT — arithmetic]. Resolution per the corpus rule: source outranks bundled docs. Ledger tests must assert source counts (356/355/272), never doc counts. No test in `tests/` asserts a provider count today [FACT — grep over tests/].
 
+## Addendum 2026-08-27 — counting-basis reconciliation (review batch rr-47, labeled, append-only)
+
+The rr review notes a reconciliation the original register missed: **356 − deprecated(2) = 354** (the "LLM providers" doc figure) and **356 − deprecated(2) − system(1) = 353** (the "Registered providers" doc figure). On that basis the first two verdicts above are downgraded from **MISMATCH** to **RECONCILABLE** — pending upstream confirmation that the docs' counting basis is indeed "excluding deprecated, and excluding system": the figure 354 matches the AGENTS.md/llm.txt claim exactly and 353 matches the README claim exactly. The remaining three verdicts stand unreconciled: 339 (candidate profile, −17/−16), 268 chat-model registry (−4 vs 272), 154 free (−1 vs 153). The original table and the "no reconciliation path" line are preserved above as the historical record; the source-count test requirement (assert 356/355/272, never doc counts) is unchanged.
+
 ## NOT-ESTABLISHED items (searched, not found)
 
 1. **ATEM/native protocol adapter** (CAP-P2-023): case-sensitive whole-word `ATEM` across `src/ open-sse/ packages/ docs/ config/` → zero matches; case-insensitive `atem` → substring noise only (i18n, unrelated identifiers). No ATEM adapter, format, or doc exists. The extant native paths are claude/gemini/codex/antigravity/kiro/cursor (CAP-P2-006…011).

@@ -53,3 +53,17 @@ work_order:
     transient_retry: 1
   stop_conditions: "build fails environmentally and cannot be bounded (escalate); corpus hash mismatch at any point (STOP — integrity); any requirement to exceed scope; secrets verification fails (do not paper over it); identity verification of a backend fails (do not register it — report)"
   rollback_or_containment: "documented inverse for every change: unit stop+remove, /opt/omniroute removal, data wipe, backend unregistration; pre-state hashes recorded"
+
+# Addendum 2026-08-27 (review batch rr-47, labeled, append-only):
+# (a) The owner_authorizations listed above were RATIFIED before this WO executed —
+#     state-log row 32 (2026-08-27T15:54Z) records OD-12 Layer-1 authorization with
+#     the owner's parameters (OD-04/OD-07/OD-08-amended/OD-09/OD-13) and the
+#     four-backend scope; M2 completed PASS under them (row 37). Reconciliation:
+#     no conflict between this WO and the ratified receipt.
+# (b) The "mode 0640" drop-in wording matches the DEPLOYED state at execution
+#     (0640 root:root — group-root read only). HARDENED 2026-08-28T00:11Z: the
+#     live drop-in is now 0600 root:root (governor chmod; content unchanged;
+#     service active throughout; least-privilege applied in fact).
+addenda_20260827:
+  - "authorizations ratified pre-execution (state log row 32); M2 PASS under them (row 37) — no conflict"
+  - "drop-in deployed 0640 root:root; HARDENED to 0600 root:root 2026-08-28T00:11Z (governor live chmod; content sha256 05638010ce7a6645… unchanged; service active throughout, no restart; least-privilege now applied in fact — verified stat 600 root:root)"

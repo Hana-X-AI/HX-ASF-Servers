@@ -233,3 +233,27 @@ as open owner-lane items, library + 7 pre-work records current,
 OmniRoute log at rows 1-44; flags F-1..F-4 above, each with
 provenance — F-1 is the row-44 follow-up wave's work list, F-2/F-4
 are owner-lane).
+
+[ERRATUM 2026-08-27 — labeled addendum, rr-47 wave; the original text above is preserved unchanged]
+Write-set totals reconciliation (rr finding, verified still valid): this
+receipt's figures are inconsistent across sections — "Updated (10)", "Write
+set: 15/15", and "all 15 touched records". The consistent totals are 5
+additions + 9 updated = 14 records touched. The nine updated records (all
+named in the Updated section): DOC-fleet-script-library, DOC-tkv-hxs6-,
+hxs9-, hxs10-, hxs12-, hxs13-, hxs14-, hxs15-pre-work-results, and
+DOC-pilot-omniroute-state-log. The five additions are the goal, the pilot
+state log, WO-02, CP-03, and the wave evidence record. The "10" in "Updated
+(10)" and the "15" figures are counting errors; the per-record content and
+the F-1 queue list are unaffected and stand. Recorded per the open-correction
+convention by Carol at the rr-47 catalog wave.
+
+[ERRATUM 2026-08-28 — labeled addendum, batch-10 follow-up wave; the preserved
+text above, including the 2026-08-27 erratum, is unchanged]
+The preserved Index summary line of this receipt reads "5 added, 10 updated".
+Per the 2026-08-27 erratum above, the correct figure is "5 added, 9 updated"
+(the nine updated records: DOC-fleet-script-library, DOC-tkv-hxs6-, hxs9-,
+hxs10-, hxs12-, hxs13-, hxs14-, hxs15-pre-work-results, and
+DOC-pilot-omniroute-state-log). Recorded per the open-correction convention
+by Carol at the batch-10 follow-up wave (OmniRoute state log row 50 queue
+item, verified still valid against the receipt text); the receipt body and
+both prior addenda otherwise stand.

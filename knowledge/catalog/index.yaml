@@ -4,8 +4,8 @@
 index:
   schema_version: 1
   initialized: 2026-08-25 (Carol instantiation, owner amendment)
-  updated: "2026-08-27T2140Z (T-standard run — review-batch-followup wave (provenance: OmniRoute pilot state log row 44, 2026-08-27T20:49Z — the 15-finding review batch disposition: 7 governor-lane FIXED at source, 8 catalog-lane QUEUED to this wave per the write-race rule — plus the baseline-wave receipt's F-3, the 19- reference doc; carry-forward: receipt 2026-08-27T2104Z-carol-baseline-wave.md + validate.py 4/4 PASS at 21:04Z): 2 added (DOC-hxs8-discovery-repo — discovery, active, agent-evidence — the F-A1 two-copy split RESOLVED by option (a): the REPO maintained hxs-8 discovery cataloged (baseline entries + labeled 2026-08-27 memory addendum); DOC-pilot-omniroute-19-kimi-code-provider-setup — runbook, adopted, ratified-governance — the owner-approved Kimi Code -> OmniRoute provider setup, deferral condition consumed at baseline completion, L1-M3 closure owner-gated), 9 updated (DOC-goal-hxs3-muse-glimmer-tooling re-hash 355b837b… -> 13d6aeeb… — status_mapping updated: the original status restored as historical + the dated transition current, SC-06 formal deferral the current disposition; DOC-tkv-server-registry — status/freshness -> SUPERSEDED pointing consumers to DOC-server-registry (authority preserved) + re-hash 24053689… -> caff7987… + hxs-cp wording recast historical (hxs-5 current control plane); DOC-server-registry re-hash accc06f2… -> 4ede3ba5… — the dated superseded-assignment note recorded; DOC-agent-trinity-charter re-hash a2485640… -> 0a69c523… — OD-12 authorized + OD-03 completed; DOC-agent-trinity-profile re-hash 4954c02b… -> b6dfffd4… — header OD-12/OD-03 completed, discipline CANDIDATE -> RATIFIED, 13,098-file verification COMPLETE, 314 -> 316 lines; DOC-goal-omniroute-layer1-secure-core re-hash 91abb96c… -> 62d8cccc… — OD-08 posture-blocked + OD-13 injection/prohibited-locations amendments mirrored; DOC-hxs3-configuration — registry-divergence passages recast RESOLVED (source unchanged 6ce8d291… re-verified); DOC-kdd-0008-trinity-omniroute-adoption — author field decider 'pending' -> O1 DECIDED (source unchanged 4a87ec64… re-verified); DOC-tkv-hxs8-discovery — notes.f_a1_resolution_20260827 added (source unchanged 37997d0d… re-verified)); count 290 -> 292)"
-  document_count: 292
+  updated: "2026-08-28T0058Z (T-standard run — batch-10-followup wave (provenance: OmniRoute pilot state log rows 50-51, 2026-08-28T00:26Z/00:41Z — row 50 rr batch-10 disposition (drop-in HARDENED live to 0600 root:root, bind = pre-gate task, 2 verified skips, 5 catalog items QUEUED to this wave); row 51 dispositions-closing receipt cited (293) + this wave dispatched; carry-forward: receipt 2026-08-28T0037Z-carol-dispositions-closing.md + validate.py 4/4 PASS at 00:37Z): 0 added, 6 updated (DOC-pilot-omniroute-control-manifest — declared_purpose 'six allowed states' -> SEVEN with the enum spelled out (stale wording labeled; source unchanged 493b32e7… re-verified); DOC-pilot-omniroute-decision-19-kk3-gate — declared_purpose item (3) copilot-driver membership labeled HISTORICAL wrong-member (AVAILABLE-DISABLED; BLOCKED = CAP-P7-036/037/038/048/049/051 + CAP-P8-037/045; '8 BLOCKED entries' + carried_conditions stand; source unchanged 5cf0c005… re-verified); DOC-pilot-omniroute-wo-09-trinity-install — rr47 entry fixed twice: the invalid '23:4xZ' timestamp -> exact 2026-08-27T23:40Z (per the wave's freshness line + validated_at), and the 0640 treatment -> least-privilege APPLIED IN FACT (hardened live to 0600 root:root 2026-08-28T00:11Z, content sha256 05638010… unchanged, no restart, NO residual exception — the WO's own addenda record it); re-hash 9da37eeb… -> 2e04e2a3…; receipt 2026-08-27T2104Z-carol-baseline-wave.md — second labeled erratum appended: the preserved Index summary '5 added, 10 updated' -> '5 added, 9 updated' per the first erratum (preserved text + both addenda stand); DOC-pilot-omniroute-cp-12-trinity-gate — re-hash eeae2d63… -> 01f88ab4…: the bind note amended — bind-to-IP is now a PRE-GATE TASK inside the gate WO (apply during the gate's restart sequence, post-bind verification in the acceptance package; the owner-lane-queue framing superseded, labeled); DOC-pilot-omniroute-state-log advanced rows 1-50 -> 1-51 (73b97faa… -> db5ef95f… — row 51: closing receipt cited + this wave dispatched; F-2 the owner dispositions document lives in agent-zero-docs, F-3 the backup-encryption-wrapper the one remaining owner-open decision); count 293 unchanged)"
+  document_count: 293
   documents:
   - id: DOC-a01-origin-codex-20260824-2125
     title: codex_20260824_2125_hx-1-ollama-pilot-qwen3.8-amendment.md — original source of Amendment A01 (agent-zero-docs)
@@ -422,7 +422,7 @@ index:
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-FLEET-BASELINE-001/03-context-packet-rick-baseline.yaml
   - id: DOC-pilot-fleet-baseline-state-log
-    title: PILOT-FLEET-BASELINE-001 01-state-log.md — governor state-transition log (rows 1–3 at ingestion)
+    title: PILOT-FLEET-BASELINE-001 01-state-log.md — governor state-transition log (rows 1–4 at re-validation)
     type: other
     authority_level: agent-evidence
     freshness: current
@@ -937,6 +937,12 @@ index:
     authority_level: delegated-contract
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/10-context-packet-trinity-install.yaml
+  - id: DOC-pilot-omniroute-cp-12-trinity-gate
+    title: "12-context-packet-trinity-gate.yaml — context packet for WO-L1-GATE-001 (session trinity-l1-gate-20260827-01; L1-M3 the Secure Core gate: deep parity per reachable backend, restart ×2, cold reboot, backup+restore, rehearsed rollback, hygiene close-out, configuration.md, owner sign-off package; READY-TO-DISPATCH — the gate is HELD for the owner's word, the cold-reboot carrier)"
+    type: context-packet
+    authority_level: delegated-contract
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/12-context-packet-trinity-gate.yaml
   - id: DOC-pilot-omniroute-decision-19-kk3-gate
     title: "PILOT-OMNIROUTE-LAYER0-001 19-kk3-gate-decision.md — KK3 gate decision: PASS — Layer 0 COMPLETE (7 carried conditions; Layer 1 NOT authorized)"
     type: decision
@@ -974,7 +980,7 @@ index:
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/ledger
   - id: DOC-pilot-omniroute-ev-p2-providers-protocol
-    title: "PILOT-OMNIROUTE-LAYER0-001 ledger/P2-providers-protocol.{md,json} — Wave 0B partition P2 providers/protocol (23 entries, 110 refs; static registry 356/355 vs runtime 272 vs doc claims 353/354/268/339 ALL MISMATCH; zero ATEM adapter corpus-wide)"
+    title: "PILOT-OMNIROUTE-LAYER0-001 ledger/P2-providers-protocol.{md,json} — Wave 0B partition P2 providers/protocol (23 entries, 110 refs; static registry 356/355 vs runtime 272 vs doc claims: 353/354 RECONCILABLE via the 2026-08-27 counting-basis addendum — 356−2dep / 356−2dep−1sys, pending upstream confirmation; 268/339 MISMATCH stand; zero ATEM adapter corpus-wide)"
     type: evidence
     authority_level: agent-evidence
     freshness: current
@@ -1046,7 +1052,7 @@ index:
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/07-source-provenance-receipt.md
   - id: DOC-pilot-omniroute-state-log
-    title: PILOT-OMNIROUTE-LAYER0-001 01-state-log.md — governor state-transition log (rows 1–44 at re-validation)
+    title: PILOT-OMNIROUTE-LAYER0-001 01-state-log.md — governor state-transition log (rows 1–51 at re-validation)
     type: other
     authority_level: agent-evidence
     freshness: current

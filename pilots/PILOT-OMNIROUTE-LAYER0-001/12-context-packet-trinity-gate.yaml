@@ -10,7 +10,7 @@ context_packet:
     reboot, backup-and-restore, rehearsed rollback, hygiene close-out,
     configuration.md, and the acceptance package for the owner's sign-off.
   current_state:
-    deployed: "omniroute.service active+enabled on hxs-8 (Type=notify, READY + 60 s watchdog, user omniroute uid 999), Next 16.3.2 standalone at /opt/omniroute/app, 0.0.0.0:20128 (LAN+loopback, no firewall)"
+    deployed: "omniroute.service active+enabled on hxs-8 (Type=notify, READY + 60 s watchdog, user omniroute uid 999), Next 16.3.2 standalone at /opt/omniroute/app, 0.0.0.0:20128 (LAN+loopback, no firewall). [note 2026-08-27: 0.0.0.0 on the LAN host with OmniRoute authN/authZ was the deployed choice under OD-07. PRE-GATE TASK for this work order: rebind the primary listener to 192.168.50.207:20128 with a separate loopback listener (rr-47 follow-up, 2026-08-28 batch) — apply during this gate's own restart sequence, verify non-LAN interfaces unexposed + authN/authZ intact, and record the post-bind evidence in the acceptance package]"
     secrets: "OD-13 verified at M2 — 0 plaintext rows in the DB secrets namespace; connection api_key AES-256-GCM ciphertext; management password bcrypt; root-only 0640 drop-in (hash-recorded, never valued)"
     backends: "Qwen-X/Coder-X/Meta-X registered with identity evidence; Chat-X registered with loopback-only posture PROVEN (posture-blocked, not failed)"
     parity_baseline: "M2 parity byte-identical ×3 reachable backends (content 42, stop, identical token counts); usage_history evidences routed calls"

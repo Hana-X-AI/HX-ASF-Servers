@@ -3,6 +3,7 @@
 - Goal ID: 2026-08-27-omniroute-trinity-layer0 (this file's name)
 - Version: 1
 - Status: in-progress — Layer 0 (M0 authorized 2026-08-27 by p11 + approved plan `red-star-stargirl-kamala-khan` Option A)
+- Status transition 2026-08-27 **[current]**: **LAYER 0 COMPLETE — PASS** (KK3 gate decision `19-kk3-gate-decision.md`; handoff catalog-closed; owner OD-12 then authorized Layer 1 — see goal `2026-08-27-omniroute-layer1-secure-core`). [open correction 2026-08-27: the original in-progress status is preserved above per the append-only convention]
 - Owner: Agent Zero
 - Created: 2026-08-27
 - Human authority: Agent Zero
@@ -50,7 +51,7 @@ No OmniRoute install/start/deploy; no package/build/migration/compose/container/
 ## Layer map (entry/exit gates)
 
 - **Layer 0 — Foundation** (this contract): authority reconciled, Trinity adoption packet, provenance receipt, capability ledger, program packet, independent verification, KK3 gate. Exit: owner review of the handoff + explicit Layer 1 authorization.
-- **Layer 1 — Secure Core Gateway**: pinned runtime, persistence, authN, encrypted secrets, ONE local backend, protocol baseline, health, backup, rollback. Entry: owner authorization after Layer 0 + hxs-8 readiness acknowledged.
+- **Layer 1 — Secure Core Gateway**: pinned runtime, persistence, authN, encrypted secrets, ONE local backend, protocol baseline, health, backup, rollback. Entry: owner authorization after Layer 0 + hxs-8 readiness acknowledged. [open correction 2026-08-27: "ONE local backend" is superseded — owner OD-08 (amended 2026-08-27, state log row 32) requires ALL FOUR HX backends registered from the start, with Chat-X's parity posture-blocked as an approved exception; see goal `2026-08-27-omniroute-layer1-secure-core` OD-08]
 - **Layer 2 — Governed Routing & Resilience**: approved backends, curated routes/combos, strategy characterization, quotas/budgets/sessions/failover/telemetry. Entry: Layer 1 gate passed + owner authorization.
 - **Layer 3 — Intelligence, Quality & Modalities**: compression/cache/guardrails/eval/search/retrieval/memory characterization. Entry: Layer 2 gate + owner authorization; memory/Qdrant disposition decided.
 - **Layer 4 — Agent & Ecosystem Integration**: scoped MCP/A2A/ACP, skills/plugins, remote ops, sidecars. Entry: Layer 3 gate + owner authorization; control-plane collisions isolated/disabled by design.

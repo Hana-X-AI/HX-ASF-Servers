@@ -36,6 +36,9 @@ document:
     - predicate: "references"
       target: "DOC-tkv-server-registry"
       note: "fleet registry row for hxs-8"
+    - predicate: "references"
+      target: "DOC-hxs8-discovery-repo"
+      note: "the separate current maintained-repository record (servers/hxs-8/discovery.md — the REPO living copy the governor keeps current: 2026-08-12 baseline entries + labeled 2026-08-27 addenda) — minted at the review-batch follow-up wave per the F-A1 resolution option (a); THIS record stays the historical-original designation (vault as-found, unchanged); structured edge added at the rr-47 wave per the rr finding (record content otherwise unchanged)"
   validation:
     validated_at: "2026-08-27T21:20:00Z"
     freshness: "historical"

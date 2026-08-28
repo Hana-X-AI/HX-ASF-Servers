@@ -49,6 +49,7 @@ hx_authority:
 completion_semantics:
   allowed_states:
     - ACTIVE
+    - ACTIVE-CANDIDATE
     - AVAILABLE-DISABLED
     - LAB-ONLY
     - BLOCKED

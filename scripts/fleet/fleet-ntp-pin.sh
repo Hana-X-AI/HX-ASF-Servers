@@ -17,6 +17,12 @@
 #        --dry-run staging needs no privilege; residual risk — between
 #        diff-review and apply, only the transport user or root can touch
 #        the staged file.
+#   H3b (review batch rr-47, 2026-08-27) — the parsed STAGED_PATH is validated
+#        against the EXACT mktemp template and suffix alphabet
+#        (/tmp/.fleet-ntp-pin. + exactly 8 chars of [A-Za-z0-9]); anything else
+#        (e.g. a semicolon-suffixed injection) is refused before any reuse.
+#        Every interpolation of the path into a command string then uses the
+#        printf %q-escaped form ($qstaged), including the apply install.
 #   H4 — an empty diff means the host is already compliant: the script
 #        reports `already-compliant`, cleans the staged file, and exits 0
 #        instead of aborting. The added-line check still applies to
@@ -110,15 +116,18 @@ if [ $stage_rc -ne 0 ] || [ -z "$staged" ]; then
   printf '%s: staging failed on %s — nothing applied (fail-closed)\n' "$SCRIPT_NAME" "$host" >&2
   exit 1
 fi
-# Validate the parsed path shape before using it anywhere.
+# Validate the parsed path shape before using it anywhere (H3b): exact mktemp
+# template + suffix alphabet only — 8 chars of [A-Za-z0-9], nothing else.
 case "$staged" in
-  /tmp/.fleet-ntp-pin.*) ;;
+  /tmp/.fleet-ntp-pin.[A-Za-z0-9][A-Za-z0-9][A-Za-z0-9][A-Za-z0-9][A-Za-z0-9][A-Za-z0-9][A-Za-z0-9][A-Za-z0-9]) ;;
   *) printf '%s: refusing to use unexpected staged path "%s" on %s\n' "$SCRIPT_NAME" "$staged" "$host" >&2; exit 1 ;;
 esac
+# Shell-escaped form for every interpolation into a command string (H3b).
+qstaged="$(printf '%q' "$staged")"
 
 # H4: empty diff = already compliant — success, after normal cleanup.
 if printf '%s\n' "$stage_out" | grep -q '^diff-rc=0 '; then
-  "$FLEET_SSH" "$host" "rm -f $staged" </dev/null >/dev/null 2>&1
+  "$FLEET_SSH" "$host" "rm -f $qstaged" </dev/null >/dev/null 2>&1
   printf '%s: already-compliant — /etc/systemd/timesyncd.conf on %s already matches the fleet pin (no changes needed)\n' "$SCRIPT_NAME" "$host"
   exit 0
 fi
@@ -126,12 +135,12 @@ fi
 # Non-empty diff: the expected NTP line must be among the additions.
 if ! printf '%s\n' "$stage_out" | grep -q '^+NTP=time.cloudflare.com$'; then
   printf '%s: staged content missing expected NTP line on %s — aborting\n' "$SCRIPT_NAME" "$host" >&2
-  "$FLEET_SSH" "$host" "rm -f $staged" </dev/null >/dev/null 2>&1
+  "$FLEET_SSH" "$host" "rm -f $qstaged" </dev/null >/dev/null 2>&1
   exit 1
 fi
 
 if [ "$mode" = "dry-run" ]; then
-  "$FLEET_SSH" "$host" "rm -f $staged" </dev/null >/dev/null 2>&1
+  "$FLEET_SSH" "$host" "rm -f $qstaged" </dev/null >/dev/null 2>&1
   printf '\nDRY-RUN: would apply the diff above on %s and restart systemd-timesyncd.\n' "$host"
   printf 'Zero mutation performed. Re-run with --apply under an explicit work order.\n'
   exit 0
@@ -139,7 +148,7 @@ fi
 
 # ---- apply (work-order gated, stdin passthrough to remote sudo -S) ----
 APPLY_REMOTE="$(cat <<EOS
-sudo -S -p "" sh -c "install -m 0644 -o root -g root $staged /etc/systemd/timesyncd.conf && rm -f $staged && systemctl restart systemd-timesyncd && echo APPLIED"
+sudo -S -p "" sh -c "install -m 0644 -o root -g root $qstaged /etc/systemd/timesyncd.conf && rm -f $qstaged && systemctl restart systemd-timesyncd && echo APPLIED"
 EOS
 )"
 

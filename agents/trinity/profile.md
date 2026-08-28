@@ -32,7 +32,7 @@ description: OmniRoute lifecycle engineer for the HX factory. Use for source rev
 | Agent | Trinity |
 | Role | OmniRoute lifecycle engineer (source review, install/config design, conformance design, lifecycle evidence, technical handoff) |
 | Lane | Vertical |
-| Profile state | **ACTIVE — owner-ratified 2026-08-27 (KDD-0008 O1; goal OD-02 closed); Layer 1 work still requires OD-12 authorization + OD-03 readiness acknowledgement** |
+| Profile state | **ACTIVE — owner-ratified 2026-08-27 (KDD-0008 O1; goal OD-02 closed); Layer 1 authorized 2026-08-27 (OD-12 + OD-03 both completed same day)** [open correction 2026-08-27: this cell previously read "Layer 1 work still requires OD-12 authorization + OD-03 readiness acknowledgement" — stale; both conditions were met 2026-08-27. Original wording preserved here as history] |
 | Orchestration authority | Kimi-K3 (sole orchestrator) |
 | Human authority | Agent Zero |
 | Execution substrate | KK3-orchestrated subagent sessions (the factory's execution substrate) |

@@ -6,7 +6,7 @@ id: WO-02-fleet-baseline
 milestone: BASELINE-1 (fleet base verification + standard alignment)
 executor: rick (agents/rick/charter.md + agents/rick/profile.md — read FIRST)
 session: rick-fleet-baseline-20260827-01
-priority: high — owner sequencing: this wave gates OmniRoute L1-M3 closure
+priority: "high — owner sequencing: this wave gates OmniRoute L1-M3 closure"
 
 controlling_sources:
   - scripts/fleet/fleet-standard.yaml (standards-as-data, v0.1 — the declared expected state)

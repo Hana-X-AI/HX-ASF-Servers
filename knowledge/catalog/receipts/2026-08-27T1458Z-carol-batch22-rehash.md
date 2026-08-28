@@ -201,3 +201,13 @@ Index: updated (sha256 c28c75ceabd56454763cb8ca10a04ec7e0de067c0f7b36a74e6a47f19
 provenance).
 
 Result: PASS — CATALOG CURRENT (276 records).
+
+[ERRATUM 2026-08-27 — labeled addendum, rr-47 wave; the original text above is preserved unchanged]
+The F-B22-1 flag above describes the merged-json staleness as affecting "on 8
+fields". The correct discrepancy count is 10 fields: 3x required_authorization
+prose vs 'none' + 1x risk_class 'critical-adjacent — …' vs 'high — …' + 6
+cross-references in 4 classes (006/036/063/064 vs 005/906/059/060) — the
+parenthesized detail in the original text already itemizes all ten; the "8"
+figure is the counting error. Recorded per the open-correction convention by
+Carol at the rr-47 catalog wave (rr finding verified still valid); the
+receipt body otherwise stands.

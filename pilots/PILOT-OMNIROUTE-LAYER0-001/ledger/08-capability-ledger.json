@@ -1,4 +1,21 @@
 {
+ "ledger": {
+  "schema_version": "1",
+  "entry_schema_keys": 13,
+  "program": "PILOT-OMNIROUTE-LAYER0-001",
+  "work_order": "WO-OMNI-TRINITY-LEDGER-001",
+  "producer": "trinity",
+  "produced_at": "2026-08-27",
+  "corpus": "/opt/tkv-local/OmniRoute-release-v3.8.51 (READ-ONLY; identity VERIFIED 2026-08-27, 13,098/13,098 git-blob identical to upstream diegosouzapw/OmniRoute@42a13fedef8b)",
+  "truth_states": "FACT = verified at the cited line; UPSTREAM = bundled-doc claim, drift-prone; INFERENCE = labeled producer reasoning; AUTHORITY = HX governance decision",
+  "totals": { "entries": 367, "source_refs": 1325, "partitions": 8 },
+  "merged_from": [
+   "P1-api-routing.json", "P2-providers-protocol.json", "P3-tools-streaming.json",
+   "P4-security.json", "P5-persistence-config.json", "P6-observability.json",
+   "P7-agent-surfaces.json", "P8-packaging-modes.json"
+  ],
+  "provenance_note": "sibling metadata object added 2026-08-27 (review batch rr-47) — capabilities array and contents unchanged; values from the authoritative merged run (10-control-manifest.yaml)"
+ },
  "capabilities": [
   {
    "id": "CAP-P1-001",

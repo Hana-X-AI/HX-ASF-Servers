@@ -51,12 +51,13 @@ document:
       target: "DOC-fleet-baseline-wave-2026-08-27"
       note: "DISCHARGED by the deliverable servers/2026-08-27-fleet-baseline-wave.md (PASS — TASK COMPLETE: 12/12 verdicts — 10 PASS, 2 REPORT with declared closing directions, 0 FAIL; mutations only the two sanctioned classes, ntp ×7 + mask ×8, canary-first one-at-a-time each post-verified; selftest 42/42 at both gates; zero secret values; state log row 2, 2026-08-27T20:19Z) — minted at the discharged state per the wo-07 variant (the deliverable landed before cataloging)"
   validation:
-    validated_at: "2026-08-27T20:42:00Z"
+    validated_at: "2026-08-27T23:40:00Z"
     freshness: "current"
     review_due: "DISCHARGED 2026-08-27 (BASELINE COMPLETE, state log row 3); the baseline handoff CLOSES when this run's receipt is cited in the fleet pilot state log (profile §7); the 2 REPORTs' owner decisions (hxs-6 storage, hxs-10 memory) ride the owner lane"
-  sha256: "231a212ed253cef48a224331f2ba8a33b28ec47136feadc3472dcda4dcc30749"
+  sha256: "e0ea9169a304e02ed2d226fc01dbf55a6956dc3b1422d5b3b6501cdfd7407957"
   canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-FLEET-BASELINE-001/02-work-order-rick-baseline.yaml"
 notes:
   status_convention: "MINTED ALREADY-DISCHARGED (status adopted) per the governor's dispatch and the DOC-pilot-omniroute-wo-07-rick-node precedent (M7-pair convention variant): the wave completed before cataloging — deliverable landed at state log row 2 (2026-08-27T20:19Z), receipt + F-4 amendment + re-verification at row 3 (20:28Z), both before this mint; the in-execution state never entered the catalog. The governs edge to the deliverable is minted in place (no deferral needed at a discharged mint)."
   hash_crosscheck: "sha256 231a212ed253cef48a224331f2ba8a33b28ec47136feadc3472dcda4dcc30749 at mint (2026-08-27T20:3xZ) — the first recorded hash for this artifact (state log row 1 records no WO/CP hashes, same pattern as the earlier pairs); re-verified == live at this run's close self-check."
   secrets_discipline: "The WO's secrets boundary is cataloged as existence + mechanism only: askpass pattern from the credential record (awk on the SSH-password row), helper 0700 deleted at end, NO secret value in any artifact/log/receipt/model context — the WO names no value (VERIFIED at ingestion; profile §6)."
+  rr47_20260827: "RR-47 WAVE (2026-08-27T23:4xZ; OmniRoute state log row 46 governor-lane fix — 'fleet WO-02 priority scalar quoted'): the priority line is now a properly quoted YAML scalar — 'priority: \"high — owner sequencing: this wave gates OmniRoute L1-M3 closure\"' (source line 9, VERIFIED PRESENT this run) — a form-level correctness fix, no content change (the declared_purpose's priority sentence stands verbatim). Hash chain: 231a212e… (mint, baseline wave) -> e0ea9169… (this record)."

@@ -59,6 +59,8 @@ The numbered-excerpt + anchor-citation contract eliminated the offset-arithmetic
 
 `3.8.40/3.8.50` version strings in `docs/ops/*`; provider counts 353/354/268/339 (source: 356/355 static, 272 runtime); strategy count 17 in `open-sse/services/AGENTS.md` (source: 19); "dedicated encrypted store" in `src/lib/db/AGENTS.md` (source: plaintext); migration count 148–153 (source: 160); omni-mcp "32 scopes" (measured: 17); `OMNIROUTe_API_KEY` env-var typo in `/api/assess`; agent-card version fallback `1.8.1`.
 
+[addendum 2026-08-27 — rr-47, labeled: the 353/354 provider-count entries are RECONCILABLE, not refuted — 356 − deprecated(2) = 354 and 356 − deprecated(2) − system(1) = 353 match the doc figures exactly under that counting basis (pending upstream confirmation of the basis); 268/339 remain unreconciled drift. See P2-providers-protocol.md's 2026-08-27 addendum; the P2 partition row at line 30 and this register entry are preserved as the historical record.]
+
 ## NOT-ESTABLISHED policy
 
 35 entries record honest absences (searched-not-found), each with its search scope. Where the conclusion is producer reasoning from absence rather than a directly verified fact, the entry carries the declared INFERENCE label (batch-20 convention). Absence at this commit is evidence, not a permanent verdict.

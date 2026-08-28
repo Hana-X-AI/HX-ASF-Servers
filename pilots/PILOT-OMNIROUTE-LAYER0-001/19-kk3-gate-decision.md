@@ -27,7 +27,7 @@ Trinity's roster state accurately represented (candidate → ratified, dated). C
 
 1. **OD-13 is a hard Layer-1 requirement** (owner-ratified): env-provision `JWT_SECRET` + `API_KEY_SECRET` and set `STORAGE_ENCRYPTION_KEY`; never accept the product's plaintext defaults.
 2. Backup encryption and cloud upload are treated as **nonexistent** (write-only encryption; dead endpoint) — OD-09 plans around them.
-3. Agent-like surfaces stay disabled: copilot driver (executes model output as host CLI), Conductor hub, cloud agents/CLI, tunnels, MITM bridge — 8 BLOCKED entries stand unless the owner explicitly reverses one.
+3. Agent-like surfaces stay disabled: runner-cli flavor (agent CLIs + host docker.sock), Conductor hub, cloud agents/CLI, tunnels, MITM bridge — 8 BLOCKED entries stand unless the owner explicitly reverses one. [open correction 2026-08-27: this line previously named the "copilot driver" — wrong member; the copilot driver is AVAILABLE-DISABLED in the ledger, not owner-blocked. Membership verified against 08-capability-ledger.json: CAP-P7-036/037/038 tunnels, CAP-P7-048 Conductor, CAP-P7-049 cloud agents, CAP-P7-051 MITM bridge, CAP-P8-037 cloud agent-tasks CLI, CAP-P8-045 runner-cli]
 4. Disabled-by-default is **not code-enforced** for skills execution and background jobs — Layer-1 config must set them explicitly.
 5. No ATEM routing assumption for Meta-X (no adapter exists in v3.8.51).
 6. hxs-8 host-dependent work still requires the owner's OD-03 acknowledgement of rick's readiness evidence.

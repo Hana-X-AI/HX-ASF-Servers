@@ -138,3 +138,11 @@ Index: updated (sha256 4f569473f0ee99198192a91c0244288ae965746f9af81edac561c6f08
 2 added, 4 updated; count 260 -> 262; header rewritten with this run's provenance).
 
 Result: PASS — CATALOG CURRENT (262 records).
+
+[ERRATUM 2026-08-27 — labeled addendum, rr-47 wave; the original text above is preserved unchanged]
+The Index summary line of this receipt reads "2 added, 4 updated; count 260 ->
+262". The correct update count is "2 added, 3 updated" — the run minted 2
+records and updated 3 (the fourth figure was a counting error). Recorded per
+the open-correction convention by Carol at the rr-47 catalog wave (rr finding
+verified still valid against the receipt text); the receipt body otherwise
+stands.

@@ -98,8 +98,11 @@ else
 fi
 
 out_c="$(FLEET_KV_DIR="$fx" "$SCRIPT_DIR/fleet-verify-baseline.sh" hxs-8 2>&1)"; rc_c=$?
-if [ $rc_c -eq 0 ] && printf '%s\n' "$out_c" | grep -q '1 PASS, 0 FAIL, 1 REPORT'; then
-  ok "verify-baseline fixture C (server-default, unpinned NTP): 1 PASS, 0 FAIL, 1 REPORT, exit 0"
+# Amended 2026-08-27 (fleet-standard: server-default NTP + masks now enforce):
+# the same unpinned fixture now correctly yields 3 PASS, 1 FAIL (ntp_server),
+# 4 NOT-ESTABLISHED (empty mask actuals), exit 1 — previously 1 PASS/1 REPORT/exit 0.
+if [ $rc_c -eq 1 ] && printf '%s\n' "$out_c" | grep -q '3 PASS, 1 FAIL, 0 REPORT, 4 NOT-ESTABLISHED'; then
+  ok "verify-baseline fixture C (server-default, unpinned NTP): 3 PASS, 1 FAIL, 4 NOT-ESTABLISHED, exit 1 (amended standard)"
 else
   bad "verify-baseline fixture C (rc=$rc_c): $out_c"
 fi
@@ -153,13 +156,16 @@ host="$1"; shift; cmd="$*"
 printf '%s\t%s\n' "$host" "$cmd" >> "$MOCK_LOG"
 case "$cmd" in
   *"mktemp /tmp/.fleet-ntp-pin."*)
-    if [ "${MOCK_NTP:-diff}" = "compliant" ]; then
-      printf 'STAGED_PATH=/tmp/.fleet-ntp-pin.Ab3xY9\n'
+    if [ "${MOCK_NTP:-diff}" = "hostile" ]; then
+      printf 'STAGED_PATH=/tmp/.fleet-ntp-pin.Ab3xY9z2;id\n'
+      printf 'diff-rc=1 (0 = already matches, 1 = differences present)\n'
+    elif [ "${MOCK_NTP:-diff}" = "compliant" ]; then
+      printf 'STAGED_PATH=/tmp/.fleet-ntp-pin.Ab3xY9z2\n'
       printf 'diff-rc=0 (0 = already matches, 1 = differences present)\n'
     else
-      printf 'STAGED_PATH=/tmp/.fleet-ntp-pin.Ab3xY9\n'
+      printf 'STAGED_PATH=/tmp/.fleet-ntp-pin.Ab3xY9z2\n'
       printf '%s\n' '--- /etc/systemd/timesyncd.conf' \
-                    '+++ /tmp/.fleet-ntp-pin.Ab3xY9' \
+                    '+++ /tmp/.fleet-ntp-pin.Ab3xY9z2' \
                     '@@ -17,2 +17,2 @@' \
                     '-#NTP=' \
                     '-#FallbackNTP=ntp.ubuntu.com' \
@@ -219,20 +225,29 @@ fi
 # --- 8. H3/H4: ntp-pin staging contract via mock ---------------------------
 : > "$MOCK_LOG"
 out_n="$(FLEET_SSH="$fx/mock-ssh" MOCK_NTP=diff "$SCRIPT_DIR/fleet-ntp-pin.sh" dummyhost --dry-run 2>&1)"; rc_n=$?
-if [ $rc_n -eq 0 ] && printf '%s\n' "$out_n" | grep -q 'DRY-RUN' && grep -qF 'rm -f /tmp/.fleet-ntp-pin.Ab3xY9' "$MOCK_LOG"; then
+if [ $rc_n -eq 0 ] && printf '%s\n' "$out_n" | grep -q 'DRY-RUN' && grep -qF 'rm -f /tmp/.fleet-ntp-pin.Ab3xY9z2' "$MOCK_LOG"; then
   ok "H3: dry-run parses STAGED_PATH and cleans up the parsed path"
 else
   bad "H3 dry-run: rc=$rc_n out=[$out_n] log=[$(cat "$MOCK_LOG")]"
 fi
-if printf '%s\n' "$out_n" | grep -q '^STAGED_PATH=/tmp/.fleet-ntp-pin.Ab3xY9$'; then
+if printf '%s\n' "$out_n" | grep -q '^STAGED_PATH=/tmp/.fleet-ntp-pin.Ab3xY9z2$'; then
   ok "H3: stage output carries the parseable STAGED_PATH line"
 else
   bad "H3 STAGED_PATH line missing: [$out_n]"
 fi
 
+# --- 8b. H3b: semicolon-suffixed STAGED_PATH is refused, never re-used -----
+: > "$MOCK_LOG"
+out_h="$(FLEET_SSH="$fx/mock-ssh" MOCK_NTP=hostile "$SCRIPT_DIR/fleet-ntp-pin.sh" dummyhost --dry-run 2>&1)"; rc_h=$?
+if [ $rc_h -eq 1 ] && printf '%s\n' "$out_h" | grep -q 'refusing to use unexpected staged path' && [ "$(grep -cP '^dummyhost\t' "$MOCK_LOG")" -eq 1 ]; then
+  ok "H3b: semicolon-suffixed STAGED_PATH refused before any reuse (exactly one transport call — the stage itself)"
+else
+  bad "H3b hostile staged path: rc=$rc_h out=[$out_h] log=[$(cat "$MOCK_LOG")]"
+fi
+
 : > "$MOCK_LOG"
 out_c2="$(FLEET_SSH="$fx/mock-ssh" MOCK_NTP=compliant "$SCRIPT_DIR/fleet-ntp-pin.sh" dummyhost --dry-run 2>&1)"; rc_c2=$?
-if [ $rc_c2 -eq 0 ] && printf '%s\n' "$out_c2" | grep -q 'already-compliant' && grep -qF 'rm -f /tmp/.fleet-ntp-pin.Ab3xY9' "$MOCK_LOG"; then
+if [ $rc_c2 -eq 0 ] && printf '%s\n' "$out_c2" | grep -q 'already-compliant' && grep -qF 'rm -f /tmp/.fleet-ntp-pin.Ab3xY9z2' "$MOCK_LOG"; then
   ok "H4: empty diff -> already-compliant, cleanup, exit 0"
 else
   bad "H4 already-compliant: rc=$rc_c2 out=[$out_c2] log=[$(cat "$MOCK_LOG")]"
