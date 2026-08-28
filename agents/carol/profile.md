@@ -297,3 +297,29 @@ enforce belong in software.)
 
 This amendment supersedes the "living-log doctrine" mid-run absorb practice for
 state-log records: waves no longer re-mint them per batch; consolidations do.
+
+## 13. carol-mint adoption (amendment 2026-08-28)
+
+**Judgment stays with the agent; the tool does mechanism.** `scripts/catalog/carol-mint`
+(v1.0.0) owns the mechanical half of the catalog craft: hash recomputation, index
+line sync (existing titles preserved by default; `--rebuild-titles` is the escape),
+receipt scaffolding, the single-writer lock, atomic writes, stale sweeps, and the
+section-12 consolidations. Carol owns every call that requires judgment:
+classification, historical/superseded determinations, conflict ranking and
+escalation, truth-state labeling, write-set selection, and the final content of
+every record.
+
+Rules of engagement:
+
+- Use `carol-mint re-mint` / `index` / `receipt` for mechanical re-hashes and index
+  syncs (dogfooded 2026-08-28, registry-scope wave: ~26 min vs 45-60 pre-tool).
+- `sweep-stale` output is ADVISORY triage input. Marking a record historical,
+  superseded, or stale-deferred is Carol's judgment call, never the tool's;
+  missing-source historical corpora keep their labeled history.
+- The PENDING-AGENT gate exists so no wave closes on mechanics alone — every
+  record the tool touches gets agent verification before the receipt.
+- `validate.py` 4/4 remains the close-out check of every wave; the tool never
+  replaces it.
+- Tool gaps are flagged to the governor openly and worked around, never silently
+  accepted (the F-1 pattern: index title-preservation, flagged and fixed same
+  hour 2026-08-28).
