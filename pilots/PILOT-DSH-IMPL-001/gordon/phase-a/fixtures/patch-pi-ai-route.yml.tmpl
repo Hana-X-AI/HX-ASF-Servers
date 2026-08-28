@@ -1,14 +1,20 @@
 # Gordon fixture: pi-ai hand-declared route to OmniRoute (openai-completions).
-# Oracle: packages/llm/llm-pi-ai/src/index.ts:30-52 (route shape), provider.ts:48-50
-# (protocol registry). Rendered at runtime; placeholders are __NAME__ style.
+# Oracles: packages/llm/llm-pi-ai/src/index.ts:30-52 (route shape),
+# provider.ts:48-50 (protocol registry). compat switches mirror the landed
+# machine layer (03-morpheus-phase-a-install.md §7: unrecognized endpoints
+# default to a wire shape gateways reject; countered natively).
+# Rendered at runtime; placeholders are __NAME__ style.
 - id: llm-pi-ai
   config:
     providers:
-      omni:
+      omniroute:
         displayName: OmniRoute (HX qualification route)
         apiKeyEnv: __KEY_ENV__
         api: openai-completions
         baseURL: __BASE_URL__
+        compat:
+          supportsDeveloperRole: false
+          maxTokensField: max_tokens
         retryPolicy:
           mode: normal
           maxRetries: __MAX_RETRIES__
@@ -16,9 +22,9 @@
           - id: __MODEL_ID__
             name: __MODEL_ID__
             contextWindow: __CTX__
-            maxTokens: 4096
+            maxTokens: __MAX_TOKENS__
 
 - id: agent-default-model
   config:
-    provider: omni
+    provider: omniroute
     model: __MODEL_ID__

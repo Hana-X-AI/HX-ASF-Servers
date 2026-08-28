@@ -9,7 +9,6 @@ flagged for review — no silent skips.
 from __future__ import annotations
 
 import shutil
-import subprocess
 from pathlib import Path
 
 import pytest
@@ -61,16 +60,6 @@ def rec(evidence: Evidence, request: pytest.FixtureRequest):
             )
 
     return _Rec()
-
-
-def ensure_scratch_tree(cfg: Cfg) -> Path:
-    """Create the scratch root, owned by the service user where possible."""
-    root = cfg.scratch
-    root.mkdir(parents=True, exist_ok=True)
-    if cfg.dsh_user and subprocess.run(["id", "-un"], capture_output=True, text=True).stdout.strip() != cfg.dsh_user:
-        if shutil.which("chown") and subprocess.run(["id", "-u"], capture_output=True, text=True).stdout.strip() == "0":
-            subprocess.run(["chown", "-R", f"{cfg.dsh_user}:{cfg.dsh_user}", str(root)], check=False)
-    return root
 
 
 @pytest.fixture()

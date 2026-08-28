@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 # Gordon Phase A orchestrator — Gates 0-5 qualification runs on hxs-15.
 #
-# Authored offline 2026-08-28. Executes only after the governor releases it.
-# No secrets: the OmniRoute client key arrives via the environment variable
-# named by GORDON_OMNI_KEY_ENV (default OMNIROUTE_CLIENT_KEY); this script
-# checks presence only.
+# Authored offline 2026-08-28; reconciled with Morpheus's landed install
+# (03-morpheus-phase-a-install.md §10). Executes only after the governor
+# releases it. No secrets: the OmniRoute client key arrives via the
+# environment variable named by GORDON_OMNI_KEY_ENV (default
+# OMNIROUTE_API_KEY); this script checks presence only. The landed home also
+# resolves the key natively from $DSH_HOME/.env for real-seam runs.
 #
 # Usage:
 #   ./run-phase-a.sh [gate ...]        # default: all gates in order 0 1 2 3 4 5
@@ -18,7 +20,7 @@ SUITE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SCRATCH="${GORDON_SCRATCH:-/var/lib/dsh/gordon}"
 EVIDENCE="${GORDON_EVIDENCE_DIR:-$SCRATCH/evidence}"
 VENV="$SCRATCH/venv"
-KEY_ENV_NAME="${GORDON_OMNI_KEY_ENV:-OMNIROUTE_CLIENT_KEY}"
+KEY_ENV_NAME="${GORDON_OMNI_KEY_ENV:-OMNIROUTE_API_KEY}"
 
 mkdir -p "$EVIDENCE"
 PREFLIGHT="$EVIDENCE/preflight.txt"

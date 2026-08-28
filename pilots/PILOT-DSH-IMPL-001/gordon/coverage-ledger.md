@@ -1,15 +1,26 @@
 # Gordon — Feature Coverage Ledger (Phase A: Gates 0–5)
 
-- **Ledger state:** INITIALIZED 2026-08-28, pre-execution. Every row is
-  source-referenced, disposition `NOT_RUN`, candidate identity `PENDING-INSTALL`.
-  The §8.3 freeze happens at Gate 0 execution; this file updates per executed
-  test with identity, evidence pointer, and disposition.
+- **Ledger state:** INITIALIZED 2026-08-28, pre-execution; reconciled the same
+  day with the landed install (state-log row 7, Morpheus receipt
+  `pilots/PILOT-DSH-IMPL-001/03-morpheus-phase-a-install.md` §10, handoff
+  OPEN). Every row is source-referenced, disposition `NOT_RUN`, candidate
+  identity PENDING-FREEZE (the receipt names the identity; Gordon's §8.3
+  freeze at G0-05/G0-07 re-discovers and pins it before any other gate runs).
 - **Candidate (review baseline, profile §3):** dsh `0.1.1-rc.2`, tag
   `dsh-v0.1.1-rc.2`, commit `b150a551b8d465e31e418e1b2eaf5e79bbb7d28e`; pinned
   source `/opt/tkv-local/deepseek-harness-master`; manifest SHA-256 verified at
   authoring against this tree (package.json `4adb…86d7`, pnpm-lock.yaml
-  `6f20…013e` — match).
-- **Last-tested candidate identity:** PENDING-INSTALL (frozen at G0-05/G0-07).
+  `6f20…013e` — match; the same anchors MATCH on hxs-15 per receipt §2/§3).
+- **Landed identity (receipt §10, to be frozen at G0):** `/opt/dsh` (byte-
+  identical transport, 7,903-file manifest MATCH), launcher
+  `/usr/local/bin/dsh` sha256 `0b68259f…efcdba`, built bin
+  `/opt/dsh/apps/cli/lib/bin.js` sha256 `c0226687…366c62`,
+  `DSH_HOME=/var/lib/dsh`, home layer `/var/lib/dsh/cordis.patch.yml` sha256
+  `14f15b72…03f6016`, effective dump sha256 `dedda886…d518d34`; native
+  `llm-pi-ai` route `omniroute` (openai-completions + compat switches), fleet
+  model ids for Qwen-X / Coder-X (default) / Meta-X; `llm-deepseek`,
+  `web`, `web-search-deepseek`, `tool-web` disabled.
+- **Last-tested candidate identity:** PENDING-FREEZE (set at G0-05/G0-07).
 - **Dispositions (profile §7):** PASS · FAIL · BLOCKED · NOT_RUN ·
   NOT_APPLICABLE · NOT_IN_PINNED_VERSION · AVAILABLE_DISABLED ·
   EXPERIMENTAL_LAB_ONLY · DEFERRED_BY_POLICY.
@@ -78,7 +89,7 @@ bundle patches (`packages/bundle/base/cordis.patch.yml`,
 
 | Package (source) | Planned tests | Disposition | Evidence | Notes |
 | --- | --- | --- | --- | --- |
-| `packages/host/webserver` | G2-10, G5-10 | NOT_RUN | pending | loopback bind, port config (src/index.ts:58-62) |
+| `packages/host/webserver` | G2-10, G5-10 | NOT_RUN | pending | loopback bind, port config (src/index.ts:58-62); Phase A asserts bind + signal only — frontend dist absent by design (receipt §5), dist-dependent boot failure is BLOCKED-by-design |
 | `packages/host/frontend-static` | G2-10 (GET /) | NOT_RUN | pending | serves built web UI |
 | `packages/host/apiproxy` | census G4-14/G4-16 (web dump) | NOT_RUN | pending | web-app row; behavior Phase B |
 | `packages/host/plugin-inventory` | census G4-16 | NOT_RUN | pending | web-app row; behavior Phase B |
@@ -120,8 +131,8 @@ bundle patches (`packages/bundle/base/cordis.patch.yml`,
 | Package (source) | Planned tests | Disposition | Evidence | Notes |
 | --- | --- | --- | --- | --- |
 | `packages/llm/llm` | all G3 | NOT_RUN | pending | service spine; LlmError codes; TokenUsage (types.ts:135) |
-| `packages/llm/llm-deepseek` | G3-02, G3-03, G3-12 (+G3-04..06 when GORDON_SEAM=deepseek) | NOT_RUN | pending | route `deepseek-official`; baseURL/apiKeyEnv catalog config (src/index.ts:79-185) |
-| `packages/llm/llm-pi-ai` | G3-01, G3-04F..06F (default fixture seam) | NOT_RUN | pending | hand-declared `openai-completions` routes (src/index.ts:30-52; provider.ts:48-50); mounted dormant |
+| `packages/llm/llm-deepseek` | G3-02, G3-03, G3-12 (+G3-04..06 when GORDON_SEAM=deepseek) | NOT_RUN | pending | route `deepseek-official`; DISABLED in the landed composition (local-only, receipt §8); fixture seam re-enables it in scratch homes only |
+| `packages/llm/llm-pi-ai` | G3-01, G3-04F..06F (default fixture seam), G3-04R (landed route) | NOT_RUN | pending | LANDED: route `omniroute` (openai-completions + compat `supportsDeveloperRole:false`, `maxTokensField:max_tokens`, receipt §7-8); in-tree shape (src/index.ts:30-52; provider.ts:48-50) |
 | `packages/llm/llm-retry` | G3-09 | NOT_RUN | pending | durable `llm/retry` before wait (types.ts) |
 | `packages/llm/token-meter` | G3-10 | NOT_RUN | pending | replay-aware measurement over the event stream |
 
@@ -221,12 +232,15 @@ bundle patches (`packages/bundle/base/cordis.patch.yml`,
 
 | Row | Planned tests | Disposition | Notes |
 | --- | --- | --- | --- |
+| Directory-wide review surface (owner directive 2026-08-28, charter amendment) | mapped in plan §12 | NOT_RUN (as rows above) | ENTIRE dsh directory is review surface; cookbook is first-class test material: `docs/testing.md` → G1 gates, `docs/cookbook/adding-a-tool.md` → G5-15 oracle supplement, `adding-a-package.md` + `packages/AGENTS.md` → G1-07, architecture/postmortem docs → G2–G5 oracles, `scripts/` → G1 review precondition; examples/website/advanced cookbook → Phase B/C |
 | Repo real-API e2e tier (`pnpm run test:e2e`) | G1-09 | DEFERRED_BY_POLICY (planned) | DeepSeek-cloud keys barred by local-only doctrine; HX e2e runs through OmniRoute in Gate 3 |
 | Corrupted-current-session resume | G4-06(b) | BLOCKED-by-design (planned) | no headless resume entry in the pinned CLI; reassigned Phase B Gate 7 |
+| Web frontend dist | G2-10, G5-10 | BLOCKED-by-design contingency (planned) | `build:web` deliberately not run in Phase A (receipt §5); dist-dependent boot failure records BLOCKED with Phase B pointer |
 | usage_history routed evidence | G3-07, G3-08 | BLOCKED-by-design risk (R1) | governor-mediated snapshots; Trinity plane |
 | Live compaction trigger | census only | NOT_RUN (planned) | fixture-cost drill deferred to governor decision (R2) |
 | Telemetry reporting | G2-13, G4-09 | AVAILABLE_DISABLED target | DISABLED default + kill switch proven; reporting itself never enabled in qualification |
 | pwsh family (4 packages) | G5-16 | NOT_APPLICABLE target (Windows-only) | evidence: platform-gated rows + Linux tool census |
+| Upstream advisory debt (receipt R1: 38 advisories, 15H/20M/3L) | none (informational) | recorded | pin stands per work order; governor risk register; next upstream intake |
 
 ## Ledger maintenance rules (profile §4, §9)
 

@@ -1,13 +1,21 @@
 # Gordon — Phase A Test Plan (Gates 0–5)
 
-- **Status:** authored 2026-08-28, offline. PENDING-INSTALL: nothing has executed; no
-  result below is a finding. Execution begins only after Morpheus's install lands on
-  hxs-15 and the governor releases this plan.
+- **Status:** authored offline 2026-08-28; reconciled the same day with the
+  landed install (state-log row 7). Nothing below has executed under Gordon's
+  hand; no result here is a finding. Execution begins when the governor
+  releases this plan.
 - **Author:** Gordon (KDD-0010), independent qualification. Gordon never repairs, never
   configures the candidate, never converts a non-pass into PASS.
 - **Contract:** GOAL-DSH-IMPL-001 (`00-goal.md`) and the approved arc plan
   (`2026-08-28-dsh-full-implementation-plan.md`, Phase A: Gates 0–5, 23 named baseline
   families).
+- **Landed candidate (Morpheus receipt `03-morpheus-phase-a-install.md` §10,
+  handoff OPEN):** dsh 0.1.1-rc.2 at `/opt/dsh` (byte-identical transport of
+  the pinned corpus, anchors MATCH), launcher `/usr/local/bin/dsh`,
+  `DSH_HOME=/var/lib/dsh`, native `llm-pi-ai` route `omniroute`
+  (openai-completions) to OmniRoute, Coder-X default model, boot smoke routed
+  (Morpheus's install verification, not a Gate result). Gordon's G0 freeze
+  re-discovers and re-pins this identity at execution (§8.3).
 - **Candidate (review baseline, profile §3):** `dsh` 0.1.1-rc.2, tag `dsh-v0.1.1-rc.2`,
   commit `b150a551b8d465e31e418e1b2eaf5e79bbb7d28e`, pinned source
   `/opt/tkv-local/deepseek-harness-master`, Node `^22.19.0 || >=24.0.0`, pnpm 11.7.0.
@@ -60,10 +68,10 @@ flowchart LR
 
 Boundary rulings applied to every script:
 
-1. The candidate installation (`/opt/dsh`) and its real home (`/home/dsh/.dsh`) are
-   never written by a test. Static gates (G1) run against a byte-verified **scratch
-   copy** of the source under the Gordon scratch area, so `pnpm` build outputs never
-   touch the candidate tree.
+1. The candidate installation (`/opt/dsh`) and its real home (`/var/lib/dsh`,
+   receipt §6) are never written by a test. Static gates (G1) run against a
+   byte-verified **scratch copy** of the source under the Gordon scratch area, so
+   `pnpm` build outputs never touch the candidate tree.
 2. Behavioral tests run the candidate binary as the `dsh` user with a per-test scratch
    `DSH_HOME` under the scratch area. Setting `DSH_HOME` and passing `--patch` are
    documented launcher inputs (`packages/util/home-paths/src/index.ts:87`,
@@ -84,25 +92,32 @@ Boundary rulings applied to every script:
 
 ## 3. Environment contract (all values are names and paths, no secrets)
 
+Defaults reconciled with the landed install (receipt §10). The full table
+lives in `gordon/phase-a/gordon_util.py:ENV_DEFAULTS`.
+
 | Variable | Default | Meaning |
 | --- | --- | --- |
-| `GORDON_DSH_BIN` | `/opt/dsh/bin/dsh` | candidate executable (Morpheus handoff may override) |
-| `GORDON_DSH_ROOT` | `/opt/dsh` | install root |
-| `GORDON_DSH_SRC` | `/opt/dsh/source` | source tree for static gates; absent → G1 rows BLOCKED |
+| `GORDON_DSH_BIN` | `/usr/local/bin/dsh` | candidate launcher shim (landed) |
+| `GORDON_DSH_ROOT` | `/opt/dsh` | install root (source + node_modules + built lib) |
+| `GORDON_DSH_SRC` | `/opt/dsh` | source tree for static gates |
 | `GORDON_NODE` | `/opt/node-v24.20.0/bin/node` | Node v24.20.0 |
 | `GORDON_DSH_USER` / `GORDON_DSH_UID` | `dsh` / `999` | service user |
-| `GORDON_REAL_HOME` | `/home/dsh/.dsh` | real harness home (read-only to tests except G3-04R product writes) |
+| `GORDON_REAL_HOME` | `/var/lib/dsh` | landed harness home (read-only to tests except G3-04R product writes) |
 | `GORDON_SCRATCH` | `/var/lib/dsh/gordon` | scratch root (copies, scratch homes, fixtures, evidence) |
 | `GORDON_EVIDENCE_DIR` | `$GORDON_SCRATCH/evidence` | evidence pack destination |
 | `GORDON_OMNI_BASE_URL` | `http://192.168.50.207:20128/v1` | OmniRoute OpenAI-compatible base |
-| `GORDON_OMNI_KEY_ENV` | `OMNIROUTE_CLIENT_KEY` | NAME of the env var carrying the client key at exec |
-| `GORDON_MODEL_QWEN` / `GORDON_MODEL_CODER` / `GORDON_MODEL_META` | unset | OmniRoute model ids per call-sign (handoff input; unset → routed rows BLOCKED) |
-| `GORDON_SEAM` | `auto` | landed seam: `pi-ai` / `deepseek` / `custom`; `auto` reads the composed config |
+| `GORDON_OMNI_KEY_ENV` | `OMNIROUTE_API_KEY` | NAME of the env var carrying the client key at exec |
+| `GORDON_MODEL_QWEN` / `GORDON_MODEL_CODER` / `GORDON_MODEL_META` | `ollama-local/hx-qwen3.8-27b-64k:latest` / `…hx-qwen3.6-coderx-64k…` / `…hx-muse-glimmer-64k…` | fleet model ids per call-sign (receipt §10; override only if the fleet changes) |
+| `GORDON_SEAM` | `auto` | fixture seam: `auto` → pi-ai (the landed native seam); `deepseek` comparison; `custom` needs Morpheus's contract |
 | `GORDON_USAGE_DIR` | `$GORDON_SCRATCH/omni-usage` | governor-dropped usage_history snapshots (`before.json`, `after.json`) |
-| `GORDON_RUNNER` | `auto` | candidate invocation: `auto` → runuser/sudo/direct by executor identity |
+| `GORDON_RUNNER` | `auto` | candidate invocation: `auto` → runuser/sudo/direct by executor identity; all forms wrap `env -i` inside the privilege prefix (sudo env_reset safe) |
 
-Missing inputs produce BLOCKED with the dependency named (§7), never a fabricated
-result. The full stop conditions of §12.2 apply during execution.
+Credential mechanics (landed): the real home resolves the key natively from
+`/var/lib/dsh/.env` (root:dsh 0640, receipt §6); the real-seam run (G3-04R)
+and census (G3-01) need no executor-side key. The fixture-seam runs need the
+governor-exported variable named above. Missing inputs produce BLOCKED with
+the dependency named (§7), never a fabricated result. The full stop conditions
+of §12.2 apply during execution.
 
 ## 4. Gate 0 — provenance and candidate identity
 
@@ -151,7 +166,7 @@ bundle patches (`packages/bundle/base/cordis.patch.yml`,
 | G2-07 | `dsh --profile nosuch --dump-config` | `profile.ts:376-384`: no template → create-with-plugin error | non-zero exit + `does not exist` text | PASS, FAIL |
 | G2-08 | `dsh --profile headless --help` | `packages/bundle/headless/src/startup.ts:40-52` | app help text; exit 0 | PASS, FAIL |
 | G2-09 | `dsh --profile headless ""` | `startup.ts:58-61`: whitespace task is a usage error | non-zero exit + `a task is required` | PASS, FAIL |
-| G2-10 | `dsh --profile web --host 127.0.0.1 --port 0`, then HTTP GET `/`, then SIGTERM | `packages/bundle/web-app/src/startup.ts:51-59`; `apps/cli/src/profile-boot.ts:221` SIGTERM→exit 0 | loopback 200 HTML response; exit code 0 | PASS, FAIL |
+| G2-10 | `dsh --profile web --host 127.0.0.1 --port 0`, loopback TCP bind probe, then SIGTERM | `packages/bundle/web-app/src/startup.ts:51-59`; `apps/cli/src/profile-boot.ts:221` SIGTERM→exit 0 | listener accepts on loopback; HTTP status recorded observationally; exit 0. Frontend dist deliberately absent in Phase A (receipt §5): early exit naming it → **BLOCKED-by-design** (Phase B) | PASS, FAIL, BLOCKED |
 | G2-11 | `dsh --profile web --host 0.0.0.0` | `web-app/src/startup.ts:75`: refusal, "intentionally not supported yet for safety" | non-zero exit + refusal text | PASS, FAIL |
 | G2-12 | `dsh plugin --profile headless` (no pnpm args) | `args.ts:179-180` | non-zero exit + usage error | PASS, FAIL |
 | G2-13 | telemetry composition: default dump carries `session-telemetry-otel` with the DISABLED-default mode expression and bounded-drain values | base bundle rows 129-161; `dump-config.ts` is boot-free so the launcher disable patch (`profile-boot.ts:80-83`) is not dump-visible | dump capture; runtime switch leg lives in G4-09 | PASS, FAIL |
@@ -160,7 +175,19 @@ bundle patches (`packages/bundle/base/cordis.patch.yml`,
 
 ## 7. Gate 3 — providers, models, Omni integration
 
-Seam facts traced at rc.2 (the OpenAI-compatible-seam question the work order flags):
+**Seam question RESOLVED (receipt §7):** dsh ships a native OpenAI-compatible
+seam — `llm-pi-ai` hand-declared routes (`api: openai-completions`); no
+out-of-tree adapter was required. The landed machine layer
+(`/var/lib/dsh/cordis.patch.yml`) declares route `omniroute` with
+`baseURL http://192.168.50.207:20128/v1`, `apiKeyEnv: OMNIROUTE_API_KEY`,
+compat `supportsDeveloperRole: false` + `maxTokensField: max_tokens`, the
+three fleet model ids (65536 ctx / 8192 maxTokens), and `agent-default-model`
+= `omniroute` / Coder-X. `llm-deepseek` (cloud) is disabled in the landed
+composition. Gordon's fixture-seam runs replicate this shape in scratch homes;
+the real-seam run (G3-04R) exercises the landed profile unmodified, resolving
+the credential natively from `/var/lib/dsh/.env`.
+
+Seam facts traced at rc.2 (the in-tree mechanics behind the finding):
 
 - `llm-deepseek` owns route `deepseek-official`; `baseURL` config → `$DEEPSEEK_BASE_URL`
   (trusted layer) → `https://api.deepseek.com`; requests POST `<baseURL>/chat/completions`
@@ -182,7 +209,7 @@ patch overlay; the real-seam run (G3-04R) uses the installed profile unmodified.
 | G3-01 | seam census: `dsh --profile headless --dump-config` on the real home + fixture detection logic | composed config vs the two in-tree seams above | recorded seam identity, route names, model ids; feeds ledger | PASS, FAIL (contradictory composition), BLOCKED |
 | G3-02 | no-credential failure: scratch run with key env unset | `llm-deepseek/src/index.ts:427-431`: `LlmError` code `MISSING_CREDENTIAL`; headless fail path `packages/bundle/headless/src/index.ts:79-82,126-129` | exit 1; stderr `MISSING_CREDENTIAL` | PASS, FAIL |
 | G3-03 | provider-down: fixture route to `http://127.0.0.1:<closed-port>` with `retryPolicy` bounded to 1 | `adapter.ts:498`: `TRANSPORT`; retry knob `llm-deepseek` Config `retryPolicy` | exit 1; `TRANSPORT` error; wall-clock bounded; session log durable retry/failure events | PASS, FAIL |
-| G3-04R | real-seam routed run: installed profile, known-answer task with nonce | this work order; Trinity gate record (nonce discipline) | exit 0; stdout/session-log marker; session artifact | PASS, FAIL, BLOCKED (no key, no model id, seam not landed) |
+| G3-04R | real-seam routed run: installed profile unmodified, known-answer task with nonce; credential resolves natively from `/var/lib/dsh/.env` (receipt §6) | this work order; Trinity gate record (nonce discipline); receipt §8 landed defaults | exit 0; stdout/session-log marker; session artifact | PASS, FAIL, BLOCKED (seam not landed) |
 | G3-04F/05F/06F | fixture-seam routed runs: Qwen-X, Coder-X, Meta-X (`GORDON_MODEL_*`), one run each, unique nonce markers `GORDON-PROBE-<uuid>` | known-answer oracle chosen by Gordon; `llm-pi-ai` or `llm-deepseek` fixture config | per run: exit 0, marker in `assistant/message`, `turn/end` reason `completed` | PASS, FAIL, BLOCKED |
 | G3-07 | usage_history evidence: governor snapshots `before.json`/`after.json` around G3-04..06 | Trinity gate record: `usage_history` rows with `tokens_input`, `tokens_output`, `latency_ms`, `ttft_ms`, `api_key_id` (`03-trinity-l1-install.md:217`) | row-count delta == number of routed calls (+title-generation calls, counted openly); per-row model attribution matches the call-sign | PASS, FAIL, **BLOCKED-by-design** (governor snapshot absent: named dependency, Trinity plane) |
 | G3-08 | usage reconciliation: dsh-side usage vs Omni rows | `llm-deepseek/src/translate.ts:53-58` `mapUsage` → `TokenUsage`; session-log usage records | both sides non-zero for the same run; same order of magnitude; discrepancies recorded, not explained away | PASS, FAIL, BLOCKED (needs G3-07) |
@@ -196,7 +223,11 @@ patch overlay; the real-seam run (G3-04R) uses the installed profile unmodified.
 Format oracles: `packages/session/session-persistence-jsonl/src/format.ts` (layout,
 header, scanner), `packages/core/session/src/types.ts:56` (`SESSION_FORMAT_VERSION = 0`),
 persistence defaults in `session-persistence-jsonl/src/index.ts:38` (zstd default;
-root mode 0700).
+root mode 0700). Decode mechanics (Morpheus receipt §9 tooling note, verified on
+hxs-15): artifacts are CONCATENATED zstd frames, one per write batch; Node's
+one-shot/streaming decode yields frame 1 only, so the suite's decoder splits on
+the frame magic and decodes frame-wise (`fixtures/decode-zstd.mjs`, zstd CLI
+fallback).
 
 | Test ID | Entry path | Oracle source | Required evidence | Acceptable dispositions |
 | --- | --- | --- | --- | --- |
@@ -241,7 +272,7 @@ follow the flake discipline of §1.
 | G5-07 | bash timeout: instructed `sleep` with explicit small `timeoutMs` | tool description: executor kills on expiry (`tool-bash:254`) | result `timedOut: true`; wall-clock bounded | PASS, FAIL, BLOCKED |
 | G5-08 | SIGINT drill: signal mid-run | `profile-boot.ts:222`: SIGINT→130 | exit 130; log parses as committed prefix | PASS, FAIL |
 | G5-09 | SIGKILL drill: kill mid-run, then cold boot | scanner torn-tail semantics (`format.ts:337-344`) | kill; next boot + run succeed; killed log parses (with G4-05) | PASS, FAIL |
-| G5-10 | SIGTERM drill: signal a long-lived web boot | `profile-boot.ts:221`: SIGTERM→0 | exit 0 | PASS, FAIL |
+| G5-10 | SIGTERM drill: signal a long-lived web boot | `profile-boot.ts:221`: SIGTERM→0 | exit 0; same frontend-dist BLOCKED-by-design caveat as G2-10 | PASS, FAIL, BLOCKED |
 | G5-11 | invalid config: (a) malformed YAML `--patch`; (b) schema violation `--patch` (`maxTokens: -1`) | fail-loud doctrine (`AGENTS.md`: misconfiguration fails loud at load); `llm-deepseek` Config schema bounds | non-zero exit naming the file/field; no partial boot | PASS, FAIL |
 | G5-12 | public-bind refusal (cross-listed G2-11) | `web-app/src/startup.ts:75` | see G2-11 | PASS, FAIL |
 | G5-13 | background job smoke: instructed `run_in_background` long command, then `job_output` | `tool-bash` background contract (`tool-bash:72-73,256-257`); `jobs` row in base | job id returned; output collected; marker present | PASS, FAIL, BLOCKED |
@@ -294,33 +325,58 @@ checkpoint.
 - **R3 — model-cooperation rows** (G5-01..07, G5-13, G4-13, G2-15) depend on the
   routed model following tool-use instructions. One recorded re-run each; persistent
   failure records FAIL with transcripts, never a suppressed skip.
-- **R4 — Morpheus's install shape is unknown at author time.** `GORDON_DSH_BIN`,
-  `GORDON_DSH_SRC`, and profile locations are parameterized; G1 rows BLOCKED if no
-  source tree is present on hxs-15.
-- **R5 — out-of-tree adapter case.** If Morpheus lands a custom seam, G3 fixture rows
-  need its row id and config keys from his handoff; absent that, fixture rows BLOCKED
-  and the real-seam row (G3-04R) carries the routing proof alone.
-- **Q1 — family count** (see §10). **Q2 — exact OmniRoute model ids** for Qwen-X /
-  Coder-X / Meta-X (handoff input). **Q3 — usage snapshot format** the governor will
+- **R4 — RESOLVED (receipt §10).** The install shape is landed: `/opt/dsh` (source +
+  node_modules + built lib), launcher `/usr/local/bin/dsh`, `DSH_HOME=/var/lib/dsh`.
+  Defaults updated; overrides remain for future phases.
+- **R5 — RESOLVED (receipt §7).** The native pi-ai seam landed; no out-of-tree
+  adapter. The `GORDON_SEAM=custom` path stays in the suite for future seams.
+- **R6 — web frontend dist is deliberately absent in Phase A** (receipt §5,
+  `build:web` not run). G2-10/G5-10 assert the bind + signal contract only;
+  an early exit naming the missing dist is BLOCKED-by-design, Phase B pointer.
+- **R7 — upstream advisory debt of the pinned snapshot** (receipt R1: 38
+  advisories, 15H/20M/3L). Pin stands per work order; recorded for the
+  governor's risk register; no local remediation authorized.
+- **Q1 — family count** (see §10). **Q2 — RESOLVED:** fleet model ids are in the
+  receipt and now the suite defaults. **Q3 — usage snapshot format** the governor will
   drop (script accepts JSON with `count` and optional `rows[]`; contract documented in
   the runbook).
 
-## 12. Script inventory
+## 12. Directory-wide review surface (owner directive 2026-08-28, charter amendment)
+
+The owner amended Gordon's charter mid-authoring: the review surface is the
+ENTIRE `/opt/tkv-local/deepseek-harness-master` directory — code, `docs/`
+(including the cookbook), examples, schemas, scripts — and the cookbook is
+first-class test material. Phase A mapping (deep dives into examples, website,
+and advanced cookbook surfaces land in their own phases per the arc plan):
+
+| Surface | Phase A use | Rows |
+| --- | --- | --- |
+| `docs/testing.md` | repo test-tier policy behind the G1 gates (unit/snapshot/hygiene; e2e DEFERRED_BY_POLICY) | G1-01..09 |
+| `docs/cookbook/adding-a-tool.md` | tool-registry contract (`defineTool` shape, render intent, executor enforcement) supplementing the tool census oracle | G5-15 |
+| `docs/cookbook/adding-a-package.md`, `packages/AGENTS.md` | package/invariant conventions behind the hygiene gates | G1-07 |
+| `docs/architecture.md`, `docs/postmortem/`, `docs/glossary.md` | architecture oracles consumed while tracing (capability seams, agent-loop boundaries) | G2–G5 oracles |
+| `scripts/` | reviewed before execution per profile §2; the pinned root `package.json` script names are the G1 entry paths | G1 |
+| `examples/`, `website/`, `docs/cookbook` remaining guides | not Phase A surface | Phase B/C rows in the arc plan |
+
+## 13. Script inventory
 
 All under `pilots/PILOT-DSH-IMPL-001/gordon/phase-a/` (static artifacts; authored, not
 executed):
 
 - `run-phase-a.sh` — orchestrator: preflight (tools, identity, env census), per-gate
   pytest invocation, verdict aggregation, evidence pack assembly.
-- `conftest.py` + `gordon_util.py` — environment contract, run-as-dsh wrapper, scratch
-  homes, fixture rendering, zstd decode (candidate Node `node:zlib` first, `zstd` CLI
+- `conftest.py` + `gordon_util.py` — environment contract, run-as-dsh wrapper
+  (`env -i` inside the privilege prefix), scratch homes, fixture rendering,
+  frame-wise zstd decode (candidate Node `node:zlib` per receipt §9, `zstd` CLI
   fallback), session-log parser, evidence recorder (test ID, candidate identity,
   environment, command, observed, oracle, disposition, artifact pointer per §13 of my
   profile).
 - `test_g0_identity.py`, `test_g1_static.py`, `test_g2_entry.py`,
   `test_g3_providers.py`, `test_g4_sessions.py`, `test_g5_containment.py`.
-- `fixtures/` — patch-overlay templates (`pi-ai` route, `deepseek` route, bounded
-  retry, invalid YAML, invalid config), marker workspace (AGENTS.md instruction probe).
+- `fixtures/` — patch-overlay templates (`pi-ai` route with the landed compat
+  switches, `deepseek` comparison route), the frame-wise zstd decoder, and the
+  marker workspace file (AGENTS.md instruction probe). The malformed-YAML and
+  schema-violation patches for G5-11 are generated inline by the test.
 - `README.md` — execution runbook: prerequisites, env contract, governor inputs,
   per-gate commands, stop conditions.
 

@@ -19,6 +19,7 @@ from gordon_util import (
     events_of_type,
     find_session_artifacts,
     project_key,
+    read_file_bytes,
     read_session_log,
     run_candidate,
     seqs_contiguous,
@@ -119,15 +120,19 @@ def test_g4_04_restart_durability(cfg, candidate_bin, scratch_home, scratch_env,
         rec.finish("FAIL", "run-1 artifact", "none found")
         pytest.fail("no run-1 artifact")
     first = artifacts1[-1]
-    before = first.read_bytes()
+    before = read_file_bytes(cfg, first)
     run2, _ = _routed_run(cfg, scratch_home, scratch_env, workspace, rec, "G404B")
-    after = first.read_bytes()
     artifacts2 = find_session_artifacts(scratch_home, cfg)
+    # Staging mode rebuilds the staging dir per listing, so re-resolve the same
+    # session by its stable artifact name (staged names hash the source path).
+    reread = next((a for a in artifacts2 if a.name == first.name), None)
+    after = read_file_bytes(cfg, reread) if reread else b""
     observed = (
         f"run1_exit={run1.exit_code}; run2_exit={run2.exit_code}; "
-        f"first_artifact_stable={before == after}; artifacts_total={len(artifacts2)}"
+        f"first_artifact_stable={before == after and bool(after)}; artifacts_total={len(artifacts2)}"
     )
-    ok = run1.exit_code == 0 and run2.exit_code == 0 and before == after and len(artifacts2) >= 2
+    ok = (run1.exit_code == 0 and run2.exit_code == 0 and reread is not None
+          and before == after and len(artifacts2) >= 2)
     rec.finish("PASS" if ok else "FAIL",
                "append-only per-session logs (format.ts module doc); a later run must "
                "not mutate an earlier session's artifact",
@@ -337,8 +342,11 @@ def test_g4_13_spill_on_oversized_output(cfg, candidate_bin, scratch_home, scrat
 
                         spill_paths += _re.findall(r'"spillPath":\s*"([^"]+)"', text)
             for candidate in spill_paths:
-                if Path(candidate).exists() and Path(candidate).stat().st_size > 50_000:
-                    spill_found = True
+                try:
+                    if len(read_file_bytes(cfg, Path(candidate))) > 50_000:
+                        spill_found = True
+                except OSError:
+                    continue
         observed = (f"attempt={attempt}; exit={run.exit_code}; "
                     f"spill_paths={spill_paths}; spill_file_ok={spill_found}")
         attempts.append(observed)
@@ -385,18 +393,21 @@ def test_g4_15_credentials_env_fallback(cfg, candidate_bin, scratch_home, worksp
     patch = seam_fixture_for(cfg, scratch_home, model_key="qwen", max_retries=1)
     marker = f"GORDON-G415-{nonce()}"
     # Strip the inherited key so only the .env layer can satisfy resolution.
-    from gordon_util import base_env, _runner_prefix
+    from gordon_util import base_env, candidate_argv
     import subprocess, time as _time
 
     full_env = base_env(cfg, env)
     full_env.pop(cfg.omni_key_env_name, None)
-    prefix = _runner_prefix(cfg)
+    argv = candidate_argv(
+        cfg,
+        ["--profile", "headless", "--patch", str(patch),
+         f"Reply with exactly this token and nothing else: {marker}"],
+        full_env,
+    )
     started = _time.monotonic()
     try:
         proc = subprocess.run(
-            prefix + [cfg.dsh_bin, "--profile", "headless", "--patch", str(patch),
-                      f"Reply with exactly this token and nothing else: {marker}"],
-            capture_output=True, text=True, env=full_env, cwd=str(workspace), timeout=300,
+            argv, capture_output=True, text=True, cwd=str(workspace), timeout=300,
         )
     finally:
         # Secret hygiene: the .env fixture is transient test data; remove it as

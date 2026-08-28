@@ -21,9 +21,9 @@ from pathlib import Path
 import pytest
 
 from gordon_util import (
-    _runner_prefix,
     base_env,
     blocked,
+    candidate_argv,
     events_of_type,
     find_session_artifacts,
     nonce,
@@ -253,13 +253,13 @@ def _spawn_long_run(cfg, scratch_home, scratch_env, workspace, tag: str):
     require_routing_inputs(cfg, "qwen")
     patch = seam_fixture_for(cfg, scratch_home, model_key="qwen", max_retries=1)
     env = base_env(cfg, scratch_env)
-    prefix = _runner_prefix(cfg)
     task = (
         "Use the bash tool to run: sleep 300. Do not finish before it does."
     )
+    argv = candidate_argv(cfg, ["--profile", "headless", "--patch", str(patch), task], env)
     proc = subprocess.Popen(
-        prefix + [cfg.dsh_bin, "--profile", "headless", "--patch", str(patch), task],
-        stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, env=env,
+        argv,
+        stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
         cwd=str(workspace),
     )
     return proc
@@ -310,15 +310,30 @@ def test_g5_09_sigkill_drill(cfg, candidate_bin, scratch_home, scratch_env, work
 
 
 def test_g5_10_sigterm_drill(cfg, candidate_bin, scratch_home, scratch_env, workspace, rec):
-    """G5-10: SIGTERM to a long-lived web boot exits 0."""
+    """G5-10: SIGTERM to a long-lived web boot exits 0 (bind caveat per G2-10)."""
     env = base_env(cfg, scratch_env)
-    prefix = _runner_prefix(cfg)
     port = 23_992
+    argv = candidate_argv(
+        cfg, ["--profile", "web", "--host", "127.0.0.1", "--port", str(port)], env
+    )
     proc = subprocess.Popen(
-        prefix + [cfg.dsh_bin, "--profile", "web", "--host", "127.0.0.1", "--port", str(port)],
-        stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, env=env,
+        argv,
+        stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
     )
     time.sleep(20)
+    if proc.poll() is not None:
+        _, stderr = proc.communicate()
+        missing_frontend = any(
+            token in (stderr or "").lower() for token in ("dist", "frontend", "static")
+        )
+        observed = f"early_exit={proc.returncode}; stderr={(stderr or '')[-300:]}"
+        if missing_frontend:
+            rec.finish("BLOCKED",
+                       "web boot requires the Phase B frontend dist (Morpheus receipt §5)",
+                       observed, note="SIGTERM drill on the headless surface is G2-10's SIGTERM leg")
+            blocked("web frontend dist absent by Phase A boundary")
+        rec.finish("FAIL", "profile-boot.ts:221 SIGTERM→interrupt(0)", observed)
+        pytest.fail(observed)
     proc.send_signal(signal.SIGTERM)
     try:
         proc.communicate(timeout=60)

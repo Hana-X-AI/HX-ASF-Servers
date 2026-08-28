@@ -1,8 +1,14 @@
-# Gordon fixture: llm-deepseek route repointed at OmniRoute.
-# Oracle: packages/llm/llm-deepseek/src/index.ts:79-81 (apiKeyEnv), :109-110
-# (baseURL), adapter.ts:71-72 (/chat/completions appended), :159-179 (Config schema).
+# Gordon fixture: llm-deepseek route repointed at OmniRoute (fallback seam).
+# Oracles: packages/llm/llm-deepseek/src/index.ts:79-81 (apiKeyEnv), :109-110
+# (baseURL), adapter.ts:71-72 (/chat/completions appended), :159-179 (schema).
+# The landed machine layer disables llm-deepseek (local-only doctrine); a
+# --patch overlay applies ABOVE the home layer (profile-boot.ts composeLive
+# order), so this fixture re-enables the row explicitly for fixture homes only.
+# NOTE: the DeepSeek wire dialect against OmniRoute is unqualified — this seam
+# is a fallback for the GORDON_SEAM=deepseek comparison run only.
 # Rendered at runtime; placeholders are __NAME__ style.
 - id: llm-deepseek
+  disabled: false
   config:
     apiKeyEnv: __KEY_ENV__
     baseURL: __BASE_URL__
@@ -13,7 +19,7 @@
       - id: __MODEL_ID__
         name: __MODEL_ID__
         contextWindow: __CTX__
-        maxTokens: 4096
+        maxTokens: __MAX_TOKENS__
 
 - id: agent-default-model
   config:

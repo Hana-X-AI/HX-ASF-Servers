@@ -35,34 +35,30 @@ PINNED_PNPM = "11.7.0"
 
 # Environment variable names this suite reads. None of these hold secrets in
 # the repository; the only secret-adjacent one is the *name* of the variable
-# that will carry the OmniRoute client key at execution time.
+# that will carry the OmniRoute client key at execution time. Defaults reflect
+# Morpheus's landed Phase A install (03-morpheus-phase-a-install.md §10).
 ENV_DEFAULTS: dict[str, str] = {
-    "GORDON_DSH_BIN": "/opt/dsh/bin/dsh",
+    "GORDON_DSH_BIN": "/usr/local/bin/dsh",
     "GORDON_DSH_ROOT": "/opt/dsh",
-    "GORDON_DSH_SRC": "/opt/dsh/source",
+    "GORDON_DSH_SRC": "/opt/dsh",
     "GORDON_NODE": "/opt/node-v24.20.0/bin/node",
     "GORDON_PNPM": "/opt/node-v24.20.0/bin/pnpm",
     "GORDON_DSH_USER": "dsh",
     "GORDON_DSH_UID": "999",
-    "GORDON_REAL_HOME": "/home/dsh/.dsh",
+    "GORDON_REAL_HOME": "/var/lib/dsh",
     "GORDON_SCRATCH": "/var/lib/dsh/gordon",
     "GORDON_EVIDENCE_DIR": "",  # default: <scratch>/evidence
     "GORDON_OMNI_BASE_URL": "http://192.168.50.207:20128/v1",
-    "GORDON_OMNI_KEY_ENV": "OMNIROUTE_CLIENT_KEY",
-    "GORDON_SEAM": "auto",  # auto | pi-ai | deepseek | custom
+    "GORDON_OMNI_KEY_ENV": "OMNIROUTE_API_KEY",
+    "GORDON_SEAM": "auto",  # auto (→ pi-ai, the landed native seam) | pi-ai | deepseek | custom
     "GORDON_RUNNER": "auto",  # auto | direct | runuser | sudo
     "GORDON_USAGE_DIR": "",  # default: <scratch>/omni-usage
-    "GORDON_MODEL_QWEN": "",
-    "GORDON_MODEL_CODER": "",
-    "GORDON_MODEL_META": "",
+    "GORDON_MODEL_QWEN": "ollama-local/hx-qwen3.8-27b-64k:latest",
+    "GORDON_MODEL_CODER": "ollama-local/hx-qwen3.6-coderx-64k:latest",
+    "GORDON_MODEL_META": "ollama-local/hx-muse-glimmer-64k:latest",
     "GORDON_CUSTOM_ROW_ID": "",  # custom seam: composed row id of the adapter
     "GORDON_HOST": "192.168.50.214",
 }
-
-
-class Blocked(Exception):
-    """Raised (via pytest.skip) for a named external dependency or owner
-    decision. The reason MUST name the dependency (profile §7 BLOCKED)."""
 
 
 def blocked(reason: str) -> None:
@@ -198,6 +194,19 @@ def base_env(cfg: Cfg, extra: dict[str, str] | None = None) -> dict[str, str]:
     return env
 
 
+def candidate_argv(
+    cfg: Cfg, args: list[str], env: dict[str, str], runner: list[str] | None = None
+) -> list[str]:
+    """Full wrapped argv: privilege prefix + `env -i` + controlled assignments.
+
+    Shared by run_candidate and the signal-drill Popen sites so every candidate
+    process sees exactly the same environment discipline under sudo env_reset.
+    """
+    prefix = _runner_prefix(cfg) if runner is None else runner
+    assignments = [f"{key}={value}" for key, value in sorted(env.items())]
+    return prefix + ["env", "-i", *assignments, cfg.dsh_bin, *args]
+
+
 def run_candidate(
     cfg: Cfg,
     args: list[str],
@@ -207,16 +216,20 @@ def run_candidate(
     timeout: float = 180.0,
     runner: list[str] | None = None,
 ) -> RunRecord:
-    """Run the candidate binary as the service user and record the atom."""
-    prefix = _runner_prefix(cfg) if runner is None else runner
-    argv = prefix + [cfg.dsh_bin, *args]
+    """Run the candidate binary as the service user and record the atom.
+
+    The assignment list rides INSIDE the privilege wrapper
+    (`sudo -n -u dsh -- env -i K=V ... dsh ...`): sudo's env_reset would strip
+    subprocess-side variables, and the dsh process must see exactly the
+    controlled set (Morpheus's execution contract, receipt §10).
+    """
     env = base_env(cfg, env_extra)
+    argv = candidate_argv(cfg, args, env, runner)
     started = time.monotonic()
     proc = subprocess.run(
         argv,
         capture_output=True,
         text=True,
-        env=env,
         cwd=cwd or str(cfg.scratch),
         timeout=timeout,
     )
@@ -371,8 +384,20 @@ def encode_segment(raw: str) -> str:
     return "".join(out)
 
 
+def _by_mtime(paths: list[Path]) -> list[Path]:
+    """Newest last: call sites take [-1] for the latest run's artifact.
+    Session ids are random (`session-<uuid>`), so lexical order is not recency."""
+    def mt(path: Path) -> float:
+        try:
+            return path.stat().st_mtime
+        except OSError:
+            return 0.0
+
+    return sorted(paths, key=mt)
+
+
 def find_session_artifacts(home: Path, cfg: "Cfg | None" = None) -> list[Path]:
-    """List session artifacts under a harness home.
+    """List session artifacts under a harness home, oldest to newest.
 
     The persistence backend creates its root mode 0700 owned by the service
     user (session-persistence-jsonl/src/index.ts:536), so a non-root,
@@ -384,7 +409,7 @@ def find_session_artifacts(home: Path, cfg: "Cfg | None" = None) -> list[Path]:
         if root.is_dir():
             found = list(root.rglob("session.jsonl.zstd")) + list(root.rglob("session.jsonl"))
             if found:
-                return sorted(found)
+                return _by_mtime(found)
             return []
         if cfg is None:
             return []
@@ -421,10 +446,12 @@ def _stage_artifacts_as_service_user(cfg: "Cfg", home: Path) -> list[Path]:
         if not source:
             continue
         dest = staging / (hashlib.sha256(source.encode()).hexdigest()[:16] + "-" + Path(source).name)
-        copied = subprocess.run(prefix + ["cp", source, str(dest)], capture_output=True, timeout=60)
+        # -p preserves mtime: the recency ordering find_session_artifacts
+        # returns must reflect the artifact, not the copy time.
+        copied = subprocess.run(prefix + ["cp", "-p", source, str(dest)], capture_output=True, timeout=60)
         if copied.returncode == 0:
             staged.append(dest)
-    return sorted(staged)
+    return _by_mtime(staged)
 
 
 def read_file_bytes(cfg: "Cfg", path: Path) -> bytes:

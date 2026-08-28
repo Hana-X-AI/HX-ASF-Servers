@@ -56,8 +56,9 @@ def seam_choice(cfg) -> str:
 
 
 def seam_provider(cfg) -> str:
-    """The provider route name the fixture composition registers."""
-    return "omni" if seam_choice(cfg) == "pi-ai" else "deepseek-official"
+    """The provider route name the fixture composition registers (matches the
+    landed machine layer's route name, Morpheus receipt §8)."""
+    return "omniroute" if seam_choice(cfg) == "pi-ai" else "deepseek-official"
 
 
 def require_routing_inputs(cfg, model_key: str) -> str:
@@ -85,9 +86,13 @@ def seam_fixture_for(
     base_url: str | None = None,
     model_id: str | None = None,
     key_env: str | None = None,
-    context_window: int = 262_144,
+    context_window: int = 65_536,
+    max_tokens: int = 8_192,
 ) -> Path:
-    """Render the routed-provider patch overlay for one fixture run."""
+    """Render the routed-provider patch overlay for one fixture run.
+
+    Capacity defaults mirror the landed fleet operating profile (receipt §8:
+    65536 context, 8192 maxTokens, keeping input+output inside 64K)."""
     seam = seam_choice(cfg)
     url = base_url or cfg.omni_base_url
     mid = model_id or cfg.model_ids()[model_key] or "gordon-unset-model"
@@ -97,6 +102,7 @@ def seam_fixture_for(
         "MODEL_ID": mid,
         "MAX_RETRIES": str(max_retries),
         "CTX": str(context_window),
+        "MAX_TOKENS": str(max_tokens),
     }
     template = "patch-pi-ai-route.yml.tmpl" if seam == "pi-ai" else "patch-deepseek-route.yml.tmpl"
     return render_fixture(template, mapping, dest_dir)
@@ -291,7 +297,9 @@ def test_g3_04r_real_seam_run(cfg, candidate_bin, workspace, rec):
                    "census absent or seam not landed",
                    note="guard prevents the client key reaching api.deepseek.com")
         blocked("G3-01 has not confirmed a landed OmniRoute seam")
-    require_routing_inputs(cfg, "qwen")
+    # No executor-side key needed: the landed home resolves the credential
+    # natively from $DSH_HOME/.env (root:dsh 0640, receipt §6). The run uses
+    # the landed default model (Coder-X per receipt §8).
     marker = f"GORDON-G304R-{nonce()}"
     run = run_candidate(
         cfg,
