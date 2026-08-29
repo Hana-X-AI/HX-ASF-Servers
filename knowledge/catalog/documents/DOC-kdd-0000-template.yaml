@@ -6,7 +6,7 @@ document:
   source:
     author: "Kimi-K3 / owner (repository governance)"
     provided_by: "Agent Zero"
-    origin: "/home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0000-template.md"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0000-template.md"
     section: "§whole-document"
     ingestion_date: "2026-08-25T04:50:00Z"
   owner: "Kimi-K3"
@@ -28,11 +28,11 @@ document:
     contains_secret_values: false
   relations:
     - predicate: "governs"
-      target: "knowledge/decisions/KDD-NNNN-*.md"
+      target: "governace/decisions/KDD-NNNN-*.md"
       note: "one file per decision; never renumber"
   validation:
     validated_at: "2026-08-25T04:50:00Z"
     freshness: "current"
     review_due: "on convention change"
   sha256: "30c9e906000d2c62c48c1da23cbc80590507dc7d35201c6d429facff116f6abb"
-  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0000-template.md"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0000-template.md"

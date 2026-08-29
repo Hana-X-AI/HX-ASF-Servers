@@ -155,7 +155,7 @@ configured state.
 - `servers/hxs-3/discovery.md` (as-found, 2026-08-12; preserved)
 - `pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/`: `01-state-log.md` (rows 1–23), `04-rick-hxs3-os-readiness.md`, `07-esme-m4-install.md`, `09-esme-m7-ladder-profiles.md`, `12-esme-m5-validation.md` (+ Addendum A), `15-esme-m8-signoff.md`
 - `goals/2026-08-26-hxs3-muse-glimmer-tooling.md` (owner decisions D1–D8; SC-01…SC-08)
-- `knowledge/decisions/KDD-0007-hxs3-muse-glimmer-tooling-adoption.md`
+- `governace/decisions/KDD-0007-hxs3-muse-glimmer-tooling-adoption.md`
 - `servers/BLUEPRINT-llm-server.md` (§2–§6 planes; §8 Meta-X consumer contract)
 - `servers/SERVER-REGISTRY.md` (assigned role; owner-maintained)
 - `servers/2026-08-26-fleet-time-and-mask-pass.md`

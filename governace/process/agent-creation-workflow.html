@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<!-- Generated from governace/process/agent-creation-workflow.md (sha256 5fa9f340d1a33f03861806b30e4f181c220ff833c25ff088eddb6646ff31103f) by scripts/wiki/render.py on 2026-08-29T21:41Z.
+     Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent Creation Workflow</title>
+<style>
+:root{color-scheme:light dark}
+body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.55;
+max-width:62rem;margin:0 auto;padding:1.5rem 2rem;color:#1a1a1a;background:#fff}
+h1,h2,h3,h4,h5,h6{line-height:1.25;margin-top:1.6em}
+h1{border-bottom:2px solid #444;padding-bottom:.3em}
+h2{border-bottom:1px solid #ccc;padding-bottom:.2em}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+code{background:#f0f0f0;padding:.1em .3em;border-radius:3px}
+pre{background:#f6f8fa;border:1px solid #ddd;border-radius:6px;padding:.8em;overflow-x:auto}
+pre code{background:none;padding:0}
+table{border-collapse:collapse;margin:1em 0;width:100%}
+th,td{border:1px solid #ccc;padding:.35em .6em;text-align:left;vertical-align:top}
+th{background:#f0f0f0}
+blockquote{border-left:4px solid #bbb;margin:1em 0;padding:.2em 1em;color:#444;background:#fafafa}
+a{color:#0645ad}
+.doc-meta{color:#666;font-size:.85em;border-bottom:1px dashed #bbb;padding-bottom:.6em;margin-bottom:1.2em}
+footer{margin-top:2.5em;border-top:1px solid #ccc;color:#666;font-size:.8em;padding-top:.8em}
+pre.mermaid{background:#fff;border:1px dashed #999}
+@media (prefers-color-scheme:dark){
+body{color:#ddd;background:#111} h1{border-color:#888} h2{border-color:#555}
+code{background:#2a2a2a} pre{background:#1b1b1b;border-color:#444}
+th{background:#222} th,td{border-color:#555} blockquote{color:#bbb;background:#191919;border-color:#666}
+a{color:#6fa8ff} .doc-meta,footer{color:#999}}
+</style>
+</head>
+<body>
+<main class="doc">
+<h1 id="agent-creation-workflow">Agent Creation Workflow</h1>
+<pre class="mermaid">flowchart TD
+    A[Owner directive or governor work order] --&gt; B[Survey TKV knowledge dir\nbe-great skill]
+    B --&gt; C[Confirm: name, family, model lane, host]
+    C --&gt; D[Create agents/name/ directory]
+    D --&gt; E[Create charter.md from template]
+    E --&gt; F[Create profile.md from template]
+    F --&gt; G[Fill mandatory sections\nIdentity, TKV, be-great, SSH, Skills, Provenance]
+    G --&gt; H[Register: agents/README.md roster]
+    H --&gt; I[Register: AGENTS.md taxonomy + lanes]
+    I --&gt; J[Register: system-mapping.md S-N row]
+    J --&gt; K[Register: SERVER-REGISTRY.md if host-bound]
+    K --&gt; L[Create KDD registration document]
+    L --&gt; M[Add KDD to wiki manifest]
+    M --&gt; N[Create catalog records\ncharter + profile + KDD YAML]
+    N --&gt; O[Add catalog records to index.yaml]
+    O --&gt; P[Verify model lane via OmniRoute]
+    P --&gt; Q[Run render.py]
+    Q --&gt; R[Run validate.py — 4/4 PASS]
+    R --&gt; S{All PASS?}
+    S --&gt;|Yes| T[Commit]
+    S --&gt;|No| U[Fix missing items]
+    U --&gt; Q
+    T --&gt; V[Hook: agent-creation-check.sh\nfires on Write to agents/]
+    V --&gt; W[Done]</pre>
+<h2 id="deliverables-created">Deliverables created</h2>
+<ul><li><code>charter.md</code>, <code>profile.md</code>, KDD, catalog YAMLs, roster entry, <code>AGENTS.md</code> entry, <code>system-mapping.md</code> entry, manifest entry</li></ul>
+<h2 id="skills-triggered">Skills triggered</h2>
+<ul><li><strong>be-great</strong> (TKV survey), <strong>create-agent</strong> (checklist walkthrough)</li></ul>
+<h2 id="hooks-triggered">Hooks triggered</h2>
+<ul><li><code>agent-creation-check.sh</code> (PostToolUse on <code>agents/</code>)</li></ul>
+</main>
+<footer>Source of truth: <code>governace/process/agent-creation-workflow.md</code> (sha256 <code>5fa9f340d1a33f03861806b30e4f181c220ff833c25ff088eddb6646ff31103f</code>) · rendered 2026-08-29T21:41Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true});
+</script>
+<!-- If this file is viewed offline or the CDN is blocked, Mermaid diagrams appear
+     as their source text inside dashed boxes; that source is the authoritative form. -->
+
+</body>
+</html>

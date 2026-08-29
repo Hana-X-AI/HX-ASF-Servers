@@ -38,7 +38,7 @@ Relevant Files:
   - servers/BLUEPRINT-llm-server.md §3 (preload contract), §5 (exposure plane, boundary + O1 tripwire
     residual), §6 (D5 SLO), §7 (recovery proof shape), §8 (Meta-X call-sign row, candidate until M8)
   - goals/2026-08-26-hxs3-muse-glimmer-tooling.md (D1-D8; SC-01..SC-08; stop conditions)
-  - knowledge/decisions/KDD-0007 (one-call-per-turn, two-level enforcement)
+  - governace/decisions/KDD-0007 (one-call-per-turn, two-level enforcement)
   - pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001: 01-state-log.md rows 1-23 (M8 commissioned);
     13-work-order-john-m8.yaml + 14-context-packet-john-m8.yaml (governing);
     04-rick-hxs3-os-readiness.md (F-05 host-key pin; F-08 tz — closed by the fleet UTC pass);

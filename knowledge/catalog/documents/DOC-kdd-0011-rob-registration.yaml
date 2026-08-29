@@ -6,7 +6,7 @@ document:
   source:
     author: "KDD-0011"
     provided_by: "Agent-Zero"
-    origin: "/home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0011-rob-registration.md"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0011-rob-registration.md"
     ingestion_date: "2026-08-28T00:00:00Z"
     section: "§whole-document"
   owner: "Kimi-K3"
@@ -28,4 +28,4 @@ document:
     freshness: "current"
     review_due: "2026-09-28"
   sha256: "b9d7f838ca2941792ba31ebe91e34a17c285b3f09c45f58b42f872fae75858f1"
-  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0011-rob-registration.md"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0011-rob-registration.md"

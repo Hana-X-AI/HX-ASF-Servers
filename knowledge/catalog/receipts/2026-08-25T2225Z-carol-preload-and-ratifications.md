@@ -32,7 +32,7 @@ Freshness: no stale/aging transitions this run; all 5 new records current; all 5
 
 Follow-ups:
 - Governor to cite this receipt in the pilot state log to close the preload-budget handoff (profile §7).
-- M7b 24-hour soak (AC-008/AC-016) sits in knowledge/issues.md as owner-scheduled backlog — do not raise proactively (owner instruction).
+- M7b 24-hour soak (AC-008/AC-016) sits in governace/issue-tracking/issues.md as owner-scheduled backlog — do not raise proactively (owner instruction).
 - Every future Carol retrieval package must open with the R2 suitable_for_execution verdict header (profile §5, owner-ratified).
 - CAT-10..15 are the ratified golden-question corpus — any future catalog regression battery runs against them as official.
 

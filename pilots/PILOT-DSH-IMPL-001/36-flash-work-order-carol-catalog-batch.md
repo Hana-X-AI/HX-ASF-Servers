@@ -16,9 +16,9 @@ records and index entries for each. Verify cross-references are consistent.
    `hxs3-workload-placement.md`). Authoritative system placement document.
 2. `agents/quinn/profile.md` — Quinn (Qdrant vector database engineer) profile.
 3. `agents/quinn/charter.md` — Quinn charter.
-4. `knowledge/decisions/KDD-0016-agent-taxonomy-and-standard-template.md` —
+4. `governace/decisions/KDD-0016-agent-taxonomy-and-standard-template.md` —
    Agent family taxonomy and standard profile/charter template.
-5. `knowledge/decisions/KDD-0015-wayne-registration.md` — Wayne (Redis engineer)
+5. `governace/decisions/KDD-0015-wayne-registration.md` — Wayne (Redis engineer)
    registration (may already be cataloged — verify).
 6. `agents/_template/profile.md` — Standard profile template (KDD-0016).
 7. `agents/_template/charter.md` — Standard charter template (KDD-0016).
@@ -44,8 +44,8 @@ Verify these cross-references exist and are consistent:
 - `servers/system-mapping.md` ↔ `servers/SERVER-REGISTRY.md` (bidirectional)
 - `servers/system-mapping.md` ↔ `AGENTS.md` (AGENTS.md references mapping)
 - `servers/system-mapping.md` ↔ `agents/README.md` (README references mapping)
-- `knowledge/decisions/KDD-0016` ↔ `agents/_template/` (template follows KDD)
-- `knowledge/decisions/KDD-0016` ↔ `AGENTS.md` (AGENTS.md has taxonomy section)
+- `governace/decisions/KDD-0016` ↔ `agents/_template/` (template follows KDD)
+- `governace/decisions/KDD-0016` ↔ `AGENTS.md` (AGENTS.md has taxonomy section)
 - `agents/quinn/` ↔ `agents/README.md` (roster row)
 - `agents/quinn/` ↔ `servers/system-mapping.md` (agent assignment)
 - Each agent profile ↔ `servers/system-mapping.md` (if applicable)

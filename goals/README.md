@@ -21,5 +21,5 @@ order: scope, completion contract, and evidence requirements in one place.
   (KDD-0002).
 - The full goal contract model (Goal Contract, work orders, fresh sessions, gates)
   lives in `agents/kimi-k3/goal-setting-guidance.md`.
-- Link decisions to `knowledge/decisions/KDD-NNNN-*` files.
+- Link decisions to `governace/decisions/KDD-NNNN-*` files.
 - Link affected servers to `servers/<hostname>/` once that tree exists.

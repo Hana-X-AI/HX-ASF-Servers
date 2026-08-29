@@ -45,7 +45,7 @@ Update Rick's Model lane entry to reference an immutable model tag or digest ins
 ## F14 — knowledge/catalog/receipts/2026-08-29-batchB-carol-statelog-registry.md lines 16-17
 Update the batch completion metadata to list the four validator-reported manual gates as pending, and change the completion marker from fully complete to automated validation only.
 
-## F15 — knowledge/decisions/KDD-0014-chris-registration.md lines 39-44
+## F15 — governace/decisions/KDD-0014-chris-registration.md lines 39-44
 Append an open, dated correction stating DeepSeek V4 Pro via Baidu FP8 supersedes the Qwen 3.8 Flash lane. Preserve the existing Qwen entry as historical.
 
 ## F16 — pilots/PILOT-DSH-IMPL-001/01-state-log.md line 57

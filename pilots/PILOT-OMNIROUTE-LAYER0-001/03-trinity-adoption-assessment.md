@@ -13,7 +13,7 @@
   - `/home/hxsa/opt/local-tkv/agent-zero-docs/pilots/omniroute/plan/codex_20260826_1548_omniroute-v3.8.51-full-capability-phased-implementation-plan.md` (1,268 lines)
   - `/home/hxsa/opt/local-tkv/agent-zero-docs/pilots/omniroute/plan/codex_20260826_1548_omniroute-v3.8.51-implementation-control-manifest.yaml` (443 lines)
 - Companion drafts produced by this wave: `agents/trinity/charter.md`,
-  `agents/trinity/profile.md`, `knowledge/decisions/KDD-0008-trinity-omniroute-adoption.md`
+  `agents/trinity/profile.md`, `governace/decisions/KDD-0008-trinity-omniroute-adoption.md`
   (all **candidate — not ratified authority**)
 
 ## 1. Verdict
@@ -200,7 +200,7 @@ PENDING / OPEN-OWNER.
 | G3 | No Trinity-active before the adoption gate | HELD | Charter/profile marked draft/candidate; no roster entry; no Trinity work orders issued |
 | G4 | Charter draft in `_template/` format | SATISFIED | `agents/trinity/charter.md` (one page; standing survey directive preserved) |
 | G5 | Corrected operating-profile draft | SATISFIED | `agents/trinity/profile.md` (labeled candidate DRAFT; provenance recorded) |
-| G6 | KDD proposal with the exact owner decision | SATISFIED | `knowledge/decisions/KDD-0008-trinity-omniroute-adoption.md` |
+| G6 | KDD proposal with the exact owner decision | SATISFIED | `governace/decisions/KDD-0008-trinity-omniroute-adoption.md` |
 | G7 | Lane overlap resolvable against all four roster agents | SATISFIED | §4 L1–L4; exclusions encoded in charter "Does not own" |
 | G8 | Roster-true roles only (Harness → execution substrate; unrostered → p11 verifier contract) | SATISFIED | §3 C2/C3; drafts contain no Harness or unrostered-role authority |
 | G9 | No `/opt/tkv-local/omniroute`; catalog-canonical knowledge path | SATISFIED | §3 C1; drafts cite DOC-tkv-corpus-omniroute and Carol's catalog only |
@@ -238,7 +238,7 @@ unproven but bounded (KK3-gated, depth one).
 
 ## 7. Required action
 
-A1: Agent Zero decides OD-02 per `knowledge/decisions/KDD-0008-trinity-omniroute-adoption.md`
+A1: Agent Zero decides OD-02 per `governace/decisions/KDD-0008-trinity-omniroute-adoption.md`
 §Decision. Until that decision, Trinity remains a candidate: no roster entry, no
 work orders, no activation. Nothing in this assessment activates her.
 

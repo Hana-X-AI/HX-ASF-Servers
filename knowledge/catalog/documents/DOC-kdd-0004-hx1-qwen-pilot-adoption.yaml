@@ -6,7 +6,7 @@ document:
   source:
     author: "Kimi-K3 (review and record); decider Agent-Zero"
     provided_by: "Agent Zero"
-    origin: "/home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0004-hx1-qwen-pilot-adoption.md"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0004-hx1-qwen-pilot-adoption.md"
     section: "§whole-document"
     ingestion_date: "2026-08-25T04:50:00Z"
   owner: "Agent Zero"
@@ -41,6 +41,6 @@ document:
     freshness: "current"
     review_due: "at pilot close (M8)"
   sha256: "3b88d51ed7d048320fdc0bdbfe8283a71961facca252f59f4138a8a1bfb22e38"
-  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0004-hx1-qwen-pilot-adoption.md"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0004-hx1-qwen-pilot-adoption.md"
 notes:
   corrections_batch6: "references relation repointed from the raw source path to the newly cataloged DOC-hx1-qwen-pilot-origin-codex-20260824-1945 (batch 6, T1); 'not cataloged this run' wording dropped; provenance (767 lines, SHA-256 cbe90fb0…) preserved. Source file unchanged — record sha256 re-verified 2026-08-25T20:15Z."

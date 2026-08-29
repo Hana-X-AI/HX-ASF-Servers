@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Generated from goals/2026-08-24-ollama-audit-hxs4.md (sha256 9556f9ffabeb6a90118874294a74e6062398e6ca09595319996de4c847c9f992) by scripts/wiki/render.py on 2026-08-29T13:10Z.
+<!-- Generated from goals/2026-08-24-ollama-audit-hxs4.md (sha256 600ef8aafe33fc922a60763685bca9c6a361bf8faf082ea9c56280425d811cff) by scripts/wiki/render.py on 2026-08-29T21:41Z.
      Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
 <html lang="en">
 <head>
@@ -37,7 +37,7 @@ a{color:#6fa8ff} .doc-meta,footer{color:#999}}
 <h1 id="goal-read-only-ollama-infrastructure-and-performance-audit-on-hxs-4">Goal: Read-only Ollama infrastructure and performance audit on hxs-4</h1>
 <ul><li>Goal ID: 2026-08-24-ollama-audit-hxs4 (this file's name)</li><li>Version: 1</li><li>Status: done — PASS (owner accepted 2026-08-24T12:50Z)</li><li>Owner: Agent-Zero</li><li>Created: 2026-08-24</li><li>Human authority: Agent-Zero</li><li>Agent lane(s): kimi-k3 (governor), john (operational audit agent, sub-agent dispatch)</li></ul>
 <h2 id="intent">Intent</h2>
-<p>Produce a reproducible, sanitized, evidence-backed audit of the live Ollama runtime on hxs-4: version reconciliation, effective configuration, model inventory and residency, GPU alignment, network exposure, and material performance risks, plus recommendation-only remediation guidance. This is the valid-target successor of PILOT-001 (hxs-5, FAIL — invalid target; lessons in <code>knowledge/lessons-learned.md</code>).</p>
+<p>Produce a reproducible, sanitized, evidence-backed audit of the live Ollama runtime on hxs-4: version reconciliation, effective configuration, model inventory and residency, GPU alignment, network exposure, and material performance risks, plus recommendation-only remediation guidance. This is the valid-target successor of PILOT-001 (hxs-5, FAIL — invalid target; lessons in <code>governace/lesson-learned/lessons-learned.md</code>).</p>
 <h2 id="scope-and-target">Scope and target</h2>
 <ul><li>Target identity: hxs-4 (192.168.50.203), service: ollama. Registry role: Retrieval &amp; AI utility — consistent with Ollama presence.</li><li>Baseline: <strong>pre-flight verified 2026-08-24</strong> (intake existence check): ollama 0.32.9 at <code>/usr/local/bin/ollama</code>, service active, API <code>{"version":"0.32.9"}</code>, GPUs RTX 5060 Ti + RTX 5060 present. Full baseline to be established by John's knowledge review of <code>/opt/tkv-local/ollama</code> and read-only inspection.</li><li>In scope: knowledge review; passive host/service/API/GPU/log inspection; installed/running version reconciliation against version-matched source; model inventory, digests, context, residency; passive performance-risk assessment; recommendation-only plan.</li><li>Out of scope: any mutation; restarts/reloads; model pull/create/run/unload/delete; active inference, stress, load, or saturation testing; driver/OS/Ollama installs; remediation execution; fleet-role decisions.</li><li>Constraints: strictly read-only; one John session, one correction session max, one transient retry max. Probes reach hxs-4 via SSH from the John session.</li></ul>
 <h2 id="success-conditions-and-evidence">Success conditions and evidence</h2>
@@ -47,9 +47,9 @@ a{color:#6fa8ff} .doc-meta,footer{color:#999}}
 <h2 id="execution-controls">Execution controls</h2>
 <ul><li>Active charters reviewed (Phase M): <code>agents/john</code> (active), <code>agents/kimi-k3</code> (active). Qualified agent available: YES — john, via profile-briefed sub-agent dispatch.</li><li>Pre-flight (intake existence check): DONE 2026-08-24 — see Baseline above.</li><li>Maximum iterations / retries: 1 John session + 1 correction session; 1 transient read-only retry</li><li>Stop conditions: pilot plan section 16, plus the fail-closed knowledge-review rule (authority/baseline NOT ESTABLISHED -&gt; BLOCKED)</li><li>Rollback / containment: not applicable (read-only)</li><li>HITL checkpoints: authorization before execution; any section 16 escalation; completion acceptance</li></ul>
 <h2 id="notes-and-links">Notes and links</h2>
-<ul><li>KDDs: KDD-0001, KDD-0002, KDD-0003</li><li>Delta plan: <code>pilots/PILOT-KK3-JOHN-OLLAMA-AUDIT-002/plan.md</code></li><li>Base plan: <code>pilots/PILOT-KK3-JOHN-OLLAMA-AUDIT-001/plan.md</code></li><li>Lessons: <code>knowledge/lessons-learned.md</code> (2026-08-24 entries)</li></ul>
+<ul><li>KDDs: KDD-0001, KDD-0002, KDD-0003</li><li>Delta plan: <code>pilots/PILOT-KK3-JOHN-OLLAMA-AUDIT-002/plan.md</code></li><li>Base plan: <code>pilots/PILOT-KK3-JOHN-OLLAMA-AUDIT-001/plan.md</code></li><li>Lessons: <code>governace/lesson-learned/lessons-learned.md</code> (2026-08-24 entries)</li></ul>
 </main>
-<footer>Source of truth: <code>goals/2026-08-24-ollama-audit-hxs4.md</code> (sha256 <code>9556f9ffabeb6a90118874294a74e6062398e6ca09595319996de4c847c9f992</code>) · rendered 2026-08-29T13:10Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+<footer>Source of truth: <code>goals/2026-08-24-ollama-audit-hxs4.md</code> (sha256 <code>600ef8aafe33fc922a60763685bca9c6a361bf8faf082ea9c56280425d811cff</code>) · rendered 2026-08-29T21:41Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
 
 </body>
 </html>

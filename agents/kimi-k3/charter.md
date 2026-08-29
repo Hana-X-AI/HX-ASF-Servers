@@ -24,7 +24,7 @@ description: "Factory meta-agent: decomposes authorized goals into bounded execu
 - Created: 2026-08-24
 - Full operating contract: `profile.md`
 - Provenance: adopted per
-  `knowledge/decisions/KDD-0001-adopt-kimi-k3-meta-agent-model.md` (source document,
+  `governace/decisions/KDD-0001-adopt-kimi-k3-meta-agent-model.md` (source document,
   hash, and corrections record)
 
 ## Mission
@@ -58,7 +58,7 @@ In Phase M, may perform bounded operational work directly under the conditions i
 
 - Intent and Authority Receipts and run records in `goals/`.
 - Gate decisions, completion records, and escalations linked to their goal.
-- Process learning entries in `knowledge/lessons-learned.md`.
+- Process learning entries in `governace/lesson-learned/lessons-learned.md`.
 
 ## Escalates when
 

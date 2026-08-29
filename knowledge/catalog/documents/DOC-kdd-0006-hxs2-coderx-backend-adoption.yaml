@@ -6,7 +6,7 @@ document:
   source:
     author: "Kimi-K3 (record); decider Agent-Zero"
     provided_by: "Agent Zero"
-    origin: "/home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0006-hxs2-coderx-backend-adoption.md"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0006-hxs2-coderx-backend-adoption.md"
     section: "§whole-document"
     ingestion_date: "2026-08-26T03:26:00Z"
   owner: "Agent Zero"
@@ -50,7 +50,7 @@ document:
     freshness: "current"
     review_due: "at pilot close, or on the KDD's own revisit triggers (a real DeepSeek Harness is commissioned; the owner changes the exposure boundary)"
   sha256: "ed29544b856a6ff809bb36ba1a75606502758569a7a4f097eeea7dd2b8f1417a"
-  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0006-hxs2-coderx-backend-adoption.md"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0006-hxs2-coderx-backend-adoption.md"
 notes:
   header_verification: "Verified at ingestion: KDD header fields read Date 2026-08-26, Status ratified, Decider Agent-Zero. Record status/authority follow the established KDD record convention (KDD-0001..0005: status active, authority_level ratified-governance — 'ratified' is not a schema status enum value); the header's ratified state and decider are preserved verbatim in declared_purpose (same treatment as DOC-kdd-0005 notes.header_verification)."
   easter_egg_resolution: "The Harness easter-egg resolution is a recorded verification result, not an edit to any source: the deployment directive's Harness premise stands unmodified in its document (DOC-hxs2-deployment-directive); the current-truth closure (no deployed Harness anywhere; owner-confirmed 2026-08-26 it has never existed) lives in this KDD and state log row 1, authority-ranked above the directive premise per profile §9 (current owner directive + verification > the earlier directive text). Conflict preserved, not blended."

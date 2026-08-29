@@ -91,7 +91,7 @@ Follow-ups:
 - IMMEDIATE (handoff closure): Kimi-K3 to reference this receipt in 09-state-log.md — closes the pre-M7 handoff (row 29, for 26-rick-pre-m7-readiness.md) and the M6b handoff (row 34, for 29-esme-m6b-profiles.md).
 - ESCALATED TO KIMI-K3: F8 (Phase-3 guard timing; review at M8 when hxs-1/configuration.md is created), F7 (registry wording awareness), F13 (Rev-2 supersession is now the governing context rule — all future packets must cite 32K/64K/128K profiles, not the v1 freeze).
 - Run 2 (owner-directed, state log row 32): TKV-wide catalog sweep — corpus-level records for all source-snapshot trees, document-level for HX-operational trees (servers, dns-fqdn, file-share, skills, governance material), plus this receipt's Deferred list. .git excluded.
-- 2026-09-01: recheck FQDN state (DOC-knowledge-network); review knowledge/issues.md items.
+- 2026-09-01: recheck FQDN state (DOC-knowledge-network); review governace/issue-tracking/issues.md items.
 - 2026-09-24: re-hash corpus manifests (ubuntu, ollama) or on any corpus update.
 - At M7: Wi-Fi-disable persistence empirical confirmation (ev-26); M7 validates the 64K operating profile + 128K profile-switch mechanics (Rev-2); re-ingest M7 evidence and resolve the decision record's condition.
 - At M8: ingest hxs-1/configuration.md (closes F8); registry row wording (F7); unified evidence index; fixtures manifest re-check after the fixer session lands (row 33).

@@ -42,6 +42,19 @@ coordination, and distribution under the governor-issued work orders → Chris o
 the engineering quality of the PostgreSQL lane. Every "Paul" gate in the
 source document reads as **Agent Zero, requested through the governor**.
 
+## Skills available
+
+This agent has access to the following skills. Use them as
+directed:
+- **be-great** — exhaustive evidence-first investigation before acting
+- **eli5** — plain ASD-STE100-style English reporting
+- **bro** — plain language restatement
+- **wait-what** — re-pitch with missing context
+- **quick** — fast answer, action first
+- **human** — casual conversational tone
+- **corp** — formal business English
+- **copy** — ad copy style
+
 ## 2. Scope of accountability
 
 **Owns:** single-instance install/configure/operate/update; users, login

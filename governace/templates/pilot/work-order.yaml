@@ -1,0 +1,35 @@
+# Work-order template (ratified 2026-08-25, UD5/U6). Copy per milestone; keep the
+# section order. Every field is required unless marked optional. The companion
+# context packet is context-packet.yaml in this directory.
+work_order:
+  task_id: "WO-<PILOT>-<AGENT>-<MILESTONE>-NNN"
+  parent_goal: "GOAL-<id>"
+  goal_file: "goals/<file>.md"
+  milestone: "<id — short title>"
+  assigned_agent: "<roster name> / <call sign> (profile-briefed sub-agent)"
+  objective: >-
+    <One paragraph: what changes where, and the single-line acceptance statement.
+    Name the exact files/systems and the expected end state.>
+  owner_authorizations:
+    - "<explicit owner decision + state-log row> — the scope it grants"
+    - "<explicit NOT-authorized items (e.g., no 4th reboot, no soak, no restart)>"
+  boundaries:
+    - "Files/systems touched: <explicit allowlist — nothing outside it>"
+    - "Versioned change (for config mutations): pre/post sha256 + unified diff in evidence"
+    - "Execution path: session on hxs-5; <target host (IP)> via SSH hxsa@<ip>; askpass helper READS the credential at execution time (ratified pattern — NO extracted secret copy, helper deleted at task end, never printed/logged/stored); verify hostname and peer IP before any mutation; sudo -n only"
+    - "One bounded correction attempt per failed correctable gate; stop conditions: <explicit list>"
+  rollback: "<smallest affected layer + the deterministic inverse>"
+  controlling_sources:
+    - "<NN-context-packet file> (this package)"
+    - "plan/goal sections: <refs>"
+    - "/opt/tkv-local/servers/<host>/ (historical as-found, cross-check only — never current truth)"
+    - "<role TKV path> (per AGENTS.md knowledge gate: ubuntu for rick, ollama for john)"
+    - "knowledge/catalog retrieval per governor packet (cited records)"
+  deliverable: "<NN-<agent>-<slug>.md: required contents (hashes, diffs, outputs, journal, receipt) + the Task May Proceed line>"
+  # STANDING DIRECTIVE (owner 2026-08-25, AGENTS.md "Second Brain roadmap
+  # integration") — mandatory in every material work order. Answer all four.
+  second_brain_evaluation:
+    opportunity_identified: "<yes | no>"
+    roadmap_capability_or_pattern: "<which capability/pattern, or none>"
+    disposition: "<implemented | recommended-for-future-iteration | deliberately-deferred>"
+    evidence_and_reasoning: "<one to three sentences>"

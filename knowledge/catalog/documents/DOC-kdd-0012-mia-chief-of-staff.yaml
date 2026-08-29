@@ -6,7 +6,7 @@ document:
   source:
     author: "KDD-0012"
     provided_by: "Agent-Zero"
-    origin: "/home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0012-mia-chief-of-staff.md"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0012-mia-chief-of-staff.md"
     ingestion_date: "2026-08-28T00:00:00Z"
     section: "§whole-document"
   owner: "Kimi-K3"
@@ -28,4 +28,4 @@ document:
     freshness: "current"
     review_due: "2026-09-28"
   sha256: "f399b3a1dd0af692565bb8c1fd671626206896ccaee60974a77860625820ebe4"
-  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0012-mia-chief-of-staff.md"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0012-mia-chief-of-staff.md"

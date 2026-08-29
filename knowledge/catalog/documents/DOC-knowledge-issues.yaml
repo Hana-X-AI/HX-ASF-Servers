@@ -1,12 +1,12 @@
 document:
   id: "DOC-knowledge-issues"
-  title: "knowledge/issues.md — open issues and action items"
+  title: "governace/issue-tracking/issues.md — open issues and action items"
   type: "other"
   declared_purpose: "Single-file register of open issues/action items (newest first, dated, closed with resolution note). Open at ingestion: HX file-naming convention draft (Kimi-K3); D1 OmniRoute remote-consumption mechanism (Agent-Zero, open since 2026-08-14); D2 Ollama source baseline for hxs-4 (corpus 0.32.11 vs installed 0.32.9); D3 default-context contract (OLLAMA_CONTEXT_LENGTH inert vs num_ctx)."
   source:
     author: "Kimi-K3 (register keeper)"
     provided_by: "Agent Zero"
-    origin: "/home/hxsa/opt/HX-ASF-Servers/knowledge/issues.md"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/governace/issue-tracking/issues.md"
     section: "§whole-document"
     ingestion_date: "2026-08-25T04:50:00Z"
   owner: "Kimi-K3"
@@ -38,6 +38,6 @@ document:
     freshness: "current"
     review_due: "2026-09-01 or on item change"
   sha256: "9a7db8518996395ef98bc01e8c1c4e0da81410d31f7aff07540825c322d06981"
-  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/knowledge/issues.md"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/governace/issue-tracking/issues.md"
 notes:
   corrections_batch8: "M7b-backlog re-validation (2026-08-25T22:15Z): drift traced to the governor's owner-directed register addition (state log row 53, verified at source line 14): new open item '2026-08-25 | M7b 24-hour soak (AC-008/AC-016) — deferred to backlog by owner directive; soak evidence absent = deferred, not waived; M8 acceptance scope adjusted accordingly | Agent-Zero | Owner's word to schedule; do not raise proactively'. Legitimate governor edit. Re-hashed 6b22c6a6… -> 9a7db851…. declared_purpose 'Open at ingestion' list left as-ingested (dated snapshot); the M7b item is the register's newest open entry and is now recorded here. All other fields re-checked — unchanged."

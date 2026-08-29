@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!-- Generated from governace/decisions/KDD-0004-hx1-qwen-pilot-adoption.md (sha256 3b88d51ed7d048320fdc0bdbfe8283a71961facca252f59f4138a8a1bfb22e38) by scripts/wiki/render.py on 2026-08-29T21:41Z.
+     Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KDD-0004: Adopt the HX-1 Qwen pilot with qwen3.8:27b as the approved baseline</title>
+<style>
+:root{color-scheme:light dark}
+body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.55;
+max-width:62rem;margin:0 auto;padding:1.5rem 2rem;color:#1a1a1a;background:#fff}
+h1,h2,h3,h4,h5,h6{line-height:1.25;margin-top:1.6em}
+h1{border-bottom:2px solid #444;padding-bottom:.3em}
+h2{border-bottom:1px solid #ccc;padding-bottom:.2em}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+code{background:#f0f0f0;padding:.1em .3em;border-radius:3px}
+pre{background:#f6f8fa;border:1px solid #ddd;border-radius:6px;padding:.8em;overflow-x:auto}
+pre code{background:none;padding:0}
+table{border-collapse:collapse;margin:1em 0;width:100%}
+th,td{border:1px solid #ccc;padding:.35em .6em;text-align:left;vertical-align:top}
+th{background:#f0f0f0}
+blockquote{border-left:4px solid #bbb;margin:1em 0;padding:.2em 1em;color:#444;background:#fafafa}
+a{color:#0645ad}
+.doc-meta{color:#666;font-size:.85em;border-bottom:1px dashed #bbb;padding-bottom:.6em;margin-bottom:1.2em}
+footer{margin-top:2.5em;border-top:1px solid #ccc;color:#666;font-size:.8em;padding-top:.8em}
+pre.mermaid{background:#fff;border:1px dashed #999}
+@media (prefers-color-scheme:dark){
+body{color:#ddd;background:#111} h1{border-color:#888} h2{border-color:#555}
+code{background:#2a2a2a} pre{background:#1b1b1b;border-color:#444}
+th{background:#222} th,td{border-color:#555} blockquote{color:#bbb;background:#191919;border-color:#666}
+a{color:#6fa8ff} .doc-meta,footer{color:#999}}
+</style>
+</head>
+<body>
+<main class="doc">
+<h1 id="kdd-0004-adopt-the-hx-1-qwen-pilot-with-qwen3-8-27b-as-the-approved-baseline">KDD-0004: Adopt the HX-1 Qwen pilot with qwen3.8:27b as the approved baseline</h1>
+<ul><li>Date: 2026-08-24</li><li>Status: ratified</li><li>Decider: Agent-Zero</li><li>Related goals: <code>goals/2026-08-24-hx1-ollama-qwen38-27b.md</code></li></ul>
+<h2 id="context">Context</h2>
+<p>A production-grade pilot plan (767 lines) for deploying a Qwen 27B-class model on hxs-1 via Ollama was reviewed against SERVER-REGISTRY, the live Ollama library, a live pre-flight of hxs-1, and PILOT-002 evidence. The plan's executive decision proposed <code>qwen3.5:27b</code> on the grounds that the requested tags were invalid. Live verification on 2026-08-24 showed <code>qwen3.5:27b</code>, <code>qwen3.5:27b-mlx</code>, <code>qwen3:30b</code>, and <code>qwen3.8:27b</code> all exist — and the registry's ratified hxs-1 workload ("Qwen 3.8 27B — unreleased, slot reserved", 2026-08-13) is now released.</p>
+<h2 id="options-considered">Options considered</h2>
+<ol><li>Adopt with <code>qwen3.5:27b</code> per the document — rejected: deviates from the ratified registry workload and would require a later registry amendment.</li><li>Adopt with <code>qwen3.8:27b</code> — chosen: matches the ratified registry role, newest available tag, no registry amendment needed.</li><li>Hold adoption until agent naming, quality thresholds, and SLO were settled — rejected: adoption proceeds with those recorded as proposed-pending; only the model choice blocked alignment.</li></ol>
+<h2 id="decision">Decision</h2>
+<p>Adopt the pilot at <code>pilots/PILOT-HX1-OLLAMA-QWEN27B-001/plan.md</code> with <code>qwen3.8:27b</code> (non-MLX, GGUF) as the approved baseline, and these amendments:</p>
+<ul><li>Executive decision rewritten for the approved baseline with live tag evidence.</li><li>Phase M dispatch note (governor runs no probes; specialists execute as profile-briefed sub-agents).</li><li>Host table populated with the 2026-08-24 pre-flight evidence.</li><li>Context-length evidence note from PILOT-002 (Modelfile <code>num_ctx</code> is the contract; the drop-in variable may be inert).</li><li>Open-decisions table: model and TKV paths resolved; agent naming resolved as roster names with pilot call signs (Esme=john, KK3=kimi-k3); quality thresholds and readiness SLO recorded as proposed-pending owner confirmation.</li><li>Goal file created at <code>goals/2026-08-24-hx1-ollama-qwen38-27b.md</code>.</li></ul>
+<p>Execution (M0) is NOT authorized by this KDD; it is the first mutating pilot and starts on explicit owner instruction. Each cold reboot is individually approved.</p>
+<h2 id="consequences">Consequences</h2>
+<ul><li>Registry and pilot are aligned on <code>qwen3.8:27b</code>; no registry amendment required.</li><li><code>qwen3.5:27b</code> remains available as a fallback candidate if the pilot discovers a blocking defect in <code>qwen3.8:27b</code>; switching requires a KK3 gate decision.</li><li>Proposed quality thresholds and SLO must be confirmed by the owner before M5/M4 respectively.</li></ul>
+<h2 id="provenance">Provenance</h2>
+<ul><li>Source document: <code>/home/hxsa/opt/local-tkv/agent-zero-docs/pilots/qwen/codex_20260824_1945_hx-1-ollama-qwen-27b-pilot-project.md</code> (767 lines), SHA-256 <code>cbe90fb04fbe16e17aecfc2e175ec49b0fea0b477113021063d76ac8058342b7</code>.</li><li>Evidence reviewed: source in full; SERVER-REGISTRY; ollama.com library tag checks (live); hxs-1 pre-flight (live, 2026-08-24); PILOT-002 audit evidence.</li></ul>
+</main>
+<footer>Source of truth: <code>governace/decisions/KDD-0004-hx1-qwen-pilot-adoption.md</code> (sha256 <code>3b88d51ed7d048320fdc0bdbfe8283a71961facca252f59f4138a8a1bfb22e38</code>) · rendered 2026-08-29T21:41Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+
+</body>
+</html>

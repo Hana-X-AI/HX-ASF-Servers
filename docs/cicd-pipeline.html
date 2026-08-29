@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Generated from docs/cicd-pipeline.md (sha256 a4dbe60f0cb4cc50ab5b72b0ea1763009de59c9df0bdb6983f7c8d0635327ae7) by scripts/wiki/render.py on 2026-08-29T13:10Z.
+<!-- Generated from docs/cicd-pipeline.md (sha256 a4dbe60f0cb4cc50ab5b72b0ea1763009de59c9df0bdb6983f7c8d0635327ae7) by scripts/wiki/render.py on 2026-08-29T21:41Z.
      Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
 <html lang="en">
 <head>
@@ -72,7 +72,7 @@ a{color:#6fa8ff} .doc-meta,footer{color:#999}}
 <p>[OPEN CORRECTION 2026-08-28, labeled, append-only: the workflow file <code>.github/workflows/ci-cd.yml</code> was amended on 2026-08-28 with three changes that supersede the text above. The original 2026-08-26 text is preserved as history; THIS correction block is the current reading.]</p>
 <ol><li><strong>Trigger</strong> — the <code>coderabbit-review</code> job now runs on <strong>ALL pushes including <code>main</code></strong> (owner directive 2026-08-28: "coderabbit should run on every commit regardless of the type"). The doc above says "non-<code>main</code> pushes only" (§Step list, step 10 header; §Lifecycle diagram; §Review-fix loop) — that wording is STALE. Main pushes review the pushed range <code>BEFORE..HEAD</code>; branch pushes review vs <code>origin/main</code>.</li><li><strong>Blocking threshold</strong> — the gate now blocks on <strong>ALL findings: critical + major + minor</strong> (owner directive 2026-08-28: "we are introducing problems in our codebase that coderabbit can find and fix" — zero-tolerance, not severity triage). The doc above says "fails on critical/major findings" and "minor/trivial findings are reported, not blocking" (§Step list, step 13; §Review-fix loop) — that wording is STALE. Trivial and info findings remain non-blocking.</li><li><strong>Fix-loop agent</strong> — the doc references "Kimi-K3 / john" as the factory agent (§Review-fix loop). The governor role is now held by <strong>Flash</strong> (owner appointment 2026-08-29); the fix-loop agent is whoever the governor dispatches under a work order — typically routed through Mia to the appropriate engineering lane. The "Kimi-K3 / john" wording is STALE.</li></ol>
 </main>
-<footer>Source of truth: <code>docs/cicd-pipeline.md</code> (sha256 <code>a4dbe60f0cb4cc50ab5b72b0ea1763009de59c9df0bdb6983f7c8d0635327ae7</code>) · rendered 2026-08-29T13:10Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+<footer>Source of truth: <code>docs/cicd-pipeline.md</code> (sha256 <code>a4dbe60f0cb4cc50ab5b72b0ea1763009de59c9df0bdb6983f7c8d0635327ae7</code>) · rendered 2026-08-29T21:41Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
 
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';

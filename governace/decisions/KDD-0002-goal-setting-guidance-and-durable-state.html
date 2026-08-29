@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!-- Generated from governace/decisions/KDD-0002-goal-setting-guidance-and-durable-state.md (sha256 62d52e59c2eedee97b1cd3a4bd472e5b9e61ae1272327aea2cbf38b4d29e809c) by scripts/wiki/render.py on 2026-08-29T21:41Z.
+     Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KDD-0002: Adopt goal-setting guidance and designate goals/ as the durable state system</title>
+<style>
+:root{color-scheme:light dark}
+body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.55;
+max-width:62rem;margin:0 auto;padding:1.5rem 2rem;color:#1a1a1a;background:#fff}
+h1,h2,h3,h4,h5,h6{line-height:1.25;margin-top:1.6em}
+h1{border-bottom:2px solid #444;padding-bottom:.3em}
+h2{border-bottom:1px solid #ccc;padding-bottom:.2em}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+code{background:#f0f0f0;padding:.1em .3em;border-radius:3px}
+pre{background:#f6f8fa;border:1px solid #ddd;border-radius:6px;padding:.8em;overflow-x:auto}
+pre code{background:none;padding:0}
+table{border-collapse:collapse;margin:1em 0;width:100%}
+th,td{border:1px solid #ccc;padding:.35em .6em;text-align:left;vertical-align:top}
+th{background:#f0f0f0}
+blockquote{border-left:4px solid #bbb;margin:1em 0;padding:.2em 1em;color:#444;background:#fafafa}
+a{color:#0645ad}
+.doc-meta{color:#666;font-size:.85em;border-bottom:1px dashed #bbb;padding-bottom:.6em;margin-bottom:1.2em}
+footer{margin-top:2.5em;border-top:1px solid #ccc;color:#666;font-size:.8em;padding-top:.8em}
+pre.mermaid{background:#fff;border:1px dashed #999}
+@media (prefers-color-scheme:dark){
+body{color:#ddd;background:#111} h1{border-color:#888} h2{border-color:#555}
+code{background:#2a2a2a} pre{background:#1b1b1b;border-color:#444}
+th{background:#222} th,td{border-color:#555} blockquote{color:#bbb;background:#191919;border-color:#666}
+a{color:#6fa8ff} .doc-meta,footer{color:#999}}
+</style>
+</head>
+<body>
+<main class="doc">
+<h1 id="kdd-0002-adopt-goal-setting-guidance-and-designate-goals-as-the-durable-state-system">KDD-0002: Adopt goal-setting guidance and designate goals/ as the durable state system</h1>
+<ul><li>Date: 2026-08-24</li><li>Status: ratified</li><li>Decider: Agent-Zero</li><li>Related goals: none yet</li></ul>
+<h2 id="context">Context</h2>
+<p>A first-pass goal-setting and agent-invocation guidance document (735 lines) was reviewed against the ratified Kimi-K3 profile (KDD-0001), this repository's <code>goals/</code> conventions, and the Kimi Code sub-agent execution model.</p>
+<p>The review found the guidance architecturally strong: its "fresh, bounded operational session" pattern maps directly onto sub-agent dispatch, and its Goal Contract is a superset of the existing goal template. Three conflicts required resolution: the text assumed the full agent-fleet end state and omitted the Phase M exception ratified in KDD-0001; it named GitHub Projects as the durable work-state system while this repository already designates <code>goals/</code> files; and its status ("Production guidance") and Appendix A source references did not meet the adoption-of-provided-documents rule in AGENTS.md.</p>
+<h2 id="options-considered">Options considered</h2>
+<ol><li>Adopt verbatim — rejected: contradicts the ratified Phase M model and creates a second work-state authority (GitHub Projects) alongside <code>goals/</code>.</li><li>Defer adoption — rejected: goal-based work begins now and needs its contract.</li><li>Adopt with amendments — chosen: Phase M operation note added, <code>goals/</code> designated as the durable state system, status and provenance corrected, and the goal template upgraded to a Phase-M-sized subset of the contract.</li></ol>
+<h2 id="decision">Decision</h2>
+<p>Adopt option 3.</p>
+<ul><li>The guidance is adopted at <code>agents/kimi-k3/goal-setting-guidance.md</code> with amendments (section 4.3 Phase M operation, section 10 durable-state designation, status correction, goal-ID mapping, Appendix A provenance note).</li><li><code>goals/</code> goal files are the designated durable work-state system. GitHub Projects is a deferred optional layer, introducible only by owner decision with a new KDD.</li><li><code>goals/_template.md</code> is upgraded to the contract subset; the goal file name (<code>&lt;YYYY-MM-DD&gt;-&lt;slug&gt;.md</code>) is the Goal ID.</li></ul>
+<h2 id="consequences">Consequences</h2>
+<ul><li>One work-state authority exists: <code>goals/</code>. No board tooling is introduced now.</li><li>In Phase M, a "fresh operational session" means a sub-agent dispatch, or bounded direct execution by Kimi-K3 under profile section 2.3 with the charter check recorded; owner review is the verifier fallback (profile section 11).</li><li>Goal files gain success-condition tables, evidence contracts, budgets, and stop conditions; completion requires evidence, not narrative.</li><li>Appendix A's source pattern is recorded as owner-provided historical input, not authority.</li></ul>
+<h2 id="provenance-and-corrections">Provenance and corrections</h2>
+<ul><li>Source document: <code>/home/hxsa/opt/local-tkv/agent-zero-docs/goals/codex_20260824_1112_kimi-k3_goal-setting-and-agent-invocation-guidance.md</code> (735 lines), SHA-256 <code>8c7e1397af21360fbfa83b1f20450521f3b0cefea5c523d39267ab40712cc59e</code>.</li><li>Evidence reviewed: the source in full; the ratified profile and KDD-0001; this repository's <code>goals/</code> and AGENTS.md conventions.</li><li>Corrections applied at adoption:<ol><li>Status changed from "Production guidance" to ratified with amendments.</li><li>Section 4.3 added: Phase M operation (sub-agent dispatch, section 2.3 direct execution, owner-review verification fallback).</li><li>Durable work state designated as <code>goals/</code>; GitHub Projects deferred-optional.</li><li>Goal-ID mapping to the goal file name added.</li><li>Appendix A provenance noted as owner-provided historical input.</li></ol></li><li>The source document remains unmodified as historical input.</li></ul>
+</main>
+<footer>Source of truth: <code>governace/decisions/KDD-0002-goal-setting-guidance-and-durable-state.md</code> (sha256 <code>62d52e59c2eedee97b1cd3a4bd472e5b9e61ae1272327aea2cbf38b4d29e809c</code>) · rendered 2026-08-29T21:41Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+# Context-packet template (ratified 2026-08-25, UD5/U6). Pairs with work-order.yaml.
+# Everything the producer needs and nothing it does not.
+context_packet:
+  goal_id: "GOAL-<id>"
+  goal_version: 1
+  work_order_id: "WO-<PILOT>-<AGENT>-<MILESTONE>-NNN"
+  session_id: "<agent>-<milestone>-<yyyymmdd>-<nn>"
+  role: "producer (<lane>: <roster name> / <call sign>)"
+  milestone: "<id — short title>"
+  objective: >-
+    <Restated from the work order, one paragraph.>
+  current_state:
+    host: "<hostname (IP), OS, kernel — verified at packet time>"
+    key_identities: "<frozen aliases/digests/versions the work must preserve>"
+    relevant_config: "<current values the change touches, with evidence dates>"
+    units_or_services: "<states that must hold at completion>"
+  owner_decisions:
+    - "<decision + date + state-log row>"
+  constraints:
+    - "<loopback-only / read-only scope / no-secret rules / frozen-evidence rules>"
+    - "<stop conditions and the bounded-correction budget>"
+  evidence_requirements:
+    - "<pre/post hashes, diffs, command outputs, journal excerpts, verification runs>"
+    - "<budget/arithmetic tables or checklists where the milestone defines them>"
+  consulted_records:  # governor cites catalog knowledge consulted (AGENTS.md)
+    - "<DOC-ids / retrieval packages consulted at dispatch, or 'none required'>"
+  handoff:
+    - "Deliverable <NN-...> goes to Carol for catalog receipt; the handoff is OPEN
+      until the receipt is cited in the state log (documentation-governance amendment)"
+  second_brain_evaluation: "See the governing work order — the packet does not re-decide it"

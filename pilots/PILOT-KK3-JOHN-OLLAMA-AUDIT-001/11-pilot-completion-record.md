@@ -41,4 +41,4 @@ timestamp. That decision is pending.
 | Notes | Target selection was never reconciled with SERVER-REGISTRY: Ollama is not assigned to hxs-5 (role: Edge/ingress). Ollama lives on hxs-4. John should have returned BLOCKED at the knowledge-review gate (no ratified baseline, G1) instead of proceeding. The evidence-gate PASS on package quality stands, but the goal was ill-posed at intake, so the pilot is FAIL. The hxs-5 findings are retained as conformance evidence: Ollama absent where it should be absent. |
 
 Final Status: `FAIL — PILOT OR AUDIT REQUIREMENTS NOT MET` (owner decision; see also
-`knowledge/lessons-learned.md`, 2026-08-24 entries).
+`governace/lesson-learned/lessons-learned.md`, 2026-08-24 entries).

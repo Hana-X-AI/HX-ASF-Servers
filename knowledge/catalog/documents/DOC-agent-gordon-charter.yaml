@@ -31,7 +31,7 @@ document:
       target: "DOC-agent-gordon-profile"
       note: "full operating contract"
     - predicate: "references"
-      target: "/home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0010-gordon-dsh-qa-adoption.md"
+      target: "/home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0010-gordon-dsh-qa-adoption.md"
       note: "registration decision (KDD-0010)"
   validation:
     validated_at: "2026-08-29T12:30:00Z"

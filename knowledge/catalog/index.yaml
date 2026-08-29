@@ -339,55 +339,55 @@ index:
     type: contract
     authority_level: ratified-governance
     freshness: current
-    canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0000-template.md
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0000-template.md
   - id: DOC-kdd-0001-kimi-k3-meta-agent
     title: KDD-0001 — Adopt the Kimi-K3 meta-agent control model with phased activation
     type: decision
     authority_level: ratified-governance
     freshness: current
-    canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0001-adopt-kimi-k3-meta-agent-model.md
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0001-adopt-kimi-k3-meta-agent-model.md
   - id: DOC-kdd-0002-goal-setting-guidance
     title: KDD-0002 — Adopt goal-setting guidance and designate goals/ as the durable state system
     type: decision
     authority_level: ratified-governance
     freshness: current
-    canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0002-goal-setting-guidance-and-durable-state.md
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0002-goal-setting-guidance-and-durable-state.md
   - id: DOC-kdd-0003-ollama-audit-pilot
     title: KDD-0003 — Adopt the Ollama audit pilot (PILOT-KK3-JOHN-OLLAMA-AUDIT-001) with Phase M execution note
     type: decision
     authority_level: ratified-governance
     freshness: current
-    canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0003-ollama-audit-pilot-adoption.md
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0003-ollama-audit-pilot-adoption.md
   - id: DOC-kdd-0004-hx1-qwen-pilot-adoption
     title: KDD-0004 — Adopt the HX-1 Qwen pilot with qwen3.8:27b as the approved baseline
     type: decision
     authority_level: ratified-governance
     freshness: current
-    canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0004-hx1-qwen-pilot-adoption.md
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0004-hx1-qwen-pilot-adoption.md
   - id: DOC-kdd-0005-second-brain-canonical-home
     title: KDD-0005 — Second Brain canonical home is the HX-ASF-Servers repository
     type: decision
     authority_level: ratified-governance
     freshness: current
-    canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0005-second-brain-canonical-home.md
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0005-second-brain-canonical-home.md
   - id: DOC-kdd-0006-hxs2-coderx-backend-adoption
     title: KDD-0006 — Adopt the hxs-2 CoderX coding-inference backend pilot (PILOT-HXS2-CODERX-BACKEND-001)
     type: decision
     authority_level: ratified-governance
     freshness: current
-    canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0006-hxs2-coderx-backend-adoption.md
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0006-hxs2-coderx-backend-adoption.md
   - id: DOC-kdd-0007-hxs3-muse-glimmer-tooling-adoption
     title: KDD-0007 — Adopt the hxs-3 Muse Glimmer 30B tooling pilot (PILOT-HXS3-MUSE-GLIMMER-TOOLING-001)
     type: decision
     authority_level: ratified-governance
     freshness: current
-    canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0007-hxs3-muse-glimmer-tooling-adoption.md
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0007-hxs3-muse-glimmer-tooling-adoption.md
   - id: DOC-kdd-0008-trinity-omniroute-adoption
     title: KDD-0008 — Adopt Trinity as OmniRoute lifecycle engineer — RATIFIED 2026-08-27 (owner decision O1, adopt-as-corrected; OD-02 closed)
     type: decision
     authority_level: ratified-governance
     freshness: current
-    canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0008-trinity-omniroute-adoption.md
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0008-trinity-omniroute-adoption.md
   - id: DOC-kimi-k3-goal-setting-guidance
     title: agents/kimi-k3/goal-setting-guidance.md — Kimi-K3 goal-setting and agent invocation guidance (ratified adoption per KDD-0002)
     type: runbook
@@ -401,17 +401,17 @@ index:
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/agent-performance.md
   - id: DOC-knowledge-issues
-    title: knowledge/issues.md — open issues and action items
+    title: governace/issue-tracking/issues.md — open issues and action items
     type: other
     authority_level: agent-evidence
     freshness: current
-    canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/issues.md
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/issue-tracking/issues.md
   - id: DOC-knowledge-lessons-learned
-    title: knowledge/lessons-learned.md — factory process learning record
+    title: governace/lesson-learned/lessons-learned.md — factory process learning record
     type: other
     authority_level: agent-evidence
     freshness: current
-    canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/lessons-learned.md
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/lesson-learned/lessons-learned.md
   - id: DOC-knowledge-network
     title: knowledge/network.md — local DNS and FQDN access (hx.local.arpa)
     type: runbook
@@ -1827,19 +1827,19 @@ index:
     type: decision
     authority_level: agent-evidence
     freshness: current
-    canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0011-rob-registration.md
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0011-rob-registration.md
   - id: DOC-kdd-0012-mia-chief-of-staff
     title: "KDD-0012: Mia — Chief of Staff to the Governor"
     type: decision
     authority_level: agent-evidence
     freshness: current
-    canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0012-mia-chief-of-staff.md
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0012-mia-chief-of-staff.md
   - id: DOC-kdd-0013-agent-model-lanes
     title: "KDD-0013: Per-agent model lane assignments"
     type: decision
     authority_level: agent-evidence
     freshness: current
-    canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0013-agent-model-lanes.md
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0013-agent-model-lanes.md
   - id: DOC-agent-mia-charter
     title: "Agent charter — mia (Chief of Staff)"
     type: charter
@@ -1957,4 +1957,28 @@ index:
     type: decision
     authority_level: ratified-governance
     freshness: current
-    canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0017-quinn-registration.md
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0017-quinn-registration.md
+  - id: DOC-kdd-0018-raphael-registration
+    title: "KDD-0018: Raphael registration — LightRAG systems engineer"
+    type: decision
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0018-raphael-registration.md
+  - id: DOC-agent-raphael-charter
+    title: "Agent charter — raphael (LightRAG systems engineer)"
+    type: charter
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/raphael/charter.md
+  - id: DOC-agent-raphael-profile
+    title: "Agent profile — raphael (full operating contract)"
+    type: profile
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/raphael/profile.md
+  - id: DOC-goal-lightrag-hxs4
+    title: "Goal: Implement LightRAG and LightRAG MCP server on hxs-4"
+    type: goal
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/goals/2026-08-29-lightrag-hxs4.md

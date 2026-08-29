@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!-- Generated from governace/issue-tracking/issues.md (sha256 4508e1d8d631047d77a7297899aae5f1cc2b17e03bb577e7b602ba27f5ffd5a3) by scripts/wiki/render.py on 2026-08-29T21:41Z.
+     Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Issues and action items</title>
+<style>
+:root{color-scheme:light dark}
+body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.55;
+max-width:62rem;margin:0 auto;padding:1.5rem 2rem;color:#1a1a1a;background:#fff}
+h1,h2,h3,h4,h5,h6{line-height:1.25;margin-top:1.6em}
+h1{border-bottom:2px solid #444;padding-bottom:.3em}
+h2{border-bottom:1px solid #ccc;padding-bottom:.2em}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+code{background:#f0f0f0;padding:.1em .3em;border-radius:3px}
+pre{background:#f6f8fa;border:1px solid #ddd;border-radius:6px;padding:.8em;overflow-x:auto}
+pre code{background:none;padding:0}
+table{border-collapse:collapse;margin:1em 0;width:100%}
+th,td{border:1px solid #ccc;padding:.35em .6em;text-align:left;vertical-align:top}
+th{background:#f0f0f0}
+blockquote{border-left:4px solid #bbb;margin:1em 0;padding:.2em 1em;color:#444;background:#fafafa}
+a{color:#0645ad}
+.doc-meta{color:#666;font-size:.85em;border-bottom:1px dashed #bbb;padding-bottom:.6em;margin-bottom:1.2em}
+footer{margin-top:2.5em;border-top:1px solid #ccc;color:#666;font-size:.8em;padding-top:.8em}
+pre.mermaid{background:#fff;border:1px dashed #999}
+@media (prefers-color-scheme:dark){
+body{color:#ddd;background:#111} h1{border-color:#888} h2{border-color:#555}
+code{background:#2a2a2a} pre{background:#1b1b1b;border-color:#444}
+th{background:#222} th,td{border-color:#555} blockquote{color:#bbb;background:#191919;border-color:#666}
+a{color:#6fa8ff} .doc-meta,footer{color:#999}}
+</style>
+</head>
+<body>
+<main class="doc">
+<h1 id="issues-and-action-items">Issues and action items</h1>
+<p>One file until it hurts. Newest first. Date every entry. Close items with a resolution note, never by deleting.</p>
+<h2 id="open">Open</h2>
+<table><thead><tr><th>Date</th><th>Item</th><th>Owner</th><th>Next action</th></tr></thead><tbody><tr><td>2026-08-24</td><td>Draft HX file-naming convention (no tool-name prefixes such as <code>codex_</code>) and apply it to new files going forward</td><td>the governor (via Mia)</td><td>Draft convention, record it in the repo conventions, then rename existing non-conforming files, e.g. <code>agents/john/codex_20260824_0205_ollama-directory-reconnaissance-inventory.md</code></td></tr><tr><td>2026-08-24</td><td>D1: OmniRoute remote-consumption mechanism (open since 2026-08-14 per PILOT-002)</td><td>Agent-Zero</td><td>[RESOLVED — see Closed]</td></tr><tr><td>2026-08-24</td><td>D2: Ollama source baseline for hxs-4 — corpus has 0.32.11, installed is 0.32.9</td><td>Agent-Zero</td><td>[RESOLVED — see Closed]</td></tr><tr><td>2026-08-24</td><td>D3: default-context contract — OLLAMA_CONTEXT_LENGTH=65536 did not change observed num_ctx default of 4096</td><td>Agent-Zero</td><td>[RESOLVED — see Closed]</td></tr><tr><td>2026-08-25</td><td>M7b 24-hour soak (AC-008/AC-016) — deferred to backlog by owner directive; soak evidence absent = deferred, not waived; M8 acceptance scope adjusted accordingly</td><td>Agent-Zero</td><td>[RESOLVED — see Closed]</td></tr></tbody></table>
+<h2 id="closed">Closed</h2>
+<table><thead><tr><th>Date</th><th>Item</th><th>Resolution</th></tr></thead><tbody><tr><td>2026-08-24</td><td>Possible OpenRouter API key in local doc <code>ox-alpha.md</code></td><td>Owner confirmed the key is not exposed; local file left as-is, no action</td></tr><tr><td>2026-08-29</td><td>D1: OmniRoute remote-consumption mechanism (open since 2026-08-14 per PILOT-002)</td><td>OmniRoute deployed and owner-accepted (L1-M3 COMPLETE, KDD-0008); hxs-4 Chat-X deployed; D1 resolved — OmniRoute IS the remote-consumption mechanism</td></tr><tr><td>2026-08-29</td><td>D2: Ollama source baseline for hxs-4 — corpus has 0.32.11, installed is 0.32.9</td><td>hxs-4 Chat-X (Qwen 3.5 9B) deployed via Ollama; source baseline discrepancy is historical — verify against live hxs-4 if a source-matched build is needed</td></tr><tr><td>2026-08-29</td><td>D3: default-context contract — OLLAMA_CONTEXT_LENGTH=65536 did not change observed num_ctx default of 4096</td><td>LLM server blueprint (BLUEPRINT-llm-server.md §8) documents the downstream-consumer contract; num_ctx is set explicitly per workload in the Ollama model config</td></tr><tr><td>2026-08-29</td><td>M7b 24-hour soak (AC-008/AC-016) — deferred to backlog by owner directive</td><td>hxs-1 through hxs-4 are deployed and owner-accepted; M7b soak remains deferred per owner directive</td></tr></tbody></table>
+</main>
+<footer>Source of truth: <code>governace/issue-tracking/issues.md</code> (sha256 <code>4508e1d8d631047d77a7297899aae5f1cc2b17e03bb577e7b602ba27f5ffd5a3</code>) · rendered 2026-08-29T21:41Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+
+</body>
+</html>

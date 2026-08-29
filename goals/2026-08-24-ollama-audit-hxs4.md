@@ -15,7 +15,7 @@ on hxs-4: version reconciliation, effective configuration, model inventory and
 residency, GPU alignment, network exposure, and material performance risks, plus
 recommendation-only remediation guidance. This is the valid-target successor of
 PILOT-001 (hxs-5, FAIL — invalid target; lessons in
-`knowledge/lessons-learned.md`).
+`governace/lesson-learned/lessons-learned.md`).
 
 ## Scope and target
 
@@ -67,4 +67,4 @@ recorded Agent Zero owner-review acceptance decision with timestamp after the ga
 - KDDs: KDD-0001, KDD-0002, KDD-0003
 - Delta plan: `pilots/PILOT-KK3-JOHN-OLLAMA-AUDIT-002/plan.md`
 - Base plan: `pilots/PILOT-KK3-JOHN-OLLAMA-AUDIT-001/plan.md`
-- Lessons: `knowledge/lessons-learned.md` (2026-08-24 entries)
+- Lessons: `governace/lesson-learned/lessons-learned.md` (2026-08-24 entries)

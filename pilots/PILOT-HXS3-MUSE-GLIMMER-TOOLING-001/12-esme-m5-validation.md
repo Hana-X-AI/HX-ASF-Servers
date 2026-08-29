@@ -31,7 +31,7 @@ Relevant Files: 19 reviewed (each named entry below counts as one file) —
   web-search posture change row 12); 09-esme-m7-ladder-profiles.md (Meta-X frozen
   identity; F-05 host key; EST tz)
   goals/2026-08-26-hxs3-muse-glimmer-tooling.md (SC-05 enforcement contract)
-  knowledge/decisions/KDD-0007-hxs3-muse-glimmer-tooling-adoption.md (one-call-per-turn,
+  governace/decisions/KDD-0007-hxs3-muse-glimmer-tooling-adoption.md (one-call-per-turn,
   two-level enforcement)
   pilots/PILOT-HX1-OLLAMA-QWEN27B-001/16-esme-m5-validation.md (AC-012 standard) +
   19-esme-m5b-amendment-conformance.md (evaluator-review standard)

@@ -1,0 +1,48 @@
+document:
+  id: "DOC-goal-lightrag-hxs4"
+  title: "Goal: Implement LightRAG and LightRAG MCP server on hxs-4"
+  type: "goal"
+  declared_purpose: "Implementation goal for LightRAG v1.5.7 server, Web UI, and lightragmcp v1.1.0 MCP server on hxs-4. Qdrant vector backend (Quinn), Meta-X LLM via OmniRoute, bge-m3 embeddings via Ollama (john). Agent: raphael (KDD-0018, Qwen-X lane). 16 success conditions."
+  source:
+    author: "Flash (governor)"
+    provided_by: "Agent Zero"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/goals/2026-08-29-lightrag-hxs4.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-29T14:00:00Z"
+  owner: "Agent Zero (ratification); Flash (author)"
+  applies_to:
+    hosts: [hxs-4]
+    fqdns: []
+    services: [lightrag, lightragmcp]
+    agents: [raphael]
+    repositories: [HX-ASF-Servers]
+    environments: [fleet]
+  version: "1"
+  status: "draft"
+  authority_level: "ratified-governance"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "references"
+      target: "DOC-kdd-0018-raphael-registration"
+      note: "agent registration"
+    - predicate: "references"
+      target: "DOC-kdd-0017-quinn-registration"
+      note: "Qdrant dependency"
+    - predicate: "references"
+      target: "DOC-system-mapping"
+      note: "S17 LightRAG placement"
+  validation:
+    validated_at: "2026-08-29T14:00:00Z"
+    freshness: "current"
+    review_due: "on owner approval"
+  sha256: "3d076b4c0e5e91008e9a2f6846d0ca222f08bb8ee5e3346aecc65a5cdf34631e"
+  hash_history:
+    - sha256: "3d076b4c0e5e91008e9a2f6846d0ca222f08bb8ee5e3346aecc65a5cdf34631e"
+      timestamp: "2026-08-29T14:00:00Z"
+      reason: "initial cataloging"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/goals/2026-08-29-lightrag-hxs4.md"

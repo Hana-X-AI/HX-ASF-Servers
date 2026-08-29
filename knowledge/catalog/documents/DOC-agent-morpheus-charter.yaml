@@ -31,7 +31,7 @@ document:
       target: "DOC-agent-morpheus-profile"
       note: "full operating contract"
     - predicate: "references"
-      target: "/home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0009-morpheus-dsh-adoption.md"
+      target: "/home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0009-morpheus-dsh-adoption.md"
       note: "registration decision (KDD-0009)"
   validation:
     validated_at: "2026-08-29T12:30:00Z"

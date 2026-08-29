@@ -6,7 +6,7 @@ document:
   source:
     author: "Kimi-K3 (record); decider Agent-Zero"
     provided_by: "Agent Zero"
-    origin: "/home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0007-hxs3-muse-glimmer-tooling-adoption.md"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0007-hxs3-muse-glimmer-tooling-adoption.md"
     section: "§whole-document"
     ingestion_date: "2026-08-26T05:05:00Z"
   owner: "Agent Zero"
@@ -57,7 +57,7 @@ document:
     freshness: "current"
     review_due: "at pilot close, or on the KDD's own revisit triggers (Ollama fails Muse compatibility — escape hatch; the RAG pipeline is built — integration pilot; Meta ships a materially different artifact — re-qualification on digest change)"
   sha256: "b96404144ef3383a0d58eda0227f46bc5fae8964c892470be631f7a3ae281971"
-  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0007-hxs3-muse-glimmer-tooling-adoption.md"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0007-hxs3-muse-glimmer-tooling-adoption.md"
 notes:
   header_verification: "Verified at ingestion: KDD header fields read Date 2026-08-26, Status ratified, Decider Agent-Zero. Record status/authority follow the established KDD record convention (KDD-0001..0006: status active, authority_level ratified-governance — 'ratified' is not a schema status enum value); the header's ratified state and decider are preserved verbatim in declared_purpose (same treatment as DOC-kdd-0005/DOC-kdd-0006 notes.header_verification)."
   capability_limit_convention: "NEW CATALOG CONVENTION (per dispatch, recorded in the KDD decision text and the goal's Second Brain evaluation): a capability LIMIT is registered as first-class registry content — parallel_tool_calling: false for muse-glimmer:30b — so every future dispatch retrieves the limit alongside capabilities. Prior registrations carried capabilities/limits inside Harness-era registry sketches (v1.1 §7) or prose; from KDD-0007 forward the limit is a decides-edge and, at the registration milestone (SC-08), a field of the catalog capability record."

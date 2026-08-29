@@ -27,9 +27,9 @@ task DIED at the ceiling after corpus-wide reads (103k of tool output). So:
 2. `knowledge/catalog/schema.yaml` + at most 2 example records from
    `knowledge/catalog/documents/` (pick KDD records, e.g. DOC-kdd-0008*).
 3. The seven source files for THIS batch only:
-   - `knowledge/decisions/KDD-0011-rob-registration.md`
-   - `knowledge/decisions/KDD-0012-mia-chief-of-staff.md`
-   - `knowledge/decisions/KDD-0013-agent-model-lanes.md`
+   - `governace/decisions/KDD-0011-rob-registration.md`
+   - `governace/decisions/KDD-0012-mia-chief-of-staff.md`
+   - `governace/decisions/KDD-0013-agent-model-lanes.md`
    - `agents/mia/charter.md`, `agents/mia/profile.md`
    - `agents/rob/charter.md`, `agents/rob/profile.md`
 

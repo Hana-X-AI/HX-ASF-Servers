@@ -6,7 +6,7 @@ document:
   source:
     author: "Flash (governor)"
     provided_by: "Agent Zero (ratification)"
-    origin: "/home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0017-quinn-registration.md"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0017-quinn-registration.md"
     section: "§whole-document"
     ingestion_date: "2026-08-29T12:00:00Z"
   owner: "Agent Zero (ratification); Flash (author)"
@@ -35,4 +35,4 @@ document:
     freshness: "current"
     review_due: "on owner amendment"
   sha256: "7e382b3299b53a21798095ba73f3a700f850ebb00cb1989564ce6ed5fc66c886"
-  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0017-quinn-registration.md"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0017-quinn-registration.md"

@@ -26,6 +26,6 @@ Final Status: GATE PASSED — PENDING OWNER ACCEPTANCE
 | Accepted by | Agent Zero |
 | Decision | ACCEPT |
 | Timestamp | 2026-08-24T12:50Z |
-| Notes | First valid-target pilot: full audit matrix executed on a live Ollama runtime, all 11 success conditions passed, zero mutations, zero corrections. The 001 FAIL lessons (pre-flight, roster check, fail-closed review) all fired correctly. Open decisions D1–D3 tracked in `knowledge/issues.md`. |
+| Notes | First valid-target pilot: full audit matrix executed on a live Ollama runtime, all 11 success conditions passed, zero mutations, zero corrections. The 001 FAIL lessons (pre-flight, roster check, fail-closed review) all fired correctly. Open decisions D1–D3 tracked in `governace/issue-tracking/issues.md`. |
 
 Final Status: `PASS — PILOT PROCESS AND AUDIT EVIDENCE VERIFIED`

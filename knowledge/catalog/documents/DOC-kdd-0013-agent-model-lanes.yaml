@@ -6,7 +6,7 @@ document:
   source:
     author: "KDD-0013"
     provided_by: "Agent-Zero"
-    origin: "/home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0013-agent-model-lanes.md"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0013-agent-model-lanes.md"
     ingestion_date: "2026-08-28T00:00:00Z"
     section: "§whole-document"
   owner: "Kimi-K3"
@@ -28,4 +28,4 @@ document:
     freshness: "current"
     review_due: "2026-09-28"
   sha256: "71144186008e837897747575269529cb44332b67ac64400d3f789ebe3745b1cd"
-  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0013-agent-model-lanes.md"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0013-agent-model-lanes.md"

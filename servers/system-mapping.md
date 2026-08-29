@@ -75,6 +75,7 @@ deployment until the owner lifts the hold.
 | S14 | n8n (+MCP) | hxs-13 | ripple (new) | Automation |
 | S15 | LangGraph | hxs-11 | erwin (new) | Agent runtime; deferred by implementation order; no LangGraph service live anywhere in fleet; hxs-6 has legacy /srv/LangGraph-Server-Deployment/ on foreign spare disk (2025-11-12, historical artifact, not the HX deployment) |
 | S16 | NGINX | hxs-21 | nexus (new) | Reverse proxy / web edge |
+| S17 | LightRAG (+MCP) | hxs-4 | raphael | Graph-based RAG; Qdrant backend (Quinn); LLM via OmniRoute (Meta-X); bge-m3 embeddings via Ollama (john); co-located with Qdrant |
 
 ### Development and test environments
 
@@ -116,6 +117,7 @@ deployment until the owner lifts the hold.
 | Agent | Family | Lane type | System | Status |
 |---|---|---|---|---|
 | quinn | 3 (Platform Systems) | vertical | Qdrant | Registered (KDD-0017) |
+| raphael | 3 (Platform Systems) | vertical | LightRAG | Registered (KDD-0018) |
 | sage | 3 (Platform Systems) | vertical | FastMCP | New — to be registered |
 | iris | 3 (Platform Systems) | vertical | Open WebUI | New — to be registered |
 | scout | 3 (Platform Systems) | vertical | Crawl4AI | New — to be registered |
@@ -177,7 +179,7 @@ documents must reference it for traceability:
 - `agents/README.md` — agent roster (references this document for agent-to-
   system assignments)
 - `servers/BLUEPRINT-llm-server.md` — LLM server blueprint
-- `knowledge/decisions/KDD-0016-agent-taxonomy-and-standard-template.md` —
+- `governace/decisions/KDD-0016-agent-taxonomy-and-standard-template.md` —
   agent family taxonomy
 - Agent profiles — each platform-system agent's profile references this
   document in its knowledge sources section
@@ -190,6 +192,6 @@ documents must reference it for traceability:
 - `servers/hxs-9/2026-08-29-postgresql-implementation-plan.md` — PostgreSQL plan
 - `servers/hxs-9/2026-08-29-redis-implementation-plan.md` — Redis plan
 - `servers/BLUEPRINT-llm-server.md` — LLM server blueprint
-- `knowledge/decisions/KDD-0008-trinity-omniroute-adoption.md` — OmniRoute replaces LiteLLM
-- `knowledge/decisions/KDD-0016-agent-taxonomy-and-standard-template.md` — agent family taxonomy
+- `governace/decisions/KDD-0008-trinity-omniroute-adoption.md` — OmniRoute replaces LiteLLM
+- `governace/decisions/KDD-0016-agent-taxonomy-and-standard-template.md` — agent family taxonomy
 - Historical reference (retired): `/home/hxsa/opt/local-tkv/agent-zero-docs/server-system-mapping/`

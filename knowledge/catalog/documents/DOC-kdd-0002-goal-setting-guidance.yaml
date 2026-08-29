@@ -6,7 +6,7 @@ document:
   source:
     author: "Kimi-K3 (review and record); decider Agent-Zero"
     provided_by: "Agent Zero"
-    origin: "/home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0002-goal-setting-guidance-and-durable-state.md"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0002-goal-setting-guidance-and-durable-state.md"
     section: "§whole-document"
     ingestion_date: "2026-08-25T04:50:00Z"
   owner: "Agent Zero"
@@ -41,6 +41,6 @@ document:
     freshness: "current"
     review_due: "on owner decision to change work-state system"
   sha256: "62d52e59c2eedee97b1cd3a4bd472e5b9e61ae1272327aea2cbf38b4d29e809c"
-  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0002-goal-setting-guidance-and-durable-state.md"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0002-goal-setting-guidance-and-durable-state.md"
 notes:
   corrections_batch5: "2026-08-25 corrections batch 5: adopted artifact cataloged as DOC-kimi-k3-goal-setting-guidance; references relation repointed from raw path to the DOC id and the 'NOT cataloged — follow-up' language removed. The separate local-tkv source relation (external historical input) is unchanged. source.section backfilled (§whole-document); validated_at refreshed. Source file unchanged (sha256 stands from run 1)."

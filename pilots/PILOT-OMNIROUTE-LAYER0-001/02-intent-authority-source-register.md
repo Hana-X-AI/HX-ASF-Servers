@@ -24,7 +24,7 @@ Truth-state labels: FACT / AUTHORITY / CANDIDATE / INFERENCE / NOT-ESTABLISHED.
 | --- | --- | --- |
 | `goals/2026-08-27-omniroute-trinity-layer0.md` | Goal Contract (this program's spine) | AUTHORITY (this program) |
 | `AGENTS.md`, `agents/README.md`, `agents/*/charter.md` | roster + governance truth | AUTHORITY |
-| `knowledge/decisions/KDD-0001..0007` | ratified decisions (incl. KDD-0006: the DeepSeek Harness never existed) | AUTHORITY |
+| `governace/decisions/KDD-0001..0007` | ratified decisions (incl. KDD-0006: the DeepSeek Harness never existed) | AUTHORITY |
 | `servers/BLUEPRINT-llm-server.md` | LLM-server contract incl. §5 boundary (no host firewalls; /24 LAN) and §8 capability table | AUTHORITY |
 | `knowledge/catalog/` (245 records, validator 4/4) | canonical governed catalog (Carol-owned) | AUTHORITY |
 | `/opt/tkv-local/OmniRoute-release-v3.8.51` | OmniRoute source snapshot (13,098 files, package 3.8.51, no .git) — **read-only this program** | PRIMARY SOURCE (read-only) |

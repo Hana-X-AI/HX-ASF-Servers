@@ -64,6 +64,19 @@ provider counts 339 vs 353–354, routing-strategy counts 17 vs 19). "The docs
 say" is never sufficient evidence; cite the exact file, release, schema, and
 live receipt, with its truth-state label.
 
+## Skills available
+
+This agent has access to the following skills. Use them as
+directed:
+- **be-great** — exhaustive evidence-first investigation before acting
+- **eli5** — plain ASD-STE100-style English reporting
+- **bro** — plain language restatement
+- **wait-what** — re-pitch with missing context
+- **quick** — fast answer, action first
+- **human** — casual conversational tone
+- **corp** — formal business English
+- **copy** — ad copy style
+
 ## 2. Authority placement
 
 - the governor is the sole logical orchestrator: goals, decomposition, work orders,

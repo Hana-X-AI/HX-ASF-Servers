@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!-- Generated from governance/testing/test-log.md (sha256 2248c05154d79a3f1a272b94fc967c22300df9ca7268eb28d7234bed301e3ed1) by scripts/wiki/render.py on 2026-08-29T21:41Z.
+     Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HX Factory — Consolidated Test Log</title>
+<style>
+:root{color-scheme:light dark}
+body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.55;
+max-width:62rem;margin:0 auto;padding:1.5rem 2rem;color:#1a1a1a;background:#fff}
+h1,h2,h3,h4,h5,h6{line-height:1.25;margin-top:1.6em}
+h1{border-bottom:2px solid #444;padding-bottom:.3em}
+h2{border-bottom:1px solid #ccc;padding-bottom:.2em}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+code{background:#f0f0f0;padding:.1em .3em;border-radius:3px}
+pre{background:#f6f8fa;border:1px solid #ddd;border-radius:6px;padding:.8em;overflow-x:auto}
+pre code{background:none;padding:0}
+table{border-collapse:collapse;margin:1em 0;width:100%}
+th,td{border:1px solid #ccc;padding:.35em .6em;text-align:left;vertical-align:top}
+th{background:#f0f0f0}
+blockquote{border-left:4px solid #bbb;margin:1em 0;padding:.2em 1em;color:#444;background:#fafafa}
+a{color:#0645ad}
+.doc-meta{color:#666;font-size:.85em;border-bottom:1px dashed #bbb;padding-bottom:.6em;margin-bottom:1.2em}
+footer{margin-top:2.5em;border-top:1px solid #ccc;color:#666;font-size:.8em;padding-top:.8em}
+pre.mermaid{background:#fff;border:1px dashed #999}
+@media (prefers-color-scheme:dark){
+body{color:#ddd;background:#111} h1{border-color:#888} h2{border-color:#555}
+code{background:#2a2a2a} pre{background:#1b1b1b;border-color:#444}
+th{background:#222} th,td{border-color:#555} blockquote{color:#bbb;background:#191919;border-color:#666}
+a{color:#6fa8ff} .doc-meta,footer{color:#999}}
+</style>
+</head>
+<body>
+<main class="doc">
+<h1 id="hx-factory-consolidated-test-log">HX Factory — Consolidated Test Log</h1>
+<p>This log is continuously updated after every test run. Append new results, never delete old entries.</p>
+<h2 id="lightrag-hxs-4">LightRAG (hxs-4)</h2>
+<table><thead><tr><th>Date</th><th>Test</th><th>Status</th><th>Evidence</th><th>Notes</th></tr></thead><tbody><tr><td>2026-08-29</td><td>lightrag_ollama_demo.py</td><td>PASS</td><td>14 entities, 7 relations, GraphML produced</td><td>In-process Ollama LLM + bge-m3 embeddings</td></tr><tr><td>2026-08-29</td><td>graph_visual_with_html.py</td><td>PASS</td><td>knowledge_graph.html generated</td><td>Visualization from GraphML</td></tr><tr><td>2026-08-29</td><td>generate_query.py</td><td>PASS</td><td>Structured user/task/question analysis</td><td>Via Ollama OpenAI-compatible endpoint</td></tr><tr><td>2026-08-29</td><td>lightrag_openai_compatible_demo.py</td><td>FAIL</td><td>openai_complete_if_cache() missing 'prompt' arg</td><td>Upstream API change in v1.5.7; server works via env config. Example #4</td></tr><tr><td>2026-08-29</td><td>insert_custom_kg.py</td><td>PASS</td><td>Custom KG inserted, 'Quinn manages Qdrant' returned</td><td>5 entities, 4 relations, 1 chunk</td></tr><tr><td>2026-08-29</td><td>rerank_example.py</td><td>PASS</td><td>Query with/without rerank ran successfully</td><td>LLM-based rerank (no external rerank model)</td></tr><tr><td>2026-08-29</td><td>embedding_prefixes.py (unofficial)</td><td>PASS</td><td>3 prefixed docs, 3 entities, 2 relations</td><td>Prefix-tagged document ingestion</td></tr><tr><td>2026-08-29</td><td>copy_llm_cache_to_another_storage.py (unofficial)</td><td>DEP-OK</td><td>PostgreSQL impl available</td><td>Full run needs PG config from hxs-9. Example #8</td></tr><tr><td>2026-08-29</td><td>bedrock/cloudflare/hf/nvidia/neo4j/milvus/redis/llamaindex/lmdeploy/litellm</td><td>SKIP</td><td>Services not in our stack</td><td>9 unofficial samples skipped</td></tr></tbody></table>
+<h2 id="qdrant-hxs-4">Qdrant (hxs-4)</h2>
+<table><thead><tr><th>Date</th><th>Test</th><th>Status</th><th>Evidence</th><th>Notes</th></tr></thead><tbody><tr><td>2026-08-29</td><td>V0 Pre-state</td><td>PASS</td><td>No Qdrant running, NVMe unallocated</td><td>Quinn V0 checkpoint</td></tr><tr><td>2026-08-29</td><td>V1 Install + version</td><td>PASS</td><td>qdrant 1.19.0, service active</td><td>Prebuilt binary from GitHub</td></tr><tr><td>2026-08-29</td><td>V2 Config posture</td><td>PASS</td><td>LAN bind, API key, TLS off, Web UI 404 (assets not bundled)</td><td>Web UI assets downloaded separately</td></tr><tr><td>2026-08-29</td><td>V3 API probe</td><td>PASS</td><td>Health, readyz, collections respond</td><td>API key auth works</td></tr><tr><td>2026-08-29</td><td>V4 Collection lifecycle</td><td>PASS</td><td>Create, upsert, query_points, delete</td><td>query_points (search deprecated in v1.19)</td></tr><tr><td>2026-08-29</td><td>V5 Snapshot backup + restore</td><td>PASS</td><td>file:// URI, 5 points restored</td><td>Collection-level snapshot</td></tr><tr><td>2026-08-29</td><td>V6 Health monitoring</td><td>PASS</td><td>Timer active, health script exit 0</td><td>Timer fired (LAST/PASSED populated)</td></tr></tbody></table>
+<h2 id="deepseek-harness-hxs-15">DeepSeek Harness (hxs-15)</h2>
+<table><thead><tr><th>Date</th><th>Test</th><th>Status</th><th>Evidence</th><th>Notes</th></tr></thead><tbody><tr><td>2026-08-29</td><td>Gate 6 (Phase B)</td><td>19 passed, 2 skipped, 1 known defect</td><td>G6-13 subagent_fork: works manually, fails under pytest</td><td>Test-harness defect, not DSH source bug</td></tr><tr><td>2026-08-29</td><td>Gate 7 (Phase B)</td><td>11 passed, 6 failed, 3 skipped</td><td>Model-cooperation tests fail under pytest only</td><td>Same class as G6-13</td></tr><tr><td>2026-08-29</td><td>Gate 8-10 (Phase C)</td><td>11 passed, 6 failed, 3 skipped</td><td>Same model-cooperation pattern</td><td>Phase C complete</td></tr></tbody></table>
+<h2 id="postgresql-hxs-9">PostgreSQL (hxs-9)</h2>
+<table><thead><tr><th>Date</th><th>Test</th><th>Status</th><th>Evidence</th><th>Notes</th></tr></thead><tbody><tr><td>2026-08-29</td><td>Step 0+1 (V0-V3)</td><td>PASS</td><td>PGDG onboarding, 18.6, scram auth, LAN bind</td><td>Chris Checkpoint 1 accepted</td></tr><tr><td>2026-08-29</td><td>Step 2 (V4-V6)</td><td>PARTIAL</td><td>V4-V5 pass, V6 service-level smoke only</td><td>Timer-fired activation not demonstrated</td></tr></tbody></table>
+<h2 id="redis-hxs-9">Redis (hxs-9)</h2>
+<table><thead><tr><th>Date</th><th>Test</th><th>Status</th><th>Evidence</th><th>Notes</th></tr></thead><tbody><tr><td>2026-08-29</td><td>Install + evidence</td><td>PASS</td><td>Redis 7.0.15, ACL users, persistence</td><td>Wayne KDD-0015</td></tr></tbody></table>
+<h2 id="omniroute-hxs-8">OmniRoute (hxs-8)</h2>
+<table><thead><tr><th>Date</th><th>Test</th><th>Status</th><th>Evidence</th><th>Notes</th></tr></thead><tbody><tr><td>2026-08-29</td><td>API key verification</td><td>PASS</td><td>Models list returns with valid key</td><td>Key: sk-cbea27b8607bc7cc-edfb4a-e8c571ca</td></tr></tbody></table>
+</main>
+<footer>Source of truth: <code>governance/testing/test-log.md</code> (sha256 <code>2248c05154d79a3f1a272b94fc967c22300df9ca7268eb28d7234bed301e3ed1</code>) · rendered 2026-08-29T21:41Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+
+</body>
+</html>

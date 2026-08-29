@@ -1,0 +1,45 @@
+document:
+  id: "DOC-kdd-0018-raphael-registration"
+  title: "KDD-0018: Raphael registration — LightRAG systems engineer"
+  type: "decision"
+  declared_purpose: "Owner-ratified registration of Raphael as the LightRAG systems engineer (KDD-0018, 2026-08-29). Lane: Qwen-X via OmniRoute (local). Target host: hxs-4. Scope: LightRAG server, Web UI, lightragmcp MCP server. Dependencies: Qdrant (Quinn), bge-m3 (john), OmniRoute (trinity)."
+  source:
+    author: "Flash (governor)"
+    provided_by: "Agent Zero (ratification)"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0018-raphael-registration.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-29T13:30:00Z"
+  owner: "Agent Zero (ratification); Flash (author)"
+  applies_to:
+    hosts: [hxs-4]
+    fqdns: []
+    services: [lightrag, lightragmcp]
+    agents: [raphael]
+    repositories: [HX-ASF-Servers]
+    environments: [fleet]
+  version: ""
+  status: "adopted"
+  authority_level: "ratified-governance"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "references"
+      target: "DOC-kdd-0017-quinn-registration"
+      note: "Qdrant dependency (Quinn's lane)"
+    - predicate: "references"
+      target: "DOC-system-mapping"
+      note: "S17 LightRAG placement on hxs-4"
+  validation:
+    validated_at: "2026-08-29T13:30:00Z"
+    freshness: "current"
+    review_due: "on owner amendment"
+  sha256: "2b0be0c316f67aa6b302add447374804fbf4858bc0c1e0c6b688105902104ed5"
+  hash_history:
+    - sha256: "2b0be0c316f67aa6b302add447374804fbf4858bc0c1e0c6b688105902104ed5"
+      timestamp: "2026-08-29T13:30:00Z"
+      reason: "initial cataloging"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0018-raphael-registration.md"

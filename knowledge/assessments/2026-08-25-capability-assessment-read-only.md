@@ -241,7 +241,7 @@ Bash/SSH pattern do not already close.
   (SC-07; remote refusal proven in M5 evidence). Any MCP path requires a network
   route to the model — a new exposure surface that contradicts the posture and
   intersects the owner's open D1/OmniRoute remote-consumption decision
-  (`knowledge/issues.md`). Disposition: **defer**; trigger = the owner's
+  (`governace/issue-tracking/issues.md`). Disposition: **defer**; trigger = the owner's
   D1/OmniRoute ruling, at which point MCP-over-that-approved-channel becomes the
   evaluation. Second Brain effect: none now; noted so the roadmap's "act" stage
   has a clean integration point when the owner opens remote access. Disposition:
@@ -365,6 +365,6 @@ Official product documentation fetched 2026-08-25: Kimi Code hooks page
 MCP page (`https://www.kimi.com/code/docs/en/kimi-code-cli/customization/mcp.html`).
 Project evidence: repo `.kimi-code/mcp.json`, `~/.kimi-code/` inventory,
 `config.toml` section scan (names only), `scripts/README.md`, AGENTS.md
-conventions, state-log rows 33–57, `knowledge/issues.md`, Carol catalog records.
+conventions, state-log rows 33–57, `governace/issue-tracking/issues.md`, Carol catalog records.
 Read-only boundary confirmed: the only filesystem writes in this assignment are
 this report and its `.html` rendering.

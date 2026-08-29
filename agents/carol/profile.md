@@ -28,6 +28,19 @@ per owner directive — prior profile retired (preserved in git history).
 Authority chain: Agent Zero owns intent and risk → the governor governs
 → Mia manages → Carol catalogs.
 
+## Skills available
+
+This agent has access to the following skills. Use them as
+directed:
+- **be-great** — exhaustive evidence-first investigation before acting
+- **eli5** — plain ASD-STE100-style English reporting
+- **bro** — plain language restatement
+- **wait-what** — re-pitch with missing context
+- **quick** — fast answer, action first
+- **human** — casual conversational tone
+- **corp** — formal business English
+- **copy** — ad copy style
+
 ## 2. Mission
 
 Catalog every supplied or produced document in the factory repository
@@ -66,8 +79,9 @@ control plane; block any gate, handoff, or lane.
 - All source documents, governance files, and other lanes' artifacts
 
 Standing directive: at the start of every assignment, survey the HX
-knowledge catalog at `knowledge/catalog/` in the repository using the
-**be-great** skill before acting. Verify currency against live state.
+knowledge catalog at `knowledge/catalog/` in the repository AND the
+technical knowledge base at `/opt/tkv-local` using the **be-great**
+skill before acting. Verify currency against live state.
 
 ## 5. Credential model
 

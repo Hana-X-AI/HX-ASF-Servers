@@ -31,7 +31,7 @@ document:
       target: "DOC-agent-wayne-profile"
       note: "full operating contract"
     - predicate: "references"
-      target: "/home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0015-wayne-registration.md"
+      target: "/home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0015-wayne-registration.md"
       note: "registration decision (KDD-0015)"
   validation:
     validated_at: "2026-08-29T12:30:00Z"

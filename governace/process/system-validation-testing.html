@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<!-- Generated from governace/process/system-validation-testing.md (sha256 13916c4271143da9d033fe5a0d8ec13e6d8e7bc733b2cabdefb18c26a83a8dbb) by scripts/wiki/render.py on 2026-08-29T21:41Z.
+     Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>System Validation Testing Workflow</title>
+<style>
+:root{color-scheme:light dark}
+body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.55;
+max-width:62rem;margin:0 auto;padding:1.5rem 2rem;color:#1a1a1a;background:#fff}
+h1,h2,h3,h4,h5,h6{line-height:1.25;margin-top:1.6em}
+h1{border-bottom:2px solid #444;padding-bottom:.3em}
+h2{border-bottom:1px solid #ccc;padding-bottom:.2em}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+code{background:#f0f0f0;padding:.1em .3em;border-radius:3px}
+pre{background:#f6f8fa;border:1px solid #ddd;border-radius:6px;padding:.8em;overflow-x:auto}
+pre code{background:none;padding:0}
+table{border-collapse:collapse;margin:1em 0;width:100%}
+th,td{border:1px solid #ccc;padding:.35em .6em;text-align:left;vertical-align:top}
+th{background:#f0f0f0}
+blockquote{border-left:4px solid #bbb;margin:1em 0;padding:.2em 1em;color:#444;background:#fafafa}
+a{color:#0645ad}
+.doc-meta{color:#666;font-size:.85em;border-bottom:1px dashed #bbb;padding-bottom:.6em;margin-bottom:1.2em}
+footer{margin-top:2.5em;border-top:1px solid #ccc;color:#666;font-size:.8em;padding-top:.8em}
+pre.mermaid{background:#fff;border:1px dashed #999}
+@media (prefers-color-scheme:dark){
+body{color:#ddd;background:#111} h1{border-color:#888} h2{border-color:#555}
+code{background:#2a2a2a} pre{background:#1b1b1b;border-color:#444}
+th{background:#222} th,td{border-color:#555} blockquote{color:#bbb;background:#191919;border-color:#666}
+a{color:#6fa8ff} .doc-meta,footer{color:#999}}
+</style>
+</head>
+<body>
+<main class="doc">
+<h1 id="system-validation-testing-workflow">System Validation Testing Workflow</h1>
+<p>Separate from deployment.</p>
+<pre class="mermaid">flowchart TD
+    A[Select test plan\nfrom system config doc] --&gt; B[Identify test cases\nV0-V6 gates + example scripts]
+    B --&gt; C[Execute test case]
+    C --&gt; D{Result}
+    D --&gt;|PASS| E[Append to test-log.md\nPASS + evidence]
+    D --&gt;|FAIL| F[Append to test-log.md\nFAIL + evidence + error]
+    D --&gt;|SKIP| G[Append to test-log.md\nSKIP + reason]
+    E --&gt; H{More tests?}
+    F --&gt; I{Fixable?}
+    G --&gt; H
+    I --&gt;|Yes| J[Fix issue]
+    J --&gt; C
+    I --&gt;|No| K[Escalate to governor\nwith evidence]
+    H --&gt;|Yes| C
+    H --&gt;|No| L[Update system config doc\nwith final test status]
+    L --&gt; M[Update change record\nwith verification result]
+    M --&gt; N[Run render.py]
+    N --&gt; O[Run validate.py — 4/4 PASS]
+    O --&gt; P[Commit]
+    P --&gt; Q[Done]</pre>
+<h2 id="deliverables-updated">Deliverables updated</h2>
+<ul><li><code>test-log.md</code>, <code>system-config-doc.md</code>, <code>change-record.md</code></li></ul>
+<h2 id="skills-triggered">Skills triggered</h2>
+<ul><li><strong>be-great</strong> (investigate failures)</li></ul>
+<h2 id="hooks-triggered">Hooks triggered</h2>
+<ul><li><code>validate-changed.sh</code> (PostToolUse on <code>test-log.md</code>)</li></ul>
+</main>
+<footer>Source of truth: <code>governace/process/system-validation-testing.md</code> (sha256 <code>13916c4271143da9d033fe5a0d8ec13e6d8e7bc733b2cabdefb18c26a83a8dbb</code>) · rendered 2026-08-29T21:41Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true});
+</script>
+<!-- If this file is viewed offline or the CDN is blocked, Mermaid diagrams appear
+     as their source text inside dashed boxes; that source is the authoritative form. -->
+
+</body>
+</html>

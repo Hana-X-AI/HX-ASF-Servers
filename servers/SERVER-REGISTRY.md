@@ -92,9 +92,12 @@ and are STALE: LiteLLM was replaced by **OmniRoute** (KDD-0008 arc; hxs-8 runs
 OmniRoute in production), and LangGraph belongs to hxs-11's row. Owner review
 2026-08-29: "we replaced hx_litellm with openrouter." The rows above are
 preserved unchanged as the as-assigned record; THIS correction is the current
-reading. hxs-9's live target: PostgreSQL 18.6 + Redis 7.0.15 (both deployed)
-per KDD-0014 and `servers/hxs-9/2026-08-29-postgresql-implementation-plan.md`;
-LangGraph and LiteLLM are entirely removed from hxs-9.
+reading. hxs-9's TARGET-STATE: PostgreSQL 18.6 + Redis 7.0.15 (installed per
+KDD-0014 and `servers/hxs-9/2026-08-29-postgresql-implementation-plan.md`;
+acceptance of the full deployment is not yet recorded — state-log row 46 records
+Step 2 as REPORTED BUT UNVERIFIED, and the Step 2 evidence doc's open correction
+notes V6 timer-fired evidence is pending). LangGraph and LiteLLM are entirely
+removed from hxs-9.
 
 **Open correction — hxs-11 stale target-state (2026-08-29, labeled per the
 append-only governance rule).** The hxs-11 row's "LangGraph; Mem0 — separate

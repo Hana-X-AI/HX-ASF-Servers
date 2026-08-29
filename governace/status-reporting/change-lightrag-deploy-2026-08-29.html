@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<!-- Generated from governace/status-reporting/change-lightrag-deploy-2026-08-29.md (sha256 c89bc0632592ea28461bafb4db95ac43bf220d0638d1bbf2dbb2f6e4137632bf) by scripts/wiki/render.py on 2026-08-29T21:41Z.
+     Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Change Record: LightRAG Deployment on hxs-4</title>
+<style>
+:root{color-scheme:light dark}
+body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.55;
+max-width:62rem;margin:0 auto;padding:1.5rem 2rem;color:#1a1a1a;background:#fff}
+h1,h2,h3,h4,h5,h6{line-height:1.25;margin-top:1.6em}
+h1{border-bottom:2px solid #444;padding-bottom:.3em}
+h2{border-bottom:1px solid #ccc;padding-bottom:.2em}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+code{background:#f0f0f0;padding:.1em .3em;border-radius:3px}
+pre{background:#f6f8fa;border:1px solid #ddd;border-radius:6px;padding:.8em;overflow-x:auto}
+pre code{background:none;padding:0}
+table{border-collapse:collapse;margin:1em 0;width:100%}
+th,td{border:1px solid #ccc;padding:.35em .6em;text-align:left;vertical-align:top}
+th{background:#f0f0f0}
+blockquote{border-left:4px solid #bbb;margin:1em 0;padding:.2em 1em;color:#444;background:#fafafa}
+a{color:#0645ad}
+.doc-meta{color:#666;font-size:.85em;border-bottom:1px dashed #bbb;padding-bottom:.6em;margin-bottom:1.2em}
+footer{margin-top:2.5em;border-top:1px solid #ccc;color:#666;font-size:.8em;padding-top:.8em}
+pre.mermaid{background:#fff;border:1px dashed #999}
+@media (prefers-color-scheme:dark){
+body{color:#ddd;background:#111} h1{border-color:#888} h2{border-color:#555}
+code{background:#2a2a2a} pre{background:#1b1b1b;border-color:#444}
+th{background:#222} th,td{border-color:#555} blockquote{color:#bbb;background:#191919;border-color:#666}
+a{color:#6fa8ff} .doc-meta,footer{color:#999}}
+</style>
+</head>
+<body>
+<main class="doc">
+<h1 id="change-record-lightrag-deployment-on-hxs-4">Change Record: LightRAG Deployment on hxs-4</h1>
+<table><thead><tr><th>Field</th><th>Value</th></tr></thead><tbody><tr><td>Date</td><td>2026-08-29</td></tr><tr><td>Host</td><td>hxs-4 (192.168.50.203)</td></tr><tr><td>Change type</td><td>New service deployment (RAG system)</td></tr><tr><td>Agent lane</td><td>raphael (LightRAG, KDD-0018)</td></tr><tr><td>Status</td><td>COMPLETE — LightRAG operational, V0-V6 PASS</td></tr></tbody></table>
+<h2 id="what-changed">What changed</h2>
+<p>LightRAG v1.5.7 deployed on hxs-4, providing graph-based RAG (retrieval-augmented generation) capability for the factory. Documents can be ingested, entities and relations extracted, and hybrid queries answered with citations.</p>
+<h2 id="why">Why</h2>
+<p>The factory needed a graph-based RAG system to support the Second Brain architecture — document ingestion, entity/relation extraction, and hybrid query with source citations.</p>
+<h2 id="before-state">Before state</h2>
+<p>No RAG system deployed. hxs-4 had Qdrant (v1.19.0) and Ollama (Chat-X / Qwen 3.5 9B + bge-m3 embeddings) already running.</p>
+<h2 id="after-state">After state</h2>
+<table><thead><tr><th>Property</th><th>Value</th></tr></thead><tbody><tr><td>Software</td><td><code>lightrag-hku[api,offline-storage,offline-llm]</code> v1.5.7</td></tr><tr><td>Port</td><td>9621</td></tr><tr><td>Venv</td><td><code>/srv/lightrag/.venv/</code></td></tr><tr><td>Service</td><td><code>lightrag.service</code> (systemd, enabled + active)</td></tr><tr><td>LLM binding</td><td>Chat-X (Qwen 3.5 9B) via local Ollama (<code>127.0.0.1:11434</code>)</td></tr><tr><td>Embeddings</td><td>bge-m3 via Ollama, 1024 dimensions</td></tr><tr><td>Vector storage</td><td>QdrantVectorDBStorage (<code>192.168.50.203:6333</code>)</td></tr><tr><td>Graph storage</td><td>NetworkX (default, JSON files)</td></tr><tr><td>KV storage</td><td>JSON (default)</td></tr><tr><td>Web UI</td><td>Bundled, served at <code>:9621</code></td></tr><tr><td>Auth</td><td>API key (X-API-Key header)</td></tr><tr><td>MCP server</td><td>lightragmcp v1.1.0, 30 tools, stdio transport (on-demand)</td></tr></tbody></table>
+<h2 id="verification">Verification</h2>
+<p>V0-V6 gates all PASS. Key evidence:</p>
+<ul><li><strong>V4 Document lifecycle:</strong> A test document was ingested. Chat-X (local Ollama) processed it in ~2 minutes, extracting 9 entities and 8 relations. A hybrid query returned the correct answer with citation: <code>"Agent Quinn is responsible for managing the Qdrant vector database on hxs-4"</code> with citation <code>[[1]] fresh_test.txt</code>.</li><li><strong>V5 Qdrant backend:</strong> 3 collections created — <code>lightrag_vdb_entities_bge_m3_1024d</code> (9 points), <code>lightrag_vdb_chunks_bge_m3_1024d</code> (1 point), <code>lightrag_vdb_relationships_bge_m3_1024d</code> (8 points).</li><li><strong>V6 Health monitoring:</strong> Service active, enabled, health endpoint returns healthy.</li></ul>
+<table><thead><tr><th>Gate</th><th>Status</th></tr></thead><tbody><tr><td>V0: Pre-state</td><td>PASS</td></tr><tr><td>V1: Install + Version</td><td>PASS</td></tr><tr><td>V2: Config posture</td><td>PASS</td></tr><tr><td>V3: API probe</td><td>PASS</td></tr><tr><td>V4: Document lifecycle</td><td>PASS</td></tr><tr><td>V5: Qdrant backend</td><td>PASS</td></tr><tr><td>V6: Health monitoring</td><td>PASS</td></tr></tbody></table>
+<p><strong>Overall: ALL GATES PASS</strong></p>
+<h2 id="conclusion">Conclusion</h2>
+<p>LightRAG is operational on hxs-4. The LLM binding was switched from Meta-X via OmniRoute to Chat-X via local Ollama after an OmniRoute 504 timeout — Meta-X 30B was too slow for LightRAG's entity extraction prompts. Chat-X on local Ollama processes documents in ~2 minutes with no rate-limit issues.</p>
+<h2 id="rollback">Rollback</h2>
+<pre><code class="language-bash">systemctl stop lightrag
+systemctl disable lightrag
+pip uninstall lightrag-hku   # from /srv/lightrag/.venv/
+rm -rf /srv/lightrag</code></pre>
+<p>Qdrant collections created by LightRAG can be deleted separately if a full rollback is required.</p>
+<h2 id="mcp-server">MCP server</h2>
+<p>lightragmcp v1.1.0 is installed at <code>/usr/bin/lightrag-mcp-server</code>. It uses stdio transport and is launched by MCP clients on demand (not a daemon). MCP client config:</p>
+<pre><code class="language-json">{
+  "mcpServers": {
+    "lightrag-mcp": {
+      "command": "lightrag-mcp-server",
+      "env": {
+        "LIGHTRAG_SERVER_URL": "http://192.168.50.203:9621",
+        "LIGHTRAG_API_KEY": "&lt;key&gt;"
+      }
+    }
+  }
+}</code></pre>
+<h2 id="sources">Sources</h2>
+<ul><li><code>servers/hxs-4/2026-08-29-lightrag-install-evidence.md</code></li><li><code>goals/2026-08-29-lightrag-hxs4.md</code></li><li><code>servers/hxs-4/qdrant-config.md</code></li><li><code>agents/raphael/profile.md</code> (KDD-0018)</li></ul>
+</main>
+<footer>Source of truth: <code>governace/status-reporting/change-lightrag-deploy-2026-08-29.md</code> (sha256 <code>c89bc0632592ea28461bafb4db95ac43bf220d0638d1bbf2dbb2f6e4137632bf</code>) · rendered 2026-08-29T21:41Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+
+</body>
+</html>

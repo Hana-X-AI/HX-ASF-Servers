@@ -10,7 +10,7 @@ and hxs-21 added 2026-08-28.)
 
 - Every assignment begins as a goal in `goals/`. See `goals/README.md`.
 - Agents work in lanes under `agents/<agent-name>/`. See `agents/README.md`.
-- Decisions are recorded as Key Decision Documents (KDDs) in `knowledge/decisions/`.
+- Decisions are recorded as Key Decision Documents (KDDs) in `governace/decisions/`.
 - Issues, action items, and lessons live in `knowledge/`.
 - Operations scripts live in `scripts/` and follow the approved Bash/SSH
   fleet-control pattern. Ansible is not part of this architecture.

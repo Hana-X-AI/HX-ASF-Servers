@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<!-- Generated from governace/status-reporting/change-meta-x-to-oai-x-2026-08-29.md (sha256 d2a5e38418e48f6fccd5b4d636dcdc42c423f90806abdc8952207d965cd717c5) by scripts/wiki/render.py on 2026-08-29T21:41Z.
+     Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Change Record: Meta-X to OAI-X Replacement on hxs-3</title>
+<style>
+:root{color-scheme:light dark}
+body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.55;
+max-width:62rem;margin:0 auto;padding:1.5rem 2rem;color:#1a1a1a;background:#fff}
+h1,h2,h3,h4,h5,h6{line-height:1.25;margin-top:1.6em}
+h1{border-bottom:2px solid #444;padding-bottom:.3em}
+h2{border-bottom:1px solid #ccc;padding-bottom:.2em}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+code{background:#f0f0f0;padding:.1em .3em;border-radius:3px}
+pre{background:#f6f8fa;border:1px solid #ddd;border-radius:6px;padding:.8em;overflow-x:auto}
+pre code{background:none;padding:0}
+table{border-collapse:collapse;margin:1em 0;width:100%}
+th,td{border:1px solid #ccc;padding:.35em .6em;text-align:left;vertical-align:top}
+th{background:#f0f0f0}
+blockquote{border-left:4px solid #bbb;margin:1em 0;padding:.2em 1em;color:#444;background:#fafafa}
+a{color:#0645ad}
+.doc-meta{color:#666;font-size:.85em;border-bottom:1px dashed #bbb;padding-bottom:.6em;margin-bottom:1.2em}
+footer{margin-top:2.5em;border-top:1px solid #ccc;color:#666;font-size:.8em;padding-top:.8em}
+pre.mermaid{background:#fff;border:1px dashed #999}
+@media (prefers-color-scheme:dark){
+body{color:#ddd;background:#111} h1{border-color:#888} h2{border-color:#555}
+code{background:#2a2a2a} pre{background:#1b1b1b;border-color:#444}
+th{background:#222} th,td{border-color:#555} blockquote{color:#bbb;background:#191919;border-color:#666}
+a{color:#6fa8ff} .doc-meta,footer{color:#999}}
+</style>
+</head>
+<body>
+<main class="doc">
+<h1 id="change-record-meta-x-to-oai-x-replacement-on-hxs-3">Change Record: Meta-X to OAI-X Replacement on hxs-3</h1>
+<table><thead><tr><th>Field</th><th>Value</th></tr></thead><tbody><tr><td>Date</td><td>2026-08-29</td></tr><tr><td>Host</td><td>hxs-3 (192.168.50.202)</td></tr><tr><td>Change type</td><td>Model replacement (LLM backend)</td></tr><tr><td>Agent lane</td><td>john (Ollama engineer, KDD-0013)</td></tr><tr><td>Status</td><td>COMPLETE — OAI-X deployed, Meta-X decommissioned</td></tr></tbody></table>
+<h2 id="what-changed">What changed</h2>
+<p>Replaced Meta-X (Muse Glimmer 30B) with OAI-X (gpt-oss-20b) as the factory's tooling/structured-contracts LLM on hxs-3. The Ollama operating-profile alias <code>hx-muse-glimmer-64k</code> was superseded by <code>hx-oai-x-64k</code>.</p>
+<h2 id="why">Why</h2>
+<p>Meta-X was too slow for LightRAG entity extraction. The root cause was an OmniRoute 504 timeout (<code>RATE_LIMIT_EXECUTION_TIMEOUT</code>) during LightRAG's entity-extraction prompts. OAI-X (gpt-oss-20b) provides tool-calling and structured JSON output at acceptable latency for the factory's tooling workloads.</p>
+<h2 id="before-state">Before state</h2>
+<table><thead><tr><th>Property</th><th>Value</th></tr></thead><tbody><tr><td>Call-sign</td><td>Meta-X</td></tr><tr><td>Model</td><td><code>muse-glimmer:30b</code> (frozen digest <code>de878ce33ad81d060001db1469a02eebe4d86f0ad58cfe52dc062fdcbe4464c1</code>)</td></tr><tr><td>Alias</td><td><code>hx-muse-glimmer-64k</code> (digest <code>9dffb015db409f44713b7c5a9ab5413e140c41eb4e72eac7ca753ce1b99de7da</code>)</td></tr><tr><td>Context</td><td>65536</td></tr><tr><td>Model store size</td><td>18 GB across 5 model variants (frozen artifact + 4 aliases)</td></tr><tr><td>Variants</td><td><code>hx-muse-glimmer</code>, <code>hx-muse-glimmer-32k</code>, <code>hx-muse-glimmer-64k</code>, <code>hx-muse-glimmer-128k</code></td></tr></tbody></table>
+<h2 id="after-state">After state</h2>
+<table><thead><tr><th>Property</th><th>Value</th></tr></thead><tbody><tr><td>Call-sign</td><td>OAI-X</td></tr><tr><td>Model</td><td><code>gpt-oss:20b</code></td></tr><tr><td>Alias</td><td><code>hx-oai-x-64k</code> (64K context)</td></tr><tr><td>Context</td><td>65536</td></tr><tr><td>Model store size</td><td>13 GB (single model + alias)</td></tr><tr><td>Capabilities</td><td>tool-calling, structured JSON output, general LLM inference</td></tr><tr><td>Ollama endpoint</td><td><code>192.168.50.202:11434</code></td></tr></tbody></table>
+<h2 id="verification">Verification</h2>
+<p>Tool-calling test: a structured prompt requiring JSON output was sent to <code>hx-oai-x-64k</code> via the Ollama API. The response returned valid JSON:</p>
+<pre><code class="language-json">{"name":"Quinn","role":"Qdrant engineer"}</code></pre>
+<p>This confirms OAI-X's tool-calling and structured-output capability (goal SC-05).</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>OAI-X deployed and serving on hxs-3. Meta-X decommissioned: all 5 muse-glimmer models (frozen artifact + 4 aliases) removed from the Ollama model store. The <code>ollama-preload.service</code> pin was updated to <code>hx-oai-x-64k</code> before any Meta-X artifacts were removed, preserving restart and rollback functionality throughout the migration.</p>
+<h2 id="rollback">Rollback</h2>
+<p>If OAI-X fails in production, re-pull the Meta-X artifact:</p>
+<pre><code class="language-bash">ollama pull muse-glimmer:30b</code></pre>
+<p>Then restore the <code>hx-muse-glimmer-64k</code> alias and repoint <code>ollama-preload.service</code> to the Meta-X digest (<code>9dffb015db409f44713b7c5a9ab5413e140c41eb4e72eac7ca753ce1b99de7da</code>). Recreate aliases from the frozen artifact as documented in the hxs-3 M7 ladder profiles.</p>
+<h2 id="open-items">Open items</h2>
+<ul><li>OmniRoute routing refresh is pending — the route that currently points to Meta-X needs to be updated to <code>hx-oai-x-64k</code> by trinity (OmniRoute engineer). This is trinity's lane, not john's.</li></ul>
+<h2 id="sources">Sources</h2>
+<ul><li><code>servers/hxs-3/configuration.md</code> (pre-change configured state)</li><li><code>servers/hxs-3/2026-08-29-oai-x-implementation-plan.md</code> (execution plan)</li><li><code>goals/2026-08-29-oai-x-replace-meta-x.md</code> (owner-commissioned goal)</li><li><code>governace/decisions/KDD-0007-hxs3-muse-glimmer-tooling-adoption.md</code></li><li><code>servers/hxs-4/2026-08-29-lightrag-install-evidence.md</code> (504 timeout evidence)</li></ul>
+</main>
+<footer>Source of truth: <code>governace/status-reporting/change-meta-x-to-oai-x-2026-08-29.md</code> (sha256 <code>d2a5e38418e48f6fccd5b4d636dcdc42c423f90806abdc8952207d965cd717c5</code>) · rendered 2026-08-29T21:41Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+
+</body>
+</html>

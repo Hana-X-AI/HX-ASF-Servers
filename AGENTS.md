@@ -265,6 +265,11 @@ doubt, act reversibly and report rather than pause.
   exception unmetered as a zero-cost cloud lane. OD-14 scope: NINE cloud
   lanes — trinity, rob, mia, gordon, carol, chris, kimi-k3, wayne, quinn
   (quinn unmetered). Authority: KDD-0017.]
+  [OPEN CORRECTION 2026-08-29, labeled, append-only: raphael is registered
+  (KDD-0018) with lane Qwen-X (`ollama-local/hx-qwen3.8-27b-64k`, hxs-1,
+  via OmniRoute hxs-8) — owner-assigned 2026-08-29. Qwen-X is a local
+  lane (no OD-14 cloud metering). OD-14 scope unchanged (nine cloud lanes;
+  raphael is local). Authority: KDD-0018.]
 - **Chief of Staff** (owner directive 2026-08-28, KDD-0012). **Mia**
   (`agents/mia/`) manages the work — planning, coordination, distribution to the
   engineering lanes, breakage triage, and status reporting to Kimi-K3. The
@@ -346,7 +351,7 @@ needs them. The standard profile and charter templates at
 |---|---|---|---|
 | 1 | Agentic Software Engineering | Build and test products, features, APIs, interfaces, schemas, integrations | rob (gated) |
 | 2 | AI Infrastructure and Operations Engineering | Maintain the underlying computing environment | rick |
-| 3 | AI Platform Systems Engineering | Install, configure, operate, upgrade, recover platform services | morpheus (DSH), gordon (QA), trinity (OmniRoute), john (Ollama), chris (PostgreSQL), wayne (Redis), quinn (Qdrant) |
+| 3 | AI Platform Systems Engineering | Install, configure, operate, upgrade, recover platform services | morpheus (DSH), gordon (QA), trinity (OmniRoute), john (Ollama), chris (PostgreSQL), wayne (Redis), quinn (Qdrant), raphael (LightRAG) |
 | 4 | AI-PMO | Portfolio, project, research, documentation, human-facing reporting | mia, carol |
 
 **Governor:** above all families. Governs (goals, gates, acceptance, owner

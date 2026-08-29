@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!-- Generated from governace/status-reporting/change-qdrant-deploy-2026-08-29.md (sha256 9b138d1a3daba5a46c3a539a006e96760f0f36ffaa09d3fc791ef7af359bb137) by scripts/wiki/render.py on 2026-08-29T21:41Z.
+     Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Change Record: Qdrant Deployment on hxs-4</title>
+<style>
+:root{color-scheme:light dark}
+body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.55;
+max-width:62rem;margin:0 auto;padding:1.5rem 2rem;color:#1a1a1a;background:#fff}
+h1,h2,h3,h4,h5,h6{line-height:1.25;margin-top:1.6em}
+h1{border-bottom:2px solid #444;padding-bottom:.3em}
+h2{border-bottom:1px solid #ccc;padding-bottom:.2em}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+code{background:#f0f0f0;padding:.1em .3em;border-radius:3px}
+pre{background:#f6f8fa;border:1px solid #ddd;border-radius:6px;padding:.8em;overflow-x:auto}
+pre code{background:none;padding:0}
+table{border-collapse:collapse;margin:1em 0;width:100%}
+th,td{border:1px solid #ccc;padding:.35em .6em;text-align:left;vertical-align:top}
+th{background:#f0f0f0}
+blockquote{border-left:4px solid #bbb;margin:1em 0;padding:.2em 1em;color:#444;background:#fafafa}
+a{color:#0645ad}
+.doc-meta{color:#666;font-size:.85em;border-bottom:1px dashed #bbb;padding-bottom:.6em;margin-bottom:1.2em}
+footer{margin-top:2.5em;border-top:1px solid #ccc;color:#666;font-size:.8em;padding-top:.8em}
+pre.mermaid{background:#fff;border:1px dashed #999}
+@media (prefers-color-scheme:dark){
+body{color:#ddd;background:#111} h1{border-color:#888} h2{border-color:#555}
+code{background:#2a2a2a} pre{background:#1b1b1b;border-color:#444}
+th{background:#222} th,td{border-color:#555} blockquote{color:#bbb;background:#191919;border-color:#666}
+a{color:#6fa8ff} .doc-meta,footer{color:#999}}
+</style>
+</head>
+<body>
+<main class="doc">
+<h1 id="change-record-qdrant-deployment-on-hxs-4">Change Record: Qdrant Deployment on hxs-4</h1>
+<table><thead><tr><th>Field</th><th>Value</th></tr></thead><tbody><tr><td>Date</td><td>2026-08-29</td></tr><tr><td>Host</td><td>hxs-4 (192.168.50.203)</td></tr><tr><td>Change type</td><td>New service deployment (vector database)</td></tr><tr><td>Agent lane</td><td>quinn (Qdrant, KDD-0017)</td></tr><tr><td>Status</td><td>COMPLETE — Qdrant operational, V0-V6 PASS</td></tr></tbody></table>
+<h2 id="what-changed">What changed</h2>
+<p>Qdrant v1.19.0 deployed on hxs-4, providing vector similarity search for LightRAG and the factory's semantic search workloads.</p>
+<h2 id="why">Why</h2>
+<p>The factory needed a vector database to support LightRAG's graph-based RAG pipeline and factory-wide semantic search. Qdrant was selected as the vector backend per the system mapping decision (S09: Qdrant on hxs-4).</p>
+<h2 id="before-state">Before state</h2>
+<p>No vector database deployed. hxs-4 had a 477 GB unallocated NVMe device available for storage.</p>
+<h2 id="after-state">After state</h2>
+<table><thead><tr><th>Property</th><th>Value</th></tr></thead><tbody><tr><td>Software</td><td>Qdrant v1.19.0 (prebuilt x86_64 binary)</td></tr><tr><td>Binary path</td><td><code>/usr/local/bin/qdrant</code></td></tr><tr><td>Config</td><td><code>/etc/qdrant/config.yaml</code></td></tr><tr><td>Port</td><td>6333 (HTTP)</td></tr><tr><td>Bind address</td><td><code>192.168.50.203</code> (LAN only)</td></tr><tr><td>Service</td><td><code>qdrant.service</code> (systemd, enabled + active)</td></tr><tr><td>Storage</td><td><code>/var/lib/qdrant</code> on 477 GB NVMe (<code>/dev/nvme0n1p1</code>, ext4, 469 GB)</td></tr><tr><td>Snapshots</td><td><code>/var/lib/qdrant/snapshots</code></td></tr><tr><td>Auth</td><td>API key (stored in <code>.local.env</code>, <code>api-key</code> header)</td></tr><tr><td>TLS</td><td>Disabled (LAN-only, accepted risk — no host firewall per owner rule)</td></tr><tr><td>Cluster</td><td>Disabled (standalone mode)</td></tr><tr><td>Telemetry</td><td>Disabled</td></tr><tr><td>Web UI</td><td>v0.2.16, served at <code>/dashboard</code> (assets downloaded separately)</td></tr><tr><td>Python client</td><td><code>qdrant-client==1.19.0</code></td></tr><tr><td>MCP server</td><td><code>mcp-server-qdrant==0.8.1</code> (stdio transport)</td></tr><tr><td>Health monitoring</td><td><code>qdrant-health.timer</code> (every 5 min)</td></tr></tbody></table>
+<h2 id="verification">Verification</h2>
+<p>V0-V6 gates all PASS. Document lifecycle proven:</p>
+<ul><li><strong>V3 API probe:</strong> Health, readiness, and collections endpoints all respond correctly with API key auth.</li><li><strong>V4 Collection lifecycle:</strong> Create, upsert, search, scroll, delete — all verified with a test collection.</li><li><strong>V5 Snapshot backup + restore:</strong> Snapshot created, listed, and restored via <code>file:///</code> URI; data integrity verified (5 points recovered with correct IDs and vectors).</li></ul>
+<table><thead><tr><th>Gate</th><th>Status</th></tr></thead><tbody><tr><td>V0: Pre-state</td><td>PASS</td></tr><tr><td>V1: Install + Version</td><td>PASS</td></tr><tr><td>V2: Config posture</td><td>PASS</td></tr><tr><td>V3: API probe</td><td>PASS</td></tr><tr><td>V4: Collection lifecycle</td><td>PASS</td></tr><tr><td>V5: Snapshot backup + restore</td><td>PASS</td></tr><tr><td>V6: Health monitoring</td><td>PASS</td></tr></tbody></table>
+<p><strong>Overall: ALL GATES PASS</strong></p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Qdrant is operational on hxs-4. Quinn owns this stack (KDD-0017). The API key is stored in <code>.local.env</code> — never in the repo. No TLS, no cluster mode — standalone, LAN-bound, API-key-authenticated.</p>
+<h2 id="rollback">Rollback</h2>
+<pre><code class="language-bash">systemctl stop qdrant
+systemctl disable qdrant
+rm /usr/local/bin/qdrant
+rm -rf /etc/qdrant
+# Optionally unmount and remove the NVMe partition:
+umount /var/lib/qdrant
+# Remove fstab entry</code></pre>
+<h2 id="sources">Sources</h2>
+<ul><li><code>servers/hxs-4/2026-08-29-qdrant-install-evidence.md</code></li><li><code>servers/hxs-4/2026-08-29-qdrant-implementation-plan.md</code></li><li><code>servers/system-mapping.md</code> (S09: Qdrant on hxs-4)</li><li><code>agents/quinn/profile.md</code> (KDD-0017)</li></ul>
+</main>
+<footer>Source of truth: <code>governace/status-reporting/change-qdrant-deploy-2026-08-29.md</code> (sha256 <code>9b138d1a3daba5a46c3a539a006e96760f0f36ffaa09d3fc791ef7af359bb137</code>) · rendered 2026-08-29T21:41Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<!-- Generated from servers/hxs-4/2026-08-29-lightrag-install-evidence.md (sha256 fd70047e28f49a454a9fef325756d18c7647d650ee7ee2f636893c5186a4a71b) by scripts/wiki/render.py on 2026-08-29T21:26Z.
+     Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LightRAG Installation Evidence — hxs-4 (2026-08-29)</title>
+<style>
+:root{color-scheme:light dark}
+body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.55;
+max-width:62rem;margin:0 auto;padding:1.5rem 2rem;color:#1a1a1a;background:#fff}
+h1,h2,h3,h4,h5,h6{line-height:1.25;margin-top:1.6em}
+h1{border-bottom:2px solid #444;padding-bottom:.3em}
+h2{border-bottom:1px solid #ccc;padding-bottom:.2em}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+code{background:#f0f0f0;padding:.1em .3em;border-radius:3px}
+pre{background:#f6f8fa;border:1px solid #ddd;border-radius:6px;padding:.8em;overflow-x:auto}
+pre code{background:none;padding:0}
+table{border-collapse:collapse;margin:1em 0;width:100%}
+th,td{border:1px solid #ccc;padding:.35em .6em;text-align:left;vertical-align:top}
+th{background:#f0f0f0}
+blockquote{border-left:4px solid #bbb;margin:1em 0;padding:.2em 1em;color:#444;background:#fafafa}
+a{color:#0645ad}
+.doc-meta{color:#666;font-size:.85em;border-bottom:1px dashed #bbb;padding-bottom:.6em;margin-bottom:1.2em}
+footer{margin-top:2.5em;border-top:1px solid #ccc;color:#666;font-size:.8em;padding-top:.8em}
+pre.mermaid{background:#fff;border:1px dashed #999}
+@media (prefers-color-scheme:dark){
+body{color:#ddd;background:#111} h1{border-color:#888} h2{border-color:#555}
+code{background:#2a2a2a} pre{background:#1b1b1b;border-color:#444}
+th{background:#222} th,td{border-color:#555} blockquote{color:#bbb;background:#191919;border-color:#666}
+a{color:#6fa8ff} .doc-meta,footer{color:#999}}
+</style>
+</head>
+<body>
+<main class="doc">
+<h1 id="lightrag-installation-evidence-hxs-4-2026-08-29">LightRAG Installation Evidence — hxs-4 (2026-08-29)</h1>
+<h2 id="summary">Summary</h2>
+<p>LightRAG v1.5.7 (lightrag-hku[api,offline-storage,offline-llm]) installed, configured, and operational on hxs-4 (192.168.50.203) with lightragmcp v1.1.0 MCP server. Qdrant v1.19.0 as vector backend, bge-m3 embeddings via Ollama, Chat-X (Qwen 3.5 9B) as LLM binding via local Ollama.</p>
+<h2 id="v0-pre-state">V0: Pre-state</h2>
+<ul><li>Qdrant v1.19.0 running on hxs-4:6333 (Quinn, KDD-0017, V0-V6 PASS)</li><li>bge-m3 model available in Ollama on hxs-4</li><li>No LightRAG installed, port 9621 free</li></ul>
+<h2 id="v1-install-version">V1: Install + Version</h2>
+<ul><li><strong>LightRAG:</strong> <code>lightrag-hku[api,offline-storage,offline-llm]</code> v1.5.7 installed in venv at <code>/srv/lightrag/.venv/</code></li><li><strong>Full feature install:</strong> includes offline-storage (Qdrant, Milvus, Neo4j, PostgreSQL, OpenSearch backends) and offline-llm (Ollama, vLLM, llama-index LLM providers)- <strong>Config:</strong> <code>/srv/lightrag/.env</code> (based on env.example)</li><li><strong>Service:</strong> systemd unit <code>lightrag.service</code> (Type=simple, user=hxsa, WorkingDirectory=/srv/lightrag, Restart=always)</li><li><strong>lightragmcp:</strong> v1.1.0 installed via <code>npm install -g @g99/lightrag-mcp-server</code> (Node.js v22.23.2)</li><li><strong>Node.js:</strong> v22.23.2 via NodeSource repo</li><li><strong>MCP transport:</strong> stdio (launched by MCP clients on demand, not a daemon — systemd unit disabled)</li></ul>
+<h2 id="v2-config-posture">V2: Config posture</h2>
+<table><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>Host</td><td>0.0.0.0 (LAN accessible)</td></tr><tr><td>Port</td><td>9621</td></tr><tr><td>API key</td><td><code>6e437e5ef5aef927...</code> (LIGHTRAG_API_KEY, X-API-Key header)</td></tr><tr><td>LLM binding</td><td>ollama</td></tr><tr><td>LLM host</td><td><a href="http://127.0.0.1:11434">http://127.0.0.1:11434</a></td></tr><tr><td>LLM model</td><td>hx-qwen3.5-9b-64k (Chat-X, Qwen 3.5 9B)</td></tr><tr><td>Embedding binding</td><td>ollama</td></tr><tr><td>Embedding host</td><td><a href="http://127.0.0.1:11434">http://127.0.0.1:11434</a></td></tr><tr><td>Embedding model</td><td>bge-m3</td></tr><tr><td>Embedding dim</td><td>1024</td></tr><tr><td>Vector storage</td><td>QdrantVectorDBStorage</td></tr><tr><td>Qdrant URL</td><td><a href="http://192.168.50.203:6333">http://192.168.50.203:6333</a></td></tr><tr><td>Qdrant API key</td><td>(from .local.env QDRANT_API_KEY)</td></tr><tr><td>Graph storage</td><td>NetworkX (default)</td></tr><tr><td>KV storage</td><td>JSON (default)</td></tr><tr><td>Web UI</td><td>Available (bundled, served at :9621)</td></tr><tr><td>Telemetry</td><td>Disabled</td></tr></tbody></table>
+<p><strong>LLM binding correction:</strong> Originally configured for Meta-X (Muse Glimmer 30B) via OmniRoute. Switched to local Ollama Chat-X (Qwen 3.5 9B) after OmniRoute rate-limit execution timeout (504 RATE_LIMIT_EXECUTION_TIMEOUT) — Meta-X 30B was too slow for LightRAG's entity extraction prompts. Chat-X on local Ollama processes documents in ~2 minutes with no rate-limit issues.</p>
+<h2 id="v3-api-probe">V3: API probe</h2>
+<ul><li><code>GET /health</code> → <code>{"status":"healthy","core_version":"1.5.6","webui_available":true}</code></li><li><code>GET /</code> → 307 redirect to Web UI</li><li><code>POST /documents/text</code> without key → 403 Forbidden</li><li><code>POST /documents/text</code> with X-API-Key → 200 success</li></ul>
+<p>**[OPEN CORRECTION 2026-08-29, labeled, append-only — LIGHTRAG VERSION ALIGNMENT PENDING VERIFICATION.] V1 records the installed <code>lightrag-hku</code> package as v1.5.7 (venv at <code>/srv/lightrag/.venv/</code>), but the V3 <code>GET /health</code> capture reports <code>core_version: "1.5.6"</code>. The vault source (<code>/opt/tkv-local/LightRAG-main/lightrag/_version.py</code>) defines <code>__version__ = "1.5.7"</code>, which is what <code>/health</code> <code>core_version</code> is derived from in-tree — so the 1.5.6 capture does NOT match either the recorded install or the pinned source. Root cause is not established from this record alone (could be an older running process, a mismatched venv, or a stale capture). RESOLUTION REQUIRED at next live probe before V1 and V3 are marked aligned: (1) confirm the <code>lightrag.service</code> unit launches <code>/srv/lightrag/.venv/</code> binaries; (2) run <code>pip show lightrag-hku</code> from that venv; (3) re-capture <code>GET /health</code>; then record the single authoritative running version in both V1 and V3. Until reconciled, V1/V3 version evidence is VERIFICATION-REQUIRED, not final — the install and API-probe outcomes themselves are not in question.]</p>
+<h2 id="v4-document-lifecycle-proven">V4: Document lifecycle (PROVEN)</h2>
+<p><strong>Insert:</strong></p>
+<pre><code class="language-bash">curl -X POST http://localhost:9621/documents/text \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: &lt;key&gt;" \
+  -d '{"text":"HX factory uses Qdrant for vectors...Quinn owns Qdrant, Raphael owns LightRAG.","file_source":"fresh_test.txt"}'</code></pre>
+<p>→ <code>{"status":"success","track_id":"insert_20260829_150035_37e2fcf2"}</code></p>
+<p><strong>Processing result (local Ollama Chat-X, ~2 min):</strong></p>
+<ul><li>9 entities extracted (HX AI Software Factory, Qdrant, LightRAG, Quinn, Raphael, Ubuntu, systemd, Docker, hxs-4)</li><li>8 relations extracted (HX→Ubuntu, HX→systemd, Docker→HX, etc.)</li><li>9 entity vectors, 8 relationship vectors, 1 chunk vector embedded in Qdrant</li><li>Graph written with 9 nodes, 8 edges</li></ul>
+<p><strong>Query:</strong></p>
+<pre><code class="language-bash">curl -X POST http://localhost:9621/query \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: &lt;key&gt;" \
+  -d '{"query":"Who owns Qdrant?","mode":"hybrid","top_k":3}'</code></pre>
+<p>→ <code>"Agent Quinn is responsible for managing the Qdrant vector database on hxs-4"</code> with citation <code>[[1]] fresh_test.txt</code>, response_time: 36.3s</p>
+<h2 id="v5-qdrant-backend-verification">V5: Qdrant backend verification</h2>
+<p>Qdrant collections created by LightRAG:</p>
+<ul><li><code>lightrag_vdb_entities_bge_m3_1024d</code> — 9 points</li><li><code>lightrag_vdb_chunks_bge_m3_1024d</code> — 1 point</li><li><code>lightrag_vdb_relationships_bge_m3_1024d</code> — 8 points</li></ul>
+<h2 id="v6-health-monitoring">V6: Health monitoring</h2>
+<ul><li>LightRAG service: <code>systemctl is-active lightrag</code> → active</li><li>LightRAG enabled: <code>systemctl is-enabled lightrag</code> → enabled</li><li>Health endpoint: <code>GET /health</code> → healthy</li><li>Web UI: available at <code>http://192.168.50.203:9621/</code></li></ul>
+<h2 id="mcp-server">MCP server</h2>
+<ul><li><strong>lightragmcp v1.1.0</strong> — 30 tools, stdio transport</li><li>Installed at <code>/usr/bin/lightrag-mcp-server</code></li><li>Not a daemon — launched by MCP clients (Claude Desktop, kimi, etc.) on demand</li><li>MCP client config: ``<code>json { "mcpServers": { "lightrag-mcp": { "command": "lightrag-mcp-server", "env": { "LIGHTRAG_SERVER_URL": "http://192.168.50.203:9621", "LIGHTRAG_API_KEY": "&lt;key&gt;" } } } } </code>``</li></ul>
+<h2 id="credentials-stored-in-local-env">Credentials (stored in .local.env)</h2>
+<pre><code class="language-dotenv">LIGHTRAG_HOST=192.168.50.203
+LIGHTRAG_PORT=9621
+LIGHTRAG_API_KEY=&lt;generated&gt;
+LIGHTRAG_SERVER_URL=http://192.168.50.203:9621
+LIGHTRAG_MCP_API_KEY=&lt;same as LIGHTRAG_API_KEY&gt;</code></pre>
+<h2 id="v0-v6-gate-results">V0-V6 Gate Results</h2>
+<table><thead><tr><th>Gate</th><th>Status</th><th>Notes</th></tr></thead><tbody><tr><td>V0: Pre-state</td><td>PASS</td><td>Qdrant running, bge-m3 available, port 9621 free</td></tr><tr><td>V1: Install + Version</td><td>PASS (version alignment VERIFICATION-REQUIRED)</td><td>lightrag-hku v1.5.7 installed, lightragmcp v1.1.0; running-version alignment pending per the V3 correction</td></tr><tr><td>V2: Config posture</td><td>PASS</td><td>LAN bind, API key auth, Qdrant backend, local Ollama LLM+embeddings</td></tr><tr><td>V3: API probe</td><td>PASS (version alignment VERIFICATION-REQUIRED)</td><td>Health, Web UI, auth gate working; <code>core_version</code> 1.5.6 vs recorded 1.5.7 — reconcile per correction</td></tr><tr><td>V4: Document lifecycle</td><td>PASS</td><td>Insert, extract (9 entities, 8 relations), query with correct answer</td></tr><tr><td>V5: Qdrant backend</td><td>PASS</td><td>3 collections, 18 points total</td></tr><tr><td>V6: Health monitoring</td><td>PASS</td><td>Service active, enabled, health endpoint green</td></tr></tbody></table>
+<p><strong>Overall: ALL GATES PASS</strong></p>
+<h2 id="notes">Notes</h2>
+<ul><li>Native deployment (no Docker) — pip venv + systemd, owner rule 2026-08-27</li><li>LLM binding switched from Meta-X/OmniRoute to Chat-X/local Ollama (see V2 correction)</li><li>MCP server is stdio transport (not SSE/HTTP daemon) — by design</li><li>Web UI bundled with lightrag-hku[api] — no separate download needed</li></ul>
+</main>
+<footer>Source of truth: <code>servers/hxs-4/2026-08-29-lightrag-install-evidence.md</code> (sha256 <code>fd70047e28f49a454a9fef325756d18c7647d650ee7ee2f636893c5186a4a71b</code>) · rendered 2026-08-29T21:26Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+
+</body>
+</html>

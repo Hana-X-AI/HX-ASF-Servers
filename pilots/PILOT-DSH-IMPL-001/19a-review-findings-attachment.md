@@ -40,13 +40,13 @@ Add a catalog record and corresponding index entry for the receipt document, usi
 ## F10 — knowledge/catalog/receipts/2026-08-29-batchB-carol-statelog-registry.md line 20
 Update the validator-output fenced code block in the document to use the text language tag, changing the opening fence to a text-labeled fence while preserving its plain-text contents.
 
-## F11 — knowledge/decisions/KDD-0013-agent-model-lanes.md line 145
+## F11 — governace/decisions/KDD-0013-agent-model-lanes.md line 145
 Move the Chris row into the main assignment table, or place it in a separate Markdown table with an explicit header so it renders as a valid standing-lane entry. Preserve the row's existing values and leave the surrounding amendment history unchanged.
 
-## F12 — knowledge/decisions/KDD-0014-chris-registration.md lines 43-44
+## F12 — governace/decisions/KDD-0014-chris-registration.md lines 43-44
 Update the governance records referenced by KDD-0014 and Chris's charter to mark the obsolete "implemented instance + credential entries" activation gate as historical, then add a single current gate consistent with the revised authorization for Chris to create them during installation. Preserve append-only history and record the correction as open and labeled rather than editing prior entries.
 
-## F13 — knowledge/decisions/KDD-0014-chris-registration.md lines 50-52
+## F13 — governace/decisions/KDD-0014-chris-registration.md lines 50-52
 Synchronize the D3 status in the KDD-0014 decision record without silently changing older governance records: if KDD-0014 is ratified, add a clearly labeled follow-on correction cross-referencing KDD-0011 and agents/rob/profile.md; otherwise qualify the existing "satisfied by class" statement as conditional pending owner confirmation. Preserve the append-only governance-record convention.
 
 ## F14 — pilots/PILOT-DSH-IMPL-001/07-kk3-work-order-gordon-gates-6-7-resume.md line 90

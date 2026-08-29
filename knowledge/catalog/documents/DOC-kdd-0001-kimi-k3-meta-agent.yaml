@@ -6,7 +6,7 @@ document:
   source:
     author: "Kimi-K3 (review and record); decider Agent-Zero"
     provided_by: "Agent Zero"
-    origin: "/home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0001-adopt-kimi-k3-meta-agent-model.md"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0001-adopt-kimi-k3-meta-agent-model.md"
     section: "§whole-document"
     ingestion_date: "2026-08-25T04:50:00Z"
   owner: "Agent Zero"
@@ -32,10 +32,10 @@ document:
       note: "ratified with §2.3 phased activation; six recorded corrections; source first pass codex_20260824_1050 (SHA-256 7c355b68…) remains unmodified as historical input"
     - predicate: "governs"
       target: "agents/ charters as delegation-activation mechanism"
-      note: "run records map to goals/ and knowledge/lessons-learned.md; no second registry plane"
+      note: "run records map to goals/ and governace/lesson-learned/lessons-learned.md; no second registry plane"
   validation:
     validated_at: "2026-08-25T04:50:00Z"
     freshness: "current"
     review_due: "on phase transition (requires new KDD)"
   sha256: "3d54dc081b71c4f4c5495af898b2bb52c5ffd64d333ed099e83b1df7532b8ca7"
-  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0001-adopt-kimi-k3-meta-agent-model.md"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0001-adopt-kimi-k3-meta-agent-model.md"
