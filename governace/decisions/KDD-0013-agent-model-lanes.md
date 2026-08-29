@@ -195,3 +195,25 @@ carol, chris, kimi-k3, wayne. Amendment 7's seven-lane scope is superseded;
 preserved as history. Lane corrections in the same window: morpheus →
 Qwen 3.8 2.4T A95B (DeepInfra) superseding Coder-X; chris → DeepSeek V4 Pro
 (Baidu FP8) superseding Qwen 3.8 Flash — both owner directives 2026-08-29.]
+
+[Amendment 10 — 2026-08-29, labeled, append-only — LANE CAPABILITY REGISTRY
+(QA-audit SY-5): the verified capability/context profile of each lane, so
+every work order is pre-scoped. Entries are VERIFIED facts from state-log
+rows and config; re-probe at dispatch. Fail-closed: a capped lane's work
+order must carry the context_budget + capability_probe fields (work-order
+template, ST-5).]
+
+| Lane | Verified context ceiling | Output guard | Capability note (evidence) |
+| --- | --- | --- | --- |
+| gpt-oss-120b (carol, wayne) | 131072 total | `max_output_size=16384` (row-33 guard) | Session-overhead overflow at start if unguarded (state-log rows 32-33) |
+| Qwen 3.8 2.4T A95B (morpheus) | 65536 (half of carol's) | apply same guard class | Driver-lane failure class on long synthesis (rows 34, 40-41); WRITE-FIRST discipline |
+| Meta-X (rick, john) | 65536 | none recorded | Deterministic work; analysis/drafting |
+| Chat-X (carol prior) | 131072 | — | Superseded for carol; used by LightRAG LLM binding |
+| DeepSeek V4 Pro (gordon, chris) | 1048576/1310720 metadata | — | High ceiling; gordon campaign-verified |
+| GLM 5.3 Flash (trinity, rob, mia) | per metadata | row-33 guard class if overflow | Omnicontext metadata-driven |
+| DeepSeek V4 Flash (governor/Flash) | per metadata | row-33 guard class if overflow | Governor lane |
+| Nemotron 3 Ultra (quinn) | free tier | — | Unmetered; capability probe at dispatch |
+
+Rule: every work order on a capped lane must include the context_budget +
+capability_probe fields and a 4-token pre-dispatch probe (row-33 fix). No
+automatic lane substitution on failure — stop and escalate (KDD-0013).

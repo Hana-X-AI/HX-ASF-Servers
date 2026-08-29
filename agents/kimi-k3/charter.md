@@ -21,6 +21,18 @@ description: "Factory meta-agent: decomposes authorized goals into bounded execu
   as an identity may be decommissioned or repurposed per owner direction
   during the DSH harness cutover. Authority: owner directive 2026-08-29
   ("kimi-k3 that model is out of here").]
+  [OPEN CORRECTION 2026-08-29, labeled, append-only — RETIREMENT OF THE
+  kimi-k3 IDENTITY (QA-audit R-1, owner directive "kimi-k3 that model is out
+  of here"): effective 2026-08-29 the kimi-k3 identity is RETIRED as a
+  live governor lane. The governor role is held by **Flash**
+  (`agents/flash/`, DeepSeek V4 Flash via OmniRoute). This directory is
+  preserved as the **historical governor-role template** — its `profile.md`
+  body is the ratified operating contract that Flash's profile adapts, and
+  `verification-checklist.md` remains the standing mandatory governor gate.
+  The moonshot-ai/kimi-k3 lane reference in KDD-0013 is preserved as
+  history; no new work is dispatched to the kimi-k3 identity. The directory
+  stays in-tree (append-only governance; template + checklist are
+  referenced by Flash's profile and the manifest).]
 - Created: 2026-08-24
 - Full operating contract: `profile.md`
 - Provenance: adopted per

@@ -11,6 +11,8 @@ agents/john/charter.md
 agents/john/profile.md
 agents/kimi-k3/charter.md
 agents/kimi-k3/profile.md
+agents/flash/charter.md
+agents/flash/profile.md
 agents/carol/charter.md
 agents/carol/profile.md
 goals/README.md
@@ -74,7 +76,8 @@ goals/2026-08-29-oai-x-replace-meta-x.md
 governace/status-reporting/change-meta-x-to-oai-x-2026-08-29.md
 governace/status-reporting/change-lightrag-deploy-2026-08-29.md
 governace/status-reporting/change-qdrant-deploy-2026-08-29.md
-governance/testing/test-log.md
+governace/project-plan/governance-foundation-plan.md
+governace/testing/test-log.md
 governace/process/agent-creation-workflow.md
 governace/process/system-deployment-workflow.md
 governace/process/system-validation-testing.md

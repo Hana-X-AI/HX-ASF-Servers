@@ -2,7 +2,19 @@
 
 **Configuration date:** 2026-08-29
 **Agent lane:** john (Ollama engineer, KDD-0013)
-**Status:** Operational (OAI-X deployed, Meta-X decommissioned)
+**Status:** PROPOSED — NOT EXECUTED (config doc describes the TARGET configuration, not current state)
+
+> **[OPEN CORRECTION 2026-08-29, labeled, append-only — status corrected from
+> "Operational (OAI-X deployed, Meta-X decommissioned)" to PROPOSED.]** This
+> document described OAI-X as deployed and operational, which is NOT evidenced
+> and is contradicted by the governing records: the goal
+> (`goals/2026-08-29-oai-x-replace-meta-x.md`) is `draft` and the implementation
+> plan (`servers/hxs-3/2026-08-29-oai-x-implementation-plan.md`) is
+> `NOT APPROVED / NOT EXECUTED`. This is the TARGET configuration the plan would
+> produce once approved and executed; the current hxs-3 configuration remains
+> Meta-X (`hx-muse-glimmer-64k`) per `servers/hxs-3/configuration.md`. Update
+> this file to a real "operational" state only after execution evidence exists
+> (ollama list, digest, preload pin, state-log row).
 
 ## Functional role
 

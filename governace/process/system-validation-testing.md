@@ -36,3 +36,5 @@ flowchart TD
 ## Hooks triggered
 
 - `validate-changed.sh` (PostToolUse on `test-log.md`)
+- `test-log-append.sh` (PostToolUse on test/evidence writes — reminds to append a dated row; added 2026-08-29, QA-audit ST-7)
+- `render-sync.sh` (PostToolUse on `.md`/manifest writes — flags manifest drift before commit; added 2026-08-29, QA-audit ST-4)

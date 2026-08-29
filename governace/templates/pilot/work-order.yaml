@@ -18,6 +18,18 @@ work_order:
     - "Versioned change (for config mutations): pre/post sha256 + unified diff in evidence"
     - "Execution path: session on hxs-5; <target host (IP)> via SSH hxsa@<ip>; askpass helper READS the credential at execution time (ratified pattern — NO extracted secret copy, helper deleted at task end, never printed/logged/stored); verify hostname and peer IP before any mutation; sudo -n only"
     - "One bounded correction attempt per failed correctable gate; stop conditions: <explicit list>"
+  # LANE CAPABILITY + CONTEXT BUDGET (QA-audit ST-5, 2026-08-29 — mandatory).
+  # Lessons of record: Carol 131k context ceiling (state-log row 32-33, overflow
+  # at session start regardless of reads) and Morpheus Coder-X 65k driver-lane
+  # failures (rows 34, 40-41). Every dispatch on a capped lane MUST pre-scope.
+  context_budget:
+    max_tokens: "<numeric ceiling for this lane — e.g. 16384 output reserved, 131072 context>"
+    max_output_size_override: "<exact alias field value if the lane needed the row-33 guard; else none>"
+    read_discipline: "line-range/grep only — NO whole-file reads of large files; index-navigated; incremental writes"
+  capability_probe:
+    required: "yes | no (always yes for long/multi-step work orders on capped lanes)"
+    procedure: "4-token probe session on the lane BEFORE authoring/dispatching the full order (row-33 fix); record served-model id + session-start answer in the receipt"
+    fail_action: "stop the branch and escalate to the governor — NO automatic lane substitution (KDD-0013)"
   rollback: "<smallest affected layer + the deterministic inverse>"
   controlling_sources:
     - "<NN-context-packet file> (this package)"
@@ -26,6 +38,21 @@ work_order:
     - "<role TKV path> (per AGENTS.md knowledge gate: ubuntu for rick, ollama for john)"
     - "knowledge/catalog retrieval per governor packet (cited records)"
   deliverable: "<NN-<agent>-<slug>.md: required contents (hashes, diffs, outputs, journal, receipt) + the Task May Proceed line>"
+  # DELIVERABLE PLACEMENT (QA-audit SY-3, 2026-08-29 — mandatory): the work
+  # order names the exact destination path for every deliverable. Acceptance
+  # requires a placement check: `ls <destination>` shows the artifact at the
+  # named path (this closes the AG-03/DC-01 "plan never reached project-plan/"
+  # failure class).
+  deliverable_destination:
+    - "<exact repo-relative path where each deliverable must land, e.g. governace/project-plan/<slug>.md>"
+    - "verify: ls <destination> shows the artifact before acceptance"
+  # ACCEPTANCE GATE (QA-audit R-6, 2026-08-29 — mandatory): no deliverable is
+  # accepted until the governor runs the verification-checklist
+  # (agents/kimi-k3/verification-checklist.md) — artifact exists, receipt line,
+  # token context, secret sweep, governor-artifact integrity, claims-vs-live-
+  # state, boundary conformance, completeness, honest limitations, handoff to
+  # Carol. A deliverable that fails any step goes back with one bounded
+  # correction or escalates; it is never accepted around a failed step.
   # STANDING DIRECTIVE (owner 2026-08-25, AGENTS.md "Second Brain roadmap
   # integration") — mandatory in every material work order. Answer all four.
   second_brain_evaluation:

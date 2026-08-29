@@ -97,3 +97,14 @@ Phase M/A/C framework above are preserved as history — the governor role
 and its authority chain are defined in the current AGENTS.md. Authority:
 AGENTS.md governor-transition correction; KDD-0013 Amendment 8;
 state-log row 46.]
+
+[OPEN CORRECTION 2026-08-29, labeled, append-only (QA-audit R-1/R-2/R-5):
+the kimi-k3 identity is RETIRED as a live governor lane per owner
+directive ("kimi-k3 that model is out of here"). The current governor is
+**Flash** with a dedicated operating contract at `agents/flash/charter.md`
+and `agents/flash/profile.md` (added 2026-08-29, manifest-listed). This
+KDD's ratified framework is preserved as the historical governor-role
+template; `agents/kimi-k3/verification-checklist.md` remains the standing
+mandatory governor evidence gate. No new work is dispatched to the
+kimi-k3 identity. Authority: AGENTS.md governor-transition corrections;
+state-log row 46; QA-audit remediation 2026-08-29.]

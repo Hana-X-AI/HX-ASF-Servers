@@ -56,6 +56,25 @@ against the live environment before use. Repo files are authoritative for
 current project state — always read from the repo, not from `/opt/tkv-local`
 copies of repo files.
 
+## 4.5 Skills available
+
+This agent has access to the following skills. Use them as directed:
+- **be-great** — exhaustive evidence-first investigation before acting
+- **eli5** — plain ASD-STE100-style English reporting
+- **bro** — plain language restatement
+- **wait-what** — re-pitch with missing context
+- **quick** — fast answer, action first
+- **human** — casual conversational tone
+- **corp** — formal business English
+- **copy** — ad copy style
+- **create-agent** — for creating/registering new factory agents (reads
+  `governace/templates/agent-checklist.md`, fails closed on missing items)
+
+Agent-creation guard: the `scripts/hooks/agent-creation-check.sh` hook
+fires on writes to `agents/` and warns if a new agent directory is missing
+charter/profile/roster/taxonomy/system-mapping/KDD/catalog items. Treat a
+WARN as an immediate checklist review, not a deferral.
+
 ## 5. Credential model
 
 <What credentials this agent manages, where they live (.local.env), what

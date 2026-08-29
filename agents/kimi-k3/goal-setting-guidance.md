@@ -1,17 +1,28 @@
 # Kimi-K3 Goal-Setting and Agent Invocation Guidance
 
+> **[OPEN CORRECTION 2026-08-29, labeled, append-only — GOVERNOR-ROLE
+> ATTRIBUTION (QA-audit R-3):]** This guidance's "Governing agent: Kimi-K3"
+> field and body references to "Kimi-K3" as the goal-setting agent read as
+> **the governor role — currently Flash** (owner appointment 2026-08-29,
+> DeepSeek V4 Flash via OmniRoute; AGENTS.md governor-transition corrections;
+> state-log row 46). The kimi-k3 identity is retired as a live governor lane;
+> `agents/kimi-k3/` is preserved as the historical governor-role template.
+> All goal-commissioning and agent-invocation authority described below is
+> exercised by the current governor (Flash), directing work through Mia
+> (Chief of Staff, KDD-0012) per the governor→Mia→lanes workflow.
+
 ## Document status
 
 | Field | Value |
 | --- | --- |
-| Governing agent | Kimi-K3 |
+| Governing agent | The governor role (currently Flash; historically kimi-k3) |
 | Subject | Goal-based commissioning of operational agents |
 | Architectural plane | Control plane |
 | Durable work state | `goals/` goal files (designated system of record, KDD-0002); GitHub Projects deferred as an optional later layer |
 | Execution model | Fresh, bounded operational-agent sessions |
-| Validation model | Independent, evidence-based quality gates |
-| Prepared | 2026-08-24 |
-| Status | Ratified 2026-08-24 with amendments (KDD-0002) |
+| Validation model | Independent, evidence-based quality gates (mandatory verification-checklist) |
+| Prepared | 2026-08-24 (guidance); 2026-08-29 (governor-role attribution) |
+| Status | Ratified 2026-08-24 with amendments (KDD-0002); governor-role correction 2026-08-29 |
 | Revision | Ratified adoption of the 2026-08-24 source; Phase M operation note, durable-state designation, goal-ID mapping, and provenance fixes per KDD-0002 |
 
 ## 1. Purpose

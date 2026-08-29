@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<!-- Generated from governace/templates/change-record.md (sha256 fa0c3e4faa5ec0632b20e4b8fd012d2dea75f334fec9aac946957b71f375b829) by scripts/wiki/render.py on 2026-08-29T23:36Z.
+     Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Change Record — &lt;change-name&gt;</title>
+<style>
+:root{color-scheme:light dark}
+body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.55;
+max-width:62rem;margin:0 auto;padding:1.5rem 2rem;color:#1a1a1a;background:#fff}
+h1,h2,h3,h4,h5,h6{line-height:1.25;margin-top:1.6em}
+h1{border-bottom:2px solid #444;padding-bottom:.3em}
+h2{border-bottom:1px solid #ccc;padding-bottom:.2em}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+code{background:#f0f0f0;padding:.1em .3em;border-radius:3px}
+pre{background:#f6f8fa;border:1px solid #ddd;border-radius:6px;padding:.8em;overflow-x:auto}
+pre code{background:none;padding:0}
+table{border-collapse:collapse;margin:1em 0;width:100%}
+th,td{border:1px solid #ccc;padding:.35em .6em;text-align:left;vertical-align:top}
+th{background:#f0f0f0}
+blockquote{border-left:4px solid #bbb;margin:1em 0;padding:.2em 1em;color:#444;background:#fafafa}
+a{color:#0645ad}
+.doc-meta{color:#666;font-size:.85em;border-bottom:1px dashed #bbb;padding-bottom:.6em;margin-bottom:1.2em}
+footer{margin-top:2.5em;border-top:1px solid #ccc;color:#666;font-size:.8em;padding-top:.8em}
+pre.mermaid{background:#fff;border:1px dashed #999}
+@media (prefers-color-scheme:dark){
+body{color:#ddd;background:#111} h1{border-color:#888} h2{border-color:#555}
+code{background:#2a2a2a} pre{background:#1b1b1b;border-color:#444}
+th{background:#222} th,td{border-color:#555} blockquote{color:#bbb;background:#191919;border-color:#666}
+a{color:#6fa8ff} .doc-meta,footer{color:#999}}
+</style>
+</head>
+<body>
+<main class="doc">
+<h1 id="change-record-change-name">Change Record — &lt;change-name&gt;</h1>
+<p><strong>Status lifecycle (QA-audit ST-6, 2026-08-29):</strong> a change record moves <code>PROPOSED → IN PROGRESS → COMPLETE</code>. <strong>No record may claim COMPLETE unless the governing goal/plan status AND execution evidence agree</strong> (audit AG-01/DC-02: a fabricated COMPLETE was corrected to PROPOSED on 2026-08-29 because the goal was draft and the plan NOT-APPROVED/NOT-EXECUTED). Status flips require a labeled, dated correction line preserving the prior status verbatim.</p>
+<table><thead><tr><th>Field</th><th>Value</th></tr></thead><tbody><tr><td>Date</td><td>&lt;YYYY-MM-DD&gt;</td></tr><tr><td>Host</td><td>&lt;host (IP)&gt;</td></tr><tr><td>Change type</td><td>&lt;model replacement</td><td>deployment</td><td>configuration</td><td>...&gt;</td></tr><tr><td>Agent lane</td><td>&lt;owner lane&gt;</td></tr><tr><td>Status</td><td><strong>PROPOSED</strong> — NOT EXECUTED (until owner approval + execution evidence)</td></tr><tr><td>Governing goal</td><td>&lt;goals/&lt;file&gt;.md — status: draft/active/complete&gt;</td></tr><tr><td>Governing plan</td><td>&lt;servers/&lt;host&gt;/&lt;plan&gt;.md — status: approved/not-approved&gt;</td></tr><tr><td>Execution evidence</td><td>&lt;artifact path(s): ollama list, digests, state-log row, validate output&gt;</td></tr></tbody></table>
+<h2 id="what-changed">What changed</h2>
+<p>&lt;Describe the proposed change. For the PROPOSED state, this is the TARGET; for COMPLETE, describe what was actually executed.&gt;</p>
+<h2 id="why">Why</h2>
+<p>&lt;Problem being solved, with evidence (e.g., a recorded timeout/504, an owner directive).&gt;</p>
+<h2 id="before-state">Before state</h2>
+<p>&lt;Table: call-sign, model/version, alias, digest, config, service state.&gt;</p>
+<h2 id="after-state">After state</h2>
+<p>&lt;For COMPLETE: the verified end state with digests/evidence. For PROPOSED: the intended target state, clearly labeled as target.&gt;</p>
+<h2 id="verification">Verification</h2>
+<p>&lt;For COMPLETE: the actual evidence (commands, outputs, hashes). For PROPOSED: what will be run at execution.&gt;</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>&lt;Only write "COMPLETE — deployed / decommissioned" when the governing goal/plan and the execution evidence all support it. Otherwise: "PROPOSED — awaiting owner approval and execution."&gt;</p>
+<h2 id="rollback">Rollback</h2>
+<p>&lt;Deterministic inverse for each mutation.&gt;</p>
+<h2 id="open-items">Open items</h2>
+<p>&lt;List pending owner decisions, cross-lane handoffs (e.g., OmniRoute routing is trinity's lane), and verification steps.&gt;</p>
+<h2 id="sources">Sources</h2>
+<p>&lt;Controlling goal, plan, configuration.md, KDDs, install/evidence docs.&gt;</p>
+</main>
+<footer>Source of truth: <code>governace/templates/change-record.md</code> (sha256 <code>fa0c3e4faa5ec0632b20e4b8fd012d2dea75f334fec9aac946957b71f375b829</code>) · rendered 2026-08-29T23:36Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+
+</body>
+</html>

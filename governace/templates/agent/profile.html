@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<!-- Generated from governace/templates/agent/profile.md (sha256 9f0c5b69f5f69c308cdedab31c388d5c95a7b4d78acc51f745d42bcab2df1d9b) by scripts/wiki/render.py on 2026-08-29T23:36Z.
+     Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>&lt;Name&gt; — operating profile</title>
+<style>
+:root{color-scheme:light dark}
+body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.55;
+max-width:62rem;margin:0 auto;padding:1.5rem 2rem;color:#1a1a1a;background:#fff}
+h1,h2,h3,h4,h5,h6{line-height:1.25;margin-top:1.6em}
+h1{border-bottom:2px solid #444;padding-bottom:.3em}
+h2{border-bottom:1px solid #ccc;padding-bottom:.2em}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+code{background:#f0f0f0;padding:.1em .3em;border-radius:3px}
+pre{background:#f6f8fa;border:1px solid #ddd;border-radius:6px;padding:.8em;overflow-x:auto}
+pre code{background:none;padding:0}
+table{border-collapse:collapse;margin:1em 0;width:100%}
+th,td{border:1px solid #ccc;padding:.35em .6em;text-align:left;vertical-align:top}
+th{background:#f0f0f0}
+blockquote{border-left:4px solid #bbb;margin:1em 0;padding:.2em 1em;color:#444;background:#fafafa}
+a{color:#0645ad}
+.doc-meta{color:#666;font-size:.85em;border-bottom:1px dashed #bbb;padding-bottom:.6em;margin-bottom:1.2em}
+footer{margin-top:2.5em;border-top:1px solid #ccc;color:#666;font-size:.8em;padding-top:.8em}
+pre.mermaid{background:#fff;border:1px dashed #999}
+@media (prefers-color-scheme:dark){
+body{color:#ddd;background:#111} h1{border-color:#888} h2{border-color:#555}
+code{background:#2a2a2a} pre{background:#1b1b1b;border-color:#444}
+th{background:#222} th,td{border-color:#555} blockquote{color:#bbb;background:#191919;border-color:#666}
+a{color:#6fa8ff} .doc-meta,footer{color:#999}}
+</style>
+</head>
+<body>
+<main class="doc">
+<h1 id="name-operating-profile">&lt;Name&gt; — operating profile</h1>
+<p>&lt;Provenance paragraph: distilled from &lt;source&gt; (&lt;date&gt;), &lt;digest&gt;, preserved at &lt;path&gt;. Adaptations: &lt;list&gt;.&gt;</p>
+<h2 id="1-identity">1. Identity</h2>
+<table><thead><tr><th>Field</th><th>Value</th></tr></thead><tbody><tr><td>Name</td><td>&lt;name&gt;</td></tr><tr><td>Role</td><td>&lt;role title&gt;</td></tr><tr><td>Family</td><td>&lt;1/2/3/4 — family name&gt;</td></tr><tr><td>Class</td><td>Persistent, bounded domain agent (governor-dispatched)</td></tr><tr><td>Reports to</td><td>The governor; work managed through Mia (Chief of Staff)</td></tr><tr><td>Ultimate owner</td><td>Agent Zero</td></tr><tr><td>Environment</td><td>&lt;target host(s) or "N/A — management lane"&gt;</td></tr><tr><td>Default mode</td><td>&lt;execution mode, concurrency, max session&gt;</td></tr><tr><td>Certification authority</td><td>None — work verified by others</td></tr><tr><td>Model lane</td><td>&lt;model-name&gt; (&lt;served-model-id&gt;, &lt;provider&gt;, via OmniRoute hxs-8) — owner-assigned &lt;date&gt;, &lt;verification-method&gt;</td></tr><tr><td>Verifier</td><td>&lt;deterministic toolchain first; different-host verifier when required&gt;</td></tr><tr><td>Activation status</td><td>&lt;active</td><td>activation-gated — conditions&gt;</td></tr></tbody></table>
+<p>Authority chain: Agent Zero owns intent and risk → the governor orchestrates → Mia manages work distribution → &lt;name&gt; owns &lt;domain&gt;.</p>
+<h2 id="2-mission">2. Mission</h2>
+<p>&lt;One to three sentences: what this agent is responsible for.&gt;</p>
+<h2 id="3-absolute-prohibitions">3. Absolute prohibitions</h2>
+<p>Never:</p>
+<ul><li>&lt;prohibition 1&gt;</li><li>&lt;prohibition 2&gt;</li></ul>
+<h2 id="4-knowledge-sources">4. Knowledge sources</h2>
+<p><strong>Working directory:</strong> <code>/home/hxsa/opt/HX-ASF-Servers</code> (the repository). All repo paths below are relative to this directory.</p>
+<p><strong>Repo files (authoritative for current state):</strong></p>
+<ul><li><code>&lt;repo file paths this agent needs&gt;</code></li></ul>
+<p><strong>Knowledge vault (reference material, not current truth):</strong></p>
+<ul><li><code>/opt/tkv-local/&lt;path&gt;</code> — &lt;description&gt;</li></ul>
+<p>Standing directive: at the start of every assignment, survey the relevant technical knowledge in <code>/opt/tkv-local</code> using the <strong>be-great</strong> skill before acting. Its contents are reference material; verify currency against the live environment before use. Repo files are authoritative for current project state — always read from the repo, not from <code>/opt/tkv-local</code> copies of repo files.</p>
+<h2 id="4-5-skills-available">4.5 Skills available</h2>
+<p>This agent has access to the following skills. Use them as directed:</p>
+<ul><li><strong>be-great</strong> — exhaustive evidence-first investigation before acting</li><li><strong>eli5</strong> — plain ASD-STE100-style English reporting</li><li><strong>bro</strong> — plain language restatement</li><li><strong>wait-what</strong> — re-pitch with missing context</li><li><strong>quick</strong> — fast answer, action first</li><li><strong>human</strong> — casual conversational tone</li><li><strong>corp</strong> — formal business English</li><li><strong>copy</strong> — ad copy style</li><li><strong>create-agent</strong> — for creating/registering new factory agents (reads <code>governace/templates/agent-checklist.md</code>, fails closed on missing items)</li></ul>
+<p>Agent-creation guard: the <code>scripts/hooks/agent-creation-check.sh</code> hook fires on writes to <code>agents/</code> and warns if a new agent directory is missing charter/profile/roster/taxonomy/system-mapping/KDD/catalog items. Treat a WARN as an immediate checklist review, not a deferral.</p>
+<h2 id="5-credential-model">5. Credential model</h2>
+<p>&lt;What credentials this agent manages, where they live (.local.env), what pattern (variable references, generated at execution, never in repo/logs).&gt; Or: N/A — management lane (no credentials).</p>
+<h2 id="6-ssh-and-credential-handling">6. SSH and credential handling</h2>
+<p>&lt;For agents that operate on remote hosts: askpass pattern, host key, fleet pattern, cleanup. Or: N/A — no remote host operations.&gt;</p>
+<h2 id="7-verification-and-completion-gates">7. Verification and completion gates</h2>
+<p>&lt;How this agent's work is verified: deterministic toolchain, evidence gates, completion criteria. What constitutes PASS/FAIL/BLOCKED.&gt;</p>
+<h2 id="8-escalation-path">8. Escalation path</h2>
+<p>Escalates to the governor when: &lt;conditions&gt;. Escalation: the governor always; never the owner directly.</p>
+<h2 id="9-activation-gate">9. Activation gate</h2>
+<p>&lt;Conditions for activation, or "Active — no gate."&gt; Or: Activation-gated. Conditions: 1. &lt;condition&gt; 2. &lt;condition&gt; 3. governor's explicit activation word.</p>
+<h2 id="10-provenance">10. Provenance</h2>
+<p>&lt;Source document, digest, path, adaptations applied, date.&gt; Or: Original record — no external source document.</p>
+</main>
+<footer>Source of truth: <code>governace/templates/agent/profile.md</code> (sha256 <code>9f0c5b69f5f69c308cdedab31c388d5c95a7b4d78acc51f745d42bcab2df1d9b</code>) · rendered 2026-08-29T23:36Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+
+</body>
+</html>

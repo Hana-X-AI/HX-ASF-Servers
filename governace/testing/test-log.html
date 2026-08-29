@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Generated from governance/testing/test-log.md (sha256 2248c05154d79a3f1a272b94fc967c22300df9ca7268eb28d7234bed301e3ed1) by scripts/wiki/render.py on 2026-08-29T21:41Z.
+<!-- Generated from governace/testing/test-log.md (sha256 10508a28087acf6acfc6de7c1cb2323516269b1371488fae8a3676e15f054f3e) by scripts/wiki/render.py on 2026-08-29T23:58Z.
      Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
 <html lang="en">
 <head>
@@ -47,9 +47,11 @@ a{color:#6fa8ff} .doc-meta,footer{color:#999}}
 <h2 id="redis-hxs-9">Redis (hxs-9)</h2>
 <table><thead><tr><th>Date</th><th>Test</th><th>Status</th><th>Evidence</th><th>Notes</th></tr></thead><tbody><tr><td>2026-08-29</td><td>Install + evidence</td><td>PASS</td><td>Redis 7.0.15, ACL users, persistence</td><td>Wayne KDD-0015</td></tr></tbody></table>
 <h2 id="omniroute-hxs-8">OmniRoute (hxs-8)</h2>
-<table><thead><tr><th>Date</th><th>Test</th><th>Status</th><th>Evidence</th><th>Notes</th></tr></thead><tbody><tr><td>2026-08-29</td><td>API key verification</td><td>PASS</td><td>Models list returns with valid key</td><td>Key: sk-cbea27b8607bc7cc-edfb4a-e8c571ca</td></tr></tbody></table>
+<table><thead><tr><th>Date</th><th>Test</th><th>Status</th><th>Evidence</th><th>Notes</th></tr></thead><tbody><tr><td>2026-08-29</td><td>API key verification</td><td>PASS</td><td>Models list returns with valid key</td><td>Key: &lt;redacted from OMNIROUTE API key in .local.env&gt;</td></tr></tbody></table>
+<h2 id="governance-hx-asf-servers-qa-audit-phase-2">Governance (HX-ASF-Servers QA audit Phase 2)</h2>
+<table><thead><tr><th>Date</th><th>Test</th><th>Status</th><th>Evidence</th><th>Notes</th></tr></thead><tbody><tr><td>2026-08-29</td><td>validate.py full suite</td><td>PASS</td><td>5/5 checks (wiki-sync, governance-path, fixture-suite, catalog-mechanical, secret-boundary)</td><td>New governance-path check added (SY-2); exit 0</td></tr><tr><td>2026-08-29</td><td>render.py --check</td><td>PASS</td><td>79/79 manifest documents in sync</td><td>All .md + .html pairs current (SY-6)</td></tr><tr><td>2026-08-29</td><td>governance-path integrity</td><td>PASS</td><td>governace/ canonical; governance/ fork absent</td><td>Fork removed; regression guard in validate.py</td></tr><tr><td>2026-08-29</td><td>secret-boundary sweep</td><td>PASS</td><td>1191 files scanned, 0 hits</td><td>Redacted leaked OmniRoute key variant</td></tr><tr><td>2026-08-29</td><td>hook registration</td><td>PASS</td><td>6 hooks in ~/.kimi-code/config.toml</td><td>agent-creation, render-sync, test-log-append, governor-gate, secret-boundary, validate-changed</td></tr><tr><td>2026-08-29</td><td>lane-capability registry</td><td>PASS</td><td>KDD-0013 Amendment 10 appended</td><td>Context ceilings + output guards per lane (SY-5)</td></tr></tbody></table>
 </main>
-<footer>Source of truth: <code>governance/testing/test-log.md</code> (sha256 <code>2248c05154d79a3f1a272b94fc967c22300df9ca7268eb28d7234bed301e3ed1</code>) · rendered 2026-08-29T21:41Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+<footer>Source of truth: <code>governace/testing/test-log.md</code> (sha256 <code>10508a28087acf6acfc6de7c1cb2323516269b1371488fae8a3676e15f054f3e</code>) · rendered 2026-08-29T23:58Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
 
 </body>
 </html>

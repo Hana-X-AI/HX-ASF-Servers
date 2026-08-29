@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<!-- Generated from governace/project-plan/governance-foundation-plan.md (sha256 a6f45213e67bd3ef80806de5461fa59ad220884e398c7dd8e1931eac80667914) by scripts/wiki/render.py on 2026-08-29T23:56Z.
+     Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Governance Foundation Plan — HX Agentic Software Factory</title>
+<style>
+:root{color-scheme:light dark}
+body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.55;
+max-width:62rem;margin:0 auto;padding:1.5rem 2rem;color:#1a1a1a;background:#fff}
+h1,h2,h3,h4,h5,h6{line-height:1.25;margin-top:1.6em}
+h1{border-bottom:2px solid #444;padding-bottom:.3em}
+h2{border-bottom:1px solid #ccc;padding-bottom:.2em}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+code{background:#f0f0f0;padding:.1em .3em;border-radius:3px}
+pre{background:#f6f8fa;border:1px solid #ddd;border-radius:6px;padding:.8em;overflow-x:auto}
+pre code{background:none;padding:0}
+table{border-collapse:collapse;margin:1em 0;width:100%}
+th,td{border:1px solid #ccc;padding:.35em .6em;text-align:left;vertical-align:top}
+th{background:#f0f0f0}
+blockquote{border-left:4px solid #bbb;margin:1em 0;padding:.2em 1em;color:#444;background:#fafafa}
+a{color:#0645ad}
+.doc-meta{color:#666;font-size:.85em;border-bottom:1px dashed #bbb;padding-bottom:.6em;margin-bottom:1.2em}
+footer{margin-top:2.5em;border-top:1px solid #ccc;color:#666;font-size:.8em;padding-top:.8em}
+pre.mermaid{background:#fff;border:1px dashed #999}
+@media (prefers-color-scheme:dark){
+body{color:#ddd;background:#111} h1{border-color:#888} h2{border-color:#555}
+code{background:#2a2a2a} pre{background:#1b1b1b;border-color:#444}
+th{background:#222} th,td{border-color:#555} blockquote{color:#bbb;background:#191919;border-color:#666}
+a{color:#6fa8ff} .doc-meta,footer{color:#999}}
+</style>
+</head>
+<body>
+<main class="doc">
+<h1 id="governance-foundation-plan-hx-agentic-software-factory">Governance Foundation Plan — HX Agentic Software Factory</h1>
+<ul><li><strong>Goal ID:</strong> governance-foundation-plan</li><li><strong>Status:</strong> ACTIVE — implementation underway (7 workstreams; status per workstream below)</li><li><strong>Owner:</strong> Agent Zero</li><li><strong>Created:</strong> 2026-08-29</li><li><strong>Human authority:</strong> Agent Zero</li><li><strong>Destination:</strong> <code>governace/project-plan/</code> (this file) — per owner directive</li><li><strong>Directive source:</strong> owner instruction 2026-08-29 (audit input <code>misc/007/input.md</code>)</li></ul>
+<hr>
+<h2 id="summary">Summary</h2>
+<p>Build a flawless, repeatable, trackable governance foundation for the HX agentic software factory. The plan consolidates 7 workstreams that together enforce: structured governance directories, a continuously-updated test log, mandatory change documentation, a bullet-proof agent-creation checklist with skill + hooks, skills in every agent profile, workflow diagrams, and TKV-enforcement evidence.</p>
+<p>This document is the <strong>controlling plan</strong>. Each workstream's artifacts live in <code>governace/</code>; this file records the objective, deliverables, status, and acceptance criteria for each.</p>
+<hr>
+<h2 id="workstream-1-governance-directory-structure-file-migration">Workstream 1 — Governance directory structure + file migration</h2>
+<p><strong>Objective:</strong> one canonical governance tree (<code>governace/</code>) with centralized templates and migrated records.</p>
+<p><strong>Deliverables:</strong></p>
+<ul><li><code>governace/README.md</code> — root governance readme (DONE)</li><li><code>governace/decisions/</code> — KDDs moved from <code>knowledge/decisions/</code> (DONE, 30 KDD files)</li><li><code>governace/issue-tracking/issues.md</code> — issues moved from <code>knowledge/issues.md</code> (DONE)</li><li><code>governace/lesson-learned/lessons-learned.md</code> — moved from <code>knowledge/lessons-learned.md</code> (DONE)</li><li><code>governace/templates/</code> — single central template dir (DONE): agent/, server/, goal, pilot/, kdd, agent-checklist, test-log, change-record, system-config-doc</li><li>Cross-references updated (AGENTS.md, manifest, catalog, profiles, KDDs) (DONE)</li></ul>
+<p><strong>Status:</strong> COMPLETE (audited; canonical path is <code>governace/</code> per owner spelling; path-fork resolved 2026-08-29 — orphan <code>governance/</code> removed).</p>
+<h2 id="workstream-2-consolidated-test-log">Workstream 2 — Consolidated test log</h2>
+<p><strong>Objective:</strong> one continuously-updated log of ALL test and example results.</p>
+<p><strong>Deliverables:</strong></p>
+<ul><li><code>governace/testing/test-log.md</code> (+ <code>.html</code>) — seeded with current results (DONE)</li><li>Covers: LightRAG (7 PASS, 1 FAIL #4, 1 DEP-OK #8, 9 SKIP), Qdrant (V0-V6 PASS), DSH (Gates 6-10), PostgreSQL (Step 0+1 PASS, Step 2 PARTIAL), Redis (PASS), OmniRoute (PASS)</li><li>Manifest-listed + rendered (DONE)</li><li>Secret-sweep clean (DONE 2026-08-29 — key literal redacted)</li></ul>
+<p><strong>Status:</strong> COMPLETE (append mechanism added via workflow — see WS7/ST-7).</p>
+<h2 id="workstream-3-change-documentation">Workstream 3 — Change documentation</h2>
+<p><strong>Objective:</strong> every major change produces a change record + system config doc.</p>
+<p><strong>Deliverables:</strong></p>
+<ul><li>3 change records in <code>governace/status-reporting/</code> — Meta-X→OAI-X, LightRAG, Qdrant (DONE; OAI-X status corrected to PROPOSED 2026-08-29)</li><li>3 system config docs — <code>servers/hxs-3/oai-x-config.md</code>, <code>servers/hxs-4/lightrag-config.md</code>, <code>servers/hxs-4/qdrant-config.md</code> (DONE; OAI-X marked target-state)</li><li>Templates: <code>governace/templates/change-record.md</code>, <code>governace/templates/system-config-doc.md</code> (DONE)</li></ul>
+<p><strong>Status:</strong> COMPLETE with corrections (change-record lifecycle gate added — ST-6).</p>
+<h2 id="workstream-4-agent-creation-checklist-skill-hooks">Workstream 4 — Agent creation checklist + skill + hooks</h2>
+<p><strong>Objective:</strong> eliminate missed-registration errors when creating agents.</p>
+<p><strong>Deliverables:</strong></p>
+<ul><li><code>governace/templates/agent-checklist.md</code> — mandatory 22-step checklist (DONE)</li><li><code>.kimi-code/skills/create-agent/SKILL.md</code> — agent-creation skill (DONE; installed to user scope 2026-08-29)</li><li><code>scripts/hooks/agent-creation-check.sh</code> — PostToolUse hook, fail-open (DONE; registered in <code>~/.kimi-code/config.toml</code> 2026-08-29, interface fixed to read stdin payload)</li><li>Test with Nancy (QA agent) — PENDING owner word</li></ul>
+<p><strong>Status:</strong> COMPLETE (enforcement wired). Test remains owner-gated.</p>
+<h2 id="workstream-5-skills-in-every-agent-profile">Workstream 5 — Skills in every agent profile</h2>
+<p><strong>Objective:</strong> every agent profile lists its available skills.</p>
+<p><strong>Deliverables:</strong></p>
+<ul><li>"Skills available" section (be-great, eli5, bro, wait-what, quick, human, corp, copy) added to all 13 agent profiles (DONE)</li><li>Added to agent template (<code>governace/templates/agent/profile.md</code>) (DONE)</li></ul>
+<p><strong>Status:</strong> COMPLETE.</p>
+<h2 id="workstream-6-workflow-diagrams">Workstream 6 — Workflow diagrams</h2>
+<p><strong>Objective:</strong> 3 Mermaid workflow diagrams showing deliverables + skills/hooks.</p>
+<p><strong>Deliverables (all in <code>governace/process/</code>):</strong></p>
+<ul><li><code>agent-creation-workflow.md</code> (DONE)</li><li><code>system-deployment-workflow.md</code> (DONE)</li><li><code>system-validation-testing.md</code> (DONE)</li></ul>
+<p><strong>Status:</strong> COMPLETE.</p>
+<h2 id="workstream-7-tkv-enforcement-evidence">Workstream 7 — TKV enforcement evidence</h2>
+<p><strong>Objective:</strong> empirical evidence every agent has a specific TKV directive, enforced.</p>
+<p><strong>Deliverables:</strong></p>
+<ul><li><code>governace/process/tkv-enforcement-evidence.md</code> — 13-agent evidence table (DONE)</li><li>All 13 agents have: specific <code>/opt/tkv-local</code> path + be-great reference + standing directive (DONE; carol/kimi-k3/mia fixed)</li></ul>
+<p><strong>Status:</strong> COMPLETE.</p>
+<hr>
+<h2 id="enforcement-additions-post-audit-2026-08-29">Enforcement additions (post-audit 2026-08-29)</h2>
+<p>The QA audit (misc/007/audit-*.md) found the original execution committed the artifacts but did not wire enforcement and fabricated one completion. This plan adds:</p>
+<ul><li><strong>Verification-checklist gate:</strong> <code>agents/kimi-k3/verification-checklist.md</code> (governor evidence receipt-check) is the mandatory pre-acceptance gate for every producer deliverable (R-6).</li><li><strong>Agent-creation hook</strong> registered (WS4) — fires on <code>agents/</code> writes.</li><li><strong>render-sync / manifest-drift hook</strong> — added (ST-4) to catch path drift before commit.</li><li><strong>Change-record lifecycle</strong> — <code>PROPOSED → IN PROGRESS → COMPLETE</code>, gated on goal/plan status + execution evidence (ST-6).</li><li><strong>Context-budget + lane-probe</strong> fields in the work-order template (ST-5).</li><li><strong>Test-log append hook</strong> (ST-7) — test-evidence writes append dated rows.</li><li><strong>Dual-format compliance</strong> (SY-6) — every manifest-listed document keeps a rendered <code>.html</code> sibling; enforced mechanically by <code>python3 scripts/wiki/render.py --check</code> (79/79 in sync at acceptance).</li><li><strong>Per-wave read-only audit</strong> (SY-7) — after each material remediation wave, the governor re-runs the 4-domain QA audit (governance/process/docs/hooks) as read-only review; findings become the next wave's work orders, and this plan's acceptance criteria are re-checked before any new wave is opened.</li><li><strong>Governance-path integrity check</strong> (SY-2) — <code>validate.py</code> fails if the rejected <code>governance/</code> fork exists or the canonical <code>governace/</code> tree is missing.</li></ul>
+<h2 id="acceptance-criteria">Acceptance criteria</h2>
+<ol><li><code>python3 scripts/validate.py</code> → 5/5 PASS.</li><li><code>python3 scripts/wiki/render.py --check</code> → all manifest docs in sync.</li><li><code>governace/project-plan/</code> contains this controlling plan (this file).</li><li>Agent-creation hook + skill verified registered (grep config.toml).</li><li>No secret literal in any tracked file (secret-boundary 0 hits).</li><li>Change records never claim COMPLETE without matching executed evidence.</li><li>A new agent (Nancy) passes the full checklist when the owner gives the word.</li></ol>
+<h2 id="completion-rule">Completion rule</h2>
+<p>This goal is done only when every acceptance criterion passes with evidence and the owner accepts — not when the work feels done. Per KDD-0002 goal-setting contract.</p>
+</main>
+<footer>Source of truth: <code>governace/project-plan/governance-foundation-plan.md</code> (sha256 <code>a6f45213e67bd3ef80806de5461fa59ad220884e398c7dd8e1931eac80667914</code>) · rendered 2026-08-29T23:56Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+
+</body>
+</html>

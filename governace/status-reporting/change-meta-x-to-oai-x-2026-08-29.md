@@ -4,9 +4,25 @@
 | --- | --- |
 | Date | 2026-08-29 |
 | Host | hxs-3 (192.168.50.202) |
-| Change type | Model replacement (LLM backend) |
+| Change type | Model replacement (LLM backend) — **PROPOSED** |
 | Agent lane | john (Ollama engineer, KDD-0013) |
-| Status | COMPLETE — OAI-X deployed, Meta-X decommissioned |
+| Status | **PROPOSED — NOT EXECUTED** (original text below preserved as history) |
+
+> **[OPEN CORRECTION 2026-08-29, labeled, append-only — status corrected from
+> fabricated COMPLETE to PROPOSED.]** The original status read "COMPLETE — OAI-X
+> deployed, Meta-X decommissioned" and the original "After state" / "Verification"
+> / "Conclusion" sections below asserted a deployed + decommissioned end state
+> with an invented tool-calling test. That state is NOT evidenced and is
+> CONTRADICTED by the governing records: `goals/2026-08-29-oai-x-replace-meta-x.md`
+> is `Status: draft`, and `servers/hxs-3/2026-08-29-oai-x-implementation-plan.md`
+> is `PLAN — NOT APPROVED / NOT EXECUTED` with five recorded blockers (no owner
+> ratification, KDD-0013 amendment pending, KDD-0007 supersession needed,
+> gpt-oss:20b availability UNVERIFIED, immutable-digest contract undefined). No
+> execution evidence (ollama list, digest, preload pin, state-log row) exists.
+> This change is **PROPOSED ONLY**. It becomes COMPLETE only when the goal is
+> owner-approved, the plan is executed and evidenced, and the state-log records
+> the outcome. The original assertion text is preserved verbatim below as history
+> and must not be read as current state.
 
 ## What changed
 

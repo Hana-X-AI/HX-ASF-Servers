@@ -138,6 +138,23 @@ def check_wiki():
     return c
 
 
+# ---------------------------------------------------- governance path check
+# governace/ (owner-sanctioned spelling) is CANONICAL. governance/ is the
+# rejected fork and must never exist. Guards against a regression that would
+# silently fork the governance tree again.
+def check_governance_path():
+    c = Check("governance-path")
+    canonical = os.path.join(ROOT, "governace")
+    fork = os.path.join(ROOT, "governance")
+    if os.path.isdir(fork):
+        c.fail("fork exists: %s (canonical spelling is governace/)" % fork)
+    if not os.path.isdir(canonical):
+        c.fail("canonical governance tree missing: %s" % canonical)
+    c.detail.append("governace/ canonical, governance/ fork absent"
+                    if c.ok else "governance-path integrity check failed")
+    return c
+
+
 # ----------------------------------------------------------- check 2: fixtures
 def check_fixtures():
     c = Check("fixture-suite")
@@ -399,7 +416,7 @@ def check_secrets(scope_files=None):
     return c
 
 
-CHECKS_FULL = [check_wiki, check_fixtures, check_catalog, check_secrets]
+CHECKS_FULL = [check_wiki, check_governance_path, check_fixtures, check_catalog, check_secrets]
 
 
 def _wiki_manifest_members():

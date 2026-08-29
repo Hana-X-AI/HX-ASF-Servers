@@ -6,9 +6,10 @@ completes in about 3 minutes.
 
 The pipeline's own gates are the repo's existing quality discipline — the same
 commands the factory runs locally. CodeRabbit supplies the automated review gate on
-branches; the **factory agent applies fixes** (CodeRabbit's own supported loop:
-it detects, the coding agent fixes, ≤2 passes); GitHub platform auto-merge merges
-when the required checks are green. No manual approval gates anywhere.
+all pushes (incl. main); the **factory agent applies fixes** (CodeRabbit's own
+supported loop: it detects, the coding agent fixes, ≤2 passes); GitHub platform
+auto-merge merges when the required checks are green. No manual approval gates
+anywhere.
 
 ## Step list (18)
 
@@ -27,15 +28,19 @@ when the required checks are green. No manual approval gates anywhere.
    and stays a local-only check in the full mode).
 9. Security scan — gitleaks over the pushed commit range, redacted.
 
-**Job `coderabbit-review`** — non-`main` pushes only:
+**Job `coderabbit-review`** — ALL pushes incl. main (owner directive 2026-08-28:
+"coderabbit should run on every commit regardless of the type"):
 
 10. Checkout (full history for the base diff).
 11. Install the CodeRabbit CLI.
-12. Review: `coderabbit review --agent --light --base origin/main` with the Agentic
-    API key — skips with a notice when `CODERABBIT_API_KEY` is not configured.
-13. Parse the JSON event stream; the gate **fails on critical/major findings** and
-    on any review that ends without a `complete` event (fail-closed on auth/service
-    failure); minor/trivial findings are reported, not blocking.
+12. Review: main pushes review the pushed range `BEFORE..HEAD`; branch pushes
+    review vs `origin/main` — `coderabbit review --agent --light --committed`
+    (main) / `--base origin/main` (branches) with the Agentic API key — skips
+    with a notice when `CODERABBIT_API_KEY` is not configured.
+13. Parse the JSON event stream; the gate **fails on critical+major+minor
+    findings (zero-tolerance, owner directive 2026-08-28)** and on any review
+    that ends without a `complete` event (fail-closed on auth/service failure);
+    trivial/info findings are reported, not blocking.
 14. Comment the review summary on the PR.
 
 **Job `pr-manage`** — non-`main` pushes only (runs regardless of other jobs, so the
@@ -51,10 +56,10 @@ PR always exists for the fix loop):
 ```mermaid
 flowchart LR
     A[push to any branch] --> B[gates: lint, tests, build-sync, catalog, secrets]
-    A -->|non-main| C[CodeRabbit CLI review]
+    A -->|all pushes incl. main| C[CodeRabbit CLI review]
     A -->|non-main| D[pr-manage: PR + label + auto-merge + comment]
     B -->|green| E{required checks}
-    C -->|no critical/major| E
+    C -->|no critical/major/minor| E
     C -->|blocking findings| F[factory agent fixes on the branch]
     F -->|re-push| A
     E -->|all green| G[auto-merge squash into main]
@@ -62,13 +67,15 @@ flowchart LR
 
 ## The review-fix loop
 
-CodeRabbit CLI reviews the branch diff against `main` and emits structured
-findings. Blocking findings (critical/major) fail the `coderabbit-review` check,
-which blocks auto-merge. The factory agent (Kimi-K3 / john) reads the findings,
-fixes on the same branch, and re-pushes — the pipeline re-runs automatically.
-Loop limit per CodeRabbit's own guidance: ≤2 review passes on the same change;
-remaining nits are ignored deliberately. A run that produces no `complete` event
-(CLI/auth/service failure) fails the gate loudly rather than passing silently.
+CodeRabbit CLI reviews the pushed range (main) or the branch diff against `main`
+and emits structured findings. Blocking findings (critical/major/minor —
+zero-tolerance per owner directive 2026-08-28) fail the `coderabbit-review` check,
+which blocks auto-merge. The factory agent (current fixing agent per the roster;
+governor retains review authority) reads the findings, fixes on the same branch,
+and re-pushes — the pipeline re-runs automatically. Loop limit per CodeRabbit's
+own guidance: ≤2 review passes on the same change; remaining nits are ignored
+deliberately. A run that produces no `complete` event (CLI/auth/service failure)
+fails the gate loudly rather than passing silently.
 
 ## Conventions
 
@@ -162,3 +169,10 @@ as history; THIS correction block is the current reading.]
    whoever the governor dispatches under a work order — typically
    routed through Mia to the appropriate engineering lane. The
    "Kimi-K3 / john" wording is STALE.
+
+[ADDENDUM 2026-08-29, labeled, append-only: the three corrections above are
+now APPLIED to the document body — the `coderabbit-review` job (§Step list,
+§Lifecycle, §Review-fix loop) reads "ALL pushes incl. main", the blocking
+threshold reads "critical+major+minor (zero-tolerance)", and the fix-loop
+agent reference no longer names "Kimi-K3 / john". The 2026-08-28 amendment
+text above is preserved as history; the body is the current reading.]

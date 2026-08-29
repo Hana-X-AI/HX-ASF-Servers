@@ -53,4 +53,15 @@ This log is continuously updated after every test run. Append new results, never
 
 | Date | Test | Status | Evidence | Notes |
 |---|---|---|---|---|
-| 2026-08-29 | API key verification | PASS | Models list returns with valid key | Key: sk-cbea27b8607bc7cc-edfb4a-e8c571ca |
+| 2026-08-29 | API key verification | PASS | Models list returns with valid key | Key: <redacted from OMNIROUTE API key in .local.env> |
+
+## Governance (HX-ASF-Servers QA audit Phase 2)
+
+| Date | Test | Status | Evidence | Notes |
+|---|---|---|---|---|
+| 2026-08-29 | validate.py full suite | PASS | 5/5 checks (wiki-sync, governance-path, fixture-suite, catalog-mechanical, secret-boundary) | New governance-path check added (SY-2); exit 0 |
+| 2026-08-29 | render.py --check | PASS | 79/79 manifest documents in sync | All .md + .html pairs current (SY-6) |
+| 2026-08-29 | governance-path integrity | PASS | governace/ canonical; governance/ fork absent | Fork removed; regression guard in validate.py |
+| 2026-08-29 | secret-boundary sweep | PASS | 1191 files scanned, 0 hits | Redacted leaked OmniRoute key variant |
+| 2026-08-29 | hook registration | PASS | 6 hooks in ~/.kimi-code/config.toml | agent-creation, render-sync, test-log-append, governor-gate, secret-boundary, validate-changed |
+| 2026-08-29 | lane-capability registry | PASS | KDD-0013 Amendment 10 appended | Context ceilings + output guards per lane (SY-5) |

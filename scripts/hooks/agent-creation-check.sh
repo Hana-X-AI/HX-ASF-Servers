@@ -2,22 +2,38 @@
 # agent-creation-check.sh — PostToolUse hook, fires on Write|Edit to agents/
 # Checks that new agent directories have the required checklist items.
 # Fail-open: warns only, never blocks.
+#
+# Interface: reads the tool-call JSON payload from stdin (same contract as
+# validate-changed.sh) and extracts the written file path. If no payload path
+# is present, it accepts an explicit path as $1 as a fallback.
 
-set -euo pipefail
+set -u
 
 FILE="${1:-}"
+if [ -z "$FILE" ]; then
+  # Only read the hook payload from stdin when it is a pipe (hook framework),
+  # not an interactive terminal — avoids blocking a manual invocation.
+  if [ ! -t 0 ]; then
+    payload="$(cat 2>/dev/null || true)"
+    if [ -n "$payload" ]; then
+      FILE="$(printf '%s' "$payload" | sed -n 's/.*"path"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' | head -n1)"
+    fi
+  fi
+fi
+[ -z "$FILE" ] && exit 0
 
 # Only check files under agents/
 case "$FILE" in
-  agents/*)
+  */agents/*|agents/*)
     ;;
   *)
     exit 0
     ;;
 esac
 
-# Extract agent name from path (agents/<name>/...)
-AGENT_NAME=$(echo "$FILE" | cut -d/ -f2)
+# Extract agent name from path (…/agents/<name>/...)
+AGENT_NAME=$(printf '%s' "$FILE" | sed -n 's#.*/agents/\([^/]*\)/.*#\1#p')
+[ -z "$AGENT_NAME" ] && exit 0
 
 # Skip if it's the _template directory
 case "$AGENT_NAME" in
