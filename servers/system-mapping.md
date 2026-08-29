@@ -73,7 +73,7 @@ deployment until the owner lifts the hold.
 | S12 | Crawl4AI (+MCP) | hxs-6 | scout (new) | Ingestion — crawling |
 | S13 | Docling (+MCP) | hxs-12 | piper (new) | Ingestion — parsing |
 | S14 | n8n (+MCP) | hxs-13 | ripple (new) | Automation |
-| S15 | LangGraph | hxs-11 | erwin (new) | Agent runtime; deferred by implementation order |
+| S15 | LangGraph | hxs-11 | erwin (new) | Agent runtime; deferred by implementation order; no LangGraph service live anywhere in fleet; hxs-6 has legacy /srv/LangGraph-Server-Deployment/ on foreign spare disk (2025-11-12, historical artifact, not the HX deployment) |
 | S16 | NGINX | hxs-21 | nexus (new) | Reverse proxy / web edge |
 
 ### Development and test environments

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Generated from knowledge/network.md (sha256 3b79dd98c0faccbd244582ce8d8e34a2a005d10af8801adb4dd0100589921923) by scripts/wiki/render.py on 2026-08-29T12:52Z.
+<!-- Generated from knowledge/network.md (sha256 3b79dd98c0faccbd244582ce8d8e34a2a005d10af8801adb4dd0100589921923) by scripts/wiki/render.py on 2026-08-29T13:10Z.
      Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
 <html lang="en">
 <head>
@@ -47,7 +47,7 @@ nslookup hxs-1.hx.local.arpa 192.168.50.1   # verify</code></pre>
 <p><code>DISCOVERED</code> 2026-08-24, checked from hxs-5: [OPEN CORRECTION 2026-08-29, labeled, append-only: the "FQDN resolution is DOWN" snapshot below is STALE. Per state-log rows 20 and 45, the owner re-ran the DNS loader on 2026-08-28 and 16 FQDNs now resolve via 192.168.50.1 (hxs-1..6, hxs-8..15, hxs-20 (.220), hxs-21 (.21)). hxs-7 has no record (NXDOMAIN) — consistent with decommission. The original 2026-08-24 snapshot is preserved below as history.]</p>
 <ul><li>FQDN resolution is DOWN: <code>nslookup hxs-1.hx.local.arpa 192.168.50.1</code> returns NXDOMAIN after a router restart. Use IP addresses until the loader has been re-run.</li><li>Ping: hxs-6 (192.168.50.205) and hxs-7 (192.168.50.206) do not respond. All other fleet addresses and hxs-cp respond.</li><li>Recheck 2026-08-24 06:51 UTC: hxs-6 responds again. hxs-7 is still unreachable (ping 100% packet loss, TCP/22 "No route to host").</li><li>Recheck 2026-08-24 06:55 UTC: hxs-7 responds on ping and TCP/22. All 16 addresses reachable.</li></ul>
 </main>
-<footer>Source of truth: <code>knowledge/network.md</code> (sha256 <code>3b79dd98c0faccbd244582ce8d8e34a2a005d10af8801adb4dd0100589921923</code>) · rendered 2026-08-29T12:52Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+<footer>Source of truth: <code>knowledge/network.md</code> (sha256 <code>3b79dd98c0faccbd244582ce8d8e34a2a005d10af8801adb4dd0100589921923</code>) · rendered 2026-08-29T13:10Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
 
 </body>
 </html>

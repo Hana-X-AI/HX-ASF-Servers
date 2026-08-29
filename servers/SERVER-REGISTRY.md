@@ -92,8 +92,26 @@ and are STALE: LiteLLM was replaced by **OmniRoute** (KDD-0008 arc; hxs-8 runs
 OmniRoute in production), and LangGraph belongs to hxs-11's row. Owner review
 2026-08-29: "we replaced hx_litellm with openrouter." The rows above are
 preserved unchanged as the as-assigned record; THIS correction is the current
-reading. hxs-9's live target: PostgreSQL (Redis pending) per KDD-0014 and
-`servers/hxs-9/2026-08-29-postgresql-implementation-plan.md`.
+reading. hxs-9's live target: PostgreSQL 18.6 + Redis 7.0.15 (both deployed)
+per KDD-0014 and `servers/hxs-9/2026-08-29-postgresql-implementation-plan.md`;
+LangGraph and LiteLLM are entirely removed from hxs-9.
+
+**Open correction — hxs-11 stale target-state (2026-08-29, labeled per the
+append-only governance rule).** The hxs-11 row's "LangGraph; Mem0 — separate
+virtualenvs" is the 2026-08-13 target-state and is STALE: Mem0 is retired from
+the fleet (role absorbed by PostgreSQL, Redis, Qdrant, catalog per
+system-mapping retired/superseded table). LangGraph remains a target-state
+system assigned to hxs-11 (S15) but is DEFERRED by implementation order —
+no LangGraph service is currently live anywhere in the fleet. Owner agent:
+erwin (new, not yet registered). The row above is preserved unchanged as the
+as-assigned record; THIS correction is the current reading.
+
+**Open correction — hxs-14 stale target-state (2026-08-29, labeled per the
+append-only governance rule).** The hxs-14 row's "Prompt engineering; LangGraph
+and client development" is the 2026-08-13 target-state and is STALE: hxs-14 is
+the Dev environment (per system-mapping); LangGraph runtime belongs to hxs-11
+(S15, deferred), not hxs-14. The row above is preserved unchanged as the
+as-assigned record; THIS correction is the current reading.
 
 ## Role assignment record — historical
 
