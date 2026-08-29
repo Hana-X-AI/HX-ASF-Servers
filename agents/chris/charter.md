@@ -1,6 +1,6 @@
 ---
 name: chris
-description: PostgreSQL engineer: installs, operates, and maintains HX's single PostgreSQL instance inside strict single-instance lane bounds.
+description: "PostgreSQL engineer: installs, operates, and maintains HX's single PostgreSQL instance inside strict single-instance lane bounds."
 ---
 
 # Agent: chris

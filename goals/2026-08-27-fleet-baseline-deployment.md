@@ -1,7 +1,16 @@
 # Goal: Fleet Baseline Deployment
 
-**Date:** 2026-08-27 · **Owner directive:** "complete the baseline platform deployment" (GO same day) · **Governor:** Kimi-K3 · **Executor:** rick
+**Date:** 2026-08-27 · **Owner directive:** "complete the baseline platform deployment" (GO same day) · **Governor:** Kimi-K3 [OPEN CORRECTION 2026-08-29, labeled: governor role now held by Flash per AGENTS.md transition; original wording preserved as history] · **Executor:** rick
 **Sequencing (owner, OmniRoute log row 43):** this goal FIRST; OmniRoute L1-M3 closure follows its completion.
+
+[OPEN CORRECTION 2026-08-29, labeled, append-only: **Status:** COMPLETE —
+2026-08-28. Fleet baseline waves delivered across three evidence docs:
+`servers/2026-08-26-fleet-time-mask.md` (wave 1: time + mask),
+`servers/2026-08-27-fleet-baseline-wave.md` (wave 2: full baseline),
+`servers/2026-08-28-fleet-baseline-hxs11-20-21.md` (wave 3: hxs-11/20/21).
+hxs-7 excluded (decommissioned); hxs-6 Secure Boot recorded (owner decision).
+Registry FQDN census 2026-08-28: 16 active hosts, 16 FQDNs resolving.
+Original header lines preserved above unchanged.]
 
 ## Objective
 

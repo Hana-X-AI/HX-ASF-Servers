@@ -2,7 +2,7 @@ document:
   id: "DOC-agent-rick-profile"
   title: "Agent profile — rick (full operating contract)"
   type: "profile"
-  declared_purpose: "Full operating contract for rick: startup protocol (TKV survey per §5), authority order (§4), test-first lifecycle, sanitization (§11), evidence package format (§12), escalation packet (§14), final gate (§20). Governs all rick sessions including pilot work orders 01/05/24."
+  declared_purpose: "Full operating contract for rick: identity (KDD-0016 standard template), mission, prohibitions, knowledge sources, credential model, SSH handling, verification gates, escalation, provenance. Distilled 2026-08-29 from 876 to 249 lines. [CORRECTION 2026-08-29: authority references updated from Kimi-K3 to the governor; model-lane F13 correction applied per KDD-0013; distilled per KDD-0016 standard template.]"
   source:
     author: "Codex (agent-zero-docs) / adopted by Agent Zero"
     provided_by: "Agent Zero"
@@ -37,8 +37,15 @@ document:
       target: "DOC-tkv-corpus-ubuntu"
       note: "standing knowledge source"
   validation:
-    validated_at: "2026-08-25T04:50:00Z"
+    validated_at: "2026-08-29T11:50:00Z"
     freshness: "current"
     review_due: "on owner amendment"
-  sha256: "0a663e830f8d168ebd0655371337712a3017adc83ccf8492a58ee6e0255f65e1"
+  sha256: "80e3e6ceccb6e7526f33efdeac025bb16560fd1ec9ec0224ca7502b994959b9b"
+  hash_history:
+    - sha256: "0a663e830f8d168ebd0655371337712a3017adc83ccf8492a58ee6e0255f65e1"
+      timestamp: "2026-08-25T04:50:00Z"
+      reason: "initial cataloging"
+    - sha256: "80e3e6ceccb6e7526f33efdeac025bb16560fd1ec9ec0224ca7502b994959b9b"
+      timestamp: "2026-08-29T11:50:00Z"
+      reason: "re-mint after 2026-08-29 distillation + authority + model-lane corrections (review batch 2 F1/F13)"
   canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/rick/profile.md"

@@ -2,7 +2,7 @@ document:
   id: "DOC-agent-rick-charter"
   title: "Agent charter — rick (Ubuntu Server engineer, vertical lane)"
   type: "charter"
-  declared_purpose: "One-page authority on rick's mission, ownership (Ubuntu Server OS plane on authorized hosts), non-ownership, inputs, outputs, and escalation triggers. Adopted 2026-08-24 from agent-zero-docs rick profile (SHA-256 0fee49d8…) with zero content amendments."
+  declared_purpose: "One-page authority on rick's mission, ownership (Ubuntu Server OS plane on authorized hosts), non-ownership, inputs, outputs, and escalation triggers. Adopted 2026-08-24 from agent-zero-docs rick profile (SHA-256 0fee49d8…). [CORRECTION 2026-08-29: authority references updated from Kimi-K3 to the governor; provenance 'zero content amendments' superseded — see labeled correction in charter provenance.]"
   source:
     author: "Codex (agent-zero-docs) / adopted by Agent Zero"
     provided_by: "Agent Zero"
@@ -37,8 +37,15 @@ document:
       target: "/home/hxsa/opt/local-tkv/agent-zero-docs/agent-profiles/rick/codex_20260824_1637_rick-expert-ubuntu-server-engineer-agent-profile.md"
       note: "adoption source (SHA-256 0fee49d8…), not cataloged this run (out of scope)"
   validation:
-    validated_at: "2026-08-25T04:50:00Z"
+    validated_at: "2026-08-29T11:50:00Z"
     freshness: "current"
     review_due: "on owner sign-off of charter change"
-  sha256: "7f6188bac81c09ec0a60ee4cf54880dbea2ac91280779e9cfe9a0e63bc6aadf8"
+  sha256: "be5244e76ae79de09171cdab2136aeb35ec918a437bbb12528c6ca51962e7b24"
+  hash_history:
+    - sha256: "7f6188bac81c09ec0a60ee4cf54880dbea2ac91280779e9cfe9a0e63bc6aadf8"
+      timestamp: "2026-08-25T04:50:00Z"
+      reason: "initial cataloging"
+    - sha256: "be5244e76ae79de09171cdab2136aeb35ec918a437bbb12528c6ca51962e7b24"
+      timestamp: "2026-08-29T11:50:00Z"
+      reason: "re-mint after 2026-08-29 authority + provenance corrections (review batch 2 F1/F2)"
   canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/rick/charter.md"

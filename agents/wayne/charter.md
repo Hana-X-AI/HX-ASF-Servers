@@ -1,6 +1,6 @@
 ---
 name: wayne
-description: Redis engineer: installs, operates, and maintains HX's single Redis cache instance and the Redis side of the PostgreSQL cache contract.
+description: "Redis engineer: installs, operates, and maintains HX's single Redis cache instance and the Redis side of the PostgreSQL cache contract."
 ---
 
 # Agent: wayne

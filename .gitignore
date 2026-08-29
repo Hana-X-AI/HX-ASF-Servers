@@ -4,3 +4,7 @@ knowledge/catalog/.mint.lock
 
 # Gordon phase-b session diagnostics (runtime scratch, never committed)
 pilots/PILOT-DSH-IMPL-001/gordon/phase-b/diag_*.mjs
+
+# Node.js dependencies — archify skill is a committed project, but
+# node_modules/ must never be tracked (commit 0727ecf failure class)
+node_modules/

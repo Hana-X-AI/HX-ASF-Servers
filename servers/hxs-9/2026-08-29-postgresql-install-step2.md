@@ -10,7 +10,7 @@
 | Model lane | Governor lane (DeepSeek V4 Flash via OmniRoute) |
 | Credential handling | SSH password read from `.local.env` at execution time via temp askpass helper (mode 0700); value never printed, logged, or committed; helper deleted after use, absence verified |
 | Host key | `StrictHostKeyChecking=yes`; 192.168.50.208 pre-pinned in `~/.ssh/known_hosts` |
-| Result | **PASS — hba reverted, roles created, credentials written, timers enabled, V4–V6 pass** |
+| Result | **PASS — hba reverted, roles created, credentials written, timers enabled, V4–V5 pass, V6 service-level smoke (timer-fired activation pending)** |
 
 ## 1. Task A — pg_hba.conf revert (Correction 5, dev/test posture)
 
@@ -135,7 +135,14 @@ dropdb v5_restoretest
 rm /tmp/v5-test.dump
 ```
 
-### B11 — V6: timer manual trigger + health — PASS
+### B11 — V6: timer manual trigger + health — PASS (service-level smoke only)
+
+[OPEN CORRECTION 2026-08-29, labeled: the timer-fired activation is NOT
+demonstrated — `systemctl list-timers` shows LAST and PASSED = `-` (never
+fired) for both timers. V6 is downgraded to service-level smoke execution
+only (manual `systemctl start` + health check). The timer-fired claim
+requires a future run where `list-timers` shows populated LAST/PASSED
+values.]
 
 Initial run: health service failed (no backup existed yet — expected). After manual backup run and health script fix:
 

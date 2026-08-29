@@ -1,8 +1,8 @@
 index:
   schema_version: 1
   initialized: 2026-08-25 (Carol instantiation, owner amendment)
-  updated: '2026-08-29T0101Z (carol-mint 1.0.0 — batch B catalog catch‑up)'
-  document_count: 303
+  updated: '2026-08-29T12:30:00Z (catalog drift re-mint + new agent records)'
+  document_count: 313
   documents:
   - id: DOC-a01-origin-codex-20260824-2125
     title: codex_20260824_2125_hx-1-ollama-pilot-qwen3.8-amendment.md — original source of Amendment A01 (agent-zero-docs)
@@ -1864,6 +1864,66 @@ index:
     authority_level: agent-evidence
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/rob/profile.md
+  - id: DOC-agent-chris-charter
+    title: "Agent charter — chris (PostgreSQL engineer, vertical lane)"
+    type: charter
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/chris/charter.md
+  - id: DOC-agent-chris-profile
+    title: "Agent profile — chris (full operating contract)"
+    type: profile
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/chris/profile.md
+  - id: DOC-agent-gordon-charter
+    title: "Agent charter — gordon (Independent qualification engineer)"
+    type: charter
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/gordon/charter.md
+  - id: DOC-agent-gordon-profile
+    title: "Agent profile — gordon (full operating contract)"
+    type: profile
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/gordon/profile.md
+  - id: DOC-agent-morpheus-charter
+    title: "Agent charter — morpheus (DeepSeek Harness platform engineer)"
+    type: charter
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/morpheus/charter.md
+  - id: DOC-agent-morpheus-profile
+    title: "Agent profile — morpheus (full operating contract)"
+    type: profile
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/morpheus/profile.md
+  - id: DOC-agent-wayne-charter
+    title: "Agent charter — wayne (Redis engineer, vertical lane)"
+    type: charter
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/wayne/charter.md
+  - id: DOC-agent-wayne-profile
+    title: "Agent profile — wayne (full operating contract)"
+    type: profile
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/wayne/profile.md
+  - id: DOC-agent-quinn-charter
+    title: "Agent charter — quinn (Qdrant vector database engineer, vertical lane)"
+    type: charter
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/quinn/charter.md
+  - id: DOC-agent-quinn-profile
+    title: "Agent profile — quinn (full operating contract)"
+    type: profile
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/quinn/profile.md
   - id: DOC-pilot-dsh-impl-001-state-log
     title: "PILOT-DSH-IMPL-001 01-state-log.md — pilot state-log rows 17-34"
     type: other
@@ -1892,3 +1952,9 @@ index:
     authority_level: ratified-governance
     freshness: current
     canonical_location: servers/system-mapping.md
+  - id: DOC-kdd-0017-quinn-registration
+    title: "KDD-0017: Quinn registration — Qdrant vector database systems engineer"
+    type: decision
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0017-quinn-registration.md

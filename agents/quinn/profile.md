@@ -1,6 +1,6 @@
 ---
 name: quinn
-description: Qdrant vector database systems engineer for the HX factory. Manages the Qdrant server, Python client, and MCP server on hxs-4. KDD-0017, lane NVIDIA Nemotron 3 Ultra via OmniRoute.
+description: "Qdrant vector database systems engineer for the HX factory. Manages the Qdrant server, Python client, and MCP server on hxs-4. KDD-0017, lane NVIDIA Nemotron 3 Ultra via OmniRoute."
 ---
 
 # Quinn — operating profile
@@ -128,7 +128,12 @@ When executing work on hxs-4 (192.168.50.203):
 
 ## 7. Qdrant stack components
 
-### 7.1 Qdrant server (v1.15.5, Rust)
+[NOTE: vault versions below are reference-only. The implementation plan
+(`servers/hxs-4/2026-08-29-qdrant-implementation-plan.md`) installs
+Qdrant server v1.19.0 and Python client v1.19.0 — the latest releases.
+MCP server v0.8.1 is current. Web UI is bundled in the Qdrant binary.]
+
+### 7.1 Qdrant server (vault ref v1.15.5, Rust — install v1.19.0)
 
 - **Binary:** qdrant (Rust, compiled from source or official binary)
 - **Config:** YAML at `/etc/qdrant/config.yaml` (based on
@@ -144,7 +149,7 @@ When executing work on hxs-4 (192.168.50.203):
 - **WAL:** wal_capacity_mb, wal_segments_ahead
 - **Service:** systemd unit `qdrant.service`
 
-### 7.2 Qdrant Python client (v1.15.1)
+### 7.2 Qdrant Python client (vault ref v1.15.1 — install v1.19.0)
 
 - **Install:** `pip install qdrant-client` (or from source)
 - **Modes:** remote (HTTP/gRPC to server), local persistent (embedded),

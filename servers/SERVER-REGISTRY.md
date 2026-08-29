@@ -121,7 +121,7 @@ reading:
 
 | Server | Registry says (stale) | System-mapping says (current) | Agent |
 |---|---|---|---|
-| hxs-4 | "Qdrant + Web-UI; Qwen2.5-3B; BGE-M3/Nomic embeddings" | Chat-X (Qwen 3.5 9B) deployed; Qdrant + LightRAG + embeddings to co-locate (target-state) | john (LLM), quinn (Qdrant) |
+| hxs-4 | "Qdrant + Web-UI; Qwen2.5-3B; BGE-M3/Nomic embeddings" | Chat-X (Qwen 3.5 9B) deployed; Qdrant (+MCP) to co-locate (target-state, KDD-0017) — LightRAG and embeddings excluded from Quinn's scope per owner 2026-08-29 | john (LLM), quinn (Qdrant) |
 | hxs-8 | "LiteLLM gateway" (already corrected above) | OmniRoute (deployed); RAM to be reduced 48→32 GB (donate 16 GB to hxs-10) | trinity |
 | hxs-9 | "PostgreSQL + Redis; LiteLLM database; LangGraph checkpoints" (already corrected above) | PostgreSQL 18.6 + Redis 7.0.15 (both deployed); LiteLLM and LangGraph removed | chris, wayne |
 | hxs-10 | "Open WebUI; CopilotKit / AG-UI" | Open WebUI (target-state); CopilotKit/AG-UI removed (SDK, not a server); RAM to be upgraded 16→32 GB | iris (new) |

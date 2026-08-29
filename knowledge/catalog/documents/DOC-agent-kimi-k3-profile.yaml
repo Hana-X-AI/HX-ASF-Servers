@@ -37,8 +37,15 @@ document:
       target: "DOC-kdd-0002-goal-setting-guidance"
       note: "adopted guidance lives at agents/kimi-k3/goal-setting-guidance.md (not cataloged this run — out of scope)"
   validation:
-    validated_at: "2026-08-25T04:50:00Z"
+    validated_at: "2026-08-29T12:30:00Z"
     freshness: "current"
     review_due: "on phase transition or owner amendment"
-  sha256: "e19ec7bc1c605f2e286d65dc31829fb4e7eb74b7e4012d799daa6cf68404dd73"
+  sha256: "8275b47a983ef842485879ac0bf507984afe086ac0dea56a969d3d0063ebaa18"
+  hash_history:
+    - sha256: "e19ec7bc1c605f2e286d65dc31829fb4e7eb74b7e4012d799daa6cf68404dd73"
+      timestamp: "2026-08-29T12:30:00Z"
+      reason: "re-mint after 2026-08-29 normalization + corrections"
+    - sha256: "8275b47a983ef842485879ac0bf507984afe086ac0dea56a969d3d0063ebaa18"
+      timestamp: "2026-08-29T12:30:00Z"
+      reason: "re-mint after 2026-08-29 normalization + corrections"
   canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/kimi-k3/profile.md"

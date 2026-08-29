@@ -45,10 +45,17 @@ document:
       target: "/home/hxsa/opt/local-tkv/agent-zero-docs/pilots/omniroute/agent/codex_20260826_1508_trinity-expert-omniroute-engineer-steward-agent-profile.md"
       note: "candidate source profile (1,229 lines) — original preserved unchanged at this path; this charter is a corrected distillation per the governor-verified reconciliation register (assessment §3 C1-C7); uncataloged, CANDIDATE truth-state"
   validation:
-    validated_at: "2026-08-27T21:20:00Z"
+    validated_at: "2026-08-29T12:30:00Z"
     freshness: "current"
     review_due: "on any owner amendment to the lane bounds; Layer 1 authorized 2026-08-27 (OD-12 + OD-03 completed — review-batch update) — the charter's lane bounds now govern mutating work orders (first exercise: WO-L1-TRINITY-INSTALL-001, DISCHARGED)"
-  sha256: "0a69c523f940b15e56d872dedfee5af90c003b05de03baccec495318ac4416c6"
+  sha256: "5c1913fce85f886bab0f10fe5c47d452ec26c64e8d60689483964e5eaf0a0803"
+  hash_history:
+    - sha256: "0a69c523f940b15e56d872dedfee5af90c003b05de03baccec495318ac4416c6"
+      timestamp: "2026-08-29T12:30:00Z"
+      reason: "re-mint after 2026-08-29 normalization + corrections"
+    - sha256: "5c1913fce85f886bab0f10fe5c47d452ec26c64e8d60689483964e5eaf0a0803"
+      timestamp: "2026-08-29T12:30:00Z"
+      reason: "re-mint after 2026-08-29 normalization + corrections"
   canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/trinity/charter.md"
 notes:
   ratification: "MID-RUN FLIP (2026-08-27T04:14Z, during this ingestion wave): the owner decided OD-02 — 'if so I ratify as corrected (O1). You may proceed.' (state log row 5, 2026-08-27T04:16Z). The governor executed the adoption gate: charter status draft -> ACTIVE (source header lines 3-6 VERIFIED: 'Status: active — owner-ratified 2026-08-27 (KDD-0008, O1 adopt-as-corrected; Layer 1 work still requires separate owner authorization, goal OD-12, and hxs-8 readiness acknowledgement OD-03)'), roster row ADDED to agents/README.md (line 25, trinity vertical active — VERIFIED PRESENT), all re-rendered in sync. Record fields flipped accordingly: status draft -> active; authority_level delegated-contract -> ratified-governance (the dispatch-brief 'candidate per your schema' mapping held at run start — delegated-contract for the commissioned-but-unratified draft, per the pre-flip DOC-backend-meta-x convention — and was consumed by the ratification before this record entered the catalog; the draft-era record state never existed in the catalog). Hash chain: eef4d456… (draft, first hash at run start 04:05Z) -> d0fc7a85… (ratified, this record's minted content)."

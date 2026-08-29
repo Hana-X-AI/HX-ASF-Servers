@@ -1,6 +1,6 @@
 ---
 name: <name>
-description: <one-sentence summary — role, lane, key constraint>
+description: "<one-sentence summary — role, lane, key constraint>"
 ---
 
 # Agent: <name>

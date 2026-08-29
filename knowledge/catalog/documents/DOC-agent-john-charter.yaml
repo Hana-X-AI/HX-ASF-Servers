@@ -37,10 +37,17 @@ document:
       target: "DOC-john-ollama-recon-inventory"
       note: "foundational evidence cited by charter; cataloged 2026-08-25 (corrections batch 5)"
   validation:
-    validated_at: "2026-08-25T19:08:00Z"
+    validated_at: "2026-08-29T12:30:00Z"
     freshness: "current"
     review_due: "on owner sign-off of charter change"
-  sha256: "b1cbdb29f251efcaf3c042a0a50f887dc70407844ad35690592ebe935b55d3d7"
+  sha256: "0a7dc30b45a3103acbcbbaf9c84a510eae432ab9426dfc7cbd3406d5fc0c66a3"
+  hash_history:
+    - sha256: "b1cbdb29f251efcaf3c042a0a50f887dc70407844ad35690592ebe935b55d3d7"
+      timestamp: "2026-08-29T12:30:00Z"
+      reason: "re-mint after 2026-08-29 normalization + corrections"
+    - sha256: "0a7dc30b45a3103acbcbbaf9c84a510eae432ab9426dfc7cbd3406d5fc0c66a3"
+      timestamp: "2026-08-29T12:30:00Z"
+      reason: "re-mint after 2026-08-29 normalization + corrections"
   canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/john/charter.md"
 notes:
   corrections_batch5: "2026-08-25 corrections batch 5: recon artifact cataloged as DOC-john-ollama-recon-inventory; references relation repointed from raw path to the DOC id and the 'NOT cataloged — follow-up' language removed. source.section backfilled (§whole-document); validated_at refreshed. Source file unchanged (sha256 stands from run 1)."

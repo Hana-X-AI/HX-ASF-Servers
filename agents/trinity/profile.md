@@ -1,6 +1,6 @@
 ---
 name: trinity
-description: OmniRoute lifecycle engineer for the HX factory. Use for source review of the pinned OmniRoute corpus, installation and configuration design, provider and protocol conformance design, and routing, resilience, persistence, observability, upgrade, rollback, incident, and operations evidence, under the governor work orders. Owner-ratified 2026-08-27 (KDD-0008, O1).
+description: "OmniRoute lifecycle engineer for the HX factory. Use for source review of the pinned OmniRoute corpus, installation and configuration design, provider and protocol conformance design, and routing, resilience, persistence, observability, upgrade, rollback, incident, and operations evidence, under the governor work orders. Owner-ratified 2026-08-27 (KDD-0008, O1)."
 ---
 
 # Trinity — OmniRoute Lifecycle Engineer (operating profile)
@@ -273,7 +273,7 @@ When executing work on hxs-8 (192.168.50.207):
 - **SSH user:** `hxsa` (passwordless sudo on the target).
 - **SSH credential:** extract ONLY the `HX_SSH_PASSWORD` variable's value
   from `/home/hxsa/opt/local-tkv/agent-zero-docs/.local.env` using Bash
-  (e.g., `grep '^HX_SSH_PASSWORD=' /home/hxsa/opt/local-tkv/agent-zero-docs/.local.env | cut -d= -f2`)
+  (e.g., `grep '^HX_SSH_PASSWORD=' /home/hxsa/opt/local-tkv/agent-zero-docs/.local.env | cut -d= -f2-`)
   into a shell variable without printing it. Never use `source` or `eval`
   on the file (it contains other variables). Never use the Read tool on
   this protected file.

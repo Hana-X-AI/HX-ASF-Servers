@@ -24,8 +24,15 @@ document:
     contains_secret_values: false
   relations: []
   validation:
-    validated_at: "2026-08-28T07:30:00Z"
+    validated_at: "2026-08-29T12:30:00Z"
     freshness: "current"
     review_due: "2026-09-28"
-  sha256: "d0842878cc59b25ac63a58fbf77225edb6e378d170847c9cd48b30c262723b1f"
+  sha256: "99eef4393211fcc98458290e4841b70f625f100ea25ba342c018d09b9ad67b2d"
+  hash_history:
+    - sha256: "d0842878cc59b25ac63a58fbf77225edb6e378d170847c9cd48b30c262723b1f"
+      timestamp: "2026-08-29T12:30:00Z"
+      reason: "re-mint after 2026-08-29 normalization + corrections"
+    - sha256: "99eef4393211fcc98458290e4841b70f625f100ea25ba342c018d09b9ad67b2d"
+      timestamp: "2026-08-29T12:30:00Z"
+      reason: "re-mint after 2026-08-29 normalization + corrections"
   canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/mia/charter.md"

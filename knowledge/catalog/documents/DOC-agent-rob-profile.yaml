@@ -25,8 +25,15 @@ document:
     contains_secret_values: false
   relations: []
   validation:
-    validated_at: "2026-08-28T08:10:00Z"
+    validated_at: "2026-08-29T12:30:00Z"
     freshness: "current"
     review_due: "2026-09-28"
-  sha256: "65ea14235b60f527832e7ee60ced5baff709de96807616e8eb7ec03f78bc0fc4"
+  sha256: "f1aca7d7f24b3cced33005ccf251a598ccb3a6208cdedbe6d12f0e79f90a4113"
+  hash_history:
+    - sha256: "65ea14235b60f527832e7ee60ced5baff709de96807616e8eb7ec03f78bc0fc4"
+      timestamp: "2026-08-29T12:30:00Z"
+      reason: "re-mint after 2026-08-29 normalization + corrections"
+    - sha256: "f1aca7d7f24b3cced33005ccf251a598ccb3a6208cdedbe6d12f0e79f90a4113"
+      timestamp: "2026-08-29T12:30:00Z"
+      reason: "re-mint after 2026-08-29 normalization + corrections"
   canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/rob/profile.md"

@@ -24,8 +24,15 @@ document:
     contains_secret_values: false
   relations: []
   validation:
-    validated_at: "2026-08-28T07:45:00Z"
+    validated_at: "2026-08-29T12:30:00Z"
     freshness: "current"
     review_due: "2026-09-28"
-  sha256: "eceb60e2fc14e56cb0914632978a3e31de287647e890c7dd8565423732835096"
+  sha256: "ff7277fc4ad15c1938a83247369306b53bf370d43adf1203f3a4dc91862270c1"
+  hash_history:
+    - sha256: "eceb60e2fc14e56cb0914632978a3e31de287647e890c7dd8565423732835096"
+      timestamp: "2026-08-29T12:30:00Z"
+      reason: "re-mint after 2026-08-29 normalization + corrections"
+    - sha256: "ff7277fc4ad15c1938a83247369306b53bf370d43adf1203f3a4dc91862270c1"
+      timestamp: "2026-08-29T12:30:00Z"
+      reason: "re-mint after 2026-08-29 normalization + corrections"
   canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/mia/profile.md"

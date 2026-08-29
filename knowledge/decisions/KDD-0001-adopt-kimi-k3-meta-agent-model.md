@@ -85,3 +85,15 @@ Per the repository's adoption-of-provided-documents rule (AGENTS.md):
      HFSM non-completion transitions, owner-review verifier fallback in Phase M,
      and this provenance record.
 - The source first pass remains unmodified as historical input.
+
+[OPEN CORRECTION 2026-08-29, labeled, append-only: the GOVERNOR ROLE has
+transferred from kimi-k3 to **Flash** (owner/Agent Zero appointment,
+2026-08-29), running on DeepSeek V4 Flash via OmniRoute. This KDD
+recorded the original adoption of the kimi-k3 meta-agent model; the
+governor-transition is recorded in AGENTS.md labeled correction blocks
+and KDD-0013 Amendment 8. kimi-k3 is now an identity-specific model lane
+(`moonshot-ai/kimi-k3`), not the governor. The ratified status and
+Phase M/A/C framework above are preserved as history — the governor role
+and its authority chain are defined in the current AGENTS.md. Authority:
+AGENTS.md governor-transition correction; KDD-0013 Amendment 8;
+state-log row 46.]

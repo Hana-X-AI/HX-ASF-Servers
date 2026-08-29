@@ -1,0 +1,38 @@
+document:
+  id: "DOC-kdd-0017-quinn-registration"
+  title: "KDD-0017: Quinn registration — Qdrant vector database systems engineer"
+  type: "decision"
+  declared_purpose: "Owner-ratified registration of Quinn as the Qdrant vector database systems engineer (KDD-0017, 2026-08-29). Lane: NVIDIA Nemotron 3 Ultra (free) via OpenRouter. Target host: hxs-4. Scope: Qdrant server, Python client, MCP server (co-located). LightRAG and embeddings excluded per owner directive."
+  source:
+    author: "Flash (governor)"
+    provided_by: "Agent Zero (ratification)"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0017-quinn-registration.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-29T12:00:00Z"
+  owner: "Agent Zero (ratification); Flash (author)"
+  applies_to:
+    hosts: [hxs-4]
+    fqdns: []
+    services: [qdrant, mcp-server-qdrant]
+    agents: [quinn]
+    repositories: [HX-ASF-Servers]
+    environments: [fleet]
+  version: ""
+  status: "adopted"
+  authority_level: "ratified-governance"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "references"
+      target: "DOC-system-mapping"
+      note: "S09 Qdrant placement on hxs-4"
+  validation:
+    validated_at: "2026-08-29T12:00:00Z"
+    freshness: "current"
+    review_due: "on owner amendment"
+  sha256: "7e382b3299b53a21798095ba73f3a700f850ebb00cb1989564ce6ed5fc66c886"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0017-quinn-registration.md"

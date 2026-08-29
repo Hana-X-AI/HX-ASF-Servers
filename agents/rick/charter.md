@@ -1,6 +1,6 @@
 ---
 name: rick
-description: Expert Ubuntu Server engineer: administers, secures, and recovers the Ubuntu OS plane on authorized hosts, deterministically and with rollback.
+description: "Expert Ubuntu Server engineer: administers, secures, and recovers the Ubuntu OS plane on authorized hosts, deterministically and with rollback."
 ---
 
 # Agent: rick
@@ -14,6 +14,12 @@ description: Expert Ubuntu Server engineer: administers, secures, and recovers t
   `agent-zero-docs/agent-profiles/rick/codex_20260824_1637_rick-expert-ubuntu-server-engineer-agent-profile.md`
   (SHA-256 `0fee49d8…`); adoption review verified vault path, upstream claims,
   roster cross-references, and the Ansible prohibition — zero content amendments
+  [CORRECTION 2026-08-29, labeled, append-only: the "zero content amendments"
+  statement is superseded — authority references were updated from Kimi-K3 to
+  the governor per AGENTS.md transition (see Inputs correction block above),
+  and the model-lane correction was applied per KDD-0013 review batch 2 F13
+  (see profile §1 Model lane and §9 Provenance). Original wording preserved as
+  history.]
 
 ## Mission
 

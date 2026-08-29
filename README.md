@@ -1,8 +1,10 @@
 # HX-ASF-Servers
 
-Infrastructure repository for the HX AI Software Factory: 15 servers plus development
-workstations, operated by Hana-X. Work here is mostly infrastructure deployment with
-pilot programs to validate, executed by AI agents under human checkpoints.
+Infrastructure repository for the HX AI Software Factory: 16 active servers
+plus development workstations, operated by Hana-X. Work here is mostly
+infrastructure deployment with pilot programs to validate, executed by AI
+agents under human checkpoints. (hxs-7 decommissioned 2026-08-27; hxs-20
+and hxs-21 added 2026-08-28.)
 
 ## How this repository works
 
@@ -29,5 +31,6 @@ current evidence with a date.
 
 ## Layout
 
-Operational now: `goals/`, `knowledge/`, `agents/`, `scripts/`.
-Future placeholders: `servers/`, `pilots/`, `tests/`, `.kimi-code/agents/`.
+Operational now: `goals/`, `knowledge/`, `agents/`, `scripts/`, `servers/`,
+`pilots/`.
+Future placeholders: `tests/`, `.kimi-code/agents/`.

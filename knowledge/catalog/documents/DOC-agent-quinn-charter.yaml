@@ -1,0 +1,45 @@
+document:
+  id: "DOC-agent-quinn-charter"
+  title: "Agent charter — quinn (Qdrant vector database engineer, vertical lane)"
+  type: "charter"
+  declared_purpose: "One-page authority on quinn's mission: Qdrant vector database systems engineer for the HX factory. Manages Qdrant server, Python client, and MCP server on hxs-4. Registered 2026-08-29 (KDD-0017)."
+  source:
+    author: "Agent Zero / KDD-0017"
+    provided_by: "Agent Zero"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/agents/quinn/charter.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-29T12:30:00Z"
+  owner: "quinn (lane); Agent Zero (ratification)"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: [quinn]
+    repositories: [HX-ASF-Servers]
+    environments: [fleet]
+  version: ""
+  status: "adopted"
+  authority_level: "ratified-governance"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "references"
+      target: "DOC-agent-quinn-profile"
+      note: "full operating contract"
+    - predicate: "references"
+      target: "DOC-kdd-0017-quinn-registration"
+      note: "registration decision (KDD-0017)"
+  validation:
+    validated_at: "2026-08-29T12:30:00Z"
+    freshness: "current"
+    review_due: "on owner sign-off of charter change"
+  sha256: "c4b1af2104740f958966e4cb4c603d8031a3acfca9f9654a5f2b9c496aad765c"
+  hash_history:
+    - sha256: "c4b1af2104740f958966e4cb4c603d8031a3acfca9f9654a5f2b9c496aad765c"
+      timestamp: "2026-08-29T12:30:00Z"
+      reason: "initial cataloging"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/quinn/charter.md"

@@ -3,6 +3,14 @@
 - Goal ID: 2026-08-26-hxs2-qwen36-coderx-backend (this file's name)
 - Version: 1
 - Status: in-progress — M0 authorized 2026-08-26 (plan approved; D1–D8 decided and recorded; M1 COMPLETE 13/13, handoff pending Carol receipt)
+  [Status transition 2026-08-29 **[current]**: COMPLETE — hxs-2 registry
+  status READY; Coder-X (Qwen2.5-Coder-32B, AWQ Int4, TP=2) deployed and
+  verified per SERVER-REGISTRY. SC-08 owner sign-off recorded by
+  deployment acceptance. M7b soak remains deferred per owner directive
+  (issues.md). Original status preserved above as history.]
+  [Labeled note 2026-08-29: D3 artifact (mannix/qwen3.6-27b-a3b-coderx:vision-Q4_K_M)
+  superseded by owner deployment decision (Qwen2.5-Coder-32B AWQ Int4);
+  SERVER-REGISTRY confirms READY with the deployed model.]
 - Owner: Agent-Zero
 - Created: 2026-08-26
 - Human authority: Agent-Zero

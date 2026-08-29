@@ -34,10 +34,17 @@ document:
       target: "DOC-repo-governance-agents-md"
       note: "owner amendment 2026-08-25 (Documentation Governance and Knowledge Stewardship)"
   validation:
-    validated_at: "2026-08-26T04:12:00Z"
+    validated_at: "2026-08-29T12:30:00Z"
     freshness: "current"
     review_due: "on owner amendment"
-  sha256: "28083d9f2aa0513dde90e843f025566e14375918b3d5cbf1cb6f6951a4680c01"
+  sha256: "7902874b23bf82d2827a1a488c817932b0b15450e7e9a1d9b8a194642834b3e8"
+  hash_history:
+    - sha256: "28083d9f2aa0513dde90e843f025566e14375918b3d5cbf1cb6f6951a4680c01"
+      timestamp: "2026-08-29T12:30:00Z"
+      reason: "re-mint after 2026-08-29 normalization + corrections"
+    - sha256: "7902874b23bf82d2827a1a488c817932b0b15450e7e9a1d9b8a194642834b3e8"
+      timestamp: "2026-08-29T12:30:00Z"
+      reason: "re-mint after 2026-08-29 normalization + corrections"
   canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/carol/profile.md"
 notes:
   review_batch_update: "2026-08-25 review batch (state log row 33): receipt filename pattern fixed to <timestamp>-carol-<action>-<slug>.md; status enum gained 'rejected' and the schema gained the 'charter' type and rejection_reason. This run's receipt name complies."

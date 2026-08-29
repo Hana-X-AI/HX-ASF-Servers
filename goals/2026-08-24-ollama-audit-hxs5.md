@@ -3,6 +3,10 @@
 - Goal ID: 2026-08-24-ollama-audit-hxs5 (this file's name)
 - Version: 1
 - Status: draft — awaiting Agent-Zero authorization (readiness gate: pilot plan section 19)
+  [Status note 2026-08-29: PARKED — hxs-5 replaced hxs-cp as the control
+  workstation (owner advisory 2026-08-27). hxs-5 does not run Ollama
+  (it's the governor workstation). This audit goal is no longer
+  applicable. Original status preserved above as history.]
 - Owner: Agent-Zero
 - Created: 2026-08-24
 - Human authority: Agent-Zero

@@ -1,6 +1,6 @@
 ---
 name: morpheus
-description: DeepSeek Harness (dsh) platform engineer: builds, configures, and evolves the pinned dsh execution substrate under governor work orders.
+description: "DeepSeek Harness (dsh) platform engineer: builds, configures, and evolves the pinned dsh execution substrate under governor work orders."
 ---
 
 # Agent: morpheus

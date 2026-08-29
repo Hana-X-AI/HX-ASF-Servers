@@ -257,6 +257,14 @@ doubt, act reversibly and report rather than pause.
   blocks above. Kimi-K3 remains a registered identity-specific lane reference
   but moonshot-ai is not the operative provider for the governor. Original
   allowlist text preserved above as history.]
+  [OPEN CORRECTION 2026-08-29, labeled, append-only: quinn is registered
+  (KDD-0017) with lane NVIDIA Nemotron 3 Ultra
+  (`openrouter/nvidia/nemotron-3-ultra-550b-a55b:free`, provider NVIDIA, via
+  OmniRoute hxs-8) — owner-assigned 2026-08-29, CLI-verified live. Quinn's
+  lane is free-tier on OpenRouter (no metered spend); it rides the OD-14
+  exception unmetered as a zero-cost cloud lane. OD-14 scope: NINE cloud
+  lanes — trinity, rob, mia, gordon, carol, chris, kimi-k3, wayne, quinn
+  (quinn unmetered). Authority: KDD-0017.]
 - **Chief of Staff** (owner directive 2026-08-28, KDD-0012). **Mia**
   (`agents/mia/`) manages the work — planning, coordination, distribution to the
   engineering lanes, breakage triage, and status reporting to Kimi-K3. The
@@ -338,7 +346,7 @@ needs them. The standard profile and charter templates at
 |---|---|---|---|
 | 1 | Agentic Software Engineering | Build and test products, features, APIs, interfaces, schemas, integrations | rob (gated) |
 | 2 | AI Infrastructure and Operations Engineering | Maintain the underlying computing environment | rick |
-| 3 | AI Platform Systems Engineering | Install, configure, operate, upgrade, recover platform services | morpheus (DSH), gordon (QA), trinity (OmniRoute), john (Ollama), chris (PostgreSQL), wayne (Redis) |
+| 3 | AI Platform Systems Engineering | Install, configure, operate, upgrade, recover platform services | morpheus (DSH), gordon (QA), trinity (OmniRoute), john (Ollama), chris (PostgreSQL), wayne (Redis), quinn (Qdrant) |
 | 4 | AI-PMO | Portfolio, project, research, documentation, human-facing reporting | mia, carol |
 
 **Governor:** above all families. Governs (goals, gates, acceptance, owner

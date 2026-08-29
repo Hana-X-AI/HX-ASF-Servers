@@ -132,3 +132,33 @@ Note: the fine-grained PAT in the local credential store returned 401 on
    ratified plan.
 4. Evidence/reasoning: recorded here per the standing directive; revisit when the
    pipeline has a month of run history to catalog against.
+
+## Amendment log — labeled corrections (append-only)
+
+[OPEN CORRECTION 2026-08-28, labeled, append-only: the workflow file
+`.github/workflows/ci-cd.yml` was amended on 2026-08-28 with three changes
+that supersede the text above. The original 2026-08-26 text is preserved
+as history; THIS correction block is the current reading.]
+
+1. **Trigger** — the `coderabbit-review` job now runs on **ALL pushes
+   including `main`** (owner directive 2026-08-28: "coderabbit should
+   run on every commit regardless of the type"). The doc above says
+   "non-`main` pushes only" (§Step list, step 10 header; §Lifecycle
+   diagram; §Review-fix loop) — that wording is STALE. Main pushes
+   review the pushed range `BEFORE..HEAD`; branch pushes review vs
+   `origin/main`.
+
+2. **Blocking threshold** — the gate now blocks on **ALL findings:
+   critical + major + minor** (owner directive 2026-08-28: "we are
+   introducing problems in our codebase that coderabbit can find and
+   fix" — zero-tolerance, not severity triage). The doc above says
+   "fails on critical/major findings" and "minor/trivial findings are
+   reported, not blocking" (§Step list, step 13; §Review-fix loop) —
+   that wording is STALE. Trivial and info findings remain non-blocking.
+
+3. **Fix-loop agent** — the doc references "Kimi-K3 / john" as the
+   factory agent (§Review-fix loop). The governor role is now held by
+   **Flash** (owner appointment 2026-08-29); the fix-loop agent is
+   whoever the governor dispatches under a work order — typically
+   routed through Mia to the appropriate engineering lane. The
+   "Kimi-K3 / john" wording is STALE.

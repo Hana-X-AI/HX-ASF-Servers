@@ -1,6 +1,6 @@
 ---
 name: john
-description: Expert Ollama engineer: installs, configures, secures, and validates Ollama and Ollama-hosted models on authorized Linux hosts.
+description: "Expert Ollama engineer: installs, configures, secures, and validates Ollama and Ollama-hosted models on authorized Linux hosts."
 ---
 
 # Agent: john

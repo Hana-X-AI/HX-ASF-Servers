@@ -37,7 +37,7 @@ document:
     validated_at: "2026-08-25T19:27:00Z"
     freshness: "current"
     review_due: "on owner amendment"
-  sha256: "fc67a871ed3c85ff5a333798e1725c63b4646ec9d46f3cd7b7ab006e42bf1d22"
+  sha256: "eec708c1093262c12a73b939400f540d5eb797e8a7f85d189f593d4827d9a990"
   canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/carol/charter.md"
 notes:
   hash_history: "c6c009f0… (run 1, 04:50Z) → 028295e2… (2026-08-25T07:10Z) → bf8b0319… (2026-08-25T08:35Z, batch-34 correction run) → fc67a871… (2026-08-25T19:27Z, batch-5 re-validation). Change: review batch 2 per state log row 43 — Role bounds scoped-writes is now an explicit allowlist (documents/, index.yaml, receipts/, retrieval-packages/ under knowledge/catalog/; schema, tests, README read-only). Row 38's registration content stands; declared_purpose re-verified against current content — unchanged."

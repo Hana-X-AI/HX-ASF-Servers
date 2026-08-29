@@ -33,7 +33,9 @@ reviews:
     base_branches:
       - main
 
-  # Autofix requires the GitHub App plus a Pro plan; inert until then.
+  # Autofix: enabled. The GitHub App + Pro plan path commits fixes directly.
+  # The CLI path (used in CI) supports autofix as of CLI 0.7.5+; verify
+  # behavior on the next CLI version bump.
   finishing_touches:
     autofix:
       enabled: true

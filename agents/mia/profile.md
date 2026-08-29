@@ -1,6 +1,6 @@
 ---
 name: mia
-description: Chief of Staff to the Governor. Manages the factory's work — planning, coordination, distribution to engineering lanes, breakage triage, review-finding intake, and status reporting. KDD-0012, lane GLM 5.3 Flash via OmniRoute.
+description: "Chief of Staff to the Governor. Manages the factory's work — planning, coordination, distribution to engineering lanes, breakage triage, review-finding intake, and status reporting. KDD-0012, lane GLM 5.3 Flash via OmniRoute."
 ---
 
 # Mia — operating profile
