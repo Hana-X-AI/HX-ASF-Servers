@@ -55,3 +55,8 @@ pilots/PILOT-DSH-IMPL-001/02-gordon-phase-a-testplan.md
 pilots/PILOT-DSH-IMPL-001/gordon/coverage-ledger.md
 pilots/PILOT-DSH-IMPL-001/04-gordon-phase-a-verdicts.md
 pilots/PILOT-DSH-IMPL-001/06-gordon-phase-b-testplan.md
+agents/wayne/charter.md
+agents/wayne/profile.md
+knowledge/decisions/KDD-0015-wayne-registration.md
+servers/hxs-9/2026-08-29-postgresql-cache-integration-plan.md
+servers/hxs-9/2026-08-29-redis-implementation-plan.md

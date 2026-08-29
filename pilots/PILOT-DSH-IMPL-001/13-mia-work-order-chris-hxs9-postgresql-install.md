@@ -26,6 +26,12 @@
   Checkpoint 1** — an owner gate (via Kimi-K3), not optional.
 - Predecessor session of record: rick's earlier hxs-9 session was stopped
   BEFORE any mutation — hxs-9 is in pre-state (verified: zero changes).
+  [SUPERSESSION NOTE 2026-08-29, labeled, append-only — Mia per Flash work
+  order 19 (F17): rick's assignment to the hxs-9 install (state-log rows
+  41–42 lineage) is SUPERSEDED/CANCELLED by owner lane ruling 2026-08-29
+  (state-log row 42: "Chris is the DBA, Chris installs his own database") —
+  stopped pre-mutation, zero partial state; this order (13) is the SOLE
+  ACTIVE authorization for the hxs-9 PostgreSQL install, executed by Chris.]
 - Concurrency 1, max session PT1H (profile §8).
 
 ## STALE-TEXT RULING (carries the plan's own Correction 2)

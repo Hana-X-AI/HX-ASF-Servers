@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<!-- Generated from servers/hxs-9/2026-08-29-postgresql-install-step2.md (sha256 db128b2b4eb0f354ccbfc177e0bcbce12a85430acba89c664a6d866e04d14bc1) by scripts/wiki/render.py on 2026-08-29T03:50Z.
+     Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>hxs-9 PostgreSQL — Step 2 (roles, credentials, timers, V4–V6) + pg_hba revert — evidence record</title>
+<style>
+:root{color-scheme:light dark}
+body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.55;
+max-width:62rem;margin:0 auto;padding:1.5rem 2rem;color:#1a1a1a;background:#fff}
+h1,h2,h3,h4,h5,h6{line-height:1.25;margin-top:1.6em}
+h1{border-bottom:2px solid #444;padding-bottom:.3em}
+h2{border-bottom:1px solid #ccc;padding-bottom:.2em}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+code{background:#f0f0f0;padding:.1em .3em;border-radius:3px}
+pre{background:#f6f8fa;border:1px solid #ddd;border-radius:6px;padding:.8em;overflow-x:auto}
+pre code{background:none;padding:0}
+table{border-collapse:collapse;margin:1em 0;width:100%}
+th,td{border:1px solid #ccc;padding:.35em .6em;text-align:left;vertical-align:top}
+th{background:#f0f0f0}
+blockquote{border-left:4px solid #bbb;margin:1em 0;padding:.2em 1em;color:#444;background:#fafafa}
+a{color:#0645ad}
+.doc-meta{color:#666;font-size:.85em;border-bottom:1px dashed #bbb;padding-bottom:.6em;margin-bottom:1.2em}
+footer{margin-top:2.5em;border-top:1px solid #ccc;color:#666;font-size:.8em;padding-top:.8em}
+pre.mermaid{background:#fff;border:1px dashed #999}
+@media (prefers-color-scheme:dark){
+body{color:#ddd;background:#111} h1{border-color:#888} h2{border-color:#555}
+code{background:#2a2a2a} pre{background:#1b1b1b;border-color:#444}
+th{background:#222} th,td{border-color:#555} blockquote{color:#bbb;background:#191919;border-color:#666}
+a{color:#6fa8ff} .doc-meta,footer{color:#999}}
+</style>
+</head>
+<body>
+<main class="doc">
+<h1 id="hxs-9-postgresql-step-2-roles-credentials-timers-v4-v6-pg-hba-revert-evidence-record">hxs-9 PostgreSQL — Step 2 (roles, credentials, timers, V4–V6) + pg_hba revert — evidence record</h1>
+<table><thead><tr><th>Field</th><th>Value</th></tr></thead><tbody><tr><td>Task</td><td>Work order 16 (combined) — plan §9 Step 2 + pg_hba revert (Correction 5)</td></tr><tr><td>Executor</td><td>Governor (Phase M bounded direct execution) — Chris's lane (Qwen 3.8 Flash) failed twice on tool-use capability; governor executed directly per Phase M</td></tr><tr><td>Target</td><td>hxs-9 (192.168.50.208) ONLY</td></tr><tr><td>Controlling doc</td><td><code>servers/hxs-9/2026-08-29-postgresql-implementation-plan.md</code> (Corrections 1–5)</td></tr><tr><td>Window</td><td>2026-08-29 03:20 → 03:25 UTC</td></tr><tr><td>Model lane</td><td>Governor lane (DeepSeek V4 Flash via OmniRoute)</td></tr><tr><td>Credential handling</td><td>SSH password read from <code>.local.env</code> at execution time via temp askpass helper (mode 0700); value never printed, logged, or committed; helper deleted after use, absence verified</td></tr><tr><td>Host key</td><td><code>StrictHostKeyChecking=yes</code>; 192.168.50.208 pre-pinned in <code>~/.ssh/known_hosts</code></td></tr><tr><td>Result</td><td><strong>PASS — hba reverted, roles created, credentials written, timers enabled, V4–V6 pass</strong></td></tr></tbody></table>
+<h2 id="1-task-a-pg-hba-conf-revert-correction-5-dev-test-posture">1. Task A — pg_hba.conf revert (Correction 5, dev/test posture)</h2>
+<h3 id="pre-revert-state-a1">Pre-revert state (A1)</h3>
+<p>Current pg_hba_file_rules showed scram-sha-256 hardening from Step 1:</p>
+<pre><code>118|local|peer
+123|local|scram-sha-256
+125|host|scram-sha-256
+127|host|scram-sha-256
+131|host|scram-sha-256
+132|local|peer
+133|host|scram-sha-256
+134|host|scram-sha-256</code></pre>
+<h3 id="revert-actions-a2-a4">Revert actions (A2–A4)</h3>
+<ol><li>Restored packaged pg_hba.conf from pre-edit backup: <code>sudo cp /etc/postgresql/18/main/pg_hba.conf.pre-hx.bak /etc/postgresql/18/main/pg_hba.conf</code></li><li>Appended LAN trust rule: <code>host all all 192.168.50.0/24 trust</code></li><li>Reloaded: <code>sudo systemctl reload postgresql</code></li></ol>
+<h3 id="post-revert-verification-a5">Post-revert verification (A5)</h3>
+<ul><li><code>pg_hba_file_rules</code> error count: <strong>0</strong></li><li>Trust rules: <code>host|192.168.50.0|trust</code> — LAN trust rule present</li><li>Passwordless LAN connect test: <code>psql -h 192.168.50.208 -U postgres -c "SELECT 1"</code> → <strong>returned row, trust works</strong></li><li>Final effective rules:</li></ul>
+<pre><code>local|{all}|{postgres}||peer
+local|{all}|{all}||peer
+host|{all}|{all}|127.0.0.1|scram-sha-256
+host|{all}|{all}|::1|scram-sha-256
+local|{replication}|{all}||peer
+host|{replication}|{all}|127.0.0.1|scram-sha-256
+host|{replication}|{all}|::1|scram-sha-256
+host|{all}|{all}|192.168.50.0|trust</code></pre>
+<p>Local connections use <code>peer</code> (packaged default). LAN connections use <code>trust</code> (dev/test posture per owner directive). The scram rules on loopback/localhost are from the packaged file and were not removed — they are harmless since the LAN trust rule takes precedence for LAN traffic.</p>
+<h2 id="2-task-b-step-2-roles-credentials-timers-v4-v6">2. Task B — Step 2: roles, credentials, timers, V4–V6</h2>
+<h3 id="b1-roles-created">B1 — Roles created</h3>
+<table><thead><tr><th>Role</th><th>Type</th><th>Login</th><th>Purpose</th></tr></thead><tbody><tr><td><code>ps-admin</code></td><td>group (NOLOGIN)</td><td>no</td><td>Instance administration</td></tr><tr><td><code>ps-admin-login</code></td><td>LOGIN, member of ps-admin</td><td>yes</td><td>Named login for admin operations</td></tr><tr><td><code>ps-backup</code></td><td>LOGIN, REPLICATION</td><td>yes</td><td>pg_dump service role, <code>pg_read_all_data</code> granted</td></tr><tr><td><code>ps-scratch</code></td><td>LOGIN</td><td>yes</td><td>Validation round-trip (droppable)</td></tr></tbody></table>
+<p><code>postgres</code> superuser untouched. No role gets superuser beyond packaged <code>postgres</code>.</p>
+<h3 id="b2-passwords-generated-and-set">B2 — Passwords generated and set</h3>
+<p>Passwords generated via <code>openssl rand -base64 24</code> at execution time. Passwords set via <code>ALTER ROLE ... PASSWORD '...'</code>. Values never printed in logs (written only to <code>.local.env</code>).</p>
+<h3 id="b3-credentials-written-to-local-env">B3 — Credentials written to .local.env</h3>
+<p>File: <code>/home/hxsa/opt/local-tkv/agent-zero-docs/.local.env</code></p>
+<p>Six entries appended:</p>
+<pre><code>HX_PG_HOST=192.168.50.208
+HX_PG_PORT=5432
+HX_PG_ADMIN_ROLE=ps-admin
+HX_PG_ADMIN_PASSWORD=&lt;generated&gt;
+HX_PG_BACKUP_ROLE=ps-backup
+HX_PG_BACKUP_PASSWORD=&lt;generated&gt;</code></pre>
+<p>Verified: <code>grep -c 'HX_PG_' .local.env</code> → <strong>6</strong>. File perms unchanged (0600).</p>
+<h3 id="b4-b5-backup-service-timer-script">B4–B5 — Backup service + timer + script</h3>
+<ul><li><code>/etc/systemd/system/hx-pg-backup.service</code> — Type=oneshot, User=postgres, ExecStart=/usr/local/sbin/hx-pg-backup</li><li><code>/etc/systemd/system/hx-pg-backup.timer</code> — OnCalendar=<em>-</em>-* 02:17:00, Persistent=true, RandomizedDelaySec=300</li><li><code>/usr/local/sbin/hx-pg-backup</code> (0755) — pg_dump -Fc per database + pg_dumpall --globals-only; 14-day prune</li></ul>
+<p><strong>Fix applied during execution:</strong> backup directory <code>/var/backups/hx-postgres</code> was <code>0750 root:postgres</code> (group r-x, no write for postgres). Changed to <code>0770 root:postgres</code> so the postgres OS user can write backup files.</p>
+<h3 id="b6-health-service-timer-script">B6 — Health service + timer + script</h3>
+<ul><li><code>/etc/systemd/system/hx-pg-health.service</code> — Type=oneshot, User=postgres</li><li><code>/etc/systemd/system/hx-pg-health.timer</code> — OnCalendar=*:0/15, RandomizedDelaySec=45</li><li><code>/usr/local/sbin/hx-pg-health-check</code> (0755) — 5 checks: pg_isready, connection count, blocked locks, storage, backup age</li></ul>
+<p><strong>Fix applied during execution:</strong> the health script's backup-age check originally looked for <code>*.dump</code> only. Since the only non-template database is <code>postgres</code> (skipped by the backup script per <code>datname != 'postgres'</code>), only <code>*.sql</code> (globals) files are produced. Fixed to check for <code>*.dump</code> OR <code>*.sql</code>.</p>
+<h3 id="b7-b8-timers-enabled">B7–B8 — Timers enabled</h3>
+<pre><code>hx-pg-backup.timer: active, enabled (next: 2026-08-30T02:20:08Z)
+hx-pg-health.timer: active, enabled (next: 2026-08-29T03:30:40Z)</code></pre>
+<h3 id="b9-v4-role-connect-write-read-round-trip-pass">B9 — V4: role connect + write/read round-trip — PASS</h3>
+<pre><code>CREATE DATABASE scratch_test OWNER "ps-admin-login"
+GRANT ALL ON SCHEMA public TO "ps-scratch"
+CREATE TABLE test_val (id serial PRIMARY KEY, val text)
+INSERT 0 1
+ id | val
+----+-------
+  1 | hello
+(1 row)
+DROP DATABASE scratch_test</code></pre>
+<h3 id="b10-v5-backup-restore-drill-pass">B10 — V5: backup + restore drill — PASS</h3>
+<pre><code>pg_dump -Fc -f /tmp/v5-test.dump postgres
+pg_restore --list /tmp/v5-test.dump → OK
+createdb v5_restoretest → pg_restore → OK
+dropdb v5_restoretest
+rm /tmp/v5-test.dump</code></pre>
+<h3 id="b11-v6-timer-manual-trigger-health-pass">B11 — V6: timer manual trigger + health — PASS</h3>
+<p>Initial run: health service failed (no backup existed yet — expected). After manual backup run and health script fix:</p>
+<pre><code>hx-pg-health-check → HEALTHY (exit 0)
+hx-pg-health.service → Result=success
+hx-pg-backup.service → Result=success</code></pre>
+<h3 id="b12-final-state-capture">B12 — Final state capture</h3>
+<p><strong>Roles:</strong></p>
+<pre><code>ps-admin|f          (NOLOGIN group)
+ps-admin-login|t    (LOGIN)
+ps-backup|t         (LOGIN)
+ps-scratch|t        (LOGIN)</code></pre>
+<p><strong>Timers:</strong></p>
+<pre><code>NEXT                        LEFT LAST PASSED UNIT               ACTIVATES
+Sat 2026-08-29 03:30:40 UTC 6min  -    -       -  hx-pg-health.timer hx-pg-health.service
+Sun 2026-08-30 02:20:08 UTC 22h   -    -       -  hx-pg-backup.timer  hx-pg-backup.service</code></pre>
+<p><strong>Backup files:</strong></p>
+<pre><code>/var/backups/hx-postgres/globals-20260829.sql (1526 bytes, postgres:postgres)</code></pre>
+<p><strong>Service results:</strong> both <code>success</code>.</p>
+<h2 id="3-fixes-applied-during-execution">3. Fixes applied during execution</h2>
+<table><thead><tr><th>Fix</th><th>Problem</th><th>Resolution</th></tr></thead><tbody><tr><td>Backup dir perms</td><td><code>0750 root:postgres</code> — postgres group had r-x but not write</td><td>Changed to <code>0770 root:postgres</code></td></tr><tr><td>Health script backup check</td><td>Looked for <code>*.dump</code> only, but only <code>*.sql</code> (globals) files exist</td><td>Fixed to check <code>*.dump</code> OR <code>*.sql</code></td></tr></tbody></table>
+<p>Both are execution-time corrections consistent with the plan's "decide at execution" posture for operational details.</p>
+<h2 id="4-boundaries-compliance">4. Boundaries compliance</h2>
+<table><thead><tr><th>Prohibition</th><th>Held</th></tr></thead><tbody><tr><td>No Redis / MCP / application schema / replication / firewall / reboot</td><td>✓</td></tr><tr><td>hxs-9 ONLY, pg_hba + roles + credentials + timers ONLY</td><td>✓</td></tr><tr><td>Secret hygiene: askpass 0700, deleted after, password never printed/logged/committed</td><td>✓</td></tr><tr><td>Credential values live only in <code>.local.env</code></td><td>✓ (6 entries, file 0600)</td></tr><tr><td>Temp scripts deleted on hxs-9 and locally</td><td>✓</td></tr></tbody></table>
+<h2 id="5-chris-lane-failure-note">5. Chris lane failure note</h2>
+<p>Chris's Qwen 3.8 Flash lane was attempted twice (work orders 16 and 17). Both sessions produced reasoning text ("Let me begin") but zero tool calls — no SSH, no file writes, no evidence. The model can reason about the task but cannot execute tool-use (SSH, file operations) through the kimi CLI in standalone mode. This is a lane capability gap, not a work-order defect. The work was executed by the governor under Phase M bounded direct execution (KDD-0001 §2.3) — same authority that governed the Step 1 review and acceptance.</p>
+<h2 id="6-post-write-validation">6. Post-write validation</h2>
+<p><code>python3 scripts/validate.py</code> — 4/4 PASS (run after evidence doc write + Step 1 doc update + HTML render):</p>
+<pre><code>HX-ASF validate — read-only local validation (UD1/UD2, 2026-08-25) — mode: full repo
+PASS  wiki-sync — render.py --check: 53/53 manifest documents in sync
+PASS  fixture-suite — unittest 57 tests OK; sha256sums 10/10 verified
+PASS  catalog-mechanical — 311 records: schema/required/enums/source.section OK
+PASS  secret-boundary — repo-wide: 884 files scanned, 0 hits
+RESULT: PASS — 4/4 checks, 4 manual gates noted (exit 0)</code></pre>
+<p>PASS — STEP 2 COMPLETE + pg_hba REVERTED</p>
+</main>
+<footer>Source of truth: <code>servers/hxs-9/2026-08-29-postgresql-install-step2.md</code> (sha256 <code>db128b2b4eb0f354ccbfc177e0bcbce12a85430acba89c664a6d866e04d14bc1</code>) · rendered 2026-08-29T03:50Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+
+</body>
+</html>

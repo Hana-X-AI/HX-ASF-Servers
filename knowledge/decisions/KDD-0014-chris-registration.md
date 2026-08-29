@@ -42,6 +42,17 @@ upstream Alibaba Cloud International, via OmniRoute, route probed live
 directive) — `postgres-mcp-mai` deferred entirely. (d) Scope pin: PostgreSQL
 only on hxs-9; Redis is explicitly outside his lane. Activation is gated
 (profile §10): instance implemented + credential entries + owner word.
+[OPEN CORRECTION 2026-08-29, labeled, append-only — Mia per Flash work order
+19 (F12): the activation gate sentence above is VOID as an operational gate —
+owner ruling the same day (state-log row 42): Chris is the DBA and installs
+his own database; the "instance already implemented" precondition was a
+chicken-and-egg the owner voided, and credential entries are created BY Chris
+during installation, not required before it. The gate text above and in
+`agents/chris/profile.md` §10 stands as history; the current single gate is:
+(1) owner activation word — GIVEN 2026-08-29 ("proceed with install" + the
+DBA ruling), (2) halts at the plan's Checkpoint 1 for owner review, (3) final
+activation word remains an owner decision. `agents/chris/profile.md` §10
+already carries this revision, labeled, dated 2026-08-29.]
 
 ## Consequences
 
@@ -49,7 +60,13 @@ only on hxs-9; Redis is explicitly outside his lane. Activation is gated
   implementation plan (work order 11) proceeds against this registration.
 - KDD-0011 D3 (Bill pairing) is satisfied BY CLASS — the Bill profile is
   unnecessary unless a second, distinct database lane emerges; recorded
-  openly for the owner's confirmation.
+  openly for the owner's confirmation. [QUALIFICATION 2026-08-29, labeled,
+  append-only — Mia per Flash work order 19 (F13): "satisfied BY CLASS" is
+  CONDITIONAL pending primary-owner confirmation — the owner's confirmation
+  is not yet recorded in the governance records; this statement does not
+  silently amend KDD-0011, whose D3 stands as written until the owner
+  confirms the class-satisfaction ruling (cross-ref: KDD-0011 D3 and
+  `agents/rob/profile.md`).]
 - Chris's lane is the SIXTH cloud lane in the OD-14 metering scope
   (KDD-0013 amendment 6).
 - Revisit when: the instance is implemented (activation review), the MCP

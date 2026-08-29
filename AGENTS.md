@@ -182,7 +182,13 @@ doubt, act reversibly and report rather than pause.
   [Correction 2026-08-28, labeled: carol's lane is now OpenAI gpt-oss-120b
   (`openrouter/openai/gpt-oss-120b`, provider AkashML, via OmniRoute) — owner
   directive same day, superseding the Chat-X assignment printed above; she
-  remains frozen.] The three
+  remains frozen.]
+  [OPEN CORRECTION 2026-08-29, labeled, append-only: Carol is UNFROZEN to
+  background-class status (owner plan GO, state-log row 31) — she runs catalog
+  catch-up batches on her lane without blocking any gate, handoff, or lane;
+  the frozen wording above and in the Carol section below is preserved as
+  history. Authority: state-log row 31; owner: "run carol but not on the
+  critical path… does not block any work."] The three
   GLM lanes plus gordon's DeepSeek lane ride the OD-14
   OpenRouter exception of record (USD 100 cap, owner-lane allowlist, metered);
   cloud substitution otherwise stays prohibited. New agents receive a lane at
@@ -204,6 +210,15 @@ doubt, act reversibly and report rather than pause.
   (`openrouter/qwen/qwen3.8-flash`, provider Alibaba Cloud International, via
   OmniRoute). Authority: KDD-0013 Amendment 6. The preceding five-lane note
   remains preserved as historical text.]
+  [OPEN CORRECTION 2026-08-29, labeled, append-only: the GOVERNOR ROLE is now
+  held by **Flash** (owner/Agent Zero appointment, 2026-08-29), running on
+  **DeepSeek V4 Flash** via OmniRoute — superseding the GLM 5.2 governor lane
+  of Amendment 7 (preserved as history). Governing references to "Kimi-K3" as
+  the governor (Chief of Staff reporting line, Checkpoint routing, state-log
+  triage fields) read as the GOVERNOR role — currently Flash — not the
+  kimi-k3 identity. Authority: owner appointment reported by Flash
+  (work order 14, `pilots/PILOT-DSH-IMPL-001/`); RECORD OF THE APPOINTMENT IS
+  INTENT-LEVEL PENDING PRIMARY OWNER CONFIRMATION IN RECORDS.]
 - **Chief of Staff** (owner directive 2026-08-28, KDD-0012). **Mia**
   (`agents/mia/`) manages the work — planning, coordination, distribution to the
   engineering lanes, breakage triage, and status reporting to Kimi-K3. The

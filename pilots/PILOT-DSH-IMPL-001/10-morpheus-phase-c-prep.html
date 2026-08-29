@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<!-- Generated from pilots/PILOT-DSH-IMPL-001/10-morpheus-phase-c-prep.md (sha256 2176311fcc743f4f034be5ca9f857e75ab4c76ecaf06016241efcc4b87d9b0fb) by scripts/wiki/render.py on 2026-08-29T03:47Z.
+     Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PILOT-DSH-IMPL-001 — Phase C Prep: Candidate Seams &amp; Activation</title>
+<style>
+:root{color-scheme:light dark}
+body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.55;
+max-width:62rem;margin:0 auto;padding:1.5rem 2rem;color:#1a1a1a;background:#fff}
+h1,h2,h3,h4,h5,h6{line-height:1.25;margin-top:1.6em}
+h1{border-bottom:2px solid #444;padding-bottom:.3em}
+h2{border-bottom:1px solid #ccc;padding-bottom:.2em}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+code{background:#f0f0f0;padding:.1em .3em;border-radius:3px}
+pre{background:#f6f8fa;border:1px solid #ddd;border-radius:6px;padding:.8em;overflow-x:auto}
+pre code{background:none;padding:0}
+table{border-collapse:collapse;margin:1em 0;width:100%}
+th,td{border:1px solid #ccc;padding:.35em .6em;text-align:left;vertical-align:top}
+th{background:#f0f0f0}
+blockquote{border-left:4px solid #bbb;margin:1em 0;padding:.2em 1em;color:#444;background:#fafafa}
+a{color:#0645ad}
+.doc-meta{color:#666;font-size:.85em;border-bottom:1px dashed #bbb;padding-bottom:.6em;margin-bottom:1.2em}
+footer{margin-top:2.5em;border-top:1px solid #ccc;color:#666;font-size:.8em;padding-top:.8em}
+pre.mermaid{background:#fff;border:1px dashed #999}
+@media (prefers-color-scheme:dark){
+body{color:#ddd;background:#111} h1{border-color:#888} h2{border-color:#555}
+code{background:#2a2a2a} pre{background:#1b1b1b;border-color:#444}
+th{background:#222} th,td{border-color:#555} blockquote{color:#bbb;background:#191919;border-color:#666}
+a{color:#6fa8ff} .doc-meta,footer{color:#999}}
+</style>
+</head>
+<body>
+<main class="doc">
+<h1 id="pilot-dsh-impl-001-phase-c-prep-candidate-seams-activation">PILOT-DSH-IMPL-001 — Phase C Prep: Candidate Seams &amp; Activation</h1>
+<p><strong>Order:</strong> 09a (rescoped from work order 09) <strong>Issuer:</strong> Flash (governor), 2026-08-29 <strong>Executor:</strong> Morpheus (dsh lifecycle steward) <strong>Model:</strong> <code>omniroute/qwen3.8-2.4t-a95b</code> (Qwen 3.8 2.4T A95B, provider DeepInfra, via OmniRoute hxs-8) — CLI-verified live 2026-08-29 <strong>Parent records:</strong> 03 Phase A prep (interop/activation), 05 Phase B prep (testing/validation/rollback framework) <strong>Corpus path (read-only):</strong> <code>/opt/tkv-local/deepseek-harness-master</code></p>
+<hr>
+<h2 id="purpose">Purpose</h2>
+<p>Per the [Phase C prep plan — PILOT-DSH-IMPL-001] section "Phase C Scope" (Gates 8–10):</p>
+<p>This product provides, for each activation candidate identified in Phase A/Gate 7:</p>
+<ol><li><strong>Exact source seams</strong> from the pinned harness corpus (<code>file:line</code>).</li><li><strong>Activation mechanism</strong> on the native composition layer (cordis class + pattern), matching the Phases A/B template: <code>patch-interop</code>, <code>patch-sandbox</code>, <code>deploy-remote</code>.</li><li><strong>Host prerequisites</strong> for each seam and its deployment target.</li><li><strong>Risk classification</strong> from the Phase B taxonomy (<code>RISK_*</code>).</li></ol>
+<p>This document also supplies <strong>read-only testability notes for Gordon's Gate 8–10 authoring</strong>, stating what is provable on hxs-15's frozen corpus, and what is BLOCKED-by-design (no candidate mutation).</p>
+<hr>
+<h2 id="product-families-gates-8-10-scope">Product families (Gates 8–10 scope)</h2>
+<p>Each family maps to a Phase C gate cluster from the plan:</p>
+<table><thead><tr><th>Gate range</th><th>Family</th><th>Purpose</th></tr></thead><tbody><tr><td>Gates 8a</td><td>interop</td><td>Cross-seam coordination &amp; injection</td></tr><tr><td>Gates 8b</td><td>sandboxing</td><td>Harness-level isolation &amp; capability caps</td></tr><tr><td>Gates 9</td><td>remote</td><td>Remote endpoint + model discovery</td></tr><tr><td>Gates 10</td><td>experimental</td><td>Feature-flagged experimentation layer</td></tr></tbody></table>
+<hr>
+<h2 id="family-1-i-o-interop-gates-8a">Family 1: I/O interop (Gates 8a)</h2>
+<h3 id="source-seams">Source seams</h3>
+<p>&lt;!-- Filled by targeted reads of harness corpus — see 03 Phase A pattern --&gt;</p>
+<h3 id="activation-mechanism">Activation mechanism</h3>
+<p>&lt;!-- Cordis patch-interop class + per-family description --&gt;</p>
+<h3 id="host-prerequisites">Host prerequisites</h3>
+<p>&lt;!-- Required packages / daemon state on each target host --&gt;</p>
+<h3 id="risk-classification">Risk classification</h3>
+<p>&lt;!-- RISK_* code from Phase B taxonomy, with one-line rationale --&gt;</p>
+<hr>
+<h2 id="family-2-sandbox-activation-gates-8b">Family 2: Sandbox activation (Gates 8b)</h2>
+<h3 id="source-seams">Source seams</h3>
+<h3 id="activation-mechanism">Activation mechanism</h3>
+<h3 id="host-prerequisites">Host prerequisites</h3>
+<h3 id="risk-classification">Risk classification</h3>
+<hr>
+<h2 id="family-3-remote-endpoint-deployment-gate-9">Family 3: Remote endpoint deployment (Gate 9)</h2>
+<h3 id="source-seams">Source seams</h3>
+<h3 id="activation-mechanism">Activation mechanism</h3>
+<h3 id="host-prerequisites">Host prerequisites</h3>
+<h3 id="risk-classification">Risk classification</h3>
+<hr>
+<h2 id="family-4-experimental-layer-gate-10">Family 4: Experimental layer (Gate 10)</h2>
+<h3 id="source-seams">Source seams</h3>
+<h3 id="activation-mechanism">Activation mechanism</h3>
+<h3 id="host-prerequisites">Host prerequisites</h3>
+<h3 id="risk-classification">Risk classification</h3>
+<h2 id="testability-matrix-gordon-s-gate-8-10-authoring-reference">Testability matrix (Gordon's Gate 8–10 authoring reference)</h2>
+<p>&lt;!-- Filled family by family as each is researched. One row per seam/activation pair --&gt;</p>
+<table><thead><tr><th>Family</th><th>Seam ID</th><th>Provability</th><th>BLOCKED-by-design?</th><th>Rationale</th></tr></thead><tbody><tr><td>interop</td><td>(to fill)</td><td>TBD</td><td>—</td><td>—</td></tr><tr><td>sandbox</td><td>(to fill)</td><td>TBD</td><td>—</td><td>—</td></tr><tr><td>remote</td><td>(to fill)</td><td>TBD</td><td>—</td><td>—</td></tr><tr><td>experimental</td><td>(to fill)</td><td>TBD</td><td>—</td><td>—</td></tr></tbody></table>
+<p>Each PROVABLE row lists exact command(s)/test(s) Gordon can run read-only against the frozen hxs-15 corpus to validate readiness. Each BLOCKED-by-design row notes what requires candidate mutation and why those are deferred.</p>
+<h2 id="open-risks-items-phase-c-pre-check">Open risks &amp; items (Phase C pre-check)</h2>
+<p>&lt;!-- Filled at last, after all families assessed --&gt;</p>
+<ul><li>[ ] Risk gap: &lt;!-- pending family fill --&gt;</li><li>[ ] Validation scope: &lt;!-- partial doc risk if target reads exceeded token cap --&gt;</li></ul>
+<h2 id="knowledge-review-receipt">Knowledge-review receipt</h2>
+<p>Per KDD-0009 working order for Morpheus sessions (Phase A/B precedent):</p>
+<ul><li><strong>Receipt emitter</strong>: This session closes first. The governor's receiving agent scans <code>pilots/PILOT-DSH-IMPL-001</code> for new material and catalogs it into <code>/home/hxsa/opt/HX-ASF-Servers/knowledge/catalog/PILOT-DSH-IMPL-001</code>.</li><li><strong>Content</strong>: Phase C prep findings (candidate seams, activation mechanism, risk taxonomy applied to Gates 8–10).</li><li><strong>Citation format</strong>: <code>PILOT-DSH-IMPL-001/10-morpheus-phase-c-prep.md</code> with section path and line ranges.</li></ul>
+<h2 id="sanitized-command-log">Sanitized command log</h2>
+<p>All harness-side commands executed read-only against the corpus. Any mutations are limited to new document files under this pilot project in <code>pilots/</code>.</p>
+<table><thead><tr><th>Command</th><th>Host</th><th>Purpose</th><th>Status</th></tr></thead><tbody><tr><td>—</td><td>—</td><td>(to be filled on execution)</td><td>pending</td></tr></tbody></table>
+<hr>
+<p><strong>Previous product:</strong> 05 Phase B prep (testing/validation, rollback) <strong>Next product:</strong> 09c Phase C fill (targeted reads &amp; seed writes per family) <strong>Closed by:</strong> [executor to record]</p>
+</main>
+<footer>Source of truth: <code>pilots/PILOT-DSH-IMPL-001/10-morpheus-phase-c-prep.md</code> (sha256 <code>2176311fcc743f4f034be5ca9f857e75ab4c76ecaf06016241efcc4b87d9b0fb</code>) · rendered 2026-08-29T03:47Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+
+</body>
+</html>

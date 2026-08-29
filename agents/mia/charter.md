@@ -16,7 +16,9 @@ engineering agents, and reports status and results back to Kimi-K3.
 - Work management: task intake from Kimi-K3, decomposition into actionable
   assignments, sequencing, tracking, and follow-through to completion.
 - Coordination: routing assignments to the right engineering lane (morpheus,
-  gordon, rick, john, rob, trinity), resolving scheduling conflicts, keeping
+  gordon, rick, john, rob, trinity, chris [added 2026-08-29, labeled: Chris is
+  the PostgreSQL engineering lane, KDD-0014 — routing under a governor-issued
+  work order]), resolving scheduling conflicts, keeping
   handoffs moving.
 - Breakage triage: first receiver for "something is broken" — reproduce and
   characterize, then coordinate the repair: dispatch to the owning lane under a

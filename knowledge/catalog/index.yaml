@@ -1870,3 +1870,19 @@ index:
     authority_level: agent-evidence
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-DSH-IMPL-001/01-state-log.md
+  # [2026-08-29, labeled, Mia per Flash work order 19 — F9 form correction: the
+  # two batch receipt documents below were written by Carol's catch-up batches
+  # but themselves lacked catalog records; added here using the existing schema
+  # so audit/provenance queries can discover them.]
+  - id: DOC-catalog-receipt-2026-08-29-batch-a
+    title: "Catalog receipt — Carol batch A (KDD-0011/0012/0013 + mia/rob registrations), 2026-08-29"
+    type: evidence
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/catalog/receipts/2026-08-29-batchA-carol-kdds-registrations.md
+  - id: DOC-catalog-receipt-2026-08-29-batch-b
+    title: "Catalog receipt — Carol batch B (state-log rows 17-33 + registry hxs-7 decommission), 2026-08-29"
+    type: evidence
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/catalog/receipts/2026-08-29-batchB-carol-statelog-registry.md

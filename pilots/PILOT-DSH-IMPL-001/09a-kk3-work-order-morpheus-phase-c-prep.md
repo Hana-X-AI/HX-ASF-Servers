@@ -1,11 +1,24 @@
 # WORK ORDER — Morpheus: Phase C prep, PRODUCT 1 ONLY (write-first)
 
-- Issuer: Kimi-K3 (governor), 2026-08-29 — rescoped from work order 09 after
+- Issuer: Flash (governor), 2026-08-29 — rescoped from work order 09 after
   the driver-lane failure of record (state-log row 34)
-- Executor: Morpheus (dsh lifecycle steward, KDD-0009) — lane WATCH of record
-- Model lane (binding): `omniroute/coder-x` (hxs-2, digest `ec9ebe08…a9f1`,
-  KDD-0013). Session-start: verify the backend digest fail-closed; stop and
+- Executor: Morpheus (dsh lifecycle steward, KDD-0009)
+- Model lane (binding): `omniroute/qwen3.8-2.4t-a95b` (Qwen 3.8 2.4T A95B,
+  provider DeepInfra, via OmniRoute hxs-8) — owner-assigned 2026-08-29,
+  CLI-verified live (served id `qwen/qwen3.8-2.4t-a95b`, `MORPHEUS_LANE_OK`).
+  Supersedes Coder-X (two consecutive failures, state-log rows 34/40 — branch
+  was STOPPED per KDD-0013; Q1 resolved by the lane change).
+  Session-start: verify the served-model id fail-closed; stop and
   escalate on failure, no substitution.
+
+**LANE CORRECTION (2026-08-29, labeled, append-only):** this order's
+original model lane was `omniroute/coder-x` (hxs-2, digest `ec9ebe08…a9f1`).
+Coder-X failed twice on this work order (read-loop + confabulated paths,
+state-log rows 34/40). The owner changed Morpheus's lane to Qwen 3.8 2.4T
+A95B via DeepInfra on 2026-08-29. The Coder-X lane reference is preserved
+as history above; the binding lane is now `omniroute/qwen3.8-2.4t-a95b`.
+Q1 of record (state-log row 40: O1/O2/O3) is CLOSED — the lane change
+supersedes all three options.
 
 ## WRITE-FIRST DISCIPLINE (binding — this is the failure fix)
 

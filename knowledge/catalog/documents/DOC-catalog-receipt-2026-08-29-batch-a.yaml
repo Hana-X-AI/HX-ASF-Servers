@@ -1,0 +1,55 @@
+document:
+  id: DOC-catalog-receipt-2026-08-29-batch-a
+  title: "Catalog receipt — Carol batch A (KDD-0011/0012/0013 + mia/rob registrations), 2026-08-29"
+  type: evidence
+  declared_purpose: "Carol's batch A catch-up receipt for KDD-0011/0012/0013 and the mia/rob registrations"
+  inferred_value: "INFERENCE: records the index hash before/after batch A's seven added records, proving the frozen-window catalog catch-up."
+  source:
+    author: "Carol (documentation and knowledge steward)"
+    provided_by: "Kimi-K3 (governor acceptance, state-log rows 32/34)"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/knowledge/catalog/receipts/2026-08-29-batchA-carol-kdds-registrations.md"
+    section: "§Batch A receipt"
+    ingestion_date: "2026-08-29T00:00:00Z"
+  owner: "Carol"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents:
+      - "carol"
+    repositories:
+      - "HX-ASF-Servers"
+    environments:
+      - "factory"
+    models: []
+  version: "batch A, 2026-08-29"
+  status: "active"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "evidences"
+      target: "DOC-kdd-0011-rob-registration"
+      note: "batch A added the KDD-0011 record"
+    - predicate: "evidences"
+      target: "DOC-kdd-0012-mia-chief-of-staff"
+      note: "batch A added the KDD-0012 record"
+    - predicate: "evidences"
+      target: "DOC-kdd-0013-agent-model-lanes"
+      note: "batch A added the KDD-0013 record"
+    - predicate: "references"
+      target: "DOC-agent-mia-profile"
+      note: "batch A added mia charter/profile records"
+    - predicate: "references"
+      target: "DOC-agent-rob-profile"
+      note: "batch A added rob charter/profile records"
+  validation:
+    validated_at: "2026-08-29T00:00:00Z"
+    freshness: "current"
+    review_due: "on any catalog amendment"
+  sha256: "a6b4da8f2a88df1693347fdffc79490e409883951d687226c95c2c5a29911593"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/knowledge/catalog/receipts/2026-08-29-batchA-carol-kdds-registrations.md"

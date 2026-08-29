@@ -87,8 +87,11 @@ repo writes.
 
 Credential material in any artifact; candidate writes outside scratch/product
 storage; identity drift vs the freeze; any P0/P1 defect — stop, preserve,
-escalate. Driver-lane (Qwen-X) failures are characterized separately from
-candidate defects.
+escalate. Driver-lane (currently DeepSeek V4 Pro per amendment 2 to the
+launch order [form note 2026-08-29, labeled, Mia per Flash work order 19 —
+F14: "Qwen-X" is the superseded lane; the failure-classification behavior is
+unchanged, only the lane name is corrected]) failures are characterized
+separately from candidate defects.
 
 Close with `[CAMPAIGN COMPLETE — EVIDENCE ATTACHED]` plus per-gate verdicts and
 the campaign integrity fingerprint, or `[CAMPAIGN PAUSED — ESCALATION TO KK3]`

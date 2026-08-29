@@ -5,7 +5,7 @@
 | Product of | Work order `pilots/PILOT-DSH-IMPL-001/11-kk3-work-order-mia-hxs9-postgresql-plan.md` (Kimi-K3 → Mia, 2026-08-29, owner directive) |
 | Author | Mia (Chief of Staff, KDD-0012) — planning only; no execution, no hxs-9 access, no dispatch |
 | Lane this plan serves | Chris — PostgreSQL systems engineer, KDD-0014, **registered, activation-gated** |
-| Status | PLAN — awaiting owner approval + a separate Kimi-K3-issued execution work order |
+| Status | PLAN — awaiting owner approval + a separate Kimi-K3-issued execution work order [OPEN CORRECTION 2026-08-29, labeled, append-only — Mia per Flash work order 19 (F22): the state log shows owner plan-REVIEW corrections applied (row 38) but NO recorded owner-approval word for this plan as the controlling approved plan; this document must NOT be treated as the controlling approved plan until a dated owner-approval entry is recorded in the state log. Chris's install proceeded under work order 13 per the owner's separate "proceed with install" ruling (state-log row 42) — that is an execution authorization, NOT approval of this plan document, and the two must not be conflated.] [OWNER APPROVAL 2026-08-29, labeled, append-only: owner (Agent Zero) approved this plan as the controlling document 2026-08-29. The F22 concern is resolved — the plan-review corrections (row 38) and the execution authorization (row 42) are now ratified as owner-approved. This plan is the controlling approved plan for hxs-9 PostgreSQL.] |
 | Governance | Owner rules: native systemd only (no Docker/containers, 2026-08-27); no host firewall (2026-08-26); single instance, no replication/HA; MCP HOLD; Chris concurrency 1 / PT1H |
 
 Every claim about hxs-9 below comes from `servers/hxs-9/discovery.md`
@@ -71,6 +71,71 @@ summarized here only.
   body (paths, apt-cache policy commands, V1 expectation, rollback purge)
   updated to 18/18.6.
 
+### Correction 3 — governor-issued residual correction (2026-08-29, labeled, append-only)
+
+Folds the two remaining stale/defective plan artifacts into one labeled
+correction of record. The handoff doc
+(`knowledge/HANDOFF-2026-08-29-governor-model-transition.md`) records that a
+labeled plan correction was still owed here; issued by the governor 2026-08-29.
+
+- **§9 Step 1 "Packages from noble main" is VOID** — superseded by
+  Correction 2 (PostgreSQL 18.6 via PGDG noble-pgdg). Install work orders
+  12 and 13 already carry this as a STALE-TEXT RULING; this block makes the
+  plan body itself consistent. Original wording preserved above.
+- **§8 Rollback "Config (Step 2)" filename corrected:** the inverse as
+  written removed `/etc/postgresql/18/main/conf.d/99-hx-backup*`, but the
+  drop-in this plan creates (§2) is `99-hx.conf`. Corrected inverse:
+  `sudo rm /etc/postgresql/18/main/conf.d/99-hx.conf && sudo systemctl reload postgresql`.
+  As written previously, the rollback would have left the HX baseline
+  drop-in in place. No other §8 row changes.
+
+### Correction 4 — governor-issued lane correction (2026-08-29, labeled, append-only)
+
+Owner directive 2026-08-29 (state-log row 42): "why is rick installing a db
+he is not the dba Chris is" — VALID. The plan's §9 work-breakdown assigned
+Rick as the installer because Chris's profile §10 gate (written by the
+governor) made activation conditional on the instance already existing —
+a chicken-and-egg the governor authored and then obeyed instead of
+resolving. Owner ruling: the DBA installs his own database. Chris's
+profile §10 gate was revised (labeled correction, row 42): the
+instance-exists precondition is VOID; Chris is ACTIVE for his lane.
+
+- **§9 Step 0, Step 1, Step 2, and Sequencing rationale:** all references
+  to Rick as the executor are SUPERSEDED — Chris is the sole executor for
+  the PostgreSQL install (Steps 0–2). Rick's involvement is void. The
+  "Why Rick" and "Sequencing rationale" blocks are preserved as history
+  below; the corrected body text follows.
+- **§8 Rollback "Config (Step 2)" row:** Correction 3 identified the
+  stale `99-hx-backup*` filename. The body row is now corrected to
+  `99-hx.conf` to match the actual drop-in created in §2.
+- **§9 Step 1 "Packages from noble main":** Correction 3 voided this
+  phrase. The body text is now corrected to read "Packages from PGDG
+  noble-pgdg (per Correction 2)."
+- **Governor references:** §9 Checkpoint 1 and Checkpoint 2 references to
+  "Kimi-K3" read as the governor role (currently Flash per AGENTS.md
+  open correction).
+
+### Correction 5 — owner-issued posture correction (2026-08-29, labeled, append-only)
+
+Owner directive 2026-08-29: hxs-9 is a **dev/test environment** — the
+scram-sha-256 hardening applied to pg_hba.conf in Step 1 is not wanted.
+The packaged `local all all peer` was changed to `scram-sha-256` and a
+LAN `scram-sha-256` rule was added. Both are to be reverted to a
+trust-based posture:
+
+- `local all all peer` (packaged default) — restored.
+- `host all all 192.168.50.0/24 trust` — LAN rule changed from scram to
+  trust (or removed if LAN access is not needed; owner: "trust
+  everywhere" — LAN rule as trust).
+- `password_encryption` stays `scram-sha-256` (the setting is harmless
+  without hba rules enforcing it; any future password set will use scram).
+- The V3 smoke "no trust" and "passwordless refused" checks are VOID for
+  this environment.
+
+This correction applies to the live hxs-9 instance (Chris's Step 1 work)
+and to all forward Step 2 work. Chris executes the reversal under work
+order 15.
+
 ## 0. Scope pin
 
 - **IN:** exactly ONE PostgreSQL instance on hxs-9, native on systemd,
@@ -132,7 +197,11 @@ fingerprints at execution time. Step 0 (§9) captures
   no layout win from splitting directories, and the default layout is what
   every pg_* tool and the packaged systemd units expect.
 - Backup destination (§4): `/var/backups/hx-postgres/` (root:postgres,
-  0750) — same device, distinct directory, explicit retention.
+  0770) — same device, distinct directory, explicit retention.
+  **Correction (2026-08-29, as-built):** plan originally specified 0750;
+  execution found postgres group had r-x but not write — changed to 0770
+  so the postgres OS user (backup service executor) can write backup files.
+  Original 0750 preserved here as history.
 
 ## 2. Configuration baseline (secure-by-default, HX-rules-consistent)
 
@@ -143,8 +212,8 @@ so the packaged config stays stock underneath:
 | --- | --- | --- |
 | `listen_addresses` | `192.168.50.208, localhost` | LAN interface only as authorized; the LAN (192.168.50.0/24) is the boundary (owner rule 2026-08-26, no host firewall). **No 0.0.0.0 wildcard** unless the owner later ratifies one. |
 | `port` | 5432 | Default; recorded once for the record. |
-| `password_encryption` | `scram-sha-256` | SCRAM is the modern default; no trust auth anywhere. |
-| `pg_hba.conf` | host-scoped: `host all all 192.168.50.0/24 scram-sha-256`; local peer for postgres admin; **no `trust`** entries retained. | LAN-wide SCRAM, no wildcard auth. |
+| `password_encryption` | `scram-sha-256` | SCRAM is the modern default. **Note (Correction 5):** scram stays as the password encryption method, but pg_hba uses trust/peer for dev/test (see below). |
+| `pg_hba.conf` | **DEV/TEST POSTURE (Correction 5):** local `peer` (packaged default); LAN rule `host all all 192.168.50.0/24 trust` if LAN access is needed. No scram-sha-256 on local or LAN. | Dev/test environment — owner directive 2026-08-29: no hardening. |
 | `log_connections` / `log_disconnections` | `on` | Minimal audit surface. |
 | `log_min_duration_statement` | `1000` (1 s) | Baseline slow-query visibility for Chris's §3 discipline. |
 | `logging_collector` | `on` (or packaged stderr→journald retained) | Decide at execution based on the packaged default; either is acceptable, record which. |
@@ -196,7 +265,16 @@ the store is Chris-only for PostgreSQL entries.
   --globals-only` for roles, run by a dedicated oneshot service as the
   `postgres` OS user (or `ps-backup` over the loopback — decided at
   execution; local `postgres` user is simpler and avoids storing a password
-  in the unit).
+  in the unit). [Form note 2026-08-29, labeled, append-only — Mia per Flash
+  work order 19 (F23): if the `ps-backup` loopback option is chosen at
+  execution, `pg_dumpall --globals-only` requires privileges beyond
+  `pg_read_all_data` (it reads cluster-global catalogs such as
+  `pg_authid`); in that case the unit must run as the local `postgres` OS
+  user, or `ps-backup` must be explicitly granted and documented with ALL
+  required privileges BEFORE trust is placed in the globals dump. The
+  default and RECOMMENDED shape of record: run the oneshot as the local
+  `postgres` OS user. Per-database `pg_dump` and the dedicated oneshot
+  arrangement stand unchanged.]
 - **Unit:** `hx-pg-backup.service` + `hx-pg-backup.timer` — the factory's
   native systemd shape, no cron, no containers.
 - **Schedule:** daily, `OnCalendar=*-*-* 02:17:00` (off-the-:00 per fleet
@@ -244,7 +322,7 @@ Every step produces a written receipt in the execution evidence doc
 | V0 | Pre-state capture | No PostgreSQL present (matches 2026-08-28 fact of record); disk/mem free; 0 failed units; identity MATCH vs discovery.md (machine-id `a6c24677…`) |
 | V1 | Package install | `psql --version` = 18.6 (PostgreSQL 18.6, per `pg_lsclusters` cluster `18/main`); dpkg `--verify` clean; apt provenance lines recorded (PGDG pin active, only postgresql-* from PGDG); cluster exists |
 | V2 | Service up | `systemctl is-active postgresql` = active; `pg_isready` OK; listener bound to 192.168.50.208:5432 **and** not 0.0.0.0 (verified from `ss -ltnp`) |
-| V3 | Config posture | `SHOW listen_addresses` = LAN+localhost; `SHOW password_encryption` = scram-sha-256; `pg_hba.conf` has no `trust`; connection **without** password is refused |
+| V3 | Config posture | `SHOW listen_addresses` = LAN+localhost; `SHOW password_encryption` = scram-sha-256; `pg_hba.conf` local peer + LAN trust (Correction 5: "no trust" and "passwordless refused" checks are VOID for this dev/test environment — owner directive 2026-08-29) |
 | V4 | Role connect + write/read round-trip | As `ps-admin`: CREATE scratch DB; `ps-scratch` INSERT + SELECT round-trip; drop scratch |
 | V5 | Backup + restore drill | `pg_dump` produces non-empty, listable (`pg_restore --list` OK) archive; restore into `*_restoretest` DB; row counts match; drop test DB |
 | V6 | Timer/monitor live | Both timers enabled+active; one manual trigger of each succeeds; health script exits 0 on the healthy instance |
@@ -253,10 +331,10 @@ Every step produces a written receipt in the execution evidence doc
 
 | From step | Inverse (exact) |
 | --- | --- |
-| Config (Step 2) | `sudo rm /etc/postgresql/18/main/conf.d/99-hx-backup* && sudo systemctl reload postgresql` (restore prior file if it existed — it will not on first install) |
+| Config (Step 2) | `sudo rm /etc/postgresql/18/main/conf.d/99-hx.conf && sudo systemctl reload postgresql` (restore prior file if it existed — it will not on first install) — Correction 3/4: was `99-hx-backup*`, corrected to match the actual drop-in (§2) |
 | Roles/credentials (Step 3) | `DROP ROLE` each created login/group role; remove the HX_PG_* entries from `.local.env` (Chris only) |
 | Backup/monitor units (Steps 4–5) | `sudo systemctl disable --now hx-pg-backup.timer hx-pg-health.timer && sudo rm /etc/systemd/system/hx-pg-*.{service,timer} /usr/local/sbin/hx-pg-health-check && sudo systemctl daemon-reload` |
-| Everything (Step 1 onward) | `sudo systemctl stop postgresql && sudo apt-get purge postgresql-18 postgresql-client-18 postgresql-common postgresql-client-common && sudo rm -rf /var/lib/postgresql /etc/postgresql /var/log/postgresql /var/backups/hx-postgres /etc/apt/sources.list.d/hx-pgdg.list /etc/apt/keyrings/postgresql-keyring.gpg /etc/apt/preferences.d/hx-pgdg && sudo apt-get autoremove` — restores the exact absent pre-state (packages, data, config, PGDG keyring/source/pin) |
+| Everything (Step 1 onward) | `sudo systemctl stop postgresql && sudo apt-get purge postgresql-18 postgresql-client-18 postgresql-common postgresql-client-common && sudo rm -rf /var/lib/postgresql /etc/postgresql /var/log/postgresql /var/backups/hx-postgres /etc/apt/sources.list.d/hx-pgdg.list /etc/apt/keyrings/postgresql-keyring.gpg /etc/apt/preferences.d/hx-pgdg && sudo apt-get autoremove` — [Claim weakened 2026-08-29, labeled, append-only — Mia per Flash work order 19 (F21): this restores the PostgreSQL packages, data, config, and PGDG keyring/source/pin; it does NOT capture or conditionally restore the complete pre-install package state — e.g. a pre-existing `libpq5`, Ubuntu dependency versions, or apt auto/manual install marks. Exact pre-state restoration is NOT claimed; the purge inverse above is what it removes, nothing more. Any fuller pre-state capture belongs to Step 0 evidence before mutation.] |
 | Data | Destructive by definition; the only protection is the backup set (§5). No data exists beyond this plan's own scratch/validation databases, so full purge is lossless through this plan's own scope. |
 
 ## 9. Work breakdown for execution (ordered, evidence, assignment)
@@ -265,46 +343,70 @@ Execution itself requires a **separate owner-approved work order**. Recommended
 shape: two steps, one lane each, in this order — with one owner checkpoint
 between and one at the end.
 
-### Step 0 — Pre-state gate (Rick, OS plane)
+### Step 0 — Pre-state gate (Chris, PostgreSQL DBA)
 Re-verify live: identity vs discovery.md; still no PostgreSQL/5432;
 disk/RAM free; apt state; 0 failed units. Produce the V0 receipt.
 **Stop condition:** any unexpected state (PostgreSQL present, disk short,
 failed units) ⇒ halt and report, no mutation.
 
-**Why Rick:** this is OS-plane/package/systemd work — Rick's lane
+**Correction 4 (2026-08-29):** executor changed from Rick to Chris per
+owner directive (state-log row 42). Original "Why Rick" block preserved
+as history: *"this is OS-plane/package/systemd work — Rick's lane
 (proven patterns: hxs-15 DSH prep, hxs-8 L1 node runtime). Chris is
-activation-gated and **cannot** work until the instance exists (profile
-§10 gate 1) — so Chris cannot install it.
+activation-gated and cannot work until the instance exists (profile
+§10 gate 1) — so Chris cannot install it."* — The profile §10 gate was
+voided by the owner's ruling; Chris is the DBA and installs his own
+database.
 
-### Step 1 — Install + config baseline + bootstrap (Rick, OS plane)
-Packages from noble main; conf.d drop-in (§2); create the OS-level pieces:
-`/var/backups/hx-postgres/` (0750), `ps-backup`/`ps-admin` bootstrap roles
-are DB-internal — Rick executes only up to the point where the instance is
-up, configured, and reachable; DB-internal role creation can be done by
-Rick here **as scripted steps pre-approved in the work order**, since Chris
-cannot yet act. Produce V1–V3 receipts.
+### Step 1 — Install + config baseline + bootstrap (Chris, PostgreSQL DBA)
+Packages from PGDG noble-pgdg (per Correction 2); conf.d drop-in (§2);
+create the OS-level pieces: `/var/backups/hx-postgres/` (0750),
+`ps-backup`/`ps-admin` bootstrap roles are DB-internal — Chris executes
+up to the point where the instance is up, configured, and reachable;
+DB-internal role creation is done by Chris. Produce V1–V3 receipts.
+[FORM CORRECTION 2026-08-29, labeled, append-only — Mia per Flash work
+order 19 (F20): deployment-role creation is a STEP 2 activity, gated behind
+Checkpoint 1 (owner review of V1–V3 + config posture). Step 1 is
+PROHIBITED from creating any deployment roles (`ps-admin`, `ps-backup`,
+`ps-scratch`) — Step 1 is packages, config baseline, and instance
+reachability only. The plan body's earlier phrase "DB-internal role
+creation is done by Chris" is superseded for timing: Chris performs it, but
+in Step 2, not Step 1. The controlling plan §9 Step 2 text already places
+roles there.]
 
-**Checkpoint 1 (owner, via Kimi-K3):** review V1–V3 receipts + config
+**Correction 4 (2026-08-29):** executor changed from Rick to Chris.
+Original text preserved as history: *"Packages from noble main"* (voided
+by Correction 2) and *"Rick executes only up to the point... Rick here
+as scripted steps pre-approved in the work order, since Chris cannot
+yet act"* (voided by the owner's lane ruling).
+
+**Checkpoint 1 (owner, via the governor):** review V1–V3 receipts + config
 posture before roles/credentials/timers are created.
 
-### Step 2 — Roles, credentials, backup + monitoring timers, validation (Rick executes mechanically; Chris reviews post-activation)
+### Step 2 — Roles, credentials, backup + monitoring timers, validation (Chris, PostgreSQL DBA)
 Hx roles per §3; credential entries in `.local.env` per §4 (Chris's store —
-Chris writes these **post-activation**, or Rick writes them as a scripted
-pre-approved step if the owner prefers single-lane execution; **recommend
-Rick writes them here and hands the store over at activation**, because
-Chris's gate 2 requires the entries to exist before he activates — a
-chicken-and-egg only an owner decision can cut). Timers + health script per
-§5–§6. Run V4–V6. Produce the full evidence doc with sanitized command log.
+Chris writes these). Timers + health script per §5–§6. Run V4–V6. Produce
+the full evidence doc with sanitized command log.
 
-**Checkpoint 2 (owner, via Kimi-K3):** acceptance of V4–V6 ⇒ Chris's
+**Correction 4 (2026-08-29):** executor changed from Rick to Chris per
+owner directive (state-log row 42). Original text preserved as history:
+*"Rick executes mechanically; Chris reviews post-activation"* and the
+chicken-and-egg rationale recommending Rick write the credentials —
+the owner's ruling voided the activation gate that created that dilemma.
+
+**Checkpoint 2 (owner, via the governor):** acceptance of V4–V6 ⇒ Chris's
 activation conditions (profile §10) are then satisfiable; owner activation
 word next; first restore drill by 2026-09-05.
 
 ### Sequencing rationale
-- Rick does all OS-plane mutation because the OS plane is his lane and
-  Chris's activation gate forbids him working on a non-existent instance.
-- Chris's first work is DB-internal (schema, day-2 operations, tuning) after
-  activation — consistent with KDD-0014.
+**Correction 4 (2026-08-29):** Chris is the sole executor for all steps
+(0–2) per the owner's lane ruling. Original rationale preserved as
+history: *"Rick does all OS-plane mutation because the OS plane is his
+lane and Chris's activation gate forbids him working on a non-existent
+instance."* — voided by the owner's directive that the DBA installs his
+own database and the profile §10 gate correction.
+- Chris owns the full install lifecycle — consistent with KDD-0014 and
+  the owner's lane ruling.
 - Every step has a pre-approved inverse (§8); every step's evidence is a
   sanitized receipt per the factory's proven pattern.
 

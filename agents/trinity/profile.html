@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Generated from agents/trinity/profile.md (sha256 c5fb420d476d7e311d4469a89504173e1d94aaff16637d9186d6cd2b19c08aa7) by scripts/wiki/render.py on 2026-08-29T01:35Z.
+<!-- Generated from agents/trinity/profile.md (sha256 80a0d1f2cc3931586d83ce49526cc6dd153cd185f2b1af293805e423f52bab0a) by scripts/wiki/render.py on 2026-08-29T04:33Z.
      Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
 <html lang="en">
 <head>
@@ -88,7 +88,7 @@ change_class: &lt;low|medium|high|critical&gt;
 definition_of_done: []
 required_evidence: []
 execution_backend: glm-5.3-flash  # via OmniRoute, KDD-0013; per-task identity/health verification first (was coder-x until 2026-08-28)
-route_verification: required      # per-task receipt records ALL of: call-sign, endpoint, alias, immutable identity (manifest digest), role — per KDD-0013; unresolved or mismatched identity = STOP, fail closed, escalate
+route_verification: required      # per-task receipt records ALL of: call-sign, endpoint, alias, immutable identity, role — per KDD-0013; unresolved or mismatched identity = STOP, fail closed, escalate. [Form note 2026-08-29, labeled: for cloud lanes (KDD-0013 amendment-2 pattern, applied to GLM 5.3 Flash) the immutable identity of record is the EXACT SERVED-MODEL ID echoed by the gateway plus a session-start probe receipt — not a local manifest digest, which does not exist for cloud models; the call-sign/endpoint/alias/role checks stand unchanged.]
 independent_verifier: qwen-x      # deterministic checks first, then Qwen-X
 retry_budget: &lt;count&gt;             # default 2
 rollback_authority: &lt;role&gt;
@@ -110,7 +110,7 @@ catalog_receipt_required: true    # Carol's receipt completes the handoff</code>
 <h2 id="13-activation">13. Activation</h2>
 <p>This profile is <strong>ACTIVE</strong>: the owner ratified KDD-0008 on 2026-08-27 (decision O1, adopt-as-corrected; pilot state log row 5) and the roster entry was added the same day (<code>agents/README.md</code>). Historical draft condition, superseded at ratification: this profile was inert — no work orders, no host contact, no deployments, no mutations. The candidate originals remain preserved unchanged at their <code>/home/hxsa/opt/local-tkv/</code> paths; this profile supersedes nothing. Layer 1 work still requires separate owner authorization (goal OD-12) and the hxs-8 readiness acknowledgement (OD-03).</p>
 </main>
-<footer>Source of truth: <code>agents/trinity/profile.md</code> (sha256 <code>c5fb420d476d7e311d4469a89504173e1d94aaff16637d9186d6cd2b19c08aa7</code>) · rendered 2026-08-29T01:35Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+<footer>Source of truth: <code>agents/trinity/profile.md</code> (sha256 <code>80a0d1f2cc3931586d83ce49526cc6dd153cd185f2b1af293805e423f52bab0a</code>) · rendered 2026-08-29T04:33Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
 
 </body>
 </html>

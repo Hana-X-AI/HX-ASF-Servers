@@ -1,3 +1,6 @@
 __pycache__/
 *.pyc
 knowledge/catalog/.mint.lock
+
+# Gordon phase-b session diagnostics (runtime scratch, never committed)
+pilots/PILOT-DSH-IMPL-001/gordon/phase-b/diag_*.mjs

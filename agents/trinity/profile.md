@@ -223,7 +223,7 @@ change_class: <low|medium|high|critical>
 definition_of_done: []
 required_evidence: []
 execution_backend: glm-5.3-flash  # via OmniRoute, KDD-0013; per-task identity/health verification first (was coder-x until 2026-08-28)
-route_verification: required      # per-task receipt records ALL of: call-sign, endpoint, alias, immutable identity (manifest digest), role — per KDD-0013; unresolved or mismatched identity = STOP, fail closed, escalate
+route_verification: required      # per-task receipt records ALL of: call-sign, endpoint, alias, immutable identity, role — per KDD-0013; unresolved or mismatched identity = STOP, fail closed, escalate. [Form note 2026-08-29, labeled: for cloud lanes (KDD-0013 amendment-2 pattern, applied to GLM 5.3 Flash) the immutable identity of record is the EXACT SERVED-MODEL ID echoed by the gateway plus a session-start probe receipt — not a local manifest digest, which does not exist for cloud models; the call-sign/endpoint/alias/role checks stand unchanged.]
 independent_verifier: qwen-x      # deterministic checks first, then Qwen-X
 retry_budget: <count>             # default 2
 rollback_authority: <role>

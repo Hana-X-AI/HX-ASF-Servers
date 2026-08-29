@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<!-- Generated from knowledge/decisions/KDD-0015-wayne-registration.md (sha256 4487be8f358a2cbed97173226a4159128abb2d111227b10ac79dab40eb70c09e) by scripts/wiki/render.py on 2026-08-29T04:33Z.
+     Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KDD-0015: Wayne registration — Redis systems engineer</title>
+<style>
+:root{color-scheme:light dark}
+body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.55;
+max-width:62rem;margin:0 auto;padding:1.5rem 2rem;color:#1a1a1a;background:#fff}
+h1,h2,h3,h4,h5,h6{line-height:1.25;margin-top:1.6em}
+h1{border-bottom:2px solid #444;padding-bottom:.3em}
+h2{border-bottom:1px solid #ccc;padding-bottom:.2em}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+code{background:#f0f0f0;padding:.1em .3em;border-radius:3px}
+pre{background:#f6f8fa;border:1px solid #ddd;border-radius:6px;padding:.8em;overflow-x:auto}
+pre code{background:none;padding:0}
+table{border-collapse:collapse;margin:1em 0;width:100%}
+th,td{border:1px solid #ccc;padding:.35em .6em;text-align:left;vertical-align:top}
+th{background:#f0f0f0}
+blockquote{border-left:4px solid #bbb;margin:1em 0;padding:.2em 1em;color:#444;background:#fafafa}
+a{color:#0645ad}
+.doc-meta{color:#666;font-size:.85em;border-bottom:1px dashed #bbb;padding-bottom:.6em;margin-bottom:1.2em}
+footer{margin-top:2.5em;border-top:1px solid #ccc;color:#666;font-size:.8em;padding-top:.8em}
+pre.mermaid{background:#fff;border:1px dashed #999}
+@media (prefers-color-scheme:dark){
+body{color:#ddd;background:#111} h1{border-color:#888} h2{border-color:#555}
+code{background:#2a2a2a} pre{background:#1b1b1b;border-color:#444}
+th{background:#222} th,td{border-color:#555} blockquote{color:#bbb;background:#191919;border-color:#666}
+a{color:#6fa8ff} .doc-meta,footer{color:#999}}
+</style>
+</head>
+<body>
+<main class="doc">
+<h1 id="kdd-0015-wayne-registration-redis-systems-engineer">KDD-0015: Wayne registration — Redis systems engineer</h1>
+<ul><li>Date: 2026-08-29</li><li>Status: ratified</li><li>Decider: Agent-Zero</li><li>Related goals: hxs-9 state-services implementation (registry target-state); PostgreSQL-to-Redis cache integration (pairs with Chris, KDD-0014)</li></ul>
+<h2 id="context">Context</h2>
+<p>The registry assigns hxs-9 "State services: PostgreSQL + Redis." Chris (KDD-0014) owns PostgreSQL. The Redis side needs a dedicated engineer. The owner's candidate profile <code>agent-zero-docs/agent-profiles/wayne/wayne-profile.yaml</code> (profile_version 2026-08-28T22:50:15Z, digest <code>sha256:282d151fa8921fe299b24d98ac3f91981d21a7c6734e313f87cec23dc176dc26</code>, preserved unchanged) was reviewed on request 2026-08-29 and dispositioned by owner directive the same day.</p>
+<h2 id="decision">Decision</h2>
+<p>Register Wayne as the Redis systems engineer for HX-ASF.</p>
+<h3 id="lane-assignment">Lane assignment</h3>
+<ul><li>Model lane: OpenAI gpt-oss-120b (<code>openrouter/openai/gpt-oss-120b</code>, provider AkashML, via OmniRoute hxs-8) — same lane as Carol. Owner-assigned 2026-08-29. CLI alias <code>omniroute/gpt-oss-120b</code> already exists in the kimi-code config (established for Carol, row 33). <code>max_output_size=16384</code> per the row-33 guard class.</li></ul>
+<h3 id="adaptations-from-the-source-profile-all-recorded-openly">Adaptations from the source profile (all recorded openly)</h3>
+<ol><li><strong>Authority chain retargeted:</strong> every "Paul" reference in the source profile reads as the governor (Flash) / Agent Zero. Escalation goes to the governor, never the owner directly. Distribution via Mia under governor-issued work orders.</li><li><strong>MCP surfaces — HOLD</strong> (owner directive 2026-08-29): <code>mcp-redis-main</code> and <code>postgres-mcp-mai</code> are deferred. No MCP usage until the owner lifts the hold. Same posture as Chris's MCP hold.</li><li><strong>RAG/vector/stream integration — DEFERRED</strong> (owner directive 2026-08-29): vector indexes, semantic caching, agent memory, and stream-based work queues are out of the initial scope. Separate assignment when the owner authorizes.</li><li><strong>Model lane assigned:</strong> the source profile specified <code>coder-x</code> as primary backend. Superseded by the owner's lane assignment (gpt-oss-120b via OmniRoute).</li><li><strong>Profile location:</strong> <code>agents/wayne/profile.md</code> (Markdown, not YAML — factory convention). Distilled from the source YAML with adaptations above.</li></ol>
+<h3 id="activation-gate">Activation gate</h3>
+<p>Wayne is registered but activation-gated. Conditions:</p>
+<ol><li>The Redis instance is implemented and validated on hxs-9.</li><li>Redis ACL users and credential entries exist in <code>.local.env</code>.</li><li>The governor's explicit activation word.</li></ol>
+<p>The instance-exists precondition does NOT block Wayne from installing Redis — he installs his own instance (same ruling as Chris: the DBA/cache engineer installs his own system). The gate covers post-install activation for ongoing operational duties.</p>
+<h3 id="lane-boundary-with-chris">Lane boundary with Chris</h3>
+<p>Wayne owns the Redis side of the PostgreSQL cache integration contract (cache keys, TTLs, invalidation, serialization). Chris owns the PostgreSQL side (schema, queries, roles, triggers). When a cache contract requires a PostgreSQL change, Wayne hands off to Chris via the governor.</p>
+<h2 id="roster-entry">Roster entry</h2>
+<p><code>agents/wayne/</code> created (charter + profile, distilled from the candidate YAML with provenance + source digest recorded). Roster row added to <code>agents/README.md</code>. KDD-0013 amended (Amendment 9: Wayne registered, EIGHT cloud lanes metered under OD-14).</p>
+<h2 id="provenance">Provenance</h2>
+<ul><li>Source profile: <code>/home/hxsa/opt/local-tkv/agent-zero-docs/agent-profiles/wayne/wayne-profile.yaml</code></li><li>Source digest: <code>sha256:282d151fa8921fe299b24d98ac3f91981d21a7c6734e313f87cec23dc176dc26</code></li><li>Source preserved unchanged.</li><li>Operative distillation: <code>agents/wayne/profile.md</code> + <code>agents/wayne/charter.md</code>.</li></ul>
+</main>
+<footer>Source of truth: <code>knowledge/decisions/KDD-0015-wayne-registration.md</code> (sha256 <code>4487be8f358a2cbed97173226a4159128abb2d111227b10ac79dab40eb70c09e</code>) · rendered 2026-08-29T04:33Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+
+</body>
+</html>

@@ -1,7 +1,12 @@
 # HAND-OFF — Governor model transition (2026-08-29)
 
 **For the incoming governor session (GLM 5.2). Read this first, then
-`AGENTS.md`, then the DSH state log rows 17–43.**
+`AGENTS.md`, then the DSH state log rows 17–43.** [Form note 2026-08-29,
+labeled, append-only: rows 44–46 were appended to the state log after this
+hand-off was written (Checkpoint-1 review, outgoing-session close, governor
+transition to Flash); the incoming session reads the range THROUGH THE LATEST
+ROW, not only through 43. The historical "rows 17–43" wording above is
+preserved as written.]
 
 ## 1. What changed at this transition
 
@@ -29,11 +34,13 @@
   onboarding GPG-verified, postgresql-18 = 18.6-1.pgdg24.04+2, conf.d
   baseline per plan §2, /var/backups/hx-postgres, V1–V3 smokes), then a
   HARD HALT at **Checkpoint 1** for owner review.
-- **On completion:** review his evidence doc
-  `servers/hxs-9/2026-08-29-postgresql-install-step1.md` against the
-  governor checklist, then present Checkpoint 1 to the owner. Step 2
-  (roles, credentials in `.local.env`, backup + health timers, V4–V6) runs
-  only on the owner's word after Checkpoint 1.
+- **Correction (row 44, supersedes the HALT above):** Checkpoint 1 is
+  DONE and ACCEPTED — Chris's evidence doc
+  `servers/hxs-9/2026-08-29-postgresql-install-step1.md` was verified
+  live by the governor (service up, version 18.6, listeners LAN +
+  loopback only, scram/no-trust posture). **Awaiting the owner's word
+  for Step 2** (roles, credentials in `.local.env`, backup + health
+  timers, V4–V6). See §6 step 2.
 - Controlling plan: `servers/hxs-9/2026-08-29-postgresql-implementation-plan.md`
   (owner-reviewed twice: LiteLLM/LangGraph stripped, ps-* role format,
   18.6 via PGDG). One known stale line (§9 Step 1 "noble main") — ruled

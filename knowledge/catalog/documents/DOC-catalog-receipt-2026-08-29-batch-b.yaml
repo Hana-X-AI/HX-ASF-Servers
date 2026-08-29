@@ -1,0 +1,47 @@
+document:
+  id: DOC-catalog-receipt-2026-08-29-batch-b
+  title: "Catalog receipt — Carol batch B (state-log rows 17-33 + registry hxs-7 decommission), 2026-08-29"
+  type: evidence
+  declared_purpose: "Carol's batch B catch-up receipt for the state-log catalog record and the registry hxs-7 decommission corrections"
+  inferred_value: "INFERENCE: records the index hash before/after batch B's record additions/updates, closing the frozen-window catch-up."
+  source:
+    author: "Carol (documentation and knowledge steward)"
+    provided_by: "Kimi-K3 (governor acceptance, state-log rows 35/36)"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/knowledge/catalog/receipts/2026-08-29-batchB-carol-statelog-registry.md"
+    section: "§Batch B receipt"
+    ingestion_date: "2026-08-29T00:00:00Z"
+  owner: "Carol"
+  applies_to:
+    hosts:
+      - "hxs-7"
+    fqdns: []
+    services: []
+    agents:
+      - "carol"
+    repositories:
+      - "HX-ASF-Servers"
+    environments:
+      - "factory"
+    models: []
+  version: "batch B, 2026-08-29"
+  status: "active"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "evidences"
+      target: "DOC-pilot-dsh-impl-001-state-log"
+      note: "batch B added the state-log catalog record"
+    - predicate: "describes"
+      target: "hxs-7 decommission correction in DOC-server-registry and DOC-tkv-server-registry"
+      note: "batch B updated both registry records"
+  validation:
+    validated_at: "2026-08-29T00:00:00Z"
+    freshness: "current"
+    review_due: "on any catalog amendment"
+  sha256: "0bfd532b709f48a79838661ed488a03ec44bb705d201a4d57d651aa953f845ab"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/knowledge/catalog/receipts/2026-08-29-batchB-carol-statelog-registry.md"

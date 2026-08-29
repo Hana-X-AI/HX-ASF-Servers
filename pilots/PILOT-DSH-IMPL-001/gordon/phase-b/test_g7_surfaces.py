@@ -552,9 +552,9 @@ def test_g7_07_corrupted_session_web_read(cfg, candidate_bin, scratch_home, scra
         b'{"type":"session","version":0,"id":"session-torn-tail","createdAt":1,'
         b'"cwd":"' + str(workspace).encode() + b'","delegationDepth":0}\n',
         b'{"type":"turn/start","seq":0,"time":1,"data":{"turn":1}}\n'
-        b'{"type":"assistant/message","seq":1,"time":2,"data":{"turn":1,"step":1,'
+        b'{"type":"assistant/message","seq":1,"time":2,"surfaceOp":"append","data":{"turn":1,"step":1,'
         b'"message":{"role":"assistant","content":[{"type":"text","text":"PREFIX-OK"}],'
-        b'"id":"m-torn-1","source":{"kind":"model","provider":"mock","model":"mock"}}}\n',
+        b'"id":"m-torn-1","source":{"kind":"model","provider":"mock","model":"mock"}}}}\n',
         torn=b'{"type":"turn/end","seq":2,"time":3,"data":{"turn":1,"reason":{"kind":"comple',
     )
     # Corrupt middle: valid header + event 0 + a garbage line + event 2.

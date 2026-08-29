@@ -181,6 +181,16 @@ host    replication     all             ::1/128                 scram-sha-256
 - After reload: `pg_hba_file_rules` error count = 0 (server parses it clean).
 - Final perms normalized to packaged convention: 0640 root:postgres.
 
+**Correction 5 (2026-08-29, labeled, append-only — owner directive: dev/test
+posture):** the pg_hba.conf changes above are REVERTED. hxs-9 is a dev/test
+environment; scram-sha-256 hardening is not wanted. The packaged
+pg_hba.conf was restored from `pg_hba.conf.pre-hx.bak` (local all all peer
+restored), and the LAN rule changed to `host all all 192.168.50.0/24 trust`.
+Passwordless LAN connections now succeed. See the Step 2 evidence doc
+(`2026-08-29-postgresql-install-step2.md` §1) for the revert receipts. The
+V3 "no trust" and "passwordless refused" checks are VOID for this
+environment. Original text preserved above.
+
 ### 4.4 Logging decision (the execution-time choice the plan asked for)
 
 Packaged Debian/PGDG default: `logging_collector = off` (`SHOW logging_collector`

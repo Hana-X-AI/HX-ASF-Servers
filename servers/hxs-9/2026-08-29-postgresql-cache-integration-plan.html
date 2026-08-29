@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<!-- Generated from servers/hxs-9/2026-08-29-postgresql-cache-integration-plan.md (sha256 466336beb05ab400ec69f8eecff84e2c91e4a0823a5939bf5084bf029dc261f1) by scripts/wiki/render.py on 2026-08-29T04:47Z.
+     Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>hxs-9 — PostgreSQL-side plan for Redis cache integration (PLANNING ONLY — NOT EXECUTED)</title>
+<style>
+:root{color-scheme:light dark}
+body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.55;
+max-width:62rem;margin:0 auto;padding:1.5rem 2rem;color:#1a1a1a;background:#fff}
+h1,h2,h3,h4,h5,h6{line-height:1.25;margin-top:1.6em}
+h1{border-bottom:2px solid #444;padding-bottom:.3em}
+h2{border-bottom:1px solid #ccc;padding-bottom:.2em}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+code{background:#f0f0f0;padding:.1em .3em;border-radius:3px}
+pre{background:#f6f8fa;border:1px solid #ddd;border-radius:6px;padding:.8em;overflow-x:auto}
+pre code{background:none;padding:0}
+table{border-collapse:collapse;margin:1em 0;width:100%}
+th,td{border:1px solid #ccc;padding:.35em .6em;text-align:left;vertical-align:top}
+th{background:#f0f0f0}
+blockquote{border-left:4px solid #bbb;margin:1em 0;padding:.2em 1em;color:#444;background:#fafafa}
+a{color:#0645ad}
+.doc-meta{color:#666;font-size:.85em;border-bottom:1px dashed #bbb;padding-bottom:.6em;margin-bottom:1.2em}
+footer{margin-top:2.5em;border-top:1px solid #ccc;color:#666;font-size:.8em;padding-top:.8em}
+pre.mermaid{background:#fff;border:1px dashed #999}
+@media (prefers-color-scheme:dark){
+body{color:#ddd;background:#111} h1{border-color:#888} h2{border-color:#555}
+code{background:#2a2a2a} pre{background:#1b1b1b;border-color:#444}
+th{background:#222} th,td{border-color:#555} blockquote{color:#bbb;background:#191919;border-color:#666}
+a{color:#6fa8ff} .doc-meta,footer{color:#999}}
+</style>
+</head>
+<body>
+<main class="doc">
+<h1 id="hxs-9-postgresql-side-plan-for-redis-cache-integration-planning-only-not-executed">hxs-9 — PostgreSQL-side plan for Redis cache integration (PLANNING ONLY — NOT EXECUTED)</h1>
+<table><thead><tr><th>Field</th><th>Value</th></tr></thead><tbody><tr><td>Product of</td><td>Work order: Chris PostgreSQL-side cache integration plan (Flash → Chris, 2026-08-29)</td></tr><tr><td>Author</td><td>Chris (PostgreSQL systems engineer, KDD-0014) — planning only; no execution, no hxs-9 access</td></tr><tr><td>Lane</td><td>The plan lane Chris owns; the Redis side belongs to Wayne (KDD-0015)</td></tr><tr><td>Status</td><td>PLAN — awaiting owner approval + a separate Kimi-K3-issued execution work order</td></tr><tr><td>Target</td><td>hxs-9 (192.168.50.208) ONLY</td></tr><tr><td>Controlling docs</td><td>Chris profile (KDD-0014), Wayne charter (KDD-0015), PostgreSQL implementation plan (hxs-9, owner-approved 2026-08-29), PostgreSQL install step2 as-built</td></tr><tr><td>Governance</td><td>Owner rules: native systemd only; no host firewall; single instance, no replication/HA; dev/test trust posture; MCP HOLD; Chris concurrency 1 / PT1H; PostgreSQL is the system of record</td></tr></tbody></table>
+<h2 id="0-knowledge-review-receipt-mandatory-completed-before-writing">0. Knowledge-review receipt (MANDATORY — completed before writing)</h2>
+<h3 id="0-1-sources-reviewed">0.1 Sources reviewed</h3>
+<table><thead><tr><th>#</th><th>Source</th><th>Provenance</th><th>What was inspected</th><th>Key findings</th></tr></thead><tbody><tr><td>1</td><td><code>/opt/tkv-local/redis-unstable/MANIFESTO</code></td><td>Redis project (unstable branch), reference knowledge tree</td><td>Full text (106 lines). Redis design philosophy: DSL for abstract data types, memory-first, fundamental data structures, against complexity, single-threaded core, opportunistic programming.</td><td>Redis is fundamentally an in-memory data structure server. Its design favors simplicity and predictable performance. TTL-based expiry is a first-class primitive. The "against complexity" principle strongly favors cache-aside over write-through for the initial integration.</td></tr><tr><td>2</td><td><code>/opt/tkv-local/redis-unstable/README.md</code></td><td>Redis project (unstable branch, v8.10+)</td><td>Full text (482 lines). Data types: String, JSON, Hash, List, Set, Sorted Set, Stream, Array, Vector Set, probabilistic structures. Use cases: caching, session store, data structure server, NoSQL, search, event store, vector store. Build: needs LLVM 21, CMake 3.25–3.31.6, Rust 1.94.</td><td>Redis supports multiple eviction policies (volatile-lru, allkeys-lru, volatile-lfu, allkeys-lfu, volatile-random, allkeys-random, volatile-ttl, noeviction). <code>maxmemory-policy</code> defaults to <code>noeviction</code>. Pub/Sub is a built-in messaging primitive. This confirms Wayne has all the cache-side primitives he needs: TTLs, eviction, pub/sub for invalidation listeners.</td></tr><tr><td>3</td><td><code>/opt/tkv-local/redis-unstable/redis.conf</code></td><td>Redis project (unstable branch), reference</td><td>Key sections: SNAPSHOTTING (RDB save points), AOF (appendonly no, appendfsync everysec), maxmemory/maxmemory-policy (noeviction default), lazy freeing, EVENT NOTIFICATION (notify-keyspace-events ""), ACL, expire cycle (active-expire-effort 1).</td><td>Persistence: RDB via save points, AOF optional. Keyspace notifications: per-key, per-event pub/sub channels (<code>__keyspace@&lt;db&gt;__:&lt;key&gt;</code>, <code>__keyevent@&lt;db&gt;__:&lt;event&gt;</code>), 20 event classes (K,E,g,$,l,s,h,z,x,e,n,t,a,d,m,o,c,S,T,I,V,A). Disabled by default. This is the mechanism for active cache invalidation if Wayne needs it.</td></tr><tr><td>4</td><td><code>servers/hxs-9/2026-08-29-postgresql-implementation-plan.md</code></td><td>Mia (KDD-0012), owner-approved 2026-08-29, Corrections 1–5 applied</td><td>Full text (431 lines). Version 18.6 via PGDG, listen_addresses 192.168.50.208+localhost, pg_hba dev/test trust posture (Correction 5), roles ps-admin/ps-backup/ps-scratch, credentials in .local.env, backup daily at 02:17, health 15-min. OUT: Redis (separate lane), all application consumers (removed), replication/HA, MCP.</td><td>The instance is up, configured, and validated. The trust posture means <code>ps-cache</code> can connect over LAN without SCRAM complexity. Existing role pattern (ps-backup: LOGIN, pg_read_all_data) is the template for <code>ps-cache</code>. No application schemas or tables exist — cache views will be a framework, not populated with real data yet.</td></tr><tr><td>5</td><td><code>servers/hxs-9/2026-08-29-postgresql-install-step2.md</code></td><td>Governor (Flash, Phase M), as-built evidence 2026-08-29</td><td>Full text (208 lines). Roles: ps-admin (NOLOGIN), ps-admin-login (LOGIN), ps-backup (LOGIN, REPLICATION, pg_read_all_data), ps-scratch (LOGIN). Credentials: 6 HX_PG_ entries in .local.env. Backup/health timers active. V4–V6 PASS. pg_hba reverted to dev/test trust posture.</td><td>Confirms the live state. <code>ps-backup</code> has <code>pg_read_all_data</code> — our <code>ps-cache</code> role should follow the same pattern: a LOGIN role with least-required read privileges. The credential entry pattern (HX_PG_*_ROLE / HX_PG_*_PASSWORD) is established and consistent.</td></tr><tr><td>6</td><td><code>agents/wayne/charter.md</code></td><td>Wayne registration (KDD-0015), 2026-08-29</td><td>Full text (80 lines). Wayne owns: Redis install/config/ACL/persistence/health on hxs-9, Redis side of cache contract (cache-key structure, serialization, TTLs, invalidation, refresh, observability). Chris owns PostgreSQL side. MCP HOLD for both. RAG/vector/stream DEFERRED. No destructive Redis ops without owner approval.</td><td>Boundary is explicit: Wayne defines the cache contract; Chris implements the PostgreSQL side. This means Chris designs the read interfaces, roles, triggers; Wayne decides what keys, TTLs, and serialization to use. The cache-aside pattern is the natural fit — Wayne's service reads from Chris's views, populates Redis with Wayne's key structure and TTLs.</td></tr><tr><td>7</td><td><code>agents/chris/profile.md</code></td><td>Chris profile (KDD-0014), owner-revised 2026-08-29</td><td>Full text (157 lines). Owns: single-instance PostgreSQL end-to-end, roles, credentials, backups, monitoring, schema review. Does not own: Redis, application code, replication, MCP. Operating discipline: confirm target/approval before execution, ON_ERROR_STOP, credential hygiene, deterministic toolchain first. Model lane: DeepSeek V4 Pro via OmniRoute.</td><td>Chris's lane bounds are clear. This plan is within scope: designing PostgreSQL-side read interfaces, a cache-service role, and optionally triggers for cache invalidation. No Redis-side design, no application logic.</td></tr><tr><td>8</td><td><code>servers/AGENTS.md</code></td><td>Project governance, server records contract</td><td>Full text (94 lines). Server records: discovery.md (as-found), configuration.md (as-configured). No per-server child AGENTS.md. Records are factual and concise; no credentials in server records.</td><td>The plan document is a server-scoped planning artifact under <code>servers/hxs-9/</code>. It follows the existing naming convention (<code>YYYY-MM-DD-&lt;slug&gt;.md</code>). Must be added to <code>scripts/wiki/manifest.txt</code> for rendering.</td></tr></tbody></table>
+<h3 id="0-2-authority-hierarchy-for-this-plan">0.2 Authority hierarchy for this plan</h3>
+<ol><li><strong>Owner directives</strong> (Agent Zero, via Kimi-K3/Flash, 2026-08-29): dev/test trust posture, single instance, MCP HOLD, PostgreSQL is system of record, no replication/HA.</li><li><strong>Chris KDD-0014 profile</strong>: least-required privileges, credential hygiene (values only in <code>.local.env</code>), deterministic toolchain first, evidence-backed operations.</li><li><strong>Wayne KDD-0015 charter</strong>: cache contract boundary — Wayne owns Redis side (key structure, TTLs, serialization, invalidation mechanism), Chris owns PostgreSQL side (read interfaces, roles, triggers).</li><li><strong>PostgreSQL implementation plan</strong> (owner-approved 2026-08-29, Corrections 1–5): version 18.6, listen_addresses, pg_hba trust, role naming pattern (ps-<em>), credential variable naming pattern (HX_PG_</em>).</li><li><strong>As-built state</strong> (step2.md): roles created, credentials written, timers active, V4–V6 pass.</li><li><strong>Redis-unstable reference</strong> (<code>/opt/tkv-local/</code>): reference material only — design philosophy, data structures, persistence, pub/sub, keyspace notifications. Verified against documented behavior; not a live instance.</li></ol>
+<h3 id="0-3-gaps-and-unresolved-questions">0.3 Gaps and unresolved questions</h3>
+<table><thead><tr><th>Gap</th><th>Classification</th><th>Resolution</th></tr></thead><tbody><tr><td>No application schemas or tables exist on hxs-9 PostgreSQL</td><td><strong>Implementation-time</strong> — the plan designs a framework; views are created as templates, instantiated when application data exists</td><td>Document the pattern; views are <code>CREATE OR REPLACE</code> and can be created now as stubs</td></tr><tr><td>Wayne's Redis instance does not exist yet</td><td><strong>Owner sequencing decision</strong> — Redis install is Wayne's lane, gated on his activation</td><td>This plan is a prerequisite: Wayne needs the PostgreSQL-side interfaces designed before he can implement his cache-service read path</td></tr><tr><td>Exact cache-key structure, TTL values, serialization format</td><td><strong>Wayne decision</strong> — Wayne owns these per KDD-0015</td><td>Chris designs the read interfaces; Wayne consumes them and decides the Redis-side shape</td></tr><tr><td>Whether active invalidation (LISTEN/NOTIFY) is needed vs TTL-only</td><td><strong>Owner decision</strong> — this plan recommends TTL-only for initial phase</td><td>Document both options with clear recommendation</td></tr></tbody></table>
+<hr>
+<h2 id="1-cache-architecture-decision">1. Cache-architecture decision</h2>
+<h3 id="1-1-pattern-selection-cache-aside-with-ttl-based-invalidation">1.1 Pattern selection: cache-aside with TTL-based invalidation</h3>
+<p><strong>Recommendation of record: cache-aside pattern, TTL-only invalidation for the initial integration phase.</strong></p>
+<p>The pattern works as follows (cache-service is Wayne's lane):</p>
+<ol><li>Cache-service receives a read request for key K.</li><li>Cache-service checks Redis for K → miss.</li><li>Cache-service connects to PostgreSQL as <code>ps-cache</code>, queries the designated view.</li><li>Cache-service populates Redis with the result, setting Wayne's chosen TTL and key structure.</li><li>Subsequent reads for K hit Redis until the TTL expires.</li><li>On TTL expiry, Redis auto-evicts K; next read repeats from step 2.</li></ol>
+<p><strong>Rationale:</strong></p>
+<table><thead><tr><th>Factor</th><th>Cache-aside + TTL</th><th>Write-through (triggers)</th><th>Write-behind</th></tr></thead><tbody><tr><td>PostgreSQL remains system of record</td><td>✓ (reads from PG, writes never bypass PG)</td><td>✓</td><td>✗ (writes go to Redis first — data-loss risk)</td></tr><tr><td>Fault tolerance</td><td>✓ (Redis down = stale reads, not lost writes; PG always authoritative)</td><td>Partial (trigger failure = cache inconsistency)</td><td>✗ (Redis down = lost writes)</td></tr><tr><td>Complexity</td><td>Low — no triggers, no NOTIFY listeners, no persistent PG connections</td><td>Medium — trigger functions, NOTIFY channels, persistent listener connection</td><td>High — queue, retry, reconciliation</td></tr><tr><td>Consistency model</td><td>Eventual (TTL-bounded staleness)</td><td>Near-real-time (NOTIFY on change)</td><td>Eventual with reconciliation</td></tr><tr><td>Redis design philosophy alignment</td><td>✓ (Redis MANIFESTO §6: "We're against complexity")</td><td>Partial — adds coordination</td><td>✗</td></tr><tr><td>Operational burden</td><td>Low — no new moving parts</td><td>Medium — listener process must stay connected, handle reconnection</td><td>High</td></tr><tr><td>Fit for dev/test environment</td><td>✓</td><td>Acceptable but overengineered for dev/test</td><td>No</td></tr></tbody></table>
+<p>Cache-aside with TTL-only invalidation is the <strong>correct starting point</strong> for a dev/test environment where:</p>
+<ul><li>The data volume is low (single instance, 238.5 GB NVMe, 233 GB free).</li><li>Eventual consistency is acceptable (the factory is not serving production traffic).</li><li>Simplicity reduces the surface for bugs and operational incidents.</li><li>The pattern can be upgraded to active invalidation later without changing the PostgreSQL-side read interfaces.</li></ul>
+<h3 id="1-2-active-invalidation-option-designed-not-deployed">1.2 Active invalidation option (designed, not deployed)</h3>
+<p>For tables where TTL-bounded staleness is unacceptable, PostgreSQL LISTEN/NOTIFY provides active cache invalidation. This plan designs the mechanism (§4) but <strong>does not recommend deploying it in the initial phase</strong>. Wayne can request it later for specific tables, and the trigger function, NOTIFY channel convention, and role privileges are already designed here.</p>
+<hr>
+<h2 id="2-read-interfaces-postgresql-views-for-cache-aside-population">2. Read interfaces — PostgreSQL views for cache-aside population</h2>
+<h3 id="2-1-schema-hx-cache">2.1 Schema: <code>hx_cache</code></h3>
+<p>A dedicated schema <code>hx_cache</code> namespaces all cache-related PostgreSQL objects:</p>
+<pre><code class="language-sql">CREATE SCHEMA IF NOT EXISTS hx_cache;
+COMMENT ON SCHEMA hx_cache IS 'Cache-integration read interfaces. Owned by Chris (KDD-0014). Read by ps-cache (Wayne''s cache-service).';</code></pre>
+<h3 id="2-2-view-pattern">2.2 View pattern</h3>
+<p>For each application table that needs caching, create a corresponding view in <code>hx_cache</code>:</p>
+<pre><code class="language-sql">-- Template pattern — instantiated per table:
+CREATE OR REPLACE VIEW hx_cache.&lt;table_name&gt; AS
+SELECT
+    &lt;primary_key_column&gt; AS id,
+    &lt;columns the cache layer needs&gt;,
+    -- Include a version/update column if available for cache-key differentiation:
+    COALESCE(&lt;updated_at_column&gt;, NOW()) AS _pg_updated_at
+FROM &lt;source_schema&gt;.&lt;source_table&gt;;</code></pre>
+<p><strong>Design principles:</strong></p>
+<ul><li>Views are <strong>read-only by construction</strong> — <code>ps-cache</code> gets SELECT, nothing more.</li><li>Each view exposes exactly the columns the cache layer needs. No <code>SELECT *</code> — explicit column lists prevent schema drift surprises.</li><li>A <code>_pg_updated_at</code> column (if the source table has a timestamp) lets Wayne incorporate a version into his cache keys for cache-busting.</li><li>Views live in <code>hx_cache</code> schema, separate from application schemas. This keeps the cache contract cleanly namespaced and makes granting privileges trivial (one <code>GRANT SELECT ON ALL TABLES IN SCHEMA hx_cache</code>).</li></ul>
+<h3 id="2-3-initial-stub-views">2.3 Initial stub views</h3>
+<p>Since no application tables exist yet, create a single stub view that validates the pattern:</p>
+<pre><code class="language-sql">-- Stub view — validates the read-interface contract end-to-end:
+CREATE OR REPLACE VIEW hx_cache.health_check AS
+SELECT
+    current_timestamp AS server_time,
+    version() AS pg_version,
+    current_database() AS database_name;</code></pre>
+<p>This stub gives Wayne a concrete target to test his cache-service read path against — he can <code>SELECT * FROM hx_cache.health_check</code> and cache the result. When application tables arrive, additional views follow the pattern above.</p>
+<h3 id="2-4-privileges">2.4 Privileges</h3>
+<pre><code class="language-sql">-- Grant read-only access on the entire cache schema to ps-cache:
+GRANT USAGE ON SCHEMA hx_cache TO "ps-cache";
+GRANT SELECT ON ALL TABLES IN SCHEMA hx_cache TO "ps-cache";
+
+-- Futre views automatically get the same grant:
+ALTER DEFALLT PRIVILEGES IN SCHEMA hx_cache
+    GRANT SELECT ON TABLES TO "ps-cache";</code></pre>
+<hr>
+<h2 id="3-cache-consistency-role-ps-cache">3. Cache-consistency role: <code>ps-cache</code></h2>
+<h3 id="3-1-design">3.1 Design</h3>
+<p>Follows the established <code>ps-backup</code> pattern (LOGIN, read-only, least-privilege):</p>
+<table><thead><tr><th>Property</th><th>Value</th></tr></thead><tbody><tr><td>Role name</td><td><code>ps-cache</code></td></tr><tr><td>Type</td><td>LOGIN</td></tr><tr><td>Purpose</td><td>Cache-service read-only access for cache-aside population</td></tr><tr><td>Privileges</td><td><code>USAGE</code> on <code>hx_cache</code> schema, <code>SELECT</code> on all tables/views in <code>hx_cache</code></td></tr><tr><td>Connection limit</td><td>5 (the cache-service should use a connection pool; 5 is generous for a single-instance dev/test cache)</td></tr><tr><td>Password</td><td>Generated at execution via <code>openssl rand -base64 24</code></td></tr><tr><td>Membership</td><td>No group membership; standalone LOGIN role</td></tr><tr><td>Modeled after</td><td><code>ps-backup</code> (LOGIN, read-only, least-privilege, credential entry pattern)</td></tr></tbody></table>
+<h3 id="3-2-create-role-grant-statements">3.2 CREATE ROLE + GRANT statements</h3>
+<pre><code class="language-sql">-- Create the cache-service role:
+CREATE ROLE "ps-cache" WITH
+    LOGIN
+    NOSUPERUSER
+    NOCREATEDB
+    NOCREATEROLE
+    INHERIT
+    NOREPLICATION
+    CONNECTION LIMIT 5
+    PASSWORD '&lt;generated_at_execution&gt;';
+
+-- Grant schema access:
+GRANT USAGE ON SCHEMA hx_cache TO "ps-cache";
+
+-- Grant read on all existing cache views:
+GRANT SELECT ON ALL TABLES IN SCHEMA hx_cache TO "ps-cache";
+
+-- Futre cache views auto-granted:
+ALTER DEFAULT PRIVILEGES IN SCHEMA hx_cache
+    GRANT SELECT ON TABLES TO "ps-cache";</code></pre>
+<h3 id="3-3-comparison-with-existing-roles">3.3 Comparison with existing roles</h3>
+<table><thead><tr><th>Role</th><th>Type</th><th>Login</th><th>Privileges</th><th>Purpose</th></tr></thead><tbody><tr><td><code>ps-admin</code></td><td>NOLOGIN group</td><td>no</td><td>(members inherit)</td><td>Administration grouping</td></tr><tr><td><code>ps-admin-login</code></td><td>LOGIN</td><td>yes</td><td>Member of ps-admin</td><td>Day-2 admin operations</td></tr><tr><td><code>ps-backup</code></td><td>LOGIN</td><td>yes</td><td>pg_read_all_data</td><td>pg_dump service</td></tr><tr><td><code>ps-scratch</code></td><td>LOGIN</td><td>yes</td><td>(none beyond scratch DB)</td><td>Validation round-trip</td></tr><tr><td><strong><code>ps-cache</code></strong></td><td><strong>LOGIN</strong></td><td><strong>yes</strong></td><td><strong>SELECT on hx_cache schema</strong></td><td><strong>Cache-service reads</strong></td></tr></tbody></table>
+<p><code>ps-cache</code> is the <strong>most narrowly privilleged</strong> of all LOGIN roles — it can only read from <code>hx_cache</code>, nothing else. This is correct: the cache-service has no business reading system catalogs, other schemas, or writing anything.</p>
+<hr>
+<h2 id="4-trigger-notification-design-active-invalidation-future-option">4. Trigger/notification design (active invalidation — FUTURE OPTION)</h2>
+<h3 id="4-1-recommendation-ttl-only-for-initial-phase">4.1 Recommendation: TTL-only for initial phase</h3>
+<p>Active invalidation via LISTEN/NOTIFY is <strong>designed here but NOT recommended for the initial deployent</strong>. The TTL-only approach (§1.1) suffices for a dev/test environment. Deploy triggers only when:</p>
+<ul><li>A specific table has staleness requirements shorter than the minimul practical TTL (sub-second or low single-digit seconds).</li><li>Wayne explicitly requests active invalidation for a named table set.</li><li>The additional operational burden (persistent PG connection, listener process, reconnection logic) is accepted.</li></ul>
+<h3 id="4-2-trigger-function">4.2 Trigger function</h3>
+<p>When deployed, a single trigger function serves all cached tables:</p>
+<pre><code class="language-sql">CREATE OR REPLACE FUNCTIOM hx_cache.notify_invalidate() RETURNS TRIGGER AS $$
+DECLARE
+    channel text;
+    payload jsonb;
+BEGIN
+    -- Channel naming: hx_cache_inval_&lt;schema&gt;_&lt;table&gt;
+    channel := 'hx_cache_inval_' || TG_TABLE_SCHEMA || '_' || TG_TABLE_NAME;
+
+    -- Payload: operation, table identity, affected key(s)
+    payload := jsonb_build_object(
+        'op', TG_OP,                              -- INSERT, UPDATE, DELETE, TRUNCATE
+        'schema', TG_TABLE_SCHEMA,
+        'table', TG_TABLE_NAME,
+        'when', now() AT TIME ZONE 'UTC'
+    );
+
+    -- For INSERT/UPDATE/DELETE on a row trigger, include the old/new key:
+    IF TG_OP IN ('INSERT', 'UPDATE') AND TG_LEVEL = 'ROW' THEN
+        payload := payload || jsonb_build_object('new_id', to_jsonb(NEW));
+    ELSIF TG_OP = 'DELETE' AND TG_LEVEL = 'ROW' THEN
+        payload := payload || jsonb_build_object('old_id', to_jsonb(OLD));
+    END IF;
+
+    -- Fire the NOTIFY:
+    PERFORM pg_notify(channel, payload::text);
+
+    -- Return appropriatley for the trigger type:
+    IF TG_OP = 'DELETE' THEN
+        RETURN OLD;
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+-- Function owned by the bootstrap superuser; SECURITY DEFINER so it can
+-- call pg_notify regardless of who performs the triggering DML.
+ALTER FUNCTIOM hx_cache.notify_invalidate() OWNER TO postgres;</code></pre>
+<h3 id="4-3-notify-chanel-naming-convention">4.3 NOTIFY chanel naming convention</h3>
+<table><thead><tr><th>Channel</th><th>Meaning</th></tr></thead><tbody><tr><td><code>hx_cache_inval_&lt;schema&gt;_&lt;table&gt;</code></td><td>A row in <code>&lt;schema&gt;.&lt;table&gt;</code> changed. Wayne's cache-service subscibes to relevant channels and invalidates the corresponding Redis keys.</td></tr></tbody></table>
+<p>Exaple: a change to <code>public.usrs</code> fires on <code>hx_cache_inval_public_usrs</code>.</p>
+<p>Wayne's cache-service subscibes with:</p>
+<pre><code class="language-sql">LISTEN hx_cache_inval_public_usrs;</code></pre>
+<h3 id="4-4-trigger-attachment-per-table-future">4.4 Trigger attachment (per-table, future)</h3>
+<pre><code class="language-sql">-- Exaple: attach to public.users when that table exists:
+CREATE TRIGGER cache_inval_trigger
+    AFTER INSERT OR UPDATE OR DELETE ON public.users
+    FOR EACH ROW
+    EXECUTE FUNCTIOM hx_cache.notify_invalidate();</code></pre>
+<h3 id="4-5-why-notify-is-the-right-mechanism-vs-alternatives">4.5 Why NOTIFY is the right mechanism (vs alternatives)</h3>
+<table><thead><tr><th>Mechanism</th><th>Pros</th><th>Cons</th><th>Verdict</th></tr></thead><tbody><tr><td><strong>LISTEN/NOTIFY</strong></td><td>Built into PostgreSQL; no polling; works over existing PG connection; payload is arbitrary JSON; no external deps.</td><td>Listener must hold a persistent PG connection.</td><td>✓ Recommended for PG-side invalidation</td></tr><tr><td>pg_cron polling</td><td>No persistent connection needed.</td><td>Polls — adds latency, wastes resources, requires pg_cron extension.</td><td>✗  Heavier than NOTIFY</td></tr><tr><td>Redis keyspace notifications</td><td>No PG-side trigger needed.</td><td>Requires <code>notify-keyspace-events</code> enabled in Redis (off by default); only fires on Redis-side changes — doesn't help when PG is the source of truth.</td><td>✗  Wrong direction: Redis can't notify about PG changes</td></tr><tr><td>External message broker (Redis pub/sub)</td><td>Decouples PG from cache-service.</td><td>Adds infrastructure; trigger would PUBLISH to Redis channel from PG — needs a PG extension (pg_redis, etc.) or an external listener.</td><td>✗  Over-enginered for single-instance dev/test</td></tr></tbody></table>
+<p>LISTEN/NOTIFY is the <strong>simplest mechanism that works</strong>: it is native to PostgreSQL, requires no extensions, and the cache-service already needs a PG connection to read views. The persistent-connection requirement is acceptable — the cache-service is a long-lived process by nature.</p>
+<h3 id="4-6-privileges-for-notify">4.6 Privileges for NOTIFY</h3>
+<p>The <code>ps-cache</code> role needs no special privilege to <code>LISTEN</code>. To receive NOTIFY, it just needs to be connected. The trigger function runs as <code>SECURITY DEFINER</code> owned by <code>postgres</code>, so it can call <code>pg_notify()</code> regardless of who performed the triggering DML.</p>
+<hr>
+<h2 id="5-credential-entries">5. Credential entries</h2>
+<h3 id="5-1-new-entries-in-local-env">5.1 New entries in <code>.local.env</code></h3>
+<p>Following the established pattern (HX_PG_*_ROLE / HX_PG_*_PASSWORD):</p>
+<pre><code class="language-text"># Added at cache-integration execution:
+HX_PG_CACHE_ROLE=ps-cache
+HX_PG_CACHE_PASSWORD=&lt;generated_at_execution&gt;</code></pre>
+<h3 id="5-2-rules-per-chris-charter-2-4">5.2 Rules (per Chris charter §2, §4)</h3>
+<ul><li>Variable references only outside the store.</li><li>Passwords never printed, logged, or committed.</li><li>Generation via <code>openssl rand -base64 24</code> at execution.</li><li>No values in this plan.</li><li>Access: Chris-only for PostgreSQL entries.</li><li>File: <code>/home/hxsa/opt/local-tkv/agent-zero-docs/.local.env</code>.</li></ul>
+<h3 id="5-3-complete-postgresql-credential-entry-map-after-execution">5.3 Complete PostgreSQL credential entry map (after execution)</h3>
+<table><thead><tr><th>Variable</th><th>Value</th><th>Owner</th></tr></thead><tbody><tr><td><code>HX_PG_HOST</code></td><td><code>192.168.50.208</code></td><td>Chris</td></tr><tr><td><code>HX_PG_PORT</code></td><td><code>5432</code></td><td>Chris</td></tr><tr><td><code>HX_PG_ADMIN_ROLE</code></td><td><code>ps-admin</code></td><td>Chris</td></tr><tr><td><code>HX_PG_ADMIN_PASSWORD</code></td><td><code>&lt;generated&gt;</code></td><td>Chris</td></tr><tr><td><code>HX_PG_BACKUP_ROLE</code></td><td><code>ps-backup</code></td><td>Chris</td></tr><tr><td><code>HX_PG_BACKUP_PASSWORD</code></td><td><code>&lt;generated&gt;</code></td><td>Chris</td></tr><tr><td><strong><code>HX_PG_CACHE_ROLE</code></strong></td><td><strong><code>ps-cache</code></strong></td><td><strong>Chris</strong></td></tr><tr><td><strong><code>HX_PG_CACHE_PASSWORD</code></strong></td><td><strong><code>&lt;generated&gt;</code></strong></td><td><strong>Chris</strong></td></tr></tbody></table>
+<hr>
+<h2 id="6-validation-end-to-end-cache-contract-verification">6. Validation — end-to-end cache contract verification</h2>
+<h3 id="6-1-cache-service-role-can-connect-and-read">6.1 Cache-service role can connect and read</h3>
+<pre><code class="language-sql">-- Connect as ps-cache:
+psql -h 192.168.50.208 -U ps-cache -d postgres -c "
+SELECT current_user, current_database();
+SELECT * FROM hx_cache.health_check;
+"</code></pre>
+<p><strong>Pass criterion:</strong> connection succeeds; <code>current_user</code> = <code>ps-cache</code>; <code>health_check</code> returns one row with server_time, pg_version, database_name.</p>
+<h3 id="6-2-cache-aside-round-trip-test-manual">6.2 Cache-aside round-trip test (manual)</h3>
+<p>This test validates the full cache-aside contract end-to-end. It assumes Wayne's Redis instance and cache-service exist. Until then, steps 2–4 are <strong>deferred</strong>.</p>
+<table><thead><tr><th>Step</th><th>Actor</th><th>Action</th><th>Verification</th></tr></thead><tbody><tr><td>1</td><td>Chris</td><td><code>SELECT * FROM hx_cache.health_check</code> via ps-cache</td><td>Returns row R₁</td></tr><tr><td>2</td><td>Wayne</td><td>Cache-service reads <code>health_check</code> view, populates Redis key <code>cache:health_check:1</code> with TTL 60s</td><td>Redis GET returns serialized R₁</td></tr><tr><td>3</td><td>Wayne</td><td>Cache-service reads Redis key <code>cache:health_check:1</code></td><td>Returns R₁ (cache hit)</td></tr><tr><td>4</td><td>Wayne</td><td>Wait 65s (TTL + grace), re-read Redis</td><td>Returns nil (expired), cache-service re-populates from PG</td></tr><tr><td>5</td><td>Chris</td><td>Verify <code>ps-cache</code> cannot write: <code>CREATE TABLE hx_cache.test_write (id int)</code></td><td><strong>Must fail</strong> (permission denied)</td></tr></tbody></table>
+<p>Steps 1 and 5 <strong>can be executed now</strong> (Chris only, no Redis dependency). Steps 2–4 are deferred until Wayne's Redis instance is live.</p>
+<h3 id="6-3-notify-test-if-active-invalidation-is-deployed">6.3 NOTIFY test (if active invalidation is deployed)</h3>
+<pre><code class="language-sql">-- Terminal 1: LISTEN
+psql -h 192.168.50.208 -U ps-cache -d postgres -c "LISTEN hx_cache_inval_test;"
+
+-- Terminal 2: Fire NOTIFY
+psql -h 192.168.50.208 -U ps-admin-login -d postgres -c "
+CREATE TABLE IF NOT EXISTS hx_cache._test_notify (id int);
+CREATE TRIGGER _test_notify_trig
+    AFTER INSERT ON hx_cache._test_notify
+    FOR EACH ROW EXECUTE FUNCTIOM hx_cache.notify_invalidate();
+INSIRT INTO hx_cache._test_notify VALUES (1);
+DROP TRIGGER _test_notify_trig ON hx_cache._test_notify;
+DROP TABLE hx_cache._test_notify;
+"</code></pre>
+<p><strong>Pass criterion:</strong> Terminal 1 receives a NOTIFY message on channel <code>hx_cache_inval_hx_cache__test_notify</code> with payload containing <code>"op": "INSERT"</code>.</p>
+<p><strong>Validated only if active invalidation is deployed.</strong> TTL-only phase skips this.</p>
+<hr>
+<h2 id="7-rollback">7. Rollback</h2>
+<p>Every artifact created by this plan has a pre-defined inverse:</p>
+<table><thead><tr><th>Artifact</th><th>Inverse (exact)</th></tr></thead><tbody><tr><td>Cache schema</td><td><code>DROP SCHEMA IF EXISTS hx_cache CASCADE;</code> — removes all views, trigger functions, and default privileges in the schema.</td></tr><tr><td>Cache role</td><td><code>DROP ROLE IF EXISTS "ps-cache";</code> — revokes all privileges, removes the role.</td></tr><tr><td>Trigger function</td><td>Covered by <code>DROP SCHEMA hx_cache CASCADE</code> above (the function lives in hx_cache).</td></tr><tr><td>Triggers on application tables</td><td><code>DROP TRIGGER IF EXISTS cache_inval_trigger ON &lt;schema&gt;.&lt;table&gt;;</code> per table. Triggers are on application schemas, not in hx_cache — must be dropped individually or as part of the owning migration.</td></tr><tr><td>Credential entries</td><td>Remove <code>HX_PG_CACHE_ROLE</code> and <code>HX_PG_CACHE_PASSWORD</code> lines from <code>/home/hxsa/opt/local-tkv/agent-zero-docs/.local.env</code> (Chris only).</td></tr></tbody></table>
+<p><strong>Rollback ordering:</strong> credentials first (they reference the role), then triggers on application tables, then the schema (which cascades to views/functions), then the role.</p>
+<hr>
+<h2 id="8-work-breakdown-for-execution-ordered-one-lane">8. Work breakdown for execution (ordered, one lane)</h2>
+<p>Execution requires a <strong>separate owner-approved work order</strong>. All steps are Chris's lane (PostgreSQL DBA).</p>
+<h3 id="step-0-pre-state-gate">Step 0 — Pre-state gate</h3>
+<ul><li>Verify hxs-9 is reachable, PostgreSQL is up, existing roles intact.</li><li>Verify no <code>ps-cache</code> role or <code>hx_cache</code> schema already exists (idempotency check).</li><li>Record pre-state.</li></ul>
+<h3 id="step1-create-schema-stub-view">Step1 — Create schema + stub view</h3>
+<pre><code class="language-sql">CREATE SCHEMA hx_cache;
+COMMENT ON SCHEMA hx_cache IS 'Cache-integration read interfaces...';
+CREATE OR REPLACE VIEW hx_cache.health_check AS SELECT ...;</code></pre>
+<h3 id="step2-create-cache-role-password-grants">Step2 — Create cache role + password + grants</h3>
+<pre><code class="language-sql">CREATE ROLE "ps-cache" WITH LOGIN ... PASSWORD '&lt;generated&gt;';
+GRANT USAGE ON SCHEMA hx_cache TO "ps-cache";
+GRANT SELECT ON ALL TABLES IN SCHEMA hx_cache TO "ps-cache";
+ALTER DEFAULT PRIVILEGES IN SCHEMA hx_cache GRANT SELECT ON TABLES TO "ps-cache";</code></pre>
+<h3 id="step3-write-credential-entries">Step3 — Write credential entries</h3>
+<p>Append <code>HX_PG_CACHE_ROLE</code> and <code>HX_PG_CACHE_PASSWORD</code> to <code>.local.env</code>.</p>
+<h3 id="step4-create-trigger-function-even-if-not-deployed-yet">Step4 — Create trigger function (even if not deployed yet)</h3>
+<pre><code class="language-sql">CREATE OR REPLACE FUNCTION hx_cache.notify_invalidate() ...;</code></pre>
+<p>The function is harmless when not attached to any trigger. Creating it now means it is ready when Wayne needs active invalidation.</p>
+<h3 id="step5-run-validation-6-1-and-6-2-step-1-step-5">Step5 — Run validation §6.1 and §6.2 Step 1 + Step 5</h3>
+<p>Produce the evidence receipt.</p>
+<h3 id="step6-deferred-attach-triggers-if-active-invalidation-is-requested">Step6 — (Deferred) Attach triggers if active invalidation is requested</h3>
+<p>Per-table, per a separate Wayne-initiated work order.</p>
+<h3 id="checkpoint-owner-review">Checkpoint — Owner review</h3>
+<p>Review: role created, credentials written, stub view readable, <code>ps-cache</code> cannot write. Acceptance ⇒ cache contract PostgreSQL side is complete; Wayne can begin his Redis-side implementation against the live <code>hx_cache.health_check</code> view.</p>
+<hr>
+<h2 id="9-second-brain-evaluation-mandatory-per-agents-md">9. Second Brain evaluation (mandatory per AGENTS.md)</h2>
+<ol><li><strong>Opportunity identified: yes</strong> — the <code>ps-cache</code> role pattern (LOGIN, read-only, schema-scoped, least-privilege), the <code>hx_cache</code> schema convention, the view-template pattern, and the NOTIFY trigger function are all catalog-able factory patterns for any future PostgreSQL-to-cache integration.</li><li><strong>Applicable pattern:</strong> the existing <code>ps-backup</code> role pattern (LOGIN, read-only, pg_read_all_data, credential entries in .local.env) is directly reused and narrowed for <code>ps-cache</code>. The credential variable naming convention (<code>HX_PG_*_ROLE</code> / <code>HX_PG_*_PASSWORD</code>) is consistent.</li><li><strong>Disposition: recommended for cataloging at execution handoff.</strong> The plan is the reusable artifact. Carol (Second Brain) receives the plan record at handoff per the catalog discipline. Cataloging before owner approval would record an unratified design.</li><li><strong>Reason:</strong> the plan itself is a versioned, repeatable recipe. The cache-aside pattern with TTL invalidation, the <code>hx_cache</code> schema approach, and the NOTIFY trigger function are generalizable beyond this specific Redis integration on hxs-9.</li></ol>
+<hr>
+<h2 id="10-constraints-compliance">10. Constraints compliance</h2>
+<table><thead><tr><th>Constraint</th><th>Held</th></tr></thead><tbody><tr><td>PostgreSQL is the system of record — Redis never replaces it</td><td>✓ — all reads originate from PG views; cache-service is a read-only consumer</td></tr><tr><td>Chris designs PostgreSQL side ONLY; Wayne owns Redis side</td><td>✓ — this plan defines read interfaces, role, optional triggers; no cache-key, TTL, or serialization decisions</td></tr><tr><td>No schema changes beyond what the cache contract requires</td><td>✓ — one new schema (<code>hx_cache</code>), one new role (<code>ps-cache</code>), optional trigger function; no changes to existing schemas/tables/roles</td></tr><tr><td>MCP on HOLD — no postgres-mcp-mai</td><td>✓ — no MCP usage in this plan</td></tr><tr><td>Native systemd — no Docker</td><td>✓ — no Docker references</td></tr><tr><td>No host firewall</td><td>✓ — LAN trust posture already in place; ps-cache connects over 192.168.50.208:5432</td></tr><tr><td>hxs-9 ONLY</td><td>✓</td></tr><tr><td>No secret values in any artifact</td><td>✓ — passwords are <code>&lt;generated_at_execution&gt;</code> placeholders; values live only in .local.env at execution</td></tr><tr><td>PLANNING ONLY — no execution, no hxs-9 access, no SSH</td><td>✓ — this is a plan document; execution requires a separate owner-approved work order</td></tr></tbody></table>
+<hr>
+<p><em>End of plan. Nothing in this document has been executed. The cache-integration PostgreSQL side awaits owner approval + a separate Kimi-K3-issued execution work order. The Redis side (Wayne) is a separate lane, gated on Wayne's activation and this plan's approval.</em></p>
+</main>
+<footer>Source of truth: <code>servers/hxs-9/2026-08-29-postgresql-cache-integration-plan.md</code> (sha256 <code>466336beb05ab400ec69f8eecff84e2c91e4a0823a5939bf5084bf029dc261f1</code>) · rendered 2026-08-29T04:47Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+
+</body>
+</html>

@@ -17,7 +17,7 @@
 - None.
 
 **Validator output**
-```
+```text
 HX-ASF validate — read-only local validation (UD1/UD2, 2026-08-25) — mode: full repo
 PASS  wiki-sync — render.py --check: 52/52 manifest documents in sync
 PASS  fixture-suite — unittest 57 tests OK; sha256sums 10/10 verified

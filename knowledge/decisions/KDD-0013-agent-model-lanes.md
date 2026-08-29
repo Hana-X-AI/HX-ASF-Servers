@@ -142,6 +142,15 @@ is corrected here, original preserved. New-agent rule of record satisfied: he
 received his lane at registration. His table row is appended below this
 amendment.]
 
+[Form note 2026-08-29, labeled, Mia per Flash work order 19 — F11: the Chris
+row below was appended as a bare table fragment (no header), which does not
+render as a table. It is now presented as a headered standalone Markdown
+table per the reviewer's alternative; values unchanged, and it is NOT merged
+into the main table at line 34 (that table is frozen as of the original
+decision; amendments are appended, not inserted — append-only convention).]
+
+| Agent | Model lane | Notes |
+| --- | --- | --- |
 | Chris | Qwen 3.8 Flash (`openrouter/qwen/qwen3.8-flash`; upstream Alibaba Cloud International; identity of record per amendment 2's cloud pattern, route probed live 2026-08-29) | OD-14 exception; registered KDD-0014; activation gated |
 
 [Amendment 7 — 2026-08-29, labeled — owner directive: the GOVERNOR's lane
@@ -158,3 +167,31 @@ metering scope: SEVEN cloud lanes now (trinity, rob, mia, gordon, carol,
 chris, kimi-k3) — amendment 6's "six" is corrected here, original preserved.
 The `omniroute/glm-5.2` alias carries max_output_size=16384 per the row-33
 guard class.]
+
+[Amendment 8 — 2026-08-29, labeled — GOVERNOR TRANSITION: the governor ROLE
+transfers from kimi-k3 to **Flash** (owner/Agent Zero appointment reported
+2026-08-29 via Flash's work order to the Chief of Staff). Flash runs on
+**DeepSeek V4 Flash** via OmniRoute. Amendment 7's GLM 5.2 governor lane is
+SUPERSEDED for the governor role and preserved as history; the
+substrate-retraction rule (no moonshot sub-agents; no Agent-tool dispatch for
+agent work) stands unchanged for every agent. Governance references to
+"Kimi-K3" as the governor (Chief of Staff reporting line, checkpoint routing,
+state-log triage agent fields) read as the GOVERNOR role — currently Flash.
+SCOPE NOTE: this amendment records a reported appointment; the owner's
+primary confirmation in records is pending and the appointment is carried at
+intent-level evidence (Flash-issued work order 14,
+`pilots/PILOT-DSH-IMPL-001/14-flash-work-order-mia-hxs9-transition-records.md`).
+No OD-14 metering change is implied beyond amendment 7's seven-lane scope
+until the owner rules on Flash's lane.]
+
+[Amendment 9 — 2026-08-29, labeled — WAYNE REGISTERED: Wayne (Redis systems
+engineer, KDD-0015) registered with lane OpenAI gpt-oss-120b
+(`openrouter/openai/gpt-oss-120b`, provider AkashML, via OmniRoute hxs-8) —
+same lane as Carol; owner-assigned 2026-08-29. The source profile's
+`coder-x` primary backend is superseded. CLI alias `omniroute/gpt-oss-120b`
+already exists (established for Carol, row 33 guard class). OD-14 exception
+scope now covers EIGHT metered cloud lanes: trinity, rob, mia, gordon,
+carol, chris, kimi-k3, wayne. Amendment 7's seven-lane scope is superseded;
+preserved as history. Lane corrections in the same window: morpheus →
+Qwen 3.8 2.4T A95B (DeepInfra) superseding Coder-X; chris → DeepSeek V4 Pro
+(Baidu FP8) superseding Qwen 3.8 Flash — both owner directives 2026-08-29.]
