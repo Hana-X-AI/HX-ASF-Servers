@@ -32,6 +32,10 @@ exist in this repository.
 - Agents must not assign roles automatically.
 - Phase 2 means repository consolidation and alignment. Server implementation is a
   later owner-authorized phase; Phase 3 is Regroup & Reconciliation.
+- **System placement** is recorded in `servers/system-mapping.md` — the
+  authoritative mapping of systems to servers. This registry owns durable
+  host identity and role; the system-mapping document owns which system
+  runs on which host.
 
 ## Discovery Status Values
 
@@ -108,11 +112,28 @@ and `hxs-20.hx.local.arpa` resolve correctly (verified); `hx-20.hx.local.arpa` d
 NOT resolve — the canonical FQDN for hxs-20 is `hxs-20.hx.local.arpa` regardless of
 the on-host hostname.
 
-**Superseded assignment (hxs-3), dated 2026-08-27.** hxs-3's original workload target
-was **gpt-oss / LightRAG** (the 2026-08-13 role mapping). That assignment was superseded
-by owner decision: hxs-3 is now the **Meta-X tooling specialist** (Muse Glimmer 30B,
-`hx-muse-glimmer-64k`, production ACTIVE 2026-08-27 — see the hxs-3 row). The gpt-oss/
-LightRAG target is preserved here as history; it is no longer the current assignment.
+**Open correction — system-mapping reconciliation (2026-08-29, labeled per the
+append-only governance rule).** The `servers/system-mapping.md` document
+(ratified 2026-08-29) reconciles system-to-server assignments against current
+factory evidence. The following registry rows are updated by that mapping.
+Original rows are preserved unchanged above; THIS correction is the current
+reading:
+
+| Server | Registry says (stale) | System-mapping says (current) | Agent |
+|---|---|---|---|
+| hxs-4 | "Qdrant + Web-UI; Qwen2.5-3B; BGE-M3/Nomic embeddings" | Chat-X (Qwen 3.5 9B) deployed; Qdrant + LightRAG + embeddings to co-locate (target-state) | john (LLM), quinn (Qdrant) |
+| hxs-8 | "LiteLLM gateway" (already corrected above) | OmniRoute (deployed); RAM to be reduced 48→32 GB (donate 16 GB to hxs-10) | trinity |
+| hxs-9 | "PostgreSQL + Redis; LiteLLM database; LangGraph checkpoints" (already corrected above) | PostgreSQL 18.6 + Redis 7.0.15 (both deployed); LiteLLM and LangGraph removed | chris, wayne |
+| hxs-10 | "Open WebUI; CopilotKit / AG-UI" | Open WebUI (target-state); CopilotKit/AG-UI removed (SDK, not a server); RAM to be upgraded 16→32 GB | iris (new) |
+| hxs-11 | "LangGraph; Mem0" | LangGraph (target-state, deferred); Mem0 retired | erwin (new) |
+| hxs-14 | "Prompt engineering; LangGraph and client development" | Dev environment | rick |
+| hxs-20 | "FastMCP runtime + custom HX MCP servers (target)" | FastMCP (target-state) — MCP gateway | sage (new) |
+| hxs-21 | "Standby — designated future control-plane machine" | NGINX (target-state) + Test environment | nexus (new), rick (test) |
+
+New agents to register per system-mapping: quinn, sage, iris, scout, piper,
+ripple, erwin, nexus. See `servers/system-mapping.md` for the complete
+mapping and `agents/_template/` + KDD-0016 for the standard profile/charter
+template.
 
 Phase 1 (discovery): COMPLETE, verified 2026-08-13 — 15 of 15 records accepted
 (historical baseline scope: the original fifteen-server fleet). Current registry:

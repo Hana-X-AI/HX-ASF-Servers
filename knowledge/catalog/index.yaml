@@ -1886,3 +1886,9 @@ index:
     authority_level: agent-evidence
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/catalog/receipts/2026-08-29-batchB-carol-statelog-registry.md
+  - id: DOC-system-mapping
+    title: "HX System-to-Server Mapping"
+    type: registry
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: servers/system-mapping.md

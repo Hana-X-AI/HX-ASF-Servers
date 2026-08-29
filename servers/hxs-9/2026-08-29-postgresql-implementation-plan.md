@@ -360,7 +360,11 @@ database.
 
 ### Step 1 — Install + config baseline + bootstrap (Chris, PostgreSQL DBA)
 Packages from PGDG noble-pgdg (per Correction 2); conf.d drop-in (§2);
-create the OS-level pieces: `/var/backups/hx-postgres/` (0750),
+create the OS-level pieces: `/var/backups/hx-postgres/` (0770) [OPEN
+CORRECTION 2026-08-29, labeled, append-only — review batch 2, F52: the
+original text read `0750`; group-writable is required so the `postgres`
+user and the designated backup group share read/write; original preserved
+in this note],
 `ps-backup`/`ps-admin` bootstrap roles are DB-internal — Chris executes
 up to the point where the instance is up, configured, and reachable;
 DB-internal role creation is done by Chris. Produce V1–V3 receipts.
@@ -427,5 +431,16 @@ own database and the profile §10 gate correction.
 
 ---
 
-*End of plan. Nothing in this document has been executed. hxs-9 remains
-PostgreSQL-free as of the 2026-08-28 verified fact of record.*
+*End of plan. Nothing in this document has been executed.*
+
+> **OPEN CORRECTION 2026-08-29, labeled, append-only — review batch 2, F53:**
+> the closing statement above ("Nothing in this document has been executed.
+> hxs-9 remains PostgreSQL-free") is HISTORICAL as of 2026-08-29. PostgreSQL
+> 18.6 is now INSTALLED and ACTIVE on hxs-9: Step 1 was executed by Chris
+> (evidence: `servers/hxs-9/2026-08-29-postgresql-install-step1.md`), and Step
+> 2 (roles, credential entries, backup + health timers, V4–V6) is COMPLETE as
+> reported via Flash, verified against Chris's lane records — verification
+> state of record: REPORTED BUT UNVERIFIED by this session per state-log row
+> 46 (no direct SSH path). The plan body above remains the design of record;
+> treat this note as the as-built status marker superseding the closing
+> sentence. Original sentence preserved verbatim above.

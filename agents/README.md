@@ -29,6 +29,23 @@ Current roster:
 | mia | horizontal (control-plane staff) | active — owner-directed 2026-08-28 (KDD-0012) | Chief of Staff to the Governor: planning, coordination, work management, breakage triage and distribution to the engineering lanes, status reporting to Kimi-K3; management only — never gates, acceptance, or verdicts |
 | chris | vertical (database systems) | registered 2026-08-29 (KDD-0014) — **activation gated** (hxs-9 PostgreSQL implemented + credential entries + owner word) | PostgreSQL systems engineer: single-instance administration, least-required roles/service accounts, pg_dump/pg_restore with validation, basic performance, schema under owner approval; MCP on HOLD (owner 2026-08-29) |
 | wayne | vertical (cache/data systems) | registered 2026-08-29 (KDD-0015) — **activation gated** (hxs-9 Redis implemented + credential entries + owner word) | Redis systems engineer: single-instance administration, ACL users, persistence, health, PostgreSQL cache integration contract (Redis side); standalone topology only; MCP on HOLD; RAG/vector/stream deferred (owner 2026-08-29) |
+| quinn | vertical (vector database systems) | registered 2026-08-29 (KDD-0017) — **activation gated** (hxs-4 Qdrant implemented + credential entries + owner word) | Qdrant server + Python client + MCP server (co-located) on hxs-4; lane NVIDIA Nemotron 3 Ultra (free) via OpenRouter; standalone topology only |
+
+### New agents pending registration (per system-mapping 2026-08-29)
+
+| Agent | Family | System | Server | Notes |
+|---|---|---|---|---|
+| sage | 3 (Platform Systems) | FastMCP | hxs-20 | MCP gateway — discovery, routing, cloud proxy |
+| iris | 3 (Platform Systems) | Open WebUI | hxs-10 | Web frontend |
+| scout | 3 (Platform Systems) | Crawl4AI | hxs-6 | Ingestion — crawling |
+| piper | 3 (Platform Systems) | Docling | hxs-12 | Ingestion — parsing |
+| ripple | 3 (Platform Systems) | n8n | hxs-13 | Automation |
+| erwin | 3 (Platform Systems) | LangGraph | hxs-11 | Agent runtime; deferred |
+| nexus | 2 (Infra/Ops) | NGINX | hxs-21 | Reverse proxy / web edge |
+
+**System-to-server mapping:** see `servers/system-mapping.md` for the
+authoritative mapping of all systems to servers, agent assignments, MCP
+co-location architecture, and placement principles.
 
 Model lanes (owner-assigned 2026-08-28, KDD-0013): kimi-k3 `moonshot-ai/kimi-k3` (meta-agent exception) · morpheus Coder-X · gordon Qwen-X · rick Meta-X · john Meta-X · carol Chat-X · trinity GLM 5.3 Flash · rob GLM 5.3 Flash · mia GLM 5.3 Flash — all local/GLM lanes route via OmniRoute (hxs-8).
 

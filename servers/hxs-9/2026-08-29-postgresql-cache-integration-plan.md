@@ -140,9 +140,17 @@ GRANT USAGE ON SCHEMA hx_cache TO "ps-cache";
 GRANT SELECT ON ALL TABLES IN SCHEMA hx_cache TO "ps-cache";
 
 -- Futre views automatically get the same grant:
-ALTER DEFALLT PRIVILEGES IN SCHEMA hx_cache
+ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA hx_cache
     GRANT SELECT ON TABLES TO "ps-cache";
 ```
+
+> **OPEN CORRECTION 2026-08-29, labeled, append-only — review batch 2, F51:**
+> the `ALTER DEFAULT PRIVILEGES` statements in this plan (here, §3.2, and
+> §7) must carry `FOR ROLE postgres` — default privileges apply only to
+> objects created by the role named in the `FOR ROLE` clause, and the
+> `hx_cache` schema objects are created under `postgres` (see the
+> `OWNER TO postgres` pattern in §4). Without it the grants silently never
+> fire. Original unscoped text preserved above in place.
 
 ---
 
@@ -184,7 +192,7 @@ GRANT USAGE ON SCHEMA hx_cache TO "ps-cache";
 GRANT SELECT ON ALL TABLES IN SCHEMA hx_cache TO "ps-cache";
 
 -- Futre cache views auto-granted:
-ALTER DEFAULT PRIVILEGES IN SCHEMA hx_cache
+ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA hx_cache
     GRANT SELECT ON TABLES TO "ps-cache";
 ```
 
@@ -206,7 +214,7 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA hx_cache
 
 ### 4.1 Recommendation: TTL-only for initial phase
 
-Active invalidation via LISTEN/NOTIFY is **designed here but NOT recommended for the initial deployent**. The TTL-only approach (§1.1) suffices for a dev/test environment. Deploy triggers only when:
+Active invalidation via LISTEN/NOTIFY is **designed here but NOT recommended for the initial deployment**. The TTL-only approach (§1.1) suffices for a dev/test environment. Deploy triggers only when:
 
 - A specific table has staleness requirements shorter than the minimul practical TTL (sub-second or low single-digit seconds).
 - Wayne explicitly requests active invalidation for a named table set.
@@ -217,7 +225,7 @@ Active invalidation via LISTEN/NOTIFY is **designed here but NOT recommended for
 When deployed, a single trigger function serves all cached tables:
 
 ```sql
-CREATE OR REPLACE FUNCTIOM hx_cache.notify_invalidate() RETURNS TRIGGER AS $$
+CREATE OR REPLACE FUNCTION hx_cache.notify_invalidate() RETURNS TRIGGER AS $$
 DECLARE
     channel text;
     payload jsonb;
@@ -253,7 +261,7 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
 
 -- Function owned by the bootstrap superuser; SECURITY DEFINER so it can
 -- call pg_notify regardless of who performs the triggering DML.
-ALTER FUNCTIOM hx_cache.notify_invalidate() OWNER TO postgres;
+ALTER FUNCTION hx_cache.notify_invalidate() OWNER TO postgres;
 ```
 
 ### 4.3 NOTIFY chanel naming convention
@@ -277,7 +285,7 @@ LISTEN hx_cache_inval_public_usrs;
 CREATE TRIGGER cache_inval_trigger
     AFTER INSERT OR UPDATE OR DELETE ON public.users
     FOR EACH ROW
-    EXECUTE FUNCTIOM hx_cache.notify_invalidate();
+    EXECUTE FUNCTION hx_cache.notify_invalidate();
 ```
 
 ### 4.5 Why NOTIFY is the right mechanism (vs alternatives)
@@ -366,14 +374,22 @@ Steps 1 and 5 **can be executed now** (Chris only, no Redis dependency). Steps 2
 ```sql
 -- Terminal 1: LISTEN
 psql -h 192.168.50.208 -U ps-cache -d postgres -c "LISTEN hx_cache_inval_test;"
+-- NOTE (review batch 2, F50, 2026-08-29, labeled): a one-shot `psql -c
+-- LISTEN ...` process exits immediately and never receives the NOTIFY —
+-- LISTEN requires a persistent client connection for the channel's whole
+-- receive window. For this verification, run the listen terminal
+-- interactively (bare `psql`, then the LISTEN statement) or use a psql
+-- session that stays open while Terminal 2 fires. Execution-time fix; the
+-- production cache-service is a long-lived process and already satisfies
+-- this (§5).
 
 -- Terminal 2: Fire NOTIFY
 psql -h 192.168.50.208 -U ps-admin-login -d postgres -c "
 CREATE TABLE IF NOT EXISTS hx_cache._test_notify (id int);
 CREATE TRIGGER _test_notify_trig
     AFTER INSERT ON hx_cache._test_notify
-    FOR EACH ROW EXECUTE FUNCTIOM hx_cache.notify_invalidate();
-INSIRT INTO hx_cache._test_notify VALUES (1);
+    FOR EACH ROW EXECUTE FUNCTION hx_cache.notify_invalidate();
+INSERT INTO hx_cache._test_notify VALUES (1);
 DROP TRIGGER _test_notify_trig ON hx_cache._test_notify;
 DROP TABLE hx_cache._test_notify;
 "
@@ -422,7 +438,7 @@ CREATE OR REPLACE VIEW hx_cache.health_check AS SELECT ...;
 CREATE ROLE "ps-cache" WITH LOGIN ... PASSWORD '<generated>';
 GRANT USAGE ON SCHEMA hx_cache TO "ps-cache";
 GRANT SELECT ON ALL TABLES IN SCHEMA hx_cache TO "ps-cache";
-ALTER DEFAULT PRIVILEGES IN SCHEMA hx_cache GRANT SELECT ON TABLES TO "ps-cache";
+ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA hx_cache GRANT SELECT ON TABLES TO "ps-cache";
 ```
 
 ### Step3 — Write credential entries

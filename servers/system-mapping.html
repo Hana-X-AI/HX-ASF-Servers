@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<!-- Generated from servers/system-mapping.md (sha256 ebab2c4225920bbfefaf4bf4f2802fff5334458310f7aa1ee366af9e4d075dda) by scripts/wiki/render.py on 2026-08-29T11:21Z.
+     Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HX System-to-Server Mapping</title>
+<style>
+:root{color-scheme:light dark}
+body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.55;
+max-width:62rem;margin:0 auto;padding:1.5rem 2rem;color:#1a1a1a;background:#fff}
+h1,h2,h3,h4,h5,h6{line-height:1.25;margin-top:1.6em}
+h1{border-bottom:2px solid #444;padding-bottom:.3em}
+h2{border-bottom:1px solid #ccc;padding-bottom:.2em}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+code{background:#f0f0f0;padding:.1em .3em;border-radius:3px}
+pre{background:#f6f8fa;border:1px solid #ddd;border-radius:6px;padding:.8em;overflow-x:auto}
+pre code{background:none;padding:0}
+table{border-collapse:collapse;margin:1em 0;width:100%}
+th,td{border:1px solid #ccc;padding:.35em .6em;text-align:left;vertical-align:top}
+th{background:#f0f0f0}
+blockquote{border-left:4px solid #bbb;margin:1em 0;padding:.2em 1em;color:#444;background:#fafafa}
+a{color:#0645ad}
+.doc-meta{color:#666;font-size:.85em;border-bottom:1px dashed #bbb;padding-bottom:.6em;margin-bottom:1.2em}
+footer{margin-top:2.5em;border-top:1px solid #ccc;color:#666;font-size:.8em;padding-top:.8em}
+pre.mermaid{background:#fff;border:1px dashed #999}
+@media (prefers-color-scheme:dark){
+body{color:#ddd;background:#111} h1{border-color:#888} h2{border-color:#555}
+code{background:#2a2a2a} pre{background:#1b1b1b;border-color:#444}
+th{background:#222} th,td{border-color:#555} blockquote{color:#bbb;background:#191919;border-color:#666}
+a{color:#6fa8ff} .doc-meta,footer{color:#999}}
+</style>
+</head>
+<body>
+<main class="doc">
+<h1 id="hx-system-to-server-mapping">HX System-to-Server Mapping</h1>
+<p><strong>Status:</strong> CURRENT-STATE — reconciled against factory evidence as of 2026-08-29 <strong>Authority:</strong> This document maps systems to servers. <code>SERVER-REGISTRY.md</code> owns durable host identity and role. This document owns system placement. <strong>Predecessors:</strong> <code>hxs3-workload-placement.md</code> (retired), <code>hx-ai-platform-target-architecture-2026-08-21.md</code> (retired, historical reference at <code>/home/hxsa/opt/local-tkv/agent-zero-docs/server-system-mapping/</code>), <code>hx-ai-platform-target-architecture-diagrams-2026-08-21.md</code> (retired, same location).</p>
+<hr>
+<h2 id="the-rule">The rule</h2>
+<pre><code>THE SERVER OWNS CAPACITY.
+THE SYSTEM IS A WORKLOAD.</code></pre>
+<p>A server's durable identity (assigned role) does not change when a system is installed, removed, or swapped. Installation presence is not activation. The registry assigns the role; this document records what runs there.</p>
+<hr>
+<h2 id="mcp-architecture-decision-2026-08-29">MCP architecture decision (2026-08-29)</h2>
+<p><strong>Co-located MCP servers with FastMCP as discovery and routing layer.</strong></p>
+<ul><li>Each system deploys with its own MCP server on the same host (co-located). Consumers connect directly to local MCP servers — one hop, no gateway bottleneck.</li><li>FastMCP serves as the discovery and routing layer: consumers ask FastMCP "where is the Docling MCP server?" and connect directly.</li><li>FastMCP proxies cloud/remote MCP servers that consumers can't reach directly (credentials, network, TLS handled by FastMCP's single outbound connection).</li><li>FastMCP provides single-endpoint fallback for consumers (like LLMs) that can only talk to one MCP URL — it proxies to any MCP server, local or remote.</li></ul>
+<pre><code>Consumer (app/LLM)
+  ├── direct connection → local MCP servers (co-located with their systems)
+  └── FastMCP (discovery + proxy)
+       ├── discovery: "where is X?" → returns address, consumer connects directly
+       └── proxy: cloud/remote MCP servers, or single-endpoint fallback</code></pre>
+<p>All MCP deployment is on HOLD per owner directive 2026-08-29. No MCP deployment until the owner lifts the hold.</p>
+<hr>
+<h2 id="system-placement-map">System placement map</h2>
+<h3 id="deployed-running-in-production-verified">Deployed — running in production, verified</h3>
+<table><thead><tr><th>#</th><th>System</th><th>Server</th><th>Agent</th><th>Notes</th></tr></thead><tbody><tr><td>S01</td><td>Qwen-X (Qwen 3.8 27B)</td><td>hxs-1</td><td>john</td><td>LLM server — deep reasoning &amp; synthesis</td></tr><tr><td>S02</td><td>Coder-X (Qwen 2.5 Coder 32B)</td><td>hxs-2</td><td>john</td><td>LLM server — coding</td></tr><tr><td>S03</td><td>Meta-X (Muse Glimmer 30B)</td><td>hxs-3</td><td>john</td><td>LLM server — agent intelligence / tooling</td></tr><tr><td>S04</td><td>Chat-X (Qwen 3.5 9B)</td><td>hxs-4</td><td>john</td><td>LLM server — basic utility</td></tr><tr><td>S05</td><td>OmniRoute</td><td>hxs-8</td><td>trinity</td><td>Model traffic gateway; replaces LiteLLM</td></tr><tr><td>S06</td><td>PostgreSQL (+MCP)</td><td>hxs-9</td><td>chris</td><td>State services</td></tr><tr><td>S07</td><td>Redis (+MCP)</td><td>hxs-9</td><td>wayne</td><td>Cache + data plane</td></tr><tr><td>S08</td><td>DeepSeek Harness (DSH)</td><td>hxs-15</td><td>morpheus</td><td>Agent harness; Gates 6-7 in progress</td></tr></tbody></table>
+<h3 id="target-state-not-yet-deployed">Target-state — not yet deployed</h3>
+<table><thead><tr><th>#</th><th>System</th><th>Server</th><th>Agent</th><th>Notes</th></tr></thead><tbody><tr><td>S09</td><td>Qdrant (+MCP)</td><td>hxs-4</td><td>quinn</td><td>Co-locate with Chat-X; Qdrant on 477 GB NVMe</td></tr><tr><td>S10</td><td>FastMCP</td><td>hxs-20</td><td>sage (new)</td><td>MCP gateway — discovery, routing, cloud proxy</td></tr><tr><td>S11</td><td>Open WebUI</td><td>hxs-10</td><td>iris (new)</td><td>Web frontend (upgrade hxs-10 to 32 GB with RAM from hxs-8)</td></tr><tr><td>S12</td><td>Crawl4AI (+MCP)</td><td>hxs-6</td><td>scout (new)</td><td>Ingestion — crawling</td></tr><tr><td>S13</td><td>Docling (+MCP)</td><td>hxs-12</td><td>piper (new)</td><td>Ingestion — parsing</td></tr><tr><td>S14</td><td>n8n (+MCP)</td><td>hxs-13</td><td>ripple (new)</td><td>Automation</td></tr><tr><td>S15</td><td>LangGraph</td><td>hxs-11</td><td>erwin (new)</td><td>Agent runtime; deferred by implementation order</td></tr><tr><td>S16</td><td>NGINX</td><td>hxs-21</td><td>nexus (new)</td><td>Reverse proxy / web edge</td></tr></tbody></table>
+<h3 id="development-and-test-environments">Development and test environments</h3>
+<table><thead><tr><th>Environment</th><th>Server</th><th>Agent</th><th>Notes</th></tr></thead><tbody><tr><td>Dev</td><td>hxs-14</td><td>rick</td><td>Development environment</td></tr><tr><td>Test</td><td>hxs-21</td><td>rick</td><td>Co-located with NGINX on hxs-21</td></tr></tbody></table>
+<h3 id="ram-reallocation">RAM reallocation</h3>
+<table><thead><tr><th>Source</th><th>Current</th><th>After</th><th>Notes</th></tr></thead><tbody><tr><td>hxs-8</td><td>48 GB (using 1.8 GB for OmniRoute)</td><td>32 GB</td><td>Donate 16 GB to hxs-10</td></tr><tr><td>hxs-10</td><td>16 GB</td><td>32 GB</td><td>Receive 16 GB from hxs-8</td></tr></tbody></table>
+<h3 id="horizontal-agents-not-host-bound">Horizontal agents (not host-bound)</h3>
+<table><thead><tr><th>Agent</th><th>Lane type</th><th>Role</th></tr></thead><tbody><tr><td>rob</td><td>horizontal</td><td>Full-stack agentic software engineering — uses dev/test environments</td></tr><tr><td>gordon</td><td>horizontal</td><td>Independent QA — qualifies on hxs-15 test environment</td></tr><tr><td>mia</td><td>horizontal</td><td>Chief of Staff — management, coordination, routing</td></tr><tr><td>carol</td><td>horizontal</td><td>Knowledge stewardship — catalog, no host</td></tr><tr><td>governor</td><td>horizontal</td><td>Factory governor — control plane, no host</td></tr></tbody></table>
+<h3 id="retired-superseded">Retired / superseded</h3>
+<table><thead><tr><th>System</th><th>Replaced by</th><th>Notes</th></tr></thead><tbody><tr><td>LiteLLM</td><td>OmniRoute (KDD-0008)</td><td>Owner: "we replaced hx_litellm with openrouter"</td></tr><tr><td>vLLM</td><td>Ollama</td><td>Owner decision 2026-08-21; Ollama is sole serving runtime</td></tr><tr><td>Mem0</td><td>(retired from list)</td><td>Role absorbed by PostgreSQL, Redis, Qdrant, catalog; may return if needed</td></tr><tr><td>CopilotKit / AG-UI</td><td>(removed — SDK, not a server)</td><td>Lives inside app projects, not a standalone system</td></tr></tbody></table>
+<hr>
+<h2 id="new-agents-to-register">New agents to register</h2>
+<table><thead><tr><th>Agent</th><th>Family</th><th>Lane type</th><th>System</th><th>Status</th></tr></thead><tbody><tr><td>quinn</td><td>3 (Platform Systems)</td><td>vertical</td><td>Qdrant</td><td>Registered (KDD-0017)</td></tr><tr><td>sage</td><td>3 (Platform Systems)</td><td>vertical</td><td>FastMCP</td><td>New — to be registered</td></tr><tr><td>iris</td><td>3 (Platform Systems)</td><td>vertical</td><td>Open WebUI</td><td>New — to be registered</td></tr><tr><td>scout</td><td>3 (Platform Systems)</td><td>vertical</td><td>Crawl4AI</td><td>New — to be registered</td></tr><tr><td>piper</td><td>3 (Platform Systems)</td><td>vertical</td><td>Docling</td><td>New — to be registered</td></tr><tr><td>ripple</td><td>3 (Platform Systems)</td><td>vertical</td><td>n8n</td><td>New — to be registered</td></tr><tr><td>erwin</td><td>3 (Platform Systems)</td><td>vertical</td><td>LangGraph</td><td>New — to be registered</td></tr><tr><td>nexus</td><td>2 (Infra/Ops)</td><td>vertical</td><td>NGINX</td><td>New — to be registered</td></tr></tbody></table>
+<hr>
+<h2 id="placement-principles">Placement principles</h2>
+<ol><li><strong>The server owns capacity.</strong> A system is a workload selected to run on a host when capacity and isolation requirements are met.</li><li><strong>Installation presence is not activation.</strong> A system installed on a host is not "running" until its service is enabled, verified, and accepted.</li><li><strong>Host identity does not change when the workload changes.</strong> The registry assigns the durable role; this document records what runs there.</li><li><strong>Coexistence is never assumed.</strong> Multiple systems on one host must be capacity-tested together before concurrent operation is claimed.</li><li><strong>Runtime isolation.</strong> A system must be removable without making the host unusable for another. Environment variables scoped to the runtime, never global. Model files separated by identity. Ports configurable and documented. Switching systems must not require rebuilding the host.</li><li><strong>No Docker/containers.</strong> Native services on systemd (owner rule 2026-08-27).</li><li><strong>No host firewalls.</strong> The LAN (192.168.50.0/24) is the boundary (owner rule 2026-08-26). Services bind to the LAN interface as authorized.</li><li><strong>Model weights never enter Git.</strong></li><li><strong>MCP surfaces on HOLD</strong> per owner directive 2026-08-29 — no MCP deployment until the owner lifts the hold.</li><li><strong>MCP servers are co-located</strong> with their systems. FastMCP is the discovery and routing layer, not a proxy for local MCP traffic. FastMCP proxies cloud/remote MCP servers and provides single-endpoint fallback.</li></ol>
+<hr>
+<h2 id="authority-hierarchy-for-placement-decisions">Authority hierarchy for placement decisions</h2>
+<ol><li>Owner (Agent Zero) current directive</li><li>SERVER-REGISTRY.md (durable host identity and role)</li><li>This document (system-to-server mapping)</li><li>Ratified KDDs and governance records</li><li>Discovery records (as-found evidence)</li><li>Target architecture docs (historical reference only)</li></ol>
+<hr>
+<h2 id="cross-references">Cross-references</h2>
+<p>This document is the authoritative system-to-server mapping. The following documents must reference it for traceability:</p>
+<ul><li><code>servers/SERVER-REGISTRY.md</code> — durable host identity and role (references this document for system placement)</li><li><code>AGENTS.md</code> — project governance (references this document for the fleet deployment map)</li><li><code>agents/README.md</code> — agent roster (references this document for agent-to- system assignments)</li><li><code>servers/BLUEPRINT-llm-server.md</code> — LLM server blueprint</li><li><code>knowledge/decisions/KDD-0016-agent-taxonomy-and-standard-template.md</code> — agent family taxonomy</li><li>Agent profiles — each platform-system agent's profile references this document in its knowledge sources section</li></ul>
+<hr>
+<h2 id="related-documents">Related documents</h2>
+<ul><li><code>servers/SERVER-REGISTRY.md</code> — authoritative durable host identity and role</li><li><code>servers/hxs-9/2026-08-29-postgresql-implementation-plan.md</code> — PostgreSQL plan</li><li><code>servers/hxs-9/2026-08-29-redis-implementation-plan.md</code> — Redis plan</li><li><code>servers/BLUEPRINT-llm-server.md</code> — LLM server blueprint</li><li><code>knowledge/decisions/KDD-0008-trinity-omniroute-adoption.md</code> — OmniRoute replaces LiteLLM</li><li><code>knowledge/decisions/KDD-0016-agent-taxonomy-and-standard-template.md</code> — agent family taxonomy</li><li>Historical reference (retired): <code>/home/hxsa/opt/local-tkv/agent-zero-docs/server-system-mapping/</code></li></ul>
+</main>
+<footer>Source of truth: <code>servers/system-mapping.md</code> (sha256 <code>ebab2c4225920bbfefaf4bf4f2802fff5334458310f7aa1ee366af9e4d075dda</code>) · rendered 2026-08-29T11:21Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+
+</body>
+</html>

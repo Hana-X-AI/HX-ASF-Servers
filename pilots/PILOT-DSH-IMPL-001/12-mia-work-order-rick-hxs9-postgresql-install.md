@@ -1,5 +1,13 @@
 # WORK ORDER — Rick: hxs-9 PostgreSQL Step 0 (pre-state gate) + Step 1 (install + config baseline)
 
+> **SUPERSEDED 2026-08-29** (OPEN STATUS CORRECTION, labeled, append-only —
+> review batch 2, F30): this work order was superseded the same day it was
+> issued by **`13-mia-work-order-chris-hxs9-postgresql-install.md`** (work
+> order 13) after the owner's DBA ruling (state-log row 42: Chris the DBA
+> installs his own database; rick stopped pre-mutation, zero partial state).
+> This order is retained in full below as the historical record; it has no
+> remaining executable force.
+
 - Issuer: Kimi-K3 (governor) — written by Mia (Chief of Staff, KDD-0012),
   2026-08-29, per owner-approved plan. Distribution executes under this
   Kimi-K3-issued order.

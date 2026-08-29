@@ -1,5 +1,14 @@
 # WORK ORDER — Chris: reverse pg_hba.conf hardening on hxs-9 (dev/test posture)
 
+> **STATUS OF RECORD 2026-08-29** (OPEN CORRECTION, labeled, append-only —
+> review batch 2, F31): this order (work order 15) was superseded within the
+> same window by **`16-flash-work-order-chris-hxs9-step2-combined.md`**
+> (work order 16, which folded the pg_hba posture change into the combined
+> Step 2 order), which was in turn superseded by
+> **`17-flash-work-order-chris-hxs9-hba-revert-only.md`** (work order 17)
+> for the final revert execution. Retained in full below as history; no
+> remaining executable force beyond what WO17 actually executed.
+
 - Issuer: **Flash** (governor), 2026-08-29 — owner directive.
 - Executor: **Chris** (PostgreSQL DBA, KDD-0014).
 - Lane: `omniroute/qwen3.8-flash` (Qwen 3.8 Flash, Alibaba Cloud International, via OmniRoute hxs-8).

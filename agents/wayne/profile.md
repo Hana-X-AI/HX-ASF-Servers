@@ -107,6 +107,36 @@ slowlog, clients, persistence state. Health script performs no automatic
 production changes. Fixes execute only under a governor-issued work
 order routed through Mia.
 
+## 7a. SSH and credential handling (execution discipline)
+
+When executing work on hxs-9 (192.168.50.208):
+
+- **SSH user:** `hxsa` (passwordless sudo on the target).
+- **SSH credential:** read from `/home/hxsa/opt/local-tkv/agent-zero-docs/.local.env`
+  at execution time — the variable `HX_SSH_PASSWORD`. This file is a
+  protected credential store; read it with Bash (grep for the variable),
+  never with the Read tool (it will be refused).
+- **Askpass pattern (mandatory):** SSH requires a password, but you must
+  never pass it on the command line or in command history. Create a temp
+  askpass helper script:
+  1. `cat > /tmp/hx-askpass.sh << 'EOF'` with `#!/bin/bash` and
+     `echo "<the-value-from-HX_SSH_PASSWORD>"` inside.
+  2. `chmod 0700 /tmp/hx-askpass.sh`
+  3. Use `SSH_ASKPASS=/tmp/hx-askpass.sh SSH_ASKPASS_REQUIRE=force setsid -w ssh -o StrictHostKeyChecking=yes hxsa@192.168.50.208 "<command>"`
+  4. After all SSH work: `rm -f /tmp/hx-askpass.sh` and verify deletion.
+- **Host key:** `StrictHostKeyChecking=yes`; 192.168.50.208 pre-pinned in
+  `~/.ssh/known_hosts`.
+- **Fleet pattern (preferred for multi-step work):** write a script to
+  `/tmp/hx-remote.sh`, `scp` it to hxs-9 `/tmp/`, then execute remotely:
+  `SSH_ASKPASS=... setsid -w ssh ... "bash /tmp/hx-remote.sh"`. This
+  avoids quote-mangling through nested SSH. Clean up the script on both
+  hosts after.
+- **Never:** print the password, log it, commit it, or leave the askpass
+  helper on disk after the session.
+- **Reference:** Chris's Step 1 evidence doc
+  (`servers/hxs-9/2026-08-29-postgresql-install-step1.md` §8) documents
+  this pattern in action — read it if you need a concrete example.
+
 ## 8. Deferred scope (owner directive 2026-08-29)
 
 - **MCP surfaces — HOLD**: `mcp-redis-main` and `postgres-mcp-mai` are

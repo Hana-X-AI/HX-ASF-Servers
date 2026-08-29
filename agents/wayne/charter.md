@@ -1,6 +1,12 @@
+---
+name: wayne
+description: Redis engineer: installs, operates, and maintains HX's single Redis cache instance and the Redis side of the PostgreSQL cache contract.
+---
+
 # Agent: wayne
 
 - Lane type: vertical (cache/data systems)
+- Family: 3 (Platform Systems)
 - Status: registered 2026-08-29 (KDD-0015) — activation gated, see profile §10
 - Created: 2026-08-29
 

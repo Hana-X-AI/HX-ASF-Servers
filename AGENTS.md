@@ -2,7 +2,7 @@
 
 ## Skills and trigger words
 
-Ten owner-installed skills govern how work is done in this repository. They live in
+Eleven owner-installed skills govern how work is done in this repository. They live in
 `.kimi-code/skills/` (project scope) and also at user scope in `~/.kimi-code/skills/`.
 
 - **be-great** — owner trigger: **"be great"**. Exhaustive, evidence-first investigation:
@@ -30,6 +30,11 @@ Ten owner-installed skills govern how work is done in this repository. They live
   English.
 - **copy** — owner trigger: **"punchy"**. Rewrite as ad copy: hooks first, short
   lines, sell do not explain.
+- **archify** — owner trigger: **"archify"**. Generate polished, validated architecture,
+  workflow, sequence, data-flow, and lifecycle diagrams as self-contained interactive
+  HTML with inline SVG. Accept plain-language requirements, Mermaid input, or repository
+  evidence. Five diagram types, four presets, dark/light themes. Requires Node.js >=18
+  (v24.20.0 installed at `/opt/node/` on hxs-5). Skill at `.kimi-code/skills/archify/`.
 
 When the owner uses a trigger word, invoke the matching skill first and follow its
 workflow in full — do not partially apply it. Project agents and sub-agents working in
@@ -219,6 +224,39 @@ doubt, act reversibly and report rather than pause.
   kimi-k3 identity. Authority: owner appointment reported by Flash
   (work order 14, `pilots/PILOT-DSH-IMPL-001/`); RECORD OF THE APPOINTMENT IS
   INTENT-LEVEL PENDING PRIMARY OWNER CONFIRMATION IN RECORDS.]
+  [OPEN CORRECTION 2026-08-29, labeled, append-only (review batch 2, F1):
+  morpheus's lane is now **Qwen 3.8 2.4T A95B** (`openrouter/qwen/qwen3.8-2.4t-a95b`,
+  provider DeepInfra, via OmniRoute hxs-8) — owner directive 2026-08-29,
+  superseding the Coder-X assignment printed above (preserved as history).
+  Reason: two consecutive Coder-X failures on the Phase C prep order
+  (state-log rows 34/40); recorded in the Morpheus profile amendment and
+  `agents/README.md`.]
+  [OPEN CORRECTION 2026-08-29, labeled, append-only (review batch 2, F2):
+  the substrate-retraction paragraph above describes the governor's bounded
+  direct execution as "(KK3 itself)". The GOVERNOR ROLE is now held by Flash
+  (see the governor correction above) — the moonshot-legal direct-execution
+  clause reads as the GOVERNOR ROLE, and the current governor runs on
+  DeepSeek V4 Flash via OmniRoute, not moonshot-ai. Kimi-K3 remains an
+  identity-specific model lane on `moonshot-ai/kimi-k3` per KDD-0013.
+  Original clause preserved above as history.]
+  [OPEN CORRECTION 2026-08-29, labeled, append-only (review batch 2, F3):
+  the OD-14 OpenRouter exception scope is now **EIGHT** metered cloud lanes —
+  trinity, rob, mia, gordon, carol, chris, kimi-k3, **wayne** (KDD-0015,
+  registered 2026-08-29, lane `openrouter/openai/gpt-oss-120b`) — superseding
+  the seven-lane scope of Amendment 7 (preserved as history) and matching
+  `agents/README.md`. Authority: KDD-0015 + owner registration 2026-08-29.]
+  [OPEN CORRECTION 2026-08-29, labeled, append-only (review batch 2, F6):
+  chris's lane is now **DeepSeek V4 Pro** (`openrouter/deepseek/deepseek-v4-pro`,
+  provider Baidu FP8, via OmniRoute hxs-8) — owner directive 2026-08-29,
+  superseding the Qwen 3.8 Flash lane of the six-lane note above (preserved
+  as history). Authority: KDD-0014 open correction, same date.]
+  [OPEN CORRECTION 2026-08-29, labeled, append-only (CodeRabbit review batch):
+  within the OD-14 allowlist above, the `moonshot-ai/kimi-k3` provider lane is
+  SUPERSEDED as an authoritative provider lane — the governor role runs on
+  GLM 5.2, then Flash/DeepSeek V4 Flash, via OmniRoute per the correction
+  blocks above. Kimi-K3 remains a registered identity-specific lane reference
+  but moonshot-ai is not the operative provider for the governor. Original
+  allowlist text preserved above as history.]
 - **Chief of Staff** (owner directive 2026-08-28, KDD-0012). **Mia**
   (`agents/mia/`) manages the work — planning, coordination, distribution to the
   engineering lanes, breakage triage, and status reporting to Kimi-K3. The
@@ -232,6 +270,18 @@ doubt, act reversibly and report rather than pause.
   Kimi-K3-issued work order** — this rule grants Mia coordination and triage,
   NOT independent self-dispatch authority (consistent with
   `agents/mia/charter.md` and `agents/mia/profile.md`).
+  [OPEN CORRECTION 2026-08-29, labeled, append-only (review batch 2, F4):
+  the issuer phrase "Kimi-K3-issued work order" in this rule reads as the
+  GOVERNOR-issued work order — the governor role is currently held by Flash
+  (see the governor correction above), under whose authority Kimi-K3's
+  original issuing rule was established. The Kimi-K3 wording is preserved
+  as history.]
+  [OPEN CORRECTION 2026-08-29, labeled, append-only (review batch 2, F5):
+  the governor-transition correction above records the Flash appointment as
+  "INTENT-LEVEL PENDING PRIMARY OWNER CONFIRMATION IN RECORDS" — that
+  qualifier stands: the appointment is not presented as owner-confirmed.
+  This entry changes no status; the pending qualifier remains the operative
+  record until the owner confirms in records.]
 
 ## Documentation governance and knowledge stewardship
 
@@ -276,3 +326,35 @@ deferred; (4) the evidence and reasoning for the disposition.
 
 Governing question for every material change: **does this work create a justified
 opportunity to advance the HX Second Brain while delivering the current goal?**
+
+## Agent family taxonomy and standard template (KDD-0016, 2026-08-29)
+
+All HX agents belong to one of four families. The governor sits above all
+families. New agents are created within a family only when the platform
+needs them. The standard profile and charter templates at
+`agents/_template/` are mandatory for all agents.
+
+| Group | Family | Responsibility | Current agents |
+|---|---|---|---|
+| 1 | Agentic Software Engineering | Build and test products, features, APIs, interfaces, schemas, integrations | rob (gated) |
+| 2 | AI Infrastructure and Operations Engineering | Maintain the underlying computing environment | rick |
+| 3 | AI Platform Systems Engineering | Install, configure, operate, upgrade, recover platform services | morpheus (DSH), gordon (QA), trinity (OmniRoute), john (Ollama), chris (PostgreSQL), wayne (Redis) |
+| 4 | AI-PMO | Portfolio, project, research, documentation, human-facing reporting | mia, carol |
+
+**Governor:** above all families. Governs (goals, gates, acceptance, owner
+escalation); does not belong to any family.
+
+**Standard template:** every `agents/<name>/profile.md` and
+`agents/<name>/charter.md` must follow the templates in
+`agents/_template/`. See KDD-0016 for the full specification, mandatory
+sections, normalization rules, and the standard identity table fields.
+
+## System-to-server mapping (2026-08-29)
+
+The authoritative mapping of systems to servers lives at
+`servers/system-mapping.md`. It records which system runs on which host,
+the MCP co-location architecture, placement principles, and the agent
+assignments for each system. `servers/SERVER-REGISTRY.md` owns durable host
+identity and role; `servers/system-mapping.md` owns system placement.
+Both documents must stay reconciled — changes to one require a labeled
+correction in the other.

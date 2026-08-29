@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Generated from servers/hxs-9/2026-08-29-postgresql-cache-integration-plan.md (sha256 466336beb05ab400ec69f8eecff84e2c91e4a0823a5939bf5084bf029dc261f1) by scripts/wiki/render.py on 2026-08-29T04:47Z.
+<!-- Generated from servers/hxs-9/2026-08-29-postgresql-cache-integration-plan.md (sha256 75e3ba419ff3325c91edb96ee52bd39d6fa6761b63c73ea49e420fcd62cc05c6) by scripts/wiki/render.py on 2026-08-29T11:21Z.
      Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
 <html lang="en">
 <head>
@@ -88,8 +88,9 @@ GRANT USAGE ON SCHEMA hx_cache TO "ps-cache";
 GRANT SELECT ON ALL TABLES IN SCHEMA hx_cache TO "ps-cache";
 
 -- Futre views automatically get the same grant:
-ALTER DEFALLT PRIVILEGES IN SCHEMA hx_cache
+ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA hx_cache
     GRANT SELECT ON TABLES TO "ps-cache";</code></pre>
+<blockquote><p><strong>OPEN CORRECTION 2026-08-29, labeled, append-only — review batch 2, F51:</strong> the <code>ALTER DEFAULT PRIVILEGES</code> statements in this plan (here, §3.2, and §7) must carry <code>FOR ROLE postgres</code> — default privileges apply only to objects created by the role named in the <code>FOR ROLE</code> clause, and the <code>hx_cache</code> schema objects are created under <code>postgres</code> (see the <code>OWNER TO postgres</code> pattern in §4). Without it the grants silently never fire. Original unscoped text preserved above in place.</p></blockquote>
 <hr>
 <h2 id="3-cache-consistency-role-ps-cache">3. Cache-consistency role: <code>ps-cache</code></h2>
 <h3 id="3-1-design">3.1 Design</h3>
@@ -114,7 +115,7 @@ GRANT USAGE ON SCHEMA hx_cache TO "ps-cache";
 GRANT SELECT ON ALL TABLES IN SCHEMA hx_cache TO "ps-cache";
 
 -- Futre cache views auto-granted:
-ALTER DEFAULT PRIVILEGES IN SCHEMA hx_cache
+ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA hx_cache
     GRANT SELECT ON TABLES TO "ps-cache";</code></pre>
 <h3 id="3-3-comparison-with-existing-roles">3.3 Comparison with existing roles</h3>
 <table><thead><tr><th>Role</th><th>Type</th><th>Login</th><th>Privileges</th><th>Purpose</th></tr></thead><tbody><tr><td><code>ps-admin</code></td><td>NOLOGIN group</td><td>no</td><td>(members inherit)</td><td>Administration grouping</td></tr><tr><td><code>ps-admin-login</code></td><td>LOGIN</td><td>yes</td><td>Member of ps-admin</td><td>Day-2 admin operations</td></tr><tr><td><code>ps-backup</code></td><td>LOGIN</td><td>yes</td><td>pg_read_all_data</td><td>pg_dump service</td></tr><tr><td><code>ps-scratch</code></td><td>LOGIN</td><td>yes</td><td>(none beyond scratch DB)</td><td>Validation round-trip</td></tr><tr><td><strong><code>ps-cache</code></strong></td><td><strong>LOGIN</strong></td><td><strong>yes</strong></td><td><strong>SELECT on hx_cache schema</strong></td><td><strong>Cache-service reads</strong></td></tr></tbody></table>
@@ -122,11 +123,11 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA hx_cache
 <hr>
 <h2 id="4-trigger-notification-design-active-invalidation-future-option">4. Trigger/notification design (active invalidation — FUTURE OPTION)</h2>
 <h3 id="4-1-recommendation-ttl-only-for-initial-phase">4.1 Recommendation: TTL-only for initial phase</h3>
-<p>Active invalidation via LISTEN/NOTIFY is <strong>designed here but NOT recommended for the initial deployent</strong>. The TTL-only approach (§1.1) suffices for a dev/test environment. Deploy triggers only when:</p>
+<p>Active invalidation via LISTEN/NOTIFY is <strong>designed here but NOT recommended for the initial deployment</strong>. The TTL-only approach (§1.1) suffices for a dev/test environment. Deploy triggers only when:</p>
 <ul><li>A specific table has staleness requirements shorter than the minimul practical TTL (sub-second or low single-digit seconds).</li><li>Wayne explicitly requests active invalidation for a named table set.</li><li>The additional operational burden (persistent PG connection, listener process, reconnection logic) is accepted.</li></ul>
 <h3 id="4-2-trigger-function">4.2 Trigger function</h3>
 <p>When deployed, a single trigger function serves all cached tables:</p>
-<pre><code class="language-sql">CREATE OR REPLACE FUNCTIOM hx_cache.notify_invalidate() RETURNS TRIGGER AS $$
+<pre><code class="language-sql">CREATE OR REPLACE FUNCTION hx_cache.notify_invalidate() RETURNS TRIGGER AS $$
 DECLARE
     channel text;
     payload jsonb;
@@ -162,7 +163,7 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
 
 -- Function owned by the bootstrap superuser; SECURITY DEFINER so it can
 -- call pg_notify regardless of who performs the triggering DML.
-ALTER FUNCTIOM hx_cache.notify_invalidate() OWNER TO postgres;</code></pre>
+ALTER FUNCTION hx_cache.notify_invalidate() OWNER TO postgres;</code></pre>
 <h3 id="4-3-notify-chanel-naming-convention">4.3 NOTIFY chanel naming convention</h3>
 <table><thead><tr><th>Channel</th><th>Meaning</th></tr></thead><tbody><tr><td><code>hx_cache_inval_&lt;schema&gt;_&lt;table&gt;</code></td><td>A row in <code>&lt;schema&gt;.&lt;table&gt;</code> changed. Wayne's cache-service subscibes to relevant channels and invalidates the corresponding Redis keys.</td></tr></tbody></table>
 <p>Exaple: a change to <code>public.usrs</code> fires on <code>hx_cache_inval_public_usrs</code>.</p>
@@ -173,7 +174,7 @@ ALTER FUNCTIOM hx_cache.notify_invalidate() OWNER TO postgres;</code></pre>
 CREATE TRIGGER cache_inval_trigger
     AFTER INSERT OR UPDATE OR DELETE ON public.users
     FOR EACH ROW
-    EXECUTE FUNCTIOM hx_cache.notify_invalidate();</code></pre>
+    EXECUTE FUNCTION hx_cache.notify_invalidate();</code></pre>
 <h3 id="4-5-why-notify-is-the-right-mechanism-vs-alternatives">4.5 Why NOTIFY is the right mechanism (vs alternatives)</h3>
 <table><thead><tr><th>Mechanism</th><th>Pros</th><th>Cons</th><th>Verdict</th></tr></thead><tbody><tr><td><strong>LISTEN/NOTIFY</strong></td><td>Built into PostgreSQL; no polling; works over existing PG connection; payload is arbitrary JSON; no external deps.</td><td>Listener must hold a persistent PG connection.</td><td>✓ Recommended for PG-side invalidation</td></tr><tr><td>pg_cron polling</td><td>No persistent connection needed.</td><td>Polls — adds latency, wastes resources, requires pg_cron extension.</td><td>✗  Heavier than NOTIFY</td></tr><tr><td>Redis keyspace notifications</td><td>No PG-side trigger needed.</td><td>Requires <code>notify-keyspace-events</code> enabled in Redis (off by default); only fires on Redis-side changes — doesn't help when PG is the source of truth.</td><td>✗  Wrong direction: Redis can't notify about PG changes</td></tr><tr><td>External message broker (Redis pub/sub)</td><td>Decouples PG from cache-service.</td><td>Adds infrastructure; trigger would PUBLISH to Redis channel from PG — needs a PG extension (pg_redis, etc.) or an external listener.</td><td>✗  Over-enginered for single-instance dev/test</td></tr></tbody></table>
 <p>LISTEN/NOTIFY is the <strong>simplest mechanism that works</strong>: it is native to PostgreSQL, requires no extensions, and the cache-service already needs a PG connection to read views. The persistent-connection requirement is acceptable — the cache-service is a long-lived process by nature.</p>
@@ -206,14 +207,22 @@ SELECT * FROM hx_cache.health_check;
 <h3 id="6-3-notify-test-if-active-invalidation-is-deployed">6.3 NOTIFY test (if active invalidation is deployed)</h3>
 <pre><code class="language-sql">-- Terminal 1: LISTEN
 psql -h 192.168.50.208 -U ps-cache -d postgres -c "LISTEN hx_cache_inval_test;"
+-- NOTE (review batch 2, F50, 2026-08-29, labeled): a one-shot `psql -c
+-- LISTEN ...` process exits immediately and never receives the NOTIFY —
+-- LISTEN requires a persistent client connection for the channel's whole
+-- receive window. For this verification, run the listen terminal
+-- interactively (bare `psql`, then the LISTEN statement) or use a psql
+-- session that stays open while Terminal 2 fires. Execution-time fix; the
+-- production cache-service is a long-lived process and already satisfies
+-- this (§5).
 
 -- Terminal 2: Fire NOTIFY
 psql -h 192.168.50.208 -U ps-admin-login -d postgres -c "
 CREATE TABLE IF NOT EXISTS hx_cache._test_notify (id int);
 CREATE TRIGGER _test_notify_trig
     AFTER INSERT ON hx_cache._test_notify
-    FOR EACH ROW EXECUTE FUNCTIOM hx_cache.notify_invalidate();
-INSIRT INTO hx_cache._test_notify VALUES (1);
+    FOR EACH ROW EXECUTE FUNCTION hx_cache.notify_invalidate();
+INSERT INTO hx_cache._test_notify VALUES (1);
 DROP TRIGGER _test_notify_trig ON hx_cache._test_notify;
 DROP TABLE hx_cache._test_notify;
 "</code></pre>
@@ -237,7 +246,7 @@ CREATE OR REPLACE VIEW hx_cache.health_check AS SELECT ...;</code></pre>
 <pre><code class="language-sql">CREATE ROLE "ps-cache" WITH LOGIN ... PASSWORD '&lt;generated&gt;';
 GRANT USAGE ON SCHEMA hx_cache TO "ps-cache";
 GRANT SELECT ON ALL TABLES IN SCHEMA hx_cache TO "ps-cache";
-ALTER DEFAULT PRIVILEGES IN SCHEMA hx_cache GRANT SELECT ON TABLES TO "ps-cache";</code></pre>
+ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA hx_cache GRANT SELECT ON TABLES TO "ps-cache";</code></pre>
 <h3 id="step3-write-credential-entries">Step3 — Write credential entries</h3>
 <p>Append <code>HX_PG_CACHE_ROLE</code> and <code>HX_PG_CACHE_PASSWORD</code> to <code>.local.env</code>.</p>
 <h3 id="step4-create-trigger-function-even-if-not-deployed-yet">Step4 — Create trigger function (even if not deployed yet)</h3>
@@ -258,7 +267,7 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA hx_cache GRANT SELECT ON TABLES TO "ps-cache"
 <hr>
 <p><em>End of plan. Nothing in this document has been executed. The cache-integration PostgreSQL side awaits owner approval + a separate Kimi-K3-issued execution work order. The Redis side (Wayne) is a separate lane, gated on Wayne's activation and this plan's approval.</em></p>
 </main>
-<footer>Source of truth: <code>servers/hxs-9/2026-08-29-postgresql-cache-integration-plan.md</code> (sha256 <code>466336beb05ab400ec69f8eecff84e2c91e4a0823a5939bf5084bf029dc261f1</code>) · rendered 2026-08-29T04:47Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+<footer>Source of truth: <code>servers/hxs-9/2026-08-29-postgresql-cache-integration-plan.md</code> (sha256 <code>75e3ba419ff3325c91edb96ee52bd39d6fa6761b63c73ea49e420fcd62cc05c6</code>) · rendered 2026-08-29T11:21Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
 
 </body>
 </html>

@@ -54,7 +54,7 @@ Ordered exactly as the Phase B record §7 groups them, so each inverse can be ve
 | # | Step (command, sanitized) | Inverse (restore from §A.2 bundle) | Hash anchor |
 | ---: | --- | --- | --- |
 | R1 | `sudo systemctl disable --now hx-dsh-lan-forward.service dsh-web.service` | `sudo systemctl enable --now` both (bundle restores unit files first if missing) | unit hashes `c3257852…57ca` / `4e659cd5…4b6c53` |
-| R2 | `sudo rm /etc/systemd/system/{hx-dsh-lan-forward,dsh-web}.service /usr/local/libexec/hx-dsh-lan-forward.mjs && sudo systemctl daemon-reload` | copy bundle members back (root 0644 / 0755), `daemon-reload` | forwarder `bb618566…2cd0` |
+| R2 | `sudo rm -f /etc/systemd/system/hx-dsh-lan-forward.service /etc/systemd/system/dsh-web.service /usr/local/libexec/hx-dsh-lan-forward.mjs && sudo systemctl daemon-reload` [OPEN CORRECTION 2026-08-29, labeled, append-only — review batch 2, F27: `rm` corrected to `rm -f` for idempotent removal of already-absent paths; brace expansion also expanded to explicit paths for portability. Original preserved in this note.] | copy bundle members back (root 0644 / 0755), `daemon-reload` | forwarder `bb618566…2cd0` |
 | R3 | restore Phase A home layer: `sudo install -m 0644 -o root -g root <bundle>/cordis.patch.yml /var/lib/dsh/cordis.patch.yml` (overwrites Phase B content) | install bundle's Phase B layer copy back over it | target `14f15b72…03f6016`; source `d4ac2f19…40f83f` |
 | R4 | `sudo rm -rf /var/lib/dsh/.agent-presets` | restore bundle's preset trees (root 0644) | preset `56c71037…9eb0` / `c5b863c8…4677` |
 | R5 | `sudo -u dsh rm -rf /opt/dsh/apps/web/dist /opt/dsh/.dsh-build` | restore bundle dist + build record | dist 114 files; build-record file hash from Phase B §9 |
@@ -176,6 +176,6 @@ Per KDD-0009 working order (Phase A/B/C-prep precedent):
 | `sha256sum package.json pnpm-lock.yaml` (corpus root) | session host (corpus read) | Anchor re-verification vs Phase A record | OK — MATCH |
 | `grep`/`sed` reads of pilot records 03/05/10 (checkpoint identities, seams, family dispositions) | session host (read-only) | Source material for Parts A/B/C | OK (read-only) |
 | Write/edit of this document (skeleton-first, then targeted section fills) | session host | Products 3+4 | OK |
-| `python3 scripts/validate.py` (repo root) | session host | Work-order gate | see close-out |
+| `python3 scripts/validate.py` (repo root) | session host | Work-order gate | PASS — 4/4 checks (wiki-sync render --check, fixture-suite, catalog-mechanical, secret-boundary), manual gates noted, exit 0 — 2026-08-29 [OPEN CORRECTION 2026-08-29, labeled, append-only — review batch 2, F28: placeholder replaced with the actual gate result of record.] |
 
 No hxs-15 contact, no candidate mutation, no install, no credential values. Drill and runbook EXECUTION remain separately-gated future windows — this session produced design only.

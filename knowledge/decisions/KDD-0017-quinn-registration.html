@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!-- Generated from knowledge/decisions/KDD-0017-quinn-registration.md (sha256 7e382b3299b53a21798095ba73f3a700f850ebb00cb1989564ce6ed5fc66c886) by scripts/wiki/render.py on 2026-08-29T11:21Z.
+     Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KDD-0017: Quinn registration — Qdrant vector database systems engineer</title>
+<style>
+:root{color-scheme:light dark}
+body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.55;
+max-width:62rem;margin:0 auto;padding:1.5rem 2rem;color:#1a1a1a;background:#fff}
+h1,h2,h3,h4,h5,h6{line-height:1.25;margin-top:1.6em}
+h1{border-bottom:2px solid #444;padding-bottom:.3em}
+h2{border-bottom:1px solid #ccc;padding-bottom:.2em}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+code{background:#f0f0f0;padding:.1em .3em;border-radius:3px}
+pre{background:#f6f8fa;border:1px solid #ddd;border-radius:6px;padding:.8em;overflow-x:auto}
+pre code{background:none;padding:0}
+table{border-collapse:collapse;margin:1em 0;width:100%}
+th,td{border:1px solid #ccc;padding:.35em .6em;text-align:left;vertical-align:top}
+th{background:#f0f0f0}
+blockquote{border-left:4px solid #bbb;margin:1em 0;padding:.2em 1em;color:#444;background:#fafafa}
+a{color:#0645ad}
+.doc-meta{color:#666;font-size:.85em;border-bottom:1px dashed #bbb;padding-bottom:.6em;margin-bottom:1.2em}
+footer{margin-top:2.5em;border-top:1px solid #ccc;color:#666;font-size:.8em;padding-top:.8em}
+pre.mermaid{background:#fff;border:1px dashed #999}
+@media (prefers-color-scheme:dark){
+body{color:#ddd;background:#111} h1{border-color:#888} h2{border-color:#555}
+code{background:#2a2a2a} pre{background:#1b1b1b;border-color:#444}
+th{background:#222} th,td{border-color:#555} blockquote{color:#bbb;background:#191919;border-color:#666}
+a{color:#6fa8ff} .doc-meta,footer{color:#999}}
+</style>
+</head>
+<body>
+<main class="doc">
+<h1 id="kdd-0017-quinn-registration-qdrant-vector-database-systems-engineer">KDD-0017: Quinn registration — Qdrant vector database systems engineer</h1>
+<ul><li>Date: 2026-08-29</li><li>Status: ratified</li><li>Decider: Agent-Zero</li><li>Related: KDD-0016 (agent taxonomy), <code>servers/system-mapping.md</code> (system placement)</li></ul>
+<h2 id="context">Context</h2>
+<p>The system-to-server mapping (ratified 2026-08-29) assigns Qdrant to hxs-4, co-located with Chat-X (Qwen 3.5 9B). hxs-4 has 477 GB unallocated NVMe — ideal for vector database storage. A dedicated engineer is needed for the Qdrant stack lifecycle.</p>
+<h2 id="decision">Decision</h2>
+<p>Register Quinn as the Qdrant vector database systems engineer for HX-ASF.</p>
+<h3 id="lane-assignment">Lane assignment</h3>
+<ul><li>Model lane: NVIDIA Nemotron 3 Ultra (<code>openrouter/nvidia/nemotron-3-ultra-550b-a55b:free</code>, provider NVIDIA, via OmniRoute hxs-8) — free tier on OpenRouter. Owner-assigned 2026-08-29. CLI alias <code>omniroute/nemotron-3-ultra</code> added to kimi-code config. <code>max_output_size=16384</code> per the row-33 guard class. Route probed live: served id <code>nvidia/nemotron-3-ultra-550b-a55b:free</code>, content <code>QUINN_LANE_OK</code>.</li></ul>
+<h3 id="target-host">Target host</h3>
+<ul><li>hxs-4 (192.168.50.203) — co-located with Chat-X; Qdrant storage on 477 GB unallocated NVMe.</li></ul>
+<h3 id="adaptations-from-source">Adaptations from source</h3>
+<ol><li>No external source document — this is an original profile created per owner directive 2026-08-29.</li><li>Knowledge base: three Qdrant directories at <code>/opt/tkv-local/</code> — <code>qdrant-master</code> (server v1.15.5), <code>qdrant-client-master</code> (Python client v1.15.1), <code>mcp-server-qdrant-master</code> (MCP server v0.8.1).</li><li>MCP server co-located with Qdrant on hxs-4 per the system-mapping MCP architecture decision (2026-08-29).</li></ol>
+<h3 id="activation-gate">Activation gate</h3>
+<p>Quinn is registered but activation-gated. Conditions:</p>
+<ol><li>The Qdrant server instance is implemented and validated on hxs-4.</li><li>Qdrant API key and credential entries exist in <code>.local.env</code>.</li><li>The governor's explicit activation word.</li></ol>
+<p>The instance-exists precondition does NOT block Quinn from installing Qdrant — he installs his own instance (same ruling as Chris and Wayne).</p>
+<h3 id="lane-boundary">Lane boundary</h3>
+<p>Quinn owns the Qdrant stack: server, Python client, MCP server. He does not own PostgreSQL (Chris), Redis (Wayne), LightRAG, embedding models, or any non-Qdrant system.</p>
+<h2 id="roster-entry">Roster entry</h2>
+<p><code>agents/quinn/</code> created (charter + profile, per KDD-0016 standard template). Roster row added to <code>agents/README.md</code>. Config alias <code>omniroute/nemotron-3-ultra</code> added to kimi-code config.</p>
+<h2 id="provenance">Provenance</h2>
+<p>Original record — no external source document. Created per owner directive 2026-08-29. Knowledge base: <code>/opt/tkv-local/qdrant-master</code> (v1.15.5), <code>/opt/tkv-local/qdrant-client-master</code> (v1.15.1), <code>/opt/tkv-local/mcp-server-qdrant-master</code> (v0.8.1).</p>
+</main>
+<footer>Source of truth: <code>knowledge/decisions/KDD-0017-quinn-registration.md</code> (sha256 <code>7e382b3299b53a21798095ba73f3a700f850ebb00cb1989564ce6ed5fc66c886</code>) · rendered 2026-08-29T11:21Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+
+</body>
+</html>

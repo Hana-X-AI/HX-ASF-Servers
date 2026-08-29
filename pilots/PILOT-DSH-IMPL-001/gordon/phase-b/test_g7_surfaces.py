@@ -494,11 +494,13 @@ def test_g7_06_session_export(cfg, candidate_bin, scratch_home, scratch_env, wor
         rec.artifact("g706-export.bin", exported)
         import hashlib
         same = bool(durable_bytes) and exported == durable_bytes
+        ufffd_bytes = b"\xef\xbf\xbd"  # three-byte UTF-8 encoding of U+FFFD (F48)
+        ufffd_in_export = exported.count(ufffd_bytes)
         observed = (f"http={status}; exported_bytes={len(exported)}; "
                     f"durable_bytes={len(durable_bytes)}; turn_events={len(events)}; "
                     f"export_sha256={hashlib.sha256(exported).hexdigest()[:16]}; "
                     f"durable_sha256={hashlib.sha256(durable_bytes).hexdigest()[:16] if durable_bytes else 'none'}; "
-                    f"bytes_equal={same}; ufffd_in_export={exported.count(b'\\xef\\xbf\\xbd')}")
+                    f"bytes_equal={same}; ufffd_in_export={ufffd_in_export}")
         ok = status == 200 and same
         rec.finish("PASS" if ok else "FAIL",
                    "session-log-export: GET /api/session.export?sessionId=… returns exactly "
@@ -714,8 +716,13 @@ def test_g7_09_conversation_node_contract(cfg, candidate_bin, scratch_home, scra
             gid = goal.get("id")
             if isinstance(gid, str):
                 ids.add(gid)
+        # F47: determinism must be judged against a fresh re-read of the durable
+        # session log, not the same in-memory fold (a tautology by construction).
+        log2 = latest_log(cfg, home)
+        records2 = log2.get("records", [])
+        goal_events2 = [e for e in records2 if (e.get("type") or "").startswith("goal/")]
         ids2 = set()
-        for e in goal_events:
+        for e in goal_events2:
             goal = (e.get("data") or {}).get("goal") or {}
             gid = goal.get("id")
             if isinstance(gid, str):
@@ -1194,27 +1201,40 @@ def test_g7_19_telemetry_sharing_modes(cfg, candidate_bin, scratch_home, scratch
         blocked("frontend dist absent (G7-01 finding)")
     import socket as _socket
 
-    with _socket.socket() as probe:
-        probe.bind(("127.0.0.1", 0))
-        capture_port = probe.getsockname()[1]
-    capture_file = Path("/var/tmp") / f"gordon-otlp-{nonce()}.bin"
-    collector = subprocess.Popen(
-        ["python3", str(FIXTURES / "otlp_capture.py"), str(capture_port), str(capture_file)],
-        stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+    def _free_port() -> int:
+        with _socket.socket() as probe:
+            probe.bind(("127.0.0.1", 0))
+            return probe.getsockname()[1]
+
+    def _start_collector(port: int, path: Path) -> subprocess.Popen:
+        return subprocess.Popen(
+            ["python3", str(FIXTURES / "otlp_capture.py"), str(port), str(path)],
+            stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+
+    # F46: FEEDBACK_ONLY and FULL each get a distinct port + capture file so the
+    # two modes can never contaminate each other's frames.
+    capture_port_a = _free_port()
+    capture_file_a = Path("/var/tmp") / f"gordon-otlp-a-{nonce()}.bin"
+    collector_a = _start_collector(capture_port_a, capture_file_a)
+    capture_port_b = _free_port()
+    capture_file_b = Path("/var/tmp") / f"gordon-otlp-b-{nonce()}.bin"
+    collector_b = _start_collector(capture_port_b, capture_file_b)
     try:
-        assert collector.stdout is not None
-        ready = collector.stdout.readline()
-        if "OTLP-CAPTURE-READY" not in ready:
-            rec.finish("FAIL", "OTLP capture fixture starts", f"ready={ready!r}")
-            pytest.fail("capture fixture did not start")
+        for collector, name in ((collector_a, "A"), (collector_b, "B")):
+            assert collector.stdout is not None
+            ready = collector.stdout.readline()
+            if "OTLP-CAPTURE-READY" not in ready:
+                rec.finish("FAIL", "OTLP capture fixture starts", f"collector_{name}_ready={ready!r}")
+                pytest.fail(f"capture fixture {name} did not start")
         require_routing_inputs(cfg, "coder")
-        otlp_url = f"http://127.0.0.1:{capture_port}/v1/logs"
+        otlp_url_a = f"http://127.0.0.1:{capture_port_a}/v1/logs"
+        otlp_url_b = f"http://127.0.0.1:{capture_port_b}/v1/logs"
         # Boot A — FEEDBACK_ONLY with a feedback event in the session.
         home_a = workspace.parent / "g719-home-a"
         home_a.mkdir(); home_a.chmod(0o777)
         env_a = {"HOME": str(home_a), "DSH_HOME": str(home_a),
                  "DSH_TELEMETRY_MODE": "FEEDBACK_ONLY",
-                 "DSH_TELEMETRY_OTLP_URL": otlp_url,
+                 "DSH_TELEMETRY_OTLP_URL": otlp_url_a,
                  "DSH_TELEMETRY_DISABLED": ""}
         patch_a = seam_fixture_for(cfg, home_a, model_key="coder", max_retries=1)
         boot_a = web_boot(env_a, str(workspace), patches=[str(patch_a)])
@@ -1248,7 +1268,7 @@ def test_g7_19_telemetry_sharing_modes(cfg, candidate_bin, scratch_home, scratch
         home_b.mkdir(); home_b.chmod(0o777)
         env_b = {"HOME": str(home_b), "DSH_HOME": str(home_b),
                  "DSH_TELEMETRY_MODE": "FULL",
-                 "DSH_TELEMETRY_OTLP_URL": otlp_url,
+                 "DSH_TELEMETRY_OTLP_URL": otlp_url_b,
                  "DSH_TELEMETRY_DISABLED": ""}
         patch_b = seam_fixture_for(cfg, home_b, model_key="coder", max_retries=1)
         boot_b = web_boot(env_b, str(workspace), patches=[str(patch_b)])
@@ -1269,25 +1289,36 @@ def test_g7_19_telemetry_sharing_modes(cfg, candidate_bin, scratch_home, scratch
             boot_b.stop()
         time.sleep(8)  # BatchLogRecordProcessor flush + dispose drain
     finally:
-        collector.terminate()
-        try:
-            collector.wait(timeout=15)
-        except subprocess.TimeoutExpired:
-            collector.kill()
-    frames = _read_otlp_captures(capture_file)
-    capture_file.unlink(missing_ok=True)
-    text = json.dumps(frames)
-    session_record_frames = text.count("session-telemetry/record") + text.count("session/telemetry")
-    feedback_class = ("feedback" in text.lower())
-    rec.artifact("g719-captures.json", json.dumps(frames, indent=2)[:60000])
-    observed = (f"frames={len(frames)}; session_record_markers={session_record_frames}; "
+        for collector in (collector_a, collector_b):
+            collector.terminate()
+            try:
+                collector.wait(timeout=15)
+            except subprocess.TimeoutExpired:
+                collector.kill()
+    frames_a = _read_otlp_captures(capture_file_a)
+    capture_file_a.unlink(missing_ok=True)
+    frames_b = _read_otlp_captures(capture_file_b)
+    capture_file_b.unlink(missing_ok=True)
+    text_a = json.dumps(frames_a)
+    text_b = json.dumps(frames_b)
+    feedback_class = ("feedback" in text_a.lower())
+    feedback_only_excludes = (text_a.count("session-telemetry/record")
+                              + text_a.count("session/telemetry")) == 0
+    full_session_records = (text_b.count("session-telemetry/record")
+                            + text_b.count("session/telemetry")) > 0
+    rec.artifact("g719-captures.json",
+                 json.dumps({"feedback_only": frames_a, "full": frames_b}, indent=2)[:60000])
+    observed = (f"feedback_only_frames={len(frames_a)}; full_frames={len(frames_b)}; "
                 f"feedback_class_present={feedback_class}; "
+                f"feedback_only_excludes_session_records={feedback_only_excludes}; "
+                f"full_has_session_records={full_session_records}; "
                 f"feedback_put_session={bool(session_a and message_a)}")
-    ok = len(frames) > 0 and session_record_frames > 0 and feedback_class
+    ok = (len(frames_a) > 0 and len(frames_b) > 0 and feedback_class
+          and feedback_only_excludes and full_session_records)
     rec.finish("PASS" if ok else "FAIL",
-               "base telemetry row modes: FEEDBACK_ONLY exports feedback-class only; "
-               "FULL exports session records — frames captured and classified "
-               "against the localhost OTLP fixture (no cloud)",
+               "base telemetry row modes: FEEDBACK_ONLY exports feedback-class only "
+               "(and excludes session records); FULL exports session records — frames "
+               "captured per-mode against localhost OTLP fixtures (no cloud)",
                observed, note="executed in the release window with the capture fixture; "
                               "mode/exporter arrive via DSH_TELEMETRY_MODE/"
                               "DSH_TELEMETRY_OTLP_URL (base bundle row)")

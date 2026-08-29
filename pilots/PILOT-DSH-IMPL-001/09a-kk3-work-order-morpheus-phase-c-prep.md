@@ -23,7 +23,12 @@ supersedes all three options.
 ## WRITE-FIRST DISCIPLINE (binding — this is the failure fix)
 
 Your lane caps at 65,536 tokens. Your predecessor session read-looped until
-the ceiling and died with nothing written. So this order INVERTS the flow:
+the ceiling and died with nothing written. [OPEN CORRECTION 2026-08-29,
+labeled, append-only, review batch 2 F18: the 65,536 cap figure above was
+written for the original Coder-X lane and is HISTORICAL — the current lane,
+`omniroute/qwen3.8-2.4t-a95b` (Qwen 3.8 2.4T A95B), caps at 131K output
+tokens per the OmniRoute route of record. The write-first discipline below
+stands unchanged.] So this order INVERTS the flow:
 
 1. **Write the skeleton FIRST** — create
    `pilots/PILOT-DSH-IMPL-001/10-morpheus-phase-c-prep.md` with all section

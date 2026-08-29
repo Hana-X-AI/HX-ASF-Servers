@@ -53,6 +53,15 @@ during installation, not required before it. The gate text above and in
 DBA ruling), (2) halts at the plan's Checkpoint 1 for owner review, (3) final
 activation word remains an owner decision. `agents/chris/profile.md` §10
 already carries this revision, labeled, dated 2026-08-29.]
+[OPEN CORRECTION 2026-08-29, labeled, append-only — Mia per Flash work order
+28 (review batch 2, F15): model lane **DeepSeek V4 Pro**
+(`openrouter/deepseek/deepseek-v4-pro`, provider Baidu FP8, via OmniRoute
+hxs-8) SUPERSEDES the Qwen 3.8 Flash lane in Decision item (b) above — owner
+directive 2026-08-29, CLI-verified live same day (served id
+`deepseek/deepseek-v4-pro`, Baidu provider confirmed). The Qwen 3.8 Flash
+entry above and in `agents/chris/profile.md` (where it is also corrected) is
+preserved as history. Authority: owner directive; `agents/README.md` lane
+correction 2026-08-29.]
 
 ## Consequences
 

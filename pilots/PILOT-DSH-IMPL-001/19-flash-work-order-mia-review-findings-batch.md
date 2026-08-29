@@ -6,7 +6,11 @@
 
 ## Intent
 
-A review batch of 27 findings landed against 11 files in the repository.
+A review batch of 27 findings landed against 17 physical files in the
+repository. [OPEN CORRECTION 2026-08-29, labeled, append-only — review
+batch 2, F37: the original text read "11 files"; corrected to the actual
+count of 17 physical files the findings span. Original preserved in the
+work-order record of the batch.]
 Per your charter (review-finding intake, owner directive 2026-08-28
 state-log row 23): verify each finding against current state, separate
 valid from stale or already-fixed, and route fixes to the owning lane

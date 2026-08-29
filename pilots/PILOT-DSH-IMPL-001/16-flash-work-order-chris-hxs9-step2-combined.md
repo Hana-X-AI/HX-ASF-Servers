@@ -28,6 +28,14 @@ to pg_hba.conf in Step 1 is not wanted. Revert to trust-based posture.
    `sudo cp /etc/postgresql/18/main/pg_hba.conf.pre-hx.bak /etc/postgresql/18/main/pg_hba.conf`
 2. Add the LAN rule as trust:
    append `host all all 192.168.50.0/24 trust` to pg_hba.conf.
+   [OPEN CORRECTION 2026-08-29, labeled, append-only — review batch 2, F32:
+   this LAN-wide trust rule was executed as ordered under the owner's
+   dev/test directive, and is recorded here as HISTORY, not as the standing
+   posture: work order 17 subsequently REVERTED pg_hba.conf to the packaged
+   hardening (scram). Any future dev/test relaxation must scope passwordless
+   access to the designated test database and non-privileged roles only, or
+   carry an explicit owner risk acceptance — LAN-wide `trust` for `all all`
+   is not an approved standing pattern.]
 3. Reload: `sudo systemctl reload postgresql`.
 4. Verify: `pg_hba_file_rules` error count = 0; `local all all` is `peer`;
    `host all all 192.168.50.0/24` is `trust`; a passwordless TCP
@@ -45,7 +53,12 @@ created per the plan for operational identity.
 **Roles (plan §3):**
 
 - `ps-admin` — group role (NOLOGIN) + a named LOGIN member. Instance
-  administration.
+  administration. [OPEN CORRECTION 2026-08-29, labeled, append-only — review
+  batch 2, F33: per plan §3 the group role is NOLOGIN; any `HX_PG_ADMIN_ROLE`
+  reference in execution configuration must name the LOGIN MEMBER of this
+  group (the individual administration login), not the NOLOGIN group itself
+  — group-role references cannot establish sessions. The role design above
+  stands unchanged.]
 - `ps-backup` — LOGIN, read-only via `pg_read_all_data`. pg_dump service
   role.
 - `ps-scratch` — LOGIN, on scratch DB only. Validation round-trip, then

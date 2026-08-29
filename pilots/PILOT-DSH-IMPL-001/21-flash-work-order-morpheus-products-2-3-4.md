@@ -3,7 +3,14 @@
 - Issuer: Flash (governor), 2026-08-29.
 - Executor: Morpheus (dsh lifecycle steward, KDD-0009).
 - Lane: `omniroute/qwen3.8-2.4t-a95b` (Qwen 3.8 2.4T A95B, provider DeepInfra, via OmniRoute hxs-8).
-- Product 1 (Phase C prep) is COMPLETE and governor-accepted.
+- Product 1 (Phase C prep) is COMPLETE and governor-accepted [OPEN
+  CORRECTION 2026-08-29, labeled, append-only — review batch 2, F39: the
+  original line read "COMPLETE and governor-accepted" without a citation;
+  the acceptance of record is the governor's review of
+  `10-morpheus-phase-c-prep.md` (state-log rows for the Phase C prep
+  products, 2026-08-29) and the work order 21 issuance itself. If no
+  acceptance citation can be produced from the state log at close-out, the
+  status downgrades to PENDING governor acceptance].
 
 ## Intent
 
@@ -52,7 +59,14 @@ NO candidate mutation of any kind on hxs-15. No hxs-15 contact at all.
 ## Constraints
 
 - Read-only against `/opt/tkv-local/deepseek-harness-master`.
-- Only write to the three doc files listed above.
+- Only write to the three doc files listed above. [OPEN CORRECTION
+  2026-08-29, labeled, append-only — review batch 2, F40: the authorized
+  write set is exactly: `10b-morpheus-r1-advisory-analysis.md`,
+  `10c-morpheus-rollback-ops-design.md`, and
+  `10-morpheus-phase-c-prep.md` (all under
+  `pilots/PILOT-DSH-IMPL-001/`) — i.e., the three doc files above ARE 10b,
+  10c, and 10. The original line is preserved as history; this correction
+  names the exact paths to remove ambiguity.]
 - `python3 scripts/validate.py` 4/4 after writes.
 - No credential-shaped literals. Append-only for governance records.
 

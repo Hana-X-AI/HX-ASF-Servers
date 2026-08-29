@@ -60,3 +60,8 @@ agents/wayne/profile.md
 knowledge/decisions/KDD-0015-wayne-registration.md
 servers/hxs-9/2026-08-29-postgresql-cache-integration-plan.md
 servers/hxs-9/2026-08-29-redis-implementation-plan.md
+knowledge/decisions/KDD-0016-agent-taxonomy-and-standard-template.md
+agents/quinn/profile.md
+agents/quinn/charter.md
+servers/system-mapping.md
+knowledge/decisions/KDD-0017-quinn-registration.md

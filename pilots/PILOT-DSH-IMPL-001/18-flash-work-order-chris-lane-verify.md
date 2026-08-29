@@ -4,7 +4,14 @@ You are Chris, PostgreSQL DBA. Your model lane was just changed to DeepSeek V4 P
 
 ## Task
 
-1. SSH to hxsa@192.168.50.208. The SSH password is in /home/hxsa/opt/local-tkv/agent-zero-docs/.local.env (HX_SSH_PASSWORD). Use a temp askpass helper (mode 0700), delete it after.
+1. SSH to hxsa@192.168.50.208. The SSH credential comes from the canonical
+   `ssh-info` mechanism of record (see `knowledge/network.md` and the
+   protected ssh-info file; keys.md documents key-based access where
+   staged). Use a temp askpass helper (mode 0700), delete it after.
+   [OPEN CORRECTION 2026-08-29, labeled, append-only — review batch 2, F36:
+   the original instruction named /home/hxsa/opt/local-tkv/agent-zero-docs/.local.env
+   (HX_SSH_PASSWORD); corrected to the mechanism reference per the factory's
+   secret-mechanism rule. Original preserved here as history.]
 
 2. Connect to PostgreSQL on hxs-9:
    `sudo -u postgres psql -c "SELECT version();"`

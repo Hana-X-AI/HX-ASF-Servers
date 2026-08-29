@@ -98,12 +98,15 @@ Pinned version and importer chain taken from the pinned `pnpm-lock.yaml` (`snaps
 
 ## 4. Classification rollup & exposure rationale
 
-**Rollup (38 scored instances):**
+**Rollup (38 scored instances):** [OPEN CORRECTION 2026-08-29, labeled,
+append-only — review batch 2, F26: the RBI/NUA instance counts were corrected
+33→34 and 5→4 to match the detailed classification ledger; GHSA column already
+consistent.]
 
 | Class | Instances | GHSAs |
 | --- | ---: | --- |
-| resolved-by-next-intake (RBI) | 33 | 27 |
-| needs-upstream-action (NUA, interim accepted-risk attached) | 5 | 5 (all in the vite@5.4.21 / esbuild@0.21.5 lineage) |
+| resolved-by-next-intake (RBI) | 34 | 27 |
+| needs-upstream-action (NUA, interim accepted-risk attached) | 4 | 4 (all in the vite@5.4.21 / esbuild@0.21.5 lineage) |
 | accepted-risk-with-rationale (standalone) | 0 | — |
 | excluded (withdrawn) | 0 scored | 1 (gv7w) |
 
@@ -154,6 +157,6 @@ Per KDD-0009 working order (Phase A/B/C-prep precedent):
 | GitHub Advisory API `affects=<pkg@pinned>` × ~20 queries (read-only) | session host → public API | GHSA ids, severities, first_patched_version, withdrawn flags | OK |
 | npm-registry metadata reads for pinned importer versions | session host → public API | Declared ranges (`^7.25.0`, `^4.11.4`, etc.) for compatibility check | OK (read-only) |
 | Write/edit of this document (+ skeleton-first) | session host | Product 2 | OK |
-| `python3 scripts/validate.py` (repo root) | session host | Work-order gate | see close-out |
+| `python3 scripts/validate.py` (repo root) | session host | Work-order gate | PASS — 4/4 checks (wiki-sync render --check, fixture-suite, catalog-mechanical, secret-boundary), manual gates noted, exit 0 — 2026-08-29 [OPEN CORRECTION 2026-08-29, labeled, append-only — review batch 2, F25: placeholder "see close-out" replaced with the actual gate result of record.] |
 
 No hxs-15 contact, no candidate mutation, no install/lockfile rewrite, no credential values.

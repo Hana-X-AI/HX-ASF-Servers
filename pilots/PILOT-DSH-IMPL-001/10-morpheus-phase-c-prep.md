@@ -105,7 +105,7 @@ RISK_DERIVED_ARTIFACT_DRIFT (R7).
 | --- | --- | --- |
 | SEAM-INT-01/-02 | RISK_MODEL_BEHAVIOR | Live prompt/image/permission/cancel flows over ACP exercise fleet-model tool behavior that Gates 3–7 only smoke-proved; qualification is new surface. |
 | SEAM-INT-01 | RISK_TRUST_PLANE | `session/request_permission` lets the automation client answer approvals automatically (README protocol table) — the policy boundary moves from operator to client code. |
-| SEAM-INT-03 | RISK_OUT_OF_TREE_COMPONENT-adjacent | A spawned child process with its own cwd/credentials reference extends the process boundary; source mitigates with loud spawn validation, but host-side command identity is ours to manage. |
+| SEAM-INT-03 | RISK_OUT_OF_TREE_COMPONENT | A spawned child process with its own cwd/credentials reference extends the process boundary; source mitigates with loud spawn validation, but host-side command identity is ours to manage. [OPEN CORRECTION 2026-08-29, labeled, append-only — review batch 2, F20: the risk code originally read `RISK_OUT_OF_TREE_COMPONENT-adjacent`, which is not an enum code of record; corrected to the `RISK_OUT_OF_TREE_COMPONENT` code with the "adjacent" character retained in this rationale.] |
 | SEAM-INT-02 | RISK_DERIVED_ARTIFACT_DRIFT | The HX ACP composition is a derivation of the shipped example (route swap); it must be re-derived at every upstream intake (R7-class). |
 | SEAM-INT-04/-05 | RISK_ADVISORY_DEBT (baseline) | No activation risk until a target exists; inherited upstream advisory exposure applies to any mounted server/bridge. |
 
@@ -421,13 +421,13 @@ are limited to new document files under this pilot project in `pilots/`.
 | ------- | ------ | -------------------------- | --------- |
 | Read of `pilots/PILOT-DSH-IMPL-001/{00-goal,03,05,09a,20,state-log}*` | hxs-15 (repo files) | Governance context for orders 09a/20 and Phase A/B records | OK (read-only) |
 | `sed -n '95,135p' agent-zero-docs/projects/Deepseek/2026-08-28-dsh-full-implementation-plan.md` | hxs-15 (repo files) | Phase C scope (Gates 8–10) family mapping | OK (read-only) |
-| `sha256sum packages/package.json packages/pnpm-lock.yaml` (corpus) | hxs-15 (corpus) | Anchor re-verification vs Phase A record (`4adbdffa…4986d7` / `6f20c268…90013e`) | OK — MATCH |
+| `sha256sum packages/package.json packages/pnpm-lock.yaml` (corpus) | hxs-15 (corpus) | Anchor re-verification vs Phase A record (`4adbdffa…4986d7` / `6f20c268…90013e`). [OPEN CORRECTION 2026-08-29, labeled, append-only — review batch 2, F19: the `packages/` prefix is INTENTIONAL — the DSH corpus resolves its manifest anchors inside `packages/` (the monorepo manifest files are not at the repo root); root-level `package.json`/`pnpm-lock.yaml` do not exist in this corpus. Original row preserved verbatim above.] | OK — MATCH |
 | `ls /opt/tkv-local/deepseek-harness-master/packages/` (+ `packages/sandbox/`, `packages/e2b/`, `packages/experimental/`) | hxs-15 (corpus) | Package locations for all four families | OK (read-only) |
 | Reads: `packages/acp/acp/src/index.ts`, `packages/acp/acp/README.md`, `examples/acp-agent/cordis.yml`, root `package.json` (demo script), `packages/subagent/subagent-acp/src/index.ts`, `packages/mcp/mcp-client/README.md` | hxs-15 (corpus) | Family 1 seams (SEAM-INT-01..05) | OK (read-only) |
 | Reads: `packages/sandbox/sandbox-local/src/index.ts` (ranges incl. 148-168 chain table), `packages/sandbox/sandbox-policy/README.md`, `packages/shell/bash-sandbox/README.md`, `packages/fs/README.md` | hxs-15 (corpus) | Family 2 seams (SEAM-SBX-01..06) | OK (read-only) |
 | Reads: `packages/e2b/README.md`, `packages/e2b/e2b/README.md`, `packages/e2b/fs-e2b/README.md`; `grep -n` key/config anchors in `packages/e2b/e2b/src/index.ts` + version in `package.json` | hxs-15 (corpus) | Family 3 seams (SEAM-RMT-01..05); credential seams recorded as field/env references only, no values | OK (read-only) |
 | Reads: `packages/experimental/README.md`, `packages/experimental/agent-team/README.md` | hxs-15 (corpus) | Family 4 seams (SEAM-EXP-01..04) | OK (read-only) |
-| `python3 scripts/validate.py` (repo root) | hxs-15 (repo) | Gate for this product | see result below |
+| `python3 scripts/validate.py` (repo root) | hxs-15 (repo) | Gate for this product | PASS — 4/4 checks (wiki-sync render --check, fixture-suite, catalog-mechanical, secret-boundary), manual gates noted, exit 0 — 2026-08-29 [OPEN CORRECTION 2026-08-29, labeled, append-only — review batch 2, F22: placeholder "see result below" replaced with the actual gate result of record.] |
 
 No hxs-15 candidate mutation, no daemon contact, no network egress, no
 credential values in any command or output.

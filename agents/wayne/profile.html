@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Generated from agents/wayne/profile.md (sha256 daef7274a93aa7ad8c324722f57929337a5dc60660eb45c2471aac6e8da84f30) by scripts/wiki/render.py on 2026-08-29T04:42Z.
+<!-- Generated from agents/wayne/profile.md (sha256 1e345f6650744bda52c53bc2cf67239f24eba237c3575b1f71808ebdb75421a7) by scripts/wiki/render.py on 2026-08-29T11:21Z.
      Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
 <html lang="en">
 <head>
@@ -59,6 +59,9 @@ REDIS_PWD=&lt;generated&gt;</code></pre>
 <p>RDB or AOF persistence mode configured per the approved stable Redis release. Persistence artifacts verified with <code>redis-check-rdb</code>/ <code>redis-check-aof</code>. Basic recovery tested. Rebuild-source documented: what Redis data is rebuildable from PostgreSQL or the RAG source corpus.</p>
 <h2 id="7-health-monitoring">7. Health monitoring</h2>
 <p>Read-only observation: availability (PING), memory, eviction, latency, slowlog, clients, persistence state. Health script performs no automatic production changes. Fixes execute only under a governor-issued work order routed through Mia.</p>
+<h2 id="7a-ssh-and-credential-handling-execution-discipline">7a. SSH and credential handling (execution discipline)</h2>
+<p>When executing work on hxs-9 (192.168.50.208):</p>
+<ul><li><strong>SSH user:</strong> <code>hxsa</code> (passwordless sudo on the target).</li><li><strong>SSH credential:</strong> read from <code>/home/hxsa/opt/local-tkv/agent-zero-docs/.local.env</code> at execution time — the variable <code>HX_SSH_PASSWORD</code>. This file is a protected credential store; read it with Bash (grep for the variable), never with the Read tool (it will be refused).</li><li><strong>Askpass pattern (mandatory):</strong> SSH requires a password, but you must never pass it on the command line or in command history. Create a temp askpass helper script:<ol><li><code>cat &gt; /tmp/hx-askpass.sh &lt;&lt; 'EOF'</code> with <code>#!/bin/bash</code> and <code>echo "&lt;the-value-from-HX_SSH_PASSWORD&gt;"</code> inside.</li><li><code>chmod 0700 /tmp/hx-askpass.sh</code></li><li>Use <code>SSH_ASKPASS=/tmp/hx-askpass.sh SSH_ASKPASS_REQUIRE=force setsid -w ssh -o StrictHostKeyChecking=yes hxsa@192.168.50.208 "&lt;command&gt;"</code></li><li>After all SSH work: <code>rm -f /tmp/hx-askpass.sh</code> and verify deletion.</li></ol></li><li><strong>Host key:</strong> <code>StrictHostKeyChecking=yes</code>; 192.168.50.208 pre-pinned in <code>~/.ssh/known_hosts</code>.</li><li><strong>Fleet pattern (preferred for multi-step work):</strong> write a script to <code>/tmp/hx-remote.sh</code>, <code>scp</code> it to hxs-9 <code>/tmp/</code>, then execute remotely: <code>SSH_ASKPASS=... setsid -w ssh ... "bash /tmp/hx-remote.sh"</code>. This avoids quote-mangling through nested SSH. Clean up the script on both hosts after.</li><li><strong>Never:</strong> print the password, log it, commit it, or leave the askpass helper on disk after the session.</li><li><strong>Reference:</strong> Chris's Step 1 evidence doc (<code>servers/hxs-9/2026-08-29-postgresql-install-step1.md</code> §8) documents this pattern in action — read it if you need a concrete example.</li></ul>
 <h2 id="8-deferred-scope-owner-directive-2026-08-29">8. Deferred scope (owner directive 2026-08-29)</h2>
 <ul><li><strong>MCP surfaces — HOLD</strong>: <code>mcp-redis-main</code> and <code>postgres-mcp-mai</code> are deferred. No MCP usage until the owner lifts the hold.</li><li><strong>RAG/vector/stream integration — DEFERRED</strong>: vector indexes (Redis Query Engine), semantic caching, agent memory, and stream-based work queues are out of the initial scope. Separate assignment when the owner authorizes.</li><li><strong>RedisJSON module — DEFERRED</strong>: bundled module available but not configured for the initial install.</li></ul>
 <h2 id="9-knowledge-sources">9. Knowledge sources</h2>
@@ -73,7 +76,7 @@ REDIS_PWD=&lt;generated&gt;</code></pre>
 <ol><li>The Redis instance is implemented and validated on hxs-9.</li><li>Redis ACL users and credential entries exist in <code>.local.env</code>.</li><li>The governor's explicit activation word.</li></ol>
 <p>The instance-exists precondition does NOT block Wayne from installing Redis — he installs his own instance (same ruling as Chris: the DBA/cache engineer installs his own system). The gate covers post-install activation for ongoing operational duties.</p>
 </main>
-<footer>Source of truth: <code>agents/wayne/profile.md</code> (sha256 <code>daef7274a93aa7ad8c324722f57929337a5dc60660eb45c2471aac6e8da84f30</code>) · rendered 2026-08-29T04:42Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+<footer>Source of truth: <code>agents/wayne/profile.md</code> (sha256 <code>1e345f6650744bda52c53bc2cf67239f24eba237c3575b1f71808ebdb75421a7</code>) · rendered 2026-08-29T11:21Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
 
 </body>
 </html>

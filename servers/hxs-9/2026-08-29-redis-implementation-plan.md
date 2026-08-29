@@ -59,8 +59,8 @@
 Create the following users (via `ACL SETUSER` or config file):
 | User | Permissions | Key pattern | Notes |
 |------|-------------|-------------|-------|
-| `admin` | `on >* ~* &* +@all` | `*` (all) | Full access; password stored in `.local.env` (**REDIS_PWD**). |
-| `cache-service` | `on >* ~cache:* +@all` | `cache:*` | Read/write for cache keys only; no password required for LAN (protected‑mode disabled). |
+| `admin` | `on >* ~* &* +@all` | `*` (all) | Full access; password stored in `.local.env` (**REDIS_PWD**). [OPEN CORRECTION 2026-08-29, labeled, append-only — review batch 2, F41/F59: AS-BUILT on hxs-9 the DEFAULT user is RESTRICTED (`user default off`, all access requires ACL auth) and LAN clients authenticate with named ACL users + passwords; the original no-password-for-LAN posture above was superseded on the live system by the governor 2026-08-29. This plan row is updated to match as-built; see the note under `cache-service` below.] |
+| `cache-service` | `on >* ~cache:* -@all +get +set +setex +mget +mset +del +exists +ttl +expire +scan +ping` | `cache:*` | Read/write for cache keys only, restricted command set — **not** `+@all` (F61); authenticates with its own ACL password per the as-built default-user-off posture (F41/F59). [Original row: `on >* ~cache:* +@all`, "no password required for LAN (protected-mode disabled)" — preserved here verbatim, corrected as noted.] |
 | `rag-service` _(reserved)_ | — | `rag:*` | Future expansion; not created now. |
 
 **Implementation**: Add an `aclfile` (e.g., `/etc/redis/users.acl`) and reference it with `aclfile /etc/redis/users.acl` in `redis.conf`.
@@ -91,7 +91,15 @@ REDIS_PWD=<generated>
     fleet anti-herd convention, 20 min after PG backup), Persistent=true,
     RandomizedDelaySec=300
   - Script: copy current RDB/AOF from /var/lib/redis/ to
-    /var/backups/hx-redis/, prune >7 days, verify with redis-check-rdb
+    /var/backups/hx-redis/, prune >7 days, verify with redis-check-rdb.
+    [OPEN CORRECTION 2026-08-29, labeled, append-only — review batch 2, F62:
+    the backup copy MUST be an ATOMIC VERSIONED SET — write each copy to a
+    timestamped directory (e.g. `/var/backups/hx-redis/<UTC-timestamp>/`) and
+    move it into place only when both RDB and AOF members are present and
+    pass redis-check; never leave a partially copied set as the "latest"
+    (an interrupted copy must not be restorable-as-latest). A Redis package
+    version record (from `redis-server --version`) is captured in the V1
+    receipt at install time and re-recorded in each backup receipt.]
 - **Recovery test**: Stop service, move current DB files, restore from latest backup, start service, validate `PING` and data integrity via a sanity key (`cache:test`).
 
 ## 6. Health Monitoring
@@ -110,14 +118,27 @@ REDIS_PWD=<generated>
 - **TTL rules**:
   - Static tables (e.g., reference data) → `TTL 86400` (24 h).
   - Frequently changing tables (e.g., `orders`) → `TTL 300` (5 min).
-  - Critical fast‑changing data → no TTL, rely on active invalidation.
+  - Critical fast‑changing data → `TTL 60` (1 min), shortest class. [OPEN
+    CORRECTION 2026-08-29, labeled, append-only — review batch 2, F58: the
+    original "no TTL, rely on active invalidation" option is REMOVED —
+    every cache class carries a finite TTL so entries can never persist
+    indefinitely if the invalidation agent (deferred) never ships. The
+    original no-TTL line is preserved in this note.]
+  - **Rule of record: ALL classes get a finite TTL — no key without a TTL.**
 - **Invalidation**:
   - Primary: TTL expiry.
   - Secondary: PostgreSQL NOTIFY / LISTEN channel `hx_cache_invalidate`. When a row changes, PostgreSQL sends `NOTIFY hx_cache_invalidate '<table>:<id>'`; a lightweight agent (outside this scope) will delete the matching Redis key.
 - **Refresh (Cache‑Aside)**:
   - Application reads from Redis; on miss, queries PostgreSQL, writes result back with appropriate TTL.
 - **Observability**:
-  - Track `GET` vs `SET` counts per key pattern via Redis `INFO commandstats`.
+  - Track cache effectiveness via Redis `INFO stats` counters
+    `keyspace_hits` / `keyspace_misses` (hit ratio =
+    hits / (hits + misses)). [OPEN CORRECTION 2026-08-29, labeled,
+    append-only — review batch 2, F60: the original text proposed per-key
+    attribution via `INFO commandstats`, which is aggregate per-command and
+    cannot attribute GETs to key patterns; the keyspace hit/miss counters are
+    the correct source for the hit/miss ratio. Original text preserved in
+    this note.]
   - Export hit/miss ratio to Prometheus via `redis_exporter` (future integration).
 
 ## 8. Validation Suite
@@ -138,7 +159,7 @@ all evidence docs are written, `python3 scripts/validate.py` must return
 ## 9. Rollback Procedure
 1. Stop `redis-server.service`.
 2. `systemctl disable --now hx-redis-backup.timer hx-redis-health.timer` (if created).
-3. `rm -f /etc/systemd/system/hx-redis-*.{service,timer} /usr/local/sbin/hx-redis-*` and `systemctl daemon-reload`.
+3. `rm -f /etc/systemd/system/hx-redis-*.{service,timer} /usr/local/sbin/hx-redis-* /usr/local/bin/hx-redis-health.sh` and `systemctl daemon-reload`. [OPEN CORRECTION 2026-08-29, labeled, append-only — review batch 2, F57: the health script `/usr/local/bin/hx-redis-health.sh` (§6) lives under `/usr/local/bin/` and was NOT covered by the original `/usr/local/sbin/hx-redis-*` glob; added to the cleanup set.]
 4. `apt-get purge -y redis-server` (removes package and config dirs).
 5. Delete custom ACL files (`/etc/redis/users.acl`).
 6. Remove backup directory `/var/backups/hx-redis/`.

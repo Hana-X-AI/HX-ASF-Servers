@@ -15,6 +15,12 @@
 
 **Remainder / next steps**
 - None.
+- [OPEN CORRECTION 2026-08-29, labeled, append-only (review batch 2, F14):
+  this receipt records AUTOMATED VALIDATION ONLY — the four MANUAL GATE
+  families printed in the validator output (CAT-10..15, CAT-20..22, CB-01,
+  literal-credential sweep) were NOT executed and remain PENDING governor
+  judgment; "complete" in this receipt means the automated battery passed,
+  not full validation completion. Original text preserved above as history.]
 
 **Validator output**
 ```text

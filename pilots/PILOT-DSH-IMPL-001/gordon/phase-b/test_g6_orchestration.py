@@ -438,7 +438,7 @@ def test_g6_13_subagent_fork(cfg, candidate_bin, scratch_home, scratch_env, work
                 child_seen = True
                 if marker in log_text(log):
                     child_seed = True
-        return (run.exit_code == 0 and child_seen), \
+        return (run.exit_code == 0 and child_seen and not child_seed), \
             f"fork_child={child_seen}; seed_in_turn1_child={child_seed}"
 
     task_a = ("Remember this exact token: ALPHA-SEED-__MARKER__. Then IMMEDIATELY, "
@@ -624,7 +624,13 @@ def test_g6_17_bundle_layer_precedence(cfg, candidate_bin, scratch_home, scratch
         _runner_prefix(cfg) + ["tee", str(profile_patch)],
         input=patch_text, capture_output=True, text=True, timeout=30,
     )
-    assert write.returncode == 0, write.stderr[-300:]
+    if write.returncode != 0:
+        # F45: record the runner-write result into the ledger before the failure
+        # is raised, so the write receipt is never lost.
+        rec.finish("FAIL",
+                   "profile precedence patch write: tee as service user must exit 0",
+                   f"tee exit={write.returncode}; stderr_tail={write.stderr[-300:]!r}")
+        pytest.fail(f"runner-write failed: {write.stderr[-300:]}")
     run2 = run_candidate(cfg, ["--profile", "headless", "--dump-config"],
                          env_extra=scratch_env)
     rec.commands.append(run2)
@@ -684,11 +690,19 @@ def test_g6_18_live_recomposition(cfg, candidate_bin, scratch_home, scratch_env,
         )
         time.sleep(6)
         health2, _ = boot.http_get("/")
+        # Last-good retention (F44): after the invalid edit the refresh path must
+        # reject the bad value and keep serving the prior composition, so a fresh
+        # dump must still carry fallbackMaxWords: 11.
+        dump_invalid = run_candidate(cfg, ["--profile", "web", "--dump-config"],
+                                     env_extra=scratch_env)
+        rec.commands.append(dump_invalid)
+        last_good_retained = "fallbackMaxWords: 11" in dump_invalid.stdout
         profile_patch.write_text("[]\n")
         observed = (f"bound_port={boot.port}; pid_stable={pid_before == pid_after}; "
                     f"health_after_edit={health}; health_after_invalid={health2}; "
-                    f"recomposed_layer={recomposed}")
-        ok = recomposed and pid_before == pid_after and health == 200 and health2 == 200
+                    f"recomposed_layer={recomposed}; last_good_retained={last_good_retained}")
+        ok = (recomposed and pid_before == pid_after and health == 200
+              and health2 == 200 and last_good_retained)
         rec.finish("PASS" if ok else "FAIL",
                    "profile-boot watchUserPatches: user-layer edits recompose a "
                    "long-lived surface without restart (hmr.registerConfig → "
@@ -701,7 +715,7 @@ def test_g6_18_live_recomposition(cfg, candidate_bin, scratch_home, scratch_env,
                         "composition; boot log captured (HMR output as-found)")
         assert ok, observed
     finally:
-        boot_log = boot.stop()
+        exit_code = boot.stop()
         rec.artifact("g618-boot-log.txt", boot.boot_log()[-8000:])
 
 
