@@ -125,13 +125,18 @@
 
 ## 6. First actions for the incoming session, in order
 
-1. Read this file, AGENTS.md, DSH state-log rows 17–43.
-2. Check Chris's install task (`bash-z3a5jjmc`) and Gordon's campaign
-   (`bash-ln2cbqqu`) state; honor their checkpoint protocols.
-3. At Chris's Checkpoint 1: verify his evidence doc, present to the owner.
-4. Bring the owner: Checkpoint 1 result, Morpheus Q1 reminder, and this
-   hand-off's confirmation that the transition held (first routed governor
-   call on GLM 5.2 logged to the state log).
+1. Read this file, AGENTS.md, DSH state-log rows 17–45.
+2. Checkpoint 1 is DONE and ACCEPTED (state-log row 44 — Chris's evidence
+   verified live by the governor: service, version 18.6, listeners
+   LAN+loopback only, scram/no-trust posture). **Awaiting the owner's word
+   for Step 2** (roles, credential entries, backup + health timers, V4–V6).
+   Present the result if the owner has not yet ruled.
+3. Check Gordon's campaign (`bash-ln2cbqqu`) state; honor his checkpoint
+   protocol (Gate 6 verdict, Gate 7 verdict, campaign close).
+4. Bring the owner: Step 2 GO question, Morpheus Q1 (O1/O2/O3), and log
+   the first routed governor call on GLM 5.2 to the state log as the
+   transition-held proof.
 5. Continue the standing flow: KK3 → Mia → lanes, intent + constraints.
 
-*— Kimi-K3 (outgoing moonshot session), 2026-08-29T02:13Z, state-log row 43.*
+*— Kimi-K3 (outgoing moonshot session), final entry 2026-08-29T02:24Z,
+rows 43–45. Session closed at owner word "transition now".*
