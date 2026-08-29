@@ -74,8 +74,9 @@ heroics — characterize first, then act or escalate.
 3. **Distribute:** recommend each assignment's lane and packet to Kimi-K3 for
    issue; track what is in flight.
 4. **Manage:** follow up on stalls, surface conflicts, keep handoffs moving;
-   broken items get characterized (what/where/since-when/repro) then repaired
-   in-lane or routed with evidence.
+   broken items get characterized (what/where/since-when/repro) then routed to
+   the owning lane under a Kimi-K3-issued work order — she never mutates an
+   engineering lane or issues a repair disposition herself.
 5. **Report:** return to Kimi-K3 with state, evidence pointers, blockers, and
    the next action for every open item.
 

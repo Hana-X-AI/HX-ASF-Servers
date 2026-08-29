@@ -17,6 +17,7 @@ import socket
 import subprocess
 import sys
 import time
+import urllib.error
 import urllib.request
 from pathlib import Path
 
@@ -54,6 +55,25 @@ from test_g3_providers import (  # noqa: E402
 )
 
 FIXTURES = Path(__file__).resolve().parent / "fixtures"
+
+
+def render_b_fixture(name: str, mapping: dict[str, str], dest_dir: Path) -> Path:
+    """Render a phase-b fixture template with runtime values into scratch.
+
+    Mirrors gordon_util.render_fixture but resolves templates against the
+    phase-b fixtures directory (phase-a's FIXTURES_DIR points at phase-a/fixtures,
+    which does not hold the SDK/ACP templates the Gate 7 rows compose).
+    """
+    template = (FIXTURES / name).read_text()
+    for key, value in mapping.items():
+        template = template.replace(f"__{key}__", value)
+    leftovers = re.findall(r"__[A-Z_]+__", template)
+    if leftovers:
+        blocked(f"fixture {name} has unresolved placeholders: {sorted(set(leftovers))}")
+    dest_dir.mkdir(parents=True, exist_ok=True)
+    out = dest_dir / name.replace(".tmpl", "")
+    out.write_text(template)
+    return out
 
 
 @pytest.fixture(scope="session")
@@ -332,61 +352,62 @@ class WebBoot:
     Lifecycle: start(), wait_bound(), http_get(path), stop() (SIGTERM → 0 per
     profile-boot.ts:221). The boot runs as the service user through the same
     env -i wrapper as every other candidate invocation.
+
+    Port discovery (fix of record 2026-08-28, Gate 6 retest): the listener is
+    the node child under the sudo wrapper — invisible to the executor's
+    `ss -tlnp`. Parse the product's own bound-address announcement
+    (`dsh web: http://127.0.0.1:<port>`) from the drained boot log instead.
     """
+
+    BOUND_RE = re.compile(r"dsh web: http://127\.0\.0\.1:(\d+)")
 
     def __init__(self, cfg: Cfg, env_extra: dict[str, str], cwd: str, patches: list[str] | None = None):
         self.cfg = cfg
         env = base_env(cfg, env_extra)
-        args = ["--profile", "web", "--host", "127.0.0.1", "--port", "0"]
-        for patch in patches or []:
-            args[1:1] = []  # no-op guard; patches are launcher flags below
         argv_tail = []
         for patch in patches or []:
             argv_tail += ["--patch", patch]
         self.argv = candidate_argv(cfg, ["--profile", "web", *argv_tail,
-                                         "--host", "127.0.0.1", "--port", "0"], env)
+                                         "--host", "127.0.0.1", "--port", "0",
+                                         "--no-open"], env)
         self.cwd = cwd
         self.proc: subprocess.Popen | None = None
         self.port: int | None = None
-        self._stdout: list[str] = []
-        self._stderr: list[str] = []
+        self._lines: list[str] = []
+        import threading
+        self._lock = threading.Lock()
+
+    def _drain(self) -> None:
+        assert self.proc is not None and self.proc.stdout is not None
+        for line in self.proc.stdout:
+            with self._lock:
+                self._lines.append(line)
 
     def start(self) -> None:
+        import threading
+
         self.proc = subprocess.Popen(
             self.argv, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
-            text=True, cwd=self.cwd,
+            text=True, cwd=self.cwd, bufsize=1,
         )
+        threading.Thread(target=self._drain, daemon=True).start()
+
+    def _snapshot(self) -> str:
+        with self._lock:
+            return "".join(self._lines)
 
     def wait_bound(self, timeout: float = 90.0) -> bool:
-        """The web app reports its bound address; discover the port by probing
-        the process's listeners once it announces readiness or a listener
-        appears. Falls back to parsing the boot log for the port."""
+        """Wait for the product's bound-address announcement in the boot log."""
         deadline = time.monotonic() + timeout
         while time.monotonic() < deadline:
+            match = self.BOUND_RE.search(self._snapshot())
+            if match:
+                self.port = int(match.group(1))
+                return True
             if self.proc.poll() is not None:
                 return False
-            port = self._discover_port()
-            if port:
-                self.port = port
-                return True
-            time.sleep(1.5)
+            time.sleep(1.0)
         return False
-
-    def _discover_port(self) -> int | None:
-        if self.proc is None:
-            return None
-        try:
-            out = subprocess.run(
-                ["ss", "-tlnp"], capture_output=True, text=True, timeout=10
-            ).stdout
-            for line in out.splitlines():
-                if str(self.proc.pid) in line and "127.0.0.1:" in line:
-                    match = re.search(r"127\.0\.0\.1:(\d+)", line)
-                    if match:
-                        return int(match.group(1))
-        except (OSError, subprocess.SubprocessError):
-            pass
-        return None
 
     def http_get(self, path: str, timeout: float = 10.0) -> tuple[int, str]:
         assert self.port, "web boot not bound"
@@ -404,15 +425,15 @@ class WebBoot:
         if self.proc.poll() is None:
             self.proc.send_signal(signal.SIGTERM)
         try:
-            out, _ = self.proc.communicate(timeout=60)
+            self.proc.wait(timeout=60)
         except subprocess.TimeoutExpired:
             self.proc.kill()
-            out, _ = self.proc.communicate()
-        self._stdout.append(out or "")
+            self.proc.wait(timeout=15)
+        time.sleep(0.5)  # let the drain thread flush the final lines
         return self.proc.returncode
 
     def boot_log(self) -> str:
-        return "".join(self._stdout)
+        return self._snapshot()
 
 
 @pytest.fixture()

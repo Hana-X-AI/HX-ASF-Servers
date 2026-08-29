@@ -35,6 +35,7 @@ knowledge/assessments/2026-08-25-capability-assessment-read-only.md
 knowledge/assessments/2026-08-25-unified-capability-recommendations.md
 knowledge/agent-performance.md
 servers/BLUEPRINT-llm-server.md
+servers/hxs-9/2026-08-29-postgresql-implementation-plan.md
 goals/2026-08-26-hxs2-qwen36-coderx-backend.md
 goals/2026-08-26-hxs3-muse-glimmer-tooling.md
 knowledge/decisions/KDD-0006-hxs2-coderx-backend-adoption.md

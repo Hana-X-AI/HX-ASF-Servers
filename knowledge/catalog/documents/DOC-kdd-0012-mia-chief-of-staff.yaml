@@ -1,0 +1,31 @@
+document:
+  id: "DOC-kdd-0012-mia-chief-of-staff"
+  title: "KDD-0012: Mia — Chief of Staff to the Governor"
+  type: "decision"
+  declared_purpose: "Record of decision to create and register Mia as Chief of Staff, defining her role and model lane."
+  source:
+    author: "KDD-0012"
+    provided_by: "Agent-Zero"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0012-mia-chief-of-staff.md"
+    ingestion_date: "2026-08-28T00:00:00Z"
+    section: "§whole-document"
+  owner: "Kimi-K3"
+  applies_to:
+    agents: [mia]
+    repositories: [HX-ASF-Servers]
+  version: ""
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none"
+    contains_secret_values: false
+  relations: []
+  validation:
+    validated_at: "2026-08-29T01:25:00Z"
+    freshness: "current"
+    review_due: "2026-09-28"
+  sha256: "f399b3a1dd0af692565bb8c1fd671626206896ccaee60974a77860625820ebe4"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0012-mia-chief-of-staff.md"

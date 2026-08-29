@@ -63,6 +63,9 @@ document:
     access_restrictions: none beyond vault access
     contains_secret_values: false
   relations:
+  - predicate: "describes"
+    target: "hxs-7 decommission"
+    note: "open correction effective 2026-08-28, fleet active count 16, row preserved as history"
   - predicate: governs
     target: 'hxs-1 assigned role: Deep reasoning & synthesis — ''Qwen 3.8 27B — unreleased, slot reserved'''
     note: 'ratified 2026-08-13; KDD-0004 (2026-08-24) verified the model now released and adopted qwen3.8:27b with NO registry amendment required — registry row text is stale on ''unreleased, slot reserved'' (FLAG F-REG-1, governance-tolerated). [HISTORICAL since 2026-08-27 (batch-11 wave, labeled): owner disposition #1 CLOSED the thread — the tkv line-38 cell now reads ''Qwen 3.8 27B (`hx-qwen3.8-27b-64k`, deployed and owner-accepted per owner disposition 2026-08-27 #1; supersedes "unreleased, slot reserved" recorded 2026-08-13 — preserved as history)'' (VERIFIED this run); the target''s quoted stale wording and the ''stale'' finding above are preserved as the historical record of the pre-amendment row; the superseded mirror lineage of this record is unchanged]'

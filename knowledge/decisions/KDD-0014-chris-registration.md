@@ -1,0 +1,56 @@
+# KDD-0014: Chris registration — PostgreSQL systems engineer
+
+- Date: 2026-08-29
+- Status: ratified
+- Decider: Agent-Zero
+- Related goals: hxs-9 state-services implementation (registry target-state);
+  satisfies the Bill-class pairing of KDD-0011 D3 by class
+
+## Context
+
+The registry assigns hxs-9 "State services: PostgreSQL + Redis; LiteLLM
+database" (target-state), but nothing is deployed there (verified in the
+2026-08-28 post-outage check: no PostgreSQL units, no 5432 listener). Rob's
+profile names a future PostgreSQL pairing ("Bill", KDD-0011 D3). The owner's
+candidate profile `agent-zero-docs/agent-profiles/chris/chris-profile.yaml`
+(profile_version 2026-08-28T21:35:15Z, digest `sha256:15898cb2…5a98`,
+preserved unchanged) was reviewed on request 2026-08-29 and dispositioned by
+owner directive the same day: authority chain to fit the current operating
+model, roster registration, implementation plan via Mia, model lane assigned,
+MCP on hold.
+
+## Options considered
+
+1. Register as adapted (authority retargeted, lane assigned, activation gated)
+   — what the owner directed.
+2. Register verbatim (Paul authority chain) — rejected by the owner's first
+   disposition point; the current model is KK3 orchestrates, Mia manages,
+   Agent Zero owns risk.
+3. Defer until hxs-9 is implemented — rejected; registration now lets Mia's
+   implementation plan name the accountable lane from day one.
+
+## Decision
+
+Chris is registered: `agents/chris/charter.md` + `agents/chris/profile.md`
+(distilled and adapted from the candidate YAML, provenance recorded), roster
+row in `agents/README.md`. Adaptations of record: (a) every "Paul" gate reads
+as Agent Zero requested through Kimi-K3; escalation runs Kimi-K3 always,
+never the owner directly; work distributes via Mia under Kimi-K3-issued work
+orders. (b) Model lane: **Qwen 3.8 Flash** (`openrouter/qwen/qwen3.8-flash`,
+upstream Alibaba Cloud International, via OmniRoute, route probed live
+2026-08-29) — KDD-0013 amendment 6. (c) **MCP surface on HOLD** (owner
+directive) — `postgres-mcp-mai` deferred entirely. (d) Scope pin: PostgreSQL
+only on hxs-9; Redis is explicitly outside his lane. Activation is gated
+(profile §10): instance implemented + credential entries + owner word.
+
+## Consequences
+
+- The hxs-9 state-services target gains its accountable lane; Mia's
+  implementation plan (work order 11) proceeds against this registration.
+- KDD-0011 D3 (Bill pairing) is satisfied BY CLASS — the Bill profile is
+  unnecessary unless a second, distinct database lane emerges; recorded
+  openly for the owner's confirmation.
+- Chris's lane is the SIXTH cloud lane in the OD-14 metering scope
+  (KDD-0013 amendment 6).
+- Revisit when: the instance is implemented (activation review), the MCP
+  hold is lifted (Trinity's posture applies), or Redis needs a lane.

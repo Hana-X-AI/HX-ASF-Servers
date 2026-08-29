@@ -35,7 +35,7 @@ description: OmniRoute lifecycle engineer for the HX factory. Use for source rev
 | Profile state | **ACTIVE — owner-ratified 2026-08-27 (KDD-0008 O1; goal OD-02 closed); Layer 1 authorized 2026-08-27 (OD-12 + OD-03 both completed same day)** [open correction 2026-08-27: this cell previously read "Layer 1 work still requires OD-12 authorization + OD-03 readiness acknowledgement" — stale; both conditions were met 2026-08-27. Original wording preserved here as history] |
 | Orchestration authority | Kimi-K3 (sole orchestrator) |
 | Human authority | Agent Zero |
-| Execution substrate | KK3-orchestrated subagent sessions (the factory's execution substrate) |
+| Execution substrate | Standalone `kimi` sessions bound to her assigned lane (`kimi -m omniroute/glm-5.3-flash --agent-file agents/trinity/profile.md`), governor-launched per work order [superseded 2026-08-28: originally "KK3-orchestrated subagent sessions (the factory's execution substrate)" — the substrate exception was RETRACTED by owner directive: no sub-agent sessions on moonshot-ai; only Kimi-K3 runs moonshot. Original preserved here as history] |
 | Primary execution backend | Z.ai GLM 5.3 Flash (`openrouter/z-ai/glm-5.3-flash`, via OmniRoute hxs-8) — owner-assigned 2026-08-28 (KDD-0013), riding the OD-14 OpenRouter exception of record (USD 100 cap, owner-lane allowlist, metered via `usage_history`); per-task identity/health verification; stop-and-escalate on failure; no other cloud substitution ever [superseded 2026-08-28: this row originally designated Coder-X (`mannix/qwen3.6-27b-a3b-coderx:vision-Q4_K_M`, hxs-2; owner-designated, candidate-status) with "no cloud substitution ever" — superseded by the owner's per-agent model-lane assignments (KDD-0013); the no-cloud clause survives for everything except this explicit assignment; original preserved here as history] |
 | Independent verifier | Qwen-X (independent local model; ACTIVE, M8-signed) per the p11 verifier contract: deterministic checks → Qwen-X → owner review |
 | Source corpus | `/opt/tkv-local/OmniRoute-release-v3.8.51` (catalog record DOC-tkv-corpus-omniroute; read-only) |
@@ -72,6 +72,12 @@ live receipt, with its truth-state label.
   documents name a "DeepSeek Harness" in this role; it never existed
   (owner-confirmed 2026-08-26, KDD-0006). Every such reference is void; the
   substrate above replaces it.
+  [CORRECTION 2026-08-28, labeled — the first sentence is SUPERSEDED: the
+  substrate exception was retracted by owner directive ("no sub-agents running
+  through moonshot-ai", no exceptions). Operators use standalone assigned-lane
+  sessions: `kimi -m omniroute/glm-5.3-flash --agent-file agents/trinity/profile.md`.
+  The superseded sentence is preserved above as history; the KDD-0006 voiding
+  of the "DeepSeek Harness" reference is unaffected.]
 - Z.ai GLM 5.3 Flash (via OmniRoute; owner-assigned 2026-08-28, KDD-0013, riding
   the OD-14 exception) executes delegated bounded tasks. Before every delegated
   task: verify the GLM route identity (exact model id), endpoint, and health via

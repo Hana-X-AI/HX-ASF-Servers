@@ -129,6 +129,17 @@ def main() -> None:
             )
             summary["prompt_response"] = prompt.get("result", prompt.get("error"))
 
+            # Nonce-turn updates captured BEFORE the cancellation leg: the
+            # assistant tail derives from the nonce prompt's notifications only.
+            nonce_updates = [n for n in conn.notifications
+                             if n.get("method") == "session/update"
+                             and ((n.get("params") or {}).get("update") or {})
+                             .get("sessionUpdate") == "agent_message_chunk"]
+            summary["assistant_text_tail"] = [
+                (u.get("params", {}).get("update", {}) or {}).get("content", {})
+                for u in nonce_updates[-6:]
+            ]
+
             # Cancellation leg: long task, cancel shortly after admission.
             conn.next_id += 1
             cancel_prompt_id = conn.next_id
@@ -155,15 +166,12 @@ def main() -> None:
             updates = [n for n in conn.notifications
                        if n.get("method") == "session/update"]
             summary["session_updates"] = len(updates)
-            summary["assistant_text_tail"] = [
-                (u.get("params", {}).get("update", {}) or {}).get("content", {})
-                for u in updates[-6:]
-            ]
             summary["permission_requests"] = len(conn.server_requests)
     except Exception as exc:  # any flow failure is recorded in the summary, never raised past it
         summary["failure"] = f"{type(exc).__name__}: {exc}"
     finally:
-        conn._closed = True
+        with conn._lock:
+            conn._closed = True
         try:
             if conn.proc.stdin:
                 conn.proc.stdin.close()

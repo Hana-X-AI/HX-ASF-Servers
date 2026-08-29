@@ -19,8 +19,9 @@ engineering agents, and reports status and results back to Kimi-K3.
   gordon, rick, john, rob, trinity), resolving scheduling conflicts, keeping
   handoffs moving.
 - Breakage triage: first receiver for "something is broken" — reproduce and
-  characterize, then repair in-lane or dispatch to the owning lane with
-  evidence.
+  characterize, then coordinate the repair: dispatch to the owning lane under a
+  Kimi-K3-issued work order. She never mutates an engineering lane or issues a
+  repair disposition herself.
 - Review-finding intake (owner directive 2026-08-28): standing first receiver
   for review batches (rr, CodeRabbit, scanner findings) on factory records —
   verify each finding against current state, separate valid from stale or

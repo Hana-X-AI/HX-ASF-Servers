@@ -1,0 +1,52 @@
+document:
+  id: DOC-pilot-dsh-impl-001-state-log
+  title: "PILOT-DSH-IMPL-001 01-state-log.md — pilot state-log rows 17-34"
+  type: other
+  declared_purpose: "Catalog entry for pilot state-log rows 17-34 of PILOT-DSH-IMPL-001"
+  inferred_value: "INFERENCE: state-log rows 17-34 capture governance actions for DSH implementation pilot."
+  source:
+    author: "Kimi-K3 (governor, main session)"
+    provided_by: "Kimi-K3"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-DSH-IMPL-001/01-state-log.md"
+    section: "§17-34"
+    ingestion_date: "2026-08-29T00:00:00Z"
+  owner: "Carol"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents:
+      - "carol"
+    repositories:
+      - "HX-ASF-Servers"
+    environments:
+      - "pilot"
+    models: []
+  version: "rows 17-34"
+  status: "active"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "describes"
+      target: "PILOT-DSH-IMPL-001 state-log rows 17-34"
+      note: "covers governance wave rows 17-34"
+    - predicate: "references"
+      target: "DOC-kdd-0011-rob-registration"
+      note: "links to Batch A agent registration"
+    - predicate: "references"
+      target: "DOC-kdd-0012-mia-chief-of-staff"
+      note: "links to Batch A chief-of-staff registration"
+    - predicate: "references"
+      target: "DOC-kdd-0013-agent-model-lanes"
+      note: "links to Batch A lane registration"
+  validation:
+    validated_at: "2026-08-29T00:00:00Z"
+    freshness: "current"
+    review_due: "on any catalog amendment"
+  sha256: "4a08ab1889b1a6a774793c76f6e946e203ec03c62e36d97d335713f97c8f7e9b"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-DSH-IMPL-001/01-state-log.md"

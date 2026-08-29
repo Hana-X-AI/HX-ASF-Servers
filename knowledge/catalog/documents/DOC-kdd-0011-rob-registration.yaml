@@ -1,0 +1,31 @@
+document:
+  id: "DOC-kdd-0011-rob-registration"
+  title: "KDD-0011: Rob registration — full-stack engineer for the DeepSeek Harness"
+  type: "decision"
+  declared_purpose: "Record of decision to register Rob as full-stack engineer, including model lane assignment."
+  source:
+    author: "KDD-0011"
+    provided_by: "Agent-Zero"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0011-rob-registration.md"
+    ingestion_date: "2026-08-28T00:00:00Z"
+    section: "§whole-document"
+  owner: "Kimi-K3"
+  applies_to:
+    agents: [rob]
+    repositories: [HX-ASF-Servers]
+  version: ""
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none"
+    contains_secret_values: false
+  relations: []
+  validation:
+    validated_at: "2026-08-28T06:00:00Z"
+    freshness: "current"
+    review_due: "2026-09-28"
+  sha256: "b9d7f838ca2941792ba31ebe91e34a17c285b3f09c45f58b42f872fae75858f1"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0011-rob-registration.md"

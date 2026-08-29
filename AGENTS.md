@@ -158,20 +158,62 @@ doubt, act reversibly and report rather than pause.
   the meta-agent model; subagent session substrates are orchestration
   mechanics, not "the LLM for the work" — the rule governs model-inference
   work products.
+- **Substrate exception RETRACTED** (owner directive 2026-08-28, labeled
+  correction — the exception sentence inside the rule above is VOID from this
+  date, original preserved there as history): "i dont want any sub-agents
+  running through moonshot-ai.. the only agent to run throug moonshot-ai is
+  you… no expections." Only Kimi-K3 runs on `moonshot-ai/kimi-k3`. Every other
+  agent's work sessions run on that agent's assigned model lane (KDD-0013),
+  executed as standalone `kimi` sessions bound at launch
+  (`kimi -m omniroute/<lane> --agent-file agents/<name>/profile.md`) or as dsh
+  sessions on hxs-15 for harness-side work. Product fact of record: Kimi Code
+  sub-agents always inherit the main session's model (agent files have no
+  model field), so Agent-tool dispatches from the governor's moonshot session
+  are NO LONGER an execution path for agent work — the governor's own bounded
+  direct execution (KK3 itself) remains moonshot-legal.
 - **Per-agent model lanes** (owner-assigned 2026-08-28, KDD-0013; all local/GLM
   lanes route via OmniRoute on hxs-8): kimi-k3 `moonshot-ai/kimi-k3` (meta-agent
   exception) · morpheus Coder-X (hxs-2) · gordon Qwen-X (hxs-1) · rick Meta-X
   (hxs-3) · john Meta-X (hxs-3) · carol Chat-X (hxs-4) · trinity GLM 5.3 Flash ·
-  rob GLM 5.3 Flash · mia GLM 5.3 Flash. The three GLM lanes ride the OD-14
+  rob GLM 5.3 Flash · mia GLM 5.3 Flash. [Correction 2026-08-28, labeled:
+  gordon's lane is now DeepSeek V4 Pro (`openrouter/deepseek/deepseek-v4-pro-0813`,
+  provider StreamLake, via OmniRoute) — owner directive same day, superseding
+  the Qwen-X assignment printed above, which is preserved as history.]
+  [Correction 2026-08-28, labeled: carol's lane is now OpenAI gpt-oss-120b
+  (`openrouter/openai/gpt-oss-120b`, provider AkashML, via OmniRoute) — owner
+  directive same day, superseding the Chat-X assignment printed above; she
+  remains frozen.] The three
+  GLM lanes plus gordon's DeepSeek lane ride the OD-14
   OpenRouter exception of record (USD 100 cap, owner-lane allowlist, metered);
   cloud substitution otherwise stays prohibited. New agents receive a lane at
   registration.
+  [OPEN CORRECTION 2026-08-29, labeled, append-only: the GOVERNOR's lane is now
+  Z.ai GLM 5.2 (`openrouter/z-ai/glm-5.2`, provider Decart, via OmniRoute) —
+  owner directive same day, superseding the `moonshot-ai/kimi-k3` meta-agent
+  exception printed above, which is preserved as history. The
+  substrate-retraction rule (no moonshot sub-agents) stands unchanged. OD-14
+  scope: SEVEN cloud lanes — trinity, rob, mia, gordon, carol, chris, kimi-k3.
+  Authority: KDD-0013 Amendment 7.]
+  [OPEN CORRECTION 2026-08-29, labeled, append-only: the OD-14 owner-lane
+  allowlist and metering scope now covers all five cloud lanes: Trinity, Rob,
+  Mia, Gordon, and Carol. Authority: KDD-0013 Amendment 4 and
+  `pilots/PILOT-DSH-IMPL-001/01-state-log.md` row 30. The preceding four-lane
+  scope remains preserved as historical text.]
+  [OPEN CORRECTION 2026-08-29, labeled, append-only: the scope now covers SIX
+  cloud lanes — chris is registered (KDD-0014) with lane Qwen 3.8 Flash
+  (`openrouter/qwen/qwen3.8-flash`, provider Alibaba Cloud International, via
+  OmniRoute). Authority: KDD-0013 Amendment 6. The preceding five-lane note
+  remains preserved as historical text.]
 - **Chief of Staff** (owner directive 2026-08-28, KDD-0012). **Mia**
   (`agents/mia/`) manages the work — planning, coordination, distribution to the
   engineering lanes, breakage triage, and status reporting to Kimi-K3. The
   Governor governs (goals, gates, acceptance, owner escalation); Mia manages.
-  Broken items go to Mia first: characterize, repair in-lane, or distribute
-  with evidence. **Distribution and assignments execute only under a
+  Broken items go to Mia first: characterize, then coordinate or distribute
+  with evidence — she never mutates an engineering lane or issues repair
+  dispositions; repairs execute only under a Kimi-K3-issued work order.
+  [Corrected 2026-08-28, labeled: previously "characterize, repair in-lane, or
+  distribute with evidence" — overreach vs her management-only mandate;
+  original preserved here.] **Distribution and assignments execute only under a
   Kimi-K3-issued work order** — this rule grants Mia coordination and triage,
   NOT independent self-dispatch authority (consistent with
   `agents/mia/charter.md` and `agents/mia/profile.md`).

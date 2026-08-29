@@ -10,8 +10,8 @@
 The DSH full-implementation arc created the platform (Morpheus) and its
 independent QA (Gordon), but no application-layer consumer — "a harness with no
 developer is a race car with no driver." Kimi-K3 drafted Rob's profile at owner
-request (`agent-zero-docs/projects/Deepseek/kk3_20260828_0956_rob-...md`, DRAFT,
-preserved unchanged). The owner's review of per-agent model assignments
+request (`/home/hxsa/opt/local-tkv/agent-zero-docs/projects/Deepseek/kk3_20260828_0956_rob-deepseek-harness-full-stack-developer-agent-profile.md`, DRAFT,
+preserved unchanged; content identity sha256 `6ede0b05408a9225810b9631eb7ade3abef21ddd3cbdda625875ecee20e0f9e3`, recorded 2026-08-28 — this exact pointer supersedes the truncated form originally printed here, labeled correction). The owner's review of per-agent model assignments
 (2026-08-28) included "Rob — how did you forget Rob" with his model lane named
 directly, which is the ratification word.
 

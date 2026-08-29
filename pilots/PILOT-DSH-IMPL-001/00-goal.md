@@ -28,6 +28,11 @@ cutover word at close.
 - Codification of HX conventions into dsh: OUT of this arc (owner 2026-08-28).
 - Carol frozen (owner 2026-08-28): catalog pauses; the state log is the
   authoritative record.
+  [Corrected 2026-08-29, labeled: freeze LIFTED to background-class by owner
+  directive — "you can run carol but not on the critical path, she can run in
+  the background but does not block any work." No gate, handoff, or lane blocks
+  on her output; the state log stays authoritative until her receipts land.
+  Original line preserved above.]
 - Local-model-first: no cloud keys or external services without explicit owner
   word (e2b / web-search rows disposition accordingly).
 - rr zero-tolerance gate reviews every push.

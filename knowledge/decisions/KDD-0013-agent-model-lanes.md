@@ -35,13 +35,13 @@ Standing model lanes, all local lanes routed via OmniRoute (hxs-8,
 | --- | --- | --- |
 | Kimi-K3 | `moonshot-ai/kimi-k3` | Meta-agent exception (orchestration/governance only), unchanged |
 | Morpheus | Coder-X (`ollama-local/hx-qwen3.6-coderx-64k`, hxs-2; immutable identity: manifest digest `ec9ebe08a82447f7440fd8cba07b406f6972c19ea7fa0cfd53ea8055ff28a9f1`, recorded 2026-08-28) | Verifier Qwen-X (hxs-1) |
-| Gordon | Qwen-X (`ollama-local/hx-qwen3.8-27b-64k`, hxs-1; immutable identity: manifest digest `766cd9469fb47c42890616880772f2647fcfe4656b7550e5cc37ab186cc99d8a`, recorded 2026-08-28) | Deterministic oracles remain first-tool |
+| Gordon | Qwen-X (`ollama-local/hx-qwen3.8-27b-64k`, hxs-1; immutable identity: manifest digest `766cd9469fb47c42890616880772f2647fcfe4656b7550e5cc37ab186cc99d8a`, recorded 2026-08-28) [SUPERSEDED 2026-08-28 — see amendment 2 below] | Deterministic oracles remain first-tool |
 | Rick | Meta-X (`ollama-local/hx-muse-glimmer-64k`, hxs-3; immutable identity: manifest digest `9dffb015db409f44713b7c5a9ab5413e140c41eb4e72eac7ca753ce1b99de7da`, recorded 2026-08-28) | Work class largely deterministic; lane covers analysis/drafting |
 | John | Meta-X (`ollama-local/hx-muse-glimmer-64k`, hxs-3; same immutable identity as rick's row) | Same deterministic caveat as rick |
-| Carol | Chat-X (`ollama-local/hx-qwen3.5-9b-64k`, hxs-4; immutable identity: manifest digest `5936a390c6c22594ce49e8c77187fc92f4a81126fd04a4eabad7c000b30447d2`, recorded 2026-08-28) | Schema/mechanical validation stays deterministic (validate.py); currently frozen by owner directive |
-| Trinity | Z.ai GLM 5.3 Flash (`openrouter/z-ai/glm-5.3-flash`) | OD-14 exception; supersedes her Coder-X designation |
-| Rob | Z.ai GLM 5.3 Flash | OD-14 exception; resolves his profile's D1 against its Coder-X recommendation — recorded openly |
-| Mia | Z.ai GLM 5.3 Flash | OD-14 exception |
+| Carol | Chat-X (`ollama-local/hx-qwen3.5-9b-64k`, hxs-4; immutable identity: manifest digest `5936a390c6c22594ce49e8c77187fc92f4a81126fd04a4eabad7c000b30447d2`, recorded 2026-08-28) [SUPERSEDED 2026-08-28 — see amendment 4 below] | Schema/mechanical validation stays deterministic (validate.py); currently frozen by owner directive |
+| Trinity | Z.ai GLM 5.3 Flash (`openrouter/z-ai/glm-5.3-flash`; identity of record per amendment 3: served id `z-ai/glm-5.3-flash`, upstream provider Modal, route probed live 2026-08-28) | OD-14 exception; supersedes her Coder-X designation |
+| Rob | Z.ai GLM 5.3 Flash (`openrouter/z-ai/glm-5.3-flash`; identity of record per amendment 3: served id `z-ai/glm-5.3-flash`, upstream provider Modal, route probed live 2026-08-28) | OD-14 exception; resolves his profile's D1 against its Coder-X recommendation — recorded openly |
+| Mia | Z.ai GLM 5.3 Flash (`openrouter/z-ai/glm-5.3-flash`; identity of record per amendment 3: served id `z-ai/glm-5.3-flash`, upstream provider Modal, route probed live 2026-08-28) | OD-14 exception |
 
 Controls carried into every profile: per-task identity/health verification;
 stop-and-escalate on backend failure with re-assignment control at Kimi-K3; no
@@ -53,6 +53,14 @@ resolves the served model's manifest digest and compares it against the
 immutable digest recorded in the table above (digests captured live from the
 backends 2026-08-28); a mismatch, an unresolvable identity, or an unhealthy
 endpoint stops the task before any inference and escalates to Kimi-K3.
+
+[Amendment 2026-08-28, labeled — owner directive: the 2026-08-27 substrate
+exception is RETRACTED. Only Kimi-K3 runs on `moonshot-ai/kimi-k3`; every other
+agent's work sessions run on its assigned lane via standalone
+`kimi -m omniroute/<lane> --agent-file …` sessions (or dsh sessions on hxs-15
+for harness-side work). Agent-tool sub-agent dispatches inherit the governor's
+moonshot model and are therefore no longer an execution path for agent work.
+See AGENTS.md local-model-first section for the full labeled correction.]
 
 ## Consequences
 
@@ -68,3 +76,85 @@ endpoint stops the task before any inference and escalates to Kimi-K3.
 - Revisit when: a backend's fitness proves wrong for a lane, the GLM cap
   pressure changes the exception, or new agents are registered (they must
   receive a lane at registration).
+
+[Amendment 2 — 2026-08-28, labeled — owner directive: Gordon's lane changes from
+Qwen-X (local, hxs-1) to **DeepSeek V4 Pro** (`openrouter/deepseek/deepseek-v4-pro-0813`,
+upstream provider StreamLake, via OmniRoute hxs-8). The OpenRouter connection of
+record (OD-14 exception) carries the key; route probed live before activation
+(`ROUTE-OK`, reasoning tokens flowing, 109 tokens on the probe). Identity
+verification for this lane = exact served-model id echoed by the gateway plus a
+routed probe at session start (no local manifest digest exists for a cloud
+model); the fail-closed rule applies to the probe. Deterministic oracles remain
+Gordon's first tool; Qwen-X remains the designated VERIFIER backend where a
+separate-host verifier is required. The Qwen-X row above is preserved as
+history.]
+
+[Amendment 3 — 2026-08-28, labeled: (a) OD-14 model identity for the GLM lanes
+(trinity, rob, mia): served model id `z-ai/glm-5.3-flash`, upstream provider
+**Modal** (owner directive 2026-08-28: "GLM 5.3 Flash the provider = Modal");
+route probed live same day (`ROUTE-OK`, exact served id echoed by the gateway).
+No local manifest digest exists for a cloud-served model; the verifiable
+immutable identity of record is the exact served-model id plus a session-start
+routed probe — the fail-closed rule applies to that probe (exact-id mismatch or
+an unhealthy endpoint stops the task before inference). (b) OD-14 scope
+correction: gordon's DeepSeek V4 Pro lane (amendment 2) rides the SAME OD-14
+OpenRouter exception and metering scope — the cloud-substitution controls and
+Consequences now cover FOUR cloud lanes (trinity, rob, mia, gordon); the
+Consequences sentence "GLM lanes (trinity, rob, mia) spend OpenRouter credit…"
+is amended accordingly, original preserved here. (c) the three GLM table rows
+above now carry their identity-of-record pointers; prior wording preserved in
+git history.]
+
+[Amendment 4 — 2026-08-28, labeled — owner directive: Carol's lane changes from
+Chat-X (local, hxs-4) to **OpenAI gpt-oss-120b** (`openrouter/openai/gpt-oss-120b`,
+upstream provider **AkashML**, via OmniRoute hxs-8). Route probed live before
+activation: model served exactly as named, coherent reasoning stream (the empty
+`content` on tiny probes is a token-cap artifact of a reasoning model —
+`finish_reason=length`, reasoning field healthy; normal session budgets are
+unaffected). Identity verification per amendment 2's cloud pattern: exact
+served-model id echo plus session-start probe, fail closed. Context of record:
+the Chat-X gateway connection was already INACTIVE (posture-blocked, state-log
+row 28), so the local lane was unrouteable regardless; her row above is
+preserved as history. OD-14 scope: the exception and its metering now cover
+FIVE cloud lanes (trinity, rob, mia, gordon, carol) — amendment 3(b)'s "four
+cloud lanes" is corrected here, original preserved. Carol remains FROZEN by
+owner directive: this lane is registered, not yet exercised.]
+
+[Amendment 5 — 2026-08-29, labeled: (a) Carol's freeze is LIFTED to
+**background-class** by owner directive ("you can run carol but not on the
+critical path… does not block any work"): her gpt-oss-120b lane (amendment 4)
+is ACTIVE for catalog catch-up, asynchronous — no gate, handoff, or lane blocks
+on her output; her table row's "currently frozen by owner directive" note is
+superseded, original preserved. (b) PENDING owner instruction of record: "once
+deepseek is up and running we will change your model to point to openrouter
+model also" — Kimi-K3's own lane moves off moonshot-ai to an OpenRouter model
+when the owner declares the DeepSeek work up and running; the model-selection
+plan comes to the owner at that trigger. NO config change now.]
+
+[Amendment 6 — 2026-08-29, labeled — owner directive: **Chris** is registered
+(KDD-0014) with lane **Qwen 3.8 Flash** (`openrouter/qwen/qwen3.8-flash`,
+upstream provider **Alibaba Cloud International**, via OmniRoute hxs-8). Route
+probed live before activation (exact served id echoed). Identity verification
+per the amendment-2 cloud pattern: exact served-model id + session-start
+probe, fail closed. OD-14 scope: the exception and its metering now cover SIX
+cloud lanes (trinity, rob, mia, gordon, carol, chris) — amendment 4's "five"
+is corrected here, original preserved. New-agent rule of record satisfied: he
+received his lane at registration. His table row is appended below this
+amendment.]
+
+| Chris | Qwen 3.8 Flash (`openrouter/qwen/qwen3.8-flash`; upstream Alibaba Cloud International; identity of record per amendment 2's cloud pattern, route probed live 2026-08-29) | OD-14 exception; registered KDD-0014; activation gated |
+
+[Amendment 7 — 2026-08-29, labeled — owner directive: the GOVERNOR's lane
+changes from `moonshot-ai/kimi-k3` to **Z.ai GLM 5.2**
+(`openrouter/z-ai/glm-5.2`, upstream provider **Decart**, via OmniRoute hxs-8).
+Route probed live before the change (exact served id echoed, reasoning
+flowing); `default_model` in the kimi CLI config now reads
+`omniroute/glm-5.2` (next-session effect); `kimi doctor` valid; a live
+no-`-m` session answered on the new lane. The moonshot meta-agent exception
+for the governor (owner rule 2026-08-27) is SUPERSEDED by this directive and
+preserved as history — the substrate-retraction rule stands unchanged for
+every other agent (no moonshot sub-agents). Governor traffic joins the OD-14
+metering scope: SEVEN cloud lanes now (trinity, rob, mia, gordon, carol,
+chris, kimi-k3) — amendment 6's "six" is corrected here, original preserved.
+The `omniroute/glm-5.2` alias carries max_output_size=16384 per the row-33
+guard class.]

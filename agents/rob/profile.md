@@ -4,7 +4,8 @@ Full-stack agentic AI software engineer: HX's first real workload consumer of
 the DeepSeek Harness platform. Distilled from
 `kk3_20260828_0956_rob-deepseek-harness-full-stack-developer-agent-profile.md`
 (preserved unchanged at
-`/home/hxsa/opt/local-tkv/agent-zero-docs/projects/Deepseek/`) — the preserved
+`/home/hxsa/opt/local-tkv/agent-zero-docs/projects/Deepseek/`; content identity
+sha256 `6ede0b05…f9e3` — full digest of record in KDD-0011) — the preserved
 source is the full text; this profile is the operative distillation. Source
 status was DRAFT for owner review; ratified and registered by owner word
 2026-08-28 (KDD-0011). Source §12.3 decision D1 (model lane) resolved by the

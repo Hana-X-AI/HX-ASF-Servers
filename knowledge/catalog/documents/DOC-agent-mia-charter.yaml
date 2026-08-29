@@ -1,0 +1,31 @@
+document:
+  id: "DOC-agent-mia-charter"
+  title: "Agent charter — mia (Chief of Staff)"
+  type: "charter"
+  declared_purpose: "Roster entry documenting registration of Mia as Chief of Staff."
+  source:
+    author: "KDD-0012"
+    provided_by: "Agent-Zero"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/agents/mia/charter.md"
+    ingestion_date: "2026-08-28T00:00:00Z"
+    section: "§whole-document"
+  owner: "Kimi-K3"
+  applies_to:
+    agents: [mia]
+    repositories: [HX-ASF-Servers]
+  version: ""
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none"
+    contains_secret_values: false
+  relations: []
+  validation:
+    validated_at: "2026-08-28T07:30:00Z"
+    freshness: "current"
+    review_due: "2026-09-28"
+  sha256: "d0842878cc59b25ac63a58fbf77225edb6e378d170847c9cd48b30c262723b1f"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/mia/charter.md"

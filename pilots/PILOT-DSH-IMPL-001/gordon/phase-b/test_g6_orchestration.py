@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import json
 import os
+import subprocess
 import time
 from pathlib import Path
 
@@ -235,7 +236,7 @@ def test_g6_05_workflow_run(cfg, candidate_bin, scratch_home, scratch_env, works
 
 def test_g6_06_skill_catalog(cfg, candidate_bin, scratch_home, scratch_env, workspace, rec):
     """G6-06: a fixture SKILL.md in a skills root reaches the model-visible catalog."""
-    skills_root = workspace / "skills" / "gordon-probe-skill"
+    skills_root = workspace / ".dsh" / "skills" / "gordon-probe-skill"
     skills_root.mkdir(parents=True)
     import shutil
 
@@ -268,7 +269,7 @@ def test_g6_06_skill_catalog(cfg, candidate_bin, scratch_home, scratch_env, work
     rec.finish("PASS" if ok else "FAIL",
                "skill registry + skill-filesystem roots (project root discovery)",
                f"exit={run.exit_code}; {observed}",
-               note="fixture SKILL.md under workspace/skills; census via request stream")
+               note="fixture SKILL.md under workspace/.dsh/skills; census via request stream")
     assert ok, observed
 
 
@@ -461,32 +462,38 @@ def test_g6_13_subagent_fork(cfg, candidate_bin, scratch_home, scratch_env, work
             api = ApiClient(boot.port)
             _, created = api.rpc("session.create", {"cwd": str(workspace)})
             session_id = (_rpc_value(created) or {}).get("sessionId")
-            register_call(cfg, {"tag": "G613B", "model_key": "coder",
-                                "model_id": cfg.model_ids()["coder"], "marker": seed,
-                                "ts": int(time.time()), "entry": "web-api"})
-            api.rpc("session.prompt", {
-                "sessionId": session_id, "mode": "queue",
-                "content": [{"type": "text", "text":
-                             (f"Remember this exact token: {seed}. "
-                              "Reply with exactly: NOTED")}],
-            })
-            _wait_turn_end(api, session_id, timeout=300)
-            api.rpc("session.prompt", {
-                "sessionId": session_id, "mode": "queue",
-                "content": [{"type": "text", "text":
-                             ("Use the subagent_fork tool to ask a forked child what "
-                              "exact token you were told to remember. Report its answer, "
-                              "then reply DONE")}],
-            })
-            _wait_turn_end(api, session_id, timeout=600)
-            # The fork child is a separate durable session with origin subagent.
-            artifacts = find_session_artifacts(scratch_home, cfg)
-            for artifact in artifacts:
-                log = read_session_log(cfg, artifact)
-                header = log.get("header") or {}
-                if header.get("origin") == "subagent" and seed in log_text(log):
-                    child_carries = True
-            observed_b = f"fork_child_carries_seed={child_carries}"
+            if not session_id:
+                # creation failure is recorded as itself, never as a fork failure
+                observed_b = f"session.create failed: {json.dumps(created)[:400]}"
+            else:
+                register_call(cfg, {"tag": "G613B", "model_key": "coder",
+                                    "model_id": cfg.model_ids()["coder"], "marker": seed,
+                                    "ts": int(time.time()), "entry": "web-api"})
+                api.rpc("session.prompt", {
+                    "sessionId": session_id, "mode": "queue",
+                    "content": [{"type": "text", "text":
+                                 (f"Remember this exact token: {seed}. "
+                                  "Reply with exactly: NOTED")}],
+                })
+                _wait_turn_end(api, session_id, timeout=300)
+                api.rpc("session.prompt", {
+                    "sessionId": session_id, "mode": "queue",
+                    "content": [{"type": "text", "text":
+                                 ("Use the subagent_fork tool to ask a forked child what "
+                                  "exact token you were told to remember. Report its answer, "
+                                  "then reply DONE")}],
+                })
+                # The fork turn includes a child agent turn end-to-end; the probe of
+                # record (2026-08-28) needed ~7-8 minutes at fleet queue depth.
+                _wait_turn_end(api, session_id, timeout=960)
+                # The fork child is a separate durable session with origin subagent.
+                artifacts = find_session_artifacts(scratch_home, cfg)
+                for artifact in artifacts:
+                    log = read_session_log(cfg, artifact)
+                    header = log.get("header") or {}
+                    if header.get("origin") == "subagent" and seed in log_text(log):
+                        child_carries = True
+                observed_b = f"fork_child_carries_seed={child_carries}"
         else:
             observed_b = "web boot did not bind"
     finally:
@@ -596,17 +603,28 @@ def test_g6_17_bundle_layer_precedence(cfg, candidate_bin, scratch_home, scratch
     write the patch afterwards (EACCES). Pre-create the dir 0777 instead."""
     profile_patch = scratch_home / "profiles" / "headless" / "cordis.patch.yml"
     profile_patch.parent.mkdir(parents=True, exist_ok=True)
+    (scratch_home / "profiles").chmod(0o777)
     profile_patch.parent.chmod(0o777)
     run1 = run_candidate(cfg, ["--profile", "headless", "--dump-config"],
                          env_extra=scratch_env)
     rec.commands.append(run1)
-    profile_patch.write_text(
+    # The dump's auto-init hardens the profile dir to dsh-owned 0700
+    # (initProfile privacy posture), so the patch write goes through the
+    # runner as the service user (fix of record, Gate 6 retest 2).
+    from gordon_util import _runner_prefix
+
+    patch_text = (
         "- id: session-title\n"
         "  config:\n"
         "    fallbackMaxWords: 7\n"
         "    fallbackMaxBytes: 77\n"
         "    maxTitleBytes: 77\n"
     )
+    write = subprocess.run(
+        _runner_prefix(cfg) + ["tee", str(profile_patch)],
+        input=patch_text, capture_output=True, text=True, timeout=30,
+    )
+    assert write.returncode == 0, write.stderr[-300:]
     run2 = run_candidate(cfg, ["--profile", "headless", "--dump-config"],
                          env_extra=scratch_env)
     rec.commands.append(run2)
@@ -631,6 +649,7 @@ def test_g6_18_live_recomposition(cfg, candidate_bin, scratch_home, scratch_env,
     patch = seam_fixture_for(cfg, scratch_home, model_key="coder", max_retries=1)
     profile_patch = scratch_home / "profiles" / "web" / "cordis.patch.yml"
     profile_patch.parent.mkdir(parents=True, exist_ok=True)
+    (scratch_home / "profiles").chmod(0o777)
     profile_patch.parent.chmod(0o777)
     profile_patch.write_text("[]\n")
     boot = web_boot(scratch_env, str(workspace), patches=[str(patch)])

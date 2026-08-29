@@ -1,0 +1,31 @@
+document:
+  id: "DOC-kdd-0013-agent-model-lanes"
+  title: "KDD-0013: Per-agent model lane assignments"
+  type: "decision"
+  declared_purpose: "Record of decision assigning model lanes to each agent."
+  source:
+    author: "KDD-0013"
+    provided_by: "Agent-Zero"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0013-agent-model-lanes.md"
+    ingestion_date: "2026-08-28T00:00:00Z"
+    section: "§whole-document"
+  owner: "Kimi-K3"
+  applies_to:
+    agents: [kimi-k3, morpheus, gordon, rick, john, carol, trinity, rob, mia, chris]
+    repositories: [HX-ASF-Servers]
+  version: ""
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none"
+    contains_secret_values: false
+  relations: []
+  validation:
+    validated_at: "2026-08-29T01:25:00Z"
+    freshness: "current"
+    review_due: "2026-09-28"
+  sha256: "71144186008e837897747575269529cb44332b67ac64400d3f789ebe3745b1cd"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0013-agent-model-lanes.md"

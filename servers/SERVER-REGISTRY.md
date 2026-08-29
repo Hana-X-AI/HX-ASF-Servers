@@ -81,6 +81,16 @@ baseline-green). The row above is preserved unchanged as the as-found and
 as-assigned record; THIS correction is the operative lifecycle state. Fleet
 active count: 16.
 
+**Open correction — hxs-8/hxs-9 stale target-state (2026-08-29, labeled per the
+append-only governance rule).** The hxs-8 row's "LiteLLM gateway" and the hxs-9
+row's "LiteLLM database; LangGraph checkpoints" are the 2026-08-13 target-state
+and are STALE: LiteLLM was replaced by **OmniRoute** (KDD-0008 arc; hxs-8 runs
+OmniRoute in production), and LangGraph belongs to hxs-11's row. Owner review
+2026-08-29: "we replaced hx_litellm with openrouter." The rows above are
+preserved unchanged as the as-assigned record; THIS correction is the current
+reading. hxs-9's live target: PostgreSQL (Redis pending) per KDD-0014 and
+`servers/hxs-9/2026-08-29-postgresql-implementation-plan.md`.
+
 ## Role assignment record — historical
 
 Roles were assigned by the project owner on 2026-08-13, ratifying the mapping in

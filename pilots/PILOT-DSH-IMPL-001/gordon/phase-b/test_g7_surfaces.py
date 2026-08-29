@@ -16,6 +16,7 @@ import os
 import struct
 import subprocess
 import time
+import urllib.error
 from pathlib import Path
 
 import pytest
@@ -26,6 +27,7 @@ from conftest import (
     WsDownlink,
     latest_log,
     log_text,
+    render_b_fixture,
     run_as_dsh_argv,
 )
 from gordon_util import (
@@ -37,7 +39,6 @@ from gordon_util import (
     project_key,
     read_file_bytes,
     read_session_log,
-    render_fixture,
     run_candidate,
     run_host,
     zstd_decode,
@@ -190,7 +191,14 @@ def test_g7_02_api_gateway_sessions(cfg, candidate_bin, scratch_home, scratch_en
                 mismatch_body = json.loads(resp.read().decode())
         except urllib.error.HTTPError as exc:
             # non-2xx still carries the parsed response body (bad-request leg)
-            mismatch_body = json.loads(exc.read().decode())
+            raw_body = exc.read().decode(errors="replace")
+            try:
+                mismatch_body = json.loads(raw_body)
+            except json.JSONDecodeError:
+                mismatch_body = {"_httpError": exc.code, "_body": raw_body[:500]}
+        if not isinstance(mismatch_body, dict):
+            # None/list/string/other JSON: normalized to a bounded fallback
+            mismatch_body = {"_non_dict_body": repr(mismatch_body)[:200]}
         mismatched = (mismatch_body.get("result") or {}).get("ok") is False \
             and ((mismatch_body.get("result") or {}).get("error") or {}).get("code") == "bad-request"
         downlinks = {}
@@ -231,7 +239,7 @@ def test_g7_03_web_round_trip(cfg, candidate_bin, scratch_home, scratch_env, wor
         register_call(cfg, {"tag": "G703", "model_key": "coder",
                             "model_id": cfg.model_ids()["coder"], "marker": marker,
                             "ts": int(time.time()), "entry": "web-api"})
-        downlink = WsDownlink(boot.port, "/api/events.host")
+        downlink = WsDownlink(boot.port, "/api/events.mux")
         rec.artifact("g703-ws-handshake.txt", downlink.head)
         try:
             api.rpc("session.prompt", {
@@ -239,8 +247,18 @@ def test_g7_03_web_round_trip(cfg, candidate_bin, scratch_home, scratch_env, wor
                 "content": [{"type": "text", "text":
                              f"Reply with exactly this token and nothing else: {marker}"}],
             })
+            # Wait for turn/end, the terminal session/event frame. Matching on
+            # the marker alone is wrong twice over: the prompt echo (session/queue)
+            # and the inbox splice (a session/event echoing the marker) both
+            # precede the assistant reply, and the durable log is batch-flushed
+            # with a 200ms delay — returning before the turn completes reads a
+            # log whose routed-identity records (request/header, request/context)
+            # have not yet hit disk. turn/end guarantees the reply streamed and
+            # the whole turn is durable.
             frames = downlink.collect_until(
-                lambda frame: marker in json.dumps(frame), timeout_s=300.0)
+                lambda frame: (((frame.get("payload") or {}).get("event") or {})
+                               .get("type") == "turn/end"),
+                timeout_s=300.0)
         finally:
             downlink.close()
         frame_types = sorted({str((f.get("payload") or {}).get("type", f.get("method", "?")))
@@ -265,7 +283,7 @@ def test_g7_03_web_round_trip(cfg, candidate_bin, scratch_home, scratch_env, wor
                     f"routed_identity={routed}; frame_types={frame_types}")
         ok = (downlink.status == 101 and streamed and durable_marker and routed)
         rec.finish("PASS" if ok else "FAIL",
-                   "web round-trip: session.create/prompt envelope, WS events.host "
+                   "web round-trip: session.create/prompt envelope, WS events.mux "
                    "downlink carries the reply, session durable with routed identity",
                    observed)
         assert ok, observed
@@ -355,17 +373,22 @@ def test_g7_05_session_query_search(cfg, candidate_bin, scratch_home, scratch_en
     )
     rec.commands.append(dump2)
     enabled = "openAt: first-search" in dump2.stdout and str(query_path) in dump2.stdout
-    # Leg 3: default behavior — search call fails with the named code.
+    # Leg 3: default behavior — with no indexed sessions the search short-circuits
+    # to an empty result (api-proxy.ts short-circuit), never an error code.
     patch_route = seam_fixture_for(cfg, scratch_home, model_key="coder", max_retries=1)
     boot = web_boot(scratch_env, str(workspace), patches=[str(patch_route)])
-    disabled_code = None
+    disabled_search_ok = False
+    disabled_items = None
+    disabled_has_more = None
     try:
         if boot.wait_bound(120):
             api = ApiClient(boot.port)
             status, body = api.rpc("session.search", {"query": "gordon-probe"})
             rec.artifact("g705-search-disabled.json", json.dumps(body, indent=2))
-            error = (body.get("result") or {}).get("error") or {}
-            disabled_code = error.get("code")
+            value = _rpc_value(body) or {}
+            disabled_search_ok = status == 200 and _rpc_ok(body)
+            disabled_items = value.get("items")
+            disabled_has_more = value.get("hasMore")
     finally:
         boot.stop()
     # Leg 4: enabled behavior — marker found across sessions, index durable.
@@ -415,16 +438,18 @@ def test_g7_05_session_query_search(cfg, candidate_bin, scratch_home, scratch_en
     except Exception as exc:  # transport failure: observed value, never propagated
         live_error = f"{type(exc).__name__}: {exc}"
     observed = (f"default_posture={default_posture}; enabled_patch_composes={enabled}; "
-                f"disabled_error_code={disabled_code!r}; enabled_hits={hits}; "
+                f"disabled_search_ok={disabled_search_ok}; disabled_items={disabled_items!r}; "
+                f"disabled_has_more={disabled_has_more!r}; enabled_hits={hits}; "
                 f"index_durable={index_materialized}; live_real_home_ok={live_ok}; "
                 f"live_error={live_error}")
     ok = (default_posture and enabled and dump2.exit_code == 0
-          and disabled_code == "SESSION_QUERY_SEARCH_DISABLED"
+          and disabled_search_ok and disabled_items == [] and disabled_has_more is False
           and hits >= 2 and index_materialized and live_ok)
     rec.finish("PASS" if ok else "FAIL",
-               "session-query-sqlite openAt never|first-search: SESSION_QUERY_SEARCH_DISABLED "
-               "under the shipped default; marker found across sessions under first-search "
-               "with a durable path; native real-home mount answers on the live service",
+               "session-query-sqlite openAt never|first-search: search short-circuits to an "
+               "empty result under the shipped default (no indexed sessions); marker found "
+               "across sessions under first-search with a durable path; native real-home "
+               "mount answers on the live service",
                observed)
     assert ok, observed
 
@@ -473,7 +498,7 @@ def test_g7_06_session_export(cfg, candidate_bin, scratch_home, scratch_env, wor
                     f"durable_bytes={len(durable_bytes)}; turn_events={len(events)}; "
                     f"export_sha256={hashlib.sha256(exported).hexdigest()[:16]}; "
                     f"durable_sha256={hashlib.sha256(durable_bytes).hexdigest()[:16] if durable_bytes else 'none'}; "
-                    f"bytes_equal={same}")
+                    f"bytes_equal={same}; ufffd_in_export={exported.count(b'\\xef\\xbf\\xbd')}")
         ok = status == 200 and same
         rec.finish("PASS" if ok else "FAIL",
                    "session-log-export: GET /api/session.export?sessionId=… returns exactly "
@@ -482,6 +507,31 @@ def test_g7_06_session_export(cfg, candidate_bin, scratch_home, scratch_env, wor
         assert ok, observed
     finally:
         boot.stop()
+
+
+def _zstd_frame(data: bytes) -> bytes:
+    """Compress one JSONL chunk into a single checksummed zstd frame, matching
+    the candidate writer's `compressZstdFrame` (checksum enabled)."""
+    return subprocess.run(
+        ["zstd", "-q", "--check", "-c"], input=data,
+        capture_output=True, check=True,
+    ).stdout
+
+
+def _write_concat_zstd(out: Path, header: bytes, body: bytes, torn: bytes | None = None) -> None:
+    """Write a session log as concatenated zstd frames exactly as the candidate
+    writer does: frame 1 = the header line alone, frame 2 = the event lines.
+    The candidate read path (`readZstdPrefix` via `scanZstdFrames` +
+    `assertZstdHeaderFrame`) requires the FIRST frame to be exactly one
+    newline-terminated header line; a single `zstd -f` of the whole file makes
+    frame 1 contain events too and is rejected as corrupt. When `torn` is
+    given, it is emitted as a third frame truncated mid-frame (checksum
+    dropped) so `scanZstdFrames` reports it via `tornStart` and the committed
+    prefix (frame 2) is still served. Harness fixture fix 2026-08-29."""
+    frames = [_zstd_frame(header), _zstd_frame(body)]
+    if torn is not None:
+        frames.append(_zstd_frame(torn)[:-4])
+    out.write_bytes(b"".join(frames))
 
 
 def test_g7_07_corrupted_session_web_read(cfg, candidate_bin, scratch_home, scratch_env, workspace, rec, web_boot):
@@ -497,31 +547,27 @@ def test_g7_07_corrupted_session_web_read(cfg, candidate_bin, scratch_home, scra
     # Torn tail: valid header + two committed events + a torn final record.
     torn_dir = sessions_root / "session-torn-tail"
     torn_dir.mkdir(parents=True, exist_ok=True)
-    torn_plain = torn_dir / "torn.jsonl"
-    torn_plain.write_bytes(
+    _write_concat_zstd(
+        torn_dir / "session.jsonl.zstd",
         b'{"type":"session","version":0,"id":"session-torn-tail","createdAt":1,'
-        b'"cwd":"' + str(workspace).encode() + b'","delegationDepth":0}\n'
+        b'"cwd":"' + str(workspace).encode() + b'","delegationDepth":0}\n',
         b'{"type":"turn/start","seq":0,"time":1,"data":{"turn":1}}\n'
         b'{"type":"assistant/message","seq":1,"time":2,"data":{"turn":1,"step":1,'
         b'"message":{"role":"assistant","content":[{"type":"text","text":"PREFIX-OK"}],'
-        b'"id":"m-torn-1"}}}\n'
-        b'{"type":"turn/end","seq":2,"time":3,"data":{"turn":1,"reason":{"kind":"comple'
+        b'"id":"m-torn-1"}}}\n',
+        torn=b'{"type":"turn/end","seq":2,"time":3,"data":{"turn":1,"reason":{"kind":"comple',
     )
-    run_host(["zstd", "-q", "-f", str(torn_plain), "-o", str(torn_dir / "session.jsonl.zstd")])
-    torn_plain.unlink()
     # Corrupt middle: valid header + event 0 + a garbage line + event 2.
     corrupt_dir = sessions_root / "session-corrupt-middle"
     corrupt_dir.mkdir(parents=True, exist_ok=True)
-    corrupt_plain = corrupt_dir / "corrupt.jsonl"
-    corrupt_plain.write_bytes(
+    _write_concat_zstd(
+        corrupt_dir / "session.jsonl.zstd",
         b'{"type":"session","version":0,"id":"session-corrupt-middle","createdAt":1,'
-        b'"cwd":"' + str(workspace).encode() + b'","delegationDepth":0}\n'
+        b'"cwd":"' + str(workspace).encode() + b'","delegationDepth":0}\n',
         b'{"type":"turn/start","seq":0,"time":1,"data":{"turn":1}}\n'
         b'THIS-IS-NOT-JSON\n'
-        b'{"type":"turn/end","seq":2,"time":3,"data":{"turn":1,"reason":{"kind":"completed"}}}\n'
+        b'{"type":"turn/end","seq":2,"time":3,"data":{"turn":1,"reason":{"kind":"completed"}}}\n',
     )
-    run_host(["zstd", "-q", "-f", str(corrupt_plain), "-o", str(corrupt_dir / "session.jsonl.zstd")])
-    corrupt_plain.unlink()
     for level in (scratch_home / "sessions", sessions_root, torn_dir, corrupt_dir):
         level.chmod(0o777)
     patch = seam_fixture_for(cfg, scratch_home, model_key="coder", max_retries=1)
@@ -536,7 +582,10 @@ def test_g7_07_corrupted_session_web_read(cfg, candidate_bin, scratch_home, scra
             _, listed = api.rpc("session.list", {})
             listed_ids = [item.get("sessionId", "?")
                           for item in (_rpc_value(listed) or {}).get("items", [])]
-            torn_events = _history(api, "session-torn-tail")
+            torn_status, torn_raw = api.rpc("session.history",
+                                            {"sessionId": "session-torn-tail"})
+            torn_events = ([entry.get("event", {}) for entry in (_rpc_value(torn_raw) or {}).get("events", [])]
+                           if (torn_status == 200 and _rpc_ok(torn_raw)) else [])
             status, corrupt = api.rpc("session.history",
                                       {"sessionId": "session-corrupt-middle"})
             corrupt_outcome = {"http": status, "ok": _rpc_ok(corrupt),
@@ -544,6 +593,8 @@ def test_g7_07_corrupted_session_web_read(cfg, candidate_bin, scratch_home, scra
                                "events": len((_rpc_value(corrupt) or {}).get("events", []))}
         rec.artifact("g707-probes.json", json.dumps({
             "listed": listed_ids, "torn_events": torn_events,
+            "torn_raw_status": torn_status if bound else None,
+            "torn_raw": torn_raw if bound else None,
             "corrupt": corrupt_outcome}, indent=2)[:40000])
         prefix_served = any(
             "PREFIX-OK" in json.dumps(e.get("data", {})) for e in torn_events)
@@ -552,6 +603,7 @@ def test_g7_07_corrupted_session_web_read(cfg, candidate_bin, scratch_home, scra
                     f"torn_events={len(torn_events)}; committed_prefix_served={prefix_served}; "
                     f"corrupt_middle={corrupt_outcome}")
         ok = bound and prefix_served
+        rec.artifact("g707-boot.log", boot.boot_log())
         rec.finish("PASS" if ok else "FAIL",
                    "G4-06(b) via the web read path: torn tail ignored, committed prefix "
                    "served (scanner prefix semantics format.ts:337-344); corrupt-middle "
@@ -658,16 +710,16 @@ def test_g7_09_conversation_node_contract(cfg, candidate_bin, scratch_home, scra
         goal_events = [e for e in records if (e.get("type") or "").startswith("goal/")]
         ids = set()
         for e in goal_events:
-            data = e.get("data") or {}
-            for key in ("goalId", "id"):
-                if isinstance(data.get(key), str):
-                    ids.add(data[key])
+            goal = (e.get("data") or {}).get("goal") or {}
+            gid = goal.get("id")
+            if isinstance(gid, str):
+                ids.add(gid)
         ids2 = set()
         for e in goal_events:
-            data = e.get("data") or {}
-            for key in ("goalId", "id"):
-                if isinstance(data.get(key), str):
-                    ids2.add(data[key])
+            goal = (e.get("data") or {}).get("goal") or {}
+            gid = goal.get("id")
+            if isinstance(gid, str):
+                ids2.add(gid)
         deterministic = ids == ids2 and bool(ids)
         return (run.exit_code == 0 and deterministic), \
             f"goal_events={len(goal_events)}; stable_ids={sorted(ids)[:3]}; deterministic={deterministic}"
@@ -716,18 +768,20 @@ def test_g7_10_model_selection_surface(cfg, candidate_bin, scratch_home, scratch
     live_ok = False
     live_error = "none"
     landed = {}
+    live_providers = None
+    live_models = None
     try:
         live = ApiClient(LIVE_PORT, host=LIVE_HOST)
         live_status, live_providers = live.rpc("llm.providers", {})
         _, live_models = live.rpc("llm.models", {})
-        rec.artifact("g710-live-catalog.json", json.dumps(
-            {"providers": live_providers, "models": live_models}, indent=2)[:40000])
         ids = cfg.model_ids()
         live_text = json.dumps(live_providers) + json.dumps(live_models)
         landed = {k: (v in live_text) for k, v in ids.items() if v}
         live_ok = live_status == 200 and all(landed.values())
     except Exception as exc:  # transport failure: observed value, never propagated
         live_error = f"{type(exc).__name__}: {exc}"
+    rec.artifact("g710-live-catalog.json", json.dumps(
+        {"providers": live_providers, "models": live_models}, indent=2)[:40000])
     observed = (f"scratch_catalog_ok={scratch_ok}; per_session_selection_persists={persisted}; "
                 f"live_landed_catalog={landed}; live_error={live_error}")
     ok = scratch_ok and persisted and live_ok
@@ -812,7 +866,7 @@ def test_g7_14_typescript_sdk(cfg, scratch_home, scratch_env, workspace, rec):
                 f"{SDK_RUNTIME_BIN}) — build record gap")
     sessions_root = scratch_home / "sdk-sessions"
     sessions_root.mkdir(parents=True, exist_ok=True)
-    cordis = render_fixture("sdk-jsonrpc-cordis.yml.tmpl", {
+    cordis = render_b_fixture("sdk-jsonrpc-cordis.yml.tmpl", {
         "KEY_ENV": cfg.omni_key_env_name,
         "BASE_URL": cfg.omni_base_url,
         "MODEL_ID": cfg.model_ids()["coder"],
@@ -879,14 +933,14 @@ def test_g7_15_python_sdk(cfg, scratch_home, scratch_env, workspace, rec):
                 "apt is out of lane)")
     sessions_root = scratch_home / "py-sdk-sessions"
     sessions_root.mkdir(parents=True, exist_ok=True)
-    cordis = render_fixture("sdk-minimal-cordis.yml.tmpl", {
+    cordis = render_b_fixture("sdk-minimal-cordis.yml.tmpl", {
         "KEY_ENV": cfg.omni_key_env_name,
         "BASE_URL": cfg.omni_base_url,
         "MODEL_ID": cfg.model_ids()["coder"],
         "MAX_RETRIES": "1",
         "SESSION_ROOT": str(sessions_root),
     }, scratch_home)
-    wrapper = render_fixture("sdk-runtime-wrapper.sh.tmpl", {
+    wrapper = render_b_fixture("sdk-runtime-wrapper.sh.tmpl", {
         "NODE": cfg.node,
         "SDK_BIN": SDK_RUNTIME_BIN,
     }, scratch_home)
@@ -950,7 +1004,7 @@ def test_g7_16_acp_automation(cfg, scratch_home, scratch_env, workspace, rec):
         blocked(f"built dsh-acp-demo bin absent at {ACP_BIN}")
     sessions_root = scratch_home / "acp-sessions"
     sessions_root.mkdir(parents=True, exist_ok=True)
-    cordis = render_fixture("acp-cordis.yml.tmpl", {
+    cordis = render_b_fixture("acp-cordis.yml.tmpl", {
         "KEY_ENV": cfg.omni_key_env_name,
         "BASE_URL": cfg.omni_base_url,
         "MODEL_ID": cfg.model_ids()["coder"],
@@ -1037,21 +1091,21 @@ def test_g7_17_message_feedback(cfg, candidate_bin, scratch_home, scratch_env, w
         if assistant:
             message_id = ((assistant[-1].get("data") or {}).get("message") or {}).get("id")
         note_text = f"GORDON-G717 note {nonce()}"
-        status, listed0 = api.rpc("messageFeedback.list", {"sessionId": session_id})
+        status, listed0 = api.rpc("messageFeedback/list", {"sessionId": session_id})
         initial_items = ((_rpc_value(listed0) or {}).get("items", [])) if _rpc_ok(listed0) else None
         put = conflict = deleted = listed1 = None
         if message_id:
-            _, put = api.rpc("messageFeedback.put", {
+            _, put = api.rpc("messageFeedback/put", {
                 "sessionId": session_id, "messageId": message_id,
                 "rating": "positive", "note": note_text, "ifVersion": None})
-            _, listed1 = api.rpc("messageFeedback.list", {"sessionId": session_id})
+            _, listed1 = api.rpc("messageFeedback/list", {"sessionId": session_id})
             version = (((_rpc_value(put) or {}).get("version"))
                        if _rpc_ok(put) else None)
-            _, conflict = api.rpc("messageFeedback.put", {
+            _, conflict = api.rpc("messageFeedback/put", {
                 "sessionId": session_id, "messageId": message_id,
                 "rating": "negative", "ifVersion": None})
             if version:
-                _, deleted = api.rpc("messageFeedback.delete", {
+                _, deleted = api.rpc("messageFeedback/delete", {
                     "sessionId": session_id, "messageId": message_id,
                     "ifVersion": version})
         rec.artifact("g717-feedback.json", json.dumps({
@@ -1160,7 +1214,8 @@ def test_g7_19_telemetry_sharing_modes(cfg, candidate_bin, scratch_home, scratch
         home_a.mkdir(); home_a.chmod(0o777)
         env_a = {"HOME": str(home_a), "DSH_HOME": str(home_a),
                  "DSH_TELEMETRY_MODE": "FEEDBACK_ONLY",
-                 "DSH_TELEMETRY_OTLP_URL": otlp_url}
+                 "DSH_TELEMETRY_OTLP_URL": otlp_url,
+                 "DSH_TELEMETRY_DISABLED": ""}
         patch_a = seam_fixture_for(cfg, home_a, model_key="coder", max_retries=1)
         boot_a = web_boot(env_a, str(workspace), patches=[str(patch_a)])
         session_a = None
@@ -1182,7 +1237,7 @@ def test_g7_19_telemetry_sharing_modes(cfg, candidate_bin, scratch_home, scratch
                 if assistant:
                     message_a = ((assistant[-1].get("data") or {}).get("message") or {}).get("id")
                 if message_a:
-                    api.rpc("messageFeedback.put", {
+                    api.rpc("messageFeedback/put", {
                         "sessionId": session_a, "messageId": message_a,
                         "rating": "positive", "note": "GORDON-G719 feedback-class probe",
                         "ifVersion": None})
@@ -1193,7 +1248,8 @@ def test_g7_19_telemetry_sharing_modes(cfg, candidate_bin, scratch_home, scratch
         home_b.mkdir(); home_b.chmod(0o777)
         env_b = {"HOME": str(home_b), "DSH_HOME": str(home_b),
                  "DSH_TELEMETRY_MODE": "FULL",
-                 "DSH_TELEMETRY_OTLP_URL": otlp_url}
+                 "DSH_TELEMETRY_OTLP_URL": otlp_url,
+                 "DSH_TELEMETRY_DISABLED": ""}
         patch_b = seam_fixture_for(cfg, home_b, model_key="coder", max_retries=1)
         boot_b = web_boot(env_b, str(workspace), patches=[str(patch_b)])
         try:

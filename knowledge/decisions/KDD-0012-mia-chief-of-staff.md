@@ -34,8 +34,13 @@ roster row in `agents/README.md`. Her class is **management, not governance**:
 planning, coordination, distribution, tracking, breakage triage, and reporting
 to Kimi-K3. Gates, sign-off, evidence acceptance, verdicts, and owner
 escalation remain Kimi-K3's alone. Broken items go to Mia first: she
-characterizes, repairs in-lane, or distributes to the owning engineering lane
-with evidence. Model lane: **Z.ai GLM 5.3 Flash via OmniRoute** (owner,
+characterizes and coordinates or distributes with evidence; she never mutates
+an engineering lane or issues repair dispositions herself — repair
+authorization and dispositions stay with Kimi-K3 and execute only under
+Kimi-K3-issued work orders. [Corrected 2026-08-28, labeled: this passage
+originally read "she characterizes, repairs in-lane, or distributes to the
+owning engineering lane with evidence" — the repair-in-lane phrasing
+overreached her management-only mandate; original preserved here.] Model lane: **Z.ai GLM 5.3 Flash via OmniRoute** (owner,
 2026-08-28, KDD-0013). No external source document exists; her profile is the
 original record of the role.
 

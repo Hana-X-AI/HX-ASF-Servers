@@ -1,7 +1,7 @@
 index:
   schema_version: 1
   initialized: 2026-08-25 (Carol instantiation, owner amendment)
-  updated: '2026-08-28T0659Z (carol-mint 1.0.0 — hxs6-storage-closeout wave (receipt 2026-08-28T0659Z-carol-hxs6-storage-closeout.md): 5 added (DOC-hxs6-storage-device-map-2026-08-28 — evidence, adopted, agent-evidence; DOC-hxs6-configuration — contract, active, ratified-governance, second-of-class; DOC-goal-hxs6-storage-provisioning — goal, historical, ratified-governance; DOC-pilot-hxs6-storage-wo-01-rick-storage — work-order, adopted, delegated-contract, DISCHARGED at mint; DOC-pilot-hxs6-storage-state-log — other, active, agent-evidence, freshness LIVING at the arc-close consolidation), 2 re-minted via carol-mint (DOC-server-registry 00e2ab28… -> fd05c4a1… + DOC-tkv-server-registry b0726e46… -> fe69cf66… — the hxs-6 storage cell in both copies; the RETAINABLE-DATA-FOUND verdict + owner discard ruling ride the registry records'' notes as provenance); the OmniRoute living record left at its consolidation point (rows 62+ ride the next consolidation per profile §12); count 298 -> 303 [titles preserved])'
+  updated: '2026-08-29T0101Z (carol-mint 1.0.0 — batch B catalog catch‑up)'
   document_count: 303
   documents:
   - id: DOC-a01-origin-codex-20260824-2125
@@ -1822,3 +1822,51 @@ index:
     authority_level: owner-directive
     freshness: historical
     canonical_location: /opt/tkv-local/skills/owner_2026-08-13_hx-hooks-and-skills-implementation-prompt.md
+  - id: DOC-kdd-0011-rob-registration
+    title: "KDD-0011: Rob registration — full-stack engineer for the DeepSeek Harness"
+    type: decision
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0011-rob-registration.md
+  - id: DOC-kdd-0012-mia-chief-of-staff
+    title: "KDD-0012: Mia — Chief of Staff to the Governor"
+    type: decision
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0012-mia-chief-of-staff.md
+  - id: DOC-kdd-0013-agent-model-lanes
+    title: "KDD-0013: Per-agent model lane assignments"
+    type: decision
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/decisions/KDD-0013-agent-model-lanes.md
+  - id: DOC-agent-mia-charter
+    title: "Agent charter — mia (Chief of Staff)"
+    type: charter
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/mia/charter.md
+  - id: DOC-agent-mia-profile
+    title: "Agent profile — mia (Chief of Staff)"
+    type: profile
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/mia/profile.md
+  - id: DOC-agent-rob-charter
+    title: "Agent charter — rob (Full-stack engineer)"
+    type: charter
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/rob/charter.md
+  - id: DOC-agent-rob-profile
+    title: "Agent profile — rob (Full-stack engineer)"
+    type: profile
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/rob/profile.md
+  - id: DOC-pilot-dsh-impl-001-state-log
+    title: "PILOT-DSH-IMPL-001 01-state-log.md — pilot state-log rows 17-34"
+    type: other
+    authority_level: agent-evidence
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-DSH-IMPL-001/01-state-log.md

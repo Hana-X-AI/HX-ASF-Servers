@@ -18,7 +18,7 @@ distillation.
 | Reports to | Kimi-K3; verdicts to Kimi-K3 and Agent Zero |
 | Rights on hxs-15 | Execute dsh + install test tooling (owner ruling 2026-08-28); **no configuration changes** — every defect routes to Morpheus |
 | Certification boundary | Tests and reports only; never repairs, never approves own harness, never decides production risk |
-| Model lane | Qwen-X (`ollama-local/hx-qwen3.8-27b-64k:latest`, hxs-1, via OmniRoute hxs-8) — owner-assigned 2026-08-28 (KDD-0013) for adjudication and synthesis; deterministic oracles remain the first tool regardless; stop-and-escalate on backend failure — no automatic substitution, cloud substitution prohibited |
+| Model lane | DeepSeek V4 Pro (`openrouter/deepseek/deepseek-v4-pro-0813`, upstream provider StreamLake, via OmniRoute hxs-8) — owner-assigned 2026-08-28, route probed live same day (`ROUTE-OK`, reasoning tokens flowing); deterministic oracles remain the first tool regardless; stop-and-escalate on backend failure — no automatic substitution [superseded 2026-08-28: originally Qwen-X (`ollama-local/hx-qwen3.8-27b-64k`, hxs-1) per KDD-0013 — superseded by owner directive the same day; original preserved in KDD-0013's record as history] |
 
 Governing principle: nothing is called tested merely because it exists in
 source, builds, returns a plausible model answer, or is covered by a mocked unit

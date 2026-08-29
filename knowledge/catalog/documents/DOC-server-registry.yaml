@@ -65,6 +65,9 @@ document:
     access_restrictions: none beyond repository access
     contains_secret_values: false
   relations:
+  - predicate: "describes"
+    target: "hxs-7 decommission"
+    note: "open correction effective 2026-08-28, fleet active count 16, row preserved as history"
   - predicate: governs
     target: 'hxs-3 assigned role: Agent intelligence — Meta-X tooling specialist (hx-muse-glimmer-64k, production ACTIVE 2026-08-27)'
     note: 'workload line amended 2026-08-27 on the owner''s explicit ''fix it'' directive (hxs-2 state log row 60 — the F-REG-1 stale-workload class): the 2026-08-13 target text (gpt-oss-20b TP=2; LightRAG graph & retrieval) replaced with the commissioned reality as an open correction with owner-directive provenance; repo line 53 VERIFIED PRESENT this run. [line-reference correction 2026-08-28 (batch-7 wave, labeled): the hxs-3 row moved with the header edits — 53 (this note''s era) -> 55 (batch-11 exception note) -> 57 (row-59 amendment state, the dispatch''s governor-verified number) -> 59 CURRENT (the row-59 amendment''s own +2 header lines postdate that check; live-verified 2026-08-28T02:4xZ); the cell now also carries the literal ''CURRENT-STATE:'' prefix (row 59 class (a))]'

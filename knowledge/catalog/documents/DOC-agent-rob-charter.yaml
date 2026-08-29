@@ -1,0 +1,32 @@
+document:
+  id: "DOC-agent-rob-charter"
+  title: "Agent charter — rob (Full-stack engineer)"
+  type: "charter"
+  declared_purpose: "Roster entry documenting registration of Rob as Full-stack engineer."
+  source:
+    author: "KDD-0011"
+    provided_by: "Agent-Zero"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/agents/rob/charter.md"
+    ingestion_date: "2026-08-28T00:00:00Z"
+    section: "§whole-document"
+    note: "source sha256 6ede0b05…f9e3 per KDD-0011"
+  owner: "Kimi-K3"
+  applies_to:
+    agents: [rob]
+    repositories: [HX-ASF-Servers]
+  version: ""
+  status: "adopted"
+  authority_level: "agent-evidence"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none"
+    contains_secret_values: false
+  relations: []
+  validation:
+    validated_at: "2026-08-28T08:00:00Z"
+    freshness: "current"
+    review_due: "2026-09-28"
+  sha256: "5c39de2689de30d10d0ba8f202b8d0d78dc921c423fdb9c3b6d96b874295a49e"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/rob/charter.md"
