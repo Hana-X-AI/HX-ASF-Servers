@@ -445,8 +445,18 @@ def main(argv):
         # Accept both --ids A,B and --ids A B: the space-separated form landed
         # in pos and was silently dropped, so the gate reported PASS having
         # checked only the first record.
-        id_list = (opt["ids"].split(",") + pos) if "ids" in opt else pos
-        id_list = [x for x in (s.strip() for s in id_list) if x]
+        if "ids" in opt:
+            raw = opt["ids"]
+            # A bare `--ids` parses to True, and `--ids ""` to the empty string.
+            # Neither may fall through to cmd_gate, where an empty list means
+            # "gate every record" — a narrowing flag must never silently widen.
+            if not isinstance(raw, str):
+                fail("gate: --ids requires a value (e.g. --ids DOC-a,DOC-b)")
+            id_list = [x for x in (s.strip() for s in raw.split(",") + pos) if x]
+            if not id_list:
+                fail("gate: --ids was given no non-empty record id")
+        else:
+            id_list = [x for x in (s.strip() for s in pos) if x]
         return cmd_gate(id_list)
     print(USAGE)
     return 2
