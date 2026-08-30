@@ -233,6 +233,41 @@ class WorkStateCLI(_GoalTree):
         _, out2 = self.run_cmd("standup", "--json")
         self.assertIn("ungrouped", json.loads(out2))
 
+    def test_a_malformed_block_does_not_take_down_the_report(self):
+        """load_all() retains schema-invalid records so validate.py sees every
+        problem — but the rendering layer compared/counted them anyway. A block
+        with no `status` raised KeyError and a list-valued `status` raised
+        "TypeError: unhashable type", so ONE malformed goal killed every status
+        command with a traceback: the whole report silenced by one bad file."""
+        self.seed()
+        self.write("2026-08-30-no-status",
+                   "# Goal\n\n```yaml work-state\nid: 2026-08-30-no-status\n"
+                   "status_date: 2026-08-30\nauthority: f\nreconcile: none\n```\n")
+        self.write("2026-08-30-list-status",
+                   "# Goal\n\n```yaml work-state\nid: 2026-08-30-list-status\n"
+                   "status: []\nstatus_date: 2026-08-30\nauthority: f\nreconcile: none\n```\n")
+        for cmd in ("status", "standup", "in-progress", "next", "blocked", "reconcile"):
+            rc, _ = self.run_cmd(cmd)
+            self.assertEqual(rc, 0, "%s crashed on a malformed block" % cmd)
+        _, out = self.run_cmd("standup", "--json")
+        d = json.loads(out)
+        self.assertEqual(len(d["excluded"]), 2)
+        self.assertEqual(d["total"], 7)  # the seven well-formed goals still report
+
+    def test_exclusion_is_narrow_and_does_not_hide_a_renderable_goal(self):
+        """Guards against over-correcting the fix above. A goal whose only
+        problem is a dangling evidence path is still renderable and MUST stay
+        in the report — dropping every goal that has any problem would recreate
+        the invisible-goal defect from the other direction."""
+        gid = "2026-08-30-dangling-but-renderable"
+        self.write(gid, "# Goal\n\n" + block(gid, status="in-progress",
+                                             extra="evidence:\n  - servers/nope.md\n"))
+        self.assertTrue(any("WS-06" in p for p in work_state.load_all()[1]))
+        _, out = self.run_cmd("in-progress")
+        self.assertIn(gid, out)
+        _, sj = self.run_cmd("standup", "--json")
+        self.assertEqual(json.loads(sj)["excluded"], [])
+
     def test_unknown_command_exits_2(self):
         rc, _ = self.run_cmd("nonsense")
         self.assertEqual(rc, 2)

@@ -173,6 +173,27 @@ def main(argv):
     rows = [dict(s, id=i) for i, s in states]
     sch = _schema()
 
+    # A record whose `status` is absent or non-scalar cannot be counted,
+    # grouped, or compared. Before this guard one such block raised KeyError
+    # (missing status) or TypeError: unhashable type (list-valued status) and
+    # took down EVERY status command with a traceback — one malformed goal
+    # silencing the whole report, which is precisely the failure this engine
+    # exists to prevent.
+    #
+    # load_all() deliberately still returns these records: validate.py needs
+    # every problem, so the exclusion belongs here, in the rendering layer. It
+    # is also deliberately NARROW — only unrenderable records are held back. A
+    # goal whose sole problem is, say, a dangling evidence path still appears
+    # in every report, because dropping it would recreate the "goal invisible
+    # to a status report" defect from the other direction.
+    excluded = [r for r in rows if not isinstance(r.get("status"), str)]
+    if excluded:
+        rows = [r for r in rows if isinstance(r.get("status"), str)]
+        for r in excluded:
+            print("WARNING [WS-03] %s: status %r cannot be rendered; excluded "
+                  "from this report (run --check)" % (r["id"], r.get("status")),
+                  file=sys.stderr)
+
     if cmd == "status":
         if as_json:
             return _dump(rows)
@@ -234,6 +255,7 @@ def main(argv):
                 # infer that a key's absence means "none".
                 "ungrouped": ungrouped,
                 "reconcile": rec,
+                "excluded": excluded,
             })
 
         print("Daily standup — %d goals\n" % len(rows))
@@ -251,6 +273,11 @@ def main(argv):
             print("Ungrouped (%d) — status not covered by any standup group:" % len(ungrouped))
             for r in ungrouped:
                 print("   %-46s %s" % (r["id"], r["status"]))
+            print("")
+        if excluded:
+            print("Excluded (%d) — malformed work-state block, run --check:" % len(excluded))
+            for r in excluded:
+                print("   %-46s status=%r" % (r["id"], r.get("status")))
             print("")
         if rec:
             print("Open reconcile items (%d):" % len(rec))
