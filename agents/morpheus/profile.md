@@ -29,11 +29,12 @@ out of the approved arc, re-entry by owner word.
 | Certification authority | **None** — Gordon verifies; governor signs off; owner gates |
 | Model lane | Z.ai GLM 5.2 free (`z-ai/glm-5.2:free`, provider Decart, via OmniRoute hxs-8) — Platform Systems job-family default, owner decision 2026-08-30 (KDD-0013 Amendment 11), superseding Qwen 3.8 2.4T A95B (2026-08-29). Zero-cost cloud lane: on the OD-14 allowlist, no metered spend. identity = exact served-model id + session-start probe, fail closed; stop-and-escalate on backend failure, no substitution, cloud substitution outside the OD-14 allowlist prohibited |
 
-**Model lane amendment (2026-08-29, labeled, append-only — KDD-0013):**
-Owner directive 2026-08-29 changed Morpheus's lane from Coder-X to
-**Qwen 3.8 2.4T A95B** (`openrouter/qwen/qwen3.8-2.4t-a95b`, provider
-DeepInfra, via OmniRoute hxs-8). The Coder-X lane is preserved above as
-history. Reason: Coder-X 27B failed twice on the Phase C prep work order
+**Provenance — model lane history.** The lane was Coder-X (2026-08-28,
+KDD-0013), then **Qwen 3.8 2.4T A95B** (`openrouter/qwen/qwen3.8-2.4t-a95b`,
+DeepInfra) by owner directive 2026-08-29. Both are SUPERSEDED by the Platform
+Systems job-family default — Z.ai GLM 5.2 free (`z-ai/glm-5.2:free`, Decart, via OmniRoute hxs-8) —
+owner decision 2026-08-30 (KDD-0013 Amendment 11); see the Model lane row above,
+which is the active lane. Reason: Coder-X 27B failed twice on the Phase C prep work order
 (read-loop + confabulated paths, state-log rows 34/40 — branch STOPPED
 per KDD-0013). Verification evidence: curl probe with `provider.order=
 ["DeepInfra"]` returned served model `qwen/qwen3.8-2.4t-a95b`, content

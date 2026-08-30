@@ -63,9 +63,9 @@ document:
     access_restrictions: none beyond vault access
     contains_secret_values: false
   relations:
-  - predicate: "describes"
-    target: "hxs-7 decommission"
-    note: "open correction effective 2026-08-28, fleet active count 16, row preserved as history"
+  - predicate: describes
+    target: hxs-7 decommission
+    note: open correction effective 2026-08-28, fleet active count 16, row preserved as history
   - predicate: governs
     target: 'hxs-1 assigned role: Deep reasoning & synthesis — ''Qwen 3.8 27B — unreleased, slot reserved'''
     note: 'ratified 2026-08-13; KDD-0004 (2026-08-24) verified the model now released and adopted qwen3.8:27b with NO registry amendment required — registry row text is stale on ''unreleased, slot reserved'' (FLAG F-REG-1, governance-tolerated). [HISTORICAL since 2026-08-27 (batch-11 wave, labeled): owner disposition #1 CLOSED the thread — the tkv line-38 cell now reads ''Qwen 3.8 27B (`hx-qwen3.8-27b-64k`, deployed and owner-accepted per owner disposition 2026-08-27 #1; supersedes "unreleased, slot reserved" recorded 2026-08-13 — preserved as history)'' (VERIFIED this run); the target''s quoted stale wording and the ''stale'' finding above are preserved as the historical record of the pre-amendment row; the superseded mirror lineage of this record is unchanged]'
@@ -84,6 +84,13 @@ document:
     review_due: 'SUPERSEDED as the consumer-facing registry record 2026-08-27 (OmniRoute state log row 44 queue) — consumers resolve fleet role/workload truth via DOC-server-registry (the REPO copy, authoritative replacement); this record stays maintained for the TKV mirror lineage (re-hash on any TKV amendment); hxs-1 row wording refresh CLOSED 2026-08-27 (owner disposition #1 — the tkv line-38 cell now carries the deployed + owner-accepted wording with history preserved; this clause is historical)'
   sha256: fe69cf66d222b71eb82b13fd5de2b4cc2b449042002c0631504fb9fae8f9e39e
   canonical_location: /opt/tkv-local/servers/SERVER-REGISTRY.md
+  hash_history:
+  - sha256: b0726e469e2c
+    timestamp: unrecorded
+    reason: predecessor state restored by carol-mint (re-mint events before 2026-08-30T16:10:54Z did not record history)
+  - sha256: fe69cf66d222b71eb82b13fd5de2b4cc2b449042002c0631504fb9fae8f9e39e
+    timestamp: '2026-08-30T16:10:54Z'
+    reason: 're-mint b0726e469e2c… -> fe69cf66d222… — hxs-6 storage pilot closeout: mirror carries the identical hxs-6 storage cell (governor-verified)'
 notes:
   fqdn_truth_state: 'TARGET-STATE, not live DNS: the 16 per-host FQDNs (hxs-1..hxs-15, hxs-cp — pattern <host>.hx.local.arpa per SERVER-REGISTRY.md rows and the dns-fqdn material) are documented intended names. hxs-1 discovery records NO configured FQDN (hostname -f returns the short name) and that persistent hx.local.arpa DNS is not established (act-001 open). Do not present these as live resolving names. Bare zone entry hx.local.arpa removed from this list 2026-08-25 (C10) — the zone itself is covered by DOC-tkv-dns-fqdn-hx-local-dns.'
   phase3_tension: 'Registry text: ''The Phase 3 mutation guard is hard-locked for every registry status'' and server implementation is a ''later owner-authorized phase''. The hxs-1 pilot (M0 authorized 2026-08-24 by owner) installs and configures the approved registry workload on hxs-1 — owner directive outranks the guard text (authority order), and the owner approved hxs-1/configuration.md for M8 (state log row 28). FLAG: hxs-1''s configured state currently lives only in the pilot corpus; the TKV server records do not yet reflect it. Escalated as follow-up, review at M8.'

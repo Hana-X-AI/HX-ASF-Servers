@@ -46,6 +46,12 @@ document:
   - sha256: cb005daeefc6b69f58f0d3d6fe525c4247ac728ba93013dac30459740bc6d844
     timestamp: '2026-08-30T11:21:44Z'
     reason: '2026-08-30 review batch: sha256 refresh'
+  - sha256: cb005daeefc6
+    timestamp: unrecorded
+    reason: predecessor state restored by carol-mint (re-mint events before 2026-08-30T16:10:52Z did not record history)
+  - sha256: 4735055fe6446c97a9b8cecf284ede9cadad3e82439e871cfb1aa84306207dcc
+    timestamp: '2026-08-30T16:10:52Z'
+    reason: re-mint cb005daeefc6… -> 4735055fe644… — KDD-0013 Amdt 11 job-family lane applied; F2 chain flattened
   canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/gordon/profile.md
 notes:
   minted_by: carol-mint 1.0.0 @ 2026-08-30T15:56:27Z — re-mint cb005daeefc6… -> 4735055fe644… — KDD-0013 Amdt 11 job-family lane applied; F2 chain flattened

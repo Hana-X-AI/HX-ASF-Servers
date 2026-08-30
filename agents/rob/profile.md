@@ -14,8 +14,11 @@ sha256 `6ede0b05…f9e3` — full digest of record in KDD-0011) — the preserve
 source is the full text; this profile is the operative distillation. Source
 status was DRAFT for owner review; ratified and registered by owner word
 2026-08-28 (KDD-0011). Source §12.3 decision D1 (model lane) resolved by the
-owner 2026-08-28 as **Z.ai GLM 5.3 Flash via OmniRoute** — against the source
-document's Coder-X recommendation; recorded openly per KDD-0013.
+owner 2026-08-28 as Z.ai GLM 5.3 Flash via OmniRoute — against the source
+document's Coder-X recommendation; recorded openly per KDD-0013. That decision
+is SUPERSEDED: the Agentic SWE job-family default returns Rob to **Coder-X
+(`ollama-local/hx-qwen3.6-coderx-64k`, hxs-2), a local lane** (owner decision
+2026-08-30, KDD-0013 Amendment 11).
 
 ## 1. Identity and placement
 
@@ -166,5 +169,7 @@ Open decision rows carried from the source (owner to disposition): D2
 verification of Rob's products (Janet profile to be drafted / governor's
 verifier contract interim); D3 Bill pairing (draft when the first data-heavy
 target appears); D4 write targets (HX-owned repos only at activation; expansion
-by owner word). D1 (model lane) is RESOLVED — GLM 5.3 Flash via OmniRoute
-(owner, 2026-08-28, KDD-0013).
+by owner word). D1 (model lane) is RESOLVED — **Coder-X (`ollama-local/hx-qwen3.6-coderx-64k`,
+hxs-2), local**, per the Agentic SWE job-family default (owner, 2026-08-30,
+KDD-0013 Amendment 11). Provenance: D1 was first resolved as GLM 5.3 Flash via
+OmniRoute (owner, 2026-08-28, KDD-0013); that lane is superseded.

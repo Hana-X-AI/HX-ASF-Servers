@@ -43,10 +43,10 @@ document:
     target: DOC-tkv-corpus-ubuntu
     note: standing knowledge source
   validation:
-    validated_at: '2026-08-30T15:56:27Z'
+    validated_at: '2026-08-30T16:09:40Z'
     freshness: current
     review_due: on owner amendment
-  sha256: e1f1ccb42103a523ab75080aa7ad8b1027cf3d5be309a1a014a8f89851297e56
+  sha256: fa338c6507b59a9f2fd72dfe4b363eae05e62f59b489647f10c4394b72642d7d
   hash_history:
   - sha256: 0a663e830f8d168ebd0655371337712a3017adc83ccf8492a58ee6e0255f65e1
     timestamp: '2026-08-25T04:50:00Z'
@@ -57,6 +57,12 @@ document:
   - sha256: 4a1cdb65296b720530ae3af48f2a93bb50d9ae681bf64bef785e108b4cf94396
     timestamp: '2026-08-30T09:45:00Z'
     reason: '2026-08-30 review batch: skills historical block + validate 5/5 supersession'
+  - sha256: e1f1ccb42103
+    timestamp: unrecorded
+    reason: predecessor state restored by carol-mint (re-mint events before 2026-08-30T16:10:52Z did not record history)
+  - sha256: fa338c6507b59a9f2fd72dfe4b363eae05e62f59b489647f10c4394b72642d7d
+    timestamp: '2026-08-30T16:10:52Z'
+    reason: 're-mint e1f1ccb42103… -> fa338c6507b5… — CodeRabbit batch: active lane refs synchronized; local/cloud rule reconciled; CI retry+pin'
   canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/rick/profile.md
 notes:
-  minted_by: carol-mint 1.0.0 @ 2026-08-30T15:56:27Z — re-mint 863ddefa65a8… -> e1f1ccb42103… — KDD-0013 Amdt 11 job-family lane applied; F2 chain flattened
+  minted_by: 'carol-mint 1.0.0 @ 2026-08-30T16:09:40Z — re-mint e1f1ccb42103… -> fa338c6507b5… — CodeRabbit batch: active lane refs synchronized; local/cloud rule reconciled; CI retry+pin'

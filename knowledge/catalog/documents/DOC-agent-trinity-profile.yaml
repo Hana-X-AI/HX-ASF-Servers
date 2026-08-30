@@ -74,10 +74,10 @@ document:
     target: /home/hxsa/opt/local-tkv/agent-zero-docs/pilots/omniroute/plan/codex_20260826_1548_omniroute-v3.8.51-implementation-control-manifest.yaml
     note: companion candidate control manifest (443 lines) — preserved unchanged; uncataloged, CANDIDATE
   validation:
-    validated_at: '2026-08-30T15:56:26Z'
+    validated_at: '2026-08-30T16:14:21Z'
     freshness: current
     review_due: on any owner amendment; the commit CANDIDATE-claimed wording refresh (lines 110-118, 179) RESOLVED 2026-08-27 by the governor's row-9 edit (see notes.commit_wording_resolution)
-  sha256: 53b5d8ea4513245b0098f8b993aef7eb14e793e676414f29260964d90432669d
+  sha256: a6f0e8fba7f3affe1e7f4052a17213895eb5a7f183bd21bc04a1b9a358949fad
   hash_history:
   - sha256: 2d3b45e23952fa7f75351dc9b30c45514a219de9cf4776a76e92ed2f125c5fe4
     timestamp: '2026-08-29T12:30:00Z'
@@ -88,6 +88,15 @@ document:
   - sha256: 991319bf7691aff24b72430e6210da230656d19e04e487c97c0858e16faa4909
     timestamp: '2026-08-30T11:21:44Z'
     reason: '2026-08-30 review batch: sha256 refresh'
+  - sha256: 53b5d8ea4513
+    timestamp: unrecorded
+    reason: predecessor state restored by carol-mint (re-mint events before 2026-08-30T16:10:52Z did not record history)
+  - sha256: 6eb729f99ea2ccb8bd5fded3e7f55572183dee66916836e1c0a95a3b421599c8
+    timestamp: '2026-08-30T16:10:52Z'
+    reason: 're-mint 53b5d8ea4513… -> 6eb729f99ea2… — CodeRabbit batch: active lane refs synchronized; local/cloud rule reconciled; CI retry+pin'
+  - sha256: a6f0e8fba7f3affe1e7f4052a17213895eb5a7f183bd21bc04a1b9a358949fad
+    timestamp: '2026-08-30T16:14:21Z'
+    reason: alias corrected to TARGET-STATE pending live OmniRoute verification
   canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/trinity/profile.md
 notes:
   ratification: 'MID-RUN FLIP (2026-08-27T04:16Z, during this ingestion wave): owner decision OD-02 = O1 adopt-as-corrected (state log row 5). The governor flipped the profile DRAFT -> ACTIVE — frontmatter description now reads ''Owner-ratified 2026-08-27 (KDD-0008, O1)'', title line ''(operating profile)'', banner ''ACTIVE operating profile — owner-ratified 2026-08-27 (KDD-0008, O1 adopt-as-corrected). Layer 1 work still requires OD-12 authorization + OD-03 readiness acknowledgement.'', Document status ''Profile state: ACTIVE — owner-ratified 2026-08-27 (KDD-0008 O1; goal OD-02 closed)'' (all VERIFIED PRESENT at re-verification 04:25Z). Record fields flipped: status draft -> active; authority_level delegated-contract -> ratified-governance (the dispatch-brief candidate mapping — delegated-contract per the pre-flip DOC-backend-meta-x convention — held at run start and was consumed by the ratification before this record entered the catalog). Hash chain: 9b4d13e5… (draft, first hash at run start 04:05Z) -> d9c79b4b… (ratified, this record''s minted content).'
@@ -98,4 +107,4 @@ notes:
   batch17_f2_resolution: 'RESOLVED 2026-08-27 (review batch 17 finding F2, hxs-2 log row 50 — ''profile record declared_purpose claims §13 still carries pre-ratification text — stale since the batch-16 §13 ACTIVE rewrite'', VALID, queued to this wave): the declared_purpose §13 sentence now records the batch-16 ACTIVE rewrite with the inert condition as labeled history. F2 closed.'
   review_batch_20260827: 'REVIEW-BATCH UPDATE 2026-08-27 (follow-up wave; OmniRoute state log row 44 governor fix 3): (a) the ACTIVE header banner (source line 8) now records ''Layer 1 authorized 2026-08-27 (OD-12 owner authorization + OD-03 hxs-8 readiness acknowledgement, both completed same day)'' with the original ''still requires'' line preserved as a labeled-historical bracket (VERIFIED PRESENT); (b) the frontmatter truth-state line (source lines 12-16) lifts the operating-discipline carry CANDIDATE -> RATIFIED 2026-08-27 ''per KDD-0008 line 33 and the Layer 1 goal — originally carried as "CANDIDATE — adopted as draft text, not yet ratified", historical wording preserved here as provenance'' (VERIFIED PRESENT); (c) the pinned commit''s content-sensitive verification stands COMPLETE for all 13,098 files (source lines 110-118 — the ''Resolved 2026-08-27: identity VERIFIED by content-sensitive proof — 13,098/13,098 git-blob identical to upstream'' block, VERIFIED PRESENT; the prior CANDIDATE-claimed/unverified carry stays only as labeled history — notes.commit_wording_resolution, closed at the earlier wave, holds). declared_purpose + title updated to match (316 lines now); review_due''s OD-12/OD-03 conditional consumed. Hash chain: … -> 4954c02b… (commit-discipline VERIFIED resolution) -> b6dfffd4… (this record, 2026-08-27T21:2xZ).'
   rr47_20260827: 'RR-47 WAVE (2026-08-27T23:40Z [timestamp corrected 2026-08-28, F-2 sweep, labeled: the ''23:4xZ'' shorthand was invalid — exact value 2026-08-27T23:40Z per the rr-47 receipt''s freshness line and this record''s validated_at]; OmniRoute state log row 46 governor-lane fix 1): the source''s line-35 Profile-state cell now carries the in-cell open correction — the cell reads ACTIVE … ''Layer 1 authorized 2026-08-27 (OD-12 + OD-03 both completed same day)'' with the stale ''Layer 1 work still requires OD-12 authorization + OD-03 readiness acknowledgement'' wording preserved in-cell as history (VERIFIED PRESENT this run). declared_purpose''s trailing §13 clause is labeled in place: the ''Layer 1 remains gated on OD-12 + OD-03'' wording is explicitly HISTORICAL preserved source history; the ACTIVE + Layer-1-AUTHORIZED truth state is unambiguous (WO-L1-TRINITY-INSTALL-001 already DISCHARGED). Per dispatch, review_due and notes.review_batch_20260827 are NOT altered by this fix. Hash chain: … -> b6dfffd4… (review-batch wave) -> 2d3b45e2… (this record).'
-  minted_by: carol-mint 1.0.0 @ 2026-08-30T15:56:26Z — re-mint 991319bf7691… -> 53b5d8ea4513… — KDD-0013 Amdt 11 job-family lane applied; F2 chain flattened
+  minted_by: carol-mint 1.0.0 @ 2026-08-30T16:14:21Z — re-mint 6eb729f99ea2… -> a6f0e8fba7f3… — alias corrected to TARGET-STATE pending live OmniRoute verification

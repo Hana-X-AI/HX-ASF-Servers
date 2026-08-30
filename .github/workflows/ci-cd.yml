@@ -114,10 +114,24 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Install CodeRabbit CLI
+      - name: Install CodeRabbit CLI (pinned installer digest)
+        env:
+          # SHA-256 of https://cli.coderabbit.ai/install.sh, verified 2026-08-30
+          # (17513 bytes). Audit F5/A4: this was the last unpinned executable
+          # download in the pipeline. The vendor publishes no versioned installer
+          # URL, so the digest is pinned instead and MUST be re-verified and
+          # updated together with this comment when the installer changes.
+          CR_INSTALLER_SHA256: "4ffc7fb7443f0c562adea5c998867bcbe772a14d0e6620d328dfa6045afe446d"
         run: |
+          set -euo pipefail
           export CODERABBIT_INSTALL_DIR="$RUNNER_TEMP/cr-bin"
-          curl -fsSL https://cli.coderabbit.ai/install.sh | sh
+          curl -fsSL https://cli.coderabbit.ai/install.sh -o "$RUNNER_TEMP/cr-install.sh"
+          echo "${CR_INSTALLER_SHA256}  $RUNNER_TEMP/cr-install.sh" > "$RUNNER_TEMP/cr-install.sha"
+          if ! sha256sum -c "$RUNNER_TEMP/cr-install.sha"; then
+            echo "::error::CodeRabbit installer digest mismatch — refusing to execute. Re-verify upstream and update CR_INSTALLER_SHA256 with its comment."
+            exit 1
+          fi
+          sh "$RUNNER_TEMP/cr-install.sh"
           echo "$CODERABBIT_INSTALL_DIR" >> "$GITHUB_PATH"
 
       - name: CodeRabbit review (agent JSON, light policy)
@@ -149,8 +163,13 @@ jobs:
           # runs. A recoverable rate_limit gets bounded retries at the
           # service-provided waitTime (zero-tolerance era: main must not red-X
           # on a quota collision); after retries the parser stays fail-closed.
+          # A transport failure (e.g. "Error: WebSocket closed") writes NO JSON
+          # events at all, so the rate_limit parser below computed WAIT=0 and the
+          # loop broke on attempt 1 with zero retries. Any run that produces no
+          # `complete` event is now retried with backoff, whatever the cause.
           for attempt in 1 2 3; do
-            "${CMD[@]}" > "$RUNNER_TEMP/findings.jsonl" || true
+            "${CMD[@]}" > "$RUNNER_TEMP/findings.jsonl" 2> "$RUNNER_TEMP/cr-stderr.txt" || true
+            cat "$RUNNER_TEMP/cr-stderr.txt" || true
             WAIT=$(python3 - "$RUNNER_TEMP/findings.jsonl" <<'PYEOF'
           import json, os, sys
           complete, wait = False, 0
@@ -172,11 +191,19 @@ jobs:
                               wait = int(float(w[0]) * (60 if w[1].lower().startswith("min") else 1)) + 20
                           except ValueError:
                               wait = 0
-          print(0 if complete else min(wait, 780))
+          # 0 = complete (done). Otherwise the seconds to wait before retrying:
+          # the service-provided rate_limit waitTime when present, else a plain
+          # transport-failure backoff so a dropped connection is retried too.
+          print(0 if complete else (min(wait, 780) if wait else -1))
           PYEOF
           )
-            case "$WAIT" in ''|*[!0-9]*) WAIT=0 ;; esac
-            if [ "$WAIT" -le 0 ]; then break; fi
+            case "$WAIT" in ''|*[!0-9-]*) WAIT=0 ;; esac
+            if [ "$WAIT" = "0" ]; then break; fi
+            if [ "$WAIT" -lt 0 ]; then
+              # transport/auth failure with no JSON events — fixed backoff
+              WAIT=$(( attempt * 30 ))
+              echo "::notice::CodeRabbit produced no events (attempt $attempt) — $(tr -d '\r' < "$RUNNER_TEMP/cr-stderr.txt" | tail -1). Retrying after ${WAIT}s"
+            fi
             if [ "$attempt" -eq 3 ]; then
               echo "::notice::CodeRabbit rate limit persists after retries — parser stays fail-closed"
               break
@@ -234,8 +261,26 @@ jobs:
               if any("no files to review" in e.lower() for e in errors):
                   print("::notice::CodeRabbit: no reviewable files in this range (generated-only diff) — gate passes vacuously")
                   sys.exit(0)
-              print("::error::no complete event from CodeRabbit CLI (auth/service failure) %s"
-                    % "; ".join(errors))
+              # Distinguish UNREACHABLE from "the code has findings". Both stay
+              # fail-closed per the owner zero-tolerance directive, but a reader
+              # must be able to tell a vendor problem from a code problem without
+              # opening the raw log.
+              stderr_path = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "cr-stderr.txt")
+              tail = ""
+              if os.path.exists(stderr_path):
+                  stderr_lines = open(stderr_path).read().strip().splitlines()
+                  if stderr_lines:
+                      tail = stderr_lines[-1]
+              detail = "; ".join(errors) or tail or "no diagnostic emitted"
+              with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as fh:
+                  fh.write("\n## CodeRabbit UNREACHABLE\n\n"
+                           "The review service produced no `complete` event after 3 attempts. "
+                           "**This is not a finding about the code** — the deterministic `gates` "
+                           "job is the signal for that. Cause: `%s`.\n\n"
+                           "Common causes: the API key's review quota is exhausted (it is shared "
+                           "between CI and local CLI runs), or the key is invalid/rotated.\n" % detail)
+              print("::error::CodeRabbit UNREACHABLE after 3 attempts — no complete event. "
+                    "NOT a code finding. Cause: %s" % detail)
               sys.exit(1)
           # Owner directive 2026-08-28: ALL findings block — minor through critical.
           # "we are introducing problems in our codebase that coderabbit can find

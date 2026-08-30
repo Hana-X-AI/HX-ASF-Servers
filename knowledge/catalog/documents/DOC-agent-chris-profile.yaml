@@ -35,10 +35,10 @@ document:
     target: DOC-agent-chris-charter
     note: one-page lane charter
   validation:
-    validated_at: '2026-08-30T15:56:27Z'
+    validated_at: '2026-08-30T16:09:40Z'
     freshness: current
     review_due: on owner amendment
-  sha256: 785b814eed7c8ce29dc38ecac6cb4cb64dd378d8e2f0ad4841c7344ccb21ddc9
+  sha256: 05f41c12af94a944c84ee67bf6f469504ed41f1e365b6382b5098e2c4de6daef
   hash_history:
   - sha256: 90e378a5e3a4e1c633e5740daa8395d65045d4b7594b18f751cd1db7f2e93af5
     timestamp: '2026-08-29T12:30:00Z'
@@ -46,6 +46,12 @@ document:
   - sha256: 6ca8ef40822bbe62b50b4118bf4fb697c8ccd33497be8aa6908a73c3199fc253
     timestamp: '2026-08-30T11:21:44Z'
     reason: '2026-08-30 review batch: sha256 refresh'
+  - sha256: 785b814eed7c
+    timestamp: unrecorded
+    reason: predecessor state restored by carol-mint (re-mint events before 2026-08-30T16:10:52Z did not record history)
+  - sha256: 05f41c12af94a944c84ee67bf6f469504ed41f1e365b6382b5098e2c4de6daef
+    timestamp: '2026-08-30T16:10:52Z'
+    reason: 're-mint 785b814eed7c… -> 05f41c12af94… — CodeRabbit batch: active lane refs synchronized; local/cloud rule reconciled; CI retry+pin'
   canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/chris/profile.md
 notes:
-  minted_by: carol-mint 1.0.0 @ 2026-08-30T15:56:27Z — re-mint 6ca8ef40822b… -> 785b814eed7c… — KDD-0013 Amdt 11 job-family lane applied; F2 chain flattened
+  minted_by: 'carol-mint 1.0.0 @ 2026-08-30T16:09:40Z — re-mint 785b814eed7c… -> 05f41c12af94… — CodeRabbit batch: active lane refs synchronized; local/cloud rule reconciled; CI retry+pin'

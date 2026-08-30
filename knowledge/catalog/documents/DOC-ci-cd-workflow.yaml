@@ -1,62 +1,72 @@
 document:
-  id: "DOC-ci-cd-workflow"
-  title: ".github/workflows/ci-cd.yml — p8 CI/CD pipeline definition (owner-ratified 2026-08-26; 18 steps across gates / coderabbit-review / pr-manage; trigger every push to any branch)"
-  type: "contract"
-  declared_purpose: "The repository's machine-enforced quality-gate contract (name: ci-cd), ratified by the owner 2026-08-26 under plan p8 (argent-groot-ant-man). Trigger: every push to any branch. Job gates (all pushes, happy path ~3 min): checkout full history, Python 3.12 setup, byte-compile lint of scripts + fixtures, shellcheck of repo hooks, fixtures regression suite, wiki renderer suite, wiki HTML sync check (render.py --check), catalog validation (scripts/validate.py), and a gitleaks secret scan over the pushed commit range (redacted). Job coderabbit-review (non-main pushes): installs the CodeRabbit CLI and runs `coderabbit review --agent --light --base origin/main`; skips cleanly with a notice until the CODERABBIT_API_KEY repo secret is configured; the gate FAILS on any critical/major finding and fail-closes on a run with no complete event (auth/service failure); posts the severity summary to the PR. Job pr-manage (non-main pushes, always): ensures a PR exists (auto-create targeting main on first push), auto-labels by branch prefix (feature/ fix/ chore/), arms GitHub platform auto-merge (squash), and comments the pipeline state. Auto-merge fires only when the required checks (gates, coderabbit-review) are green on the PR — no manual approval gates anywhere. Branch protection on main requires the two checks for PR merges only; direct governor pushes to main stay possible (governor-on-main flow preserved)."
-  inferred_value: "INFERENCE: this moves the factory's existing local quality discipline (validate.py, fixture suite, wiki sync, secret sweep — the same commands the factory runs locally) into the hosted merge path, so a change cannot reach main through a PR without passing the catalog/wiki/fixtures/secret gates; the CodeRabbit leg is the repo's first automated external review gate, deliberately fail-closed on CLI failure and deliberately non-blocking for minor/trivial findings (fix loop: factory agent fixes on the branch, <=2 passes)."
+  id: DOC-ci-cd-workflow
+  title: .github/workflows/ci-cd.yml — p8 CI/CD pipeline definition (owner-ratified 2026-08-26; 18 steps across gates / coderabbit-review / pr-manage; trigger every push to any branch)
+  type: contract
+  declared_purpose: 'The repository''s machine-enforced quality-gate contract (name: ci-cd), ratified by the owner 2026-08-26 under plan p8 (argent-groot-ant-man). Trigger: every push to any branch. Job gates (all pushes, happy path ~3 min): checkout full history, Python 3.12 setup, byte-compile lint of scripts + fixtures, shellcheck of repo hooks, fixtures regression suite, wiki renderer suite, wiki HTML sync check (render.py --check), catalog validation (scripts/validate.py), and a gitleaks secret scan over the pushed commit range (redacted). Job coderabbit-review (non-main pushes): installs the CodeRabbit CLI and runs `coderabbit review --agent --light --base origin/main`; skips cleanly with a notice until the CODERABBIT_API_KEY repo secret is configured; the gate FAILS on any critical/major finding and fail-closes on a run with no complete event (auth/service failure); posts the severity summary to the PR. Job pr-manage (non-main pushes, always): ensures a PR exists (auto-create targeting main on first push), auto-labels by branch prefix (feature/ fix/ chore/), arms GitHub platform auto-merge (squash), and comments the pipeline state. Auto-merge fires only when the required checks (gates, coderabbit-review) are green on the PR — no manual approval gates anywhere. Branch protection on main requires the two checks for PR merges only; direct governor pushes to main stay possible (governor-on-main flow preserved).'
+  inferred_value: 'INFERENCE: this moves the factory''s existing local quality discipline (validate.py, fixture suite, wiki sync, secret sweep — the same commands the factory runs locally) into the hosted merge path, so a change cannot reach main through a PR without passing the catalog/wiki/fixtures/secret gates; the CodeRabbit leg is the repo''s first automated external review gate, deliberately fail-closed on CLI failure and deliberately non-blocking for minor/trivial findings (fix loop: factory agent fixes on the branch, <=2 passes).'
   source:
-    author: "Kimi-K3 (governor; plan p8 argent-groot-ant-man)"
-    provided_by: "Kimi-K3"
-    origin: "/home/hxsa/opt/HX-ASF-Servers/.github/workflows/ci-cd.yml"
-    section: "§whole-document"
-    ingestion_date: "2026-08-26T20:08:00Z"
-  owner: "Kimi-K3"
+    author: Kimi-K3 (governor; plan p8 argent-groot-ant-man)
+    provided_by: Kimi-K3
+    origin: /home/hxsa/opt/HX-ASF-Servers/.github/workflows/ci-cd.yml
+    section: §whole-document
+    ingestion_date: '2026-08-26T20:08:00Z'
+  owner: Kimi-K3
   applies_to:
     hosts: []
     fqdns: []
     services: []
-    agents: [kimi-k3]
-    repositories: [HX-ASF-Servers]
+    agents:
+    - kimi-k3
+    repositories:
+    - HX-ASF-Servers
     environments: []
     models: []
-  version: "p8 (2026-08-26)"
-  status: "active"
-  authority_level: "ratified-governance"
+  version: p8 (2026-08-26)
+  status: active
+  authority_level: ratified-governance
   supersedes: []
   superseded_by: []
   security:
-    classification: "internal"
-    access_restrictions: "none beyond repository access"
+    classification: internal
+    access_restrictions: none beyond repository access
     contains_secret_values: false
   relations:
-    - predicate: "produced_by"
-      target: "kimi-k3"
-      note: "p8 pipeline, owner-ratified 2026-08-26; live + smoke-tested same day (hxs-2 state log row 33: committed ec37275 + fc3b4c3 shellcheck fix, pushed; repo settings applied — allow_auto_merge, Actions PR-create permission, main protection requiring gates + coderabbit-review on PRs only)"
-    - predicate: "references"
-      target: "DOC-cicd-pipeline-doc"
-      note: "human-facing documentation of this pipeline (docs/cicd-pipeline.md — step list, lifecycle, review-fix loop, setup, p8 deviations D1–D4)"
-    - predicate: "references"
-      target: "DOC-coderabbit-config"
-      note: "review configuration consumed by the coderabbit-review job (also governs the GitHub App if installed later)"
-    - predicate: "depends_on"
-      target: "DOC-scripts-validate-py"
-      note: "the gates job's catalog-validation step runs scripts/validate.py — the UD1 single local validation contract, now also a hosted gate"
-    - predicate: "depends_on"
-      target: "DOC-scripts-wiki-dual-format-render"
-      note: "the gates job's build-validation step runs render.py --check (wiki dual-format sync, Q2 convention)"
-    - predicate: "depends_on"
-      target: "DOC-pilot-hx1-fixtures-manifest"
-      note: "the gates job runs the fixtures regression suite (test_fixtures.py) and byte-compiles the fixtures tree"
-    - predicate: "governs"
-      target: "HX-ASF-Servers change flow (all branches; PR merges into main)"
-      note: "required checks gates + coderabbit-review on PRs; gitleaks over the pushed range; auto-merge squash on green; bootstrap applied via API (hxs-2 state log row 33)"
+  - predicate: produced_by
+    target: kimi-k3
+    note: 'p8 pipeline, owner-ratified 2026-08-26; live + smoke-tested same day (hxs-2 state log row 33: committed ec37275 + fc3b4c3 shellcheck fix, pushed; repo settings applied — allow_auto_merge, Actions PR-create permission, main protection requiring gates + coderabbit-review on PRs only)'
+  - predicate: references
+    target: DOC-cicd-pipeline-doc
+    note: human-facing documentation of this pipeline (docs/cicd-pipeline.md — step list, lifecycle, review-fix loop, setup, p8 deviations D1–D4)
+  - predicate: references
+    target: DOC-coderabbit-config
+    note: review configuration consumed by the coderabbit-review job (also governs the GitHub App if installed later)
+  - predicate: depends_on
+    target: DOC-scripts-validate-py
+    note: the gates job's catalog-validation step runs scripts/validate.py — the UD1 single local validation contract, now also a hosted gate
+  - predicate: depends_on
+    target: DOC-scripts-wiki-dual-format-render
+    note: the gates job's build-validation step runs render.py --check (wiki dual-format sync, Q2 convention)
+  - predicate: depends_on
+    target: DOC-pilot-hx1-fixtures-manifest
+    note: the gates job runs the fixtures regression suite (test_fixtures.py) and byte-compiles the fixtures tree
+  - predicate: governs
+    target: HX-ASF-Servers change flow (all branches; PR merges into main)
+    note: required checks gates + coderabbit-review on PRs; gitleaks over the pushed range; auto-merge squash on green; bootstrap applied via API (hxs-2 state log row 33)
   validation:
-    validated_at: "2026-08-26T20:08:00Z"
-    freshness: "current"
-    review_due: "on any workflow edit (re-ingest), or at the CODERABBIT_API_KEY secret activation (review leg goes live — owner action pending per hxs-2 row 33)"
-  sha256: "9dbe6070ac81706b2b0c8596f7cbe67ac6c64dd9491c904ad6fcbc1b09c7eafc"
-  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/.github/workflows/ci-cd.yml"
+    validated_at: '2026-08-30T16:09:40Z'
+    freshness: current
+    review_due: on any workflow edit (re-ingest), or at the CODERABBIT_API_KEY secret activation (review leg goes live — owner action pending per hxs-2 row 33)
+  sha256: 7ca7c5e3f74271ea2b9577db3b501373226dacfb4f959e06e20cd1d650a2f805
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/.github/workflows/ci-cd.yml
+  hash_history:
+  - sha256: 9dbe6070ac81
+    timestamp: unrecorded
+    reason: predecessor state restored by carol-mint (re-mint events before 2026-08-30T16:10:53Z did not record history)
+  - sha256: 7ca7c5e3f74271ea2b9577db3b501373226dacfb4f959e06e20cd1d650a2f805
+    timestamp: '2026-08-30T16:10:53Z'
+    reason: 're-mint 9dbe6070ac81… -> 7ca7c5e3f742… — CodeRabbit batch: active lane refs synchronized; local/cloud rule reconciled; CI retry+pin'
 notes:
-  pending_items: "Per hxs-2 state log row 33 (2026-08-26T20:00Z): (1) CODERABBIT_API_KEY web-UI add pending owner (repo Settings -> Secrets -> Actions; the coderabbit-review job skips cleanly by design until then); (2) smoke-merge + full green CI pending the owner decision on the Alert-2 uncommitted-tree commit wave (5 wiki-manifest docs exist only in that tree: BLUEPRINT, both hxs-2/3 goal files, KDD-0006/7 — render --check reports them MISSING on GitHub)."
-  protected_reference: "The workflow consumes the CODERABBIT_API_KEY GitHub Actions secret and the GITHUB_TOKEN; no secret value is present in the file or in this record (profile §6 — existence and mechanism only)."
-  typing_judgment: "Typed contract (governor brief: contract/config class at Carol's schema judgment): the workflow IS the ratified, machine-enforced quality-gate contract binding how changes enter the repository — the DOC-blueprint-llm-server class (binds deployments AND consumers), not a how-to. The companion human-facing doc is typed runbook (DOC-cicd-pipeline-doc)."
+  pending_items: 'Per hxs-2 state log row 33 (2026-08-26T20:00Z): (1) CODERABBIT_API_KEY web-UI add pending owner (repo Settings -> Secrets -> Actions; the coderabbit-review job skips cleanly by design until then); (2) smoke-merge + full green CI pending the owner decision on the Alert-2 uncommitted-tree commit wave (5 wiki-manifest docs exist only in that tree: BLUEPRINT, both hxs-2/3 goal files, KDD-0006/7 — render --check reports them MISSING on GitHub).'
+  protected_reference: The workflow consumes the CODERABBIT_API_KEY GitHub Actions secret and the GITHUB_TOKEN; no secret value is present in the file or in this record (profile §6 — existence and mechanism only).
+  typing_judgment: 'Typed contract (governor brief: contract/config class at Carol''s schema judgment): the workflow IS the ratified, machine-enforced quality-gate contract binding how changes enter the repository — the DOC-blueprint-llm-server class (binds deployments AND consumers), not a how-to. The companion human-facing doc is typed runbook (DOC-cicd-pipeline-doc).'
+  minted_by: 'carol-mint 1.0.0 @ 2026-08-30T16:09:40Z — re-mint 9dbe6070ac81… -> 7ca7c5e3f742… — CodeRabbit batch: active lane refs synchronized; local/cloud rule reconciled; CI retry+pin'

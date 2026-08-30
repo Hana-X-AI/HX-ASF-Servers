@@ -90,11 +90,18 @@ Role-specific additions: none beyond the global inventory.
   [CORRECTION 2026-08-28, labeled — the first sentence is SUPERSEDED: the
   substrate exception was retracted by owner directive ("no sub-agents running
   through moonshot-ai", no exceptions). Operators use standalone assigned-lane
-  sessions: `kimi -m omniroute/glm-5.3-flash --agent-file agents/trinity/profile.md`.
+  sessions bound to her assigned lane: `kimi -m omniroute/<alias> --agent-file
+  agents/trinity/profile.md`, where `<alias>` is the OmniRoute alias for
+  `z-ai/glm-5.2:free`. **TARGET-STATE:** the free-tier alias is not recorded in
+  evidence — `omniroute/glm-5.2` is the documented alias for the PAID GLM 5.2
+  lane (OmniRoute config, DSH state-log row 43). Confirm the alias against the
+  live OmniRoute config on hxs-8 before the first bound session; if it is absent,
+  it must be added there first.
   The superseded sentence is preserved above as history; the KDD-0006 voiding
   of the "DeepSeek Harness" reference is unaffected.]
-- Z.ai GLM 5.3 Flash (via OmniRoute; owner-assigned 2026-08-28, KDD-0013, riding
-  the OD-14 exception) executes delegated bounded tasks. Before every delegated
+- Z.ai GLM 5.2 free (`z-ai/glm-5.2:free`, Decart, via OmniRoute hxs-8) — Platform Systems job-family default (KDD-0013 Amendment 11,
+  2026-08-30), zero-cost cloud on the OD-14 allowlist — executes delegated
+  bounded tasks. Before every delegated
   task: verify the GLM route identity (exact model id), endpoint, and health via
   OmniRoute. On identity or health failure: stop and escalate to the governor. No
   substitution to any other cloud route under any circumstance.
@@ -271,9 +278,13 @@ session fills the need.
   retry must change the hypothesis, evidence request, or constraint.
 - Time, token, and operational-risk budgets are named in the work order; an
   exhausted budget is an escalation, not an overrun.
-- Verify the GLM 5.3 Flash route (via OmniRoute) identity and health before
+- Verify the GLM 5.2 free route (via OmniRoute) identity and health before
   each delegated task; failure is a stop condition, never a substitution
-  opportunity. [backend amended 2026-08-28 per KDD-0013 — was Coder-X]
+  opportunity.
+
+  Provenance: the lane was Coder-X (original), then GLM 5.3 Flash
+  (2026-08-28, KDD-0013); both superseded by the Platform Systems default
+  2026-08-30 (KDD-0013 Amendment 11).
 - Security-boundary, data-integrity, provenance, or rollback failures stop
   mutation immediately; containment may precede complete diagnosis.
 
@@ -310,7 +321,7 @@ Stop immediately and escalate to the governor (corrected from the candidate mani
 - database, backup, or restore failure; rollback not proven;
 - semantic protocol drift against the frozen acceptance corpus;
 - unbounded retry or queue behavior;
-- GLM 5.3 Flash route (via OmniRoute) identity, health, or capability
+- GLM 5.2 free route (via OmniRoute) identity, health, or capability
   unestablished; Qwen-X unavailable as independent verifier;
 - any cloud-model or remote-inference proposal OUTSIDE the owner-assigned GLM
   5.3 Flash lane (KDD-0013, OD-14 exception); any target substitution;

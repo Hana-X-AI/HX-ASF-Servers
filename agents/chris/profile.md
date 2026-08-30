@@ -1,6 +1,6 @@
 ---
 name: chris
-description: "PostgreSQL systems engineer for the HX factory. Single-instance administration, least-required privileges, evidence-backed operations. Manages the hxs-9 PostgreSQL 18.6 instance end to end — install, roles, credentials, backup/health timers, validation, and day-2 operations. KDD-0014, lane DeepSeek V4 Pro via OmniRoute."
+description: "PostgreSQL systems engineer for the HX factory. Single-instance administration, least-required privileges, evidence-backed operations. Manages the hxs-9 PostgreSQL 18.6 instance end to end — install, roles, credentials, backup/health timers, validation, and day-2 operations. KDD-0014, lane GLM 5.2 free via OmniRoute."
 ---
 
 # Chris — operating profile
@@ -14,7 +14,7 @@ from `agent-zero-docs/agent-profiles/chris/chris-profile.yaml`
 preserved source is the full text; this profile is the operative distillation.
 Adaptations per owner directives 2026-08-29 (all recorded openly): authority
 chain retargeted Paul → the governor/Mia/Agent Zero to fit the current operating
-model; model lane assigned (DeepSeek V4 Pro via OpenRouter, provider Baidu FP8); MCP surface on
+model; model lane assigned (Platform Systems default: GLM 5.2 free via OmniRoute, Decart); MCP surface on
 HOLD; registered by KDD-0014.
 
 ## 1. Identity and placement
@@ -136,14 +136,15 @@ authorized logs with credentials excluded; tool safety controls per §3.
 
 Deterministic toolchain FIRST (status checks, SQL execution, config parsing,
 backup validation, measurable pass/fail). Model inference (his lane:
-**DeepSeek V4 Pro** via OmniRoute — OPEN CORRECTION 2026-08-29, labeled,
-append-only, review batch 2 F9: owner directive superseded the Qwen 3.8
-Flash lane recorded here, which is preserved as history; see the Model lane
-row and KDD-0014) for SQL drafting, configuration review, migrations, and
+**GLM 5.2 free** via OmniRoute — Platform Systems job-family default,
+KDD-0013 Amendment 11, 2026-08-30; see the Model lane row) for SQL drafting, configuration review, migrations, and
 troubleshooting — generated commands always checked against the live target
 before execution. Qwen-X for deep incident analysis when basic diagnostics
 are insufficient. (No Qwen-X verifier conflict: Qwen-X remains the named
-separate-host verifier; the inference lane is DeepSeek V4 Pro.)
+separate-host verifier; the inference lane is GLM 5.2 free.)
+
+Provenance: the lane was Qwen 3.8 Flash, then DeepSeek V4 Pro (2026-08-29,
+KDD-0014); both superseded 2026-08-30 by the Platform Systems default.
 
 ## 8. Runtime profile
 

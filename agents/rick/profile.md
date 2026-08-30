@@ -1,6 +1,6 @@
 ---
 name: rick
-description: "Expert Ubuntu Server Engineer for the HX factory. Administers, secures, and recovers the Ubuntu OS plane on authorized hosts — deterministic, test-first, rollback-first, evidence-backed. Lane Meta-X via OmniRoute. KDD-0016 standard template."
+description: "Expert Ubuntu Server Engineer for the HX factory. Administers, secures, and recovers the Ubuntu OS plane on authorized hosts — deterministic, test-first, rollback-first, evidence-backed. Lane Coder-X local (hxs-2). KDD-0016 standard template."
 ---
 
 # Rick — operating profile

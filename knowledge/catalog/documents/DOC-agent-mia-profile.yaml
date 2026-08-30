@@ -26,10 +26,10 @@ document:
     contains_secret_values: false
   relations: []
   validation:
-    validated_at: '2026-08-30T15:56:27Z'
+    validated_at: '2026-08-30T16:09:40Z'
     freshness: current
     review_due: '2026-09-28'
-  sha256: fde7baa2d4808711284648624991b772fa9cb104af66d2caef8473a85de711c2
+  sha256: a78f1d80f341dd3b6d4e486541361524ded13a679d98c9b258fad84cf6a61a27
   hash_history:
   - sha256: eceb60e2fc14e56cb0914632978a3e31de287647e890c7dd8565423732835096
     timestamp: '2026-08-29T12:30:00Z'
@@ -40,6 +40,12 @@ document:
   - sha256: 5be9fb17fb5e6b02f07968c646e70637d7aa470949bc5dcd914719b04bdd2776
     timestamp: '2026-08-30T11:21:44Z'
     reason: '2026-08-30 review batch: sha256 refresh'
+  - sha256: fde7baa2d480
+    timestamp: unrecorded
+    reason: predecessor state restored by carol-mint (re-mint events before 2026-08-30T16:10:52Z did not record history)
+  - sha256: a78f1d80f341dd3b6d4e486541361524ded13a679d98c9b258fad84cf6a61a27
+    timestamp: '2026-08-30T16:10:52Z'
+    reason: 're-mint fde7baa2d480… -> a78f1d80f341… — CodeRabbit batch: active lane refs synchronized; local/cloud rule reconciled; CI retry+pin'
   canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/mia/profile.md
 notes:
-  minted_by: carol-mint 1.0.0 @ 2026-08-30T15:56:27Z — re-mint 5be9fb17fb5e… -> fde7baa2d480… — KDD-0013 Amdt 11 job-family lane applied; F2 chain flattened
+  minted_by: 'carol-mint 1.0.0 @ 2026-08-30T16:09:40Z — re-mint fde7baa2d480… -> a78f1d80f341… — CodeRabbit batch: active lane refs synchronized; local/cloud rule reconciled; CI retry+pin'

@@ -1,6 +1,6 @@
 ---
 name: quinn
-description: "Qdrant vector database systems engineer for the HX factory. Manages the Qdrant server, Python client, and MCP server on hxs-4. KDD-0017, lane NVIDIA Nemotron 3 Ultra via OmniRoute."
+description: "Qdrant vector database systems engineer for the HX factory. Manages the Qdrant server, Python client, and MCP server on hxs-4. KDD-0017, lane NVIDIA GLM 5.2 free via OmniRoute."
 ---
 
 # Quinn — operating profile
@@ -229,5 +229,6 @@ Original record — no external source document. Created per owner
 directive 2026-08-29. Knowledge base: `/opt/tkv-local/qdrant-master`
 (v1.15.5), `/opt/tkv-local/qdrant-client-master` (v1.15.1),
 `/opt/tkv-local/mcp-server-qdrant-master` (v0.8.1). Target host: hxs-4
-per `servers/system-mapping.md`. Model lane: NVIDIA Nemotron 3 Ultra
-(free) via OpenRouter, provider NVIDIA.
+per `servers/system-mapping.md`. Model lane: Z.ai GLM 5.2 free (`z-ai/glm-5.2:free`, Decart, via OmniRoute hxs-8) —
+Platform Systems job-family default (KDD-0013 Amendment 11, 2026-08-30).
+Provenance: previously NVIDIA Nemotron 3 Ultra free, owner-assigned 2026-08-29.

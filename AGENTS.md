@@ -257,12 +257,24 @@ doubt, act reversibly and report rather than pause.
   tooling/structured contracts, Chat-X basic utility — with call-sign, endpoint,
   alias, identity, and role recorded per task. Controls: on backend failure the
   session STOPS the affected branch and escalates to the governor —
-  re-assignment control stays with the governor, no automatic substitution,
-  cloud substitution always prohibited; the verifying backend is always a
-  different host than the producing backend when one is available,
-  deterministic checks first regardless. The rule governs model-inference work
-  products. (A substrate exception for the meta-agent's own orchestration was
-  retracted 2026-08-28 and is void — see the moonshot rule below.)
+  re-assignment control stays with the governor, no automatic substitution; the
+  verifying backend is always a different host than the producing backend when
+  one is available, deterministic checks first regardless. The rule governs
+  model-inference work products.
+
+  **How this rule relates to the assigned cloud lanes below.** The prohibition
+  is on *unapproved* cloud use: a session may never substitute a cloud backend
+  for its assigned lane, and a capability gap is escalated to the owner rather
+  than resolved by reaching for a cloud model. It is NOT a prohibition on the
+  lanes the owner has already ratified. The metered and zero-cost cloud lanes in
+  the job-family table below are the **owner-approved exception of record**
+  (OD-14, KDD-0013), assigned per agent by owner decision and bounded by the
+  USD 100 cap and the owner-lane allowlist. Answering question (1) with "yes"
+  means the assigned lane — local or the allowlisted cloud lane — not a lane of
+  the session's choosing. Anything outside the allowlist stays prohibited
+  without exception. (A substrate exception for the meta-agent's own
+  orchestration was retracted 2026-08-28 and is void — see the moonshot rule
+  below.)
 - **No agent runs on moonshot-ai** (owner directive 2026-08-28: "i dont want any
   sub-agents running through moonshot-ai… no expections"). The only
   moonshot-bound lane was ever the Kimi-K3 identity, and that lane is retired

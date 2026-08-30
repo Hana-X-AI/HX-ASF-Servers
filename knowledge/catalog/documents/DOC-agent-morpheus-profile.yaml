@@ -35,10 +35,10 @@ document:
     target: DOC-agent-morpheus-charter
     note: one-page lane charter
   validation:
-    validated_at: '2026-08-30T15:56:26Z'
+    validated_at: '2026-08-30T16:09:40Z'
     freshness: current
     review_due: on owner amendment
-  sha256: 727f0bbc7883346ad35cbbb893fa50056cd55a601f9defa4d26334ef5889b04c
+  sha256: d4bc8374c9411c98e5a8cfbca8d6e68bf4737b72c169d0998a4262a45ff6405a
   hash_history:
   - sha256: 9cc39f7bddcd51fa6868e7724d7af166f816ac18002994127d7f863c9ab3737f
     timestamp: '2026-08-29T12:30:00Z'
@@ -49,6 +49,12 @@ document:
   - sha256: 6076204bc5ee11cd2f076418e2edda1dc28232a8bb526517e8b6a5020e0b60fe
     timestamp: '2026-08-30T11:21:44Z'
     reason: '2026-08-30 review batch: sha256 refresh'
+  - sha256: 727f0bbc7883
+    timestamp: unrecorded
+    reason: predecessor state restored by carol-mint (re-mint events before 2026-08-30T16:10:52Z did not record history)
+  - sha256: d4bc8374c9411c98e5a8cfbca8d6e68bf4737b72c169d0998a4262a45ff6405a
+    timestamp: '2026-08-30T16:10:52Z'
+    reason: 're-mint 727f0bbc7883… -> d4bc8374c941… — CodeRabbit batch: active lane refs synchronized; local/cloud rule reconciled; CI retry+pin'
   canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/morpheus/profile.md
 notes:
-  minted_by: carol-mint 1.0.0 @ 2026-08-30T15:56:26Z — re-mint 6076204bc5ee… -> 727f0bbc7883… — KDD-0013 Amdt 11 job-family lane applied; F2 chain flattened
+  minted_by: 'carol-mint 1.0.0 @ 2026-08-30T16:09:40Z — re-mint 727f0bbc7883… -> d4bc8374c941… — CodeRabbit batch: active lane refs synchronized; local/cloud rule reconciled; CI retry+pin'

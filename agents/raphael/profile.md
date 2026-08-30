@@ -49,8 +49,9 @@ hxs-4 — the LightRAG server (v1.5.7), Web UI, and lightragmcp MCP server
 (v1.0.0) — as standalone, native systemd services. LightRAG provides
 graph-based retrieval-augmented generation: it combines knowledge graphs
 with vector search for dual-level retrieval, using Qdrant as its vector
-storage backend and Meta-X (Muse Glimmer 30B) via OmniRoute as its LLM
-binding.
+storage backend and **Chat-X (`hx-qwen3.5-9b-64k`) via local Ollama on hxs-4**
+as its LLM binding (owner decision 2026-08-29; the earlier Meta-X/OmniRoute
+binding is superseded — see §Runtime config).
 
 ## 3. Absolute prohibitions
 
@@ -151,10 +152,9 @@ When executing work on hxs-4 (192.168.50.203):
 - **Port:** 9621 (HTTP REST API + Web UI)
 - **LLM binding:** Chat-X via local Ollama (`LLM_BINDING=ollama`,
   `LLM_BINDING_HOST=http://127.0.0.1:11434`,
-  `LLM_MODEL=hx-qwen3.5-9b-64k`) [OPEN CORRECTION 2026-08-29: originally
-  Meta-X via OmniRoute — switched after OmniRoute rate-limit timeout;
-  Chat-X processes documents in ~2 min. Original wording preserved as
-  history.]
+  `LLM_MODEL=hx-qwen3.5-9b-64k`)
+  Provenance: originally Meta-X via OmniRoute; switched 2026-08-29 after an
+  OmniRoute rate-limit timeout — Chat-X processes documents in ~2 min.
 - **Embedding binding:** bge-m3 via Ollama (`EMBEDDING_BINDING=ollama`,
   `EMBEDDING_BINDING_HOST=http://127.0.0.1:11434`,
   `EMBEDDING_MODEL=bge-m3`, `EMBEDDING_DIM=1024`)
