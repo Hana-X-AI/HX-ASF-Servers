@@ -114,3 +114,56 @@ review's F6. O2 (context packets generated from work orders), O3 (`hx gate`),
 O4 (asynchronous catalog closure), O5 (hook-registration manifest), O6
 (secret-boundary warn → block), O7 (skill registry) and O8 (capability
 registry) are untouched and remain open.
+
+## Amendment 1 (2026-08-30, labeled, append-only) — three defects in the shipped engine
+
+[OPEN CORRECTION 2026-08-30, labeled, append-only — IMPLEMENTATION DEFECTS: the
+decision above stands unchanged. Three defects in the code that implemented it
+were found and fixed while scoping O2–O8. All three are the same class this KDD
+was written to end — state that a tool reports wrongly or not at all — so they
+are recorded here rather than as silent fixes. The original text is preserved.]
+
+**A1-1 — `--json` was dead on arrival.** D2 states the six commands ship "each
+with `--json`", and both SKILL.mds advertise it. Every one raised
+`TypeError: Object of type date is not JSON serializable` on any non-empty
+result. Cause: `status_date: 2026-08-28` is unquoted in every goal file, so
+`yaml.safe_load` resolves it to `datetime.date`; the schema checks stringify it
+(`str(data.get("status_date", ""))`) so WS-05 passed, but `json.dumps` has no
+such coercion. `next --json` and `blocked --json` appeared to work only because
+both currently select zero rows and `[]` serializes.
+
+Fixed by normalizing at `parse()` — dates become ISO strings recursively, once,
+where the state dict is built — rather than at each call site. **This is the
+load-bearing choice:** the state dict is the contract O2, O3 and O8 consume, so
+it must be JSON-safe by construction, not by each consumer remembering. A
+`default=str` backstop in the single `_dump()` writer catches any future YAML
+type without crashing a consumer mid-pipeline.
+
+**A1-2 — `standup` silently dropped `draft` goals.** It grouped in-progress,
+blocked, approved and `terminal_statuses`, with no group for
+`pre_dispatch_statuses`. The header printed "10 goals" and listed 8;
+`2026-08-29-oai-x-replace-meta-x` appeared nowhere at all. Fixed by adding the
+Draft group **and** an accounting invariant: any status no group covers is
+printed under "Ungrouped" rather than vanishing. The invariant is the durable
+half — a future schema status cannot silently disappear from a report.
+
+**A1-3 — the mirrors could not run outside the repo.** KDD-0020 requires
+byte-identical mirrors, and one runtime mirror lives outside the repo at
+`~/.kimi-code/skills/`. The wrappers resolved the engine as four levels up from
+their own location, which is the repo root in-tree and `$HOME` in the user-scope
+tree. That tree had therefore never run this engine: it still held the
+pre-consolidation prose-grepping implementation, so the governor's own
+`status.sh` was answering from the parser this KDD replaced — including the
+phantom `goal-decompose/scripts/` directory D2 removed. Byte-identical mirrors
+and location-relative root resolution are incompatible; resolution is now
+`HX_REPO_ROOT`, then an upward search from the script and `$PWD`, then a loud
+exit 2. A status tool must fail visibly, never report nothing.
+
+**Root cause common to all three: the CLI layer had no tests.** The 11 fixtures
+in D5 all exercised `load_all()`; none invoked `main()`, so CI was green while
+every `--json` command was broken and a status report was omitting goals. The
+suite now covers the CLI (17 tests). Each fix was verified by reverting it and
+confirming the new test fails.
+
+**Authority:** owner directive 2026-08-30 (process-optimization build, standalone
+engineering track); Codex review `codex_20260830_1539` O1.

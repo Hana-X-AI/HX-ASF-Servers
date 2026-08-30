@@ -19,6 +19,7 @@ Commands:
 Read-only. Stdlib + PyYAML (already a validate.py dependency). No network.
 """
 
+import datetime
 import glob
 import json
 import os
@@ -51,6 +52,25 @@ def goal_files():
     return out
 
 
+def _plain(value):
+    """Coerce YAML scalars into JSON-safe primitives, recursively.
+
+    `status_date: 2026-08-28` is unquoted in every goal file, so yaml.safe_load
+    resolves it to datetime.date. The schema checks stringify it, so the state
+    looked fine — but json.dumps does not, and every --json command died with
+    "Object of type date is not JSON serializable". The state dict is the
+    contract O2/O3/O8 consume, so it is normalized HERE, once, rather than at
+    each consumer.
+    """
+    if isinstance(value, (datetime.date, datetime.datetime)):
+        return value.isoformat()
+    if isinstance(value, dict):
+        return {k: _plain(v) for k, v in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [_plain(v) for v in value]
+    return value
+
+
 def parse(path):
     """Return (state_dict_or_None, error_or_None) for one goal file."""
     with open(path, encoding="utf-8") as fh:
@@ -66,7 +86,7 @@ def parse(path):
         return None, "work-state block is not valid YAML: %s" % e
     if not isinstance(data, dict):
         return None, "work-state block is not a mapping"
-    return data, None
+    return _plain(data), None
 
 
 def load_all():
@@ -101,10 +121,17 @@ def load_all():
     return states, problems
 
 
+def _dump(rows):
+    """One JSON writer. default=str is a backstop: parse() already normalizes
+    the shapes we know about, so anything reaching here is a new YAML type that
+    must still not crash a consumer mid-pipeline."""
+    print(json.dumps(rows, indent=2, default=str))
+    return 0
+
+
 def _emit(rows, as_json, title, empty):
     if as_json:
-        print(json.dumps(rows, indent=2))
-        return 0
+        return _dump(rows)
     print(title)
     print("=" * len(title))
     if not rows:
@@ -148,8 +175,7 @@ def main(argv):
 
     if cmd == "status":
         if as_json:
-            print(json.dumps(rows, indent=2))
-            return 0
+            return _dump(rows)
         counts = {}
         for r in rows:
             counts[r["status"]] = counts.get(r["status"], 0) + 1
@@ -182,14 +208,34 @@ def main(argv):
 
     if cmd == "standup":
         term = set(sch["terminal_statuses"])
+        pre = set(sch["pre_dispatch_statuses"])
+        groups = [
+            ("In progress", lambda r: r["status"] == "in-progress"),
+            ("Blocked",     lambda r: r["status"] == "blocked"),
+            ("Ready",       lambda r: r["status"] == "approved"),
+            ("Draft",       lambda r: r["status"] in pre),
+            ("Closed",      lambda r: r["status"] in term),
+        ]
+        if as_json:
+            return _dump({g: [r for r in rows if pred(r)] for g, pred in groups})
         print("Daily standup — %d goals\n" % len(rows))
-        for group, pred in (("In progress", lambda r: r["status"] == "in-progress"),
-                            ("Blocked", lambda r: r["status"] == "blocked"),
-                            ("Ready", lambda r: r["status"] == "approved"),
-                            ("Closed", lambda r: r["status"] in term)):
+        seen = set()
+        for group, pred in groups:
             g = [r for r in rows if pred(r)]
+            seen.update(r["id"] for r in g)
             print("%s (%d)" % (group, len(g)))
             for r in g:
+                print("   %-46s %s" % (r["id"], r["status"]))
+            print("")
+        # The header promises a total; the groups must account for it. `draft`
+        # had no group, so a 10-goal standup listed 8 and said nothing — the
+        # same "goal invisible to a status report" defect KDD-0021 was written
+        # to end. Any status the groups above do not cover surfaces here rather
+        # than vanishing.
+        missed = [r for r in rows if r["id"] not in seen]
+        if missed:
+            print("Ungrouped (%d) — status not covered by any standup group:" % len(missed))
+            for r in missed:
                 print("   %-46s %s" % (r["id"], r["status"]))
             print("")
         rec = [r for r in rows if str(r.get("reconcile", "none")).lower() != "none"]

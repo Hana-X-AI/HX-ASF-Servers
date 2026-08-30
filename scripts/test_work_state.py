@@ -8,7 +8,9 @@ the previous prose parser wrong in production on 2026-08-30.
 Run: python3 scripts/test_work_state.py
 """
 
+import json
 import os
+import re
 import shutil
 import sys
 import tempfile
@@ -28,7 +30,9 @@ def block(gid, status="in-progress", date="2026-08-30",
             "```\n" % (gid, status, date, auth, reconcile, extra))
 
 
-class WorkStateFixtures(unittest.TestCase):
+class _GoalTree(unittest.TestCase):
+    """Fixture plumbing: a throwaway goals/ tree with the real schema."""
+
     def setUp(self):
         self.tmp = tempfile.mkdtemp()
         self.goals = os.path.join(self.tmp, "governace", "goals")
@@ -49,6 +53,8 @@ class WorkStateFixtures(unittest.TestCase):
         with open(os.path.join(self.goals, gid + ".md"), "w", encoding="utf-8") as fh:
             fh.write(body)
 
+
+class WorkStateFixtures(_GoalTree):
     # --- case 1: completed-with-history -------------------------------------
     def test_completed_recorded_only_in_a_correction_block(self):
         """The fleet-baseline shape. Completion lives in an append-only labeled
@@ -131,7 +137,93 @@ class WorkStateFixtures(unittest.TestCase):
         self.assertEqual([i for i, _ in states], [gid])
 
 
+# --- case 6: the CLI layer ---------------------------------------------------
+# Everything above exercises load_all(). Nothing exercised main(), so two live
+# defects shipped green: every --json command crashed on a date, and `standup`
+# silently dropped `draft` goals. Output formatting is part of the contract —
+# a status report that omits a goal is the defect this engine exists to prevent.
+class WorkStateCLI(_GoalTree):
+    def run_cmd(self, *argv):
+        """Invoke main() and capture stdout, as a caller would."""
+        import io
+        import contextlib
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf):
+            rc = work_state.main(list(argv))
+        return rc, buf.getvalue()
+
+    def seed(self):
+        """One goal per enum status, so no command sees an empty set —
+        `--json` only ever crashed on a NON-empty result."""
+        for i, st in enumerate(["draft", "approved", "in-progress", "blocked",
+                                "done", "complete", "abandoned"]):
+            gid = "2026-08-%02d-%s" % (i + 1, st)
+            self.write(gid, "# Goal\n\n" + block(gid, status=st))
+
+    def test_json_survives_an_unquoted_status_date(self):
+        """`status_date: 2026-08-28` is unquoted in every real goal file, so
+        yaml.safe_load returns datetime.date. json.dumps raised TypeError and
+        every --json command exited non-zero with a traceback."""
+        gid = "2026-08-28-unquoted-date"
+        self.write(gid, "# Goal\n\n" + block(gid, date="2026-08-28"))
+        data, err = work_state.parse(os.path.join(self.goals, gid + ".md"))
+        self.assertIsNone(err)
+        self.assertIsInstance(data["status_date"], str)  # normalized at parse
+        for cmd in ("status", "in-progress", "standup"):
+            rc, out = self.run_cmd(cmd, "--json")
+            self.assertEqual(rc, 0, cmd)
+            json.loads(out)  # must parse, not merely not crash
+
+    def test_every_command_emits_valid_json(self):
+        self.seed()
+        for cmd in ("status", "in-progress", "next", "blocked", "reconcile", "standup"):
+            rc, out = self.run_cmd(cmd, "--json")
+            self.assertEqual(rc, 0, cmd)
+            self.assertTrue(json.loads(out) or True, cmd)
+
+    def test_standup_accounts_for_every_goal(self):
+        """The header promises a total; the groups must list that many. `draft`
+        had no group, so a 10-goal standup listed 8 and reported nothing."""
+        self.seed()
+        _, out = self.run_cmd("standup")
+        total = int(re.search(r"Daily standup — (\d+) goals", out).group(1))
+        listed = len(re.findall(r"^   \S+\s{2,}\S+$", out, re.M))
+        self.assertEqual(total, 7)
+        self.assertEqual(listed, total)
+
+    def test_a_status_with_no_group_is_surfaced_not_dropped(self):
+        """Guards the fix itself: if the schema gains a status and standup gains
+        no group for it, the goal must appear under Ungrouped."""
+        self.seed()
+        orig = work_state._schema
+
+        def patched():
+            sch = orig()
+            sch["fields"]["status"]["enum"] = list(sch["fields"]["status"]["enum"]) + ["parked"]
+            return sch
+        work_state._schema = patched
+        try:
+            gid = "2026-08-30-parked"
+            self.write(gid, "# Goal\n\n" + block(gid, status="parked"))
+            _, out = self.run_cmd("standup")
+            self.assertIn("Ungrouped (1)", out)
+            self.assertIn(gid, out)
+        finally:
+            work_state._schema = orig
+
+    def test_unknown_command_exits_2(self):
+        rc, _ = self.run_cmd("nonsense")
+        self.assertEqual(rc, 2)
+
+    def test_check_reports_and_fails_on_a_bad_goal(self):
+        self.write("2026-08-30-broken", "# Goal\n\nno block here\n")
+        rc, out = self.run_cmd("--check")
+        self.assertEqual(rc, 1)
+        self.assertIn("WS-01", out)
+
+
 if __name__ == "__main__":
+    load = unittest.TestLoader().loadTestsFromTestCase
     r = unittest.TextTestRunner(verbosity=2).run(
-        unittest.TestLoader().loadTestsFromTestCase(WorkStateFixtures))
+        unittest.TestSuite([load(WorkStateFixtures), load(WorkStateCLI)]))
     sys.exit(0 if r.wasSuccessful() else 1)
