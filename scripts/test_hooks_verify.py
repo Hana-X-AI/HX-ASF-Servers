@@ -234,6 +234,35 @@ class HooksVerify(unittest.TestCase):
         self.assertEqual(len(regs), 2)
         self.assertTrue(all(r[2] and r[2].endswith(".sh") for r in regs))
 
+    # --- structural command parsing (CodeRabbit, 2026-08-30) ----------------
+    def test_a_hook_named_but_not_invoked_is_not_counted_as_registered(self):
+        """A substring search cannot tell an invocation from a mention. If a
+        hook path is echoed or passed as data, the guardrail is NOT running and
+        the check must not report it as registered."""
+        d = json.loads(json.dumps(CLAUDE_TEMPLATE))
+        d["hooks"]["PostToolUse"][0]["hooks"][0]["command"] = \
+            'echo "$D/scripts/hooks/validate-changed.sh"'
+        self.write_claude(d)
+        codes = self.codes()
+        self.assertIn("HK-01", codes)   # not an invocation
+        self.assertIn("HK-07", codes)   # therefore declared-but-unregistered
+
+    def test_the_shim_with_no_hook_argument_is_caught(self):
+        d = json.loads(json.dumps(CLAUDE_TEMPLATE))
+        d["hooks"]["PostToolUse"][0]["hooks"][0]["command"] = \
+            '"$D/scripts/hooks/claude-payload-shim.sh"'
+        self.write_claude(d)
+        self.assertIn("HK-01", self.codes())
+
+    def test_a_missing_in_git_registration_file_fails(self):
+        """The kimi scope is advisory when absent; the claude scope is in Git
+        and must not be. Deleting .claude/settings.json unregisters every hook
+        at once and must never verify clean."""
+        os.remove(hooks_verify.CLAUDE_SETTINGS)
+        summary, problems = hooks_verify.plan()
+        self.assertTrue(any("HK-13" in p for p in problems), problems)
+        self.assertIn("MISSING", summary)
+
 
 if __name__ == "__main__":
     r = unittest.TextTestRunner(verbosity=2).run(

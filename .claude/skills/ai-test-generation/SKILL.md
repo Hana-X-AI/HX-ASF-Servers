@@ -1,6 +1,7 @@
 ---
 name: ai-test-generation
 description: "Staged AI-assisted test authoring for the HX factory's QA lane (Bailey): extract requirements from specs/PRDs/diffs/bugs/OpenAPI, analyze risk, map coverage, design oracles, then generate traceable pytest (zod for TS contract tests) code for human review. Use when: 'generate tests', 'tests from PRD', 'tests from a bug report', 'auto-generate test cases'. NOT for: auditing a pre-existing suite, testing AI/LLM features, or setting up/executing test environments (Gordon's lane). Adapted from petrkindlmann/qa-skills v3.0.0 (MIT)."
+maturity: active
 ---
 
 # AI Test Generation — staged test authoring (Bailey)

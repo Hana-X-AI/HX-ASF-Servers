@@ -212,13 +212,29 @@ def check_governance_path():
     for hp in hk_problems:
         c.fail(hp)
 
+    sk_summary = "unavailable"
+    try:
+        sys.path.insert(0, os.path.join(ROOT, "scripts"))
+        import skills_registry
+        # Smokes execute skill commands, so they stay OUT of the read-only
+        # validator and run as their own CI step. SY-6 here is the static half.
+        sk_summary, sk_problems = skills_registry.plan(run_smoke=False)
+    except Exception as e:
+        c.fail("[SY-6] skills_registry unavailable: %s" % e)
+        sk_problems = []
+    finally:
+        if sys.path and sys.path[0] == os.path.join(ROOT, "scripts"):
+            sys.path.pop(0)
+    for sp in sk_problems:
+        c.fail(sp)
+
     if c.ok:
         c.detail.append("SY-2 governace/ canonical, governance/ fork absent; "
                         "SY-3 %d skills canonical at .agents/skills/, %d tool-scope "
                         "mirrors in sync (%s stub-only); SY-4 %d goals carry a valid "
-                        "work-state block (%d open reconcile item%s); SY-5 %s"
+                        "work-state block (%d open reconcile item%s); SY-5 %s; SY-6 %s"
                         % (len(skills), len(mirrors), stub_only, ws_n, ws_rec,
-                           "" if ws_rec == 1 else "s", hk_summary))
+                           "" if ws_rec == 1 else "s", hk_summary, sk_summary))
     else:
         # Per-file findings are capped by MAX_FINDINGS_SHOWN, so name the
         # affected mirror roots here — this line always prints, and it is what
@@ -229,10 +245,29 @@ def check_governance_path():
             if n:
                 by_mirror.append("%s (%d)" % (m, n))
         where = "; drifted: " + ", ".join(by_mirror) if by_mirror else ""
-        c.detail.append("repo-layout invariants failed — SY-2 %s, SY-3 %d problem(s)%s"
-                        % ("OK" if sy2_ok else "FAIL", len(problems), where))
-        c.detail.append("skills repair: python3 scripts/skills_sync.py --write "
-                        "(canonical .agents/skills/ is authoritative; mirrors are rebuilt from it)")
+        c.detail.append("repo-layout invariants failed — SY-2 %s, SY-3 %d problem(s)%s, "
+                        "SY-4 %d problem(s), SY-5 %d problem(s), SY-6 %d problem(s)"
+                        % ("OK" if sy2_ok else "FAIL", len(problems), where,
+                           len(ws_problems), len(hk_problems), len(sk_problems)))
+        if problems:
+            c.detail.append("skills repair: python3 scripts/skills_sync.py --write "
+                            "(canonical .agents/skills/ is authoritative; mirrors are "
+                            "rebuilt from it)")
+        if ws_problems:
+            c.detail.append("work-state repair: python3 scripts/work_state.py --check "
+                            "(one ```yaml work-state block per goal; see "
+                            "governace/goals/work-state.schema.yaml)")
+        # Hook problems have no --write repair: a registration is edited by hand
+        # or the manifest is wrong. Name the tool that explains which.
+        if hk_problems:
+            c.detail.append("hook repair: python3 scripts/hooks_verify.py "
+                            "(compare governace/hooks/manifest.yaml against "
+                            ".claude/settings.json; a digest change means the script "
+                            "moved, not the registration)")
+        if sk_problems:
+            c.detail.append("skill-registry repair: python3 scripts/skills_registry.py "
+                            "--smoke (AGENTS.md is the authoritative inventory; "
+                            "frontmatter carries maturity/required_files/smoke)")
     return c
 
 

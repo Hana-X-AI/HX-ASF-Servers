@@ -2,6 +2,7 @@
 name: copy
 description: Rewrite as ad copy — sell, do not explain. Hooks first, short lines. The owner trigger word is "punchy" — when the user says "punchy", treat it as a direct request to run this skill.
 disable-model-invocation: true
+maturity: active
 ---
 
 # Copy

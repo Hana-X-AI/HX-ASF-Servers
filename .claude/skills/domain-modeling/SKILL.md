@@ -1,6 +1,11 @@
 ---
 name: domain-modeling
 description: "Build and sharpen a project's domain model. Use when discussing codebase terminology, writing or editing a CONTEXT.md, or recording a decision. HX adaptation of mattpocock/skills domain-modeling (MIT): in HX-ASF-Servers decisions are KDDs under governace/decisions/, never docs/adr/."
+maturity: active
+required_files:
+- ADR-FORMAT.md
+- CONTEXT-FORMAT.md
+- agents/openai.yaml
 ---
 
 # Domain Modeling

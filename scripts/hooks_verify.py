@@ -26,11 +26,22 @@ Usage:
 folds skills_sync.plan() — one contract, one place to fix a check.
 
 Read-only. Stdlib + PyYAML. No network.
+
+ON THE PyYAML DEPENDENCY (reviewed 2026-08-30). A stdlib-only manifest format
+was proposed and declined. PyYAML is already required by this module's own
+caller — validate.py imports it at module scope — and by work_state.py,
+skills_registry.py and carol-mint. Every governance artifact in this repository
+is YAML: the catalog records, work-state.schema.yaml, the pilot templates.
+Inventing a bespoke stdlib format for exactly one governance file would make it
+the only artifact a reader cannot open with the same expectations as its
+neighbours, and would cost the manifest its comments — which is where its
+reasoning lives. The dependency is not new here; it is the house standard.
 """
 
 import json
 import os
 import re
+import shlex
 import sys
 
 import yaml
@@ -42,7 +53,43 @@ KIMI_CONFIG = os.path.expanduser("~/.kimi-code/config.toml")
 
 SHIM = "claude-payload-shim.sh"
 # Hook scripts are addressed by basename in both registration formats.
-SCRIPT_RE = re.compile(r"scripts/hooks/([A-Za-z0-9_-]+\.sh)")
+SCRIPT_RE = re.compile(r"scripts/hooks/([A-Za-z0-9_-]+\.sh)$")
+
+
+def parse_command(cmd):
+    """(target_basename, shimmed, error) from a registration command.
+
+    Structural, not a substring search. A hook that merely APPEARS in the
+    command text — echoed, commented, or passed as data — is not a hook that
+    runs, and treating the two alike would let a disabled guardrail verify
+    clean. The hook must be argv[0], or argv[1] with the shim at argv[0].
+    """
+    try:
+        argv = shlex.split(cmd)
+    except ValueError as e:
+        return None, False, "command is not parseable: %s" % e
+    if not argv:
+        return None, False, "empty command"
+
+    def script_of(tok):
+        m = SCRIPT_RE.search(tok)
+        return m.group(1) if m else None
+
+    first = script_of(argv[0])
+    if first == SHIM:
+        second = script_of(argv[1]) if len(argv) > 1 else None
+        if not second:
+            return None, True, "%s is invoked with no hook script argument" % SHIM
+        return second, True, None
+    if first:
+        # A hook script named anywhere BUT in invocation position is data, not
+        # an invocation; say so rather than silently counting it as registered.
+        for tok in argv[1:]:
+            if script_of(tok):
+                return first, False, ("extra hook script %r appears as an argument to %r"
+                                      % (script_of(tok), first))
+        return first, False, None
+    return None, False, "command does not invoke a scripts/hooks/*.sh script"
 
 
 def _sha256(path):
@@ -69,14 +116,9 @@ def _claude_registrations():
     for event, entries in (data.get("hooks") or {}).items():
         for entry in entries or []:
             for hook in entry.get("hooks") or []:
-                cmd = hook.get("command", "")
-                targets = SCRIPT_RE.findall(cmd)
-                shimmed = SHIM in cmd
-                # With the shim the LAST path is the real hook; the shim itself
-                # is the first. Without it there is only one.
-                target = targets[-1] if targets else None
+                target, shimmed, err = parse_command(hook.get("command", ""))
                 out.append((event, entry.get("matcher"), target, shimmed,
-                            hook.get("timeout")))
+                            hook.get("timeout"), err))
     return out
 
 
@@ -114,29 +156,40 @@ def _kimi_registrations():
         out.append(cur)
     reg = []
     for h in out:
-        cmd = h.get("command", "")
-        targets = SCRIPT_RE.findall(cmd)
+        target, shimmed, err = parse_command(h.get("command", ""))
         timeout = h.get("timeout")
         try:
             timeout = int(timeout) if timeout is not None else None
         except ValueError:
             timeout = None
-        reg.append((h.get("event"), h.get("matcher"),
-                    targets[-1] if targets else None, SHIM in cmd, timeout))
+        reg.append((h.get("event"), h.get("matcher"), target, shimmed, timeout, err))
     return reg
+
+
+# claude is in Git and must always be verifiable; kimi is user scope and is not
+# present in CI or on a fresh machine.
+ADVISORY_SCOPES = ("kimi",)
 
 
 def _check_scope(scope, declared, registered, problems):
     """Compare one scope. `registered is None` means the file is absent."""
     if registered is None:
-        return "%s: not present on this machine (advisory scope, not verified)" % scope
+        if scope in ADVISORY_SCOPES:
+            return "%s: not present on this machine (advisory scope, not verified)" % scope
+        # A deterministic, in-Git scope that has vanished is a failure, not a
+        # note. Reporting it as "not verified" would let deleting
+        # .claude/settings.json — unregistering every hook at once — pass clean.
+        problems.append("[HK-13] %s: no registration file at %s; the in-Git scope must "
+                        "always be verifiable" % (scope, os.path.relpath(
+                            CLAUDE_SETTINGS if scope == "claude" else "", ROOT)))
+        return "%s: registration file MISSING" % scope
 
     want = {d["name"]: d for d in declared if scope in (d.get("scopes") or [])}
     seen = {}
-    for event, matcher, target, shimmed, timeout in registered:
+    for event, matcher, target, shimmed, timeout, err in registered:
+        if err:
+            problems.append("[HK-01] %s: %s" % (scope, err))
         if not target:
-            problems.append("[HK-01] %s: a registration names no scripts/hooks/*.sh target"
-                            % scope)
             continue
         name = target[:-3]
         if name == SHIM[:-3]:

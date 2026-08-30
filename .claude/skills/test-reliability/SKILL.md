@@ -1,6 +1,7 @@
 ---
 name: test-reliability
 description: "Make the HX factory's test suites trustworthy from the execution/qualification lane (Gordon): flake classification by root cause, resilient locator patterns, environment-aware and data healing, confidence-scored repair with evidence, and quarantine management. Use when: 'flaky test', 'test stability', 'self-healing locator', 'broken locator', 'unreliable test', 'quarantine flaky test'. NOT for: authoring the primary test scripts (Bailey's lane), bulk-regenerating selectors after a planned UI refactor, or accepting work (James's lane). Adapted from petrkindlmann/qa-skills v3.0.0 (MIT)."
+maturity: active
 ---
 
 # Test Reliability — flake classification and healing (Gordon)

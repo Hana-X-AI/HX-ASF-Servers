@@ -2,6 +2,7 @@
 name: be-smart
 description: Clear, concise, actionable communication contract. Positive and negative patterns (banned phrases, no flattery, state each idea once), reference-point codes (F/D/O/R/Q/A), hard operational boundaries, and short aliases (scr, eli, foc, ref). The owner trigger words are "be smart" — when the user says "be smart", treat it as a direct request to run this skill.
 disable-model-invocation: true
+maturity: active
 ---
 
 # Be Smart: Clear, Concise, Actionable Communication

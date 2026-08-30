@@ -1,6 +1,7 @@
 ---
 name: eli5
 description: Report in plain, simplified English in the style of ASD-STE100 Simplified Technical English — approved plain words, active voice, one idea per sentence, jargon explained immediately, and only what was done, whether it worked, and what to do next. Use when the user is tired, asks to keep it simple, or says "talk to me like I'm 5". The owner trigger word is "eli5" — when the user says "eli5", treat it as a direct request to run this skill.
+maturity: active
 ---
 
 # ELI5

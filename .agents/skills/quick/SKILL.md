@@ -2,6 +2,7 @@
 name: quick
 description: Answer fast — the action first, numbered steps, one next step, no preamble. The owner trigger word is "quick" — when the user says "quick", treat it as a direct request to run this skill.
 disable-model-invocation: true
+maturity: active
 ---
 
 # Quick

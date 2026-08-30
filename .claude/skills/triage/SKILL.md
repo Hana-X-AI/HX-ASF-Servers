@@ -2,6 +2,11 @@
 name: triage
 description: Move issues and external PRs through a state machine of triage roles, categorise, verify, grill if needed, and write agent-ready briefs.
 disable-model-invocation: true
+maturity: active
+required_files:
+- AGENT-BRIEF.md
+- OUT-OF-SCOPE.md
+- agents/openai.yaml
 ---
 
 # Triage

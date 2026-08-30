@@ -1,6 +1,7 @@
 ---
 name: test-planning
 description: "Author sprint/release test plans for the HX factory's QA lane (Bailey): feature decomposition into testable scenarios, requirements-to-test coverage mapping, effort estimation by test type, risk×effort prioritization, resource allocation, and buffered scheduling. Use when: 'sprint test plan', 'release test plan', 'what to test this sprint', 'test estimation', 'coverage mapping'. NOT for: multi-quarter strategy (test-strategy), ranking areas by risk (risk-based-testing), or the go/no-go decision itself (release-readiness / James's acceptance). Adapted from petrkindlmann/qa-skills v3.0.0 (MIT)."
+maturity: active
 ---
 
 # Test Planning — sprint and release test plans (Bailey)

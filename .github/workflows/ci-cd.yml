@@ -79,6 +79,11 @@ jobs:
       - name: Unit tests — hook manifest verifier (O5)
         run: python3 scripts/test_hooks_verify.py
 
+      - name: Skill registry — smoke every active skill (O7)
+        # validate.py runs the STATIC half as SY-6. Smokes execute skill
+        # commands, so they run here rather than inside the read-only validator.
+        run: python3 scripts/skills_registry.py --smoke
+
       - name: Catalog validation
         run: python3 scripts/validate.py --ci
 

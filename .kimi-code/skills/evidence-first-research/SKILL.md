@@ -1,6 +1,7 @@
 ---
 name: evidence-first-research
 description: Conduct rigorous, current, source-grounded research and produce defensible findings, comparisons, recommendations, or decision briefs. Use when a request calls for research, investigation, recon, deep analysis, fact-checking, technology or vendor evaluation, literature review, current-state assessment, or any answer where source quality, traceability, uncertainty, contradictions, and actionable conclusions materially matter. The owner trigger word is "recon" — when the user says "recon", treat it as a direct request to run this skill.
+maturity: active
 ---
 
 # Evidence-First Research

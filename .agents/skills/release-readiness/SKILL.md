@@ -1,6 +1,7 @@
 ---
 name: release-readiness
 description: "Validate release readiness with evidence-based go/no-go qualification for the HX factory's QA lane (Gordon): go/no-go checklist with evidence, sub-5-minute smoke suite, staged rollout validation, rollback criteria defined before deploy, and post-deployment verification. Use when: 'release ready', 'go/no-go', 'smoke test', 'release checklist', 'rollback plan', 'staged rollout', 'canary deploy'. NOT for: the final acceptance call (James's governor lane), safe-release techniques applied during the rollout itself, or continuous synthetic monitoring. Adapted from petrkindlmann/qa-skills v3.0.0 (MIT)."
+maturity: active
 ---
 
 # Release Readiness — evidence-based go/no-go qualification (Gordon)

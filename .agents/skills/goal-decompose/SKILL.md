@@ -1,6 +1,7 @@
 ---
 name: goal-decompose
 description: "Spec-driven goal decomposition for the HX factory (adapted from automazeio/ccpm, MIT). Turns an authorized goal contract into a bounded execution graph of work orders with dependency + parallelization metadata. Use after the scope-lock is confirmed: 'decompose goal X', 'break the goal into work orders', 'what work orders does this goal need'. NOT for: scope-lock (governor's grill-me flow), execution, or acceptance."
+maturity: active
 ---
 
 # Goal Decompose — spec-driven goal decomposition (James)
