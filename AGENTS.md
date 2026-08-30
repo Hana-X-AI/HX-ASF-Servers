@@ -2,7 +2,7 @@
 
 ## Skills and trigger words
 
-Twelve owner-installed skills govern how work is done in this repository. They live in
+Fourteen owner-installed skills govern how work is done in this repository. They live in
 `.kimi-code/skills/` (project scope) and also at user scope in `~/.kimi-code/skills/`.
 
 - **be-great** — owner trigger: **"be great"**. Exhaustive, evidence-first investigation:
@@ -38,6 +38,14 @@ Twelve owner-installed skills govern how work is done in this repository. They l
 - **create-agent** — owner trigger: **"create agent" / "new agent" / "register
   agent"**. Guides the creation of a new HX factory agent: reads
   `governace/templates/agent-checklist.md` and walks each step, validating after each.
+- **goal-decompose** — owner trigger: **"decompose goal" / "break the goal into
+  work orders"**. Spec-driven goal decomposition for James: turns a confirmed
+  scope-lock/goal contract into atomic work orders with dependency + parallelization
+  metadata (adapted from automazeio/ccpm, MIT). Scripts report goal-tree status.
+- **work-status** — owner trigger: **"what's our status" / "standup" / "what's
+  blocked"**. Deterministic goal/work-order status, standup, blocked, in-progress,
+  next, and validate reporting for Mia (adapted from automazeio/ccpm, MIT).
+  Read-only reporting to the governor; never mutates goal files.
 
 When the owner uses a trigger word, invoke the matching skill first and follow its
 workflow in full — do not partially apply it. Project agents and sub-agents working in
