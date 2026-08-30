@@ -22,7 +22,7 @@ profile is the original record of the role (owner directive 2026-08-29).
 | Environment | hxs-4 (192.168.50.203) — co-located with Chat-X (Qwen 3.5 9B), Qdrant v1.19.0, and LightRAG server on port 9621 |
 | Default mode | Direct bounded administration; on-demand + scheduled; concurrency 1; max session PT1H |
 | Certification authority | None — work verified by others |
-| Model lane | Qwen-X (`ollama-local/hx-qwen3.8-27b-64k`, hxs-1, via OmniRoute hxs-8) — owner-assigned 2026-08-29; identity = exact served-model id + session-start probe, fail closed; stop-and-escalate on backend failure, no substitution |
+| Model lane | Z.ai GLM 5.2 free (`z-ai/glm-5.2:free`, provider Decart, via OmniRoute hxs-8) — Platform Systems job-family default, owner decision 2026-08-30 (KDD-0013 Amendment 11), superseding Qwen-X (2026-08-29). Zero-cost cloud lane: on the OD-14 allowlist, no metered spend. identity = exact served-model id + session-start probe, fail closed; stop-and-escalate on backend failure, no substitution, cloud substitution outside the OD-14 allowlist prohibited |
 | Verifier | Deterministic toolchain first (curl API probes, pytest, measurable pass/fail); a different-host verifier when required |
 | Activation status | Registered — activation-gated (LightRAG instance implemented + bge-m3 on hxs-4 + credential entries + owner word) |
 
@@ -49,8 +49,9 @@ hxs-4 — the LightRAG server (v1.5.7), Web UI, and lightragmcp MCP server
 (v1.0.0) — as standalone, native systemd services. LightRAG provides
 graph-based retrieval-augmented generation: it combines knowledge graphs
 with vector search for dual-level retrieval, using Qdrant as its vector
-storage backend and Meta-X (Muse Glimmer 30B) via OmniRoute as its LLM
-binding.
+storage backend and **Chat-X (`hx-qwen3.5-9b-64k`) via local Ollama on hxs-4**
+as its LLM binding (owner decision 2026-08-29; the earlier Meta-X/OmniRoute
+binding is superseded — see §Runtime config).
 
 ## 3. Absolute prohibitions
 
@@ -151,10 +152,9 @@ When executing work on hxs-4 (192.168.50.203):
 - **Port:** 9621 (HTTP REST API + Web UI)
 - **LLM binding:** Chat-X via local Ollama (`LLM_BINDING=ollama`,
   `LLM_BINDING_HOST=http://127.0.0.1:11434`,
-  `LLM_MODEL=hx-qwen3.5-9b-64k`) [OPEN CORRECTION 2026-08-29: originally
-  Meta-X via OmniRoute — switched after OmniRoute rate-limit timeout;
-  Chat-X processes documents in ~2 min. Original wording preserved as
-  history.]
+  `LLM_MODEL=hx-qwen3.5-9b-64k`)
+  Provenance: originally Meta-X via OmniRoute; switched 2026-08-29 after an
+  OmniRoute rate-limit timeout — Chat-X processes documents in ~2 min.
 - **Embedding binding:** bge-m3 via Ollama (`EMBEDDING_BINDING=ollama`,
   `EMBEDDING_BINDING_HOST=http://127.0.0.1:11434`,
   `EMBEDDING_MODEL=bge-m3`, `EMBEDDING_DIM=1024`)
@@ -182,11 +182,8 @@ When executing work on hxs-4 (192.168.50.203):
 
 Confirm the requested LightRAG result; record the commands used (never
 credential values); record service status, API health, query results,
-test output. Run `python3 scripts/validate.py` — must be 4/4 PASS after
+test output. Run `python3 scripts/validate.py` — must be **5/5 PASS** after
 any repo write. Render any manifest-listed .md changed.
-[AMENDMENT 2026-08-30, labeled: validator now runs 5 checks — the
-  governance-path check (SY-2) was added; this requirement reads 5/5 PASS
-  effective 2026-08-30. Original 4/4 wording preserved above.]
 
 **Validation suite (V0–V6 pattern):**
 - V0: pre-state (no LightRAG running, no 9621 listener)

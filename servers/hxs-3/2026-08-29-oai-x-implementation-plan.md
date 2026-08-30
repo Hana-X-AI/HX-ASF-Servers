@@ -269,7 +269,7 @@
 
 ### Step 6 — Final validation (V7)
 
-1. `python3 scripts/validate.py` → 4/4 PASS (goal SC-08).
+1. `python3 scripts/validate.py` → **5/5 PASS** (goal SC-08). (5 checks since 2026-08-30: the governance-path check SY-2/SY-3 was added; this plan originally read 4/4).
 2. `render.py --check` → all manifests in sync.
 3. All success conditions SC-01..SC-08 pass with evidence; governor accepts;
    handoff receipt written.
@@ -285,7 +285,7 @@
 | SC-05 | Tool-calling works | Valid JSON | V3 |
 | SC-06 | Meta-X decommissioned | Not listed | V6 |
 | SC-07 | Records updated | All refs updated | V5 |
-| SC-08 | Repo validation | 4/4 PASS | V7 |
+| SC-08 | Repo validation | 5/5 PASS | V7 |
 
 ## Execution controls
 

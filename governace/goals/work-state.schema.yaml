@@ -1,0 +1,67 @@
+# work-state.schema.yaml — machine-readable goal state (O1, 2026-08-30)
+#
+# WHY THIS EXISTS
+# Goal status was reconstructed by grepping prose. Two failure modes were proven
+# on 2026-08-30 before this schema was written:
+#
+#   1. UNREADABLE. `governace/goals/2026-08-27-fleet-baseline-deployment.md`
+#      records its completion inside an append-only labeled correction block
+#      (`**Status:** COMPLETE — 2026-08-28`). The prose parser matched only the
+#      list form `- Status:`, so the goal parsed as <none> and was reported as
+#      unknown — a COMPLETE goal invisible to every status report.
+#   2. STALE. `2026-08-26-hxs3-muse-glimmer-tooling.md` carries
+#      `- Status: in-progress`, while its pilot state log records
+#      "goal COMPLETE — PASS ... COMPLETE and CLOSED".
+#
+# The append-only convention that protects governance history is precisely what
+# makes prose unparseable: the current answer moves into a correction block and
+# the original line stays put. This block resolves that WITHOUT weakening
+# append-only. Prose above the block remains the historical record and is never
+# rewritten; this block is the single machine-readable current state.
+#
+# CONTRACT
+# - Exactly one ```yaml work-state fenced block per goal file.
+# - It is the ONLY source any tool may use for goal status.
+# - Updating it is an append-only-compatible edit: the prose history is untouched.
+# - `scripts/work_state.py --check` enforces this schema; validate.py runs it.
+
+schema:
+  version: 1
+  fields:
+    id:
+      required: true
+      description: >-
+        Goal id. MUST equal the goal filename without the .md extension, so the
+        block cannot silently describe a different goal after a rename.
+    status:
+      required: true
+      enum: [draft, approved, in-progress, blocked, done, complete, abandoned]
+      description: >-
+        Current state. `done` and `complete` are both terminal-success values
+        retained from the existing goal vocabulary; neither is renamed here,
+        because renaming a ratified vocabulary is a governance change and this
+        schema is a mechanical one.
+    status_date:
+      required: true
+      description: ISO date (YYYY-MM-DD) the current status took effect.
+    authority:
+      required: true
+      description: >-
+        What establishes this status — the owner decision, correction block,
+        acceptance row, or evidence document. Free text, but it must name a
+        real artifact or decision, never "see above".
+    reconcile:
+      required: true
+      description: >-
+        `none` when the goal file and downstream evidence agree. Otherwise a
+        one-line statement of the disagreement, naming the conflicting source.
+        A non-`none` value is a governor decision item, NOT a defect in this
+        block: recording an unresolved conflict is the point. Tools surface
+        these; they never auto-resolve them.
+    evidence:
+      required: false
+      description: Optional list of repo-relative paths supporting the status.
+
+  terminal_statuses: [done, complete, abandoned]
+  active_statuses: [approved, in-progress, blocked]
+  pre_dispatch_statuses: [draft]

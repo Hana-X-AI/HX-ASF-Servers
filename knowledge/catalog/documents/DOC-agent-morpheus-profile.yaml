@@ -1,49 +1,60 @@
 document:
-  id: "DOC-agent-morpheus-profile"
-  title: "Agent profile — morpheus (full operating contract)"
-  type: "profile"
-  declared_purpose: "Full operating contract for morpheus: DeepSeek Harness configuration, implementation, and operations agent. Owns the dsh lifecycle on hxs-15 — configure, implement, operate, and evolve the pinned build. Builds and repairs; never certifies his own work. KDD-0009, lane Qwen 3.8 2.4T A95B via OmniRoute."
+  id: DOC-agent-morpheus-profile
+  title: Agent profile — morpheus (full operating contract)
+  type: profile
+  declared_purpose: 'Full operating contract for morpheus: DeepSeek Harness configuration, implementation, and operations agent. Owns the dsh lifecycle on hxs-15 — configure, implement, operate, and evolve the pinned build. Builds and repairs; never certifies his own work. KDD-0009, lane Qwen 3.8 2.4T A95B via OmniRoute.'
   source:
-    author: "Agent Zero / KDD-0009"
-    provided_by: "Agent Zero"
-    origin: "/home/hxsa/opt/HX-ASF-Servers/agents/morpheus/profile.md"
-    section: "§whole-document"
-    ingestion_date: "2026-08-29T12:30:00Z"
-  owner: "morpheus (lane); Agent Zero (ratification)"
+    author: Agent Zero / KDD-0009
+    provided_by: Agent Zero
+    origin: /home/hxsa/opt/HX-ASF-Servers/agents/morpheus/profile.md
+    section: §whole-document
+    ingestion_date: '2026-08-29T12:30:00Z'
+  owner: morpheus (lane); Agent Zero (ratification)
   applies_to:
-    hosts: [hxs-15]
+    hosts:
+    - hxs-15
     fqdns: []
     services: []
-    agents: [morpheus]
-    repositories: [HX-ASF-Servers]
-    environments: [fleet]
-  version: ""
-  status: "adopted"
-  authority_level: "ratified-governance"
+    agents:
+    - morpheus
+    repositories:
+    - HX-ASF-Servers
+    environments:
+    - fleet
+  version: ''
+  status: adopted
+  authority_level: ratified-governance
   supersedes: []
   superseded_by: []
   security:
-    classification: "internal"
-    access_restrictions: "none beyond repository access"
+    classification: internal
+    access_restrictions: none beyond repository access
     contains_secret_values: false
   relations:
-    - predicate: "references"
-      target: "DOC-agent-morpheus-charter"
-      note: "one-page lane charter"
+  - predicate: references
+    target: DOC-agent-morpheus-charter
+    note: one-page lane charter
   validation:
-    validated_at: "2026-08-29T12:30:00Z"
-    freshness: "current"
-    review_due: "on owner amendment"
-  sha256: "6076204bc5ee11cd2f076418e2edda1dc28232a8bb526517e8b6a5020e0b60fe"
+    validated_at: '2026-08-30T16:09:40Z'
+    freshness: current
+    review_due: on owner amendment
+  sha256: d4bc8374c9411c98e5a8cfbca8d6e68bf4737b72c169d0998a4262a45ff6405a
   hash_history:
-    - sha256: "9cc39f7bddcd51fa6868e7724d7af166f816ac18002994127d7f863c9ab3737f"
-      timestamp: "2026-08-29T12:30:00Z"
-      reason: "initial cataloging"
-    - sha256: "224b5c421a9405b10db8b7c1fa7308e7bdb9f3406dcdebb31045301fedc8fe76"
-      timestamp: "2026-08-30T09:45:00Z"
-      reason: "2026-08-30 review batch: credential-parsing open correction (cut -d= -f2-)"
-
-    - sha256: "6076204bc5ee11cd2f076418e2edda1dc28232a8bb526517e8b6a5020e0b60fe"
-      timestamp: "2026-08-30T11:21:44Z"
-      reason: "2026-08-30 review batch: sha256 refresh"
-  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/morpheus/profile.md"
+  - sha256: 9cc39f7bddcd51fa6868e7724d7af166f816ac18002994127d7f863c9ab3737f
+    timestamp: '2026-08-29T12:30:00Z'
+    reason: initial cataloging
+  - sha256: 224b5c421a9405b10db8b7c1fa7308e7bdb9f3406dcdebb31045301fedc8fe76
+    timestamp: '2026-08-30T09:45:00Z'
+    reason: '2026-08-30 review batch: credential-parsing open correction (cut -d= -f2-)'
+  - sha256: 6076204bc5ee11cd2f076418e2edda1dc28232a8bb526517e8b6a5020e0b60fe
+    timestamp: '2026-08-30T11:21:44Z'
+    reason: '2026-08-30 review batch: sha256 refresh'
+  - sha256: 727f0bbc7883
+    timestamp: unrecorded
+    reason: predecessor state restored by carol-mint (re-mint events before 2026-08-30T16:10:52Z did not record history)
+  - sha256: d4bc8374c9411c98e5a8cfbca8d6e68bf4737b72c169d0998a4262a45ff6405a
+    timestamp: '2026-08-30T16:10:52Z'
+    reason: 're-mint 727f0bbc7883… -> d4bc8374c941… — CodeRabbit batch: active lane refs synchronized; local/cloud rule reconciled; CI retry+pin'
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/morpheus/profile.md
+notes:
+  minted_by: 'carol-mint 1.0.0 @ 2026-08-30T16:09:40Z — re-mint 727f0bbc7883… -> d4bc8374c941… — CodeRabbit batch: active lane refs synchronized; local/cloud rule reconciled; CI retry+pin'

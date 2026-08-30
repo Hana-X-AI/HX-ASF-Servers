@@ -131,6 +131,49 @@ def living_consolidate_note(doc, live_hash):
     )
 
 
+def append_hash_history(data, before, after, reason):
+    """Append a dated hash event, preserving prior history. Idempotent.
+
+    Records carry hash_history in two shapes in this catalog: a list of
+    {sha256, timestamp, reason} under document.hash_history, and a prose
+    arrow-chain string under notes.hash_history. Both are supported; neither is
+    ever rewritten. When the recorded predecessor is absent from a list-form
+    chain, it is restored first so the transition chain stays unbroken (the
+    defect CodeRabbit flagged 2026-08-30: re-mint updated sha256 and minted_by
+    but never recorded the event, so `minted_by` referenced a predecessor hash
+    that appeared nowhere in the history).
+    """
+    doc = data["document"]
+    now = utcnow()
+    hh = doc.get("hash_history")
+
+    if isinstance(hh, str) or isinstance((data.get("notes") or {}).get("hash_history"), str):
+        notes = data.setdefault("notes", {})
+        chain = notes.get("hash_history") if isinstance(notes.get("hash_history"), str) else hh
+        if after[:8] in (chain or ""):
+            return
+        notes["hash_history"] = (chain or "").rstrip() + (
+            " \u2192 %s\u2026 (%s, %s)" % (after[:8], now, reason))
+        if isinstance(hh, str):
+            doc.pop("hash_history", None)
+        return
+
+    if not isinstance(hh, list):
+        hh = []
+        doc["hash_history"] = hh
+
+    def has(h):
+        return any(isinstance(e, dict) and str(e.get("sha256", "")) == h for e in hh)
+
+    if before and before != after and not has(before):
+        hh.append({"sha256": before,
+                   "timestamp": "unrecorded",
+                   "reason": "predecessor state restored by carol-mint "
+                             "(re-mint events before %s did not record history)" % now})
+    if not has(after):
+        hh.append({"sha256": after, "timestamp": now, "reason": reason})
+
+
 def cmd_re_mint(doc_id, note, set_freshness=None):
     with MintLock():
         data = load_record(doc_id)
@@ -152,6 +195,8 @@ def cmd_re_mint(doc_id, note, set_freshness=None):
             doc["validation"]["freshness"] = set_freshness
         if doc["validation"].get("freshness") == "living":
             living_consolidate_note(data, live)
+        if before != live:
+            append_hash_history(data, before, live, note or "re-mint from source")
         stamp(data.setdefault("notes", {}), "re-mint %s%s" % (
             ("%s… -> %s…" % (before[:12], live[:12])) if before != live else "freshness-only",
             (" — " + note) if note else ""))
@@ -397,7 +442,21 @@ def main(argv):
     if cmd == "consolidate":
         return cmd_consolidate()
     if cmd == "gate":
-        id_list = opt["ids"].split(",") if "ids" in opt else pos
+        # Accept both --ids A,B and --ids A B: the space-separated form landed
+        # in pos and was silently dropped, so the gate reported PASS having
+        # checked only the first record.
+        if "ids" in opt:
+            raw = opt["ids"]
+            # A bare `--ids` parses to True, and `--ids ""` to the empty string.
+            # Neither may fall through to cmd_gate, where an empty list means
+            # "gate every record" — a narrowing flag must never silently widen.
+            if not isinstance(raw, str):
+                fail("gate: --ids requires a value (e.g. --ids DOC-a,DOC-b)")
+            id_list = [x for x in (s.strip() for s in raw.split(",") + pos) if x]
+            if not id_list:
+                fail("gate: --ids was given no non-empty record id")
+        else:
+            id_list = [x for x in (s.strip() for s in pos) if x]
         return cmd_gate(id_list)
     print(USAGE)
     return 2

@@ -18,6 +18,13 @@ reviews:
   path_filters:
     - "!**/*.html"
     - "!**/__pycache__/**"
+    # Generated mirrors of .agents/skills/ (KDD-0020). Byte-identical copies —
+    # reviewing them triples the payload and can only ever restate a finding
+    # already raised on the canonical file.
+    - "!.kimi-code/skills/**"
+    - "!.claude/skills/**"
+    # Vendored third-party project (MIT), not HX-authored code.
+    - "!**/skills/archify/**"
 
   path_instructions:
     # --- Append-only record classes (A3 artifact-class policy) ---
@@ -47,8 +54,12 @@ reviews:
     # amendments on live operational source.
     - path: "AGENTS.md"
       instructions: "Live governance authority document. Correct directly; Git preserves history. Do not demand append-only amendments."
+    - path: ".agents/skills/**"
+      instructions: "CANONICAL skill source (KDD-0020). Live operational source: correct obsolete or unsafe instructions directly; do not retain incorrect instructions inline for history — Git preserves history. Edits belong here, never in a mirror."
     - path: ".kimi-code/skills/**"
-      instructions: "Live operational skill source. Correct obsolete or unsafe instructions directly; do not retain incorrect instructions inline for history — Git preserves history."
+      instructions: "GENERATED mirror of .agents/skills/ (KDD-0020) — do not review or request edits here; fix the canonical file under .agents/skills/ and re-run scripts/skills_sync.py --write. validate.py SY-3 enforces the match."
+    - path: ".claude/skills/**"
+      instructions: "GENERATED mirror of .agents/skills/ (KDD-0020) — do not review or request edits here; fix the canonical file under .agents/skills/ and re-run scripts/skills_sync.py --write. validate.py SY-3 enforces the match."
     - path: "governace/process/**"
       instructions: "Live operational process. Diagrams and instructions must state current truth directly; keep historical wording only in a concise revision note."
     - path: "governace/templates/**"

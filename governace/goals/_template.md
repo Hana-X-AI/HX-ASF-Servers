@@ -81,3 +81,16 @@ remain incomplete. This exception clause is the governing authority for the
 `[LABELED COMPLETION EXCEPTION]` blocks used by goals such as
 `2026-08-24-hx1-ollama-qwen38-27b.md` (SC-05/AC-008/AC-016) and
 `2026-08-26-hxs3-muse-glimmer-tooling.md` (SC-06).
+
+<!-- REQUIRED. Machine-readable current state (work-state.schema.yaml).
+     Prose above is history and is never rewritten; this block is the single
+     source every status tool reads. validate.py SY-4 enforces it. -->
+
+```yaml work-state
+id: <goal-filename-without-.md>
+status: draft            # draft|approved|in-progress|blocked|done|complete|abandoned
+status_date: <YYYY-MM-DD>
+authority: >-
+  <the owner decision, correction, or evidence establishing this status>
+reconcile: none          # or a one-line statement of a conflict with downstream evidence
+```

@@ -46,7 +46,8 @@ charter/profile/roster/taxonomy/system-mapping/KDD/catalog items.
 skills are lifted from `/opt/tkv-local/qa-skills-main` v3.0.0 (MIT):
 `ai-test-generation`, `test-planning`, `test-strategy`, `qa-project-context`
 (plus `test-reliability`, `test-environments`, `release-readiness`,
-`ci-cd-integration`). The skill files are created under `.kimi-code/skills/`
+`ci-cd-integration`). The skill files are canonical under `.agents/skills/`
+(KDD-0020, 2026-08-30; previously `.kimi-code/skills/`, now a generated mirror)
 and AGENTS.md's skill count reflects them; they are current authority for her
 test-authoring work, subject to the activation gate (KDD-0019).
 
@@ -91,7 +92,7 @@ All repo paths below are relative to this directory.
 - `/opt/tkv-local/pytest-main/` — pytest (default test framework, Python side)
 - `/opt/tkv-local/zod-main/` — zod (TypeScript-side schema/contract testing)
 - `/opt/tkv-local/qa-skills-main/` — QA skills v3.0.0 (MIT) source; the subset
-  lifted to `.kimi-code/skills/` (`ai-test-generation`, `test-planning`,
+  lifted to `.agents/skills/` (`ai-test-generation`, `test-planning`,
   `test-strategy`, `qa-project-context`, `test-reliability`,
   `test-environments`, `release-readiness`, `ci-cd-integration`)
 

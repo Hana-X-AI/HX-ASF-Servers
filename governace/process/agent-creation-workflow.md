@@ -27,12 +27,9 @@ flowchart TD
     V --> W[Done]
 ```
 
-[AMENDMENT 2026-08-30, labeled, append-only — VALIDATION GATE UPDATED: the active
-gate in node R now reads "Run validate.py — 5/5 PASS (SY-2)" — the validator runs
-5 checks including the governance-path check SY-2, effective 2026-08-30. The prior
-wording is preserved verbatim here as history: "Run validate.py — 4/4 PASS". The
-4/4 wording lives only in this labeled append-only amendment; 5/5 PASS (with SY-2
-included) is the current rule. This correction remains open.]
+Revision note (2026-08-30): the validate gate in node R reads **5/5 PASS** — the
+governance-path check (SY-2, plus SY-3 skill-mirror drift per KDD-0020) was added
+to the suite. It previously read 4/4; Git preserves the prior wording.
 
 ## Deliverables created
 

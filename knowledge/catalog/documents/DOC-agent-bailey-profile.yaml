@@ -37,10 +37,10 @@ document:
       target: "DOC-agent-gordon-profile"
       note: "QA job family teammate (executes Bailey's authored tests)"
   validation:
-    validated_at: "2026-08-30T09:30:00Z"
+    validated_at: "2026-08-30T15:05:00Z"
     freshness: "current"
     review_due: "on owner amendment"
-  sha256: "835b44ac898ac269f6ffe3783716b00c356f08f8a90bf860ea91b22db93ef32d"
+  sha256: "0f0fcb6e753c67e62604ea2f5861cf7844b25382a1471cc96750c4e35699204e"
   hash_history:
     - sha256: "92ab4f945caa72b797d4b0c45dfd593df81a5eb71266ba790fee31057bef626a"
       timestamp: "2026-08-30T08:11:53Z"
@@ -51,6 +51,9 @@ document:
     - sha256: "e39ac9ffdacdb1ecd51fd479f21ca5c303c7e4690372fb2ecb349a792f650a4f"
       timestamp: "2026-08-30T09:45:00Z"
       reason: "2026-08-30 review batch: bailey create-agent removed from role-specific skills (global-inventory inheritance)"
+    - sha256: "0f0fcb6e753c67e62604ea2f5861cf7844b25382a1471cc96750c4e35699204e"
+      timestamp: "2026-08-30T15:05:00Z"
+      reason: "KDD-0020: QA skill path moved to .agents/skills/"
 
     - sha256: "835b44ac898ac269f6ffe3783716b00c356f08f8a90bf860ea91b22db93ef32d"
       timestamp: "2026-08-30T12:15:05Z"

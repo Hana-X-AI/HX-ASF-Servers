@@ -89,3 +89,17 @@ Per p11 §stop: governance conflict with candidates; Trinity lane overlap unreso
 2. Roadmap capability/pattern: the adoption-gate pattern (candidate → charter/profile/KDD → owner ratification → catalog → roster) becomes the reusable path for future specialists; the backend-as-execution + independent-verifier contract is a Second Brain capability-use pattern.
 3. Disposition: **implemented in this contract** — the ledger, receipts, and catalog waves are built in; nothing extra commissioned.
 4. Evidence/reasoning: recorded per wave in the pilot state log and Carol receipts.
+
+<!-- Machine-readable current state (O1, work-state.schema.yaml). The prose
+     above is the historical record and is never rewritten; this block is the
+     single source every status tool reads. -->
+
+```yaml work-state
+id: 2026-08-27-omniroute-trinity-layer0
+status: in-progress
+status_date: 2026-08-28
+authority: >-
+  Goal status line: 'in-progress — Layer 0 (M0 authorized)'
+reconcile: >-
+    PILOT-OMNIROUTE-LAYER0-001 state-log row 75 (2026-08-28T08:22Z) records 'PROVIDER FLIP EXECUTED — kimi-code to OmniRoute LIVE, proven routed'. Whether that closes Layer 0 is a governor determination, not a mechanical one.
+```

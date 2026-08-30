@@ -259,3 +259,17 @@ Completion rule: this goal is done only when every success condition passes
 with its required evidence and the verifier accepts the correct artifact —
 not when the work feels done. The full contract model lives in
 `agents/kimi-k3/goal-setting-guidance.md` (KDD-0002).
+
+<!-- Machine-readable current state (O1, work-state.schema.yaml). The prose
+     above is the historical record and is never rewritten; this block is the
+     single source every status tool reads. -->
+
+```yaml work-state
+id: 2026-08-29-lightrag-hxs4
+status: draft
+status_date: 2026-08-29
+authority: >-
+  Goal status line: 'draft'
+reconcile: >-
+    servers/hxs-4/2026-08-29-lightrag-install-evidence.md records an executed install (LightRAG v1.5.7 + Qdrant v1.19.0, V0-V6 PASS). A goal in 'draft' with completed install evidence is inconsistent; governor to set the real status.
+```

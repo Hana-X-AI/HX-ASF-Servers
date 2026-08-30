@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<!-- Generated from governace/decisions/KDD-0022-coderabbit-review-scope.md (sha256 359dfecaa9dadca910ab67c8f903f86572258b4bcfc78be2e9a23e0084f8c10b) by scripts/wiki/render.py on 2026-08-30T17:27Z.
+     Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KDD-0022: CodeRabbit reviews the pushed range, not the whole branch</title>
+<style>
+:root{color-scheme:light dark}
+body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.55;
+max-width:62rem;margin:0 auto;padding:1.5rem 2rem;color:#1a1a1a;background:#fff}
+h1,h2,h3,h4,h5,h6{line-height:1.25;margin-top:1.6em}
+h1{border-bottom:2px solid #444;padding-bottom:.3em}
+h2{border-bottom:1px solid #ccc;padding-bottom:.2em}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+code{background:#f0f0f0;padding:.1em .3em;border-radius:3px}
+pre{background:#f6f8fa;border:1px solid #ddd;border-radius:6px;padding:.8em;overflow-x:auto}
+pre code{background:none;padding:0}
+table{border-collapse:collapse;margin:1em 0;width:100%}
+th,td{border:1px solid #ccc;padding:.35em .6em;text-align:left;vertical-align:top}
+th{background:#f0f0f0}
+blockquote{border-left:4px solid #bbb;margin:1em 0;padding:.2em 1em;color:#444;background:#fafafa}
+a{color:#0645ad}
+.doc-meta{color:#666;font-size:.85em;border-bottom:1px dashed #bbb;padding-bottom:.6em;margin-bottom:1.2em}
+footer{margin-top:2.5em;border-top:1px solid #ccc;color:#666;font-size:.8em;padding-top:.8em}
+pre.mermaid{background:#fff;border:1px dashed #999}
+@media (prefers-color-scheme:dark){
+body{color:#ddd;background:#111} h1{border-color:#888} h2{border-color:#555}
+code{background:#2a2a2a} pre{background:#1b1b1b;border-color:#444}
+th{background:#222} th,td{border-color:#555} blockquote{color:#bbb;background:#191919;border-color:#666}
+a{color:#6fa8ff} .doc-meta,footer{color:#999}}
+</style>
+</head>
+<body>
+<main class="doc">
+<h1 id="kdd-0022-coderabbit-reviews-the-pushed-range-not-the-whole-branch">KDD-0022: CodeRabbit reviews the pushed range, not the whole branch</h1>
+<ul><li>Date: 2026-08-30</li><li>Status: ratified</li><li>Decider: Agent-Zero</li><li>Related: <code>.github/workflows/ci-cd.yml</code>, <code>docs/cicd-pipeline.md</code>, owner directive 2026-08-28 (zero-tolerance review gate), Codex full-repository audit <code>codex_20260830_1510</code> — <strong>this decision knowingly reverses one of its "do not reopen" items</strong></li></ul>
+<h2 id="context">Context</h2>
+<p><code>coderabbit-review</code> failed on <strong>every push for roughly three hours</strong> on 2026-08-30 with <code>Error: WebSocket closed</code>. It was misdiagnosed at length as a vendor problem: the owner was asked to check billing, seat assignment and organization access, and regenerated the API key five times. None of that was the cause, and the owner's own instinct — <em>"it was probably never broken"</em> — was correct.</p>
+<p>The cause is <strong>review payload size</strong>, and it was introduced by this repository, not the vendor.</p>
+<p>Feature branches were reviewed with <code>--base origin/main</code>, so the CLI uploads the <strong>entire accumulated branch diff</strong>, which grows with every push. Commit <code>e8fc5c2</code> (KDD-0020) added roughly 100 files of generated skill mirrors plus a 170-file vendored project to that diff. The break aligns exactly with it:</p>
+<table><thead><tr><th>Run</th><th>Diff uploaded</th><th>Result</th></tr></thead><tbody><tr><td>14:15, <code>fdbe905</code></td><td>15 files, 788 insertions</td><td>reviewed normally, findings returned in 4m29s</td></tr><tr><td>15:10, <code>e8fc5c2</code></td><td>332 files, 14,643 insertions</td><td><code>WebSocket closed</code></td></tr><tr><td>17:19</td><td>417 files, 1.5 MB</td><td><code>WebSocket closed</code> in ~2s</td></tr></tbody></table>
+<p><strong>Direct proof</strong>, run against the same key, account and machine:</p>
+<ul><li>a <strong>2-file</strong> diff progresses <code>setup → analyzing → reviewing</code> and emits heartbeats — the connection is stable;</li><li>a <strong>417-file</strong> diff closes the socket in about two seconds.</li></ul>
+<p>Two intermediate fixes were attempted and did not work:</p>
+<ol><li><code>path_filters</code> in <code>.coderabbit.yaml</code> were extended to exclude the generated mirrors and vendored <code>archify</code>. No effect — those filters are applied <strong>server-side</strong>, so the CLI still uploads everything. The exclusions are kept because they are correct on their own merits, but they do not address this.</li><li><code>--region us</code> was made explicit for inline api-key auth. No effect; the account is US and the default was already correct. Kept as a correctness improvement, not a fix.</li></ol>
+<h2 id="options-considered">Options considered</h2>
+<ol><li><strong>Keep <code>--base origin/main</code>.</strong> Preserves the audit's guidance. Rejected: the gate is then physically unable to run on any branch of material size, which is worse than a narrower review — a check that cannot execute reviews nothing.</li><li><strong>Split work into many small branches.</strong> Would keep each diff small, but it is a process change imposed by a tool limit, and it does not help a branch that is already large.</li><li><strong>Review the pushed range (<code>--base-commit "$BEFORE"</code>).</strong> <strong>Selected.</strong> Each push reviews only its own delta, which is exactly what the <code>main</code>-branch path in this same workflow already did.</li></ol>
+<h2 id="decision">Decision</h2>
+<p>Feature-branch pushes review <code>BEFORE..HEAD</code> — the pushed range — instead of the whole branch diff. <code>BEFORE</code> is <code>github.event.before</code>. It falls back to <code>--base origin/main</code> when <code>BEFORE</code> is absent, all-zeros (the first push of a new branch), or unresolvable (after a force-push). The job logs which base it chose and the resulting file count.</p>
+<h3 id="conflict-with-the-audit-stated-plainly">Conflict with the audit, stated plainly</h3>
+<p>The Codex audit of 2026-08-30 lists under <strong>"What not to do"</strong>:</p>
+<blockquote><p><em>Do not narrow feature-branch review from <code>origin/main</code> to only the latest commit.</em></p></blockquote>
+<p><strong>This decision reverses that item</strong>, with the owner's explicit word ("narrow it", 2026-08-30). The audit's guidance is sound in the abstract — whole-branch review catches a defect introduced early and never fixed — but it was written without the evidence above, and it assumes the review runs at all. It does not, past a few hundred files. A narrower review that executes is worth more than a broader one that cannot.</p>
+<p><strong>Accepted cost.</strong> A finding introduced in an early push and not fixed is not re-raised by later pushes. Mitigation: the CodeRabbit GitHub App, if installed, reviews the PR head natively and covers the accumulated diff; the deterministic <code>gates</code> job always runs against the full tree regardless of push size; and any branch may be re-reviewed whole by dispatching a run with the base overridden.</p>
+<h2 id="consequences">Consequences</h2>
+<p><strong>Enables.</strong> The review gate can execute again. Payload is bounded by a single push rather than by branch age, so it no longer degrades as work continues.</p>
+<p><strong>Forecloses.</strong> Whole-branch review on feature branches by default.</p>
+<p><strong>Must be revisited if.</strong> The vendor raises the payload ceiling or the CLI gains client-side path filtering (which would let <code>path_filters</code> actually reduce the upload and make whole-branch review viable again) — at which point the audit's original guidance should be restored.</p>
+<p><strong>Process finding of record.</strong> The failure was attributed to an external service for three hours while the cause sat in this repository's own diff. The check that would have found it immediately is to compare the failing run's diff size against the last passing run's. Rule adopted: when a gate breaks immediately after a change of ours, correlate the break with our own diff <strong>before</strong> attributing it to a third party, and never ask the owner to modify an external system on that basis until it has been ruled out.</p>
+</main>
+<footer>Source of truth: <code>governace/decisions/KDD-0022-coderabbit-review-scope.md</code> (sha256 <code>359dfecaa9dadca910ab67c8f903f86572258b4bcfc78be2e9a23e0084f8c10b</code>) · rendered 2026-08-30T17:27Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+
+</body>
+</html>

@@ -65,6 +65,14 @@ Register Bailey as the Sr. AI Testing Engineer for HX-ASF, QA job family.
 > the skills are current authority for her test-authoring work, subject to the
 > activation gate below.
 
+[OPEN CORRECTION 2026-08-30, labeled, append-only — SKILL PATH SUPERSEDED: the
+path `.kimi-code/skills/` in the amendment above is superseded. The canonical
+skill tree is now `.agents/skills/` (KDD-0020, same date); `.kimi-code/skills/`
+is a generated mirror rebuilt by `scripts/skills_sync.py --write` and enforced
+by `validate.py` SY-3. Bailey's eight QA skills are unchanged in content,
+authority, and activation-gate status — only their canonical path moved. The
+original wording above is preserved as history. Authority: KDD-0020.]
+
 ### Activation gate
 
 Bailey is registered but activation-gated. Conditions:

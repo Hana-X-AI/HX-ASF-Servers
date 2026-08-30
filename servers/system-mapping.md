@@ -52,6 +52,12 @@ deployment until the owner lifts the hold.
 
 ### Deployed — running in production, verified
 
+**(+MCP) notation (clarified 2026-08-30, audit F1).** `(+MCP)` records the
+PLACEMENT contract — the system's MCP server is co-located on that host when MCP
+deployment is authorized. It is NOT a deployment claim. All MCP deployment is on
+HOLD per the owner directive of 2026-08-29 stated above, so **no MCP server in
+this document is deployed**, including on rows in this table.
+
 | # | System | Server | Agent | Notes |
 |---|---|---|---|---|
 | S01 | Qwen-X (Qwen 3.8 27B) | hxs-1 | john | LLM server — deep reasoning & synthesis |
@@ -59,8 +65,8 @@ deployment until the owner lifts the hold.
 | S03 | Meta-X (Muse Glimmer 30B) | hxs-3 | john | LLM server — agent intelligence / tooling |
 | S04 | Chat-X (Qwen 3.5 9B) | hxs-4 | john | LLM server — basic utility |
 | S05 | OmniRoute | hxs-8 | trinity | Model traffic gateway; replaces LiteLLM |
-| S06 | PostgreSQL (+MCP) | hxs-9 | chris | State services |
-| S07 | Redis (+MCP) | hxs-9 | wayne | Cache + data plane |
+| S06 | PostgreSQL (+MCP) | hxs-9 | chris | State services. **Installed, acceptance NOT recorded** (corrected 2026-08-30, audit F1): PostgreSQL 18.6 installed with roles, credentials and timers; `servers/hxs-9/2026-08-29-postgresql-install-step2.md` records V4–V5 PASS with **V6 timer-fired activation still pending**, so this row is installed-and-serving, not owner-accepted. `SERVER-REGISTRY.md` is the reconciled authority for that status |
+| S07 | Redis (+MCP) | hxs-9 | wayne | Cache + data plane. Redis 7.0.15 installed per `servers/hxs-9/2026-08-29-redis-install-evidence.md`; acceptance not separately recorded (corrected 2026-08-30, audit F1) |
 | S08 | DeepSeek Harness (DSH) | hxs-15 | morpheus | Agent harness; Gates 6-7 in progress |
 
 ### Target-state — not yet deployed
@@ -75,7 +81,7 @@ deployment until the owner lifts the hold.
 | S14 | n8n (+MCP) | hxs-13 | ripple (new) | Automation |
 | S15 | LangGraph | hxs-11 | erwin (new) | Agent runtime; deferred by implementation order; no LangGraph service live anywhere in fleet; hxs-6 has legacy /srv/LangGraph-Server-Deployment/ on foreign spare disk (2025-11-12, historical artifact, not the HX deployment) |
 | S16 | NGINX | hxs-21 | nexus (new) | Reverse proxy / web edge |
-| S17 | LightRAG (+MCP) | hxs-4 | raphael | Graph-based RAG; Qdrant backend (Quinn); LLM via OmniRoute (Meta-X); bge-m3 embeddings via Ollama (john); co-located with Qdrant |
+| S17 | LightRAG (+MCP) | hxs-4 | raphael | Graph-based RAG; Qdrant backend (Quinn); **LLM via local Ollama on hxs-4 — Chat-X (`hx-qwen3.5-9b-64k`, `LLM_BINDING=ollama`)** (corrected 2026-08-30, audit F1: the earlier "LLM via OmniRoute (Meta-X)" is superseded per owner decision 2026-08-29 and `servers/hxs-4/2026-08-29-lightrag-install-evidence.md` §LLM binding correction — Meta-X 30B was too slow for entity extraction); bge-m3 embeddings via Ollama (john); co-located with Qdrant |
 
 ### Development and test environments
 

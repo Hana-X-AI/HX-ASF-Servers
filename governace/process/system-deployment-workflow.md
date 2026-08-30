@@ -32,11 +32,9 @@ flowchart TD
     W --> Y[Done]
 ```
 
-Revision note (2026-08-30, A3 artifact-class policy): the gate previously read
-"4/4 PASS"; it is preserved verbatim here as history. [LABELED CORRECTION
-2026-08-30, append-only: the gate now reads 5/5 PASS — the governance-path check
-SY-2 was added to the validation suite. Prior 4/4 wording is retained above as
-history, not moved solely to Git history.]
+Revision note (2026-08-30): the gate reads **5/5 PASS** — the governance-path
+check (SY-2, plus SY-3 per KDD-0020) was added to the validation suite. It
+previously read 4/4; Git preserves the prior wording.
 
 ## Deliverables created
 

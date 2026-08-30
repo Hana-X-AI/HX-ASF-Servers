@@ -75,3 +75,16 @@ recorded Agent Zero owner-review acceptance decision with timestamp after the ga
 - Delta plan: `pilots/PILOT-KK3-JOHN-OLLAMA-AUDIT-002/plan.md`
 - Base plan: `pilots/PILOT-KK3-JOHN-OLLAMA-AUDIT-001/plan.md`
 - Lessons: `governace/lesson-learned/lessons-learned.md` (2026-08-24 entries)
+
+<!-- Machine-readable current state (O1, work-state.schema.yaml). The prose
+     above is the historical record and is never rewritten; this block is the
+     single source every status tool reads. -->
+
+```yaml work-state
+id: 2026-08-24-ollama-audit-hxs4
+status: done
+status_date: 2026-08-24
+authority: >-
+  Goal status line: 'done — PASS (owner accepted 2026-08-24T12:50Z)'
+reconcile: none
+```

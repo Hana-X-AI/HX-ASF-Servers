@@ -1,0 +1,41 @@
+document:
+  id: DOC-repo-governance-claude-md
+  title: CLAUDE.md — Claude Code session entry point to the AGENTS.md authority
+  type: contract
+  declared_purpose: "Claude Code session entry point. Loads automatically at session start and points every Claude Code session at AGENTS.md as the governance authority; summarizes only the rules most easily violated (truth-state labels, the append-only vs live-artifact split, dual-format rendering, count reconciliation, the no-co-author commit rule, secret handling), plus the canonical skill tree and the five registered hooks. Explicitly subordinate: where it differs from AGENTS.md, AGENTS.md wins and CLAUDE.md is the defect. Created under KDD-0020 to close the gap where no repository guardrail loaded for a Claude Code session."
+  source:
+    author: "Claude Code session (governor-directed)"
+    provided_by: "Agent Zero (2026-08-30)"
+    origin: /home/hxsa/opt/HX-ASF-Servers/CLAUDE.md
+    section: "§whole-document"
+    ingestion_date: '2026-08-30T15:01:07Z'
+  owner: Agent Zero
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: []
+    repositories: []
+    environments: []
+  status: active
+  security:
+    classification: internal
+    contains_secret_values: false
+  relations:
+    - predicate: "references"
+      target: "DOC-repo-governance-agents-md"
+      note: "AGENTS.md is the authority; CLAUDE.md never supersedes it"
+    - predicate: "produced_by"
+      target: "DOC-kdd-0020-canonical-skill-tree"
+      note: "created under KDD-0020"
+    - predicate: "references"
+      target: "DOC-scripts-hooks"
+      note: "documents the five hooks registered for Claude Code"
+  authority_level: "delegated-contract"
+  validation:
+    validated_at: '2026-08-30T15:01:07Z'
+    freshness: current
+  sha256: f232870b97e9d4d198f7d65f54b9cb780d967eb1b900e1ac277905d719f35eef
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/CLAUDE.md
+notes:
+  minted_by: carol-mint 1.0.0 @ 2026-08-30T15:01:07Z — scaffold

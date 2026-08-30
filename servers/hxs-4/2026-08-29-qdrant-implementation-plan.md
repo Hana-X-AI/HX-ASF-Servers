@@ -250,7 +250,7 @@ EMBEDDING_MODEL=sentence-transformers/all-MiniLM-L6-v2
 
 - Record all commands used (never credential values)
 - Record service status, collection state, snapshot status
-- Run `python3 scripts/validate.py` — must be 4/4 PASS
+- Run `python3 scripts/validate.py` — must be **5/5 PASS** (5 checks since 2026-08-30: the governance-path check SY-2/SY-3 was added; this plan originally read 4/4)
 - Render any manifest-listed .md changed
 - Write evidence doc to `servers/hxs-4/2026-08-29-qdrant-install-evidence.md`
 

@@ -1,45 +1,57 @@
 document:
-  id: "DOC-agent-chris-profile"
-  title: "Agent profile — chris (full operating contract)"
-  type: "profile"
-  declared_purpose: "Full operating contract for chris: PostgreSQL systems engineer for the HX factory. Single-instance administration, least-required privileges, evidence-backed operations. Manages the hxs-9 PostgreSQL 18.6 instance end to end — install, roles, credentials, backup/health timers, validation, and day-2 operations. KDD-0014, lane DeepSeek V4 Pro via OmniRoute."
+  id: DOC-agent-chris-profile
+  title: Agent profile — chris (full operating contract)
+  type: profile
+  declared_purpose: 'Full operating contract for chris: PostgreSQL systems engineer for the HX factory. Single-instance administration, least-required privileges, evidence-backed operations. Manages the hxs-9 PostgreSQL 18.6 instance end to end — install, roles, credentials, backup/health timers, validation, and day-2 operations. KDD-0014, lane DeepSeek V4 Pro via OmniRoute.'
   source:
-    author: "Agent Zero / KDD-0014"
-    provided_by: "Agent Zero"
-    origin: "/home/hxsa/opt/HX-ASF-Servers/agents/chris/profile.md"
-    section: "§whole-document"
-    ingestion_date: "2026-08-29T12:30:00Z"
-  owner: "chris (lane); Agent Zero (ratification)"
+    author: Agent Zero / KDD-0014
+    provided_by: Agent Zero
+    origin: /home/hxsa/opt/HX-ASF-Servers/agents/chris/profile.md
+    section: §whole-document
+    ingestion_date: '2026-08-29T12:30:00Z'
+  owner: chris (lane); Agent Zero (ratification)
   applies_to:
-    hosts: [hxs-9]
+    hosts:
+    - hxs-9
     fqdns: []
     services: []
-    agents: [chris]
-    repositories: [HX-ASF-Servers]
-    environments: [fleet]
-  version: ""
-  status: "adopted"
-  authority_level: "ratified-governance"
+    agents:
+    - chris
+    repositories:
+    - HX-ASF-Servers
+    environments:
+    - fleet
+  version: ''
+  status: adopted
+  authority_level: ratified-governance
   supersedes: []
   superseded_by: []
   security:
-    classification: "internal"
-    access_restrictions: "none beyond repository access"
+    classification: internal
+    access_restrictions: none beyond repository access
     contains_secret_values: false
   relations:
-    - predicate: "references"
-      target: "DOC-agent-chris-charter"
-      note: "one-page lane charter"
+  - predicate: references
+    target: DOC-agent-chris-charter
+    note: one-page lane charter
   validation:
-    validated_at: "2026-08-29T12:30:00Z"
-    freshness: "current"
-    review_due: "on owner amendment"
-  sha256: "6ca8ef40822bbe62b50b4118bf4fb697c8ccd33497be8aa6908a73c3199fc253"
+    validated_at: '2026-08-30T16:09:40Z'
+    freshness: current
+    review_due: on owner amendment
+  sha256: 05f41c12af94a944c84ee67bf6f469504ed41f1e365b6382b5098e2c4de6daef
   hash_history:
-    - sha256: "90e378a5e3a4e1c633e5740daa8395d65045d4b7594b18f751cd1db7f2e93af5"
-      timestamp: "2026-08-29T12:30:00Z"
-      reason: "initial cataloging"
-    - sha256: "6ca8ef40822bbe62b50b4118bf4fb697c8ccd33497be8aa6908a73c3199fc253"
-      timestamp: "2026-08-30T11:21:44Z"
-      reason: "2026-08-30 review batch: sha256 refresh"
-  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/chris/profile.md"
+  - sha256: 90e378a5e3a4e1c633e5740daa8395d65045d4b7594b18f751cd1db7f2e93af5
+    timestamp: '2026-08-29T12:30:00Z'
+    reason: initial cataloging
+  - sha256: 6ca8ef40822bbe62b50b4118bf4fb697c8ccd33497be8aa6908a73c3199fc253
+    timestamp: '2026-08-30T11:21:44Z'
+    reason: '2026-08-30 review batch: sha256 refresh'
+  - sha256: 785b814eed7c
+    timestamp: unrecorded
+    reason: predecessor state restored by carol-mint (re-mint events before 2026-08-30T16:10:52Z did not record history)
+  - sha256: 05f41c12af94a944c84ee67bf6f469504ed41f1e365b6382b5098e2c4de6daef
+    timestamp: '2026-08-30T16:10:52Z'
+    reason: 're-mint 785b814eed7c… -> 05f41c12af94… — CodeRabbit batch: active lane refs synchronized; local/cloud rule reconciled; CI retry+pin'
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/chris/profile.md
+notes:
+  minted_by: 'carol-mint 1.0.0 @ 2026-08-30T16:09:40Z — re-mint 785b814eed7c… -> 05f41c12af94… — CodeRabbit batch: active lane refs synchronized; local/cloud rule reconciled; CI retry+pin'

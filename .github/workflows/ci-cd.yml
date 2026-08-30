@@ -1,5 +1,5 @@
 # ci-cd.yml — HX-ASF-Servers (p8, owner-ratified 2026-08-26; amended 2026-08-28)
-# Trigger: every push to any branch. 18 steps total across three jobs.
+# Trigger: every push to any branch. 20 steps total across three jobs.
 #   gates             — deterministic quality gates (all pushes; happy path ≈3 min)
 #   coderabbit-review — CodeRabbit CLI review gate (feature-branch/PR pushes only;
 #                       owner directive 2026-08-30 supersedes for post-merge main
@@ -8,10 +8,12 @@
 #                       run (ci-cd #61) after a completed merge; it stays a required
 #                       check on feature-branch/PR validation. Prior directive
 #                       2026-08-28 "run on every commit regardless of type" retained
-#                       as history: branch pushes review vs origin/main, main pushes
-#                       used to review BEFORE..HEAD; skips cleanly until the API key
-#                       secret is configured; blocking = critical+major+minor per
-#                       owner directive 2026-08-28 — ALL issues block, zero-tolerance)
+#                       as history. CURRENT: every reviewed push compares the PUSHED
+#                       RANGE BEFORE..HEAD (KDD-0022), falling back to origin/main
+#                       only when BEFORE is unusable; a missing API key FAILS the job
+#                       (fail-closed, it no longer skips); blocking = critical+major+
+#                       minor per owner directive 2026-08-28 — ALL issues block,
+#                       zero-tolerance)
 #   pr-manage         — auto-PR, auto-label, auto-merge, PR-comment notifications
 #                         (non-main pushes)
 # Auto-merge is the GitHub platform feature: it fires only when the required checks
@@ -67,6 +69,10 @@ jobs:
       - name: Install PyYAML (validate.py dependency)
         run: python3 -m pip install -q pyyaml
 
+      - name: Unit tests — work-state engine (O1)
+        # After the PyYAML install: work_state.py imports yaml.
+        run: python3 scripts/test_work_state.py
+
       - name: Catalog validation
         run: python3 scripts/validate.py --ci
 
@@ -114,16 +120,34 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Install CodeRabbit CLI
+      - name: Install CodeRabbit CLI (pinned installer digest)
+        env:
+          # SHA-256 of https://cli.coderabbit.ai/install.sh, verified 2026-08-30
+          # (17513 bytes). Audit F5/A4: this was the last unpinned executable
+          # download in the pipeline. The vendor publishes no versioned installer
+          # URL, so the digest is pinned instead and MUST be re-verified and
+          # updated together with this comment when the installer changes.
+          CR_INSTALLER_SHA256: "4ffc7fb7443f0c562adea5c998867bcbe772a14d0e6620d328dfa6045afe446d"
         run: |
+          set -euo pipefail
           export CODERABBIT_INSTALL_DIR="$RUNNER_TEMP/cr-bin"
-          curl -fsSL https://cli.coderabbit.ai/install.sh | sh
+          curl -fsSL https://cli.coderabbit.ai/install.sh -o "$RUNNER_TEMP/cr-install.sh"
+          echo "${CR_INSTALLER_SHA256}  $RUNNER_TEMP/cr-install.sh" > "$RUNNER_TEMP/cr-install.sha"
+          if ! sha256sum -c "$RUNNER_TEMP/cr-install.sha"; then
+            echo "::error::CodeRabbit installer digest mismatch — refusing to execute. Re-verify upstream and update CR_INSTALLER_SHA256 with its comment."
+            exit 1
+          fi
+          sh "$RUNNER_TEMP/cr-install.sh"
           echo "$CODERABBIT_INSTALL_DIR" >> "$GITHUB_PATH"
 
       - name: CodeRabbit review (agent JSON, light policy)
         id: review
         env:
           CODERABBIT_API_KEY: ${{ secrets.CODERABBIT_API_KEY || secrets.CODERABBIT_API_KEY_2 }}
+          # Region for INLINE api-key auth (the CLI distinguishes this from a
+          # stored session). Account region verified US, 2026-08-30. Override
+          # with a repo variable if the org moves region.
+          CODERABBIT_REGION: ${{ vars.CODERABBIT_REGION || 'us' }}
           BEFORE: ${{ github.event.before }}
           BRANCH: ${{ github.ref_name }}
         run: |
@@ -140,17 +164,41 @@ jobs:
             BASE="$BEFORE"
             if [ -z "$BASE" ] || [ "$BASE" = "0000000000000000000000000000000000000000" ]; then BASE="HEAD~1"; fi
             echo "main push — reviewing pushed range $BASE..HEAD"
-            CMD=(coderabbit review --agent --light --committed --base-commit "$BASE" --api-key "$CODERABBIT_API_KEY")
+            CMD=(coderabbit review --agent --light --committed --base-commit "$BASE" --api-key "$CODERABBIT_API_KEY" --region "${CODERABBIT_REGION:-us}")
           else
             git fetch origin main --depth=1 >/dev/null 2>&1 || true
-            CMD=(coderabbit review --agent --light --base origin/main --api-key "$CODERABBIT_API_KEY")
+            # Review the PUSHED RANGE, not the whole accumulated branch diff.
+            # KDD-0022: --base origin/main grows the payload with every push and
+            # the service drops the socket once it is large (proven: a 2-file
+            # diff reviews normally; a 417-file diff closes the WebSocket in ~2s,
+            # same key, account and machine). BEFORE is all-zeros on the first
+            # push of a branch, and may be unresolvable after a force-push, so
+            # fall back to origin/main in both cases.
+            BASE="$BEFORE"
+            # Must be an ANCESTOR of HEAD, not merely a resolvable object: after a
+            # force-push BEFORE can still resolve while naming a commit that is no
+            # longer on this branch, which would diff against unrelated history.
+            if [ -z "$BASE" ] || [ "$BASE" = "0000000000000000000000000000000000000000" ] \
+               || ! git cat-file -e "${BASE}^{commit}" 2>/dev/null \
+               || ! git merge-base --is-ancestor "$BASE" HEAD 2>/dev/null; then
+              echo "::notice::no usable pushed-range base — reviewing against origin/main"
+              CMD=(coderabbit review --agent --light --base origin/main --api-key "$CODERABBIT_API_KEY" --region "${CODERABBIT_REGION:-us}")
+            else
+              echo "::notice::reviewing pushed range ${BASE}..HEAD ($(git diff --name-only "$BASE"..HEAD | wc -l) files)"
+              CMD=(coderabbit review --agent --light --committed --base-commit "$BASE" --api-key "$CODERABBIT_API_KEY" --region "${CODERABBIT_REGION:-us}")
+            fi
           fi
           # The org's included-review quota is shared between CI and local CLI
           # runs. A recoverable rate_limit gets bounded retries at the
           # service-provided waitTime (zero-tolerance era: main must not red-X
           # on a quota collision); after retries the parser stays fail-closed.
+          # A transport failure (e.g. "Error: WebSocket closed") writes NO JSON
+          # events at all, so the rate_limit parser below computed WAIT=0 and the
+          # loop broke on attempt 1 with zero retries. Any run that produces no
+          # `complete` event is now retried with backoff, whatever the cause.
           for attempt in 1 2 3; do
-            "${CMD[@]}" > "$RUNNER_TEMP/findings.jsonl" || true
+            "${CMD[@]}" > "$RUNNER_TEMP/findings.jsonl" 2> "$RUNNER_TEMP/cr-stderr.txt" || true
+            cat "$RUNNER_TEMP/cr-stderr.txt" || true
             WAIT=$(python3 - "$RUNNER_TEMP/findings.jsonl" <<'PYEOF'
           import json, os, sys
           complete, wait = False, 0
@@ -172,11 +220,19 @@ jobs:
                               wait = int(float(w[0]) * (60 if w[1].lower().startswith("min") else 1)) + 20
                           except ValueError:
                               wait = 0
-          print(0 if complete else min(wait, 780))
+          # 0 = complete (done). Otherwise the seconds to wait before retrying:
+          # the service-provided rate_limit waitTime when present, else a plain
+          # transport-failure backoff so a dropped connection is retried too.
+          print(0 if complete else (min(wait, 780) if wait else -1))
           PYEOF
           )
-            case "$WAIT" in ''|*[!0-9]*) WAIT=0 ;; esac
-            if [ "$WAIT" -le 0 ]; then break; fi
+            case "$WAIT" in ''|*[!0-9-]*) WAIT=0 ;; esac
+            if [ "$WAIT" = "0" ]; then break; fi
+            if [ "$WAIT" -lt 0 ]; then
+              # transport/auth failure with no JSON events — fixed backoff
+              WAIT=$(( attempt * 30 ))
+              echo "::notice::CodeRabbit produced no events (attempt $attempt) — $(tr -d '\r' < "$RUNNER_TEMP/cr-stderr.txt" | tail -1). Retrying after ${WAIT}s"
+            fi
             if [ "$attempt" -eq 3 ]; then
               echo "::notice::CodeRabbit rate limit persists after retries — parser stays fail-closed"
               break
@@ -234,8 +290,26 @@ jobs:
               if any("no files to review" in e.lower() for e in errors):
                   print("::notice::CodeRabbit: no reviewable files in this range (generated-only diff) — gate passes vacuously")
                   sys.exit(0)
-              print("::error::no complete event from CodeRabbit CLI (auth/service failure) %s"
-                    % "; ".join(errors))
+              # Distinguish UNREACHABLE from "the code has findings". Both stay
+              # fail-closed per the owner zero-tolerance directive, but a reader
+              # must be able to tell a vendor problem from a code problem without
+              # opening the raw log.
+              stderr_path = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "cr-stderr.txt")
+              tail = ""
+              if os.path.exists(stderr_path):
+                  stderr_lines = open(stderr_path).read().strip().splitlines()
+                  if stderr_lines:
+                      tail = stderr_lines[-1]
+              detail = "; ".join(errors) or tail or "no diagnostic emitted"
+              with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as fh:
+                  fh.write("\n## CodeRabbit UNREACHABLE\n\n"
+                           "The review service produced no `complete` event after 3 attempts. "
+                           "**This is not a finding about the code** — the deterministic `gates` "
+                           "job is the signal for that. Cause: `%s`.\n\n"
+                           "Common causes: the API key's review quota is exhausted (it is shared "
+                           "between CI and local CLI runs), or the key is invalid/rotated.\n" % detail)
+              print("::error::CodeRabbit UNREACHABLE after 3 attempts — no complete event. "
+                    "NOT a code finding. Cause: %s" % detail)
               sys.exit(1)
           # Owner directive 2026-08-28: ALL findings block — minor through critical.
           # "we are introducing problems in our codebase that coderabbit can find

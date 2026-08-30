@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!-- Generated from governace/decisions/KDD-0021-work-state-engine.md (sha256 32d3dfd02beeb4ab86d9af39dacc3d68549f0732fd4ce832cf4ba76e5cbbf5e0) by scripts/wiki/render.py on 2026-08-30T16:25Z.
+     Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KDD-0021: One work-state engine (O1)</title>
+<style>
+:root{color-scheme:light dark}
+body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.55;
+max-width:62rem;margin:0 auto;padding:1.5rem 2rem;color:#1a1a1a;background:#fff}
+h1,h2,h3,h4,h5,h6{line-height:1.25;margin-top:1.6em}
+h1{border-bottom:2px solid #444;padding-bottom:.3em}
+h2{border-bottom:1px solid #ccc;padding-bottom:.2em}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+code{background:#f0f0f0;padding:.1em .3em;border-radius:3px}
+pre{background:#f6f8fa;border:1px solid #ddd;border-radius:6px;padding:.8em;overflow-x:auto}
+pre code{background:none;padding:0}
+table{border-collapse:collapse;margin:1em 0;width:100%}
+th,td{border:1px solid #ccc;padding:.35em .6em;text-align:left;vertical-align:top}
+th{background:#f0f0f0}
+blockquote{border-left:4px solid #bbb;margin:1em 0;padding:.2em 1em;color:#444;background:#fafafa}
+a{color:#0645ad}
+.doc-meta{color:#666;font-size:.85em;border-bottom:1px dashed #bbb;padding-bottom:.6em;margin-bottom:1.2em}
+footer{margin-top:2.5em;border-top:1px solid #ccc;color:#666;font-size:.8em;padding-top:.8em}
+pre.mermaid{background:#fff;border:1px dashed #999}
+@media (prefers-color-scheme:dark){
+body{color:#ddd;background:#111} h1{border-color:#888} h2{border-color:#555}
+code{background:#2a2a2a} pre{background:#1b1b1b;border-color:#444}
+th{background:#222} th,td{border-color:#555} blockquote{color:#bbb;background:#191919;border-color:#666}
+a{color:#6fa8ff} .doc-meta,footer{color:#999}}
+</style>
+</head>
+<body>
+<main class="doc">
+<h1 id="kdd-0021-one-work-state-engine-o1">KDD-0021: One work-state engine (O1)</h1>
+<ul><li>Date: 2026-08-30</li><li>Status: ratified</li><li>Decider: Agent-Zero</li><li>Related: <code>governace/goals/work-state.schema.yaml</code>, <code>scripts/work_state.py</code>, KDD-0020 (canonical skill tree — the <code>work-status</code> and <code>goal-decompose</code> skills consolidated here live under it), Codex process-optimization review <code>codex_20260830_1539</code> (O1, and F1/F6 of its defect list)</li></ul>
+<h2 id="context">Context</h2>
+<p>Goal status was reconstructed by grepping prose. Both consumers — the <code>work-status</code> and <code>goal-decompose</code> skills — carried their own regex, and the prose they read is append-only governance text that deliberately moves the current answer into a labeled correction block while leaving the original line in place. That convention protects history and makes state unparseable. Two failure modes were reproduced against the live tree on 2026-08-30, before any code was written:</p>
+<ol><li><strong>A COMPLETE goal was invisible.</strong> <code>2026-08-27-fleet-baseline-deployment.md</code> records completion inside a labeled correction (<code>**Status:** COMPLETE — 2026-08-28</code>). The parser matched only the list form <code>- Status:</code>, so the goal parsed as <code>&lt;none&gt;</code> and was reported as <em>unknown</em> by every status command.</li><li><strong>A closed goal reported as active.</strong> <code>2026-08-26-hxs3-muse-glimmer-tooling.md</code> carries <code>- Status: in-progress</code>, while its pilot state log records <code>goal COMPLETE — PASS</code> and <code>PILOT-…-001 is COMPLETE and CLOSED</code>. The goal's own line even says <em>"historical — see transition"</em> — the staleness was known and pointed elsewhere rather than fixed.</li></ol>
+<p>A third defect compounded it: <code>goal-decompose/SKILL.md</code> documented four scripts (<code>status.sh</code>, <code>next.sh</code>, <code>blocked.sh</code>, <code>validate.sh</code>) as living in its own <code>scripts/</code> directory. That directory was empty and always had been — the scripts belonged to <code>work-status</code>. Anyone following the skill got "No such file or directory".</p>
+<p><strong>Correction to the source review.</strong> The Codex review states the defect as "work-status incorrectly reports completed goals as in progress", which reads as a broken script. That is half the picture. <code>in-progress.sh</code> reported exactly the goals whose status lines said <code>in-progress</code> — faithful to its input. The engine was defective (it could not parse the correction form at all) <em>and</em> its input was stale. Fixing only the script would have fixed neither case above.</p>
+<h2 id="options-considered">Options considered</h2>
+<ol><li><strong>Harden the prose regex</strong> to also match <code>**Status:**</code> inside correction blocks. Rejected: it makes the parser chase an open-ended prose grammar, and the newest correction block is not reliably the current one — nothing orders them.</li><li><strong>Rewrite goal prose so one status line is always current.</strong> Rejected: goals are an append-only class (<code>.coderabbit.yaml</code>); rewriting them to suit a parser inverts the governance rule.</li><li><strong>Add a machine-readable state block; leave prose untouched as history.</strong> <strong>Selected.</strong> Append-only is preserved because adding a block is an append.</li><li><strong>Introduce a workflow database or orchestration service.</strong> Rejected, and the source review says the same: not before the file-based engine is proven insufficient.</li></ol>
+<h2 id="decision">Decision</h2>
+<p><strong>D1 — One block, one reader.</strong> Every goal carries exactly one <code> </code>`<code>yaml work-state </code> block, specified by <code>governace/goals/work-state.schema.yaml</code>. It is the ONLY source any tool may use for goal status. Prose above it is the historical record and is never rewritten.</p>
+<p><strong>D2 — One engine.</strong> <code>scripts/work_state.py</code> is the single implementation: <code>status</code>, <code>in-progress</code>, <code>next</code>, <code>blocked</code>, <code>standup</code>, <code>reconcile</code>, <code>--check</code>, each with <code>--json</code>. The six <code>work-status</code> scripts are now thin wrappers that <code>exec</code> it, and <code>goal-decompose</code> documents the same commands. Neither skill reimplements parsing.</p>
+<p><strong>D3 — Conflicts are recorded, not resolved.</strong> The schema requires a <code>reconcile</code> field. Where a goal file and downstream evidence disagree, the block states the disagreement and names the conflicting source. Declaring a goal complete is a governor determination; a mechanical tool must not make it. Three goals currently carry an open reconcile item (hxs-3 muse-glimmer, omniroute Layer 0, LightRAG hxs-4) and are surfaced by <code>work_state.py reconcile</code>.</p>
+<p><strong>D4 — Enforced as SY-4.</strong> <code>validate.py</code> runs the schema check as sub-check <strong>SY-4</strong> inside the existing <code>governance-path</code> check. The check count stays <strong>5/5</strong> — the same reasoning as SY-3 in KDD-0020: a sixth top-level check would invalidate the count assertions scattered across the repository for no gain.</p>
+<p><strong>D5 — Regression fixtures.</strong> <code>scripts/test_work_state.py</code> covers the five cases Phase 1 requires — completed-with-history, blocked, malformed, dependent/orphan, and non-goal files — including the two production shapes above as named tests. 11 tests, wired into the CI <code>gates</code> job.</p>
+<h2 id="consequences">Consequences</h2>
+<p><strong>Enables.</strong> Status is now derived from a declared field rather than inferred from prose, so the append-only convention and machine-readable state stop fighting each other. <code>--json</code> output makes the state consumable by any later projection without another parser. Adding a consumer is a call to one engine.</p>
+<p><strong>Immediate effect.</strong> <code>fleet-baseline-deployment</code> reports <code>complete</code> (was invisible); <code>hxs3-muse-glimmer-tooling</code> reports <code>complete</code> (was <code>in-progress</code>). The current picture: 4 complete, 1 done, 1 abandoned, 2 in-progress, 2 draft.</p>
+<p><strong>Forecloses.</strong> Grepping goal prose for status. A goal without a valid block fails SY-4, so a new goal cannot be born unreadable — the template (<code>governace/goals/_template.md</code>) now ships the block.</p>
+<p><strong>Costs.</strong> One block per goal, and a maintenance obligation: the block must be updated when status changes. That obligation already existed; it was simply being discharged into prose that nothing could read.</p>
+<p><strong>Must be revisited if.</strong> A goal needs richer state than a single status value (per-milestone state, dependency edges) — the schema is versioned (<code>version: 1</code>) for that. The <code>done</code>/<code>complete</code> duplication in the enum is inherited from the existing goal vocabulary and deliberately not renamed here; collapsing it is a governance change, not a mechanical one.</p>
+<p><strong>Not addressed.</strong> This KDD implements O1 and the <code>goal-decompose</code> half of the review's F6. O2 (context packets generated from work orders), O3 (<code>hx gate</code>), O4 (asynchronous catalog closure), O5 (hook-registration manifest), O6 (secret-boundary warn → block), O7 (skill registry) and O8 (capability registry) are untouched and remain open.</p>
+</main>
+<footer>Source of truth: <code>governace/decisions/KDD-0021-work-state-engine.md</code> (sha256 <code>32d3dfd02beeb4ab86d9af39dacc3d68549f0732fd4ce832cf4ba76e5cbbf5e0</code>) · rendered 2026-08-30T16:25Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+
+</body>
+</html>

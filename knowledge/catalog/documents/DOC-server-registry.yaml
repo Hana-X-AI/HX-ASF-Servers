@@ -65,9 +65,9 @@ document:
     access_restrictions: none beyond repository access
     contains_secret_values: false
   relations:
-  - predicate: "describes"
-    target: "hxs-7 decommission"
-    note: "open correction effective 2026-08-28, fleet active count 16, row preserved as history"
+  - predicate: describes
+    target: hxs-7 decommission
+    note: open correction effective 2026-08-28, fleet active count 16, row preserved as history
   - predicate: governs
     target: 'hxs-3 assigned role: Agent intelligence — Meta-X tooling specialist (hx-muse-glimmer-64k, production ACTIVE 2026-08-27)'
     note: 'workload line amended 2026-08-27 on the owner''s explicit ''fix it'' directive (hxs-2 state log row 60 — the F-REG-1 stale-workload class): the 2026-08-13 target text (gpt-oss-20b TP=2; LightRAG graph & retrieval) replaced with the commissioned reality as an open correction with owner-directive provenance; repo line 53 VERIFIED PRESENT this run. [line-reference correction 2026-08-28 (batch-7 wave, labeled): the hxs-3 row moved with the header edits — 53 (this note''s era) -> 55 (batch-11 exception note) -> 57 (row-59 amendment state, the dispatch''s governor-verified number) -> 59 CURRENT (the row-59 amendment''s own +2 header lines postdate that check; live-verified 2026-08-28T02:4xZ); the cell now also carries the literal ''CURRENT-STATE:'' prefix (row 59 class (a))]'
@@ -92,6 +92,13 @@ document:
     review_due: 'on any fleet change or registry amendment (living document — re-hash on every amendment); hxs-1 row wording refresh CLOSED 2026-08-27 (owner disposition #1 — deployed + owner-accepted with history preserved; this clause is historical); the remaining target-text refresh items are hxs-2 (CoderX commissioned reality) and hxs-8 (OmniRoute deployed) — owner directive awaited (notes.stale_wording_register); hxs-20/hxs-21 rows catalog when their first artifacts land (both provisioning)'
   sha256: fd05c4a15c55362675f9ec878e7cc3826075ab975baa796182f427ee19e693ae
   canonical_location: /home/hxsa/opt/HX-ASF-Servers/servers/SERVER-REGISTRY.md
+  hash_history:
+  - sha256: 00e2ab28a0b4
+    timestamp: unrecorded
+    reason: predecessor state restored by carol-mint (re-mint events before 2026-08-30T16:10:54Z did not record history)
+  - sha256: fd05c4a15c55362675f9ec878e7cc3826075ab975baa796182f427ee19e693ae
+    timestamp: '2026-08-30T16:10:54Z'
+    reason: 're-mint 00e2ab28a0b4… -> fd05c4a15c55… — hxs-6 storage pilot closeout: hxs-6 storage cell -> root + 238.5 GB NVMe data (ext4 hxs-6-data @ /srv/data)'
 notes:
   mint_provenance: Minted in the M2-handoff wave per the governor's dispatch — closes the F-6 flag of receipt 2026-08-27T1735Z-carol-prework-registry.md ('the REPO servers/SERVER-REGISTRY.md has NO catalog record — mint candidate'), itself carried from DOC-tkv-server-registry notes.f_reg_1_row60_disposition. File verified on disk (92 lines, 15 registry rows) at ingestion.
   mirror_20260827: 'LIVING DOCUMENT mirrored at /opt/tkv-local/servers/SERVER-REGISTRY.md (cataloged as DOC-tkv-server-registry). Per the governor''s dispatch this record catalogs the REPO copy as source of truth; the mirror is recorded here. Both copies were amended by the governor 2026-08-27T17:48Z (OmniRoute pilot state log row 38 — the prework-registry receipt''s F-5/F-4 flags FIXED in both copies): the F-REG-1 hxs-3 workload line (repo line 53 == tkv line 40, VERIFIED this run [line-reference correction 2026-08-28 (batch-7 wave, labeled): the repo line moved — 53 (this note''s era) -> 55 (batch-11 exception note) -> 57 (row-59 amendment state, the dispatch''s governor-verified number) -> 59 CURRENT (the row-59 amendment''s own +2 header lines postdate that check; live-verified 2026-08-28T02:4xZ); the TKV line 40 is UNCHANGED and matches the dispatch]) and the roster advisory (hxs-5 control plane replacing hxs-cp; hxs-7 REPLACED BY hxs-20 provisioning; hxs-cp note amended re hxs-21 — row 38 records the TKV copy''s hxs-5/hxs-7 rows + hxs-cp note caught unamended on first pass and corrected before the row was written). Hashes at this run: repo accc06f2… (this record), tkv 24053689… (live, mtime 2026-08-27T17:48:43Z). FLAG for the governor: the DOC-tkv-server-registry record hash 8f0f3017… predates the 17:48Z TKV amendment — that record is hash-stale; re-hashing it is outside this wave''s dispatched write set, so it is flagged in the receipt, not touched. [correction 2026-08-27 (rr-47 wave, labeled): the flag is consumed — the mirror record was re-hashed to the 17:48Z content at the touch-up wave (24053689…) and to the 20:49Z content + MARKED SUPERSEDED at the review-batch follow-up wave (caff7987…, pointing consumers to this record); the mirror file itself gained the dated superseded-assignment note at 20:49Z (tkv line 88 == repo line 77). Current hashes: repo 4ede3ba5… (this record), tkv caff7987… (mirror record, superseded-status)]'

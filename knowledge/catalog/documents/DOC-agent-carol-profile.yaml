@@ -1,63 +1,67 @@
 document:
-  id: "DOC-agent-carol-profile"
-  title: "Agent profile — carol (full operating contract; governs knowledge/catalog/)"
-  type: "profile"
-  declared_purpose: "Full operating contract for carol: catalog store layout, record schema (§3), responsibilities (§4), retrieval packages (§5), security boundary (§6), catalog receipts (§7), handoff integration (§8), truth and conflict rules (§9), working procedure (§10), standing directives (§11). Ratified by owner amendment 2026-08-25."
+  id: DOC-agent-carol-profile
+  title: Agent profile — carol (full operating contract; governs knowledge/catalog/)
+  type: profile
+  declared_purpose: 'Full operating contract for carol: catalog store layout, record schema (§3), responsibilities (§4), retrieval packages (§5), security boundary (§6), catalog receipts (§7), handoff integration (§8), truth and conflict rules (§9), working procedure (§10), standing directives (§11). Ratified by owner amendment 2026-08-25.'
   source:
-    author: "Kimi-K3 (drafting/instantiation) / ratified by Agent Zero owner amendment 2026-08-25"
-    provided_by: "Agent Zero"
-    origin: "/home/hxsa/opt/HX-ASF-Servers/agents/carol/profile.md"
-    section: "§whole-document"
-    ingestion_date: "2026-08-25T04:50:00Z"
-  owner: "carol (lane); Agent Zero (ratification)"
+    author: Kimi-K3 (drafting/instantiation) / ratified by Agent Zero owner amendment 2026-08-25
+    provided_by: Agent Zero
+    origin: /home/hxsa/opt/HX-ASF-Servers/agents/carol/profile.md
+    section: §whole-document
+    ingestion_date: '2026-08-25T04:50:00Z'
+  owner: carol (lane); Agent Zero (ratification)
   applies_to:
     hosts: []
     fqdns: []
     services: []
-    agents: [carol, kimi-k3]
-    repositories: [HX-ASF-Servers]
-    environments: [fleet]
-  version: "ratified 2026-08-25"
-  status: "active"
-  authority_level: "ratified-governance"
+    agents:
+    - carol
+    - kimi-k3
+    repositories:
+    - HX-ASF-Servers
+    environments:
+    - fleet
+  version: ratified 2026-08-25
+  status: active
+  authority_level: ratified-governance
   supersedes: []
   superseded_by: []
   security:
-    classification: "internal"
-    access_restrictions: "none beyond repository access"
+    classification: internal
+    access_restrictions: none beyond repository access
     contains_secret_values: false
   relations:
-    - predicate: "governs"
-      target: "knowledge/catalog/ (schema.yaml, index.yaml, documents/, receipts/)"
-      note: "this profile is the catalog's governing contract; schema.yaml defers to §3"
-    - predicate: "depends_on"
-      target: "DOC-repo-governance-agents-md"
-      note: "owner amendment 2026-08-25 (Documentation Governance and Knowledge Stewardship)"
+  - predicate: governs
+    target: knowledge/catalog/ (schema.yaml, index.yaml, documents/, receipts/)
+    note: this profile is the catalog's governing contract; schema.yaml defers to §3
+  - predicate: depends_on
+    target: DOC-repo-governance-agents-md
+    note: owner amendment 2026-08-25 (Documentation Governance and Knowledge Stewardship)
   validation:
-    validated_at: "2026-08-29T12:30:00Z"
-    freshness: "current"
-    review_due: "on owner amendment"
-  sha256: "d7381c1413e731323d11febb5b3f5e52c25871ee0e4b3db7334363e241d0b680"
+    validated_at: '2026-08-30T15:53:41Z'
+    freshness: current
+    review_due: on owner amendment
+  sha256: c93eac5fd26dda8f3b733e83858bc18a901a243c4a15ae65203a5cb5b1613ecb
   hash_history:
-    - sha256: "28083d9f2aa0513dde90e843f025566e14375918b3d5cbf1cb6f6951a4680c01"
-      timestamp: "2026-08-29T12:30:00Z"
-      reason: "re-mint after 2026-08-29 normalization + corrections"
-    - sha256: "7902874b23bf82d2827a1a488c817932b0b15450e7e9a1d9b8a194642834b3e8"
-      timestamp: "2026-08-29T12:30:00Z"
-      reason: "re-mint after 2026-08-29 normalization + corrections"
-    - sha256: "d7381c1413e731323d11febb5b3f5e52c25871ee0e4b3db7334363e241d0b680"
-      timestamp: "2026-08-30T09:45:00Z"
-      reason: "2026-08-30 review batch: skills historical block + validate 5/5 supersession"
-
-  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/carol/profile.md"
+  - sha256: 28083d9f2aa0513dde90e843f025566e14375918b3d5cbf1cb6f6951a4680c01
+    timestamp: '2026-08-29T12:30:00Z'
+    reason: re-mint after 2026-08-29 normalization + corrections
+  - sha256: 7902874b23bf82d2827a1a488c817932b0b15450e7e9a1d9b8a194642834b3e8
+    timestamp: '2026-08-29T12:30:00Z'
+    reason: re-mint after 2026-08-29 normalization + corrections
+  - sha256: d7381c1413e731323d11febb5b3f5e52c25871ee0e4b3db7334363e241d0b680
+    timestamp: '2026-08-30T09:45:00Z'
+    reason: '2026-08-30 review batch: skills historical block + validate 5/5 supersession'
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/carol/profile.md
 notes:
-  review_batch_update: "2026-08-25 review batch (state log row 33): receipt filename pattern fixed to <timestamp>-carol-<action>-<slug>.md; status enum gained 'rejected' and the schema gained the 'charter' type and rejection_reason. This run's receipt name complies."
-  hash_history: "94e894a5… (run 1, 04:50Z) → 77384cfe… (row-33 review batch, validated 05:20Z) → 0d9ebdab… (2026-08-25T07:10Z) → 179946e3… (2026-08-25T08:35Z, batch-34 correction run) → 25eac583… (2026-08-25T19:27Z, batch-5 re-validation) → ca8bb59c… (2026-08-25T21:02Z, batch-7 re-validation) → cf027c04… (2026-08-25T21:24Z, final re-validation) → 07a9d03f… (2026-08-25T22:15Z) → 345a68a5… (2026-08-26T02:01Z, T-micro pilot-1: §10 Run tiers block ratified — see run_tiers_ratification note) → 3619b16e… (2026-08-26T02:14Z, T-micro pilot-2: §10 F-TM1-1 scope correction) → 09befadd… (2026-08-26T02:44Z, T-micro pilot-3: ≤5 min target ratified) → 28083d9f… (2026-08-26T04:12Z, §3 template applies_to.models extension, see schema_models_extension note) → d7381c… (2026-08-30T09:45:00Z, review batch: skills historical block + validate 5/5 supersession). Declared_purpose re-verified against current content — unchanged (§3 already listed; the models field is content within the §3 record template)."
-  schema_models_extension: "F-SCHEMA-1 resolution re-validation (2026-08-26T04:12Z): drift traced to the governor's §3 record-template edit — the applies_to block gained 'models: []  # e.g. mannix/qwen3.6-27b-a3b-coderx (added 2026-08-26)' (verified present at profile §3 line 77; schema.yaml mirrors it at the applies_to fields line: 'models: list (added 2026-08-26 — model identities are first-class applicability targets)'). Governor edit resolving F-SCHEMA-1 (hxs-2 state log row 6); schema.yaml is governor-controlled (charter Role bounds 2) — Carol records, never edits it. Legitimate edit, no unknown actor. Re-hashed 09befadd… -> 28083d9f…. Binding from this run: records may carry applies_to.models; first uses landed this run (hxs-2 M1 chain, hxs-1 exposure chain, both goal records, blueprint left empty as model-agnostic)."
-  corrections_batch5: "F-B5-1 RESOLVED per governor disposition: the post-restore sha256 mismatch is fully explained by governor review-batch-5 edits per review findings — motivational slogan removed (line 34) and Mermaid handoff workflow added to §8. Verified against current file content (no slogan present; §8 mermaid flowchart present). No unknown actor involved."
-  corrections_batch7: "F-B6-3 re-validation (governor drift, dispositioned batch 7): the governor added the charter type to the §3 record template type comment (verified present 2026-08-25). Re-hashed 25eac583… -> ca8bb59c…. Record fields re-checked against the current source — no field changes required; declared_purpose already covers the §3 template content."
-  predicate_enum_extension: "F-B7-1 RESOLVED by governor 2026-08-25T21:21Z: 'assesses' added to the relation-predicate enum — both in knowledge/catalog/schema.yaml (schema v1, predicate enum) and mirrored in this profile's §3 record template predicate comment (verified present in both at re-validation 2026-08-25T21:24Z). Flag origin: batch-7 run — DOC-assessment-hx-second-brain-guidance-001-review had to use enum-nearest 'references' with an inline ASSESSES note because 'assesses' was not a schema v1 predicate. Re-hashed ca8bb59c… -> cf027c04…. No other profile content changed."
-  r2_verdict_header: "R2 re-validation (owner ratified R2 2026-08-25, state log row 56): drift traced to the governor's §5 edit — the suitable_for_execution verdict header is now mandatory on every retrieval package (verified present at §5: 'every packet opens with a verdict header — suitable_for_execution: true|false plus a one-line freshness/conflict summary… (owner-ratified 2026-08-25; Second Brain guidance stage-1 gate)'; false routes to Kimi-K3, never enters execution). Legitimate governor edit. Re-hashed cf027c04… -> 07a9d03f…. Binding on Carol from this run forward: every future retrieval package must open with the verdict header."
-  run_tiers_ratification: "T-micro pilot-1 re-validation (2026-08-26T02:01Z): drift traced to the governor's §10 edit — the 'Run tiers (owner-ratified 2026-08-26, p7-lite)' block appended to §10 Working procedure (verified present: tier table — T-micro ≤5 records touched, single-purpose, scoped write-set verification (parse + required fields + hash + index 1:1 + relation targets), micro receipt, target ≤3 min; T-standard = ingestion/correction with full-catalog self-check + one validate.py; T-full = sweep/audit + CAT-10..15 + CB-01; carry-forward window: a passing T-standard/T-full audit incl. validate.py is citable 24 h, later T-micro runs in the window skip the full audit and cite it, any FAIL resets; sessions default to background dispatch, foreground only for T-micro blocking the governor). Ratified by owner 2026-08-26 (governor Option A). Legitimate governor edit. Re-hashed 07a9d03f… -> 345a68a5…. This run is itself the first T-micro under the ratified tiers; the M8-verdict full audit (receipt 2026-08-26T0137Z, self-check 182/182 + validator PASS) is cited carry-forward within 24 h, not re-run. Declared_purpose re-verified against current content — unchanged (§10 already listed; run tiers are a §10 subsection)."
-  tmicro_scope_correction: "T-micro pilot-2 re-validation (2026-08-26T02:14Z): drift traced to the governor's §10 F-TM1-1 correction — the 'T-micro session scope (2026-08-26, F-TM1-1 correction)' paragraph appended to the §10 Run tiers block (verified present: a T-micro session reads ONLY the run-tier block, the write-set records, and index.yaml lookups for the touched ids (+ count); full profile, charter, repo AGENTS.md, and full-index parse out of scope for T-micro; T-standard/T-full keep the full startup; the governor's T-micro brief pre-cites record ids, last-known hashes, and exact sections — recompute-and-compare, never discovery). Legitimate governor edit per the F-TM1-1 disposition. Re-hashed 345a68a5… -> 3619b16e…. Carry-forward: M8-verdict full audit (receipt 2026-08-26T0137Z, self-check 182/182 + validator PASS, within 24 h) cited, not re-run. This session itself executed tier-scoped per the new paragraph."
-  tmicro_target_ratification: "T-micro pilot-3 re-validation (2026-08-26T02:44Z): drift traced to the governor's §10 run-tier table edit — the T-micro receipt cell now reads 'target cycle ≤ 5 min measured end-to-end (owner-ratified 2026-08-26; ≤3 min content-work aspiration)' (verified present in the tier table; ratification per the ledger's 2026-08-26 governance review-log row, state-log row 69). Legitimate governor edit completing the pilot-series boundary recommendation. Re-hashed 3619b16e… -> 09befadd…. Carry-forward: M8-verdict full audit (receipt 2026-08-26T0137Z, self-check 182/182 + validator PASS, within 24 h) cited, not re-run. Declared_purpose re-verified against current content — unchanged (§10 already listed; the receipt cell is content within the §10 run-tier table)."
+  review_batch_update: '2026-08-25 review batch (state log row 33): receipt filename pattern fixed to <timestamp>-carol-<action>-<slug>.md; status enum gained ''rejected'' and the schema gained the ''charter'' type and rejection_reason. This run''s receipt name complies.'
+  hash_history: '94e894a5… (run 1, 04:50Z) → 77384cfe… (row-33 review batch, validated 05:20Z) → 0d9ebdab… (2026-08-25T07:10Z) → 179946e3… (2026-08-25T08:35Z, batch-34 correction run) → 25eac583… (2026-08-25T19:27Z, batch-5 re-validation) → ca8bb59c… (2026-08-25T21:02Z, batch-7 re-validation) → cf027c04… (2026-08-25T21:24Z, final re-validation) → 07a9d03f… (2026-08-25T22:15Z) → 345a68a5… (2026-08-26T02:01Z, T-micro pilot-1: §10 Run tiers block ratified — see run_tiers_ratification note) → 3619b16e… (2026-08-26T02:14Z, T-micro pilot-2: §10 F-TM1-1 scope correction) → 09befadd… (2026-08-26T02:44Z, T-micro pilot-3: ≤5 min target ratified) → 28083d9f… (2026-08-26T04:12Z, §3 template applies_to.models extension, see schema_models_extension note) → d7381c… (2026-08-30T09:45:00Z, review batch: skills historical block + validate 5/5 supersession). Declared_purpose re-verified against current content — unchanged (§3 already listed; the models field is content within the §3 record template). → c93eac5f… (2026-08-30T16:10:52Z, re-mint d7381c1413e7… -> c93eac5fd26d… — F2/A1: correction chains flattened to current truth)'
+  schema_models_extension: 'F-SCHEMA-1 resolution re-validation (2026-08-26T04:12Z): drift traced to the governor''s §3 record-template edit — the applies_to block gained ''models: []  # e.g. mannix/qwen3.6-27b-a3b-coderx (added 2026-08-26)'' (verified present at profile §3 line 77; schema.yaml mirrors it at the applies_to fields line: ''models: list (added 2026-08-26 — model identities are first-class applicability targets)''). Governor edit resolving F-SCHEMA-1 (hxs-2 state log row 6); schema.yaml is governor-controlled (charter Role bounds 2) — Carol records, never edits it. Legitimate edit, no unknown actor. Re-hashed 09befadd… -> 28083d9f…. Binding from this run: records may carry applies_to.models; first uses landed this run (hxs-2 M1 chain, hxs-1 exposure chain, both goal records, blueprint left empty as model-agnostic).'
+  corrections_batch5: 'F-B5-1 RESOLVED per governor disposition: the post-restore sha256 mismatch is fully explained by governor review-batch-5 edits per review findings — motivational slogan removed (line 34) and Mermaid handoff workflow added to §8. Verified against current file content (no slogan present; §8 mermaid flowchart present). No unknown actor involved.'
+  corrections_batch7: 'F-B6-3 re-validation (governor drift, dispositioned batch 7): the governor added the charter type to the §3 record template type comment (verified present 2026-08-25). Re-hashed 25eac583… -> ca8bb59c…. Record fields re-checked against the current source — no field changes required; declared_purpose already covers the §3 template content.'
+  predicate_enum_extension: 'F-B7-1 RESOLVED by governor 2026-08-25T21:21Z: ''assesses'' added to the relation-predicate enum — both in knowledge/catalog/schema.yaml (schema v1, predicate enum) and mirrored in this profile''s §3 record template predicate comment (verified present in both at re-validation 2026-08-25T21:24Z). Flag origin: batch-7 run — DOC-assessment-hx-second-brain-guidance-001-review had to use enum-nearest ''references'' with an inline ASSESSES note because ''assesses'' was not a schema v1 predicate. Re-hashed ca8bb59c… -> cf027c04…. No other profile content changed.'
+  r2_verdict_header: 'R2 re-validation (owner ratified R2 2026-08-25, state log row 56): drift traced to the governor''s §5 edit — the suitable_for_execution verdict header is now mandatory on every retrieval package (verified present at §5: ''every packet opens with a verdict header — suitable_for_execution: true|false plus a one-line freshness/conflict summary… (owner-ratified 2026-08-25; Second Brain guidance stage-1 gate)''; false routes to Kimi-K3, never enters execution). Legitimate governor edit. Re-hashed cf027c04… -> 07a9d03f…. Binding on Carol from this run forward: every future retrieval package must open with the verdict header.'
+  run_tiers_ratification: 'T-micro pilot-1 re-validation (2026-08-26T02:01Z): drift traced to the governor''s §10 edit — the ''Run tiers (owner-ratified 2026-08-26, p7-lite)'' block appended to §10 Working procedure (verified present: tier table — T-micro ≤5 records touched, single-purpose, scoped write-set verification (parse + required fields + hash + index 1:1 + relation targets), micro receipt, target ≤3 min; T-standard = ingestion/correction with full-catalog self-check + one validate.py; T-full = sweep/audit + CAT-10..15 + CB-01; carry-forward window: a passing T-standard/T-full audit incl. validate.py is citable 24 h, later T-micro runs in the window skip the full audit and cite it, any FAIL resets; sessions default to background dispatch, foreground only for T-micro blocking the governor). Ratified by owner 2026-08-26 (governor Option A). Legitimate governor edit. Re-hashed 07a9d03f… -> 345a68a5…. This run is itself the first T-micro under the ratified tiers; the M8-verdict full audit (receipt 2026-08-26T0137Z, self-check 182/182 + validator PASS) is cited carry-forward within 24 h, not re-run. Declared_purpose re-verified against current content — unchanged (§10 already listed; run tiers are a §10 subsection).'
+  tmicro_scope_correction: 'T-micro pilot-2 re-validation (2026-08-26T02:14Z): drift traced to the governor''s §10 F-TM1-1 correction — the ''T-micro session scope (2026-08-26, F-TM1-1 correction)'' paragraph appended to the §10 Run tiers block (verified present: a T-micro session reads ONLY the run-tier block, the write-set records, and index.yaml lookups for the touched ids (+ count); full profile, charter, repo AGENTS.md, and full-index parse out of scope for T-micro; T-standard/T-full keep the full startup; the governor''s T-micro brief pre-cites record ids, last-known hashes, and exact sections — recompute-and-compare, never discovery). Legitimate governor edit per the F-TM1-1 disposition. Re-hashed 345a68a5… -> 3619b16e…. Carry-forward: M8-verdict full audit (receipt 2026-08-26T0137Z, self-check 182/182 + validator PASS, within 24 h) cited, not re-run. This session itself executed tier-scoped per the new paragraph.'
+  tmicro_target_ratification: 'T-micro pilot-3 re-validation (2026-08-26T02:44Z): drift traced to the governor''s §10 run-tier table edit — the T-micro receipt cell now reads ''target cycle ≤ 5 min measured end-to-end (owner-ratified 2026-08-26; ≤3 min content-work aspiration)'' (verified present in the tier table; ratification per the ledger''s 2026-08-26 governance review-log row, state-log row 69). Legitimate governor edit completing the pilot-series boundary recommendation. Re-hashed 3619b16e… -> 09befadd…. Carry-forward: M8-verdict full audit (receipt 2026-08-26T0137Z, self-check 182/182 + validator PASS, within 24 h) cited, not re-run. Declared_purpose re-verified against current content — unchanged (§10 already listed; the receipt cell is content within the §10 run-tier table).'
+  minted_by: 'carol-mint 1.0.0 @ 2026-08-30T15:53:41Z — re-mint d7381c1413e7… -> c93eac5fd26d… — F2/A1: correction chains flattened to current truth'

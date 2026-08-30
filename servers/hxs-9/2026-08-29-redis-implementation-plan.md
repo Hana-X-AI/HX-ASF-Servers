@@ -154,7 +154,7 @@ REDIS_PWD=<generated>
 
 All stages produce written receipts (command, timestamp, result). After
 all evidence docs are written, `python3 scripts/validate.py` must return
-4/4 PASS from the repo root.
+**5/5 PASS** from the repo root. (5 checks since 2026-08-30: the governance-path check SY-2/SY-3 was added; this plan originally read 4/4).
 
 ## 9. Rollback Procedure
 1. Stop `redis-server.service`.

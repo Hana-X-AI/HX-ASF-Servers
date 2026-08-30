@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PROJECT_DIR:-/home/hxsa/opt/HX-ASF-Servers}/scripts/hooks/secret-boundary.sh\"",
+            "timeout": 20,
+            "statusMessage": "secret-boundary"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PROJECT_DIR:-/home/hxsa/opt/HX-ASF-Servers}/scripts/hooks/claude-payload-shim.sh\" \"${CLAUDE_PROJECT_DIR:-/home/hxsa/opt/HX-ASF-Servers}/scripts/hooks/validate-changed.sh\"",
+            "timeout": 120,
+            "statusMessage": "validate-changed"
+          },
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PROJECT_DIR:-/home/hxsa/opt/HX-ASF-Servers}/scripts/hooks/claude-payload-shim.sh\" \"${CLAUDE_PROJECT_DIR:-/home/hxsa/opt/HX-ASF-Servers}/scripts/hooks/agent-creation-check.sh\"",
+            "timeout": 30,
+            "statusMessage": "agent-creation-check"
+          },
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PROJECT_DIR:-/home/hxsa/opt/HX-ASF-Servers}/scripts/hooks/claude-payload-shim.sh\" \"${CLAUDE_PROJECT_DIR:-/home/hxsa/opt/HX-ASF-Servers}/scripts/hooks/render-sync.sh\"",
+            "timeout": 60,
+            "statusMessage": "render-sync"
+          },
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PROJECT_DIR:-/home/hxsa/opt/HX-ASF-Servers}/scripts/hooks/claude-payload-shim.sh\" \"${CLAUDE_PROJECT_DIR:-/home/hxsa/opt/HX-ASF-Servers}/scripts/hooks/test-log-append.sh\"",
+            "timeout": 30,
+            "statusMessage": "test-log-append"
+          },
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PROJECT_DIR:-/home/hxsa/opt/HX-ASF-Servers}/scripts/hooks/claude-payload-shim.sh\" \"${CLAUDE_PROJECT_DIR:-/home/hxsa/opt/HX-ASF-Servers}/scripts/hooks/governor-gate.sh\"",
+            "timeout": 30,
+            "statusMessage": "governor-gate"
+          }
+        ]
+      }
+    ]
+  }
+}
