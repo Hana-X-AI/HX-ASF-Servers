@@ -40,12 +40,15 @@ document:
       target: "DOC-agent-bailey-charter"
       note: "charter (lane bounds)"
   validation:
-    validated_at: "2026-08-30T08:11:53Z"
+    validated_at: "2026-08-30T15:05:00Z"
     freshness: "current"
     review_due: "on owner amendment"
-  sha256: "c924fb4496a13e516801da5dc0247888afb37f83e1e72c2cc0a2535e23709c9d"
+  sha256: "be1c8f16d8ff30bbc7f5a3718e9721dacc9228b594f650a64c154f5689a22a75"
   hash_history:
     - sha256: "c924fb4496a13e516801da5dc0247888afb37f83e1e72c2cc0a2535e23709c9d"
       timestamp: "2026-08-30T08:11:53Z"
       reason: "initial cataloging"
+    - sha256: "be1c8f16d8ff30bbc7f5a3718e9721dacc9228b594f650a64c154f5689a22a75"
+      timestamp: "2026-08-30T15:05:00Z"
+      reason: "KDD-0020: labeled append-only skill-path correction"
   canonical_location: "/home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0019-bailey-registration.md"

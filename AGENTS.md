@@ -2,8 +2,13 @@
 
 ## Skills and trigger words
 
-Twenty-three owner-installed skills govern how work is done in this repository. They live in
-`.kimi-code/skills/` (project scope) and also at user scope in `~/.kimi-code/skills/`.
+Thirty owner-installed skills govern how work is done in this repository. Their
+canonical home is `.agents/skills/` (KDD-0020, 2026-08-30). Two generated
+mirrors carry them into the harnesses that read a tool-specific path —
+`.kimi-code/skills/` (Kimi Code) and `.claude/skills/` (Claude Code) — plus the
+user scope at `~/.kimi-code/skills/`. Author and edit skills ONLY in
+`.agents/skills/`, then run `python3 scripts/skills_sync.py --write`;
+`validate.py` check SY-3 fails the repo if a mirror drifts.
 
 **Global skill inventory (D3 / Option A, ratified 2026-08-30):** this section IS
 the global skill inventory. Every agent inherits ALL skills listed below by
@@ -41,7 +46,9 @@ set, amend this inventory — do not list the common set per-profile.
   workflow, sequence, data-flow, and lifecycle diagrams as self-contained interactive
   HTML with inline SVG. Accept plain-language requirements, Mermaid input, or repository
   evidence. Five diagram types, four presets, dark/light themes. Requires Node.js >=18
-  (v24.20.0 installed at `/opt/node/` on hxs-5). Skill at `.kimi-code/skills/archify/`.
+  (v24.20.0 installed at `/opt/node/` on hxs-5). Skill at `.agents/skills/archify/`
+  (canonical only — the mirrors carry a pointer stub, not a copy; it is a Node CLI
+  invoked by path, not a prompt skill).
 - **create-agent** — owner trigger: **"create agent" / "new agent" / "register
   agent"**. Guides the creation of a new HX factory agent: reads
   `governace/templates/agent-checklist.md` and walks each step, validating after each.
@@ -95,6 +102,32 @@ set, amend this inventory — do not list the common set per-profile.
   "shard tests in CI"**. Wires the pipelines that run the test suites: trigger-to-suite
   mapping, sharding, evidence artifact storage, flaky quarantine, coverage gates,
   and keyless deploy (adapted from petrkindlmann/qa-skills v3.0.0, MIT).
+- **handoff** — owner trigger: **"handoff"**. Compact the current conversation
+  into a handoff document a fresh agent can resume from, naming the skills the
+  next session should call; references existing artifacts by path instead of
+  duplicating them (adapted from mattpocock/skills, MIT).
+- **writing-for-agents** — owner trigger: **"writing for agents"**. Authoring
+  contract for instructions other agents must execute: unambiguous imperatives,
+  no decorative prose, explicit success and failure conditions (adapted from
+  mattpocock/skills, MIT).
+- **triage** — owner trigger: **"triage"**. Turn a raw request into scoped,
+  actionable work: classify it, size it, name what is out of scope, and route it
+  (adapted from mattpocock/skills, MIT).
+- **diagnosing-bugs** — owner trigger: **"diagnose"**. Evidence-first debugging
+  loop: reproduce, isolate, form and test one hypothesis at a time, and prove the
+  fix against the original reproduction (adapted from mattpocock/skills, MIT).
+- **grill-with-docs** — owner trigger: **"grill with docs"**. Design interview
+  that records decisions and vocabulary as it goes; calls `grilling` and
+  `domain-modeling`. NOT the scope-lock gate (adapted from mattpocock/skills, MIT).
+- **grilling** — owner trigger: **"grill"**. Design-tree interview in rounds,
+  frontier-first, each question carrying a recommended answer. HX-corrected to a
+  **5-question-per-round budget** (owner directive 2026-08-30); the remainder
+  becomes explicit stated assumptions (adapted from mattpocock/skills, MIT).
+- **domain-modeling** — owner trigger: **"domain model"**. Build and sharpen a
+  project's domain model: challenge terms against the glossary, stress-test with
+  scenarios, record decisions. HX-corrected: inside this repository decisions are
+  append-only KDDs under `governace/decisions/`, never `docs/adr/` (adapted from
+  mattpocock/skills, MIT).
 
 When the owner uses a trigger word, invoke the matching skill first and follow its
 workflow in full — do not partially apply it. Project agents and sub-agents working in
@@ -109,6 +142,30 @@ work-status) are preserved in the inventory above. Authority: owner directive
 2026-08-30 (grill-me limited to 5 questions) and owner ratification of the QA skill
 subset (KDD-0019); effective 2026-08-30. The prior fourteen-skill state is preserved as
 history above; the current inventory is authoritative.]
+
+[OPEN CORRECTION 2026-08-30, labeled, append-only — SKILL INVENTORY GROWTH
+23 → 30 AND CANONICAL LOCATION CHANGE: (a) COUNT — the inventory above grew from
+twenty-three (23) to thirty (30) skills. The seven (7) additions are:
+**handoff**, **writing-for-agents**, **triage**, **diagnosing-bugs**,
+**grill-with-docs**, **grilling**, and **domain-modeling** — the base
+twenty-three (be-great through ci-cd-integration) are preserved in the inventory
+above. (b) LOCATION — the canonical skill tree moved from `.kimi-code/skills/` to
+`.agents/skills/`; `.kimi-code/skills/` and `.claude/skills/` are now GENERATED
+mirrors rebuilt by `scripts/skills_sync.py --write` and enforced by `validate.py`
+SY-3. The prior location wording is superseded in the section opening above and
+preserved in this correction. `archify` is canonical-only, with a pointer stub in
+each mirror; it is a Node CLI invoked by path, not a prompt skill.
+(c) PRECEDENCE — `grill-me` remains the ONLY factory scope-lock gate. `grilling`
+and `grill-with-docs` never satisfy that gate, and the owner's 5-question limit
+(directive 2026-08-30) applies to every interview path in this repository, not
+only to `grill-me`; upstream's unbounded "relentless" form was corrected at
+intake rather than adopted. (d) PROVENANCE — the seven additions come from
+`mattpocock/skills` at upstream commit
+`6654f6b60cd9d5be8b54c6fafe44346dabeb3b76` (MIT, Copyright (c) 2026 Matt Pocock),
+recorded with per-skill correction notes in each SKILL.md and pinned in
+`skills-lock.json`. Authority: KDD-0020; effective 2026-08-30. The prior
+twenty-three-skill state and its location are preserved as history above; the
+current inventory is authoritative.]
 
 Default reporting voice: **corporate** (executive-summary tone). A voice trigger
 overrides the default for that reply; when style skills conflict, the owner's most

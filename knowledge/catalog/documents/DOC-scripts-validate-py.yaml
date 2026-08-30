@@ -44,10 +44,10 @@ document:
       target: "kimi-k3"
       note: "state log row 60 (2026-08-25T23:47Z): UD1 ratified the validation contract, UD2 approved the bounded implementation; U2 dispatched to a build session"
   validation:
-    validated_at: "2026-08-26T00:25:00Z"
+    validated_at: "2026-08-30T15:05:00Z"
     freshness: "current"
     review_due: "on validate.py change (re-hash this record) or on CAT battery revision that changes the mechanized set"
-  sha256: "6976e4b74e48ea059618cfbec8af16ae78697e0ba0259d54602acfb3bca5c268"
+  sha256: "14a29288524dc58e8995325d4c772f776cfaa304a3402eeca1dce7d30ca629dd"
   canonical_location: "/home/hxsa/opt/HX-ASF-Servers/scripts/validate.py"
 notes:
   cataloging_context: "Type judged 'runbook' (executable operational procedure with a fixed invocation contract), authority ratified-governance (owner decisions UD1/UD2). Cataloged in the governor wave receipt 2026-08-26T0025Z together with the hooks system, WO/CP templates, and the governor verification checklist."

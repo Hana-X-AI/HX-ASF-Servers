@@ -29,7 +29,7 @@ document:
   relations:
     - predicate: "governs"
       target: "HX hooks and skills layer (Claude Code era implementation)"
-      note: "the approved origin of the factory's hooks/skills mechanism — ancestor of the current .kimi-code/skills trigger model"
+      note: "the approved origin of the factory's hooks/skills mechanism — ancestor of the current .agents/skills trigger model (canonical since KDD-0020, 2026-08-30; .kimi-code/skills is now a generated mirror)"
     - predicate: "references"
       target: "DOC-tkv-corpus-agent-skills"
       note: "addyosmani/agent-skills snapshot; skills/agent-skills-main is a byte-identical nested duplicate (diff -rq clean, 184 files)"

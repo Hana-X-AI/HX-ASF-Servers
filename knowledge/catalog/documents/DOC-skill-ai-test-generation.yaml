@@ -1,12 +1,12 @@
 document:
   id: "DOC-skill-ai-test-generation"
-  title: ".kimi-code/skills/ai-test-generation/SKILL.md — AI test-generation skill (Bailey)"
+  title: ".agents/skills/ai-test-generation/SKILL.md — AI test-generation skill (Bailey)"
   type: "other"
   declared_purpose: "Project-scope skill (Bailey, QA lane) defining the staged pipeline from specs/PRDs/diffs/bugs/OpenAPI to traceable test code: requirements extraction, risk analysis, coverage matrix, oracles, then pytest (zod for TS contract tests); reviewed by Gordon before execution. Adapted from /opt/tkv-local/qa-skills-main v3.0.0 (MIT)."
   source:
     author: "Bailey (QA lane) / James (governor)"
     provided_by: "Agent Zero (alignment session 2026-08-30; qa-skills lift work item 4)"
-    origin: "/home/hxsa/opt/HX-ASF-Servers/.kimi-code/skills/ai-test-generation/SKILL.md"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/.agents/skills/ai-test-generation/SKILL.md"
     section: "§whole-document"
     ingestion_date: "2026-08-30T08:30:00Z"
   owner: "Bailey (QA lane)"
@@ -37,7 +37,7 @@ document:
       target: "DOC-agent-gordon-profile"
       note: "execution/qualification review"
   validation:
-    validated_at: "2026-08-30T11:21:44Z"
+    validated_at: "2026-08-30T15:05:00Z"
     freshness: "current"
     review_due: "on skill revision"
   sha256: "666fc41b6b31fe3facdec0393484401c3cb2be6df360e7329ff9c4f4e658466d"
@@ -54,4 +54,7 @@ document:
     - sha256: "666fc41b6b31fe3facdec0393484401c3cb2be6df360e7329ff9c4f4e658466d"
       timestamp: "2026-08-30T11:21:44Z"
       reason: "2026-08-30 review batch: sha256 refresh"
-  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/.kimi-code/skills/ai-test-generation/SKILL.md"
+    - sha256: "666fc41b6b31fe3facdec0393484401c3cb2be6df360e7329ff9c4f4e658466d"
+      timestamp: "2026-08-30T15:05:00Z"
+      reason: "KDD-0020: canonical path moved .kimi-code/skills/ -> .agents/skills/ (content unchanged; mirrors generated)"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/.agents/skills/ai-test-generation/SKILL.md"

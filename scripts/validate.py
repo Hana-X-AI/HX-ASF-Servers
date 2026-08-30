@@ -62,6 +62,10 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FIXTURES_DIR = os.path.join("pilots", "PILOT-HX1-OLLAMA-QWEN27B-001", "fixtures")
 CATALOG_DIR = os.path.join("knowledge", "catalog")
 WIKI_MANIFEST = os.path.join("scripts", "wiki", "manifest.txt")
+# Canonical skill tree first; the rest are its tool-scope mirrors (SY-3).
+SKILL_TREES = (os.path.join(".agents", "skills"),
+               os.path.join(".kimi-code", "skills"),
+               os.path.join(".claude", "skills"))
 
 DOC_ID_RE = re.compile(r"^DOC-[a-z0-9]+(-[a-z0-9]+)*$")
 URL_RE = re.compile(r"^[a-zA-Z][a-zA-Z0-9+.-]*://")
@@ -138,20 +142,61 @@ def check_wiki():
     return c
 
 
-# ---------------------------------------------------- governance path check
-# governace/ (owner-sanctioned spelling) is CANONICAL. governance/ is the
-# rejected fork and must never exist. Guards against a regression that would
-# silently fork the governance tree again.
+# ------------------------------------------- repo-layout invariants (SY-2/SY-3)
+# Two canonical-path invariants share this check because they are the same class
+# of failure: a second tree quietly forking a canonical one.
+#   SY-2  governace/ (owner-sanctioned spelling) is CANONICAL. governance/ is the
+#         rejected fork and must never exist.
+#   SY-3  .agents/skills/ is the CANONICAL skill tree (KDD-0020). The tool-scope
+#         mirrors .kimi-code/skills/ and .claude/skills/ must match it exactly,
+#         or an agent reads a stale skill depending on which harness launched it.
+# SY-3 delegates to scripts/skills_sync.py rather than reimplementing the
+# comparison — the same single-source rule the hooks follow.
 def check_governance_path():
     c = Check("governance-path")
     canonical = os.path.join(ROOT, "governace")
     fork = os.path.join(ROOT, "governance")
     if os.path.isdir(fork):
-        c.fail("fork exists: %s (canonical spelling is governace/)" % fork)
+        c.fail("[SY-2] fork exists: %s (canonical spelling is governace/)" % fork)
     if not os.path.isdir(canonical):
-        c.fail("canonical governance tree missing: %s" % canonical)
-    c.detail.append("governace/ canonical, governance/ fork absent"
-                    if c.ok else "governance-path integrity check failed")
+        c.fail("[SY-2] canonical governance tree missing: %s" % canonical)
+    sy2_ok = c.ok
+
+    problems, skills, mirrors = [], [], []
+    try:
+        sys.path.insert(0, os.path.join(ROOT, "scripts"))
+        import skills_sync
+        mirrors = list(skills_sync.MIRRORS)
+        stub_only = ", ".join(skills_sync.STUB_ONLY)
+        problems, skills = skills_sync.plan()
+    except Exception as e:  # a broken sync module must not pass vacuously
+        c.fail("[SY-3] skills_sync unavailable: %s" % e)
+        stub_only = "unknown"
+    finally:
+        if sys.path and sys.path[0] == os.path.join(ROOT, "scripts"):
+            sys.path.pop(0)
+    for p in problems:
+        c.fail(p)
+
+    if c.ok:
+        c.detail.append("SY-2 governace/ canonical, governance/ fork absent; "
+                        "SY-3 %d skills canonical at .agents/skills/, %d tool-scope "
+                        "mirrors in sync (%s stub-only)"
+                        % (len(skills), len(mirrors), stub_only))
+    else:
+        # Per-file findings are capped by MAX_FINDINGS_SHOWN, so name the
+        # affected mirror roots here — this line always prints, and it is what
+        # tells the reader WHERE to look when the finding list is truncated.
+        by_mirror = []
+        for m in mirrors:
+            n = sum(1 for p in problems if (" %s/" % m) in p or p.endswith(" %s" % m))
+            if n:
+                by_mirror.append("%s (%d)" % (m, n))
+        where = "; drifted: " + ", ".join(by_mirror) if by_mirror else ""
+        c.detail.append("repo-layout invariants failed — SY-2 %s, SY-3 %d problem(s)%s"
+                        % ("OK" if sy2_ok else "FAIL", len(problems), where))
+        c.detail.append("skills repair: python3 scripts/skills_sync.py --write "
+                        "(canonical .agents/skills/ is authoritative; mirrors are rebuilt from it)")
     return c
 
 
@@ -432,7 +477,7 @@ def _wiki_manifest_members():
 def scoped_checks(changed):
     """Map --changed paths to checks; returns (check_fns, sweep_files)."""
     wiki_members = _wiki_manifest_members()
-    want = {"wiki": False, "fixtures": False, "catalog": False}
+    want = {"wiki": False, "layout": False, "fixtures": False, "catalog": False}
     sweep = []
     for p in changed:
         rel = os.path.normpath(os.path.relpath(p, ROOT)) if os.path.isabs(p) else os.path.normpath(p)
@@ -447,11 +492,18 @@ def scoped_checks(changed):
             want["fixtures"] = True
         elif rel.startswith(os.path.normpath(CATALOG_DIR) + os.sep):
             want["catalog"] = True
+        elif any(rel.startswith(os.path.normpath(t) + os.sep) for t in SKILL_TREES):
+            # A skill edit in any tree can desync the mirrors (SY-3); it is also
+            # ordinary content, so it still gets the secret sweep.
+            want["layout"] = True
+            sweep.append(os.path.join(ROOT, rel))
         else:
             sweep.append(os.path.join(ROOT, rel))
     fns = []
     if want["wiki"]:
         fns.append(check_wiki)
+    if want["layout"]:
+        fns.append(check_governance_path)
     if want["fixtures"]:
         fns.append(check_fixtures)
     if want["catalog"]:

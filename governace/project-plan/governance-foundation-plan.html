@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Generated from governace/project-plan/governance-foundation-plan.md (sha256 7cbb3439f2c37ff996507a97c705b032b61bef75af29b42d410c505dba39ad57) by scripts/wiki/render.py on 2026-08-30T11:21Z.
+<!-- Generated from governace/project-plan/governance-foundation-plan.md (sha256 dfc89b6e3a86d1a9206da50f5290af8554133f5e50d81e10678269108f41c588) by scripts/wiki/render.py on 2026-08-30T15:03Z.
      Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
 <html lang="en">
 <head>
@@ -59,7 +59,7 @@ a{color:#6fa8ff} .doc-meta,footer{color:#999}}
 <h2 id="workstream-4-agent-creation-checklist-skill-hooks">Workstream 4 — Agent creation checklist + skill + hooks</h2>
 <p><strong>Objective:</strong> eliminate missed-registration errors when creating agents.</p>
 <p><strong>Deliverables:</strong></p>
-<ul><li><code>governace/templates/agent-checklist.md</code> — mandatory 27-step checklist (DONE) [OPEN CORRECTION 2026-08-30, labeled, append-only: the deliverable above was originally worded "mandatory 22-step checklist" — that count is superseded. The checklist has 27 steps (items 1-27, validating after each step, fail closed). The 22-step wording is preserved here as history; 27 is the active count. This correction remains open.]</li><li><code>.kimi-code/skills/create-agent/SKILL.md</code> — agent-creation skill (DONE; installed to user scope 2026-08-29)</li><li><code>scripts/hooks/agent-creation-check.sh</code> — PostToolUse hook, fail-open (DONE; registered in <code>~/.kimi-code/config.toml</code> 2026-08-29, interface fixed to read stdin payload)</li><li>Test with Nancy (QA agent) — PENDING owner word</li></ul>
+<ul><li><code>governace/templates/agent-checklist.md</code> — mandatory 27-step checklist (DONE) [OPEN CORRECTION 2026-08-30, labeled, append-only: the deliverable above was originally worded "mandatory 22-step checklist" — that count is superseded. The checklist has 27 steps (items 1-27, validating after each step, fail closed). The 22-step wording is preserved here as history; 27 is the active count. This correction remains open.]</li><li><code>.agents/skills/create-agent/SKILL.md</code> — agent-creation skill (DONE; installed to user scope 2026-08-29; canonical path per KDD-0020, 2026-08-30)</li><li><code>scripts/hooks/agent-creation-check.sh</code> — PostToolUse hook, fail-open (DONE; registered in <code>~/.kimi-code/config.toml</code> 2026-08-29, interface fixed to read stdin payload)</li><li>Test with Nancy (QA agent) — PENDING owner word</li></ul>
 <p><strong>Status:</strong> COMPLETE (enforcement wired). Test remains owner-gated. [AMENDMENT 2026-08-30, labeled: the "enforcement wired" wording above overstates mechanical strength — five of six hooks are fail-open advisory guardrails (test-log-append reminds, agent-creation-check warns, governor-gate reminds). Current reading: COMPLETE (mechanics in place; enforcement advisory — hooks are fail-open), Test remains owner-gated. Original wording preserved above; this is the current status.]</p>
 <h2 id="workstream-5-skills-in-every-agent-profile">Workstream 5 — Skills in every agent profile</h2>
 <p><strong>Objective:</strong> every agent profile lists its available skills.</p>
@@ -85,7 +85,7 @@ a{color:#6fa8ff} .doc-meta,footer{color:#999}}
 <h2 id="completion-rule">Completion rule</h2>
 <p>This goal is done only when every acceptance criterion passes with evidence and the owner accepts — not when the work feels done. Per KDD-0002 goal-setting contract.</p>
 </main>
-<footer>Source of truth: <code>governace/project-plan/governance-foundation-plan.md</code> (sha256 <code>7cbb3439f2c37ff996507a97c705b032b61bef75af29b42d410c505dba39ad57</code>) · rendered 2026-08-30T11:21Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+<footer>Source of truth: <code>governace/project-plan/governance-foundation-plan.md</code> (sha256 <code>dfc89b6e3a86d1a9206da50f5290af8554133f5e50d81e10678269108f41c588</code>) · rendered 2026-08-30T15:03Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
 
 </body>
 </html>

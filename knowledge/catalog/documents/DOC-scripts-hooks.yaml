@@ -44,10 +44,10 @@ document:
       target: "kimi-k3"
       note: "state log row 60 (2026-08-25T23:47Z): UD3 approved the U3 advisory hook pilot (registration queued behind U2), UD4 approved the U5 secret-boundary pilot (script + config registration that wave, warn -> block graduation)"
   validation:
-    validated_at: "2026-08-26T00:25:00Z"
+    validated_at: "2026-08-30T15:05:00Z"
     freshness: "current"
     review_due: "on hook script/mode change (re-hash components), on warn -> block graduation, or on pilot-week outcome review"
-  sha256: "e26c07959ab1829d9f3319650e2e6e5f87c2ced5d8d506b488eb3a50e4244773"
+  sha256: "8954004f92fd549cdfc83fe7c9e2a5429c72ef857328cab5066f7458ac68b262"
   canonical_location: "/home/hxsa/opt/HX-ASF-Servers/scripts/hooks/README.md"
 notes:
   record_checksum_scope: "The record sha256 is the checksum of scripts/hooks/README.md (the system's canonical convention document). Component checksums at ingestion: secret-boundary.sh sha256 34df958144a51934472f69adda0b5cfefd63119b2e595606b70298cec5e198bf; validate-changed.sh sha256 e57143306eeb7037646a93ed8bdab305268454d3c46dd197a2a9834f9835d922; secret-boundary.mode content 'warn' (pilot mode, 5 bytes — one-word graduation to 'block')."

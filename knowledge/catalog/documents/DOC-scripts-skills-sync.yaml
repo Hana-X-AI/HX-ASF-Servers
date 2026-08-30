@@ -1,0 +1,38 @@
+document:
+  id: DOC-scripts-skills-sync
+  title: scripts/skills_sync.py — canonical skill tree + tool-scope mirror sync (SY-3)
+  type: runbook
+  declared_purpose: "Deterministic, stdlib-only tool that owns the canonical skill tree at .agents/skills/ and its two tool-scope mirrors (.kimi-code/skills/ for Kimi Code, .claude/skills/ for Claude Code). --check compares every mirror byte-for-byte and names each drifted path; --write rebuilds the mirrors from canonical. Mirrors are real copies, not symlinks, because this repository has a recorded flattened-symlink failure class. archify is mirrored as a pointer stub only — it is a Node CLI invoked by path, not a prompt skill. validate.py calls plan() as sub-check SY-3 rather than reimplementing the comparison."
+  source:
+    author: "Claude Code session (governor-directed)"
+    provided_by: "Agent Zero (2026-08-30)"
+    origin: /home/hxsa/opt/HX-ASF-Servers/scripts/skills_sync.py
+    section: "§whole-document"
+    ingestion_date: '2026-08-30T15:01:07Z'
+  owner: Agent Zero
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: []
+    repositories: []
+    environments: []
+  status: active
+  security:
+    classification: internal
+    contains_secret_values: false
+  relations:
+    - predicate: "produced_by"
+      target: "DOC-kdd-0020-canonical-skill-tree"
+      note: "mandated by KDD-0020 D2"
+    - predicate: "references"
+      target: "DOC-scripts-validate-py"
+      note: "invoked as the SY-3 sub-check of governance-path"
+  authority_level: "delegated-contract"
+  validation:
+    validated_at: '2026-08-30T15:01:07Z'
+    freshness: current
+  sha256: 383b81e49119c7c128d85793736d924edd5f88739cec5b2fedfc5c1a6509dc4c
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/scripts/skills_sync.py
+notes:
+  minted_by: carol-mint 1.0.0 @ 2026-08-30T15:01:07Z — scaffold

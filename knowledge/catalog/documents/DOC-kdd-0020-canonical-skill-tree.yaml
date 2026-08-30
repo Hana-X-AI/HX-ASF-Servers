@@ -1,0 +1,44 @@
+document:
+  id: DOC-kdd-0020-canonical-skill-tree
+  title: governace/decisions/KDD-0020-canonical-skill-tree-and-mattpocock-batch.md — canonical skill tree + mattpocock batch (KDD-0020)
+  type: decision
+  declared_purpose: "Ratified decision record (2026-08-30) establishing .agents/skills/ as the canonical skill tree with .kimi-code/skills/ and .claude/skills/ as generated mirrors enforced by validate.py SY-3; ratifying the seven-skill mattpocock batch (handoff, writing-for-agents, triage, diagnosing-bugs, grill-with-docs, grilling, domain-modeling) as adopted-as-corrected; capping every interview path at five questions per round per owner directive; and recording the archify canonical-only stub exception. Supersedes the .kimi-code/skills/ location wording in KDD-0019 and AGENTS.md."
+  source:
+    author: "Agent Zero (owner decision 2026-08-30)"
+    provided_by: "Claude Code session — skill governance batch"
+    origin: /home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0020-canonical-skill-tree-and-mattpocock-batch.md
+    section: "§whole-document"
+    ingestion_date: '2026-08-30T15:01:07Z'
+  owner: Agent Zero
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: []
+    repositories: []
+    environments: []
+  status: active
+  security:
+    classification: internal
+    contains_secret_values: false
+  relations:
+    - predicate: "supersedes"
+      target: "DOC-kdd-0019-bailey-registration"
+      note: "skill path only — .kimi-code/skills/ superseded by .agents/skills/; KDD-0019 carries the labeled append-only correction"
+    - predicate: "governs"
+      target: "DOC-repo-governance-agents-md"
+      note: "AGENTS.md skill inventory 23 to 30 and canonical-location change"
+    - predicate: "governs"
+      target: "DOC-scripts-skills-sync"
+      note: "mandates the mirror sync tool"
+    - predicate: "references"
+      target: "DOC-scripts-validate-py"
+      note: "SY-3 drift gate lives in the governance-path check"
+  authority_level: "ratified-governance"
+  validation:
+    validated_at: '2026-08-30T15:01:07Z'
+    freshness: current
+  sha256: 94c9defbaa5bdbec7c594470df7826cdd99379bf34149e9afa9f5860fd71b4f1
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0020-canonical-skill-tree-and-mattpocock-batch.md
+notes:
+  minted_by: carol-mint 1.0.0 @ 2026-08-30T15:01:07Z — scaffold
