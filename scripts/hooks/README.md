@@ -1,9 +1,20 @@
 # scripts/hooks — Kimi Code hook scripts (pilot, owner UD3/UD4 2026-08-25)
 
-Hook **scripts** live here, repo-versioned and reviewed like any code. Hook
-**registrations** live in the user-scope `~/.kimi-code/config.toml` (`[[hooks]]`
-array) — that file is personal config, never committed; this README is the
-placement convention (assessment Q-C, answered 2026-08-25).
+Hook **scripts** live here, repo-versioned and reviewed like any code.
+
+Hook **registrations** live in TWO scopes:
+
+- `.claude/settings.json` — in Git, deterministic, verified in CI.
+- `~/.kimi-code/config.toml` (`[[hooks]]`) — user scope, personal config, never
+  committed. Advisory: CI has no such file and must not claim it verified
+  user-scope state.
+
+**`governace/hooks/manifest.yaml` is the authoritative declaration** (O5,
+2026-08-30). `scripts/hooks_verify.py` compares it to both scopes and runs as
+`validate.py` sub-check **SY-5**. The table below is a reader's summary — if it
+and the manifest disagree, the manifest wins and this table is the defect. That
+is not hypothetical: three prose tables claimed to list these hooks and all
+three were wrong until SY-5 existed.
 
 ## Registered hooks
 

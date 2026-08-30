@@ -22,8 +22,8 @@ misread as "no tests exist."
 | Gordon Gate 6–7 | `pilots/PILOT-DSH-IMPL-001/gordon/phase-b/` | — | hxs-15 only | DSH Phase B qualification |
 | Gordon Gate 8–10 | `pilots/PILOT-DSH-IMPL-001/gordon/phase-b/` | — | hxs-15 only | DSH Phase C qualification (note: Phase C gates intentionally reside in `phase-b/` alongside Phase B — no separate `phase-c/` directory exists; Gordon runs all gates from phase-b) |
 
-**Tiered verification:** `validate.py` (4 checks: wiki-sync, fixture-suite,
-catalog-mechanical, secret-boundary) is the repo's automated gate, run
+**Tiered verification:** `validate.py` (5 checks: wiki-sync, governance-path,
+fixture-suite, catalog-mechanical, secret-boundary) is the repo's automated gate, run
 locally and in CI. The Gordon gate suites run on hxs-15 as Tier 2
 per-phase qualification — they are not part of `validate.py` or CI by
 design (tiered verification, KDD-0010).

@@ -35,10 +35,18 @@ advisory 2026-08-27). Ansible is not part of this architecture.
 
 ### Hooks (`scripts/hooks/`)
 
-| Script | Purpose | Trigger |
-|---|---|---|
-| `secret-boundary.sh` | Secret-value boundary scanner | PreToolUse |
-| `validate-changed.sh` | Runs `validate.py` on changed files | PostToolUse |
+Declared in `governace/hooks/manifest.yaml` and verified against the live
+registrations by `scripts/hooks_verify.py` (`validate.py` sub-check SY-5).
+
+| Script | Purpose | Trigger | Enforcement |
+|---|---|---|---|
+| `secret-boundary.sh` | Secret-value boundary scanner | PreToolUse | enforcing (mode file: `warn` today) |
+| `validate-changed.sh` | Runs `validate.py` on changed files | PostToolUse | advisory |
+| `agent-creation-check.sh` | Flags an incomplete agent registration | PostToolUse | advisory |
+| `render-sync.sh` | Flags wiki HTML drift | PostToolUse | advisory |
+| `test-log-append.sh` | Reminds to append a test-log row | PostToolUse | advisory |
+| `governor-gate.sh` | Reminds to run the verification checklist | PostToolUse | advisory |
+| `claude-payload-shim.sh` | Payload translator — a helper, not a registered hook | — | — |
 
 ### Catalog tooling (`scripts/catalog/`)
 
@@ -60,7 +68,7 @@ advisory 2026-08-27). Ansible is not part of this architecture.
 
 | Tool | Purpose |
 |---|---|
-| `validate.py` | 4-check authoritative validator (wiki-sync, fixture-suite, catalog-mechanical, secret-boundary) |
+| `validate.py` | 5-check authoritative validator (wiki-sync, governance-path, fixture-suite, catalog-mechanical, secret-boundary). `governance-path` carries sub-checks SY-2 canonical spelling, SY-3 skill mirrors, SY-4 goal work-state, SY-5 hook manifest, SY-6 skill registry |
 
 ## Onboarding note
 
