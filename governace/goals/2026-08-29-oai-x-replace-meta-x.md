@@ -143,3 +143,16 @@ After:
 Completion rule: this goal is done only when every success condition passes
 with its required evidence and the verifier accepts the correct artifact —
 not when the work feels done.
+
+<!-- Machine-readable current state (O1, work-state.schema.yaml). The prose
+     above is the historical record and is never rewritten; this block is the
+     single source every status tool reads. -->
+
+```yaml work-state
+id: 2026-08-29-oai-x-replace-meta-x
+status: draft
+status_date: 2026-08-29
+authority: >-
+  Goal status line: 'draft'
+reconcile: none
+```

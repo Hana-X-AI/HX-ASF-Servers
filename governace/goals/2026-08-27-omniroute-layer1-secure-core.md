@@ -48,3 +48,16 @@ any Docker/container work, any host other than hxs-8, any cloud provider.
 2. Roadmap capability/pattern: capability registration through the Second Brain catalog — the backend records gain their first consumer-of-record; the OD-13 secrets pattern becomes the reference for future service deployments.
 3. Disposition: **implemented** — built into the gate criteria (identity evidence, parity records, configuration.md, catalog waves).
 4. Evidence/reasoning: recorded per work order and in the pilot state log.
+
+<!-- Machine-readable current state (O1, work-state.schema.yaml). The prose
+     above is the historical record and is never rewritten; this block is the
+     single source every status tool reads. -->
+
+```yaml work-state
+id: 2026-08-27-omniroute-layer1-secure-core
+status: complete
+status_date: 2026-08-28
+authority: >-
+  Goal status line: 'COMPLETE 2026-08-28 — owner ACCEPT verdict'
+reconcile: none
+```

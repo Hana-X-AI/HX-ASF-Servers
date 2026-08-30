@@ -112,3 +112,17 @@ where the serving platform honors it — it is never the enforcement mechanism.
   dispatch retrieves the limit; playbook earns its third validated host —
   formal LLM-backend-deployment pattern drafted at M8; retrieval package at
   M0/M1. DFlash/deep integrations deferred per evidence.
+
+<!-- Machine-readable current state (O1, work-state.schema.yaml). The prose
+     above is the historical record and is never rewritten; this block is the
+     single source every status tool reads. -->
+
+```yaml work-state
+id: 2026-08-26-hxs3-muse-glimmer-tooling
+status: complete
+status_date: 2026-08-27
+authority: >-
+  PILOT-HXS3-MUSE-GLIMMER-TOOLING-001 state log: 'goal COMPLETE — PASS (governor edit + re-render)'; 'PILOT-HXS3-MUSE-GLIMMER-TOOLING-001 is COMPLETE and CLOSED'
+reconcile: >-
+    Goal prose still reads 'in-progress — M0 authorized (2026-08-26; historical — see transition)'. The pilot state log records completion; the goal's own status line was never advanced. Governor to align the prose (append-only) — this block is the operative state.
+```

@@ -58,3 +58,16 @@ Bring every in-scope fleet host to the declared baseline — verified identity/O
 ## Boundaries
 
 Two sanctioned mutation classes only (NTP pin, sleep-mask align). Everything else read-only; any other need stops and escalates to the governor. Local-model rule applies to the executor. No git commits without owner approval per instance.
+
+<!-- Machine-readable current state (O1, work-state.schema.yaml). The prose
+     above is the historical record and is never rewritten; this block is the
+     single source every status tool reads. -->
+
+```yaml work-state
+id: 2026-08-27-fleet-baseline-deployment
+status: complete
+status_date: 2026-08-28
+authority: >-
+  Labeled correction 2026-08-29 in this goal: 'Status: COMPLETE — 2026-08-28', three fleet evidence docs delivered
+reconcile: none
+```

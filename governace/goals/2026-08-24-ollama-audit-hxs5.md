@@ -84,3 +84,16 @@ this file is not final acceptance (profile section 11, Phase M fallback).
 - Pilot plan: `pilots/PILOT-KK3-JOHN-OLLAMA-AUDIT-001/plan.md`
 - Profiles: `agents/john/profile.md`, `agents/kimi-k3/profile.md`,
   `agents/kimi-k3/goal-setting-guidance.md`
+
+<!-- Machine-readable current state (O1, work-state.schema.yaml). The prose
+     above is the historical record and is never rewritten; this block is the
+     single source every status tool reads. -->
+
+```yaml work-state
+id: 2026-08-24-ollama-audit-hxs5
+status: abandoned
+status_date: 2026-08-24
+authority: >-
+  Goal status line: 'abandoned — parked, no longer applicable'; the audit target had no Ollama installed (lessons-learned 2026-08-24)
+reconcile: none
+```

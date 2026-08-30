@@ -1,8 +1,8 @@
 index:
   schema_version: 1
   initialized: 2026-08-25 (Carol instantiation, owner amendment)
-  updated: 2026-08-30T1501Z (carol-mint 1.0.0 — KDD-0020 skill-governance wave [titles preserved])
-  document_count: 340
+  updated: 2026-08-30T1625Z (carol-mint 1.0.0 — KDD-0021 work-state engine [titles preserved])
+  document_count: 341
   documents:
   - id: DOC-a01-origin-codex-20260824-2125
     title: codex_20260824_2125_hx-1-ollama-pilot-qwen3.8-amendment.md — original source of Amendment A01 (agent-zero-docs)
@@ -568,6 +568,12 @@ index:
     authority_level: ratified-governance
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0020-canonical-skill-tree-and-mattpocock-batch.md
+  - id: DOC-kdd-0021-work-state-engine
+    title: governace/decisions/KDD-0021-work-state-engine.md — one work-state engine (O1)
+    type: decision
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0021-work-state-engine.md
   - id: DOC-kimi-k3-goal-setting-guidance
     title: agents/kimi-k3/goal-setting-guidance.md — Kimi-K3 goal-setting and agent invocation guidance (ratified adoption per KDD-0002)
     type: runbook

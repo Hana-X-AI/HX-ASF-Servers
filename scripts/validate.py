@@ -150,6 +150,9 @@ def check_wiki():
 #   SY-3  .agents/skills/ is the CANONICAL skill tree (KDD-0020). The tool-scope
 #         mirrors .kimi-code/skills/ and .claude/skills/ must match it exactly,
 #         or an agent reads a stale skill depending on which harness launched it.
+#   SY-4  every goal carries exactly one valid work-state block (O1). Goal status
+#         was previously reconstructed from prose, which reported a COMPLETE goal
+#         as unknown and a closed goal as in-progress.
 # SY-3 delegates to scripts/skills_sync.py rather than reimplementing the
 # comparison — the same single-source rule the hooks follow.
 def check_governance_path():
@@ -178,11 +181,30 @@ def check_governance_path():
     for p in problems:
         c.fail(p)
 
+    ws_n = ws_rec = 0
+    try:
+        sys.path.insert(0, os.path.join(ROOT, "scripts"))
+        import work_state
+        ws_states, ws_problems = work_state.load_all()
+        ws_n = len(ws_states)
+        ws_rec = sum(1 for _, st in ws_states
+                     if str(st.get("reconcile", "none")).lower() != "none")
+    except Exception as e:
+        c.fail("[SY-4] work_state unavailable: %s" % e)
+        ws_problems = []
+    finally:
+        if sys.path and sys.path[0] == os.path.join(ROOT, "scripts"):
+            sys.path.pop(0)
+    for wp in ws_problems:
+        c.fail(wp)
+
     if c.ok:
         c.detail.append("SY-2 governace/ canonical, governance/ fork absent; "
                         "SY-3 %d skills canonical at .agents/skills/, %d tool-scope "
-                        "mirrors in sync (%s stub-only)"
-                        % (len(skills), len(mirrors), stub_only))
+                        "mirrors in sync (%s stub-only); SY-4 %d goals carry a valid "
+                        "work-state block (%d open reconcile item%s)"
+                        % (len(skills), len(mirrors), stub_only, ws_n, ws_rec,
+                           "" if ws_rec == 1 else "s"))
     else:
         # Per-file findings are capped by MAX_FINDINGS_SHOWN, so name the
         # affected mirror roots here — this line always prints, and it is what

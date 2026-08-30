@@ -1,0 +1,41 @@
+document:
+  id: DOC-kdd-0021-work-state-engine
+  title: governace/decisions/KDD-0021-work-state-engine.md — one work-state engine (O1)
+  type: decision
+  declared_purpose: "Ratified decision (2026-08-30) establishing a single machine-readable work-state block per goal (governace/goals/work-state.schema.yaml) and one engine that reads it (scripts/work_state.py), replacing prose-grep status derivation in the work-status and goal-decompose skills. Implements O1 of the Codex process-optimization review and the goal-decompose half of its F6. Records that conflicts between a goal file and downstream evidence are surfaced via a required reconcile field rather than auto-resolved, because declaring a goal complete is a governor determination. Enforced as validate.py sub-check SY-4; check count stays 5/5."
+  source:
+    author: "Agent-Zero (owner decision 2026-08-30)"
+    provided_by: "Claude Code session — process-optimization Phase 1"
+    origin: /home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0021-work-state-engine.md
+    section: "§whole-document"
+    ingestion_date: '2026-08-30T16:25:08Z'
+  owner: Agent Zero
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: []
+    repositories: []
+    environments: []
+  status: active
+  security:
+    classification: internal
+    contains_secret_values: false
+  relations:
+    - predicate: "governs"
+      target: "DOC-agents-roster-readme"
+      note: "goal status consumed by the work-status skill"
+    - predicate: "references"
+      target: "DOC-scripts-validate-py"
+      note: "enforced as sub-check SY-4"
+    - predicate: "references"
+      target: "DOC-kdd-0020-canonical-skill-tree"
+      note: "the consolidated skills live under the canonical tree"
+  authority_level: "ratified-governance"
+  validation:
+    validated_at: '2026-08-30T16:25:08Z'
+    freshness: current
+  sha256: 32d3dfd02beeb4ab86d9af39dacc3d68549f0732fd4ce832cf4ba76e5cbbf5e0
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0021-work-state-engine.md
+notes:
+  minted_by: carol-mint 1.0.0 @ 2026-08-30T16:25:08Z — scaffold

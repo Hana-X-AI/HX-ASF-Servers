@@ -42,15 +42,26 @@ broaden scope, waive tests, or declare factory completion.
 
 ## Deterministic tooling
 
-Scripts in `scripts/` read the goal/work-order tree for status, dependency, and
-readiness. Run them directly (script-first rule), do not reconstruct by hand:
+Goal state is read from ONE engine, `scripts/work_state.py`. Run it directly
+(script-first rule); never reconstruct state by grepping goal prose.
 
-- `scripts/status.sh` — goal/work-order counts by status
-- `scripts/next.sh` — ready work orders (open, deps satisfied)
-- `scripts/blocked.sh` — work orders blocked by open deps
-- `scripts/validate.sh` — goal-tree integrity (frontmatter, deps, orphans)
+```
+python3 scripts/work_state.py status        # counts by status
+python3 scripts/work_state.py next          # goals ready to dispatch (approved)
+python3 scripts/work_state.py blocked       # blocked goals, with reason
+python3 scripts/work_state.py in-progress   # actively being worked
+python3 scripts/work_state.py reconcile     # goal file vs downstream evidence disagree
+python3 scripts/work_state.py --check       # validate every work-state block
+```
 
-Run from the repo root: `bash .agents/skills/goal-decompose/scripts/<script>.sh`
+Add `--json` to any command for machine output.
+
+[CORRECTED 2026-08-30, O1: this section previously documented
+`scripts/status.sh`, `scripts/next.sh`, `scripts/blocked.sh` and
+`scripts/validate.sh` as living in THIS skill's `scripts/` directory. That
+directory is empty and always was — the four scripts belonged to the
+`work-status` skill. Anyone following this section got "No such file or
+directory". Both skills now call the single engine above.]
 
 ## Boundaries
 

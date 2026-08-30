@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Generated from governace/goals/2026-08-29-lightrag-hxs4.md (sha256 39a20572d860878b4a934303b25d90b54623ab71f831895919c62b1486ede2fd) by scripts/wiki/render.py on 2026-08-30T12:14Z.
+<!-- Generated from governace/goals/2026-08-29-lightrag-hxs4.md (sha256 9c101549f53a61de3d8645849f1e0aeb21fc83844222baf5a4d810c176631062) by scripts/wiki/render.py on 2026-08-30T16:25Z.
      Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
 <html lang="en">
 <head>
@@ -84,8 +84,11 @@ LIGHTRAG_MCP_API_KEY=&lt;same as LIGHTRAG_API_KEY&gt;</code></pre>
 <h2 id="notes-and-links">Notes and links</h2>
 <ul><li>KDDs: KDD-0017 (Quinn/Qdrant — dependency), KDD-0018 (raphael registration), KDD-0016 (agent taxonomy)</li><li>Related goals: 2026-08-29 Qdrant implementation (servers/hxs-4/2026-08-29-qdrant-implementation-plan.md)</li><li>System mapping: S17 LightRAG (+MCP) on hxs-4, agent raphael (registered KDD-0018)</li><li>Cross-lane dependencies: john (Ollama) must install bge-m3 on hxs-4 before LightRAG can ingest; quinn (Qdrant) provides the vector backend</li><li>Test suites: LightRAG core (425 test files in tests/), lightragmcp (1 test file: test_server.py), daniel-lightrag-mcp (5 test files) — all in vault</li><li>Second Brain: PL-3 "Retrieval &amp; Governed Knowledge" lists LightRAG as a target-state component — this goal implements it</li><li>Knowledge dirs (give to the implementing agent):<ul><li><code>/opt/tkv-local/LightRAG-main/</code> (v1.5.7 source)</li><li><code>/opt/tkv-local/lightragmcp-main/</code> (MCP server v1.1.0 npm, 30 tools)</li><li><code>/opt/tkv-local/daniel-lightrag-mcp-main/</code> (MCP server v0.1.0, 22 tools)</li><li><code>/home/hxsa/opt/local-tkv/agent-zero-docs/lightrag/</code> (HX reference docs)</li></ul></li></ul>
 <p>Completion rule: this goal is done only when every success condition passes with its required evidence and the verifier accepts the correct artifact — not when the work feels done. The full contract model lives in <code>agents/kimi-k3/goal-setting-guidance.md</code> (KDD-0002).</p>
+<p>&lt;!-- Machine-readable current state (O1, work-state.schema.yaml). The prose above is the historical record and is never rewritten; this block is the single source every status tool reads. --&gt;</p>
+<p>```yaml work-state id: 2026-08-29-lightrag-hxs4 status: draft status_date: 2026-08-29 authority: &gt;- Goal status line: 'draft' reconcile: &gt;- servers/hxs-4/2026-08-29-lightrag-install-evidence.md records an executed install (LightRAG v1.5.7 + Qdrant v1.19.0, V0-V6 PASS). A goal in 'draft' with completed install evidence is inconsistent; governor to set the real status.</p>
+<pre><code></code></pre>
 </main>
-<footer>Source of truth: <code>governace/goals/2026-08-29-lightrag-hxs4.md</code> (sha256 <code>39a20572d860878b4a934303b25d90b54623ab71f831895919c62b1486ede2fd</code>) · rendered 2026-08-30T12:14Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+<footer>Source of truth: <code>governace/goals/2026-08-29-lightrag-hxs4.md</code> (sha256 <code>9c101549f53a61de3d8645849f1e0aeb21fc83844222baf5a4d810c176631062</code>) · rendered 2026-08-30T16:25Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
 
 </body>
 </html>

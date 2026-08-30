@@ -122,3 +122,16 @@ artifact wording above is preserved as history.]
   backend-capability registry (new record class, implemented M8); hxs-1
   playbook promoted toward a formal pattern (second use); retrieval package
   at M0/M1. Harness-era registration deferred (substrate does not exist).
+
+<!-- Machine-readable current state (O1, work-state.schema.yaml). The prose
+     above is the historical record and is never rewritten; this block is the
+     single source every status tool reads. -->
+
+```yaml work-state
+id: 2026-08-26-hxs2-qwen36-coderx-backend
+status: in-progress
+status_date: 2026-08-27
+authority: >-
+  PILOT-HXS2-CODERX-BACKEND-001 state-log row 60 (2026-08-27T17:05Z): 'Coder-X M8 -> BACKLOG (owner-delayed)'
+reconcile: none
+```
