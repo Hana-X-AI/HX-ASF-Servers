@@ -59,18 +59,52 @@ capture_multi() {
   printf -v "$var" '%s' "$answer"
 }
 
-# Sanitize captured terminal text before it is echoed: strip ANSI escape
-# sequences and control characters, and collapse newlines to spaces, so the
-# KEY=VALUE output below never emits the raw captured bytes (which may carry
-# control/escape sequences or embedded newlines that break parsing or leak
-# into the terminal/agent log). The diagnostic text content is preserved.
+# Sanitize captured terminal text before it is echoed: remove complete ANSI
+# control sequences — CSI (7-bit ESC [ and 8-bit C1 0x9B), OSC including OSC-8
+# hyperlink payloads (7-bit ESC ] and 8-bit 0x9D), DCS/SOS/PM/APC (7-bit ESC
+# P/X/^/_ and 8-bit 0x90/0x98/0x9E/0x9F) — plus remaining C0/C1 controls, then
+# collapse newlines/whitespace. Emits only readable text content; the raw
+# captured bytes (which may carry control/escape sequences that break parsing
+# or leak into the terminal/agent log) are never emitted.
 sanitize() {
-  printf '%s' "$1" \
-    | sed 's/\x1b\[[0-9;]*m//g' \
-    | tr -d '\000-\010\013\014\016-\037\177' \
-    | tr '\n\r' ' ' \
-    | sed 's/[[:space:]][[:space:]]*/ /g'
+  printf '%s' "$1" | perl -0777 -pe '
+    s/\e\[[0-?]*[ -\/]*[@-~]//g;              # CSI (7-bit)
+    s/\x9b[0-?]*[ -\/]*[@-~]//g;              # CSI (8-bit)
+    s/\e\][^\a\e]*(?:\a|\e\\)//g;             # OSC incl. hyperlink (7-bit)
+    s/\x9d[^\x07\x9c]*(?:\x07|\x9c)//g;       # OSC (8-bit)
+    s/\e[PX^_][^\a\e]*(?:\a|\e\\)//g;         # DCS/SOS/PM/APC (7-bit)
+    s/[\x90\x98\x9e\x9f][^\x07\x9c]*(?:\x07|\x9c)//g;  # DCS/SOS/PM/APC (8-bit)
+    s/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F\x80-\x9F]//g;    # remaining C0/C1 controls
+    s/[\r\n]+/ /g;
+    s/[ \t]+/ /g;
+    s/^ | $//g;
+  '
 }
+
+# --- Self-test (CSI/OSC/C1 regression coverage) --------------------------
+# Run with: bash hitl-loop.template.sh --selftest
+if [ "${1:-}" = "--selftest" ]; then
+  pass=0; fail=0
+  t() { # t <label> <expected> <actual>
+    if [ "$2" = "$3" ]; then
+      printf 'ok   %s\n' "$1"; pass=$((pass + 1))
+    else
+      printf 'FAIL %s\nexpected: [%s]\nactual:   [%s]\n' "$1" "$2" "$3"
+      fail=$((fail + 1))
+    fi
+  }
+  t "plain"         "plain text"  "$(sanitize "plain text")"
+  t "csi-sgr"       "red"         "$(sanitize "$(printf '\033[31mred\033[0m')")"
+  t "csi-cursor"    "moved"       "$(sanitize "$(printf '\033[2J\033[10;10Hmoved')")"
+  t "osc-title"     "title"       "$(sanitize "$(printf '\033]0;title\atitle')")"
+  t "osc-hyperlink" "Click"       "$(sanitize "$(printf '\033]8;;https://evil\x1b\\Click\x1b]8;;\x1b\\')")"
+  t "c1-csi"        "c1clean"     "$(sanitize "$(printf '\23331m\220c1clean')")"
+  t "c1-osc"        "osc"         "$(sanitize "$(printf '\2350;title\007osc')")"
+  t "c1-dcs"        "dcs"         "$(sanitize "$(printf '\220q1;2\234dcs')")"
+  t "newlines"      "line1 line2" "$(sanitize "$(printf 'line1\nline2')")"
+  printf '%d pass, %d fail\n' "$pass" "$fail"
+  exit $(( fail == 0 ? 0 : 1 ))
+fi
 
 # --- edit below ---------------------------------------------------------
 
