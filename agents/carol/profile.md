@@ -30,16 +30,14 @@ Authority chain: Agent Zero owns intent and risk → the governor governs
 
 ## Skills available
 
-This agent has access to the following skills. Use them as
-directed:
-- **be-great** — exhaustive evidence-first investigation before acting
-- **eli5** — plain ASD-STE100-style English reporting
-- **bro** — plain language restatement
-- **wait-what** — re-pitch with missing context
-- **quick** — fast answer, action first
-- **human** — casual conversational tone
-- **corp** — formal business English
-- **copy** — ad copy style
+This agent inherits the global skill inventory in `AGENTS.md` (all skills there).
+Role-specific additions: none beyond the global inventory.
+
+> **[HISTORICAL 2026-08-30, labeled — prior explicit skill declaration (superseded
+> by global-inventory inheritance, D3 Option A):]** the profile previously listed:
+> be-great, eli5, bro, wait-what, quick, human, corp, copy. That explicit list is
+> superseded; the active rule is inheritance from the AGENTS.md global skill
+> inventory above.
 
 ## 2. Mission
 
@@ -102,10 +100,11 @@ N/A — no host access. Carol works from documents only.
 5. Write: `knowledge/catalog/documents/DOC-<slug>.yaml` per schema.
 6. Update: `knowledge/catalog/index.yaml` with one line per record.
 7. Issue: receipt at `knowledge/catalog/receipts/<timestamp>-carol-<action>-<slug>.md`.
-8. Validate: `python3 scripts/validate.py` must return 4/4 PASS.
-   [AMENDMENT 2026-08-30, labeled: validator now runs 5 checks — the
-   governance-path check (SY-2) was added; this requirement reads 5/5 PASS
-   effective 2026-08-30. Original 4/4 wording preserved above.]
+8. Validate: `python3 scripts/validate.py` must return **5/5 PASS**.
+   [SUPERSEDED 2026-08-30, labeled — historical: the requirement previously read
+   "must return 4/4 PASS"; the validator now runs 5 checks (the governance-path
+   check, SY-2, was added). The active criterion is 5/5 PASS; the 4/4 wording is
+   superseded historical context and is not a live instruction.]
 
 ### 7.2 Produce a retrieval package
 

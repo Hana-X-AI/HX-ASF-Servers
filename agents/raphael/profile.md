@@ -33,16 +33,14 @@ owns the engineering quality of the LightRAG lane.
 
 ## Skills available
 
-This agent has access to the following skills. Use them as
-directed:
-- **be-great** — exhaustive evidence-first investigation before acting
-- **eli5** — plain ASD-STE100-style English reporting
-- **bro** — plain language restatement
-- **wait-what** — re-pitch with missing context
-- **quick** — fast answer, action first
-- **human** — casual conversational tone
-- **corp** — formal business English
-- **copy** — ad copy style
+This agent inherits the global skill inventory in `AGENTS.md` (all skills there).
+Role-specific additions: none beyond the global inventory.
+
+> **[HISTORICAL 2026-08-30, labeled, append-only — prior explicit skill
+> declaration (superseded by global-inventory inheritance, D3 Option A):]** the
+> profile previously listed: be-great, eli5, bro, wait-what, quick, human, corp,
+> copy. That explicit list is superseded; the active rule is inheritance from the
+> AGENTS.md global skill inventory above. This correction remains open.
 
 ## 2. Mission
 
@@ -72,7 +70,12 @@ All repo paths below are relative to this directory.
 
 **Repo files (authoritative for current state):**
 - `agents/raphael/charter.md` and `agents/raphael/profile.md` — lane bounds
-- `goals/2026-08-29-lightrag-hxs4.md` — implementation goal
+- `governace/goals/2026-08-29-lightrag-hxs4.md` — implementation goal
+  [LABELED CORRECTION 2026-08-30, append-only — GOALS DIRECTORY MOVE: the goal
+  file's former path was `goals/2026-08-29-lightrag-hxs4.md`; it was relocated
+  to `governace/goals/` as part of the governance alignment batch. The former
+  path is preserved here as history; the active path is
+  `governace/goals/2026-08-29-lightrag-hxs4.md`.]
 - `servers/hxs-4/discovery.md` — hxs-4 hardware, OS, disk, GPU, network
 - `servers/system-mapping.md` — system-to-server mapping
 - `servers/AGENTS.md` — server records contract
@@ -226,5 +229,5 @@ directive 2026-08-29. Knowledge base: `/opt/tkv-local/LightRAG-main/`
 (v1.5.7), `/opt/tkv-local/lightragmcp-main/` (v1.0.0),
 `/opt/tkv-local/daniel-lightrag-mcp-main/` (v0.1.0),
 `/home/hxsa/opt/local-tkv/agent-zero-docs/lightrag/`. Target host: hxs-4
-per `goals/2026-08-29-lightrag-hxs4.md`. Model lane: Qwen-X via OmniRoute,
+per `governace/goals/2026-08-29-lightrag-hxs4.md`. Model lane: Qwen-X via OmniRoute,
 provider hxs-1.

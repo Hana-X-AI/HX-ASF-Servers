@@ -45,8 +45,15 @@ generation using Qdrant as its vector storage backend.
 
 ## Inputs
 
-- the governor work orders, `goals/2026-08-29-lightrag-hxs4.md`,
+- the governor work orders, `governace/goals/2026-08-29-lightrag-hxs4.md`,
   `servers/system-mapping.md`;
+  [LABELED CORRECTION 2026-08-30, append-only — GOALS DIRECTORY MOVE: this
+  governor work-orders reference previously read
+  "`goals/2026-08-29-lightrag-hxs4.md`"; as part of the governance alignment
+  batch the goal file relocated to `governace/goals/2026-08-29-lightrag-hxs4.md`
+  (KDD-0002 Amendment 1). The former `goals/` path is preserved here as history;
+  the `governace/goals/` path is active. This mirrors the correction recorded in
+  `agents/raphael/profile.md`.]
   `/opt/tkv-local/LightRAG-main/` (v1.5.7 source, env.example, qdrant_impl.py,
   systemd template, docs);
   `/opt/tkv-local/lightragmcp-main/` (MCP server v1.0.0, TOOLS_SUMMARY.md,

@@ -17,6 +17,13 @@ software factory. The plan consolidates 7 workstreams that together enforce:
 structured governance directories, a continuously-updated test log, mandatory
 change documentation, a bullet-proof agent-creation checklist with skill + hooks,
 skills in every agent profile, workflow diagrams, and TKV-enforcement evidence.
+[OPEN CORRECTION 2026-08-30, labeled, append-only: "continuously-updated test
+log" and "bullet-proof agent-creation checklist" are superseded by the accurate
+current position — the test log is maintained via a fail-open advisory reminder
+hook (ST-7 `test-log-append.sh` does not append; the append is a manual governor
+action), and the agent-creation checklist is a 27-step mandatory checklist with
+advisory (fail-open) hooks. See the WS2/WS4 corrections below. This correction
+remains open.]
 
 This document is the **controlling plan**. Each workstream's artifacts live in
 `governace/`; this file records the objective, deliverables, status, and
@@ -44,6 +51,10 @@ path-fork resolved 2026-08-29 — orphan `governance/` removed).
 ## Workstream 2 — Consolidated test log
 
 **Objective:** one continuously-updated log of ALL test and example results.
+[OPEN CORRECTION 2026-08-30, labeled, append-only: the objective reads as
+originally written; the accurate current position is "one maintained log" — the
+update mechanism is a fail-open advisory reminder (ST-7 `test-log-append.sh`),
+not an automatic appender. This correction remains open.]
 
 **Deliverables:**
 - `governace/testing/test-log.md` (+ `.html`) — seeded with current results (DONE)
@@ -54,6 +65,12 @@ path-fork resolved 2026-08-29 — orphan `governance/` removed).
 - Secret-sweep clean (DONE 2026-08-29 — key literal redacted)
 
 **Status:** COMPLETE (append mechanism added via workflow — see WS7/ST-7).
+[OPEN CORRECTION 2026-08-30, labeled, append-only: "append mechanism added via
+workflow" is superseded by the accurate current position — ST-7
+`test-log-append.sh` is a fail-open advisory reminder that prompts a dated row be
+added to `governace/testing/test-log.md`; it does not append the row itself (the
+append is a manual governor action). See WS4 for the advisory-hook treatment.
+This correction remains open.]
 
 ## Workstream 3 — Change documentation
 
@@ -75,7 +92,12 @@ path-fork resolved 2026-08-29 — orphan `governance/` removed).
 **Objective:** eliminate missed-registration errors when creating agents.
 
 **Deliverables:**
-- `governace/templates/agent-checklist.md` — mandatory 22-step checklist (DONE)
+- `governace/templates/agent-checklist.md` — mandatory 27-step checklist (DONE)
+  [OPEN CORRECTION 2026-08-30, labeled, append-only: the deliverable above was
+  originally worded "mandatory 22-step checklist" — that count is superseded.
+  The checklist has 27 steps (items 1-27, validating after each step, fail
+  closed). The 22-step wording is preserved here as history; 27 is the active
+  count. This correction remains open.]
 - `.kimi-code/skills/create-agent/SKILL.md` — agent-creation skill (DONE;
   installed to user scope 2026-08-29)
 - `scripts/hooks/agent-creation-check.sh` — PostToolUse hook, fail-open (DONE;
@@ -144,7 +166,9 @@ adds:
 - **Change-record lifecycle** — `PROPOSED → IN PROGRESS → COMPLETE`, gated on
   goal/plan status + execution evidence (ST-6).
 - **Context-budget + lane-probe** fields in the work-order template (ST-5).
-- **Test-log append hook** (ST-7) — test-evidence writes append dated rows.
+- **Test-log append hook** (ST-7) — fail-open advisory reminder: `test-log-append.sh`
+  prompts the governor to add a dated row to `governace/testing/test-log.md`; it does
+  not append the row itself (the append is a manual governor action).
 - **Dual-format compliance** (SY-6) — every manifest-listed document keeps a
   rendered `.html` sibling; enforced mechanically by
   `python3 scripts/wiki/render.py --check` (79/79 in sync at acceptance).

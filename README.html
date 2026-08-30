@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Generated from README.md (sha256 3a56ecc1395615862fbbf13193a4922d96b44f08f8170aa5e21134319a94f6b3) by scripts/wiki/render.py on 2026-08-30T00:36Z.
+<!-- Generated from README.md (sha256 a4ed39f7a695660474899f8a8b61a6aeb8d0e5a8c20bbd7576d00c99ca2a4a9f) by scripts/wiki/render.py on 2026-08-30T08:42Z.
      Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
 <html lang="en">
 <head>
@@ -37,15 +37,15 @@ a{color:#6fa8ff} .doc-meta,footer{color:#999}}
 <h1 id="hx-asf-servers">HX-ASF-Servers</h1>
 <p>Infrastructure repository for the HX AI Software Factory: 16 active servers plus development workstations, operated by Hana-X. Work here is mostly infrastructure deployment with pilot programs to validate, executed by AI agents under human checkpoints. (hxs-7 decommissioned 2026-08-27; hxs-20 and hxs-21 added 2026-08-28.)</p>
 <h2 id="how-this-repository-works">How this repository works</h2>
-<ul><li>Every assignment begins as a goal in <code>goals/</code>. See <code>goals/README.md</code>.</li><li>Agents work in lanes under <code>agents/&lt;agent-name&gt;/</code>. See <code>agents/README.md</code>.</li><li>Decisions are recorded as Key Decision Documents (KDDs) in <code>governace/decisions/</code>.</li><li>Issues, action items, and lessons live in <code>knowledge/</code>.</li><li>Operations scripts live in <code>scripts/</code> and follow the approved Bash/SSH fleet-control pattern. Ansible is not part of this architecture.</li><li>Agent alignment (skills, trigger words, communication contract) is in <code>AGENTS.md</code>.</li></ul>
+<ul><li>Every assignment begins as a goal in <code>governace/goals/</code>. See <code>governace/goals/README.md</code>.</li><li>Agents work in lanes under <code>agents/&lt;agent-name&gt;/</code>. See <code>agents/README.md</code>.</li><li>Decisions are recorded as Key Decision Documents (KDDs) in <code>governace/decisions/</code>.</li><li>Issues, action items, and lessons live in <code>knowledge/</code>.</li><li>Operations scripts live in <code>scripts/</code> and follow the approved Bash/SSH fleet-control pattern. Ansible is not part of this architecture.</li><li>Agent alignment (skills, trigger words, communication contract) is in <code>AGENTS.md</code>.</li></ul>
 <h2 id="truth-state-labels">Truth-state labels</h2>
 <p>Every factual claim about infrastructure state carries one of these labels:</p>
 <ul><li><code>TARGET-STATE</code> — approved design, not yet built</li><li><code>AS-BUILT</code> — implemented and verified in this repository</li><li><code>DISCOVERED</code> — observed on a running system, with evidence and date</li><li><code>PROPOSED</code> — under discussion, not approved</li><li><code>LEGACY</code> — historical, kept for rationale only</li></ul>
 <p>A design document is not evidence that something is installed. Runtime claims require current evidence with a date.</p>
 <h2 id="layout">Layout</h2>
-<p>Operational now: <code>goals/</code>, <code>knowledge/</code>, <code>agents/</code>, <code>scripts/</code>, <code>servers/</code>, <code>pilots/</code>. Future placeholders: <code>tests/</code>. [2026-08-30: the <code>.kimi-code/agents/</code> placeholder was removed — executable sub-agent definitions will be re-added here when the phase-transition KDD lands (see <code>agents/README.md</code>).]</p>
+<p>Operational now: <code>governace/goals/</code>, <code>knowledge/</code>, <code>agents/</code>, <code>scripts/</code>, <code>servers/</code>, <code>pilots/</code>. Future placeholders: <code>tests/</code>. [2026-08-30: the <code>.kimi-code/agents/</code> placeholder was removed — executable sub-agent definitions will be re-added here when the phase-transition KDD lands (see <code>agents/README.md</code>).]</p>
 </main>
-<footer>Source of truth: <code>README.md</code> (sha256 <code>3a56ecc1395615862fbbf13193a4922d96b44f08f8170aa5e21134319a94f6b3</code>) · rendered 2026-08-30T00:36Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+<footer>Source of truth: <code>README.md</code> (sha256 <code>a4ed39f7a695660474899f8a8b61a6aeb8d0e5a8c20bbd7576d00c99ca2a4a9f</code>) · rendered 2026-08-30T08:42Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
 
 </body>
 </html>

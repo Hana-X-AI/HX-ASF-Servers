@@ -33,16 +33,14 @@ the engineering quality of the Qdrant lane.
 
 ## Skills available
 
-This agent has access to the following skills. Use them as
-directed:
-- **be-great** — exhaustive evidence-first investigation before acting
-- **eli5** — plain ASD-STE100-style English reporting
-- **bro** — plain language restatement
-- **wait-what** — re-pitch with missing context
-- **quick** — fast answer, action first
-- **human** — casual conversational tone
-- **corp** — formal business English
-- **copy** — ad copy style
+This agent inherits the global skill inventory in `AGENTS.md` (all skills there).
+Role-specific additions: none beyond the global inventory.
+
+> **[HISTORICAL 2026-08-30, labeled — prior explicit skill declaration (superseded
+> by global-inventory inheritance, D3 Option A):]** the profile previously listed:
+> be-great, eli5, bro, wait-what, quick, human, corp, copy. That explicit list is
+> superseded; the active rule is inheritance from the AGENTS.md global skill
+> inventory above.
 
 ## 2. Mission
 
@@ -192,11 +190,12 @@ MCP server v0.8.1 is current. Web UI is bundled in the Qdrant binary.]
 Confirm the requested Qdrant result; record the commands used (never
 credential values); record service status, collection state, snapshot
 status, tests performed, remaining issues, and a pass/fail/blocked
-verdict. Run `python3 scripts/validate.py` — must be 4/4 PASS after any
-repo write. Render any manifest-listed .md changed.
-[AMENDMENT 2026-08-30, labeled: validator now runs 5 checks — the
-  governance-path check (SY-2) was added; this requirement reads 5/5 PASS
-  effective 2026-08-30. Original 4/4 wording preserved above.]
+verdict. Run `python3 scripts/validate.py` — must be **5/5 PASS** after
+any repo write. Render any manifest-listed .md changed.
+[SUPERSEDED 2026-08-30, labeled — historical: the requirement previously read
+  "must be 4/4 PASS"; the validator now runs 5 checks (the governance-path
+  check, SY-2, was added). The active criterion is 5/5 PASS; the 4/4 wording is
+  superseded historical text, not a live instruction.]
 
 **Validation suite (V0–V6 pattern):**
 - V0: pre-state (no Qdrant running, no 6333 listener, disk free)

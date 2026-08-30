@@ -2,8 +2,15 @@
 
 ## Skills and trigger words
 
-Twelve owner-installed skills govern how work is done in this repository. They live in
+Twenty-three owner-installed skills govern how work is done in this repository. They live in
 `.kimi-code/skills/` (project scope) and also at user scope in `~/.kimi-code/skills/`.
+
+**Global skill inventory (D3 / Option A, ratified 2026-08-30):** this section IS
+the global skill inventory. Every agent inherits ALL skills listed below by
+default. Agent profiles therefore do not enumerate the common skills; a profile's
+"Skills available" section lists only role-specific additions beyond this global
+inventory (e.g. `create-agent`, the QA-skills subset). To change the effective
+set, amend this inventory — do not list the common set per-profile.
 
 - **be-great** — owner trigger: **"be great"**. Exhaustive, evidence-first investigation:
   establish authority, verify current facts, reconcile contradictions, follow downstream
@@ -38,10 +45,70 @@ Twelve owner-installed skills govern how work is done in this repository. They l
 - **create-agent** — owner trigger: **"create agent" / "new agent" / "register
   agent"**. Guides the creation of a new HX factory agent: reads
   `governace/templates/agent-checklist.md` and walks each step, validating after each.
+- **goal-decompose** — owner trigger: **"decompose goal" / "break the goal into
+  work orders"**. Spec-driven goal decomposition for James: turns a confirmed
+  scope-lock/goal contract into atomic work orders with dependency + parallelization
+  metadata (adapted from automazeio/ccpm, MIT). Scripts report goal-tree status.
+- **work-status** — owner trigger: **"what's our status" / "standup" / "what's
+  blocked"**. Deterministic goal/work-order status, standup, blocked, in-progress,
+  next, and validate reporting for Mia (adapted from automazeio/ccpm, MIT).
+  Read-only reporting to the governor; never mutates goal files.
+- **grill-me** — owner trigger: **"grill me"**. Scope-lock interview for James:
+  clarifies objective, target, boundaries, exclusions, acceptance, and assigned
+  lane before a work order dispatches. LIMITED to 5 questions (owner directive
+  2026-08-30) — not relentless (adapted from mattpocock/skills, MIT).
+- **ai-test-generation** (Bailey) — owner trigger: **"generate tests"**. Staged
+  pipeline from specs/PRDs/diffs/bugs/OpenAPI to traceable test code: requirements
+  extraction → risk analysis → coverage matrix → oracles → pytest (zod for TS
+  contract tests), reviewed before Gordon executes (adapted from
+  petrkindlmann/qa-skills v3.0.0, MIT).
+- **test-planning** (Bailey) — owner trigger: **"sprint test plan" / "release
+  test plan" / "test estimation"**. Authors sprint/release test plans: feature
+  decomposition, requirements-to-test coverage mapping, effort estimation by test
+  type, risk×effort prioritization, and buffered scheduling (adapted from
+  petrkindlmann/qa-skills v3.0.0, MIT).
+- **test-strategy** (Bailey) — owner trigger: **"test strategy" / "QA strategy
+  doc" / "QA roadmap"**. Produces the multi-quarter QA strategy: scope,
+  risk-based prioritization, test pyramid analysis, entry/exit criteria, quality
+  gates, KPIs, and a phased timeline (adapted from petrkindlmann/qa-skills
+  v3.0.0, MIT).
+- **qa-project-context** (Bailey) — owner trigger: **"set up QA context" /
+  "configure testing"**. Authors `governace/qa/<project-name>/qa-project-context.md`
+  — the single file every other QA skill reads first for tech stack, environments,
+  quality goals, and risk areas (adapted from petrkindlmann/qa-skills v3.0.0, MIT).
+- **test-environments** (Gordon) — owner trigger: **"set up test environment" /
+  "staging parity"**. Designs and stands up test environment tiers (dev/CI/
+  preview/staging/prod), audits parity against production, and stubs external
+  dependencies at the HTTP boundary (adapted from petrkindlmann/qa-skills
+  v3.0.0, MIT).
+- **release-readiness** (Gordon) — owner trigger: **"release ready" / "go/no-go"
+  / "rollback plan"**. Evidence-based go/no-go qualification: go/no-go checklist,
+  smoke suite design, staged rollout validation, rollback criteria defined before
+  deploy, and post-deployment verification (adapted from petrkindlmann/qa-skills
+  v3.0.0, MIT).
+- **test-reliability** (Gordon) — owner trigger: **"flaky test" / "test
+  stability" / "quarantine flaky test"**. Flake classification by root cause,
+  resilient locator patterns, environment-aware and data healing, confidence-scored
+  repair with evidence, and quarantine management (adapted from
+  petrkindlmann/qa-skills v3.0.0, MIT).
+- **ci-cd-integration** (Gordon) — owner trigger: **"CI/CD" / "test in CI" /
+  "shard tests in CI"**. Wires the pipelines that run the test suites: trigger-to-suite
+  mapping, sharding, evidence artifact storage, flaky quarantine, coverage gates,
+  and keyless deploy (adapted from petrkindlmann/qa-skills v3.0.0, MIT).
 
 When the owner uses a trigger word, invoke the matching skill first and follow its
 workflow in full — do not partially apply it. Project agents and sub-agents working in
 this repository must honor these skills as well.
+
+[OPEN CORRECTION 2026-08-30, labeled, append-only — SKILL INVENTORY GROWTH 14 → 23:
+the inventory above grew from fourteen (14) to twenty-three (23) skills. The nine (9)
+additions are: **grill-me**, **ai-test-generation**, **test-planning**,
+**test-strategy**, **qa-project-context**, **test-environments**, **release-readiness**,
+**test-reliability**, and **ci-cd-integration** — the base fourteen (be-great through
+work-status) are preserved in the inventory above. Authority: owner directive
+2026-08-30 (grill-me limited to 5 questions) and owner ratification of the QA skill
+subset (KDD-0019); effective 2026-08-30. The prior fourteen-skill state is preserved as
+history above; the current inventory is authoritative.]
 
 Default reporting voice: **corporate** (executive-summary tone). A voice trigger
 overrides the default for that reply; when style skills conflict, the owner's most
@@ -273,6 +340,29 @@ doubt, act reversibly and report rather than pause.
   via OmniRoute hxs-8) — owner-assigned 2026-08-29. Qwen-X is a local
   lane (no OD-14 cloud metering). OD-14 scope unchanged (nine cloud lanes;
   raphael is local). Authority: KDD-0018.]
+  [OPEN CORRECTION 2026-08-30, labeled, append-only — JOB-FAMILY LANE DEFAULTS
+  (owner decision, multi-agent alignment session; KDD-0013 Amendment 11): lane
+  defaults are now per JOB FAMILY. This supersedes the per-agent lanes above for
+  the affected agents (prior lanes preserved as history): Rob (Agentic SWE) →
+  Coder-X (hxs-2, local) · Rick (Infra/Ops) → Coder-X (hxs-2, local) · Platform
+  Systems (Trinity, Morpheus, John, Chris, Wayne, Quinn, Raphael, Erwin +
+  future SE) → Z.ai GLM 5.2 free (`z-ai/glm-5.2:free`, Decart), replacing their
+  prior per-agent lanes. Governor (James) → DeepSeek V4 Flash (pinned); PMO
+  (Mia, Carol) → GPT-OSS 120B; QA (Bailey, Gordon) → Qwen3.8 Flash. Per-agent
+  overrides within a family remain supported. Authority: owner decision
+  2026-08-30; KDD-0013 Amendment 11.] [Note: "Governor (James)" reads as the
+  GOVERNOR ROLE — the persona renamed from Flash to James (governor-rename
+  correction below, 2026-08-30); the model lane DeepSeek V4 Flash is unchanged.]
+  [OPEN CORRECTION 2026-08-30, labeled, append-only — BAILEY QA LANE ON OD-14
+  ALLOWLIST: Bailey's QA-family lane Qwen3.8 Flash
+  (`openrouter/qwen/qwen3.8-flash`, provider Alibaba Cloud International, via
+  OmniRoute hxs-8) is included in the OD-14 owner-lane allowlist and metering
+  scope. OD-14 scope is now TEN cloud lanes — trinity, rob, mia, gordon,
+  carol, chris, kimi-k3, wayne, quinn (unmetered), bailey (metered) —
+  superseding the nine-lane scope above for Bailey (preserved as history).
+  Activation-gated: not exercised until Bailey's activation gate clears
+  (KDD-0019); no metered spend before activation. Authority: owner decision
+  2026-08-30 (KDD-0013 Amendment 11) + KDD-0019; KDD-0013 Amendment 12.]
 - **Chief of Staff** (owner directive 2026-08-28, KDD-0012). **Mia**
   (`agents/mia/`) manages the work — planning, coordination, distribution to the
   engineering lanes, breakage triage, and status reporting to Kimi-K3. The
@@ -356,6 +446,16 @@ needs them. The standard profile and charter templates at
 | 2 | AI Infrastructure and Operations Engineering | Maintain the underlying computing environment | rick |
 | 3 | AI Platform Systems Engineering | Install, configure, operate, upgrade, recover platform services | morpheus (DSH), gordon (QA), trinity (OmniRoute), john (Ollama), chris (PostgreSQL), wayne (Redis), quinn (Qdrant), raphael (LightRAG) |
 | 4 | AI-PMO | Portfolio, project, research, documentation, human-facing reporting | mia, carol |
+
+**QA lane-config placement (cross-family note, KDD-0019):** Bailey belongs to the
+QA lane-config job family (KDD-0013 Amendment 11), which is not a KDD-0016
+taxonomy family — so she has no taxonomy-table row. Gordon is the **explicit
+exception**: although he also maps under the QA lane-config family as the
+execution/qualification lane, he additionally keeps his Family 3 Platform
+Systems taxonomy row (qualification role) — that row is his, and it does not
+imply Bailey has a row. Bailey is the horizontal test-authoring QA lane and is
+mapped with Gordon under the QA lane-config family only. Per-agent lane
+assignments (including the QA Qwen3.8 Flash default) live in KDD-0013.
 
 **Governor:** above all families. Governs (goals, gates, acceptance, owner
 escalation); does not belong to any family.

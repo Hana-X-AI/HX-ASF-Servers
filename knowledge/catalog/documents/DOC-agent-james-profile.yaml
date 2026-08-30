@@ -1,0 +1,55 @@
+document:
+  id: "DOC-agent-james-profile"
+  title: "Agent profile — james (full operating contract; governor of the HX agentic software factory)"
+  type: "profile"
+  declared_purpose: "Full operating contract for james as governor of the HX agentic software factory: governs (goals, gates, acceptance, owner escalation), does not belong to any KDD-0016 taxonomy family (sits above all families). Governor role transferred to Flash on 2026-08-29 (owner/Agent Zero appointment) and the Flash persona renamed to James on 2026-08-30; lane DeepSeek V4 Flash via OmniRoute. Directs work through Mia (Chief of Staff, KDD-0012) per the governor→Mia→lanes workflow."
+  source:
+    author: "Agent Zero / governor transition (AGENTS.md governor corrections)"
+    provided_by: "Agent Zero"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/agents/james/profile.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-30T09:00:00Z"
+  owner: "james (governor role); Agent Zero (ratification)"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: [james]
+    repositories: [HX-ASF-Servers]
+    environments: [fleet]
+  version: ""
+  status: "adopted"
+  authority_level: "ratified-governance"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "references"
+      target: "DOC-agent-james-charter"
+      note: "charter (lane bounds)"
+    - predicate: "references"
+      target: "DOC-repo-governance-agents-md"
+      note: "governor role + persona rename corrections (AGENTS.md)"
+    - predicate: "references"
+      target: "DOC-kdd-0012-mia-chief-of-staff"
+      note: "Chief of Staff workflow"
+  validation:
+    validated_at: "2026-08-30T09:30:00Z"
+    freshness: "current"
+    review_due: "on owner sign-off of profile change"
+  sha256: "133958ad7ebbcc6f2a911adc47c56850b2f8e93c7df66b450d0a29f6e5cec46e"
+  hash_history:
+    - sha256: "3a8600d30cf363599e225985ebe7df08708497d81972ec0d8d59e4a084b7751a"
+      timestamp: "2026-08-30T09:00:00Z"
+      reason: "initial cataloging"
+    - sha256: "a114f7d75f3e304109cdc0433deb1441ba96325472a20075c95ed7ed98876149"
+      timestamp: "2026-08-30T09:30:00Z"
+      reason: "D3 Option A: profile Skills available now references the global skill inventory (role-specific additions only)"
+    - sha256: "133958ad7ebbcc6f2a911adc47c56850b2f8e93c7df66b450d0a29f6e5cec46e"
+      timestamp: "2026-08-30T09:45:00Z"
+      reason: "2026-08-30 review batch: skills historical block (create-agent retained as role-specific)"
+
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/james/profile.md"

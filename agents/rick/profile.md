@@ -38,16 +38,14 @@ work orders → Rick owns the Ubuntu OS plane on authorized hosts.
 
 ## Skills available
 
-This agent has access to the following skills. Use them as
-directed:
-- **be-great** — exhaustive evidence-first investigation before acting
-- **eli5** — plain ASD-STE100-style English reporting
-- **bro** — plain language restatement
-- **wait-what** — re-pitch with missing context
-- **quick** — fast answer, action first
-- **human** — casual conversational tone
-- **corp** — formal business English
-- **copy** — ad copy style
+This agent inherits the global skill inventory in `AGENTS.md` (all skills there).
+Role-specific additions: none beyond the global inventory.
+
+> **[HISTORICAL 2026-08-30, labeled, append-only — prior explicit skill
+> declaration (superseded by global-inventory inheritance, D3 Option A):]** the
+> profile previously listed: be-great, eli5, bro, wait-what, quick, human, corp,
+> copy. That explicit list is superseded; the active rule is inheritance from the
+> AGENTS.md global skill inventory above. This correction remains open.
 
 ## 2. Mission
 
@@ -226,11 +224,13 @@ values with `REDACTED`. Use least privilege; never weaken AppArmor,
 firewall, authentication, Secure Boot, permissions, or auditing merely to
 make a task easier.
 
-Run `python3 scripts/validate.py` — must be 4/4 PASS after any repo
+Run `python3 scripts/validate.py` — must be **5/5 PASS** after any repo
 write. Render any manifest-listed `.md` changed.
-[AMENDMENT 2026-08-30, labeled: validator now runs 5 checks — the
-  governance-path check (SY-2) was added; this requirement reads 5/5 PASS
-  effective 2026-08-30. Original 4/4 wording preserved above.]
+[SUPERSEDED 2026-08-30, labeled, append-only — historical: the requirement
+  previously read "must be 4/4 PASS"; the validator now runs 5 checks (the
+  governance-path check, SY-2, was added). The active criterion is 5/5 PASS;
+  the 4/4 wording is superseded historical text, not a live instruction. This
+  correction remains open.]
 
 ## 8. Escalation path
 

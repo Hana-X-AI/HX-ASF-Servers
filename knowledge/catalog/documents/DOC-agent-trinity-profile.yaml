@@ -69,7 +69,7 @@ document:
     validated_at: "2026-08-29T12:30:00Z"
     freshness: "current"
     review_due: "on any owner amendment; the commit CANDIDATE-claimed wording refresh (lines 110-118, 179) RESOLVED 2026-08-27 by the governor's row-9 edit (see notes.commit_wording_resolution)"
-  sha256: "e2bb1ca262a198015d242231fdf4ff3987206eefe82d272938da7a9bfa3dab55"
+  sha256: "991319bf7691aff24b72430e6210da230656d19e04e487c97c0858e16faa4909"
   hash_history:
     - sha256: "2d3b45e23952fa7f75351dc9b30c45514a219de9cf4776a76e92ed2f125c5fe4"
       timestamp: "2026-08-29T12:30:00Z"
@@ -77,6 +77,9 @@ document:
     - sha256: "e2bb1ca262a198015d242231fdf4ff3987206eefe82d272938da7a9bfa3dab55"
       timestamp: "2026-08-29T12:30:00Z"
       reason: "re-mint after 2026-08-29 normalization + corrections"
+    - sha256: "991319bf7691aff24b72430e6210da230656d19e04e487c97c0858e16faa4909"
+      timestamp: "2026-08-30T11:21:44Z"
+      reason: "2026-08-30 review batch: sha256 refresh"
   canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/trinity/profile.md"
 notes:
   ratification: "MID-RUN FLIP (2026-08-27T04:16Z, during this ingestion wave): owner decision OD-02 = O1 adopt-as-corrected (state log row 5). The governor flipped the profile DRAFT -> ACTIVE — frontmatter description now reads 'Owner-ratified 2026-08-27 (KDD-0008, O1)', title line '(operating profile)', banner 'ACTIVE operating profile — owner-ratified 2026-08-27 (KDD-0008, O1 adopt-as-corrected). Layer 1 work still requires OD-12 authorization + OD-03 readiness acknowledgement.', Document status 'Profile state: ACTIVE — owner-ratified 2026-08-27 (KDD-0008 O1; goal OD-02 closed)' (all VERIFIED PRESENT at re-verification 04:25Z). Record fields flipped: status draft -> active; authority_level delegated-contract -> ratified-governance (the dispatch-brief candidate mapping — delegated-contract per the pre-flip DOC-backend-meta-x convention — held at run start and was consumed by the ratification before this record entered the catalog). Hash chain: 9b4d13e5… (draft, first hash at run start 04:05Z) -> d9c79b4b… (ratified, this record's minted content)."

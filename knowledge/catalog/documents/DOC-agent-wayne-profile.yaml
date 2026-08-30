@@ -34,9 +34,12 @@ document:
     validated_at: "2026-08-29T12:30:00Z"
     freshness: "current"
     review_due: "on owner amendment"
-  sha256: "a42aef1a99f5343a8174db238148aa443744614fb78e3cba644a8e708b312e78"
+  sha256: "9e65ed635b783db8d761bfd408e01956e01533e6b21e192a4c2cb6c593a1ae4d"
   hash_history:
     - sha256: "a42aef1a99f5343a8174db238148aa443744614fb78e3cba644a8e708b312e78"
       timestamp: "2026-08-29T12:30:00Z"
       reason: "initial cataloging"
+    - sha256: "9e65ed635b783db8d761bfd408e01956e01533e6b21e192a4c2cb6c593a1ae4d"
+      timestamp: "2026-08-30T11:21:44Z"
+      reason: "2026-08-30 review batch: sha256 refresh"
   canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/wayne/profile.md"

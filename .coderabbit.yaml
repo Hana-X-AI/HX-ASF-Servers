@@ -20,12 +20,63 @@ reviews:
     - "!**/__pycache__/**"
 
   path_instructions:
+    # --- Append-only record classes (A3 artifact-class policy) ---
+    # Preserve ratified/historical text; add dated, labeled amendments or
+    # supersessions. Never demand silent rewrites.
+    - path: "governace/decisions/*.md"
+      instructions: "Formal KDD decision records are append-only. Preserve ratified text; add dated, labeled amendments or supersessions rather than rewriting."
+    - path: "governace/goals/2026-*.md"
+      instructions: "Dated goal records are append-only. Preserve approved goal history through dated status transitions and labeled amendments; keep active status and current success conditions explicit."
+    - path: "pilots/**/*-state-log.md"
+      instructions: "State logs are append-only. Add dated rows; do not rewrite or remove prior rows."
+    - path: "knowledge/catalog/receipts/*.md"
+      instructions: "Catalog receipts are append-only. Preserve prior receipts; add new dated receipts rather than rewriting."
+    - path: "pilots/**/*-receipt.md"
+      instructions: "Signed receipts are append-only. Preserve provenance and original content; add dated corrections rather than rewriting."
+    - path: "pilots/**/*-evidence.md"
+      instructions: "Evidence records are append-only. Preserve captured evidence; add dated corrections rather than rewriting."
+    - path: "pilots/**/*-acceptance*.md"
+      instructions: "Acceptance records are append-only. Preserve original acceptance content; add dated corrections rather than rewriting."
+    - path: "pilots/**/*-reconciliation.md"
+      instructions: "Gate reconciliation/acceptance records are append-only. Preserve original content; add dated corrections rather than rewriting."
+    - path: "governace/status-reporting/*.md"
+      instructions: "Point-in-time status/change records are append-only. Corrections must be dated and labeled; do not rewrite the historical record."
+
+    # --- Current-state live artifacts (A3 artifact-class policy) ---
+    # Correct directly; Git preserves history. Do not demand append-only
+    # amendments on live operational source.
+    - path: "AGENTS.md"
+      instructions: "Live governance authority document. Correct directly; Git preserves history. Do not demand append-only amendments."
+    - path: ".kimi-code/skills/**"
+      instructions: "Live operational skill source. Correct obsolete or unsafe instructions directly; do not retain incorrect instructions inline for history — Git preserves history."
+    - path: "governace/process/**"
+      instructions: "Live operational process. Diagrams and instructions must state current truth directly; keep historical wording only in a concise revision note."
+    - path: "governace/templates/**"
+      instructions: "Live template source. Update requirements directly and remove superseded behavior."
+    - path: "governace/goals/README.md"
+      instructions: "Live goals index. Update directly."
+    - path: "governace/goals/_template.md"
+      instructions: "Live template source. Update directly."
+    - path: "agents/**/profile.md"
+      instructions: "Current operating profile. Active roles, lanes, skills, and paths must be unambiguous; preserve formal appointment history only in labeled provenance sections."
+    - path: "agents/**/charter.md"
+      instructions: "Current operating charter. Correct directly; preserve formal appointment history only in labeled provenance sections."
+    - path: "servers/**"
+      instructions: "Operational configuration and implementation plans are current-state documents unless they explicitly identify themselves as historical evidence. Correct directly."
     - path: "scripts/**"
-      instructions: "stdlib-only Python is a hard repository rule; flag any third-party import."
+      instructions: "Live operational source. Correct directly; stdlib-only Python is a hard repository rule — flag any third-party import."
+    - path: ".github/**"
+      instructions: "Live CI configuration. Correct directly."
     - path: "pilots/**/fixtures/**"
       instructions: "Fixtures are versioned and alias-parameterized; flag hard-coded model tags, missing alias recording in results, and any persisted thinking content."
-    - path: "**/*.md"
-      instructions: "Governance records are append-only; flag silent rewrites of history — corrections must be open and labeled."
+
+    # --- Hybrid catalog records (A3 artifact-class policy) ---
+    # Metadata mutable; history immutable. Update current fields directly,
+    # preserve provenance/hash_history/audit, append new events, reject dupes.
+    - path: "knowledge/catalog/documents/*.yaml"
+      instructions: "Catalog records are hybrid: update current metadata, status, hashes, relationships, and validation dates directly; preserve existing hash_history, provenance, and audit events; append new history events; reject duplicate history events."
+    - path: "knowledge/catalog/index.yaml"
+      instructions: "Catalog index is hybrid: update current counts, ordering, and metadata directly; preserve existing history; append new events; reject duplicates."
 
   auto_review:
     enabled: true

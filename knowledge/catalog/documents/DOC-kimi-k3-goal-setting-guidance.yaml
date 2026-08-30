@@ -37,8 +37,8 @@ document:
       target: "/home/hxsa/opt/local-tkv/agent-zero-docs/goals/codex_20260824_1112_kimi-k3_goal-setting-and-agent-invocation-guidance.md"
       note: "source (735 lines, SHA-256 8c7e1397…), unmodified historical input"
   validation:
-    validated_at: "2026-08-25T19:08:00Z"
+    validated_at: "2026-08-30T12:15:57Z"
     freshness: "current"
     review_due: "on owner decision to change the goal-setting or work-state system"
-  sha256: "d5c2739c56f7f7333ddd24e5f10d1f02f8a4845e448d1422fa9622fa8e531959"
+  sha256: "bcb80acd8f3384dd70a21f37451b4b4f36b52ea3cfb5aab7f9c7da29581ec5ec"
   canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/kimi-k3/goal-setting-guidance.md"

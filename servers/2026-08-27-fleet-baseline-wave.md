@@ -54,6 +54,14 @@ Contradictions or Gaps: one apparent — hxs-8 live NTP already pinned vs the
 Task May Proceed: YES
 ```
 
+[LABELED CORRECTION 2026-08-30, append-only — GOAL PATH RELOCATED: the goal
+references above record the historical `goals/2026-08-27-fleet-baseline-deployment.md`
+path as written at review time (Commission row and Relevant Files list). The goal
+tree was relocated to `governace/goals/` on 2026-08-30 (KDD-0002 Amendment 1);
+the current path is `governace/goals/2026-08-27-fleet-baseline-deployment.md`.
+The historical `goals/` entries above are preserved unchanged as the dated record;
+read them as the relocated tree per the KDD-0002 relocation note.]
+
 Local-model-first rule (owner standing directive): (1) this work order is **not model-required** — deterministic fleet administration executed by the script library with scripted verification; no model inference produced any work product. (2) Backend: n/a. The session substrate is orchestration mechanics per the rule's stated exception. No cloud contact occurred.
 
 ## 2. Authority and target confirmation

@@ -48,16 +48,14 @@ You are not a senior developer, emergency operator, substitute specialist, or un
 
 ## Skills available
 
-This agent has access to the following skills. Use them as
-directed:
-- **be-great** — exhaustive evidence-first investigation before acting
-- **eli5** — plain ASD-STE100-style English reporting
-- **bro** — plain language restatement
-- **wait-what** — re-pitch with missing context
-- **quick** — fast answer, action first
-- **human** — casual conversational tone
-- **corp** — formal business English
-- **copy** — ad copy style
+This agent inherits the global skill inventory in `AGENTS.md` (all skills there).
+Role-specific additions: none beyond the global inventory.
+
+> **[HISTORICAL 2026-08-30, labeled, append-only — prior explicit skill
+> declaration (superseded by global-inventory inheritance, D3 Option A):]** the
+> profile previously listed: be-great, eli5, bro, wait-what, quick, human, corp,
+> copy. That explicit list is superseded; the active rule is inheritance from the
+> AGENTS.md global skill inventory above. This correction remains open.
 
 ## 2. Constitutional boundary — control plane only
 
@@ -188,7 +186,12 @@ Execution Authorized: YES | NO
 
 The task may not enter execution if the outcome, authority, target, acceptance criteria, or material boundary is ambiguous.
 
-The Intent and Authority Receipt is recorded as a goal file in `goals/` per this repository's goal convention; the goal file is the receipt's durable home.
+The Intent and Authority Receipt is recorded as a goal file in `governace/goals/` per this repository's goal convention; the goal file is the receipt's durable home.
+[LABELED CORRECTION 2026-08-30, append-only — GOALS DIRECTORY MOVE: the goal
+directory was relocated from `goals/` to `governace/goals/` as part of the
+governance alignment batch; the former `goals/` path is preserved here as
+history. The active path is `governace/goals/`. Authority: governance alignment
+batch, 2026-08-30.]
 
 Kimi-K3 must commission a read-only knowledge-acquisition task when source material is remote, extensive, version-sensitive, or environment-specific. The acquisition agent must return a knowledge review receipt, provenance, gaps, contradictions, and a bounded context package. Kimi-K3 must not perform the operational retrieval itself (Phase M conditions excepted). Knowledge sources include the `/opt/tkv-local` technical knowledge base, surveyed per the standing directive with the be-great skill.
 
@@ -629,7 +632,7 @@ Every factory run must retain:
 14. Factory Completion Record
 15. Process Learning Record
 
-In this repository these artifacts live in or are linked from the task's goal file in `goals/`; substantial evidence packages get goal-linked files. Follow the current authoritative evidence location and naming rules. If none exist, propose a structure for human approval rather than inventing a new authority location.
+In this repository these artifacts live in or are linked from the task's goal file in `governace/goals/`; substantial evidence packages get goal-linked files. Follow the current authoritative evidence location and naming rules. If none exist, propose a structure for human approval rather than inventing a new authority location.
 
 ## 19. Factory completion record
 

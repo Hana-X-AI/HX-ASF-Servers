@@ -217,3 +217,48 @@ template, ST-5).]
 Rule: every work order on a capped lane must include the context_budget +
 capability_probe fields and a 4-token pre-dispatch probe (row-33 fix). No
 automatic lane substitution on failure — stop and escalate (KDD-0013).
+
+[Amendment 11 — 2026-08-30, labeled, append-only — JOB-FAMILY LANE DEFAULTS
+(owner decision, multi-agent alignment session): lane defaults are now assigned
+per JOB FAMILY (lane-config view, separate from the KDD-0016 taxonomy). These
+supersede the per-agent lanes recorded in amendments above for the affected
+agents; prior lanes preserved as history. Per-agent overrides within a family
+are supported and recorded as such.]
+
+| Job family | Members | Default lane | Model / provider | Status |
+| --- | --- | --- | --- | --- |
+| Governor (above all) | James | DeepSeek V4 Flash | via OmniRoute | pinned |
+| PMO | Mia, Carol | GPT-OSS 120B | `openai/gpt-oss-120b`, AkashML | replaces prior per-agent lanes |
+| QA | Bailey, Gordon | Qwen3.8 Flash | `qwen/qwen3.8-flash`, Alibaba Cloud Intl | Gordon override recorded 2026-08-29 |
+| Agentic SWE | Rob | Coder-X | `ollama-local/hx-qwen3.6-coderx-64k` (hxs-2) | supersedes GLM 5.3 Flash (amendment 3) |
+| Infra / Ops | Rick | Coder-X | `ollama-local/hx-qwen3.6-coderx-64k` (hxs-2) | supersedes Meta-X (original row) |
+| Platform Systems | Trinity, Morpheus, John, Chris, Wayne, Quinn, Raphael, Erwin (+ future SE) | Z.ai GLM 5.2 free | `z-ai/glm-5.2:free`, Decart | REPLACES current per-agent lanes (GLM 5.3 Flash / Qwen 3.8 2.4T / Meta-X / DeepSeek V4 Pro / GPT-OSS 120B / Nemotron / Qwen-X) — all fold into GLM 5.2 free |
+
+Notes: (1) Rob and Rick move to the local Coder-X lane (hxs-2); their prior
+lanes (GLM 5.3 Flash, Meta-X) are superseded. (2) Platform Systems members move
+from their ratified per-agent lanes to the cloud-free GLM 5.2 lane; Quinn's
+Nemotron 3 Ultra free tier folds in. (3) These are lane-default changes for
+future dispatch; no running campaign is interrupted. (4) The capability registry
+in Amendment 10 stands but its lane column is superseded by this table for the
+affected agents. Authority: owner decision 2026-08-30 (multi-agent alignment
+session, lane-defaults table LOCKED).
+
+[Amendment 12 — 2026-08-30, labeled, append-only — BAILEY QA LANE ON OD-14
+ALLOWLIST: the QA family default (Amendment 11) assigns Bailey Qwen3.8 Flash
+(`openrouter/qwen/qwen3.8-flash`, provider Alibaba Cloud International, via
+OmniRoute hxs-8) — the same provider lane as chris's original registration
+(KDD-0014, amendment 6). Reconciliation per CodeRabbit review: Bailey's lane is
+now included in the OD-14 owner-lane allowlist and metering scope. OD-14 scope
+is now TEN cloud lanes — trinity, rob, mia, gordon, carol, chris, kimi-k3,
+wayne, quinn (unmetered), bailey (metered) — superseding amendment 9's
+eight-lane scope and AGENTS.md's nine-lane scope for Bailey (preserved as
+history). Activation-gated: Bailey's lane is registered and allowlisted but NOT
+exercised until her activation gate clears (KDD-0019 activation gate:
+implemented usage, `.local.env` credential references, governor activation
+word). No metered spend accrues before activation. Usage control: same OD-14
+USD 100 cap and metered `usage_history` control; per-task identity verification
+per the amendment-2 cloud pattern (exact served-model id + session-start probe,
+fail closed). Authority: owner decision 2026-08-30 (QA job-family lane default,
+KDD-0013 Amendment 11, LOCKED) + Bailey registration KDD-0019; recorded here
+append-only to keep the OD-14 authorization data authoritative and consistent
+with KDD-0019.]

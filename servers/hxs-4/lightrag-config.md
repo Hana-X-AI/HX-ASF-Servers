@@ -131,7 +131,7 @@ modify the discovery record.
 ## Sources
 
 - `servers/hxs-4/2026-08-29-lightrag-install-evidence.md`
-- `goals/2026-08-29-lightrag-hxs4.md`
+- `governace/goals/2026-08-29-lightrag-hxs4.md`
 - `governace/status-reporting/change-lightrag-deploy-2026-08-29.md`
 - `servers/hxs-4/qdrant-config.md`
 - `agents/raphael/profile.md` (KDD-0018)

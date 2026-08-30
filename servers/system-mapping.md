@@ -97,6 +97,7 @@ deployment until the owner lifts the hold.
 |---|---|---|
 | rob | horizontal | Full-stack agentic software engineering — uses dev/test environments |
 | gordon | horizontal | Independent QA — qualifies on hxs-15 test environment |
+| bailey | horizontal | Sr. AI Testing Engineer — test plan + script authoring, no host (KDD-0019) |
 | mia | horizontal | Chief of Staff — management, coordination, routing |
 | carol | horizontal | Knowledge stewardship — catalog, no host |
 | governor | horizontal | Factory governor — control plane, no host |

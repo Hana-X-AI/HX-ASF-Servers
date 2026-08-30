@@ -38,12 +38,22 @@ Adopt option 3.
   status correction, goal-ID mapping, Appendix A provenance note).
 - `goals/` goal files are the designated durable work-state system. GitHub Projects
   is a deferred optional layer, introducible only by owner decision with a new KDD.
+  [HISTORICAL 2026-08-30, labeled: this `goals/` system-of-record designation is
+  superseded by Amendment 1 below — the durable goal tree relocated to
+  `governace/goals/` (2026-08-30). Read this designation as the relocated tree; do
+  not treat the removed root `goals/` path as current.]
 - `goals/_template.md` is upgraded to the contract subset; the goal file name
   (`<YYYY-MM-DD>-<slug>.md`) is the Goal ID.
+  [HISTORICAL 2026-08-30, labeled: `goals/_template.md` now lives at
+  `governace/goals/_template.md` (Amendment 1, 2026-08-30). The former path is
+  preserved here as history.]
 
 ## Consequences
 
 - One work-state authority exists: `goals/`. No board tooling is introduced now.
+  [HISTORICAL 2026-08-30, labeled: the work-state authority now lives under
+  `governace/goals/` per Amendment 1 (2026-08-30); this sentence is preserved as
+  the original consequence wording.]
 - In Phase M, a "fresh operational session" means a sub-agent dispatch, or bounded
   direct execution by Kimi-K3 under profile section 2.3 with the charter check
   recorded; owner review is the verifier fallback (profile section 11).
@@ -68,3 +78,20 @@ Adopt option 3.
   4. Goal-ID mapping to the goal file name added.
   5. Appendix A provenance noted as owner-provided historical input.
 - The source document remains unmodified as historical input.
+
+---
+
+## Amendment 1 (labeled, append-only, 2026-08-30) — durable goal tree relocated to `governace/goals/`
+
+**[OPEN CORRECTION 2026-08-30, labeled, append-only — GOAL TREE RELOCATED
+`goals/` → `governace/goals/`:** the durable goal tree designated by this KDD
+as the system of record has been relocated from the repository-root `goals/`
+directory to `governace/goals/` (S1 move, completed 2026-08-30). The
+designation and decision text of this KDD stand unchanged; only the physical
+home of the goal files changed. All goal files, their HTML siblings, and the
+goal template now live under `governace/goals/`; the root `goals/` directory
+no longer exists. Live references in this repository now use
+`governace/goals/`; historical references to `goals/` in this and other
+decision records are preserved as written and read as the relocated tree.
+Authority: S1 goal-tree move executed under the alignment batch, 2026-08-30;
+recorded here append-only per the documentation-governance contract.]**

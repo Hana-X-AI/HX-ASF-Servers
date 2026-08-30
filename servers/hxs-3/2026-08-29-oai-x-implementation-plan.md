@@ -2,7 +2,7 @@
 
 | Field | Value |
 | --- | --- |
-| Product of | Goal `goals/2026-08-29-oai-x-replace-meta-x.md` (draft, 2026-08-29) — this plan operationalizes it |
+| Product of | Goal `governace/goals/2026-08-29-oai-x-replace-meta-x.md` (draft, 2026-08-29) — this plan operationalizes it |
 | Author | Flash (governor) — planning only; no execution, no hxs-3 model mutation, no dispatch |
 | Lane this plan serves | john — Ollama engineer, KDD-0013 lane Meta-X → OAI-X transition |
 | Target | hxs-3 (192.168.50.202) — Ollama 0.32.15 serving runtime |
@@ -29,7 +29,8 @@
    supersession, original text preserved.
 4. **gpt-oss:20b availability UNVERIFIED** — not in `/opt/tkv-local`, no
    server record of it being pulled/served anywhere. SC-01 assumes
-   `ollama list | grep gpt-oss` will show it; must be proven live first.5. **Premise evidence is thin** — the "Meta-X too slow" claim rests on a single
+   `ollama list | grep gpt-oss` will show it; must be proven live first.
+5. **Premise evidence is thin** — the "Meta-X too slow" claim rests on a single
    OmniRoute 504 (`RATE_LIMIT_EXECUTION_TIMEOUT`) recorded in the LightRAG
    goal's LLM-binding correction; that was a routing-level timeout, already
    mitigated by LightRAG switching to local Chat-X. No same-basis A/B of
@@ -41,13 +42,13 @@
 
 | Source | Path | Role |
 |---|---|---|
-| Goal | `goals/2026-08-29-oai-x-replace-meta-x.md` | Scope, success conditions (SC-01..08), constraints |
+| Goal | `governace/goals/2026-08-29-oai-x-replace-meta-x.md` | Scope, success conditions (SC-01..08), constraints |
 | hxs-3 configured state | `servers/hxs-3/configuration.md` (2026-08-27, M8) | Ollama runtime, model store, GPU, services, hashes |
 | hxs-3 discovery | `servers/hxs-3/discovery.md` (2026-08-12) | As-found hardware (do not modify) |
 | Model lanes | `governace/decisions/KDD-0013-agent-model-lanes.md` | john/rick lanes, immutable-identity discipline |
 | Muse pilot adoption | `governace/decisions/KDD-0007-hxs3-muse-glimmer-tooling-adoption.md` | gpt-oss = task-shaped control; Meta-X ratified |
 | gpt-oss control context | `knowledge/catalog/documents/DOC-hxs3-gpt-oss-regular-pilot.yaml` | gpt-oss:20b spec (~21B total, 3.6B active MoE, native 128K, Apache-2.0); standing A/B qualification contract |
-| LightRAG LLM correction | `goals/2026-08-29-lightrag-hxs4.md` (OPEN CORRECTION) | 504 evidence; already switched to Chat-X local |
+| LightRAG LLM correction | `governace/goals/2026-08-29-lightrag-hxs4.md` (OPEN CORRECTION) | 504 evidence; already switched to Chat-X local |
 | Registry | `servers/SERVER-REGISTRY.md` hxs-3 row | Current-state Meta-X |
 
 ## Target host facts (from configuration.md — VERIFIED)
@@ -82,13 +83,58 @@
      target context.
    - If a registry manifest check is unsupported or inconclusive on
      Ollama 0.32.15, an explicitly owner-approved **temporary pull
-     followed by cleanup** is the only fallback: `ollama pull gpt-oss:20b`,
-     record digest/size, then `ollama rm gpt-oss:20b` unless the owner
-     authorizes keeping it. This pull is a mutation — it requires owner
-     word and must be disclosed as such.
-   - **If availability, pullability, digest, size, or 64K-context
-     feasibility cannot be verified — STOP and escalate to the governor; do
-     not proceed** (goal SC-01 would fail).
+     retained through the V0 probe** is the only fallback: `ollama pull
+     gpt-oss:20b`, record digest/size, then **KEEP the model resident through
+     the V0 probe below** — do NOT `ollama rm` at this point. Removal happens
+     only after probe evidence is captured (or the owner authorizes keeping
+     the model for Step 1). This pull is a mutation — it requires owner word
+     and must be disclosed as such.
+   - **Executable 64K-context feasibility probe (V0, owner-approved):** after
+     availability/digest/size are confirmed, ensure gpt-oss:20b is **resident**
+     (via the fallback pull above, retained through the probe, or an
+     owner-authorized keep), then run a real 64K
+     request against gpt-oss:20b on hxs-3 and measure runtime/resource fit:
+     `curl http://192.168.50.202:11434/api/generate -d '{"model":"gpt-oss:20b","prompt":"<64K-context workload>","options":{"num_ctx":65536}}'` —
+     record response success, `total_duration`, tokens/sec, peak VRAM (from
+     `nvidia-smi` sampling), and confirm no OOM/refusal at the 64K operating
+     window. Registry metadata (digest/size) and pullability alone do NOT
+     satisfy the 64K feasibility requirement. The model stays resident through
+     probe-evidence capture; any cleanup/removal happens AFTER the probe
+     evidence is recorded.
+     [LABELED CORRECTION 2026-08-30, append-only — EXECUTABLE V0 PROBE: the
+     placeholder `<64K-context workload>` above is a literal, not a runnable
+     command. The executable procedure below replaces it: build a deterministic
+     64K-token prompt, send it with `num_ctx: 65536` and `stream: false`, then
+     validate `prompt_eval_count` against `TARGET_CTX` before accepting:
+     ```bash
+     # Deterministic 64K-token prompt: repeat a fixed unit until the token
+     # estimate exceeds TARGET_CTX (the unit averages ~1.0 token per word;
+     # prompt_eval_count is the authoritative check).
+     TARGET_CTX=65536
+     python3 - <<'PY'
+     unit = "The quick brown fox jumps over the lazy dog. "
+     # ~9 tokens per unit → ~7,300 units ≈ 65,700 tokens
+     prompt = (unit * 7300) + "\nSummarize the paragraph above in one sentence."
+     open("/tmp/oai-x-64k-prompt.txt", "w").write(prompt)
+     PY
+     PROMPT="$(cat /tmp/oai-x-64k-prompt.txt)"
+     RESP="$(curl --max-time 1800 http://192.168.50.202:11434/api/generate \
+       -d "$(python3 -c 'import json,sys; print(json.dumps({"model":"gpt-oss:20b","prompt":sys.stdin.read(),"stream":False,"options":{"num_ctx":65536}}))' <<< "$PROMPT")")"
+     PEC="$(printf '%s' "$RESP" | jq -r '.prompt_eval_count // 0')"
+     [ "$PEC" -ge "$TARGET_CTX" ] || { echo "OAI-X 64K probe FAIL: prompt_eval_count=$PEC (expected >=$TARGET_CTX)"; exit 1; }
+     printf 'OAI-X 64K probe OK: prompt_eval_count=%s total_duration=%s eval_count=%s\n' \
+       "$PEC" "$(printf '%s' "$RESP" | jq -r '.total_duration // 0')" \
+       "$(printf '%s' "$RESP" | jq -r '.eval_count // 0')"
+     ```
+     Record response success, `prompt_eval_count`, `total_duration`, tokens/sec,
+     peak VRAM (from `nvidia-smi` sampling), and confirm no OOM/refusal at the
+     64K operating window. A `prompt_eval_count` below `TARGET_CTX` means the
+     window was not actually consumed — that is a FAIL, not a pass. This
+     correction is append-only; the placeholder wording above is preserved as
+     history.]
+   - **If availability, pullability, digest, size, or 64K-context feasibility
+     (via the executable probe above) cannot be verified — STOP and escalate to
+     the governor; do not proceed** (goal SC-01/SC-09 would fail).
 4. Confirm Meta-X (`hx-muse-glimmer-64k`, digest `9dffb015…`) is still serving
    and is the only resident model.
 5. Record a **same-basis A/B baseline**: run the actual extraction/structured-
@@ -183,15 +229,43 @@
    assertion before touching Meta-X. This ordering keeps restart and rollback
    functional throughout the migration — the enabled preload service never
    points at a model that has been removed.
-3. Remove the operating-profile alias + artifact from the Ollama store:
+3. **Capture the complete manifest digest AND each complete blob digest BEFORE
+   any `ollama rm`** (the digests must be recorded pre-deletion — they cannot be
+   re-derived after the artifact is removed). Before removing anything, capture
+   the frozen identity's manifest and blob digests:
+   - `ollama show hx-muse-glimmer-64k` → record the FULL manifest digest (e.g.
+     `de878ce3…` expanded to the complete `sha256:` value in
+     `/usr/share/ollama/.ollama/models/manifests/registry.ollama.ai/…`).
+   - Record the manifest content verbatim (or its digest) and, from it, each
+     blob layer's **full digest** (the complete `sha256:...` values the manifest
+     references) — record each complete blob digest, not just the file name, so
+     the blob absence check below targets the exact recorded digest.
+   - Save this capture (manifest digest + each blob digest) to the evidence
+     record (state-log row / plan evidence) BEFORE proceeding. Do not delete
+     until both the manifest digest and every blob digest are captured.
+   Then remove the operating-profile alias + artifact from the Ollama store:
    `ollama rm hx-oai-x-64k` would be the inverse — for decommission, remove
    Meta-X aliases (`hx-muse-glimmer[-32k|-64k|-128k]`) and the frozen artifact
    only after the owner's explicit decommission word.
-4. Verify: `ollama list | grep muse-glimmer` → not listed (goal SC-06), and
-   `ollama-preload.service` remains enabled + successful on the new pin.
-5. Full rollback path preserved: re-pull Meta-X artifact (digest
-   `de878ce3…`), restore preload pin, restore OmniRoute route — each step has
-   an exact inverse recorded before mutation.
+4. Verify (goal SC-06, complete checks — not merely the alias): `ollama list |
+   grep muse-glimmer` → not listed AND the frozen Meta-X artifact's **manifest
+   and blobs are absent** from the store — `ollama show hx-muse-glimmer-64k`
+   fails, and:
+   - the **full manifest digest** captured pre-deletion in step 3 is no longer
+     present in the **manifest store**
+     (`/usr/share/ollama/.ollama/models/manifests/registry.ollama.ai/…` — check
+     the manifest store, not the blob store), and
+   - **each full blob digest** captured pre-deletion in step 3 is no longer
+     present in the **blob store**
+     (`/usr/share/ollama/.ollama/models/blobs` — check each recorded blob digest
+     separately; do not search the manifest digest among blobs).
+   Use the complete recorded digest values for both checks — never a truncated
+   prefix. `ollama-preload.service` remains enabled + successful on the new pin.
+5. Full rollback path preserved: re-pull Meta-X artifact using the **complete
+   recorded manifest digest** from step 3 (e.g. the full `de878ce3…` value, not
+   a truncated prefix) and its recorded blob digests, restore preload pin,
+   restore OmniRoute route — each step has an exact inverse recorded before
+   mutation.
 
 ### Step 6 — Final validation (V7)
 
@@ -235,13 +309,16 @@
 - **Owner:** decommission word for Meta-X.
 - **Governor:** KDD-0013 amendment + KDD-0007 supersession (labeled) after owner
   word; catalog receipt (Carol).
-- **Verification required (V0):** gpt-oss:20b pullability + digest + 64K
-  feasibility on hxs-3.
+- **Verification required (V0):** gpt-oss:20b pullability + digest + size, AND
+  an **executable 64K-context probe on hxs-3** (runtime/resource fit at
+  num_ctx 65536, no OOM/refusal) — registry metadata and pullability alone
+  cannot satisfy the 64K feasibility requirement; decommission of Meta-X stays
+  blocked until SC-09 passes.
 
 ---
 
 *Planning only. No hxs-3 mutation, no model change, no OmniRoute change
 performed. While drafting this plan, the governing goal
-(`goals/2026-08-29-oai-x-replace-meta-x.md`) and the wiki render manifest
+(`governace/goals/2026-08-29-oai-x-replace-meta-x.md`) and the wiki render manifest
 (`scripts/wiki/manifest.txt`) were updated in separate review/fix passes —
 no hxs-3 runtime or state files were modified as part of drafting this plan.*

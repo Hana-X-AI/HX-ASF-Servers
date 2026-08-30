@@ -37,7 +37,7 @@ document:
     validated_at: "2026-08-29T12:30:00Z"
     freshness: "current"
     review_due: "on phase transition (new KDD required per transition)"
-  sha256: "81ad99dbc70b0364101f92cb80bc1e2686ade14b1b23a2db3c66223520abe278"
+  sha256: "76a48f2809417f29cb29fae81d57b3be4a648932710f1466fc455a55ad17c5a1"
   hash_history:
     - sha256: "377e9eed954d121877b9547c51f9c68661e1cc54b226aa0c43cea9b313a0faf0"
       timestamp: "2026-08-29T12:30:00Z"
@@ -45,4 +45,7 @@ document:
     - sha256: "81ad99dbc70b0364101f92cb80bc1e2686ade14b1b23a2db3c66223520abe278"
       timestamp: "2026-08-29T12:30:00Z"
       reason: "re-mint after 2026-08-29 normalization + corrections"
+    - sha256: "76a48f2809417f29cb29fae81d57b3be4a648932710f1466fc455a55ad17c5a1"
+      timestamp: "2026-08-30T12:15:05Z"
+      reason: "2026-08-30 remediation register batch: sha256 refresh"
   canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/kimi-k3/charter.md"
