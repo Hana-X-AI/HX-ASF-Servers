@@ -45,7 +45,7 @@ generation using Qdrant as its vector storage backend.
 
 ## Inputs
 
-- the governor work orders, `goals/2026-08-29-lightrag-hxs4.md`,
+- the governor work orders, `governace/goals/2026-08-29-lightrag-hxs4.md`,
   `servers/system-mapping.md`;
   `/opt/tkv-local/LightRAG-main/` (v1.5.7 source, env.example, qdrant_impl.py,
   systemd template, docs);

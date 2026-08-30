@@ -1,0 +1,45 @@
+document:
+  id: "DOC-agent-james-charter"
+  title: "Agent charter — james (governor of the HX agentic software factory)"
+  type: "charter"
+  declared_purpose: "One-page authority on james's mission: governor of the HX agentic software factory. The governor role transferred to Flash on 2026-08-29 (owner/Agent Zero appointment) and the Flash persona was renamed to James on 2026-08-30; runs on DeepSeek V4 Flash via OmniRoute. Decomposes authorized goals, enforces evidence gates, directs work through Mia, escalates to Agent Zero. Family: above all (governor); horizontal (control plane)."
+  source:
+    author: "Agent Zero / governor transition (AGENTS.md governor corrections)"
+    provided_by: "Agent Zero"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/agents/james/charter.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-30T09:00:00Z"
+  owner: "james (governor role); Agent Zero (ratification)"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: [james]
+    repositories: [HX-ASF-Servers]
+    environments: [fleet]
+  version: ""
+  status: "adopted"
+  authority_level: "ratified-governance"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "references"
+      target: "DOC-agent-james-profile"
+      note: "full operating contract"
+    - predicate: "references"
+      target: "DOC-repo-governance-agents-md"
+      note: "governor role + persona rename corrections (AGENTS.md)"
+  validation:
+    validated_at: "2026-08-30T09:00:00Z"
+    freshness: "current"
+    review_due: "on owner sign-off of charter change"
+  sha256: "57ea453cc49378c1de95287fda7355da13ff7ff63087affcf443cf68cfc3bfd9"
+  hash_history:
+    - sha256: "57ea453cc49378c1de95287fda7355da13ff7ff63087affcf443cf68cfc3bfd9"
+      timestamp: "2026-08-30T09:00:00Z"
+      reason: "initial cataloging"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/james/charter.md"

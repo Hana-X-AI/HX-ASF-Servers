@@ -1,0 +1,55 @@
+document:
+  id: "DOC-agent-bailey-profile"
+  title: "Agent profile — bailey (full operating contract)"
+  type: "profile"
+  declared_purpose: "Full operating contract for bailey: identity (KDD-0016 standard template; QA lane-config family per KDD-0013 Amendment 11), mission, prohibitions, knowledge sources (pytest-main, zod-main, qa-skills-main), credential model, verification gates, test loop, escalation, provenance. Created 2026-08-30 per the alignment session."
+  source:
+    author: "James (governor)"
+    provided_by: "Agent Zero"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/agents/bailey/profile.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-30T08:11:53Z"
+  owner: "bailey (lane); Agent Zero (ratification)"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: [bailey]
+    repositories: [HX-ASF-Servers]
+    environments: [fleet]
+  version: ""
+  status: "adopted"
+  authority_level: "ratified-governance"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "references"
+      target: "DOC-agent-bailey-charter"
+      note: "charter (lane bounds)"
+    - predicate: "references"
+      target: "DOC-kdd-0019-bailey-registration"
+      note: "registration decision"
+    - predicate: "references"
+      target: "DOC-agent-gordon-profile"
+      note: "QA job family teammate (executes Bailey's authored tests)"
+  validation:
+    validated_at: "2026-08-30T09:30:00Z"
+    freshness: "current"
+    review_due: "on owner amendment"
+  sha256: "e39ac9ffdacdb1ecd51fd479f21ca5c303c7e4690372fb2ecb349a792f650a4f"
+  hash_history:
+    - sha256: "92ab4f945caa72b797d4b0c45dfd593df81a5eb71266ba790fee31057bef626a"
+      timestamp: "2026-08-30T08:11:53Z"
+      reason: "initial cataloging"
+    - sha256: "d93f189b5aacb4fcc2a11c956bc8f68063d99129c6696f22d209b06649821100"
+      timestamp: "2026-08-30T09:30:00Z"
+      reason: "D3 Option A: profile Skills available now references the global skill inventory (role-specific additions only)"
+    - sha256: "e39ac9ffdacdb1ecd51fd479f21ca5c303c7e4690372fb2ecb349a792f650a4f"
+      timestamp: "2026-08-30T09:45:00Z"
+      reason: "2026-08-30 review batch: bailey create-agent removed from role-specific skills (global-inventory inheritance)"
+
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/bailey/profile.md"

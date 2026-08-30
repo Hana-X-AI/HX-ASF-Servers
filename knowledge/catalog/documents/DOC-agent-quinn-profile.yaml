@@ -34,9 +34,13 @@ document:
     validated_at: "2026-08-29T12:30:00Z"
     freshness: "current"
     review_due: "on owner amendment"
-  sha256: "64e03b76aad54f1c70b15278ddaee8da38bb7159a25139e82a291fb7aff25ced"
+  sha256: "619dd9f1c10351eb7aa8527676bfa92d17315e0b8c8dbc3aa2e430d80a50b750"
   hash_history:
     - sha256: "64e03b76aad54f1c70b15278ddaee8da38bb7159a25139e82a291fb7aff25ced"
       timestamp: "2026-08-29T12:30:00Z"
       reason: "initial cataloging"
+    - sha256: "619dd9f1c10351eb7aa8527676bfa92d17315e0b8c8dbc3aa2e430d80a50b750"
+      timestamp: "2026-08-30T09:45:00Z"
+      reason: "2026-08-30 review batch: skills historical block + validate 5/5 supersession"
+
   canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/quinn/profile.md"

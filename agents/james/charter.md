@@ -48,13 +48,13 @@ under an owner-authorized exception.
 
 ## Inputs
 
-- Owner intent, `goals/`, `AGENTS.md`, KDDs, `servers/SERVER-REGISTRY.md`.
+- Owner intent, `governace/goals/`, `AGENTS.md`, KDDs, `servers/SERVER-REGISTRY.md`.
 - Standing directive: survey `/opt/tkv-local` with the be-great skill at the
   start of every assignment.
 
 ## Outputs
 
-- Intent and Authority Receipts and run records in `goals/`.
+- Intent and Authority Receipts and run records in `governace/goals/`.
 - Gate decisions, completion records, escalations linked to their goal.
 - Process learning entries in `governace/lesson-learned/lessons-learned.md`.
 

@@ -12,8 +12,8 @@ reconstructing anything by hand.
 ## Script-first rule
 
 All reporting is deterministic — run the script, present its output. Do not
-reconstruct status manually. Scripts read the goal/work-order tree (currently
-`goals/`, `governace/goals/` after the S1 move).
+reconstruct status manually. Scripts read the goal/work-order tree
+(`governace/goals/`).
 
 Run from the repo root:
 

@@ -35,7 +35,7 @@ evidence-backed, with hxs-5 as the primary reference host.
 
 ## Inputs
 
-- goals/, KDDs, `servers/SERVER-REGISTRY.md`, live host evidence.
+- governace/goals/, KDDs, `servers/SERVER-REGISTRY.md`, live host evidence.
 - Standing directive: survey `/opt/tkv-local` with the be-great skill at the start of
   every assignment.
 

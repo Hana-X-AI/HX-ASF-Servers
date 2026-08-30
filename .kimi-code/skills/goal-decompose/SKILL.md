@@ -12,7 +12,7 @@ atomic work orders with full traceability.
 ## Core flow
 
 1. **Read the goal contract** — the confirmed scope-lock + goal file
-   (`governace/goals/<id>.md` after the S1 move; `goals/<id>.md` currently).
+   (`governace/goals/<id>.md`).
    The six scope-lock fields are already locked (objective, target, boundaries,
    exclusions, acceptance, assigned family/lane).
 2. **Identify work types** — setup, config, install, data, integration, tests,

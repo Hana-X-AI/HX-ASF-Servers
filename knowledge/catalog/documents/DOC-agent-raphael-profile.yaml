@@ -37,9 +37,13 @@ document:
     validated_at: "2026-08-29T13:30:00Z"
     freshness: "current"
     review_due: "on owner amendment"
-  sha256: "a6c1465a335866f0591a985337d135f2f321f37156a722c4ac04954407d16e0c"
+  sha256: "0a1c5498a0cec45ee561cf8e595d682e8f864e79d167b7f179368b26839e83ff"
   hash_history:
     - sha256: "a6c1465a335866f0591a985337d135f2f321f37156a722c4ac04954407d16e0c"
       timestamp: "2026-08-29T13:30:00Z"
       reason: "initial cataloging"
+    - sha256: "0a1c5498a0cec45ee561cf8e595d682e8f864e79d167b7f179368b26839e83ff"
+      timestamp: "2026-08-30T09:45:00Z"
+      reason: "2026-08-30 review batch: skills historical block"
+
   canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/raphael/profile.md"

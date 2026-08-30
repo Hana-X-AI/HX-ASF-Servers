@@ -47,7 +47,7 @@ reproducible, evidence-backed, with administrative access and rollback preserved
 
 ## Inputs
 
-- the governor work orders, `goals/`, `servers/SERVER-REGISTRY.md`, host baselines,
+- the governor work orders, `governace/goals/`, `servers/SERVER-REGISTRY.md`, host baselines,
   `/opt/tkv-local/ubuntu`, release-matched man pages and official Ubuntu sources.
   [CORRECTION 2026-08-29: authority references updated from Kimi-K3 to the
   governor per AGENTS.md transition. Original wording preserved in git history

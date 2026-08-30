@@ -1,0 +1,48 @@
+document:
+  id: "DOC-qa-readme"
+  title: "governace/qa/README.md — QA test-artifact home"
+  type: "other"
+  declared_purpose: "Defines governace/qa/ as the deliverable home for the factory's QA test-authoring lane (Bailey, KDD-0019): one folder per project holding test plans, test scripts, and pinned stacks; states the lane boundary (Bailey authors, does not set up environments, execute, fix, or accept) and the test loop (Erwin installs, Bailey authors, Gordon executes, max 3 iterations, James accepts on the verification-checklist)."
+  source:
+    author: "James (governor) / Bailey (QA lane)"
+    provided_by: "Agent Zero (alignment session 2026-08-30)"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/governace/qa/README.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-30T08:30:00Z"
+  owner: "Bailey (QA lane); boundary governed by KDD-0019"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: [bailey, gordon, erwin]
+    repositories: [HX-ASF-Servers]
+    environments: [fleet]
+  version: ""
+  status: "active"
+  authority_level: "ratified-governance"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "references"
+      target: "DOC-kdd-0019-bailey-registration"
+      note: "registration and test-loop authority"
+    - predicate: "references"
+      target: "DOC-agent-bailey-charter"
+      note: "charter (lane bounds)"
+    - predicate: "references"
+      target: "DOC-agent-gordon-profile"
+      note: "execution lane"
+  validation:
+    validated_at: "2026-08-30T08:30:00Z"
+    freshness: "current"
+    review_due: "on KDD-0019 amendment"
+  sha256: "6caba453ca47aaabafbcf4b7029286da70ffe9d57bd661672983e37312076e2c"
+  hash_history:
+    - sha256: "6caba453ca47aaabafbcf4b7029286da70ffe9d57bd661672983e37312076e2c"
+      timestamp: "2026-08-30T08:30:00Z"
+      reason: "initial cataloging"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/governace/qa/README.md"

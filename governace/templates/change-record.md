@@ -14,7 +14,7 @@ labeled, dated correction line preserving the prior status verbatim.
 | Change type | <model replacement | deployment | configuration | ...> |
 | Agent lane | <owner lane> |
 | Status | **PROPOSED** — NOT EXECUTED (until owner approval + execution evidence) |
-| Governing goal | <goals/<file>.md — status: draft/active/complete> |
+| Governing goal | <governace/goals/<file>.md — status: draft/active/complete> |
 | Governing plan | <servers/<host>/<plan>.md — status: approved/not-approved> |
 | Execution evidence | <artifact path(s): ollama list, digests, state-log row, validate output> |
 

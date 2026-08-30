@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Generated from governace/process/system-deployment-workflow.md (sha256 f49f6d3f52672cc2df0828cd665edbd06eba9c4fe941681afb1efab09781d873) by scripts/wiki/render.py on 2026-08-30T05:19Z.
+<!-- Generated from governace/process/system-deployment-workflow.md (sha256 2f658eb25dd52d5b6b3a46f1d31ec47f165d6abc10a37d91a6dd6bea56f7ff14) by scripts/wiki/render.py on 2026-08-30T10:14Z.
      Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
 <html lang="en">
 <head>
@@ -58,13 +58,13 @@ a{color:#6fa8ff} .doc-meta,footer{color:#999}}
     Q --&gt; R[Write system config doc\nservers/host/system-config.md]
     R --&gt; S[Update test log\ngovernace/testing/test-log.md]
     S --&gt; T[Run render.py]
-    T --&gt; U[Run validate.py — 4/4 PASS]
+    T --&gt; U[Run validate.py — 5/5 PASS]
     U --&gt; V{All PASS?}
     V --&gt;|Yes| W[Commit]
     V --&gt;|No| X[Fix issues]
     X --&gt; T
     W --&gt; Y[Done]</pre>
-<p>[AMENDMENT 2026-08-30, labeled: the "Run validate.py" gate above reads 4/4 PASS as originally written; the validator now runs 5 checks (the governance-path check, SY-2, was added to the full suite) — the gate reads 5/5 PASS effective 2026-08-30. Original diagram wording preserved; current reading: 5/5 PASS.]</p>
+<p>Revision note (2026-08-30, A3 artifact-class policy): the gate reads 5/5 PASS (governance-path check SY-2 added to the suite). Prior 4/4 wording is retained in Git history.</p>
 <h2 id="deliverables-created">Deliverables created</h2>
 <ul><li>goal, plan, evidence doc, change record, system config doc, test log update, credentials</li></ul>
 <h2 id="skills-triggered">Skills triggered</h2>
@@ -72,7 +72,7 @@ a{color:#6fa8ff} .doc-meta,footer{color:#999}}
 <h2 id="hooks-triggered">Hooks triggered</h2>
 <ul><li><code>validate-changed.sh</code> (PostToolUse), <code>secret-boundary.sh</code> (PreToolUse)</li></ul>
 </main>
-<footer>Source of truth: <code>governace/process/system-deployment-workflow.md</code> (sha256 <code>f49f6d3f52672cc2df0828cd665edbd06eba9c4fe941681afb1efab09781d873</code>) · rendered 2026-08-30T05:19Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+<footer>Source of truth: <code>governace/process/system-deployment-workflow.md</code> (sha256 <code>2f658eb25dd52d5b6b3a46f1d31ec47f165d6abc10a37d91a6dd6bea56f7ff14</code>) · rendered 2026-08-30T10:14Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
 
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';

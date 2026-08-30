@@ -1,0 +1,51 @@
+document:
+  id: "DOC-kdd-0019-bailey-registration"
+  title: "KDD-0019: Bailey registration — Sr. AI Testing Engineer"
+  type: "decision"
+  declared_purpose: "Owner-ratified registration of Bailey as the Sr. AI Testing Engineer (KDD-0019, 2026-08-30). Lane: Qwen3.8 Flash via OmniRoute (QA family default, KDD-0013 Amendment 11). Placement: horizontal, not host-bound. Scope: test plans, test scripts, pinned stacks under governace/qa/<project-name>/. Test loop: Erwin installs, Bailey authors, Gordon executes, max 3 iterations, James accepts."
+  source:
+    author: "James (governor)"
+    provided_by: "Agent Zero (ratification)"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0019-bailey-registration.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-30T08:11:53Z"
+  owner: "Agent Zero (ratification); James (author)"
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: [bailey]
+    repositories: [HX-ASF-Servers]
+    environments: [fleet]
+  version: ""
+  status: "adopted"
+  authority_level: "ratified-governance"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "references"
+      target: "DOC-kdd-0013-agent-model-lanes"
+      note: "QA job-family lane default (Amendment 11)"
+    - predicate: "references"
+      target: "DOC-kdd-0018-raphael-registration"
+      note: "recent registration pattern"
+    - predicate: "references"
+      target: "DOC-agent-gordon-profile"
+      note: "QA job family teammate"
+    - predicate: "references"
+      target: "DOC-agent-bailey-charter"
+      note: "charter (lane bounds)"
+  validation:
+    validated_at: "2026-08-30T08:11:53Z"
+    freshness: "current"
+    review_due: "on owner amendment"
+  sha256: "c924fb4496a13e516801da5dc0247888afb37f83e1e72c2cc0a2535e23709c9d"
+  hash_history:
+    - sha256: "c924fb4496a13e516801da5dc0247888afb37f83e1e72c2cc0a2535e23709c9d"
+      timestamp: "2026-08-30T08:11:53Z"
+      reason: "initial cataloging"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0019-bailey-registration.md"

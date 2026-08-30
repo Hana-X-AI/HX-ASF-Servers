@@ -10,7 +10,7 @@
 > All goal-commissioning and agent-invocation authority described below is
 > exercised by the current governor (Flash), directing work through Mia
 > (Chief of Staff, KDD-0012) per the governor→Mia→lanes workflow.
-
+>
 > **[OPEN CORRECTION 2026-08-30, labeled, append-only — GOVERNOR PERSONA
 > RENAME (supersedes the "currently Flash" wording above, which is preserved
 > as history):]** the governor persona referenced above as "Flash" was
@@ -27,7 +27,7 @@
 | Governing agent | The governor role (currently Flash; historically kimi-k3) — [AMENDMENT 2026-08-30, labeled: persona renamed Flash → James; reads "currently James" effective 2026-08-30. Original wording preserved.] |
 | Subject | Goal-based commissioning of operational agents |
 | Architectural plane | Control plane |
-| Durable work state | `goals/` goal files (designated system of record, KDD-0002); GitHub Projects deferred as an optional later layer |
+| Durable work state | `governace/goals/` goal files (designated system of record, KDD-0002); GitHub Projects deferred as an optional later layer |
 | Execution model | Fresh, bounded operational-agent sessions |
 | Validation model | Independent, evidence-based quality gates (mandatory verification-checklist) |
 | Prepared | 2026-08-24 (guidance); 2026-08-29 (governor-role attribution) |
@@ -188,7 +188,7 @@ goal_contract:
       provenance_required: true
       independent_verification: true
   durable_state:
-    system: "goals/"
+    system: "governace/goals/"
     goal_file: ""
     repository: ""
   budgets:
@@ -203,7 +203,7 @@ goal_contract:
   final_authority: "Kimi-K3 for evidence gates; Agent Zero for reserved decisions"
 ```
 
-In this repository the goal file name (`goals/<YYYY-MM-DD>-<slug>.md`) is the Goal ID; the `goal_id` field mirrors it (KDD-0002).
+In this repository the goal file name (`governace/goals/<YYYY-MM-DD>-<slug>.md`) is the Goal ID; the `goal_id` field mirrors it (KDD-0002).
 
 ## 6. Writing strong outcomes
 
@@ -356,7 +356,7 @@ Kimi-K3 must not accept the most popular option automatically. It must:
 
 ## 10. Durable state
 
-The designated durable work-state system is the goal file tree in `goals/` (KDD-0002): the goal file and its linked records hold work-item state and artifact references, preventing continuity from depending on an agent’s context window.
+The designated durable work-state system is the goal file tree in `governace/goals/` (KDD-0002): the goal file and its linked records hold work-item state and artifact references, preventing continuity from depending on an agent’s context window.
 
 GitHub Projects is a deferred optional layer for repository-centered software goals, introducible only by owner decision with a new KDD. When a board is adopted, the states, fields, and integrity rules in 10.1–10.3 apply to it.
 

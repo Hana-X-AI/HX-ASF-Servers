@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<!-- Generated from governace/decisions/KDD-0019-bailey-registration.md (sha256 c842018e5e8384e881e7269d1a5a881e3aaf3918fbebab77063d884af1a70456) by scripts/wiki/render.py on 2026-08-30T09:47Z.
+     Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KDD-0019: Bailey registration — Sr. AI Testing Engineer</title>
+<style>
+:root{color-scheme:light dark}
+body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.55;
+max-width:62rem;margin:0 auto;padding:1.5rem 2rem;color:#1a1a1a;background:#fff}
+h1,h2,h3,h4,h5,h6{line-height:1.25;margin-top:1.6em}
+h1{border-bottom:2px solid #444;padding-bottom:.3em}
+h2{border-bottom:1px solid #ccc;padding-bottom:.2em}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+code{background:#f0f0f0;padding:.1em .3em;border-radius:3px}
+pre{background:#f6f8fa;border:1px solid #ddd;border-radius:6px;padding:.8em;overflow-x:auto}
+pre code{background:none;padding:0}
+table{border-collapse:collapse;margin:1em 0;width:100%}
+th,td{border:1px solid #ccc;padding:.35em .6em;text-align:left;vertical-align:top}
+th{background:#f0f0f0}
+blockquote{border-left:4px solid #bbb;margin:1em 0;padding:.2em 1em;color:#444;background:#fafafa}
+a{color:#0645ad}
+.doc-meta{color:#666;font-size:.85em;border-bottom:1px dashed #bbb;padding-bottom:.6em;margin-bottom:1.2em}
+footer{margin-top:2.5em;border-top:1px solid #ccc;color:#666;font-size:.8em;padding-top:.8em}
+pre.mermaid{background:#fff;border:1px dashed #999}
+@media (prefers-color-scheme:dark){
+body{color:#ddd;background:#111} h1{border-color:#888} h2{border-color:#555}
+code{background:#2a2a2a} pre{background:#1b1b1b;border-color:#444}
+th{background:#222} th,td{border-color:#555} blockquote{color:#bbb;background:#191919;border-color:#666}
+a{color:#6fa8ff} .doc-meta,footer{color:#999}}
+</style>
+</head>
+<body>
+<main class="doc">
+<h1 id="kdd-0019-bailey-registration-sr-ai-testing-engineer">KDD-0019: Bailey registration — Sr. AI Testing Engineer</h1>
+<ul><li>Date: 2026-08-30</li><li>Status: ratified</li><li>Decider: Agent-Zero</li><li>Related: KDD-0013 Amendment 11 (QA job-family lane default — Bailey, Gordon → Qwen3.8 Flash), KDD-0012 (Mia — Chief of Staff management), KDD-0018 (raphael registration — recent pattern), <code>governace/templates/agent-checklist.md</code> (registration checklist)</li></ul>
+<h2 id="context">Context</h2>
+<p>The factory's QA capacity is split across two roles: Gordon executes and qualifies (KDD-0010, independent qualification), but no dedicated agent owns test-authoring. The alignment session of 2026-08-30 locked the QA job family (lane-config family, separate from the KDD-0016 taxonomy) as <strong>Bailey + Gordon</strong>, with a family default lane of Qwen3.8 Flash (KDD-0013 Amendment 11). A dedicated Sr. AI Testing Engineer is needed to author test plans, test scripts, and pinned stacks for factory components without crossing into environment setup, execution, or repair.</p>
+<h2 id="decision">Decision</h2>
+<p>Register Bailey as the Sr. AI Testing Engineer for HX-ASF, QA job family.</p>
+<h3 id="lane-assignment">Lane assignment</h3>
+<ul><li>Model lane: Qwen3.8 Flash (<code>qwen/qwen3.8-flash</code>, provider Alibaba Cloud International, via OmniRoute hxs-8) — QA family default per KDD-0013 Amendment 11 (owner decision 2026-08-30). Same lane default as Gordon (Gordon override recorded 2026-08-29). Bailey's lane is a metered cloud lane within the OD-14 exception of record.</li></ul>
+<h3 id="job-family-placement">Job family / placement</h3>
+<ul><li>QA (lane-config job family, KDD-0013 Amendment 11; NOT a KDD-0016 4-family taxonomy family — no taxonomy-table entry).</li><li>Horizontal, not host-bound — no system-mapping S&lt;N&gt; row; added to the "Horizontal agents (not host-bound)" table alongside gordon.</li></ul>
+<h3 id="adaptations-from-source">Adaptations from source</h3>
+<ol><li>No external source document — original profile per the alignment session 2026-08-30.</li><li>Default knowledge (TKV): <code>/opt/tkv-local/pytest-main</code> and <code>/opt/tkv-local/zod-main</code>.</li><li>QA-skills subset (future-lift, separate work item 4 — NOT created in this registration): <code>ai-test-generation</code>, <code>test-planning</code>, <code>test-strategy</code>, <code>qa-project-context</code> from <code>/opt/tkv-local/qa-skills-main</code> v3.0.0 (MIT); recorded in her profile's "Skills available" section as future-lift items.</li><li>Test framework default: python/pytest (zod for TS-side contracts).</li><li>Deliverable location: <code>governace/qa/&lt;project-name&gt;/</code> — separate folder per project.</li><li>Test loop (locked): Erwin installs → Bailey authors → Gordon sets up env + executes → results to testing log → Gordon notifies Bailey + Erwin → Erwin fixes config → Gordon retests → max 3 iterations → James accepts on the verification-checklist.</li></ol>
+<blockquote><p><strong>[OPEN CORRECTION 2026-08-30, labeled, append-only — QA-SKILLS LIFT LANDED (supersedes adaptation 3 above, which is preserved as history):]</strong> the original adaptation 3 above described the QA-skills subset as "future-lift, separate work item 4 — NOT created in this registration" — preserved as the historical decision wording. The lift landed in this change: the QA skills (<code>ai-test-generation</code>, <code>test-planning</code>, <code>test-strategy</code>, <code>qa-project-context</code>, <code>test-reliability</code>, <code>test-environments</code>, <code>release-readiness</code>, <code>ci-cd-integration</code>) are created under <code>.kimi-code/skills/</code> and AGENTS.md's skill count reflects them. Bailey's "Skills available" is updated accordingly; the skills are current authority for her test-authoring work, subject to the activation gate below.</p></blockquote>
+<h3 id="activation-gate">Activation gate</h3>
+<p>Bailey is registered but activation-gated. Conditions:</p>
+<ol><li>Implemented testing-role usage — her test plan/script/pinned-stack deliverables exercised in at least one project.</li><li>Credential entries for her lane/route exist in <code>.local.env</code> (variable references only).</li><li>The governor's explicit activation word.</li></ol>
+<h2 id="roster-entry">Roster entry</h2>
+<p><code>agents/bailey/</code> created (charter + profile, per KDD-0016 standard template). Roster row added to <code>agents/README.md</code> (Status: registered — activation gated). Horizontal-agent row added to <code>servers/system-mapping.md</code>. QA deliverable home <code>governace/qa/</code> created with README. Catalog records <code>DOC-agent-bailey-charter</code>, <code>DOC-agent-bailey-profile</code>, <code>DOC-kdd-0019-bailey-registration</code> added to <code>knowledge/catalog/</code> and the index.</p>
+<h2 id="provenance">Provenance</h2>
+<p>Original record — no external source document. Created per the alignment session 2026-08-30 (role spec locked; KDD-0013 Amendment 11 lane-defaults table LOCKED). Knowledge base: <code>/opt/tkv-local/pytest-main</code>, <code>/opt/tkv-local/zod-main</code>, <code>/opt/tkv-local/qa-skills-main</code> (v3.0.0, MIT). Model lane: Qwen3.8 Flash via OmniRoute, provider Alibaba Cloud International — QA family default per KDD-0013 Amendment 11.</p>
+</main>
+<footer>Source of truth: <code>governace/decisions/KDD-0019-bailey-registration.md</code> (sha256 <code>c842018e5e8384e881e7269d1a5a881e3aaf3918fbebab77063d884af1a70456</code>) · rendered 2026-08-30T09:47Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+
+</body>
+</html>

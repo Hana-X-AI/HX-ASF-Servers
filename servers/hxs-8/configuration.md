@@ -3,7 +3,7 @@
 **Phase:** Owner-authorized server implementation
 **Configuration date:** 2026-08-28 (record date; implementation executed 2026-08-27 → 2026-08-28 across milestones L1-M1/L1-M2/L1-M3 of `PILOT-OMNIROUTE-LAYER0-001`)
 **Assigned role:** API gateway & control (copied from `SERVER-REGISTRY.md`)
-**Primary workload / model:** **OmniRoute v3.8.51 — the HX governed model-traffic plane** (Next.js 16.3.2 standalone, native systemd, no Docker), fronting the four HX LLM backends (Qwen-X hxs-1, Coder-X hxs-2, Meta-X hxs-3, Chat-X hxs-4) behind one authenticated OpenAI-compatible client plane, per the owner-authorized goal `GOAL-OMNIROUTE-L1-SECURE-CORE` (`goals/2026-08-27-omniroute-layer1-secure-core.md`).
+**Primary workload / model:** **OmniRoute v3.8.51 — the HX governed model-traffic plane** (Next.js 16.3.2 standalone, native systemd, no Docker), fronting the four HX LLM backends (Qwen-X hxs-1, Coder-X hxs-2, Meta-X hxs-3, Chat-X hxs-4) behind one authenticated OpenAI-compatible client plane, per the owner-authorized goal `GOAL-OMNIROUTE-L1-SECURE-CORE` (`governace/goals/2026-08-27-omniroute-layer1-secure-core.md`).
 **Approved by:** Agent-Zero (owner) — Layer 1 authorized 2026-08-27 (OD-12); L1-M3 gate GO 2026-08-28 ~05:30Z (pilot state log rows 66–67)
 
 > Registry note (divergence recorded openly, not resolved by this record): the
@@ -182,7 +182,7 @@ gate's own login probes (executor-caused, recorded openly in
 
 - `servers/hxs-8/discovery.md` (as-found, 2026-08-12 + 2026-08-27 addendum; preserved)
 - `pilots/PILOT-OMNIROUTE-LAYER0-001/`: `01-state-log.md` (rows 66–67 GO), `03-trinity-l1-install.md` (L1-M2 install record), `05-trinity-l1-gate.md` (L1-M3 gate record), `09-work-order-trinity-install.yaml`, `10-context-packet-trinity-install.yaml`, `11-work-order-trinity-gate.yaml`, `12-context-packet-trinity-gate.yaml`
-- `goals/2026-08-27-omniroute-layer1-secure-core.md` (owner decisions OD-04/OD-07/OD-08/OD-09/OD-12/OD-13; gate items 1–7)
+- `governace/goals/2026-08-27-omniroute-layer1-secure-core.md` (owner decisions OD-04/OD-07/OD-08/OD-09/OD-12/OD-13; gate items 1–7)
 - `servers/BLUEPRINT-llm-server.md` (§5 exposure boundary; §8 backend call-signs)
 - `servers/SERVER-REGISTRY.md` (assigned role; owner-maintained)
 - `servers/hxs-3/configuration.md` (first-of-class template)

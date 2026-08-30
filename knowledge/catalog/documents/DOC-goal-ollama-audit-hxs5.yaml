@@ -41,6 +41,6 @@ document:
     freshness: "current"
     review_due: "at owner acceptance of the pilot completion record"
   sha256: "5df8ccd2120bbb1eb8929d8d511e3e2238e2f14bd8795a02043f8194babf51fd"
-  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/goals/2026-08-24-ollama-audit-hxs5.md"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/governace/goals/2026-08-24-ollama-audit-hxs5.md"
 notes:
   status_note: "status 'draft' is the document's own status header (originals are sacred — the file was not updated after authorization). Post-document events recorded here, not in the source: readiness gate granted 2026-08-24T09:26Z; john session john-initial-20260824-01 (zero corrections); quality gate PASSED; completion record pre-acceptance status GATE PASSED — PENDING OWNER ACCEPTANCE."

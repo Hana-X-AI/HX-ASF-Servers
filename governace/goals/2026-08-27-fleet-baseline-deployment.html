@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<!-- Generated from governace/goals/2026-08-27-fleet-baseline-deployment.md (sha256 c8baa6d352d26b24376d76244cc11d45faa9b276ee54ca12565d2afd83cfbc71) by scripts/wiki/render.py on 2026-08-30T09:47Z.
+     Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Goal: Fleet Baseline Deployment</title>
+<style>
+:root{color-scheme:light dark}
+body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.55;
+max-width:62rem;margin:0 auto;padding:1.5rem 2rem;color:#1a1a1a;background:#fff}
+h1,h2,h3,h4,h5,h6{line-height:1.25;margin-top:1.6em}
+h1{border-bottom:2px solid #444;padding-bottom:.3em}
+h2{border-bottom:1px solid #ccc;padding-bottom:.2em}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+code{background:#f0f0f0;padding:.1em .3em;border-radius:3px}
+pre{background:#f6f8fa;border:1px solid #ddd;border-radius:6px;padding:.8em;overflow-x:auto}
+pre code{background:none;padding:0}
+table{border-collapse:collapse;margin:1em 0;width:100%}
+th,td{border:1px solid #ccc;padding:.35em .6em;text-align:left;vertical-align:top}
+th{background:#f0f0f0}
+blockquote{border-left:4px solid #bbb;margin:1em 0;padding:.2em 1em;color:#444;background:#fafafa}
+a{color:#0645ad}
+.doc-meta{color:#666;font-size:.85em;border-bottom:1px dashed #bbb;padding-bottom:.6em;margin-bottom:1.2em}
+footer{margin-top:2.5em;border-top:1px solid #ccc;color:#666;font-size:.8em;padding-top:.8em}
+pre.mermaid{background:#fff;border:1px dashed #999}
+@media (prefers-color-scheme:dark){
+body{color:#ddd;background:#111} h1{border-color:#888} h2{border-color:#555}
+code{background:#2a2a2a} pre{background:#1b1b1b;border-color:#444}
+th{background:#222} th,td{border-color:#555} blockquote{color:#bbb;background:#191919;border-color:#666}
+a{color:#6fa8ff} .doc-meta,footer{color:#999}}
+</style>
+</head>
+<body>
+<main class="doc">
+<h1 id="goal-fleet-baseline-deployment">Goal: Fleet Baseline Deployment</h1>
+<p><strong>Date:</strong> 2026-08-27 · <strong>Owner directive:</strong> "complete the baseline platform deployment" (GO same day) · <strong>Governor:</strong> Kimi-K3 [OPEN CORRECTION 2026-08-29, labeled: governor role now held by Flash per AGENTS.md transition; original wording preserved as history] · <strong>Executor:</strong> rick <strong>Sequencing (owner, OmniRoute log row 43):</strong> this goal FIRST; OmniRoute L1-M3 closure follows its completion.</p>
+<p>[OPEN CORRECTION 2026-08-29, labeled, append-only: <strong>Status:</strong> COMPLETE — 2026-08-28. Fleet baseline waves delivered across three evidence docs: <code>servers/2026-08-26-fleet-time-mask.md</code> (wave 1: time + mask), <code>servers/2026-08-27-fleet-baseline-wave.md</code> (wave 2: full baseline), <code>servers/2026-08-28-fleet-baseline-hxs11-20-21.md</code> (wave 3: hxs-11/20/21). hxs-7 excluded (decommissioned); hxs-6 Secure Boot recorded (owner decision). Registry FQDN census 2026-08-28: 16 active hosts, 16 FQDNs resolving. Original header lines preserved above unchanged.]</p>
+<p>[OPEN CORRECTION 2026-08-30, labeled, append-only — hxs-6 SECURE BOOT NON-COMPLIANCE: the 2026-08-28 COMPLETE status above is CORRECTED for hxs-6. hxs-6 is recorded with <strong>Secure Boot ENABLED</strong> (F-5, <code>servers/2026-08-27-fleet-baseline-wave.md</code>, T-SB-1), which directly violates the standing owner directive — "Secure Boot stays disabled on HX hosts, now and always — do not enable it" (owner directive 2026-08-24, confirmed 2026-08-25). hxs-6 is therefore <strong>non-compliant</strong> with the fleet baseline's Secure Boot posture and is ESCALATED for an owner decision (BIOS remediation); it must not be counted as fleet-baseline-complete until the Secure Boot state is resolved and re-verified. The prior COMPLETE wording is preserved as history; the fleet baseline completion claim stands corrected to exclude hxs-6's Secure Boot posture until resolved.]</p>
+<p><strong>[CURRENT STATUS 2026-08-30, labeled, append-only — PARTIAL / IN-PROGRESS:</strong> the fleet baseline is delivered for all in-scope hosts EXCEPT hxs-6's Secure Boot posture, which is non-compliant and escalated for an owner BIOS decision. Current status is <strong>in-progress</strong> (partial): the baseline wave evidence stands, but the goal is NOT counted complete until hxs-6's Secure Boot is resolved and re-verified. The COMPLETE wording above is retained only as historical context; status consumers must read the current state as in-progress/partial, excluding hxs-6 from completion credit.<strong>]</strong></p>
+<h2 id="objective">Objective</h2>
+<p>Bring every in-scope fleet host to the declared baseline — verified identity/OS, one timezone (Etc/UTC), one NTP source (time.cloudflare.com), the proven 4-target sleep-mask set, library selftest green — with per-host TKV records refreshed and evidence the owner can audit.</p>
+<h2 id="scope">Scope</h2>
+<ul><li><strong>Fresh (7):</strong> hxs-6, hxs-9, hxs-10, hxs-12, hxs-13, hxs-14, hxs-15 — full baseline pass (verify, pin, mask, selftest, records).</li><li><strong>Re-verify (5):</strong> hxs-1, hxs-2, hxs-3, hxs-4, hxs-8 — confirm the proven posture holds; drift reported, fixed only within the two sanctioned classes.</li><li><strong>Excluded:</strong> hxs-5 (control plane), hxs-7 (replaced by hxs-20), hxs-20/hxs-21 (provisioning), hxs-11 (owner flag unreachable).</li><li>hxs-6 Secure Boot ENABLED: record only — owner decision pending (BIOS).</li></ul>
+<h2 id="acceptance">Acceptance</h2>
+<ol><li>Every in-scope host carries an evidence-backed verdict (PASS / REPORT / FAIL); REPORT names its closing direction.</li><li>NTP + mask post-apply re-checks green on every mutated host.</li><li><code>/opt/tkv-local/servers/&lt;host&gt;/pre-work-results.md</code> refreshed per fresh host; evidence doc <code>servers/2026-08-27-fleet-baseline-wave.md</code> delivered.</li><li>Zero secret values in any artifact; catalog wave (Carol) closes the handoff with validate.py 4/4.</li></ol>
+<h2 id="boundaries">Boundaries</h2>
+<p>Two sanctioned mutation classes only (NTP pin, sleep-mask align). Everything else read-only; any other need stops and escalates to the governor. Local-model rule applies to the executor. No git commits without owner approval per instance.</p>
+</main>
+<footer>Source of truth: <code>governace/goals/2026-08-27-fleet-baseline-deployment.md</code> (sha256 <code>c8baa6d352d26b24376d76244cc11d45faa9b276ee54ca12565d2afd83cfbc71</code>) · rendered 2026-08-30T09:47Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+
+</body>
+</html>

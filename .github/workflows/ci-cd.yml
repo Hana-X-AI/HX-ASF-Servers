@@ -33,12 +33,13 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout (full history for the secret-scan range)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: "3.12"
 
@@ -66,13 +67,21 @@ jobs:
       - name: Security scan — secrets in the pushed range
         env:
           BEFORE: ${{ github.event.before }}
-          GITLEAKS_VERSION: v8.24.3
+          GITLEAKS_VERSION: v8.30.1
         run: |
           set -e
           # Pinned gitleaks version (immutable, not 'latest') — supply-chain
-          # hardening per Codex audit feedback 2026-08-30.
+          # hardening per Codex audit feedback 2026-08-30. Archive is verified
+          # against the official checksums file before extraction.
           curl -sSfL -o /tmp/gitleaks.tar.gz \
             "https://github.com/gitleaks/gitleaks/releases/download/${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION#v}_linux_x64.tar.gz"
+          curl -sSfL -o /tmp/gitleaks_checksums.txt \
+            "https://github.com/gitleaks/gitleaks/releases/download/${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION#v}_checksums.txt"
+          grep "gitleaks_${GITLEAKS_VERSION#v}_linux_x64.tar.gz" /tmp/gitleaks_checksums.txt > /tmp/gitleaks_expected.sha
+          echo "gitleaks_${GITLEAKS_VERSION#v}_linux_x64.tar.gz  /tmp/gitleaks.tar.gz" > /tmp/gitleaks_actual.sha
+          # Convert checksum line to the same path format, then compare.
+          awk '{print $1"  /tmp/gitleaks.tar.gz"}' /tmp/gitleaks_expected.sha > /tmp/gitleaks_expected_renamed.sha
+          (cd /tmp && sha256sum -c gitleaks_expected_renamed.sha)
           tar -xzf /tmp/gitleaks.tar.gz -C /tmp gitleaks
           RANGE="HEAD~1..HEAD"
           if [ "$BEFORE" != "0000000000000000000000000000000000000000" ]; then
@@ -85,12 +94,14 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 45
     permissions:
+      contents: read
       pull-requests: write
     steps:
       - name: Checkout (full history for the base diff)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Install CodeRabbit CLI
         run: |

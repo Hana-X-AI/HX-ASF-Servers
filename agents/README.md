@@ -32,6 +32,7 @@ Current roster:
 | wayne | vertical (cache/data systems) | registered 2026-08-29 (KDD-0015) — **activation gated** (hxs-9 Redis implemented + credential entries + owner word) | Redis systems engineer: single-instance administration, ACL users, persistence, health, PostgreSQL cache integration contract (Redis side); standalone topology only; MCP on HOLD; RAG/vector/stream deferred (owner 2026-08-29) |
 | quinn | vertical (vector database systems) | registered 2026-08-29 (KDD-0017) — **activation gated** (hxs-4 Qdrant implemented + credential entries + owner word) | Qdrant server + Python client + MCP server (co-located) on hxs-4; lane NVIDIA Nemotron 3 Ultra (free) via OpenRouter; standalone topology only |
 | raphael | vertical (RAG systems) | registered 2026-08-29 (KDD-0018) — **activation gated** (hxs-4 LightRAG implemented + bge-m3 on hxs-4 + credential entries + owner word) | LightRAG server + Web UI + lightragmcp MCP server on hxs-4; lane Qwen-X via OmniRoute; Qdrant backend (Quinn); LLM via OmniRoute (Meta-X); bge-m3 embeddings via Ollama (john) |
+| bailey | horizontal (quality — test authoring) | registered 2026-08-30 (KDD-0019) — **activation gated** (implemented testing-role usage + credential entries + owner word) | Sr. AI Testing Engineer: test plans + test scripts + pinned stacks per project under `governace/qa/` (python/pytest, zod); stack-agnostic; QA job family with Gordon; lane Qwen3.8 Flash via OmniRoute |
 
 ### New agents pending registration (per system-mapping 2026-08-29)
 

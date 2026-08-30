@@ -20,15 +20,14 @@ flowchart TD
     H -->|No| L[Update system config doc\nwith final test status]
     L --> M[Update change record\nwith verification result]
     M --> N[Run render.py]
-    N --> O[Run validate.py — 4/4 PASS]
+    N --> O[Run validate.py — 5/5 PASS]
     O --> P[Commit]
     P --> Q[Done]
 ```
 
-[AMENDMENT 2026-08-30, labeled: the "Run validate.py" gate above reads 4/4 PASS
-as originally written; the validator now runs 5 checks (the governance-path
-check, SY-2, was added to the full suite) — the gate reads 5/5 PASS effective
-2026-08-30. Original diagram wording preserved; current reading: 5/5 PASS.]
+Revision note (2026-08-30, A3 artifact-class policy): the gate reads 5/5 PASS
+(governance-path check SY-2 added to the suite). Prior 4/4 wording is retained in
+Git history.
 
 ## Deliverables updated
 

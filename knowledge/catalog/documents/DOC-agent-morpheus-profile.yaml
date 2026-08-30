@@ -34,9 +34,13 @@ document:
     validated_at: "2026-08-29T12:30:00Z"
     freshness: "current"
     review_due: "on owner amendment"
-  sha256: "9cc39f7bddcd51fa6868e7724d7af166f816ac18002994127d7f863c9ab3737f"
+  sha256: "224b5c421a9405b10db8b7c1fa7308e7bdb9f3406dcdebb31045301fedc8fe76"
   hash_history:
     - sha256: "9cc39f7bddcd51fa6868e7724d7af166f816ac18002994127d7f863c9ab3737f"
       timestamp: "2026-08-29T12:30:00Z"
       reason: "initial cataloging"
+    - sha256: "224b5c421a9405b10db8b7c1fa7308e7bdb9f3406dcdebb31045301fedc8fe76"
+      timestamp: "2026-08-30T09:45:00Z"
+      reason: "2026-08-30 review batch: credential-parsing open correction (cut -d= -f2-)"
+
   canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/morpheus/profile.md"

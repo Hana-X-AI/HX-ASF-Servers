@@ -22,17 +22,17 @@ description: "Governor role: transferred to Flash on 2026-08-29 (owner appointme
 
 ## Skills available
 
-This agent has access to the following skills. Use them as directed:
-- **be-great** — exhaustive evidence-first investigation before acting
-- **eli5** — plain ASD-STE100-style English reporting
-- **bro** — plain language restatement
-- **wait-what** — re-pitch with missing context
-- **quick** — fast answer, action first
-- **human** — casual conversational tone
-- **corp** — formal business English
-- **copy** — ad copy style
+This agent inherits the global skill inventory in `AGENTS.md` (all skills there).
+Role-specific additions:
 - **create-agent** — for creating/registering new factory agents (reads
   `governace/templates/agent-checklist.md`, fails closed on missing items)
+
+> **[HISTORICAL 2026-08-30, labeled, append-only — prior explicit skill
+> declaration (superseded by global-inventory inheritance, D3 Option A):]** the
+> profile previously listed: be-great, eli5, bro, wait-what, quick, human, corp,
+> copy, create-agent. That explicit list is superseded; the active rule is
+> inheritance from the AGENTS.md global inventory plus the create-agent
+> role-specific addition above. This correction remains open.
 
 ## 1. Identity and mission
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Generated from governace/project-plan/governance-foundation-plan.md (sha256 38668264bc50ca4be035d78ef8e71925cfe18fc82ed1e539149b86129c64c9eb) by scripts/wiki/render.py on 2026-08-30T05:19Z.
+<!-- Generated from governace/project-plan/governance-foundation-plan.md (sha256 cf2188c45183808e0ffb0c5f367228f101f605eb87af9a2e30b1e9fbc894172b) by scripts/wiki/render.py on 2026-08-30T10:48Z.
      Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
 <html lang="en">
 <head>
@@ -38,7 +38,7 @@ a{color:#6fa8ff} .doc-meta,footer{color:#999}}
 <ul><li><strong>Goal ID:</strong> governance-foundation-plan</li><li><strong>Status:</strong> ACTIVE — implementation underway (7 workstreams; status per workstream below)</li><li><strong>Owner:</strong> Agent Zero</li><li><strong>Created:</strong> 2026-08-29</li><li><strong>Human authority:</strong> Agent Zero</li><li><strong>Destination:</strong> <code>governace/project-plan/</code> (this file) — per owner directive</li><li><strong>Directive source:</strong> owner instruction 2026-08-29 (audit input <code>misc/007/input.md</code>)</li></ul>
 <hr>
 <h2 id="summary">Summary</h2>
-<p>Build a flawless, repeatable, trackable governance foundation for the HX agentic software factory. The plan consolidates 7 workstreams that together enforce: structured governance directories, a continuously-updated test log, mandatory change documentation, a bullet-proof agent-creation checklist with skill + hooks, skills in every agent profile, workflow diagrams, and TKV-enforcement evidence.</p>
+<p>Build a flawless, repeatable, trackable governance foundation for the HX agentic software factory. The plan consolidates 7 workstreams that together enforce: structured governance directories, a continuously-updated test log, mandatory change documentation, a bullet-proof agent-creation checklist with skill + hooks, skills in every agent profile, workflow diagrams, and TKV-enforcement evidence. [OPEN CORRECTION 2026-08-30, labeled, append-only: "continuously-updated test log" and "bullet-proof agent-creation checklist" are superseded by the accurate current position — the test log is maintained via a fail-open advisory reminder hook (ST-7 <code>test-log-append.sh</code> does not append; the append is a manual governor action), and the agent-creation checklist is a 27-step mandatory checklist with advisory (fail-open) hooks. See the WS2/WS4 corrections below. This correction remains open.]</p>
 <p>This document is the <strong>controlling plan</strong>. Each workstream's artifacts live in <code>governace/</code>; this file records the objective, deliverables, status, and acceptance criteria for each.</p>
 <hr>
 <h2 id="workstream-1-governance-directory-structure-file-migration">Workstream 1 — Governance directory structure + file migration</h2>
@@ -47,10 +47,10 @@ a{color:#6fa8ff} .doc-meta,footer{color:#999}}
 <ul><li><code>governace/README.md</code> — root governance readme (DONE)</li><li><code>governace/decisions/</code> — KDDs moved from <code>knowledge/decisions/</code> (DONE, 30 KDD files)</li><li><code>governace/issue-tracking/issues.md</code> — issues moved from <code>knowledge/issues.md</code> (DONE)</li><li><code>governace/lesson-learned/lessons-learned.md</code> — moved from <code>knowledge/lessons-learned.md</code> (DONE)</li><li><code>governace/templates/</code> — single central template dir (DONE): agent/, server/, goal, pilot/, kdd, agent-checklist, test-log, change-record, system-config-doc</li><li>Cross-references updated (AGENTS.md, manifest, catalog, profiles, KDDs) (DONE)</li></ul>
 <p><strong>Status:</strong> COMPLETE (audited; canonical path is <code>governace/</code> per owner spelling; path-fork resolved 2026-08-29 — orphan <code>governance/</code> removed).</p>
 <h2 id="workstream-2-consolidated-test-log">Workstream 2 — Consolidated test log</h2>
-<p><strong>Objective:</strong> one continuously-updated log of ALL test and example results.</p>
+<p><strong>Objective:</strong> one continuously-updated log of ALL test and example results. [OPEN CORRECTION 2026-08-30, labeled, append-only: the objective reads as originally written; the accurate current position is "one maintained log" — the update mechanism is a fail-open advisory reminder (ST-7 <code>test-log-append.sh</code>), not an automatic appender. This correction remains open.]</p>
 <p><strong>Deliverables:</strong></p>
 <ul><li><code>governace/testing/test-log.md</code> (+ <code>.html</code>) — seeded with current results (DONE)</li><li>Covers: LightRAG (7 PASS, 1 FAIL #4, 1 DEP-OK #8, 9 SKIP), Qdrant (V0-V6 PASS), DSH (Gates 6-10), PostgreSQL (Step 0+1 PASS, Step 2 PARTIAL), Redis (PASS), OmniRoute (PASS)</li><li>Manifest-listed + rendered (DONE)</li><li>Secret-sweep clean (DONE 2026-08-29 — key literal redacted)</li></ul>
-<p><strong>Status:</strong> COMPLETE (append mechanism added via workflow — see WS7/ST-7).</p>
+<p><strong>Status:</strong> COMPLETE (append mechanism added via workflow — see WS7/ST-7). [OPEN CORRECTION 2026-08-30, labeled, append-only: "append mechanism added via workflow" is superseded by the accurate current position — ST-7 <code>test-log-append.sh</code> is a fail-open advisory reminder that prompts a dated row be added to <code>governace/testing/test-log.md</code>; it does not append the row itself (the append is a manual governor action). See WS4 for the advisory-hook treatment. This correction remains open.]</p>
 <h2 id="workstream-3-change-documentation">Workstream 3 — Change documentation</h2>
 <p><strong>Objective:</strong> every major change produces a change record + system config doc.</p>
 <p><strong>Deliverables:</strong></p>
@@ -59,7 +59,7 @@ a{color:#6fa8ff} .doc-meta,footer{color:#999}}
 <h2 id="workstream-4-agent-creation-checklist-skill-hooks">Workstream 4 — Agent creation checklist + skill + hooks</h2>
 <p><strong>Objective:</strong> eliminate missed-registration errors when creating agents.</p>
 <p><strong>Deliverables:</strong></p>
-<ul><li><code>governace/templates/agent-checklist.md</code> — mandatory 22-step checklist (DONE)</li><li><code>.kimi-code/skills/create-agent/SKILL.md</code> — agent-creation skill (DONE; installed to user scope 2026-08-29)</li><li><code>scripts/hooks/agent-creation-check.sh</code> — PostToolUse hook, fail-open (DONE; registered in <code>~/.kimi-code/config.toml</code> 2026-08-29, interface fixed to read stdin payload)</li><li>Test with Nancy (QA agent) — PENDING owner word</li></ul>
+<ul><li><code>governace/templates/agent-checklist.md</code> — mandatory 22-step checklist (DONE) [OPEN CORRECTION 2026-08-30, labeled, append-only: the checklist has 27 steps (items 1-27, validating after each step, fail closed), not 22 — the "22-step" count above is the original wording and is superseded by 27. This correction remains open.]</li><li><code>.kimi-code/skills/create-agent/SKILL.md</code> — agent-creation skill (DONE; installed to user scope 2026-08-29)</li><li><code>scripts/hooks/agent-creation-check.sh</code> — PostToolUse hook, fail-open (DONE; registered in <code>~/.kimi-code/config.toml</code> 2026-08-29, interface fixed to read stdin payload)</li><li>Test with Nancy (QA agent) — PENDING owner word</li></ul>
 <p><strong>Status:</strong> COMPLETE (enforcement wired). Test remains owner-gated. [AMENDMENT 2026-08-30, labeled: the "enforcement wired" wording above overstates mechanical strength — five of six hooks are fail-open advisory guardrails (test-log-append reminds, agent-creation-check warns, governor-gate reminds). Current reading: COMPLETE (mechanics in place; enforcement advisory — hooks are fail-open), Test remains owner-gated. Original wording preserved above; this is the current status.]</p>
 <h2 id="workstream-5-skills-in-every-agent-profile">Workstream 5 — Skills in every agent profile</h2>
 <p><strong>Objective:</strong> every agent profile lists its available skills.</p>
@@ -85,7 +85,7 @@ a{color:#6fa8ff} .doc-meta,footer{color:#999}}
 <h2 id="completion-rule">Completion rule</h2>
 <p>This goal is done only when every acceptance criterion passes with evidence and the owner accepts — not when the work feels done. Per KDD-0002 goal-setting contract.</p>
 </main>
-<footer>Source of truth: <code>governace/project-plan/governance-foundation-plan.md</code> (sha256 <code>38668264bc50ca4be035d78ef8e71925cfe18fc82ed1e539149b86129c64c9eb</code>) · rendered 2026-08-30T05:19Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+<footer>Source of truth: <code>governace/project-plan/governance-foundation-plan.md</code> (sha256 <code>cf2188c45183808e0ffb0c5f367228f101f605eb87af9a2e30b1e9fbc894172b</code>) · rendered 2026-08-30T10:48Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
 
 </body>
 </html>

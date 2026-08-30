@@ -37,7 +37,7 @@ document:
     validated_at: "2026-08-29T12:30:00Z"
     freshness: "current"
     review_due: "on owner amendment"
-  sha256: "7902874b23bf82d2827a1a488c817932b0b15450e7e9a1d9b8a194642834b3e8"
+  sha256: "d7381c1413e731323d11febb5b3f5e52c25871ee0e4b3db7334363e241d0b680"
   hash_history:
     - sha256: "28083d9f2aa0513dde90e843f025566e14375918b3d5cbf1cb6f6951a4680c01"
       timestamp: "2026-08-29T12:30:00Z"
@@ -45,6 +45,10 @@ document:
     - sha256: "7902874b23bf82d2827a1a488c817932b0b15450e7e9a1d9b8a194642834b3e8"
       timestamp: "2026-08-29T12:30:00Z"
       reason: "re-mint after 2026-08-29 normalization + corrections"
+    - sha256: "d7381c1413e731323d11febb5b3f5e52c25871ee0e4b3db7334363e241d0b680"
+      timestamp: "2026-08-30T09:45:00Z"
+      reason: "2026-08-30 review batch: skills historical block + validate 5/5 supersession"
+
   canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/carol/profile.md"
 notes:
   review_batch_update: "2026-08-25 review batch (state log row 33): receipt filename pattern fixed to <timestamp>-carol-<action>-<slug>.md; status enum gained 'rejected' and the schema gained the 'charter' type and rejection_reason. This run's receipt name complies."

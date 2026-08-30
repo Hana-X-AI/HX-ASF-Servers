@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Generated from servers/system-mapping.md (sha256 262d8d98b74e14fd78e02a34dfb92e3627c9cacd2cff990faadea6ca2baca2f3) by scripts/wiki/render.py on 2026-08-29T21:41Z.
+<!-- Generated from servers/system-mapping.md (sha256 04e4517dbbf382291d550b72137c595df16330c458adc6422f33c461ac0409fa) by scripts/wiki/render.py on 2026-08-30T08:42Z.
      Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
 <html lang="en">
 <head>
@@ -62,7 +62,7 @@ THE SYSTEM IS A WORKLOAD.</code></pre>
 <h3 id="ram-reallocation">RAM reallocation</h3>
 <table><thead><tr><th>Source</th><th>Current</th><th>After</th><th>Notes</th></tr></thead><tbody><tr><td>hxs-8</td><td>48 GB (using 1.8 GB for OmniRoute)</td><td>32 GB</td><td>Donate 16 GB to hxs-10</td></tr><tr><td>hxs-10</td><td>16 GB</td><td>32 GB</td><td>Receive 16 GB from hxs-8</td></tr></tbody></table>
 <h3 id="horizontal-agents-not-host-bound">Horizontal agents (not host-bound)</h3>
-<table><thead><tr><th>Agent</th><th>Lane type</th><th>Role</th></tr></thead><tbody><tr><td>rob</td><td>horizontal</td><td>Full-stack agentic software engineering — uses dev/test environments</td></tr><tr><td>gordon</td><td>horizontal</td><td>Independent QA — qualifies on hxs-15 test environment</td></tr><tr><td>mia</td><td>horizontal</td><td>Chief of Staff — management, coordination, routing</td></tr><tr><td>carol</td><td>horizontal</td><td>Knowledge stewardship — catalog, no host</td></tr><tr><td>governor</td><td>horizontal</td><td>Factory governor — control plane, no host</td></tr></tbody></table>
+<table><thead><tr><th>Agent</th><th>Lane type</th><th>Role</th></tr></thead><tbody><tr><td>rob</td><td>horizontal</td><td>Full-stack agentic software engineering — uses dev/test environments</td></tr><tr><td>gordon</td><td>horizontal</td><td>Independent QA — qualifies on hxs-15 test environment</td></tr><tr><td>bailey</td><td>horizontal</td><td>Sr. AI Testing Engineer — test plan + script authoring, no host (KDD-0019)</td></tr><tr><td>mia</td><td>horizontal</td><td>Chief of Staff — management, coordination, routing</td></tr><tr><td>carol</td><td>horizontal</td><td>Knowledge stewardship — catalog, no host</td></tr><tr><td>governor</td><td>horizontal</td><td>Factory governor — control plane, no host</td></tr></tbody></table>
 <h3 id="retired-superseded">Retired / superseded</h3>
 <table><thead><tr><th>System</th><th>Replaced by</th><th>Notes</th></tr></thead><tbody><tr><td>LiteLLM</td><td>OmniRoute (KDD-0008)</td><td>Owner: "we replaced hx_litellm with openrouter"</td></tr><tr><td>vLLM</td><td>Ollama</td><td>Owner decision 2026-08-21; Ollama is sole serving runtime</td></tr><tr><td>Mem0</td><td>(retired from list)</td><td>Role absorbed by PostgreSQL, Redis, Qdrant, catalog; may return if needed</td></tr><tr><td>CopilotKit / AG-UI</td><td>(removed — SDK, not a server)</td><td>Lives inside app projects, not a standalone system</td></tr></tbody></table>
 <hr>
@@ -82,7 +82,7 @@ THE SYSTEM IS A WORKLOAD.</code></pre>
 <h2 id="related-documents">Related documents</h2>
 <ul><li><code>servers/SERVER-REGISTRY.md</code> — authoritative durable host identity and role</li><li><code>servers/hxs-9/2026-08-29-postgresql-implementation-plan.md</code> — PostgreSQL plan</li><li><code>servers/hxs-9/2026-08-29-redis-implementation-plan.md</code> — Redis plan</li><li><code>servers/BLUEPRINT-llm-server.md</code> — LLM server blueprint</li><li><code>governace/decisions/KDD-0008-trinity-omniroute-adoption.md</code> — OmniRoute replaces LiteLLM</li><li><code>governace/decisions/KDD-0016-agent-taxonomy-and-standard-template.md</code> — agent family taxonomy</li><li>Historical reference (retired): <code>/home/hxsa/opt/local-tkv/agent-zero-docs/server-system-mapping/</code></li></ul>
 </main>
-<footer>Source of truth: <code>servers/system-mapping.md</code> (sha256 <code>262d8d98b74e14fd78e02a34dfb92e3627c9cacd2cff990faadea6ca2baca2f3</code>) · rendered 2026-08-29T21:41Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+<footer>Source of truth: <code>servers/system-mapping.md</code> (sha256 <code>04e4517dbbf382291d550b72137c595df16330c458adc6422f33c461ac0409fa</code>) · rendered 2026-08-30T08:42Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
 
 </body>
 </html>

@@ -68,3 +68,20 @@ Adopt option 3.
   4. Goal-ID mapping to the goal file name added.
   5. Appendix A provenance noted as owner-provided historical input.
 - The source document remains unmodified as historical input.
+
+---
+
+## Amendment 1 (labeled, append-only, 2026-08-30) — durable goal tree relocated to `governace/goals/`
+
+**[OPEN CORRECTION 2026-08-30, labeled, append-only — GOAL TREE RELOCATED
+`goals/` → `governace/goals/`:** the durable goal tree designated by this KDD
+as the system of record has been relocated from the repository-root `goals/`
+directory to `governace/goals/` (S1 move, completed 2026-08-30). The
+designation and decision text of this KDD stand unchanged; only the physical
+home of the goal files changed. All goal files, their HTML siblings, and the
+goal template now live under `governace/goals/`; the root `goals/` directory
+no longer exists. Live references in this repository now use
+`governace/goals/`; historical references to `goals/` in this and other
+decision records are preserved as written and read as the relocated tree.
+Authority: S1 goal-tree move executed under the alignment batch, 2026-08-30;
+recorded here append-only per the documentation-governance contract.]**

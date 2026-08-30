@@ -15,6 +15,13 @@
 > Meta-X (`hx-muse-glimmer-64k`) per `servers/hxs-3/configuration.md`. Update
 > this file to a real "operational" state only after execution evidence exists
 > (ollama list, digest, preload pin, state-log row).
+>
+> [LABELED CORRECTION 2026-08-30, append-only — GOAL PATH RELOCATED: the goal
+> reference above records the historical `goals/2026-08-29-oai-x-replace-meta-x.md`
+> path as written at the 2026-08-29 correction. The goal tree was relocated to
+> `governace/goals/` on 2026-08-30 (KDD-0002 Amendment 1); the current path is
+> `governace/goals/2026-08-29-oai-x-replace-meta-x.md`. The historical `goals/`
+> entry above is preserved unchanged; read it as the relocated tree.]
 
 ## Functional role
 
@@ -86,5 +93,5 @@ modify the discovery record.
 - `servers/hxs-3/configuration.md` (pre-change configured state)
 - `servers/hxs-3/2026-08-29-oai-x-implementation-plan.md` (execution plan)
 - `governace/status-reporting/change-meta-x-to-oai-x-2026-08-29.md` (change record)
-- `goals/2026-08-29-oai-x-replace-meta-x.md`
+- `governace/goals/2026-08-29-oai-x-replace-meta-x.md`
 - `governace/decisions/KDD-0007-hxs3-muse-glimmer-tooling-adoption.md`

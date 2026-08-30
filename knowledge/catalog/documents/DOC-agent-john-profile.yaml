@@ -40,7 +40,7 @@ document:
     validated_at: "2026-08-29T12:30:00Z"
     freshness: "current"
     review_due: "on owner amendment"
-  sha256: "9f9fcaa0548bd416d347f59df7a715248e50f48b922ccfaf14594e0c47e0394c"
+  sha256: "696faa3bfa639c453c9584797bf977d19afc947a2184fd802910272214720176"
   hash_history:
     - sha256: "60fd5279fde15656b2dfe5edc19b55c90e1ef15ce7983ef305d3f72a22de9ae8"
       timestamp: "2026-08-29T12:30:00Z"
@@ -48,4 +48,8 @@ document:
     - sha256: "9f9fcaa0548bd416d347f59df7a715248e50f48b922ccfaf14594e0c47e0394c"
       timestamp: "2026-08-29T12:30:00Z"
       reason: "re-mint after 2026-08-29 normalization + corrections"
+    - sha256: "696faa3bfa639c453c9584797bf977d19afc947a2184fd802910272214720176"
+      timestamp: "2026-08-30T09:45:00Z"
+      reason: "2026-08-30 review batch: credential-parsing open correction (cut -d= -f2-)"
+
   canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/john/profile.md"

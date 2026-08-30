@@ -35,16 +35,8 @@ Authority chain: Agent Zero owns intent and risk → the governor orchestrates
 
 ## Skills available
 
-This agent has access to the following skills. Use them as
-directed:
-- **be-great** — exhaustive evidence-first investigation before acting
-- **eli5** — plain ASD-STE100-style English reporting
-- **bro** — plain language restatement
-- **wait-what** — re-pitch with missing context
-- **quick** — fast answer, action first
-- **human** — casual conversational tone
-- **corp** — formal business English
-- **copy** — ad copy style
+This agent inherits the global skill inventory in `AGENTS.md` (all skills there).
+Role-specific additions: none beyond the global inventory.
 
 ## 2. Mission
 
@@ -157,6 +149,11 @@ When executing work on hxs-5 (192.168.50.204):
   into a shell variable without printing it. Never use `source` or `eval`
   on the file (it contains other variables). Never use the Read tool on
   this protected file.
+  [OPEN CORRECTION 2026-08-30, labeled, append-only: the extraction command
+  uses `cut -d= -f2-` (with the trailing `-`), which preserves values that
+  themselves contain `=` — the earlier `cut -d= -f2` form truncated at the
+  first `=`. The current command supersedes that earlier form (preserved in
+  git history). This correction remains open.]
 - **Askpass pattern (mandatory):** create a temp askpass helper script
   (0700), use `SSH_ASKPASS=... SSH_ASKPASS_REQUIRE=force setsid -w ssh -o
   StrictHostKeyChecking=yes hxsa@192.168.50.204 "command"`. Delete the

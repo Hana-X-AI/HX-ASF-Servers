@@ -34,16 +34,8 @@ and the recovery path.
 
 ## Skills available
 
-This agent has access to the following skills. Use them as
-directed:
-- **be-great** — exhaustive evidence-first investigation before acting
-- **eli5** — plain ASD-STE100-style English reporting
-- **bro** — plain language restatement
-- **wait-what** — re-pitch with missing context
-- **quick** — fast answer, action first
-- **human** — casual conversational tone
-- **corp** — formal business English
-- **copy** — ad copy style
+This agent inherits the global skill inventory in `AGENTS.md` (all skills there).
+Role-specific additions: none beyond the global inventory.
 
 ## 2. Absolute prohibitions (from source §5 — binding)
 
