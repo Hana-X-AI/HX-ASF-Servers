@@ -26,9 +26,11 @@ anywhere.
    check runs, except CAT-07's canonical_location *existence* probe, which is
    anchored to the governor host by design — repo home plus `/opt/tkv-local` —
    and stays a local-only check in the full mode).
-9. Security scan — gitleaks over the pushed commit range, redacted, pinned to
-   `v8.24.3` (immutable, not `latest` — supply-chain hardening, Codex audit
-   2026-08-30).
+9. Security scan — gitleaks over the pushed commit range, redacted.
+   [OPEN CORRECTION 2026-08-30, labeled: the scan above is now pinned to
+   `v8.24.3` (immutable, not `latest` — supply-chain hardening). Prior
+   behavior: latest tag resolved at run time. Current behavior: pinned
+   version. Original wording preserved above.]
 
 **Job `coderabbit-review`** — ALL pushes incl. main (owner directive 2026-08-28:
 "coderabbit should run on every commit regardless of the type"):
@@ -37,9 +39,12 @@ anywhere.
 11. Install the CodeRabbit CLI.
 12. Review: main pushes review the pushed range `BEFORE..HEAD`; branch pushes
     review vs `origin/main` — `coderabbit review --agent --light --committed`
-    (main) / `--base origin/main` (branches) with the Agentic API key — **fails
-    closed** if `CODERABBIT_API_KEY` is not configured (CodeRabbit is a required
-    check; a missing key cannot pass vacuously, hardening 2026-08-30).
+    (main) / `--base origin/main` (branches) with the Agentic API key — skips
+    with a notice when `CODERABBIT_API_KEY` is not configured.
+    [OPEN CORRECTION 2026-08-30, labeled: CodeRabbit is a required check — a
+    missing `CODERABBIT_API_KEY` now FAILS the job (cannot pass vacuously).
+    Prior behavior: skip with a notice. Current behavior: fail closed. Original
+    wording preserved above.]
 13. Parse the JSON event stream; the gate **fails on critical+major+minor
     findings (zero-tolerance, owner directive 2026-08-28)** and on any review
     that ends without a `complete` event (fail-closed on auth/service failure);

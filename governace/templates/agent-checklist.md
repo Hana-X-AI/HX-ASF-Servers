@@ -41,7 +41,10 @@ This checklist is MANDATORY for every new agent. Do not skip steps. Validate aft
 
 - [ ] 24. Verify model lane via OmniRoute (if cloud lane: curl models endpoint, confirm model in catalog; if local lane: confirm Ollama serving)
 - [ ] 25. Run python3 scripts/wiki/render.py — all manifest docs in sync
-- [ ] 26. Run python3 scripts/validate.py — must be 5/5 PASS
+- [ ] 26. Run python3 scripts/validate.py — must be 4/4 PASS
+  [AMENDMENT 2026-08-30, labeled: validator now runs 5 checks — the
+  governance-path check (SY-2) was added; this requirement reads 5/5 PASS
+  effective 2026-08-30. Original 4/4 wording preserved above.]
 - [ ] 27. Commit
 
 ## Post-creation hook

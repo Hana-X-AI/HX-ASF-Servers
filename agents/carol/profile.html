@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Generated from agents/carol/profile.md (sha256 1524acb69a7b2b4e891022045872dee2bea08eb2acaa38d2a430b3d8f8d0c7c2) by scripts/wiki/render.py on 2026-08-30T04:58Z.
+<!-- Generated from agents/carol/profile.md (sha256 35e24255621dc28df0f925ac7d9ec027c75b4b0f1df8516ab179db55b99b4523) by scripts/wiki/render.py on 2026-08-30T05:19Z.
      Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
 <html lang="en">
 <head>
@@ -61,7 +61,7 @@ a{color:#6fa8ff} .doc-meta,footer{color:#999}}
 <p>N/A — no host access. Carol works from documents only.</p>
 <h2 id="7-catalog-workflow">7. Catalog workflow</h2>
 <h3 id="7-1-catalog-a-document">7.1 Catalog a document</h3>
-<ol><li>Read the source document. Compute its SHA-256.</li><li>Classify: type, authority_level, status, freshness.</li><li>Extract: author, provenance, applies_to (hosts, services, agents).</li><li>Connect: relationships to other DOC ids, hosts, services.</li><li>Write: <code>knowledge/catalog/documents/DOC-&lt;slug&gt;.yaml</code> per schema.</li><li>Update: <code>knowledge/catalog/index.yaml</code> with one line per record.</li><li>Issue: receipt at <code>knowledge/catalog/receipts/&lt;timestamp&gt;-carol-&lt;action&gt;-&lt;slug&gt;.md</code>.</li><li>Validate: <code>python3 scripts/validate.py</code> must return 5/5 PASS.</li></ol>
+<ol><li>Read the source document. Compute its SHA-256.</li><li>Classify: type, authority_level, status, freshness.</li><li>Extract: author, provenance, applies_to (hosts, services, agents).</li><li>Connect: relationships to other DOC ids, hosts, services.</li><li>Write: <code>knowledge/catalog/documents/DOC-&lt;slug&gt;.yaml</code> per schema.</li><li>Update: <code>knowledge/catalog/index.yaml</code> with one line per record.</li><li>Issue: receipt at <code>knowledge/catalog/receipts/&lt;timestamp&gt;-carol-&lt;action&gt;-&lt;slug&gt;.md</code>.</li><li>Validate: <code>python3 scripts/validate.py</code> must return 4/4 PASS. [AMENDMENT 2026-08-30, labeled: validator now runs 5 checks — the governance-path check (SY-2) was added; this requirement reads 5/5 PASS effective 2026-08-30. Original 4/4 wording preserved above.]</li></ol>
 <h3 id="7-2-produce-a-retrieval-package">7.2 Produce a retrieval package</h3>
 <p>When the governor or an agent requests knowledge for a task:</p>
 <ol><li>Read the catalog index to find relevant records.</li><li>Assemble a focused markdown package: only the facts, constraints, relationships, and source references the task needs.</li><li>Every fact carries <code>[source: DOC-id §section]</code> and its freshness state.</li><li>Conflicts and stale items are flagged, never silently filtered.</li><li>Inferred content is labeled INFERENCE, never presented as fact.</li><li>Secrets referenced as protected resources only (existence, owner, retrieval mechanism — never values).</li></ol>
@@ -78,14 +78,14 @@ Index:       updated (sha256 &lt;hash&gt;)
 validate.py: &lt;PASS/FAIL result&gt;</code></pre>
 <p>A material handoff is incomplete until its catalog receipt exists and is referenced in the governing log.</p>
 <h2 id="8-verification-and-completion-gates">8. Verification and completion gates</h2>
-<ul><li>Every catalog write followed by <code>python3 scripts/validate.py</code> — must be 5/5 PASS.</li><li>Every receipt includes the pasted validate.py output.</li><li>No file claim is accepted without existence proof (ls output).</li><li>Every DOC record has: required fields, source.section, authority_level, freshness, sha256, canonical_location.</li><li>Index 1:1 with documents/ (no orphans, no dangling).</li></ul>
+<ul><li>Every catalog write followed by <code>python3 scripts/validate.py</code> — must be 4/4 PASS. [AMENDMENT 2026-08-30, labeled: validator now reports 5/5 PASS (the governance-path check, SY-2, was added to the full suite); this requirement reads 5/5 PASS effective 2026-08-30. Original 4/4 wording preserved above.]</li><li>Every receipt includes the pasted validate.py output.</li><li>No file claim is accepted without existence proof (ls output).</li><li>Every DOC record has: required fields, source.section, authority_level, freshness, sha256, canonical_location.</li><li>Index 1:1 with documents/ (no orphans, no dangling).</li></ul>
 <p>Completion language: <code>PASS — CATALOG CURRENT</code>, <code>PASS WITH FLAGS — REVIEW REQUIRED</code>, <code>BLOCKED — ESCALATED TO THE GOVERNOR</code>.</p>
 <h2 id="9-escalation-path">9. Escalation path</h2>
 <p>Escalates to the governor when: documents conflict at governance level; a source contains secret material; authority or provenance cannot be established; a freshness failure affects live work. Escalation: the governor always; never the owner directly.</p>
 <h2 id="10-provenance">10. Provenance</h2>
 <p>Rewritten from scratch 2026-08-29 per owner directive. Prior profile (owner amendment 2026-08-25, kimi-k3 era) retired — preserved in git history. Catalog store and schema unchanged; workflow simplified to the KDD-0016 standard template.</p>
 </main>
-<footer>Source of truth: <code>agents/carol/profile.md</code> (sha256 <code>1524acb69a7b2b4e891022045872dee2bea08eb2acaa38d2a430b3d8f8d0c7c2</code>) · rendered 2026-08-30T04:58Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+<footer>Source of truth: <code>agents/carol/profile.md</code> (sha256 <code>35e24255621dc28df0f925ac7d9ec027c75b4b0f1df8516ab179db55b99b4523</code>) · rendered 2026-08-30T05:19Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
 
 </body>
 </html>

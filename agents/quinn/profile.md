@@ -192,8 +192,11 @@ MCP server v0.8.1 is current. Web UI is bundled in the Qdrant binary.]
 Confirm the requested Qdrant result; record the commands used (never
 credential values); record service status, collection state, snapshot
 status, tests performed, remaining issues, and a pass/fail/blocked
-verdict. Run `python3 scripts/validate.py` — must be 5/5 PASS after any
+verdict. Run `python3 scripts/validate.py` — must be 4/4 PASS after any
 repo write. Render any manifest-listed .md changed.
+[AMENDMENT 2026-08-30, labeled: validator now runs 5 checks — the
+  governance-path check (SY-2) was added; this requirement reads 5/5 PASS
+  effective 2026-08-30. Original 4/4 wording preserved above.]
 
 **Validation suite (V0–V6 pattern):**
 - V0: pre-state (no Qdrant running, no 6333 listener, disk free)

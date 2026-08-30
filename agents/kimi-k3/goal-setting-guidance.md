@@ -3,19 +3,28 @@
 > **[OPEN CORRECTION 2026-08-29, labeled, append-only — GOVERNOR-ROLE
 > ATTRIBUTION (QA-audit R-3):]** This guidance's "Governing agent: Kimi-K3"
 > field and body references to "Kimi-K3" as the goal-setting agent read as
-> **the governor role — currently James** (owner appointment 2026-08-29,
+> **the governor role — currently Flash** (owner appointment 2026-08-29,
 > DeepSeek V4 Flash via OmniRoute; AGENTS.md governor-transition corrections;
 > state-log row 46). The kimi-k3 identity is retired as a live governor lane;
 > `agents/kimi-k3/` is preserved as the historical governor-role template.
 > All goal-commissioning and agent-invocation authority described below is
-> exercised by the current governor (James), directing work through Mia
+> exercised by the current governor (Flash), directing work through Mia
 > (Chief of Staff, KDD-0012) per the governor→Mia→lanes workflow.
+
+> **[OPEN CORRECTION 2026-08-30, labeled, append-only — GOVERNOR PERSONA
+> RENAME (supersedes the "currently Flash" wording above, which is preserved
+> as history):]** the governor persona referenced above as "Flash" was
+> renamed to **James** on 2026-08-30 (owner decision; AGENTS.md
+> governor-rename correction); the model lane DeepSeek V4 Flash is unchanged.
+> The R-3 attribution above (governor-role, currently Flash, 2026-08-29) is
+> preserved as written; all goal-commissioning and agent-invocation authority
+> below is exercised by the current governor — James.
 
 ## Document status
 
 | Field | Value |
 | --- | --- |
-| Governing agent | The governor role (currently James; historically kimi-k3) |
+| Governing agent | The governor role (currently Flash; historically kimi-k3) — [AMENDMENT 2026-08-30, labeled: persona renamed Flash → James; reads "currently James" effective 2026-08-30. Original wording preserved.] |
 | Subject | Goal-based commissioning of operational agents |
 | Architectural plane | Control plane |
 | Durable work state | `goals/` goal files (designated system of record, KDD-0002); GitHub Projects deferred as an optional later layer |

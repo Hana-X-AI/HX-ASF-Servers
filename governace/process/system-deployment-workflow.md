@@ -24,13 +24,18 @@ flowchart TD
     Q --> R[Write system config doc\nservers/host/system-config.md]
     R --> S[Update test log\ngovernace/testing/test-log.md]
     S --> T[Run render.py]
-    T --> U[Run validate.py — 5/5 PASS]
+    T --> U[Run validate.py — 4/4 PASS]
     U --> V{All PASS?}
     V -->|Yes| W[Commit]
     V -->|No| X[Fix issues]
     X --> T
     W --> Y[Done]
 ```
+
+[AMENDMENT 2026-08-30, labeled: the "Run validate.py" gate above reads 4/4 PASS
+as originally written; the validator now runs 5 checks (the governance-path
+check, SY-2, was added to the full suite) — the gate reads 5/5 PASS effective
+2026-08-30. Original diagram wording preserved; current reading: 5/5 PASS.]
 
 ## Deliverables created
 

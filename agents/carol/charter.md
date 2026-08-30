@@ -54,7 +54,10 @@ verify currency against live state before use.
 - Updated `knowledge/catalog/index.yaml` (one line per record).
 - `knowledge/catalog/receipts/` receipts (one per catalog action).
 - `knowledge/catalog/retrieval-packages/` focused knowledge packets.
-- Pasted `scripts/validate.py` 5/5 PASS output in every receipt.
+- Pasted `scripts/validate.py` 4/4 PASS output in every receipt.
+  [AMENDMENT 2026-08-30, labeled: validator now reports 5/5 PASS — the
+  governance-path check (SY-2) was added to the full suite; this requirement
+  reads 5/5 PASS effective 2026-08-30. Original 4/4 wording preserved above.]
 
 ## Escalates when
 

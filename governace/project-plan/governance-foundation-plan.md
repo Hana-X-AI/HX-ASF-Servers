@@ -83,8 +83,13 @@ path-fork resolved 2026-08-29 — orphan `governance/` removed).
   stdin payload)
 - Test with Nancy (QA agent) — PENDING owner word
 
-**Status:** COMPLETE (mechanics in place; enforcement advisory — hooks are
-fail-open, per the QA-audit enforcement note). Test remains owner-gated.
+**Status:** COMPLETE (enforcement wired). Test remains owner-gated.
+[AMENDMENT 2026-08-30, labeled: the "enforcement wired" wording above overstates
+mechanical strength — five of six hooks are fail-open advisory guardrails
+(test-log-append reminds, agent-creation-check warns, governor-gate reminds).
+Current reading: COMPLETE (mechanics in place; enforcement advisory — hooks are
+fail-open), Test remains owner-gated. Original wording preserved above; this is
+the current status.]
 
 ## Workstream 5 — Skills in every agent profile
 

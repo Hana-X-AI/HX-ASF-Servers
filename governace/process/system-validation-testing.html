@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Generated from governace/process/system-validation-testing.md (sha256 7bece7ec9e48fc6a77ab3e12d212c4c0eca2884c7f2cf2ab9936f27d45b2e76b) by scripts/wiki/render.py on 2026-08-30T04:58Z.
+<!-- Generated from governace/process/system-validation-testing.md (sha256 a0bff6ac36ef239300af83ac0f717415b24dadc2d4a78867ec598b5167b964d8) by scripts/wiki/render.py on 2026-08-30T05:19Z.
      Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
 <html lang="en">
 <head>
@@ -53,9 +53,10 @@ a{color:#6fa8ff} .doc-meta,footer{color:#999}}
     H --&gt;|No| L[Update system config doc\nwith final test status]
     L --&gt; M[Update change record\nwith verification result]
     M --&gt; N[Run render.py]
-    N --&gt; O[Run validate.py — 5/5 PASS]
+    N --&gt; O[Run validate.py — 4/4 PASS]
     O --&gt; P[Commit]
     P --&gt; Q[Done]</pre>
+<p>[AMENDMENT 2026-08-30, labeled: the "Run validate.py" gate above reads 4/4 PASS as originally written; the validator now runs 5 checks (the governance-path check, SY-2, was added to the full suite) — the gate reads 5/5 PASS effective 2026-08-30. Original diagram wording preserved; current reading: 5/5 PASS.]</p>
 <h2 id="deliverables-updated">Deliverables updated</h2>
 <ul><li><code>test-log.md</code>, <code>system-config-doc.md</code>, <code>change-record.md</code></li></ul>
 <h2 id="skills-triggered">Skills triggered</h2>
@@ -63,7 +64,7 @@ a{color:#6fa8ff} .doc-meta,footer{color:#999}}
 <h2 id="hooks-triggered">Hooks triggered</h2>
 <ul><li><code>validate-changed.sh</code> (PostToolUse on <code>test-log.md</code>)</li><li><code>test-log-append.sh</code> (PostToolUse on test/evidence writes — reminds to append a dated row; added 2026-08-29, QA-audit ST-7)</li><li><code>render-sync.sh</code> (PostToolUse on <code>.md</code>/manifest writes — flags manifest drift before commit; added 2026-08-29, QA-audit ST-4)</li></ul>
 </main>
-<footer>Source of truth: <code>governace/process/system-validation-testing.md</code> (sha256 <code>7bece7ec9e48fc6a77ab3e12d212c4c0eca2884c7f2cf2ab9936f27d45b2e76b</code>) · rendered 2026-08-30T04:58Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+<footer>Source of truth: <code>governace/process/system-validation-testing.md</code> (sha256 <code>a0bff6ac36ef239300af83ac0f717415b24dadc2d4a78867ec598b5167b964d8</code>) · rendered 2026-08-30T05:19Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
 
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';

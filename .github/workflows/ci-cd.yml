@@ -84,6 +84,8 @@ jobs:
     name: coderabbit-review
     runs-on: ubuntu-latest
     timeout-minutes: 45
+    permissions:
+      pull-requests: write
     steps:
       - name: Checkout (full history for the base diff)
         uses: actions/checkout@v4

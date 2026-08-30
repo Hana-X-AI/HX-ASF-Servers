@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Generated from governace/project-plan/governance-foundation-plan.md (sha256 f7276e37fb135cdbd94e952ef05ee17a8348cb9901e163ab887f2cea4a8f3cd5) by scripts/wiki/render.py on 2026-08-30T04:58Z.
+<!-- Generated from governace/project-plan/governance-foundation-plan.md (sha256 38668264bc50ca4be035d78ef8e71925cfe18fc82ed1e539149b86129c64c9eb) by scripts/wiki/render.py on 2026-08-30T05:19Z.
      Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
 <html lang="en">
 <head>
@@ -60,7 +60,7 @@ a{color:#6fa8ff} .doc-meta,footer{color:#999}}
 <p><strong>Objective:</strong> eliminate missed-registration errors when creating agents.</p>
 <p><strong>Deliverables:</strong></p>
 <ul><li><code>governace/templates/agent-checklist.md</code> — mandatory 22-step checklist (DONE)</li><li><code>.kimi-code/skills/create-agent/SKILL.md</code> — agent-creation skill (DONE; installed to user scope 2026-08-29)</li><li><code>scripts/hooks/agent-creation-check.sh</code> — PostToolUse hook, fail-open (DONE; registered in <code>~/.kimi-code/config.toml</code> 2026-08-29, interface fixed to read stdin payload)</li><li>Test with Nancy (QA agent) — PENDING owner word</li></ul>
-<p><strong>Status:</strong> COMPLETE (mechanics in place; enforcement advisory — hooks are fail-open, per the QA-audit enforcement note). Test remains owner-gated.</p>
+<p><strong>Status:</strong> COMPLETE (enforcement wired). Test remains owner-gated. [AMENDMENT 2026-08-30, labeled: the "enforcement wired" wording above overstates mechanical strength — five of six hooks are fail-open advisory guardrails (test-log-append reminds, agent-creation-check warns, governor-gate reminds). Current reading: COMPLETE (mechanics in place; enforcement advisory — hooks are fail-open), Test remains owner-gated. Original wording preserved above; this is the current status.]</p>
 <h2 id="workstream-5-skills-in-every-agent-profile">Workstream 5 — Skills in every agent profile</h2>
 <p><strong>Objective:</strong> every agent profile lists its available skills.</p>
 <p><strong>Deliverables:</strong></p>
@@ -85,7 +85,7 @@ a{color:#6fa8ff} .doc-meta,footer{color:#999}}
 <h2 id="completion-rule">Completion rule</h2>
 <p>This goal is done only when every acceptance criterion passes with evidence and the owner accepts — not when the work feels done. Per KDD-0002 goal-setting contract.</p>
 </main>
-<footer>Source of truth: <code>governace/project-plan/governance-foundation-plan.md</code> (sha256 <code>f7276e37fb135cdbd94e952ef05ee17a8348cb9901e163ab887f2cea4a8f3cd5</code>) · rendered 2026-08-30T04:58Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+<footer>Source of truth: <code>governace/project-plan/governance-foundation-plan.md</code> (sha256 <code>38668264bc50ca4be035d78ef8e71925cfe18fc82ed1e539149b86129c64c9eb</code>) · rendered 2026-08-30T05:19Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
 
 </body>
 </html>

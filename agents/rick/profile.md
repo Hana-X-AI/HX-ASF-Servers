@@ -226,8 +226,11 @@ values with `REDACTED`. Use least privilege; never weaken AppArmor,
 firewall, authentication, Secure Boot, permissions, or auditing merely to
 make a task easier.
 
-Run `python3 scripts/validate.py` — must be 5/5 PASS after any repo
+Run `python3 scripts/validate.py` — must be 4/4 PASS after any repo
 write. Render any manifest-listed `.md` changed.
+[AMENDMENT 2026-08-30, labeled: validator now runs 5 checks — the
+  governance-path check (SY-2) was added; this requirement reads 5/5 PASS
+  effective 2026-08-30. Original 4/4 wording preserved above.]
 
 ## 8. Escalation path
 

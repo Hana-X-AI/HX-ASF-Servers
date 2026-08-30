@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Generated from agents/quinn/profile.md (sha256 5dd781d5464140a3cf2c2d4441a5445a8d3979dfd673374d52afada2a7fdfd6d) by scripts/wiki/render.py on 2026-08-30T04:58Z.
+<!-- Generated from agents/quinn/profile.md (sha256 ca13e2bd494b0dc38563d61455f2d69ee8ecbff5c9a385263361a640f9ecada0) by scripts/wiki/render.py on 2026-08-30T05:19Z.
      Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
 <html lang="en">
 <head>
@@ -77,7 +77,7 @@ EMBEDDING_MODEL=sentence-transformers/all-MiniLM-L6-v2</code></pre>
 <h3 id="7-3-mcp-server-for-qdrant-v0-8-1">7.3 MCP server for Qdrant (v0.8.1)</h3>
 <ul><li><strong>Purpose:</strong> semantic memory layer — store and retrieve information via Qdrant vector search</li><li><strong>Tools:</strong> <code>qdrant-store</code> (store information + metadata), <code>qdrant-find</code> (semantic search for relevant memories)</li><li><strong>Transport:</strong> stdio (default), sse, streamable-http</li><li><strong>Embeddings:</strong> fastembed (default: all-MiniLM-L6-v2)</li><li><strong>Config:</strong> environment variables (QDRANT_URL or QDRANT_LOCAL_PATH, QDRANT_API_KEY, COLLECTION_NAME, EMBEDDING_MODEL, QDRANT_READ_ONLY, QDRANT_SEARCH_LIMIT, filterable fields)</li><li><strong>Read-only mode:</strong> disables qdrant-store tool</li><li><strong>MCP status:</strong> co-located with Qdrant on hxs-4 per system-mapping MCP architecture decision (2026-08-29)</li></ul>
 <h2 id="8-verification-and-completion-gates">8. Verification and completion gates</h2>
-<p>Confirm the requested Qdrant result; record the commands used (never credential values); record service status, collection state, snapshot status, tests performed, remaining issues, and a pass/fail/blocked verdict. Run <code>python3 scripts/validate.py</code> — must be 5/5 PASS after any repo write. Render any manifest-listed .md changed.</p>
+<p>Confirm the requested Qdrant result; record the commands used (never credential values); record service status, collection state, snapshot status, tests performed, remaining issues, and a pass/fail/blocked verdict. Run <code>python3 scripts/validate.py</code> — must be 4/4 PASS after any repo write. Render any manifest-listed .md changed. [AMENDMENT 2026-08-30, labeled: validator now runs 5 checks — the governance-path check (SY-2) was added; this requirement reads 5/5 PASS effective 2026-08-30. Original 4/4 wording preserved above.]</p>
 <p><strong>Validation suite (V0–V6 pattern):</strong></p>
 <ul><li>V0: pre-state (no Qdrant running, no 6333 listener, disk free)</li><li>V1: install + version (qdrant binary version, service active)</li><li>V2: config posture (bind address, port, API key set, TLS if required)</li><li>V3: API probe (curl collection list, health check, readyz)</li><li>V4: collection lifecycle (create, upsert, search, delete — via Python client or curl)</li><li>V5: snapshot backup + restore (create snapshot, restore, verify data)</li><li>V6: health monitoring (timer + script active, exit 0)</li></ul>
 <h2 id="9-escalation-path">9. Escalation path</h2>
@@ -89,7 +89,7 @@ EMBEDDING_MODEL=sentence-transformers/all-MiniLM-L6-v2</code></pre>
 <h2 id="11-provenance">11. Provenance</h2>
 <p>Original record — no external source document. Created per owner directive 2026-08-29. Knowledge base: <code>/opt/tkv-local/qdrant-master</code> (v1.15.5), <code>/opt/tkv-local/qdrant-client-master</code> (v1.15.1), <code>/opt/tkv-local/mcp-server-qdrant-master</code> (v0.8.1). Target host: hxs-4 per <code>servers/system-mapping.md</code>. Model lane: NVIDIA Nemotron 3 Ultra (free) via OpenRouter, provider NVIDIA.</p>
 </main>
-<footer>Source of truth: <code>agents/quinn/profile.md</code> (sha256 <code>5dd781d5464140a3cf2c2d4441a5445a8d3979dfd673374d52afada2a7fdfd6d</code>) · rendered 2026-08-30T04:58Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+<footer>Source of truth: <code>agents/quinn/profile.md</code> (sha256 <code>ca13e2bd494b0dc38563d61455f2d69ee8ecbff5c9a385263361a640f9ecada0</code>) · rendered 2026-08-30T05:19Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
 
 </body>
 </html>

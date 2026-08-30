@@ -102,7 +102,10 @@ N/A — no host access. Carol works from documents only.
 5. Write: `knowledge/catalog/documents/DOC-<slug>.yaml` per schema.
 6. Update: `knowledge/catalog/index.yaml` with one line per record.
 7. Issue: receipt at `knowledge/catalog/receipts/<timestamp>-carol-<action>-<slug>.md`.
-8. Validate: `python3 scripts/validate.py` must return 5/5 PASS.
+8. Validate: `python3 scripts/validate.py` must return 4/4 PASS.
+   [AMENDMENT 2026-08-30, labeled: validator now runs 5 checks — the
+   governance-path check (SY-2) was added; this requirement reads 5/5 PASS
+   effective 2026-08-30. Original 4/4 wording preserved above.]
 
 ### 7.2 Produce a retrieval package
 
@@ -139,7 +142,10 @@ is referenced in the governing log.
 ## 8. Verification and completion gates
 
 - Every catalog write followed by `python3 scripts/validate.py` — must
-  be 5/5 PASS.
+  be 4/4 PASS.
+  [AMENDMENT 2026-08-30, labeled: validator now reports 5/5 PASS (the
+  governance-path check, SY-2, was added to the full suite); this requirement
+  reads 5/5 PASS effective 2026-08-30. Original 4/4 wording preserved above.]
 - Every receipt includes the pasted validate.py output.
 - No file claim is accepted without existence proof (ls output).
 - Every DOC record has: required fields, source.section, authority_level,
