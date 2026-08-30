@@ -198,13 +198,27 @@ def check_governance_path():
     for wp in ws_problems:
         c.fail(wp)
 
+    hk_summary = "unavailable"
+    try:
+        sys.path.insert(0, os.path.join(ROOT, "scripts"))
+        import hooks_verify
+        hk_summary, hk_problems = hooks_verify.plan()
+    except Exception as e:
+        c.fail("[SY-5] hooks_verify unavailable: %s" % e)
+        hk_problems = []
+    finally:
+        if sys.path and sys.path[0] == os.path.join(ROOT, "scripts"):
+            sys.path.pop(0)
+    for hp in hk_problems:
+        c.fail(hp)
+
     if c.ok:
         c.detail.append("SY-2 governace/ canonical, governance/ fork absent; "
                         "SY-3 %d skills canonical at .agents/skills/, %d tool-scope "
                         "mirrors in sync (%s stub-only); SY-4 %d goals carry a valid "
-                        "work-state block (%d open reconcile item%s)"
+                        "work-state block (%d open reconcile item%s); SY-5 %s"
                         % (len(skills), len(mirrors), stub_only, ws_n, ws_rec,
-                           "" if ws_rec == 1 else "s"))
+                           "" if ws_rec == 1 else "s", hk_summary))
     else:
         # Per-file findings are capped by MAX_FINDINGS_SHOWN, so name the
         # affected mirror roots here — this line always prints, and it is what
