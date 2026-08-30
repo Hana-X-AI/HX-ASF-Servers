@@ -32,22 +32,35 @@ three were wrong until SY-5 existed.
 Every new hook or skill deliverable is **not complete until registered and
 verified**. Delivery process:
 
-1. **Hook:** add the `[[hooks]]` block to `~/.kimi-code/config.toml`
-   (event, matcher, command, timeout).
-2. **Verify registration:** `grep -c '<hook-name>' ~/.kimi-code/config.toml` → ≥ 1.
-3. **Skill (repo, canonical):** create `.agents/skills/<name>/SKILL.md`.
+1. **Declare it first:** add the hook to `governace/hooks/manifest.yaml` —
+   event, matcher, `enforcement`, `shim`, `min_timeout`, `sha256`, and the
+   `scopes` it belongs to. The manifest is the authority; a hook registered
+   but not declared fails SY-5 as loudly as one declared but not registered.
+2. **Register it in BOTH scopes:**
+   - `.claude/settings.json` — in Git. Wrap it in
+     `scripts/hooks/claude-payload-shim.sh` unless the hook reads the raw
+     payload (`secret-boundary.sh` must NOT be shimmed). Claude Code sends
+     `tool_input.file_path`; an unshimmed hook reading the Kimi key `path`
+     matches nothing and exits 0 — a silent no-op, not a visible failure.
+   - `~/.kimi-code/config.toml` — user scope, `[[hooks]]` block, no shim.
+3. **Verify:** `python3 scripts/hooks_verify.py`. This replaces the old
+   `grep -c '<hook-name>' ~/.kimi-code/config.toml` check, which proved only
+   that a string appeared in one scope's file — not that the hook was invoked,
+   not that the other scope had it, and not that the shim rule was honoured.
+   `validate.py` runs the same comparison as sub-check **SY-5**.
+4. **Skill (repo, canonical):** create `.agents/skills/<name>/SKILL.md`.
    `.agents/skills/` is the canonical skill tree (KDD-0020, 2026-08-30); never
    author or edit a skill inside a mirror.
-4. **Mirror to the tool scopes:** `python3 scripts/skills_sync.py --write`,
+5. **Mirror to the tool scopes:** `python3 scripts/skills_sync.py --write`,
    which rebuilds `.kimi-code/skills/` (Kimi Code) and `.claude/skills/`
    (Claude Code) from the canonical tree. Verify with
    `python3 scripts/skills_sync.py --check`; `validate.py` enforces it as SY-3.
-5. **Skill (user scope):** copy to `~/.kimi-code/skills/<name>/SKILL.md`
+6. **Skill (user scope):** copy to `~/.kimi-code/skills/<name>/SKILL.md`
    (`cp -a .agents/skills/<name> ~/.kimi-code/skills/`), then verify it is
    loadable: `ls ~/.kimi-code/skills/<name>/SKILL.md`.
-6. **Reference it:** add to the agent template skills section
+7. **Reference it:** add to the agent template skills section
    (`governace/templates/agent/profile.md`) and this README table.
-7. **Functional smoke:** test the hook with a stdin-payload pipe AND a direct
+8. **Functional smoke:** test the hook with a stdin-payload pipe AND a direct
    path arg (both interfaces) — see each hook header.
 
 A hook/skill that is built but not registered does not count as delivered

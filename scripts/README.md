@@ -72,8 +72,23 @@ registrations by `scripts/hooks_verify.py` (`validate.py` sub-check SY-5).
 
 ## Onboarding note
 
-Hook registrations live in `~/.kimi-code/config.toml` (user-scoped, never
-committed). A fresh machine or user does not inherit hooks automatically —
-run `kimi config` to register `secret-boundary.sh` (PreToolUse) and
-`validate-changed.sh` (PostToolUse). See `scripts/hooks/README.md` for
-the registration convention.
+Hooks are registered in **two** scopes, and a fresh machine or user inherits
+only one of them:
+
+- `.claude/settings.json` is in Git, so a clone gets all six Claude
+  registrations automatically.
+- `~/.kimi-code/config.toml` is user-scoped and never committed. A fresh
+  machine has **no** Kimi hooks until they are added — all six, not just the
+  two this note used to name: `secret-boundary.sh` (PreToolUse) plus the five
+  advisory PostToolUse hooks `validate-changed.sh`, `agent-creation-check.sh`,
+  `render-sync.sh`, `test-log-append.sh` and `governor-gate.sh`.
+
+`~/.kimi-code/skills/` is user-scoped too and is NOT rebuilt by
+`skills_sync.py`, which covers only the two in-repo mirrors. It drifted
+undetected until 2026-08-30.
+
+Run `python3 scripts/hooks_verify.py` after setup: it reports what each scope
+actually has against `governace/hooks/manifest.yaml`. The user scope is
+advisory there — absent is reported, not failed — so read the summary line
+rather than only the exit code. See `scripts/hooks/README.md` for the full
+registration checklist.

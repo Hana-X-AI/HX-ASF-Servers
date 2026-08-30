@@ -48,10 +48,10 @@ document:
     target: kimi-k3
     note: 'state log row 60 (2026-08-25T23:47Z): UD3 approved the U3 advisory hook pilot (registration queued behind U2), UD4 approved the U5 secret-boundary pilot (script + config registration that wave, warn -> block graduation)'
   validation:
-    validated_at: '2026-08-30T20:50:22Z'
+    validated_at: '2026-08-30T20:55:30Z'
     freshness: current
     review_due: on hook script/mode change (re-hash components), on warn -> block graduation, or on pilot-week outcome review
-  sha256: 73511cfa9674b040ccb0364610b42ffe36b48671f244639f21a44d77174a2c67
+  sha256: 7472dced92a9108f4abee51d390cd978090c28e3a9435dcd5767e804316b1b52
   canonical_location: /home/hxsa/opt/HX-ASF-Servers/scripts/hooks/README.md
   hash_history:
   - sha256: 8954004f92fd549cdfc83fe7c9e2a5429c72ef857328cab5066f7458ac68b262
@@ -60,8 +60,11 @@ document:
   - sha256: 73511cfa9674b040ccb0364610b42ffe36b48671f244639f21a44d77174a2c67
     timestamp: '2026-08-30T20:50:22Z'
     reason: README records both registration scopes + the manifest/SY-5 authority (O5)
+  - sha256: 7472dced92a9108f4abee51d390cd978090c28e3a9435dcd5767e804316b1b52
+    timestamp: '2026-08-30T20:55:30Z'
+    reason: registration checklist covers both scopes and hooks_verify.py replaces the grep check
 notes:
   record_checksum_scope: 'The record sha256 is the checksum of scripts/hooks/README.md (the system''s canonical convention document). Component checksums are NO LONGER duplicated here: they drifted (validate-changed.sh carried an ingestion-time hash that no longer matched) and they now live in governace/hooks/manifest.yaml, which validate.py sub-check SY-5 verifies against the live files on every run. One place, mechanically checked, instead of a second copy in prose that nothing compared.'
   external_registration: 'Hook REGISTRATIONS live in two scopes: .claude/settings.json (in Git, deterministic, CI-verified) and the user-scope ~/.kimi-code/config.toml [[hooks]] array (personal config, never committed). The 2026-08-25 record of this note predated the Claude scope and said registrations were wholly external; that is superseded. SY-5 verifies both — the in-Git scope as a hard failure if absent, the user scope advisory. hooks_verify.py reads [[hooks]] entries only from the user config, which also holds live provider credentials; no other line of it is parsed, echoed or stored.'
   cataloging_context: 'One record for the whole hook system per the DOC-scripts-wiki-dual-format-render precedent (system record, components hashed in notes). Type runbook (operational procedure + convention), authority ratified-governance (UD3/UD4). Mode file state at ingestion: warn (pilot week per UD4; graduation to block is a one-word edit after a measured pilot and owner word).'
-  minted_by: carol-mint 1.0.0 @ 2026-08-30T20:50:22Z — re-mint 8954004f92fd… -> 73511cfa9674… — README records both registration scopes + the manifest/SY-5 authority (O5)
+  minted_by: carol-mint 1.0.0 @ 2026-08-30T20:55:30Z — re-mint 73511cfa9674… -> 7472dced92a9… — registration checklist covers both scopes and hooks_verify.py replaces the grep check
