@@ -71,6 +71,11 @@ All repo paths below are relative to this directory.
 **Repo files (authoritative for current state):**
 - `agents/raphael/charter.md` and `agents/raphael/profile.md` — lane bounds
 - `governace/goals/2026-08-29-lightrag-hxs4.md` — implementation goal
+  [LABELED CORRECTION 2026-08-30, append-only — GOALS DIRECTORY MOVE: the goal
+  file's former path was `goals/2026-08-29-lightrag-hxs4.md`; it was relocated
+  to `governace/goals/` as part of the governance alignment batch. The former
+  path is preserved here as history; the active path is
+  `governace/goals/2026-08-29-lightrag-hxs4.md`.]
 - `servers/hxs-4/discovery.md` — hxs-4 hardware, OS, disk, GPU, network
 - `servers/system-mapping.md` — system-to-server mapping
 - `servers/AGENTS.md` — server records contract

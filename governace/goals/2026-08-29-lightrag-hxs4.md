@@ -148,12 +148,12 @@ tools, higher maturity, npm install. The daniel-lightrag-mcp is the fallback.
 | SC-03 | LightRAG API responds | `curl http://192.168.50.203:9621/health` | 200 OK, health check passed | curl output | governor |
 | SC-04 | Qdrant backend configured | LightRAG config uses `QdrantVectorDBStorage` with Qdrant URL and API key | Collections created in Qdrant after document insert | Qdrant collections list | governor |
 | SC-05 | LLM binding works | LightRAG config uses the selected local Ollama binding on hxs-4 (`LLM_BINDING=ollama`, `LLM_MODEL=hx-qwen3.5-9b-64k`) — the OmniRoute/Meta-X binding is superseded (owner decision 2026-08-29, preserved as history) | Query returns generated text | query output | governor |
-| SC-06 | Embedding binding works | LightRAG config uses Ollama or OmniRoute for embeddings | Document ingestion creates vectors in Qdrant | vector count > 0 | governor |
+| SC-06 | Embedding binding works | LightRAG config uses the owner-selected Ollama embedding configuration on hxs-4 — model **bge-m3**, dimension **1024** (no OmniRoute alternative; the embedding path is Ollama on hxs-4 only) | Document ingestion creates vectors in Qdrant; vector count > 0 and embedding dimension = 1024 | vector count > 0 + config shows bge-m3/1024 | governor |
 | SC-07 | LightRAG Web UI accessible | `curl http://192.168.50.203:9621/` returns HTML | Web UI loads | curl output | governor |
 | SC-08 | MCP server installed and running | `systemctl is-active lightrag-mcp` | active (running) | systemctl status | governor |
 | SC-09 | MCP server responds | MCP client can connect and call `get_health` tool | Health check returns OK | MCP client output | governor |
 | SC-10 | Document lifecycle | Insert test document, query it, delete it | Query returns relevant results; clean state after delete | API call sequence | governor |
-| SC-11 | Credentials stored | All LightRAG credentials in `.local.env`; verify the required variable NAMES exist without printing their values | QDRANT_URL, QDRANT_API_KEY, LIGHTRAG_API_KEY, LLM_BINDING (plus LLM_BINDING_HOST/LLM_MODEL) vars present; any missing entry is a validation failure | command: `set -a; . ./.local.env; set +a; for v in QDRANT_URL QDRANT_API_KEY LIGHTRAG_API_KEY LLM_BINDING LLM_BINDING_HOST LLM_MODEL; do [ -n "${!v+x}" ] \|\| { echo "MISSING: $v"; exit 1; }; done; echo "SC-11 OK: required vars present (values not printed)"` — run non-interactively with stdin closed so it cannot block | governor |
+| SC-11 | Credentials stored | All LightRAG credentials in `.local.env`; verify the required variable NAMES exist without printing their values | QDRANT_URL, QDRANT_API_KEY, LIGHTRAG_API_KEY, LLM_BINDING (plus LLM_BINDING_HOST/LLM_MODEL) vars present; any missing entry is a validation failure | command: `set -a; . ./.local.env; set +a; for v in QDRANT_URL QDRANT_API_KEY LIGHTRAG_API_KEY LLM_BINDING LLM_BINDING_HOST LLM_MODEL; do [[ -v "$v" ]] \|\| { echo "MISSING: $v"; exit 1; }; done; echo "SC-11 OK: required vars present (values not printed)"` — run non-interactively with stdin closed so it cannot block | governor |
 | SC-12 | systemd units persist | `systemctl is-enabled lightrag lightrag-mcp` | both enabled | systemctl output | governor |
 | SC-13 | Repo validation | `python3 scripts/validate.py` | 4/4 PASS | validate output | governor |
 | SC-14 | LightRAG test suite | Run LightRAG core tests: `bash -o pipefail -c 'cd /opt/tkv-local/LightRAG-main && python3 -m pytest tests/ -x --timeout=60 2>&1 \| tail -5'` | Core tests pass (425 test files) | pytest output | governor |
@@ -171,8 +171,13 @@ tools, higher maturity, npm install. The daniel-lightrag-mcp is the fallback.
 - Time / token limits: PT1H per session
 - Stop conditions: Qdrant dependency failure, LLM binding failure,
   permission denied on hxs-4, validate.py FAIL
-- Rollback / containment: systemd stop + pip uninstall; Qdrant data
-  preserved (LightRAG creates its own collections, does not modify existing)
+- Rollback / containment: systemd stop (lightrag + lightrag-mcp) + uninstall
+  BOTH installed components: uninstall LightRAG from the Python environment
+  actually used by the deployment (whether installed via pip or uv —
+  `pip uninstall lightrag-hku` or `uv pip uninstall lightrag-hku` in the
+  deployment venv) and remove the npm-installed lightragmcp package
+  (`npm uninstall lightragmcp`); Qdrant data preserved (LightRAG creates its
+  own collections, does not modify existing)
 - HITL checkpoints: bge-m3 install on hxs-4 (john's lane — cross-lane
   dependency); LLM model confirmation (local Ollama binding, hx-qwen3.5-9b-64k —
   the OmniRoute/Meta-X binding is superseded per owner decision 2026-08-29);
@@ -181,7 +186,7 @@ tools, higher maturity, npm install. The daniel-lightrag-mcp is the fallback.
 
 ## Architecture
 
-```
+```text
 Document ingest → LightRAG server (hxs-4:9621)
                     ├── LLM binding → Ollama (hxs-4) → Chat-X (Qwen 3.5 9B)
                     ├── Embedding binding → Ollama (hxs-4) → bge-m3 (installed by john)

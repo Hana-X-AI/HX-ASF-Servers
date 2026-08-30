@@ -486,14 +486,32 @@ scripts. Fix recommendations return through the locked loop with evidence.
 
 ## Verification
 
-- Reproduce the flake: `npx playwright test <spec> --repeat-each=20 --workers=4
-  --trace=on` — it must fail at least once before you trust any fix.
-- After fixing, prove stability: `npx playwright test <spec> --repeat-each=50
-  --workers=4` — require 50/50 passes, in CI conditions too.
-- Confirm quarantine routing: `npx playwright test --project=stable` excludes
-  `@quarantine` tests and `--project=quarantine` runs only them.
-- Confirm selector audit emits numbers: the stability report lists a score per locator
-  and a suite average.
+Run Playwright from the project's installed, pinned dependency (never an unpinned
+`npx playwright`): `npm ci` first, then use the local binary
+(`./node_modules/.bin/playwright`) or `npm exec --offline -- playwright`. Pass the test
+path through a quoted `SPEC` argument so spaces and shell metacharacters in the path are
+not interpreted.
+
+```bash
+# Bind the spec path from the first argument, or the environment variable.
+SPEC="${1:-$SPEC}"
+[ -n "$SPEC" ] || { echo "usage: verify-reliability.sh <spec-path> (or set \$SPEC)"; exit 2; }
+[ -x ./node_modules/.bin/playwright ] || npm ci
+
+# Reproduce the flake — it must fail at least once before you trust any fix.
+./node_modules/.bin/playwright test "$SPEC" --repeat-each=20 --workers=4 --trace=on
+
+# After fixing, prove stability — require 50/50 passes, in CI conditions too.
+./node_modules/.bin/playwright test "$SPEC" --repeat-each=50 --workers=4
+
+# Confirm quarantine routing: --project=stable excludes @quarantine tests and
+# --project=quarantine runs only them.
+./node_modules/.bin/playwright test --project=stable
+./node_modules/.bin/playwright test --project=quarantine
+```
+
+Confirm selector audit emits numbers: the stability report lists a score per locator
+and a suite average.
 
 ## Done When
 

@@ -58,6 +58,8 @@ Model lanes (owner-assigned 2026-08-28, KDD-0013): kimi-k3 `moonshot-ai/kimi-k3`
 
 **GOVERNOR PERSONA RENAME — OPEN CORRECTION (2026-08-30, labeled, append-only — supersedes the "currently Flash" statement in the correction block above, which is preserved as history):** the governor persona referenced above as "Flash" was renamed to **James** (owner decision 2026-08-30); the **DeepSeek V4 Flash** model lane is unchanged and remains assigned to the governor role — currently James. Standing references to "Flash" as governor read as James. The transfer-of-role wording above (kimi-k3 → Flash, 2026-08-29) is preserved as written; the rename (Flash → James, 2026-08-30) is a separate event. Authority: AGENTS.md governor-rename correction; owner decision 2026-08-30.
 
+**BAILEY LANE — OPEN CORRECTION (2026-08-30, labeled, append-only — extends the model-lane summary above to include Bailey, which is preserved as history):** Bailey (QA test-authoring lane, KDD-0019) is assigned **Qwen3.8 Flash** (`openrouter/qwen/qwen3.8-flash`, Alibaba Cloud International, via OmniRoute hxs-8) under the QA lane-config job family (KDD-0013 Amendment 11). Her lane is on the OD-14 owner-lane allowlist (metered; activation-gated — no metered spend before her activation gate clears, KDD-0019; KDD-0013 Amendment 12). OD-14 exception scope is now TEN metered/zero-cost cloud lanes — trinity, rob, mia, gordon, carol, chris, kimi-k3, wayne, quinn (unmetered), bailey (metered) — superseding the eight-lane scope of the correction above for Bailey. Authority: owner decision 2026-08-30 (KDD-0013 Amendment 11/12) + KDD-0019; effective 2026-08-30.
+
 ## Two lane types
 
 - **Horizontal** — one domain, across the whole project. Examples: security,

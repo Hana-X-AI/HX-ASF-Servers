@@ -280,7 +280,10 @@ human review, Bailey runs the author-side checks only — she does NOT execute t
 suite (suite execution is a Gordon-owned gate, per the KDD-0019 test loop):
 
 1. **Resolve imports / types.** Python: `python -m pyflakes <files>` or `ruff check`.
-   TypeScript: `npx tsc --noEmit` — fabricated imports and wrong signatures fail here.
+   TypeScript: use the repository's pinned compiler from the installed dependency —
+   `npm ci` first, then `./node_modules/.bin/tsc --noEmit` (or
+   `npm exec --offline -- tsc --noEmit`) — never a network-enabled `npx tsc`.
+   Fabricated imports and wrong signatures fail here.
 2. **Grep generated selectors/endpoints against the codebase.** Confirm every
    `getByTestId('...')` id and every API path the test calls actually exists in source.
    Read the configured generated-artifact root and source root from the documented
@@ -310,12 +313,26 @@ suite (suite execution is a Gordon-owned gate, per the KDD-0019 test loop):
    [ -d "$SRC_ROOT" ] || { echo "FATAL: source root missing: $SRC_ROOT"; exit 1; }
    # grep exit status: 0 = selectors found, 1 = no selectors (valid empty set),
    # 2+ = scan error — treat only 2+ as a failure and let it propagate.
-   grep -roE "getByTestId\('([^']+)'\)" "$GEN_ROOT" > /tmp/selectors-raw.txt
+   # Extract every supported literal form — single-quoted, double-quoted, and
+   # template-literal arguments. Inside this double-quoted pattern the
+   # backslashes keep the quote/backtick characters literal for bash.
+   grep -roE "getByTestId\((['\"\`])[^'\`\"]*\1\)" "$GEN_ROOT" > /tmp/selectors-raw.txt
    gs=$?
    if [ "$gs" -gt 1 ]; then echo "FATAL: selector scan error (grep exit $gs)"; exit 1; fi
    if [ "$gs" -eq 1 ]; then echo "no getByTestId selectors found (valid empty set)"; fi
-   sed -E "s/.*'([^']+)'.*/\1/" /tmp/selectors-raw.txt | sort -u \
-     | while read id; do grep -rq "$id" "$SRC_ROOT" || echo "MISSING testid: $id"; done
+   # Pull the argument out of each matched form (strip the quote characters).
+   sed -E "s/.*getByTestId\((['\"\`])([^'\`\"]*)\1\).*/\2/" /tmp/selectors-raw.txt \
+     | sort -u > /tmp/selectors-ids.txt
+   # Verify each ID exists in source with literal fixed-string matching: a
+   # leading dash in an ID is data, not an option (--), and -F disables regex
+   # interpretation so dots/brackets in IDs are matched literally. Any missing
+   # ID fails the gate with exit 1.
+   missing=0
+   while read -r id; do
+     [ -z "$id" ] && continue
+     grep -rFq -- "$id" "$SRC_ROOT" || { echo "MISSING testid: $id"; missing=1; }
+   done < /tmp/selectors-ids.txt
+   [ "$missing" -eq 0 ] || { echo "FATAL: one or more generated selectors are missing from source"; exit 1; }
    ```
    Both resolved directories must exist before scanning (fail, don't silently fall back);
    grep exit status 1 (no selectors) is a valid empty set while actual scan errors (2+)

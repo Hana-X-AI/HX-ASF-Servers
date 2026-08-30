@@ -37,7 +37,7 @@ PILOT-001 (hxs-5, FAIL — invalid target; lessons in
 
 ## Success conditions and evidence
 
-Same SC-01..SC-09 contract as `goals/2026-08-24-ollama-audit-hxs5.md`, evaluated by
+Same SC-01..SC-09 contract as `governace/goals/2026-08-24-ollama-audit-hxs5.md`, evaluated by
 the Kimi-K3 gate, with two additions:
 
 | ID | Property | Measurement / procedure | Expected result | Evidence | Verifier |

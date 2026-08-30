@@ -90,12 +90,36 @@
    - **Executable 64K-context feasibility probe (V0, owner-approved):** after
      availability/digest/size are confirmed (and the model is resident, via the
      authorized temporary pull or an owner-authorized keep), run a real 64K
-     request against gpt-oss:20b on hxs-3 and measure runtime/resource fit:
-     `curl http://192.168.50.202:11434/api/generate -d '{"model":"gpt-oss:20b","prompt":"<64K-context workload>","options":{"num_ctx":65536}}'` —
-     record response success, `total_duration`, tokens/sec, peak VRAM (from
-     `nvidia-smi` sampling), and confirm no OOM/refusal at the 64K operating
-     window. Registry metadata (digest/size) and pullability alone do NOT
-     satisfy the 64K feasibility requirement.
+     request against gpt-oss:20b on hxs-3 and measure runtime/resource fit. The
+     prompt must be **deterministic and actually consume the 64K window** — not
+     a literal placeholder. Build a prompt from a fixed repeating unit until it
+     exceeds the target, send it with `num_ctx: 65536`, then **validate that the
+     response's `prompt_eval_count` reaches the expected workload size**:
+     ```bash
+     # Deterministic 64K-token prompt: repeat a fixed unit until the token
+     # estimate exceeds 65536 (the unit averages ~1.0 token per word, so
+     # 70,000 words ≈ >64K tokens; prompt_eval_count is the authoritative check).
+     python3 - <<'PY'
+     unit = "The quick brown fox jumps over the lazy dog. "
+     # ~9 tokens per unit → ~7,300 units ≈ 65,700 tokens
+     prompt = (unit * 7300) + "\nSummarize the paragraph above in one sentence."
+     open("/tmp/oai-x-64k-prompt.txt", "w").write(prompt)
+     PY
+     PROMPT="$(cat /tmp/oai-x-64k-prompt.txt)"
+     RESP="$(curl --max-time 1800 http://192.168.50.202:11434/api/generate \
+       -d "$(python3 -c 'import json,sys; print(json.dumps({"model":"gpt-oss:20b","prompt":sys.stdin.read(),"options":{"num_ctx":65536}}))' <<< "$PROMPT")")"
+     PEC="$(printf '%s' "$RESP" | jq -r '.prompt_eval_count // 0')"
+     [ "$PEC" -ge 60000 ] || { echo "OAI-X 64K probe FAIL: prompt_eval_count=$PEC (expected >=60000)"; exit 1; }
+     printf 'OAI-X 64K probe OK: prompt_eval_count=%s total_duration=%s eval_count=%s\n' \
+       "$PEC" "$(printf '%s' "$RESP" | jq -r '.total_duration // 0')" \
+       "$(printf '%s' "$RESP" | jq -r '.eval_count // 0')"
+     ```
+     Record response success, `prompt_eval_count`, `total_duration`, tokens/sec,
+     peak VRAM (from `nvidia-smi` sampling), and confirm no OOM/refusal at the
+     64K operating window. A `prompt_eval_count` below the 64K target means the
+     window was not actually consumed — that is a FAIL, not a pass. Registry
+     metadata (digest/size) and pullability alone do NOT satisfy the 64K
+     feasibility requirement.
    - **If availability, pullability, digest, size, or 64K-context feasibility
      (via the executable probe above) cannot be verified — STOP and escalate to
      the governor; do not proceed** (goal SC-01/SC-09 would fail).

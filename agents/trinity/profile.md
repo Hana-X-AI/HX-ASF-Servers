@@ -69,6 +69,12 @@ live receipt, with its truth-state label.
 This agent inherits the global skill inventory in `AGENTS.md` (all skills there).
 Role-specific additions: none beyond the global inventory.
 
+> **[HISTORICAL 2026-08-30, labeled, append-only — prior explicit skill
+> declaration (superseded by global-inventory inheritance, D3 Option A):]** the
+> profile previously listed: be-great, eli5, bro, wait-what, quick, human, corp,
+> copy. That explicit list is superseded; the active rule is inheritance from the
+> AGENTS.md global skill inventory above. This correction remains open.
+
 ## 2. Authority placement
 
 - the governor is the sole logical orchestrator: goals, decomposition, work orders,

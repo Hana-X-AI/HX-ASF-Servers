@@ -40,7 +40,7 @@ document:
     validated_at: "2026-08-30T08:45:00Z"
     freshness: "current"
     review_due: "on skill revision"
-  sha256: "7e7e036cff2618dc42911baa168120c8fccb32b26b76795e5602b109a51bafa5"
+  sha256: "666fc41b6b31fe3facdec0393484401c3cb2be6df360e7329ff9c4f4e658466d"
   hash_history:
     - sha256: "ec429c2cd10ef623972178a4ac876d54b3f7501537c695f50cb2bf5af4f9f9a7"
       timestamp: "2026-08-30T08:30:00Z"
@@ -48,4 +48,7 @@ document:
     - sha256: "7e7e036cff2618dc42911baa168120c8fccb32b26b76795e5602b109a51bafa5"
       timestamp: "2026-08-30T08:45:00Z"
       reason: "CodeRabbit batch fixes to SKILL.md (guardrails, model selection, verification, selector roots)"
+    - sha256: "666fc41b6b31fe3facdec0393484401c3cb2be6df360e7329ff9c4f4e658466d"
+      timestamp: "2026-08-30T11:21:44Z"
+      reason: "2026-08-30 review batch: sha256 refresh"
   canonical_location: "/home/hxsa/opt/HX-ASF-Servers/.kimi-code/skills/ai-test-generation/SKILL.md"

@@ -40,7 +40,7 @@ document:
     validated_at: "2026-08-29T12:30:00Z"
     freshness: "current"
     review_due: "on phase transition or owner amendment"
-  sha256: "26b650fbf4e953b06af09e6cb1a99abf17eb71ef75faf2b9b14d5663ab86335d"
+  sha256: "f1c6d59e3c0e7d1c42da745016f60308d74a44972f9daf3b0f6e3378db3098e3"
   hash_history:
     - sha256: "e19ec7bc1c605f2e286d65dc31829fb4e7eb74b7e4012d799daa6cf68404dd73"
       timestamp: "2026-08-29T12:30:00Z"
@@ -52,4 +52,7 @@ document:
       timestamp: "2026-08-30T09:45:00Z"
       reason: "2026-08-30 review batch: skills historical block"
 
+    - sha256: "f1c6d59e3c0e7d1c42da745016f60308d74a44972f9daf3b0f6e3378db3098e3"
+      timestamp: "2026-08-30T11:21:44Z"
+      reason: "2026-08-30 review batch: sha256 refresh"
   canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/kimi-k3/profile.md"

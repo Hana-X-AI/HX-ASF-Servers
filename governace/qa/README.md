@@ -7,7 +7,7 @@ pinned stacks** — organized **one folder per project**.
 
 ## Layout
 
-```
+```text
 governace/qa/
   <project-name>/
     README.md            # project overview: component, work order ref, stack pin

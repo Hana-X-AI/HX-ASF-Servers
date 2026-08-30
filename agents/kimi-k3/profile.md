@@ -187,6 +187,11 @@ Execution Authorized: YES | NO
 The task may not enter execution if the outcome, authority, target, acceptance criteria, or material boundary is ambiguous.
 
 The Intent and Authority Receipt is recorded as a goal file in `governace/goals/` per this repository's goal convention; the goal file is the receipt's durable home.
+[LABELED CORRECTION 2026-08-30, append-only — GOALS DIRECTORY MOVE: the goal
+directory was relocated from `goals/` to `governace/goals/` as part of the
+governance alignment batch; the former `goals/` path is preserved here as
+history. The active path is `governace/goals/`. Authority: governance alignment
+batch, 2026-08-30.]
 
 Kimi-K3 must commission a read-only knowledge-acquisition task when source material is remote, extensive, version-sensitive, or environment-specific. The acquisition agent must return a knowledge review receipt, provenance, gaps, contradictions, and a bounded context package. Kimi-K3 must not perform the operational retrieval itself (Phase M conditions excepted). Knowledge sources include the `/opt/tkv-local` technical knowledge base, surveyed per the standing directive with the be-great skill.
 

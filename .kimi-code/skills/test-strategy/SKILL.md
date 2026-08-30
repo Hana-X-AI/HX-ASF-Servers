@@ -117,16 +117,16 @@ Define each level, what it covers, who owns it, and expected volume. Map owners 
 factory lanes: developers (engineering lanes) own unit; Bailey authors the plan and
 tests; Gordon qualifies through execution.
 
-| Level | What It Validates | Owner | Framework | Target Count | Run Frequency |
-|-------|-------------------|-------|-----------|-------------|---------------|
-| **Unit** | Functions, business logic, edge cases | Developers | pytest | 70-80% of all tests | Every commit |
-| **Integration** | Service interactions, DB queries, API contracts | Bailey + Gordon | pytest + Testcontainers (where authorized) | 15-20% of all tests | Every PR |
-| **E2E** | Critical user journeys through the full stack | Gordon | pytest/Playwright | 5-10% of all tests | Pre-deploy + nightly |
-| **API** | Contract compliance, schemas, error handling | Developers | pytest / zod (TS contract) | Per endpoint | Every PR |
-| **Visual** | UI regression, layout shifts, responsive | Gordon | Playwright/Argos/Chromatic | Key pages | Nightly |
-| **Performance** | Response times, throughput, resource usage | Gordon | k6/Lighthouse | Critical paths | Weekly + pre-release |
-| **Security** | OWASP Top 10, dep vulns, auth flows | Gordon | OWASP ZAP/Snyk | Per release | Pre-release + scheduled |
-| **Accessibility** | WCAG 2.2 AA, screen reader compat | Gordon | axe-core | Key flows | Every PR |
+| Level | What It Validates | Author | Qualifier/Executor | Framework | Target Count | Run Frequency |
+|-------|-------------------|--------|--------------------|-----------|-------------|---------------|
+| **Unit** | Functions, business logic, edge cases | Developers | Developers | pytest | 70-80% of all tests | Every commit |
+| **Integration** | Service interactions, DB queries, API contracts | Bailey | Gordon | pytest + Testcontainers (where authorized) | 15-20% of all tests | Every PR |
+| **E2E** | Critical user journeys through the full stack | Bailey | Gordon | pytest/Playwright | 5-10% of all tests | Pre-deploy + nightly |
+| **API** | Contract compliance, schemas, error handling | Developers | Developers | pytest / zod (TS contract) | Per endpoint | Every PR |
+| **Visual** | UI regression, layout shifts, responsive | Bailey | Gordon | Playwright/Argos/Chromatic | Key pages | Nightly |
+| **Performance** | Response times, throughput, resource usage | Bailey | Gordon | k6/Lighthouse | Critical paths | Weekly + pre-release |
+| **Security** | OWASP Top 10, dep vulns, auth flows | Bailey | Gordon | OWASP ZAP/Snyk | Per release | Pre-release + scheduled |
+| **Accessibility** | WCAG 2.2 AA, screen reader compat | Bailey | Gordon | axe-core | Key flows | Every PR |
 
 Adjust to what the product actually needs. Not every product needs visual regression.
 Every product needs unit and integration tests.
@@ -167,26 +167,33 @@ For flake root-cause triage and quarantine mechanics, see `test-reliability` (Go
 
 ### 4. Risk Assessment Matrix
 
-Map features to risk levels — this directly determines testing depth. Score each
-feature as Impact (1 Negligible → 5 Catastrophic) × Likelihood (1 Rare → 5 Almost
-Certain); the product (1-25) maps to LOW/MED/HIGH/CRIT bands.
+Map features to risk levels — this directly determines testing depth. Use the **shared
+tier model defined by `qa-project-context`** (Risk Areas): score each feature as Impact
+(1 Negligible → 5 Catastrophic) × Likelihood (1 Rare → 5 Almost Certain), then classify
+by the **impact × likelihood combination** — not by the raw score alone. This keeps every
+QA skill ranking identical combinations identically. High-impact, low-likelihood risks
+(e.g. 5 × 2 = 10) are **Important**, never Critical; low-impact, high-likelihood risks
+(e.g. 2 × 5 = 10) are **Monitor**, never Important.
 
-| Risk Level | Testing Action | Automation | Monitoring |
-|------------|---------------|------------|-------------|
-| **CRITICAL (15-25)** | Full automation + manual exploratory + load test | Mandatory, every commit | Real-time alerts, synthetic monitoring |
-| **HIGH (10-14)** | Full automation + periodic manual review | Mandatory, every PR | Dashboard + daily checks |
-| **MEDIUM (5-9)** | Automation for happy path + key error cases | Recommended | Weekly review |
-| **LOW (1-4)** | Manual testing or skip | Optional | None required |
+| Risk Level | Combination | Example score | Testing Action | Automation | Monitoring |
+|------------|-------------|---------------|----------------|------------|------------|
+| **Critical** | High impact + high likelihood | 5 × 5 = 25 | Full automation + manual exploratory + load test | Mandatory, every commit | Real-time alerts, synthetic monitoring |
+| **Important** | High impact + low likelihood | 5 × 2 = 10 | Full automation + periodic manual review | Mandatory, every PR | Dashboard + daily checks |
+| **Monitor** | Low impact + high likelihood | 2 × 5 = 10 | Automation for happy path + key error cases | Recommended | Weekly review |
+| **Backlog** | Low impact + low likelihood | 2 × 2 = 4 | Manual testing or skip | Optional | None required |
 
-**Example mapping:**
+**Example mapping (consistent with `qa-project-context` Risk Areas):**
 
-| Feature Area | Impact | Likelihood | Score | Testing Approach |
-|-------------|--------|------------|-------|-----------------|
-| Payment processing | 5 - Catastrophic | 3 - Possible | 15 - CRIT | Automated E2E + unit + contract + monitoring |
-| User authentication | 5 - Catastrophic | 2 - Unlikely | 10 - HIGH | Automated E2E + security scan + unit |
-| Product search | 3 - Moderate | 3 - Possible | 9 - MED | Unit + integration + happy-path E2E |
-| Dashboard rendering | 2 - Minor | 3 - Possible | 6 - MED | Unit + visual regression |
-| Email preferences | 1 - Negligible | 2 - Unlikely | 2 - LOW | Manual verification |
+| Feature Area | Impact | Likelihood | Score | Tier | Testing Approach |
+|-------------|--------|------------|-------|------|-----------------|
+| Payment processing | 5 - Catastrophic | 3 - Possible | 15 | Important | Automated E2E + unit + contract + monitoring |
+| User authentication | 5 - Catastrophic | 2 - Unlikely | 10 | Important | Automated E2E + security scan + unit |
+| Product search | 3 - Moderate | 3 - Possible | 9 | Monitor | Unit + integration + happy-path E2E |
+| Dashboard rendering | 2 - Minor | 3 - Possible | 6 | Backlog | Unit + visual regression |
+| Email preferences | 1 - Negligible | 2 - Unlikely | 2 | Backlog | Manual verification |
+
+Tier labels and the impact × likelihood combinations are the authoritative shared model
+from `qa-project-context`; the numeric score is a cross-check, not the classifier.
 
 ### 5. Environment Strategy
 
@@ -396,7 +403,12 @@ Prove the produced document is complete before calling it done. Run against the 
 strategy file (`governace/qa/<project-name>/test-strategy.md`):
 
 ```bash
-DOC=governace/qa/<project-name>/test-strategy.md
+# Bind the project name from the first argument, or the environment variable,
+# so the path is constructed without shell-redirection parsing of angle brackets.
+PROJECT_NAME="${1:-$PROJECT_NAME}"
+[ -n "$PROJECT_NAME" ] || { echo "usage: verify-test-strategy.sh <project-name> (or set \$PROJECT_NAME)"; exit 2; }
+DOC="governace/qa/$PROJECT_NAME/test-strategy.md"
+[ -r "$DOC" ] || { echo "error: strategy file missing or unreadable: $DOC"; exit 1; }
 # 1. All 13 numbered section headings present (Executive Summary → Revision History)
 grep -cE '^### [0-9]+\.' "$DOC"          # expect 13
 # 2. Every row in the Metrics & KPIs table has a non-empty Target cell — visually scan

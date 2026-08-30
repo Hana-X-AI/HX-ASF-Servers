@@ -293,16 +293,23 @@ switch is mandatory.
 ### Automated Rollback Triggers
 
 Define these thresholds BEFORE deployment. When any trigger fires, rollback begins
-automatically. All thresholds are relative to the measured baseline, not absolute
-ceilings.
+automatically. Every threshold is explicitly classified as **baseline-relative**
+(measured against the pre-deploy baseline) or **absolute** (a fixed value, independent
+of baseline), and each trigger carries a **measurement window** so the decision is
+deterministic — no ambiguous thresholds.
 
-| Metric | Threshold | Action |
-|--------|-----------|--------|
-| Error rate (5xx) | >2x baseline for 5 min | Auto-rollback |
-| P95 latency | >3x baseline for 5 min | Auto-rollback |
-| Health check | 3 consecutive failures | Auto-rollback |
-| Crash rate (mobile) | >0.5% | Auto-rollback |
-| Error budget | >50% burned in 1 hour | Auto-rollback |
+| Metric | Type | Threshold | Measurement window | Action |
+|--------|------|-----------|--------------------|--------|
+| Error rate (5xx) | Baseline-relative | >2x baseline | 5 min | Auto-rollback |
+| P95 latency | Baseline-relative | >3x baseline | 5 min | Auto-rollback |
+| Health check | Absolute | 3 consecutive failures | 30 s (consecutive, no gap) | Auto-rollback |
+| Crash rate (mobile) | Absolute | >0.5% of sessions | 15 min | Auto-rollback |
+| Error budget | Absolute | >50% of budget burned | 1 hour | Auto-rollback |
+
+All baseline-relative thresholds compare against the pre-deploy baseline measured during
+staged rollout; all windows are wall-clock intervals over which the metric must
+continuously exceed the threshold. Record the baseline value and the exact window start
+in the release artifact so the decision is auditable.
 
 ### Manual Rollback Triggers
 
@@ -482,18 +489,33 @@ substitute Gordon's evidence for James's governor decision.
 
 ## Verification
 
-Run these immediately after the deploy completes, smallest check first.
+Run these immediately after the deploy completes, smallest check first. Each probe
+captures the HTTP status and elapsed time, then **fails explicitly** unless the pass
+criteria are met — a printed number alone is not a pass.
 
 ```bash
-# Health endpoint returns healthy — finite timeout, fail on HTTP errors,
-# assert HTTP 200 AND the expected healthy body (no curl hang on a stuck endpoint)
+# Health endpoint: finite timeout, fail on HTTP errors, assert HTTP 200 AND the
+# expected healthy body (no curl hang on a stuck endpoint). The probe exits
+# non-zero unless the status is exactly 200 and the body matches.
 health_body="$(curl --max-time 10 --fail-with-body -s https://your-app.com/health)" \
-  && echo "$health_body" | jq -e '.status == "healthy" or .status == "ok"' >/dev/null \
-  && echo "health OK: HTTP 200 with healthy body"
+  && printf '%s' "$health_body" | jq -e '.status == "healthy" or .status == "ok"' >/dev/null \
+  && echo "health OK: HTTP 200 with healthy body" \
+  || { echo "HEALTH FAIL: not HTTP 200 with healthy body"; exit 1; }
 
-# Response time + status in one shot — same finite-timeout, fail-on-HTTP-error rule
-curl --max-time 10 --fail-with-body -o /dev/null -s \
-  -w "HTTP %{http_code} in %{time_total}s\n" https://your-app.com
+# Response time + status in one shot — finite timeout, fail on HTTP error, and
+# ENFORCE the documented latency budget (fail the gate if the response is slower
+# than the budget, not just print it). Edit the budget to your SLA.
+LATENCY_BUDGET_S="${LATENCY_BUDGET_S:-1.5}"
+status_time="$(curl --max-time 10 --fail-with-body -o /dev/null -s \
+  -w '%{http_code} %{time_total}' https://your-app.com)" \
+  || { echo "STATUS FAIL: curl error"; exit 1; }
+http_code="${status_time%% *}"; elapsed="${status_time##* }"
+if [ "$http_code" != "200" ]; then echo "STATUS FAIL: HTTP $http_code (expected 200)"; exit 1; fi
+if awk "BEGIN{exit !($elapsed <= $LATENCY_BUDGET_S)}"; then
+  echo "status OK: HTTP $http_code in ${elapsed}s (budget ${LATENCY_BUDGET_S}s)"
+else
+  echo "STATUS FAIL: ${elapsed}s exceeds latency budget ${LATENCY_BUDGET_S}s"; exit 1
+fi
 
 # New errors since deploy — should be empty
 # (error-tracker CLI, e.g. sentry-cli issues list --query "firstSeen:>15m")
@@ -503,10 +525,11 @@ curl --max-time 10 --fail-with-body -o /dev/null -s \
 
 Both probes use `--max-time` (finite timeout so a hung endpoint fails fast, not a
 forever-blocking curl) and `--fail-with-body` (curl exits non-zero on any HTTP error).
-Pass criteria: the health probe exits 0 **and** asserts HTTP 200 **and** the expected
-healthy response body; the status probe returns HTTP 200 within your latency budget; the
-error-tracker query returns no new issues; and the post-deploy 5xx count is at or below
-the pre-deploy baseline.
+Pass criteria are **enforced**: the health probe must exit 0 **and** return HTTP 200
+**and** the expected healthy body — any other result fails the gate; the status probe
+must return HTTP 200 **and** complete within the configured `LATENCY_BUDGET_S` (default
+1.5 s), failing the gate otherwise. The error-tracker query must return no new issues,
+and the post-deploy 5xx count must be at or below the pre-deploy baseline.
 
 ## Done When
 

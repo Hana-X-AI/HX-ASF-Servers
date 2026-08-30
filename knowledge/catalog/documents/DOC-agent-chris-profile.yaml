@@ -34,9 +34,12 @@ document:
     validated_at: "2026-08-29T12:30:00Z"
     freshness: "current"
     review_due: "on owner amendment"
-  sha256: "90e378a5e3a4e1c633e5740daa8395d65045d4b7594b18f751cd1db7f2e93af5"
+  sha256: "6ca8ef40822bbe62b50b4118bf4fb697c8ccd33497be8aa6908a73c3199fc253"
   hash_history:
     - sha256: "90e378a5e3a4e1c633e5740daa8395d65045d4b7594b18f751cd1db7f2e93af5"
       timestamp: "2026-08-29T12:30:00Z"
       reason: "initial cataloging"
+    - sha256: "6ca8ef40822bbe62b50b4118bf4fb697c8ccd33497be8aa6908a73c3199fc253"
+      timestamp: "2026-08-30T11:21:44Z"
+      reason: "2026-08-30 review batch: sha256 refresh"
   canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/chris/profile.md"

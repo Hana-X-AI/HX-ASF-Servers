@@ -244,10 +244,11 @@ If the user has no answer, record the actual state ("None — no E2E framework s
 yet"), not a placeholder. Placeholders left in the file silently break every downstream
 skill that parses it.
 
-**Placeholder token.** A placeholder is a bracketed, lowercase, descriptive phrase with
-no dots and no uppercase, e.g. `[user flow]`, `[component name]`, `[tool version]`.
-Valid configuration section headers such as `[tool.pytest]` or `[pytest]` are NOT
-placeholders — they are legitimate content and must pass the completeness check.
+**Placeholder token.** A placeholder is a bracketed, lowercase, descriptive **multi-word
+phrase** (contains a space) with no dots and no uppercase, e.g. `[user flow]`,
+`[component name]`, `[tool version]`. Valid configuration section headers such as
+`[tool.pytest]` or the single-word `[pytest]` are NOT placeholders — they are legitimate
+content and must pass the completeness check.
 
 ### 3. Inventing information
 Detect the stack from config files — then confirm before writing. Don't guess a
@@ -270,8 +271,8 @@ from it. Context records state; Gordon's environment skill acts on it.
 
 Prove the produced file is complete, smallest check first. From the repo root. The
 completeness check looks for the defined placeholder token — a bracketed, lowercase,
-dot-free descriptive phrase (`\[[a-z][a-z -]*\]`) — NOT any square-bracket text, so
-valid config identifiers such as `[tool.pytest]` pass:
+dot-free descriptive phrase (multi-word, containing a space) — NOT any square-bracket
+text, so valid config identifiers such as `[tool.pytest]` and `[pytest]` pass:
 
 ```bash
 # Bind QA_DIR from the first argument, or default to the environment variable.
@@ -287,10 +288,17 @@ F="governace/qa/$QA_DIR/qa-project-context.md"
 # the active-record check.
 ACTIVE_RECORD="$(sed '/^> \*\*\[\(HISTORICAL\|OPEN CORRECTION\|LABELED\)/,$d' "$F")"
 
-# Capture grep's exit status explicitly: 0 = placeholders found (incomplete),
-# 1 = no placeholders (complete), any other status = read/scan error. An
-# unreadable or failed read can never print "context complete" or return 0.
-printf '%s\n' "$ACTIVE_RECORD" | grep -qE '\[[a-z][a-z -]*\]'
+# Placeholder tokens are multi-word phrases (contain a space), e.g. `[user flow]`.
+# The valid [pytest] configuration header is single-word and is explicitly
+# excluded so it can never fail the check. grep -oE extracts each candidate,
+# grep -v drops the exact [pytest] token, and the final grep reports whether any
+# genuine placeholder remains: 0 = placeholders found (incomplete), 1 = none
+# (complete). Capture the last exit status so a read/scan error can never be
+# misreported as "context complete".
+printf '%s\n' "$ACTIVE_RECORD" \
+  | grep -oE '\[[a-z][a-z -]*\]' \
+  | grep -v '^\[pytest\]$' \
+  | grep -q .
 gs=$?
 case "$gs" in
   0) echo "context incomplete: placeholders present in the active record"; exit 1 ;;
@@ -299,12 +307,26 @@ case "$gs" in
 esac
 ```
 
+**Regression case — `[pytest]` must pass.** Create a context file whose active record
+contains the valid `[pytest]` header and no genuine placeholder; the check must report
+`context complete` (exit 0):
+
+```bash
+F="governace/qa/$QA_DIR/qa-project-context.md"
+printf '## Test Stack\n- pytest is configured via `[pytest]` in pyproject.toml\n' > "$F"
+printf '%s\n' "$(sed '/^> \*\*\[\(HISTORICAL\|OPEN CORRECTION\|LABELED\)/,$d' "$F")" \
+  | grep -oE '\[[a-z][a-z -]*\]' \
+  | grep -v '^\[pytest\]$' \
+  | grep -q . && { echo "REGRESSION FAIL: [pytest] flagged as placeholder"; exit 1; } \
+  || echo "REGRESSION PASS: [pytest] is valid content"
+```
+
 Exit 0 with the message means the file exists, is readable, and the ACTIVE record
 has no `[bracketed placeholder]` (per the placeholder token above). Placeholders in
 labeled historical/correction blocks are append-only history and are not checked.
-Bracketed config identifiers like `[tool.pytest]` are acceptable content and do not
-fail the check. Then eyeball that all nine section headers are present in the active
-record:
+Bracketed config identifiers like `[tool.pytest]` and `[pytest]` are acceptable content
+and do not fail the check. Then eyeball that all nine section headers are present in the
+active record:
 
 ```bash
 sed '/^> \*\*\[\(HISTORICAL\|OPEN CORRECTION\|LABELED\)/,$d' "$F" | grep -c '^## '   # expect >= 9
@@ -316,7 +338,7 @@ sed '/^> \*\*\[\(HISTORICAL\|OPEN CORRECTION\|LABELED\)/,$d' "$F" | grep -c '^##
   placeholder-token grep over the **active record** returns status 1 (no bracketed
   placeholders remain); placeholders in labeled historical/correction blocks are
   append-only history and do not fail the check; valid config identifiers like
-  `[tool.pytest]` do not fail it either.
+  `[tool.pytest]` and `[pytest]` do not fail it either (regression-covered).
 - All nine sections are present: Product, Tech Stack, Test Stack, CI/CD, Environments,
   Quality Goals, Risk Areas, Team, Conventions.
 - Product lists at least 5 specific, testable key user flows (no "user uses the app").

@@ -40,9 +40,12 @@ document:
     validated_at: "2026-08-30T08:30:00Z"
     freshness: "current"
     review_due: "on KDD-0019 amendment"
-  sha256: "6caba453ca47aaabafbcf4b7029286da70ffe9d57bd661672983e37312076e2c"
+  sha256: "2861d907463223032f57be2817e23daa886a917eabeec53914db5394d43eb350"
   hash_history:
     - sha256: "6caba453ca47aaabafbcf4b7029286da70ffe9d57bd661672983e37312076e2c"
       timestamp: "2026-08-30T08:30:00Z"
       reason: "initial cataloging"
+    - sha256: "2861d907463223032f57be2817e23daa886a917eabeec53914db5394d43eb350"
+      timestamp: "2026-08-30T11:21:44Z"
+      reason: "2026-08-30 review batch: sha256 refresh"
   canonical_location: "/home/hxsa/opt/HX-ASF-Servers/governace/qa/README.md"

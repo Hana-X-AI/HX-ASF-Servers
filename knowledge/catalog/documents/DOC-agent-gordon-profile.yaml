@@ -34,9 +34,12 @@ document:
     validated_at: "2026-08-29T12:30:00Z"
     freshness: "current"
     review_due: "on owner amendment"
-  sha256: "0e0c1d6e15926a827520dd2c71b975b497b92553ab8aa116be6a38542577f8e5"
+  sha256: "cb005daeefc6b69f58f0d3d6fe525c4247ac728ba93013dac30459740bc6d844"
   hash_history:
     - sha256: "0e0c1d6e15926a827520dd2c71b975b497b92553ab8aa116be6a38542577f8e5"
       timestamp: "2026-08-29T12:30:00Z"
       reason: "initial cataloging"
+    - sha256: "cb005daeefc6b69f58f0d3d6fe525c4247ac728ba93013dac30459740bc6d844"
+      timestamp: "2026-08-30T11:21:44Z"
+      reason: "2026-08-30 review batch: sha256 refresh"
   canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/gordon/profile.md"

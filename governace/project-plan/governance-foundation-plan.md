@@ -92,11 +92,12 @@ This correction remains open.]
 **Objective:** eliminate missed-registration errors when creating agents.
 
 **Deliverables:**
-- `governace/templates/agent-checklist.md` — mandatory 22-step checklist (DONE)
-  [OPEN CORRECTION 2026-08-30, labeled, append-only: the checklist has 27 steps
-  (items 1-27, validating after each step, fail closed), not 22 — the "22-step"
-  count above is the original wording and is superseded by 27. This correction
-  remains open.]
+- `governace/templates/agent-checklist.md` — mandatory 27-step checklist (DONE)
+  [OPEN CORRECTION 2026-08-30, labeled, append-only: the deliverable above was
+  originally worded "mandatory 22-step checklist" — that count is superseded.
+  The checklist has 27 steps (items 1-27, validating after each step, fail
+  closed). The 22-step wording is preserved here as history; 27 is the active
+  count. This correction remains open.]
 - `.kimi-code/skills/create-agent/SKILL.md` — agent-creation skill (DONE;
   installed to user scope 2026-08-29)
 - `scripts/hooks/agent-creation-check.sh` — PostToolUse hook, fail-open (DONE;
@@ -165,7 +166,9 @@ adds:
 - **Change-record lifecycle** — `PROPOSED → IN PROGRESS → COMPLETE`, gated on
   goal/plan status + execution evidence (ST-6).
 - **Context-budget + lane-probe** fields in the work-order template (ST-5).
-- **Test-log append hook** (ST-7) — test-evidence writes append dated rows.
+- **Test-log append hook** (ST-7) — fail-open advisory reminder: `test-log-append.sh`
+  prompts the governor to add a dated row to `governace/testing/test-log.md`; it does
+  not append the row itself (the append is a manual governor action).
 - **Dual-format compliance** (SY-6) — every manifest-listed document keeps a
   rendered `.html` sibling; enforced mechanically by
   `python3 scripts/wiki/render.py --check` (79/79 in sync at acceptance).

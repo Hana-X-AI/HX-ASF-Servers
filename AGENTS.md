@@ -100,6 +100,16 @@ When the owner uses a trigger word, invoke the matching skill first and follow i
 workflow in full — do not partially apply it. Project agents and sub-agents working in
 this repository must honor these skills as well.
 
+[OPEN CORRECTION 2026-08-30, labeled, append-only — SKILL INVENTORY GROWTH 14 → 23:
+the inventory above grew from fourteen (14) to twenty-three (23) skills. The nine (9)
+additions are: **grill-me**, **ai-test-generation**, **test-planning**,
+**test-strategy**, **qa-project-context**, **test-environments**, **release-readiness**,
+**test-reliability**, and **ci-cd-integration** — the base fourteen (be-great through
+work-status) are preserved in the inventory above. Authority: owner directive
+2026-08-30 (grill-me limited to 5 questions) and owner ratification of the QA skill
+subset (KDD-0019); effective 2026-08-30. The prior fourteen-skill state is preserved as
+history above; the current inventory is authoritative.]
+
 Default reporting voice: **corporate** (executive-summary tone). A voice trigger
 overrides the default for that reply; when style skills conflict, the owner's most
 recent explicit trigger wins.
@@ -439,11 +449,13 @@ needs them. The standard profile and charter templates at
 
 **QA lane-config placement (cross-family note, KDD-0019):** Bailey belongs to the
 QA lane-config job family (KDD-0013 Amendment 11), which is not a KDD-0016
-taxonomy family — so she has no taxonomy-table row, matching Gordon's
-cross-family treatment. Gordon remains a Family 3 Platform Systems entry
-(qualification role); Bailey is the horizontal test-authoring QA lane and is
-mapped with Gordon under the QA lane-config family. Per-agent lane assignments
-(including the QA Qwen3.8 Flash default) live in KDD-0013.
+taxonomy family — so she has no taxonomy-table row. Gordon is the **explicit
+exception**: although he also maps under the QA lane-config family as the
+execution/qualification lane, he additionally keeps his Family 3 Platform
+Systems taxonomy row (qualification role) — that row is his, and it does not
+imply Bailey has a row. Bailey is the horizontal test-authoring QA lane and is
+mapped with Gordon under the QA lane-config family only. Per-agent lane
+assignments (including the QA Qwen3.8 Flash default) live in KDD-0013.
 
 **Governor:** above all families. Governs (goals, gates, acceptance, owner
 escalation); does not belong to any family.

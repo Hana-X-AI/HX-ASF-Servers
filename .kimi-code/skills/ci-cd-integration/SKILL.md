@@ -278,7 +278,10 @@ deploy:
     id-token: write   # request the OIDC JWT
     contents: read
   steps:
-    - uses: aws-actions/configure-aws-credentials@v6
+    - name: Configure AWS credentials (OIDC)
+      # aws-actions/configure-aws-credentials v6.2.3 (pinned SHA, immutable —
+      # not a mutable tag); the IAM role's trust policy pins the sub claim.
+      uses: aws-actions/configure-aws-credentials@e6de054238d6b7531b4efff3b6587d9aade6a06c
       with:
         role-to-assume: arn:aws:iam::123456789012:role/gha-deploy
         aws-region: eu-central-1
