@@ -1,45 +1,49 @@
 document:
-  id: "DOC-agent-rob-profile"
-  title: "Agent profile — rob (Full-stack engineer)"
-  type: "profile"
-  declared_purpose: "Full operating contract for Rob, documenting role and model lane assignment."
+  id: DOC-agent-rob-profile
+  title: Agent profile — rob (Full-stack engineer)
+  type: profile
+  declared_purpose: Full operating contract for Rob, documenting role and model lane assignment.
   source:
-    author: "KDD-0011"
-    provided_by: "Agent-Zero"
-    origin: "/home/hxsa/opt/HX-ASF-Servers/agents/rob/profile.md"
-    ingestion_date: "2026-08-28T00:00:00Z"
-    section: "§whole-document"
-    note: "source sha256 6ede0b05…f9e3 per KDD-0011"
-  owner: "Kimi-K3"
+    author: KDD-0011
+    provided_by: Agent-Zero
+    origin: /home/hxsa/opt/HX-ASF-Servers/agents/rob/profile.md
+    ingestion_date: '2026-08-28T00:00:00Z'
+    section: §whole-document
+    note: source sha256 6ede0b05…f9e3 per KDD-0011
+  owner: Kimi-K3
   applies_to:
-    agents: [rob]
-    repositories: [HX-ASF-Servers]
-  version: ""
-  status: "adopted"
-  authority_level: "agent-evidence"
+    agents:
+    - rob
+    repositories:
+    - HX-ASF-Servers
+  version: ''
+  status: adopted
+  authority_level: agent-evidence
   supersedes: []
   superseded_by: []
   security:
-    classification: "internal"
-    access_restrictions: "none"
+    classification: internal
+    access_restrictions: none
     contains_secret_values: false
   relations: []
   validation:
-    validated_at: "2026-08-29T12:30:00Z"
-    freshness: "current"
-    review_due: "2026-09-28"
-  sha256: "2aa7d950b92efd57d36bbc7e04b44b14542493546734bcb7ec99cc9cd06f4d57"
+    validated_at: '2026-08-30T15:56:27Z'
+    freshness: current
+    review_due: '2026-09-28'
+  sha256: 50d6cea637a59c5af2bceb52d3efef129dd12ac7b2e313729f308f8de90f5d8f
   hash_history:
-    - sha256: "65ea14235b60f527832e7ee60ced5baff709de96807616e8eb7ec03f78bc0fc4"
-      timestamp: "2026-08-29T12:30:00Z"
-      reason: "re-mint after 2026-08-29 normalization + corrections"
-    - sha256: "f1aca7d7f24b3cced33005ccf251a598ccb3a6208cdedbe6d12f0e79f90a4113"
-      timestamp: "2026-08-29T12:30:00Z"
-      reason: "re-mint after 2026-08-29 normalization + corrections"
-    - sha256: "e9e0de9bc701a8a20350d144956c606afd5534fa94529c55ef3b8f47358b4e2d"
-      timestamp: "2026-08-30T11:21:44Z"
-      reason: "2026-08-30 review batch: sha256 refresh"
-    - sha256: "2aa7d950b92efd57d36bbc7e04b44b14542493546734bcb7ec99cc9cd06f4d57"
-      timestamp: "2026-08-30T12:15:05Z"
-      reason: "2026-08-30 remediation register batch: sha256 refresh"
-  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/rob/profile.md"
+  - sha256: 65ea14235b60f527832e7ee60ced5baff709de96807616e8eb7ec03f78bc0fc4
+    timestamp: '2026-08-29T12:30:00Z'
+    reason: re-mint after 2026-08-29 normalization + corrections
+  - sha256: f1aca7d7f24b3cced33005ccf251a598ccb3a6208cdedbe6d12f0e79f90a4113
+    timestamp: '2026-08-29T12:30:00Z'
+    reason: re-mint after 2026-08-29 normalization + corrections
+  - sha256: e9e0de9bc701a8a20350d144956c606afd5534fa94529c55ef3b8f47358b4e2d
+    timestamp: '2026-08-30T11:21:44Z'
+    reason: '2026-08-30 review batch: sha256 refresh'
+  - sha256: 2aa7d950b92efd57d36bbc7e04b44b14542493546734bcb7ec99cc9cd06f4d57
+    timestamp: '2026-08-30T12:15:05Z'
+    reason: '2026-08-30 remediation register batch: sha256 refresh'
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/rob/profile.md
+notes:
+  minted_by: carol-mint 1.0.0 @ 2026-08-30T15:56:27Z — re-mint 2aa7d950b92e… -> 50d6cea637a5… — KDD-0013 Amdt 11 job-family lane applied; F2 chain flattened

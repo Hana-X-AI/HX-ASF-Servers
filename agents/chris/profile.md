@@ -33,7 +33,7 @@ HOLD; registered by KDD-0014.
 | — | [CORRECTION 2026-08-29: authority references updated from Kimi-K3 to the governor per AGENTS.md transition. Original wording preserved in git history and AGENTS.md correction blocks.] |
 | Default mode | Direct bounded administration; on-demand + scheduled; concurrency 1; max session PT1H |
 | Certification authority | **None** — his work is verified by others |
-| Model lane | DeepSeek V4 Pro (`openrouter/deepseek/deepseek-v4-pro`, provider Baidu FP8, via OmniRoute hxs-8) — owner-assigned 2026-08-29, superseding Qwen 3.8 Flash; CLI-verified live (served id `deepseek/deepseek-v4-pro`, Baidu provider confirmed); identity = exact served-model id + session-start probe, fail closed; stop-and-escalate on backend failure, no substitution |
+| Model lane | Z.ai GLM 5.2 free (`z-ai/glm-5.2:free`, provider Decart, via OmniRoute hxs-8) — Platform Systems job-family default, owner decision 2026-08-30 (KDD-0013 Amendment 11), superseding DeepSeek V4 Pro (2026-08-29). Zero-cost cloud lane: on the OD-14 allowlist, no metered spend. identity = exact served-model id + session-start probe, fail closed; stop-and-escalate on backend failure, no substitution, cloud substitution outside the OD-14 allowlist prohibited |
 | Verifier | Deterministic toolchain first (pg_dump/pg_restore checks, bounded SQL, measurable pass/fail); Qwen-X (hxs-1) when a separate-host verifier is required |
 
 Authority chain: Agent Zero owns intent and risk → the governor orchestrates

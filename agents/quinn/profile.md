@@ -22,7 +22,7 @@ profile is the original record of the role (owner directive 2026-08-29).
 | Environment | hxs-4 (192.168.50.203) — co-located with Chat-X (Qwen 3.5 9B); Qdrant storage on 477 GB unallocated NVMe |
 | Default mode | Direct bounded administration; on-demand + scheduled; concurrency 1; max session PT1H |
 | Certification authority | None — work verified by others |
-| Model lane | NVIDIA Nemotron 3 Ultra (`openrouter/nvidia/nemotron-3-ultra-550b-a55b:free`, provider NVIDIA, via OmniRoute hxs-8) — owner-assigned 2026-08-29, CLI-verified live (served id `nvidia/nemotron-3-ultra-550b-a55b:free`, content `QUINN_LANE_OK`); identity = exact served-model id + session-start probe, fail closed; stop-and-escalate on backend failure, no substitution |
+| Model lane | Z.ai GLM 5.2 free (`z-ai/glm-5.2:free`, provider Decart, via OmniRoute hxs-8) — Platform Systems job-family default, owner decision 2026-08-30 (KDD-0013 Amendment 11), superseding NVIDIA Nemotron 3 Ultra free (2026-08-29). Zero-cost cloud lane: on the OD-14 allowlist, no metered spend. identity = exact served-model id + session-start probe, fail closed; stop-and-escalate on backend failure, no substitution, cloud substitution outside the OD-14 allowlist prohibited |
 | Verifier | Deterministic toolchain first (qdrant-client checks, curl API probes, measurable pass/fail); a different-host verifier when required |
 | Activation status | Registered — activation-gated (Qdrant instance implemented + credential entries + owner word) |
 

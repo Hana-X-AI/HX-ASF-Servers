@@ -27,7 +27,7 @@ Ratified adoption 2026-08-24; model-lane correction applied 2026-08-29.
 | Environment | Authorized HX hosts per work order; no fixed single host |
 | Default mode | Direct bounded administration; on-demand; concurrency 1; max session PT1H |
 | Certification authority | None — work verified by others |
-| Model lane | Meta-X (`ollama-local/hx-muse-glimmer-64k`, hxs-3, via OmniRoute hxs-8) — owner-assigned 2026-08-28 (KDD-0013); immutable identity of record: manifest digest `9dffb015db409f44713b7c5a9ab5413e140c41eb4e72eac7ca753ce1b99de7da` (KDD-0013, 2026-08-28 — the `:latest` reference in the original wording is demoted to a mutable alias, validation fails closed on digest mismatch) [OPEN CORRECTION 2026-08-29, labeled, append-only, review batch 2 F13 — original wording preserved in KDD-0013]; the lane covers analysis and drafting — his work class is largely deterministic shell/OS change executed as himself; stop-and-escalate on backend failure, no substitution |
+| Model lane | Coder-X (`ollama-local/hx-qwen3.6-coderx-64k`, hxs-2) — **local lane**, Infra / Ops job-family default, owner decision 2026-08-30 (KDD-0013 Amendment 11), superseding Meta-X (2026-08-28). Local: outside OD-14, no metered spend. identity = exact served-model id + session-start probe, fail closed; stop-and-escalate on backend failure, no substitution, cloud substitution outside the OD-14 allowlist prohibited |
 | Verifier | Deterministic toolchain first; a different-host verifier when required |
 | Activation status | Active — no gate |
 

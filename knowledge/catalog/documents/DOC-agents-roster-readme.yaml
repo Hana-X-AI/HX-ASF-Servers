@@ -1,49 +1,57 @@
 document:
-  id: "DOC-agents-roster-readme"
-  title: "agents/README.md — agent roster authority and lane model"
-  type: "roster"
-  declared_purpose: "Defines the agent roster as the authority on who exists and what they can do; lists current roster (kimi-k3 active Phase M, john, rick, carol active — bounded persistent role per state log row 38, trinity active — owner-ratified 2026-08-27 per KDD-0008 O1), horizontal vs vertical lane types, how to add an agent, and the manual-phase dispatch note."
-  inferred_value: "INFERENCE: roster-first rule (from lessons-learned 2026-08-24) makes this the tie-breaker whenever vault profiles conflict with the roster."
+  id: DOC-agents-roster-readme
+  title: agents/README.md — agent roster authority and lane model
+  type: roster
+  declared_purpose: Defines the agent roster as the authority on who exists and what they can do; lists current roster (kimi-k3 active Phase M, john, rick, carol active — bounded persistent role per state log row 38, trinity active — owner-ratified 2026-08-27 per KDD-0008 O1), horizontal vs vertical lane types, how to add an agent, and the manual-phase dispatch note.
+  inferred_value: 'INFERENCE: roster-first rule (from lessons-learned 2026-08-24) makes this the tie-breaker whenever vault profiles conflict with the roster.'
   source:
-    author: "Kimi-K3 / owner (repository governance)"
-    provided_by: "Agent Zero"
-    origin: "/home/hxsa/opt/HX-ASF-Servers/agents/README.md"
-    section: "§whole-document"
-    ingestion_date: "2026-08-25T04:50:00Z"
-  owner: "Kimi-K3"
+    author: Kimi-K3 / owner (repository governance)
+    provided_by: Agent Zero
+    origin: /home/hxsa/opt/HX-ASF-Servers/agents/README.md
+    section: §whole-document
+    ingestion_date: '2026-08-25T04:50:00Z'
+  owner: Kimi-K3
   applies_to:
     hosts: []
     fqdns: []
     services: []
-    agents: [kimi-k3, john, rick, carol, trinity]
-    repositories: [HX-ASF-Servers]
-    environments: [fleet]
-  version: ""
-  status: "active"
-  authority_level: "ratified-governance"
+    agents:
+    - kimi-k3
+    - john
+    - rick
+    - carol
+    - trinity
+    repositories:
+    - HX-ASF-Servers
+    environments:
+    - fleet
+  version: ''
+  status: active
+  authority_level: ratified-governance
   supersedes: []
   superseded_by: []
   security:
-    classification: "internal"
-    access_restrictions: "none beyond repository access"
+    classification: internal
+    access_restrictions: none beyond repository access
     contains_secret_values: false
   relations:
-    - predicate: "governs"
-      target: "agents/ directory"
-      note: "the roster and charters in agents/ together are the authority on who exists and what they can do and outrank any vault profile; within an agent's lane the charter defines existence and scope (precedence rule made explicit 2026-08-25)"
-    - predicate: "references"
-      target: "DOC-knowledge-lessons-learned"
-      note: "roster-first rule originates from the 2026-08-24 'craig' incident"
-    - predicate: "references"
-      target: "DOC-kdd-0008-trinity-omniroute-adoption"
-      note: "ratification vehicle for the newest row: trinity ADDED at source line 25 (vertical, active — owner-ratified 2026-08-27, KDD-0008 O1 adopt-as-corrected) at the adoption gate 2026-08-27T04:14Z (pilot state log row 5; goal OD-02 closed)"
+  - predicate: governs
+    target: agents/ directory
+    note: the roster and charters in agents/ together are the authority on who exists and what they can do and outrank any vault profile; within an agent's lane the charter defines existence and scope (precedence rule made explicit 2026-08-25)
+  - predicate: references
+    target: DOC-knowledge-lessons-learned
+    note: roster-first rule originates from the 2026-08-24 'craig' incident
+  - predicate: references
+    target: DOC-kdd-0008-trinity-omniroute-adoption
+    note: 'ratification vehicle for the newest row: trinity ADDED at source line 25 (vertical, active — owner-ratified 2026-08-27, KDD-0008 O1 adopt-as-corrected) at the adoption gate 2026-08-27T04:14Z (pilot state log row 5; goal OD-02 closed)'
   validation:
-    validated_at: "2026-08-27T04:56:00Z"
-    freshness: "current"
-    review_due: "on roster change"
-  sha256: "2dbf3655e2501d25ed53b580c91cbb9300cadfc8bd1731d0054df74b3146fb52"
-  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/README.md"
+    validated_at: '2026-08-30T15:56:37Z'
+    freshness: current
+    review_due: on roster change
+  sha256: 12b801315a6a912aad69f390f8b82ec1755f42bd239b89fde2ecba60e9e4c529
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/README.md
 notes:
-  review_batch_update: "2026-08-25 review batch (state log row 33): agent-authority precedence rule made explicit — roster and charters in agents/ outrank any vault profile; within a lane the charter defines ownership."
-  hash_history: "9d215552… (run 1) → ef8b1c1c… (row-33 review batch, validated 05:20Z) → 4fc3714f… (2026-08-25T07:10Z) → 749dba85… (2026-08-27T04:56Z, trinity roster row added) → 2dbf3655e250… (2026-08-30, review batch: Bailey model-lane OPEN CORRECTION appended to the model-lane summary). Latest change: 2026-08-30 review batch — Bailey Qwen3.8 Flash lane correction block appended to the model-lane summary paragraph."
-  corrections_batch5: "2026-08-25 corrections batch 5: governs note replaced with the ratified precedence rule per agents/README.md lines 12–15 (roster and charters together are the authority on who exists and what they can do and outrank any vault profile; within a lane the charter defines existence and scope; made explicit 2026-08-25) — supersedes the row-33 shorthand 'charters are the authority'. source.section backfilled (§whole-document); validated_at refreshed. Source file unchanged (sha256 stands)."
+  review_batch_update: '2026-08-25 review batch (state log row 33): agent-authority precedence rule made explicit — roster and charters in agents/ outrank any vault profile; within a lane the charter defines ownership.'
+  hash_history: '9d215552… (run 1) → ef8b1c1c… (row-33 review batch, validated 05:20Z) → 4fc3714f… (2026-08-25T07:10Z) → 749dba85… (2026-08-27T04:56Z, trinity roster row added) → 2dbf3655e250… (2026-08-30, review batch: Bailey model-lane OPEN CORRECTION appended to the model-lane summary). Latest change: 2026-08-30 review batch — Bailey Qwen3.8 Flash lane correction block appended to the model-lane summary paragraph.'
+  corrections_batch5: '2026-08-25 corrections batch 5: governs note replaced with the ratified precedence rule per agents/README.md lines 12–15 (roster and charters together are the authority on who exists and what they can do and outrank any vault profile; within a lane the charter defines existence and scope; made explicit 2026-08-25) — supersedes the row-33 shorthand ''charters are the authority''. source.section backfilled (§whole-document); validated_at refreshed. Source file unchanged (sha256 stands).'
+  minted_by: carol-mint 1.0.0 @ 2026-08-30T15:56:37Z — re-mint 2dbf3655e250… -> 12b801315a6a… — KDD-0013 Amdt 11 job-family lanes; F2 chain flattened

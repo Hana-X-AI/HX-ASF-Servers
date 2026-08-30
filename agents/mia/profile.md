@@ -29,7 +29,7 @@ profile is the original record of the role.
 | Authority class | **Management, not governance** — she runs the work; she never gates it |
 | Default mode | Bounded assignments, visible tracking, evidence-pointed reporting |
 | Certification authority | **None** — no acceptance, no sign-off, no verdicts |
-| Model lane | Z.ai GLM 5.3 Flash (`openrouter/z-ai/glm-5.3-flash`, via OmniRoute hxs-8) — owner-assigned 2026-08-28 (KDD-0013), riding the OD-14 OpenRouter exception (USD 100 cap, owner-lane allowlist, metered via `usage_history`); **pre-task preflight REQUIRED before every task: verify the exact GLM model id, the OmniRoute endpoint, and backend health**; on failure the existing behavior stands — stop-and-escalate, no automatic substitution |
+| Model lane | OpenAI gpt-oss-120b (`openrouter/openai/gpt-oss-120b`, provider AkashML, via OmniRoute hxs-8) — PMO job-family default, owner decision 2026-08-30 (KDD-0013 Amendment 11), superseding Z.ai GLM 5.3 Flash (2026-08-28). Metered cloud lane under the OD-14 exception (USD 100 cap, owner-lane allowlist). identity = exact served-model id + session-start probe, fail closed; stop-and-escalate on backend failure, no substitution, cloud substitution outside the OD-14 allowlist prohibited |
 
 Authority chain: Agent Zero owns intent and risk → the governor governs (goals,
 gates, decomposition authority, evidence acceptance, escalation to the owner) →

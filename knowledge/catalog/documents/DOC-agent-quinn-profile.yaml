@@ -34,10 +34,10 @@ document:
     target: DOC-agent-quinn-charter
     note: one-page lane charter
   validation:
-    validated_at: '2026-08-30T15:53:41Z'
+    validated_at: '2026-08-30T15:56:27Z'
     freshness: current
     review_due: on owner amendment
-  sha256: d6e3f0fc8798a6959ec7df6906cdf51f5e6b3e5030ddd31d0e0a3af1a1dc83da
+  sha256: 405ca94f3a077db43404aabbb3426e39226291ea9e74bce4dfe6c50376e47dd4
   hash_history:
   - sha256: 64e03b76aad54f1c70b15278ddaee8da38bb7159a25139e82a291fb7aff25ced
     timestamp: '2026-08-29T12:30:00Z'
@@ -47,4 +47,4 @@ document:
     reason: '2026-08-30 review batch: skills historical block + validate 5/5 supersession'
   canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/quinn/profile.md
 notes:
-  minted_by: 'carol-mint 1.0.0 @ 2026-08-30T15:53:41Z — re-mint 619dd9f1c103… -> d6e3f0fc8798… — F2/A1: correction chains flattened to current truth'
+  minted_by: carol-mint 1.0.0 @ 2026-08-30T15:56:27Z — re-mint d6e3f0fc8798… -> 405ca94f3a07… — KDD-0013 Amdt 11 job-family lane applied; F2 chain flattened

@@ -43,10 +43,10 @@ document:
     target: DOC-tkv-corpus-ubuntu
     note: standing knowledge source
   validation:
-    validated_at: '2026-08-30T15:53:41Z'
+    validated_at: '2026-08-30T15:56:27Z'
     freshness: current
     review_due: on owner amendment
-  sha256: 863ddefa65a848d85902463c93d82d09ea75956fba5780c2f80548ebed1be592
+  sha256: e1f1ccb42103a523ab75080aa7ad8b1027cf3d5be309a1a014a8f89851297e56
   hash_history:
   - sha256: 0a663e830f8d168ebd0655371337712a3017adc83ccf8492a58ee6e0255f65e1
     timestamp: '2026-08-25T04:50:00Z'
@@ -59,4 +59,4 @@ document:
     reason: '2026-08-30 review batch: skills historical block + validate 5/5 supersession'
   canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/rick/profile.md
 notes:
-  minted_by: 'carol-mint 1.0.0 @ 2026-08-30T15:53:41Z — re-mint 4a1cdb65296b… -> 863ddefa65a8… — F2/A1: correction chains flattened to current truth'
+  minted_by: carol-mint 1.0.0 @ 2026-08-30T15:56:27Z — re-mint 863ddefa65a8… -> e1f1ccb42103… — KDD-0013 Amdt 11 job-family lane applied; F2 chain flattened

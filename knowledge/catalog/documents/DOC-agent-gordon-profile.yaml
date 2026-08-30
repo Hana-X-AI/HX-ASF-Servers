@@ -1,45 +1,51 @@
 document:
-  id: "DOC-agent-gordon-profile"
-  title: "Agent profile — gordon (full operating contract)"
-  type: "profile"
-  declared_purpose: "Full operating contract for gordon: DeepSeek Harness full-feature test engineer. Independent dsh qualification and regression specialist — gate program (Gates 0-10), Feature Coverage Ledger, evidence-backed verdicts. Executes test tooling on hxs-15, changes no configuration, never repairs. KDD-0010, lane DeepSeek V4 Pro via OmniRoute."
+  id: DOC-agent-gordon-profile
+  title: Agent profile — gordon (full operating contract)
+  type: profile
+  declared_purpose: 'Full operating contract for gordon: DeepSeek Harness full-feature test engineer. Independent dsh qualification and regression specialist — gate program (Gates 0-10), Feature Coverage Ledger, evidence-backed verdicts. Executes test tooling on hxs-15, changes no configuration, never repairs. KDD-0010, lane DeepSeek V4 Pro via OmniRoute.'
   source:
-    author: "Agent Zero / KDD-0010"
-    provided_by: "Agent Zero"
-    origin: "/home/hxsa/opt/HX-ASF-Servers/agents/gordon/profile.md"
-    section: "§whole-document"
-    ingestion_date: "2026-08-29T12:30:00Z"
-  owner: "gordon (lane); Agent Zero (ratification)"
+    author: Agent Zero / KDD-0010
+    provided_by: Agent Zero
+    origin: /home/hxsa/opt/HX-ASF-Servers/agents/gordon/profile.md
+    section: §whole-document
+    ingestion_date: '2026-08-29T12:30:00Z'
+  owner: gordon (lane); Agent Zero (ratification)
   applies_to:
-    hosts: [hxs-15]
+    hosts:
+    - hxs-15
     fqdns: []
     services: []
-    agents: [gordon]
-    repositories: [HX-ASF-Servers]
-    environments: [fleet]
-  version: ""
-  status: "adopted"
-  authority_level: "ratified-governance"
+    agents:
+    - gordon
+    repositories:
+    - HX-ASF-Servers
+    environments:
+    - fleet
+  version: ''
+  status: adopted
+  authority_level: ratified-governance
   supersedes: []
   superseded_by: []
   security:
-    classification: "internal"
-    access_restrictions: "none beyond repository access"
+    classification: internal
+    access_restrictions: none beyond repository access
     contains_secret_values: false
   relations:
-    - predicate: "references"
-      target: "DOC-agent-gordon-charter"
-      note: "one-page lane charter"
+  - predicate: references
+    target: DOC-agent-gordon-charter
+    note: one-page lane charter
   validation:
-    validated_at: "2026-08-29T12:30:00Z"
-    freshness: "current"
-    review_due: "on owner amendment"
-  sha256: "cb005daeefc6b69f58f0d3d6fe525c4247ac728ba93013dac30459740bc6d844"
+    validated_at: '2026-08-30T15:56:27Z'
+    freshness: current
+    review_due: on owner amendment
+  sha256: 4735055fe6446c97a9b8cecf284ede9cadad3e82439e871cfb1aa84306207dcc
   hash_history:
-    - sha256: "0e0c1d6e15926a827520dd2c71b975b497b92553ab8aa116be6a38542577f8e5"
-      timestamp: "2026-08-29T12:30:00Z"
-      reason: "initial cataloging"
-    - sha256: "cb005daeefc6b69f58f0d3d6fe525c4247ac728ba93013dac30459740bc6d844"
-      timestamp: "2026-08-30T11:21:44Z"
-      reason: "2026-08-30 review batch: sha256 refresh"
-  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/gordon/profile.md"
+  - sha256: 0e0c1d6e15926a827520dd2c71b975b497b92553ab8aa116be6a38542577f8e5
+    timestamp: '2026-08-29T12:30:00Z'
+    reason: initial cataloging
+  - sha256: cb005daeefc6b69f58f0d3d6fe525c4247ac728ba93013dac30459740bc6d844
+    timestamp: '2026-08-30T11:21:44Z'
+    reason: '2026-08-30 review batch: sha256 refresh'
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/gordon/profile.md
+notes:
+  minted_by: carol-mint 1.0.0 @ 2026-08-30T15:56:27Z — re-mint cb005daeefc6… -> 4735055fe644… — KDD-0013 Amdt 11 job-family lane applied; F2 chain flattened

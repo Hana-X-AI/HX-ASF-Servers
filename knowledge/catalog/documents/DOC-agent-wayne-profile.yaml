@@ -1,45 +1,51 @@
 document:
-  id: "DOC-agent-wayne-profile"
-  title: "Agent profile — wayne (full operating contract)"
-  type: "profile"
-  declared_purpose: "Full operating contract for wayne: Redis systems engineer for the HX factory. Manages the single Redis instance on hxs-9 — install, configure, ACLs, persistence, health, and the Redis side of the PostgreSQL cache integration contract. KDD-0015, lane gpt-oss-120b via OmniRoute. Standalone topology only; no cluster/sentinel/replication. MCP and RAG/vector/stream work deferred."
+  id: DOC-agent-wayne-profile
+  title: Agent profile — wayne (full operating contract)
+  type: profile
+  declared_purpose: 'Full operating contract for wayne: Redis systems engineer for the HX factory. Manages the single Redis instance on hxs-9 — install, configure, ACLs, persistence, health, and the Redis side of the PostgreSQL cache integration contract. KDD-0015, lane gpt-oss-120b via OmniRoute. Standalone topology only; no cluster/sentinel/replication. MCP and RAG/vector/stream work deferred.'
   source:
-    author: "Agent Zero / KDD-0015"
-    provided_by: "Agent Zero"
-    origin: "/home/hxsa/opt/HX-ASF-Servers/agents/wayne/profile.md"
-    section: "§whole-document"
-    ingestion_date: "2026-08-29T12:30:00Z"
-  owner: "wayne (lane); Agent Zero (ratification)"
+    author: Agent Zero / KDD-0015
+    provided_by: Agent Zero
+    origin: /home/hxsa/opt/HX-ASF-Servers/agents/wayne/profile.md
+    section: §whole-document
+    ingestion_date: '2026-08-29T12:30:00Z'
+  owner: wayne (lane); Agent Zero (ratification)
   applies_to:
-    hosts: [hxs-9]
+    hosts:
+    - hxs-9
     fqdns: []
     services: []
-    agents: [wayne]
-    repositories: [HX-ASF-Servers]
-    environments: [fleet]
-  version: ""
-  status: "adopted"
-  authority_level: "ratified-governance"
+    agents:
+    - wayne
+    repositories:
+    - HX-ASF-Servers
+    environments:
+    - fleet
+  version: ''
+  status: adopted
+  authority_level: ratified-governance
   supersedes: []
   superseded_by: []
   security:
-    classification: "internal"
-    access_restrictions: "none beyond repository access"
+    classification: internal
+    access_restrictions: none beyond repository access
     contains_secret_values: false
   relations:
-    - predicate: "references"
-      target: "DOC-agent-wayne-charter"
-      note: "one-page lane charter"
+  - predicate: references
+    target: DOC-agent-wayne-charter
+    note: one-page lane charter
   validation:
-    validated_at: "2026-08-29T12:30:00Z"
-    freshness: "current"
-    review_due: "on owner amendment"
-  sha256: "9e65ed635b783db8d761bfd408e01956e01533e6b21e192a4c2cb6c593a1ae4d"
+    validated_at: '2026-08-30T15:56:27Z'
+    freshness: current
+    review_due: on owner amendment
+  sha256: 580146b2d2fbc19c8de66e81f47f8f5ab55979d7e7f18888da6f9b58bce98de5
   hash_history:
-    - sha256: "a42aef1a99f5343a8174db238148aa443744614fb78e3cba644a8e708b312e78"
-      timestamp: "2026-08-29T12:30:00Z"
-      reason: "initial cataloging"
-    - sha256: "9e65ed635b783db8d761bfd408e01956e01533e6b21e192a4c2cb6c593a1ae4d"
-      timestamp: "2026-08-30T11:21:44Z"
-      reason: "2026-08-30 review batch: sha256 refresh"
-  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/wayne/profile.md"
+  - sha256: a42aef1a99f5343a8174db238148aa443744614fb78e3cba644a8e708b312e78
+    timestamp: '2026-08-29T12:30:00Z'
+    reason: initial cataloging
+  - sha256: 9e65ed635b783db8d761bfd408e01956e01533e6b21e192a4c2cb6c593a1ae4d
+    timestamp: '2026-08-30T11:21:44Z'
+    reason: '2026-08-30 review batch: sha256 refresh'
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/wayne/profile.md
+notes:
+  minted_by: carol-mint 1.0.0 @ 2026-08-30T15:56:27Z — re-mint 9e65ed635b78… -> 580146b2d2fb… — KDD-0013 Amdt 11 job-family lane applied; F2 chain flattened
