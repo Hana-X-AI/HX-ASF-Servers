@@ -1,46 +1,50 @@
 document:
-  id: "DOC-agent-quinn-profile"
-  title: "Agent profile — quinn (full operating contract)"
-  type: "profile"
-  declared_purpose: "Full operating contract for quinn: Qdrant vector database systems engineer for the HX factory. Manages the Qdrant server, Python client, and MCP server on hxs-4. KDD-0017, lane NVIDIA Nemotron 3 Ultra via OmniRoute."
+  id: DOC-agent-quinn-profile
+  title: Agent profile — quinn (full operating contract)
+  type: profile
+  declared_purpose: 'Full operating contract for quinn: Qdrant vector database systems engineer for the HX factory. Manages the Qdrant server, Python client, and MCP server on hxs-4. KDD-0017, lane NVIDIA Nemotron 3 Ultra via OmniRoute.'
   source:
-    author: "Agent Zero / KDD-0017"
-    provided_by: "Agent Zero"
-    origin: "/home/hxsa/opt/HX-ASF-Servers/agents/quinn/profile.md"
-    section: "§whole-document"
-    ingestion_date: "2026-08-29T12:30:00Z"
-  owner: "quinn (lane); Agent Zero (ratification)"
+    author: Agent Zero / KDD-0017
+    provided_by: Agent Zero
+    origin: /home/hxsa/opt/HX-ASF-Servers/agents/quinn/profile.md
+    section: §whole-document
+    ingestion_date: '2026-08-29T12:30:00Z'
+  owner: quinn (lane); Agent Zero (ratification)
   applies_to:
     hosts: []
     fqdns: []
     services: []
-    agents: [quinn]
-    repositories: [HX-ASF-Servers]
-    environments: [fleet]
-  version: ""
-  status: "adopted"
-  authority_level: "ratified-governance"
+    agents:
+    - quinn
+    repositories:
+    - HX-ASF-Servers
+    environments:
+    - fleet
+  version: ''
+  status: adopted
+  authority_level: ratified-governance
   supersedes: []
   superseded_by: []
   security:
-    classification: "internal"
-    access_restrictions: "none beyond repository access"
+    classification: internal
+    access_restrictions: none beyond repository access
     contains_secret_values: false
   relations:
-    - predicate: "references"
-      target: "DOC-agent-quinn-charter"
-      note: "one-page lane charter"
+  - predicate: references
+    target: DOC-agent-quinn-charter
+    note: one-page lane charter
   validation:
-    validated_at: "2026-08-29T12:30:00Z"
-    freshness: "current"
-    review_due: "on owner amendment"
-  sha256: "619dd9f1c10351eb7aa8527676bfa92d17315e0b8c8dbc3aa2e430d80a50b750"
+    validated_at: '2026-08-30T15:53:41Z'
+    freshness: current
+    review_due: on owner amendment
+  sha256: d6e3f0fc8798a6959ec7df6906cdf51f5e6b3e5030ddd31d0e0a3af1a1dc83da
   hash_history:
-    - sha256: "64e03b76aad54f1c70b15278ddaee8da38bb7159a25139e82a291fb7aff25ced"
-      timestamp: "2026-08-29T12:30:00Z"
-      reason: "initial cataloging"
-    - sha256: "619dd9f1c10351eb7aa8527676bfa92d17315e0b8c8dbc3aa2e430d80a50b750"
-      timestamp: "2026-08-30T09:45:00Z"
-      reason: "2026-08-30 review batch: skills historical block + validate 5/5 supersession"
-
-  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/quinn/profile.md"
+  - sha256: 64e03b76aad54f1c70b15278ddaee8da38bb7159a25139e82a291fb7aff25ced
+    timestamp: '2026-08-29T12:30:00Z'
+    reason: initial cataloging
+  - sha256: 619dd9f1c10351eb7aa8527676bfa92d17315e0b8c8dbc3aa2e430d80a50b750
+    timestamp: '2026-08-30T09:45:00Z'
+    reason: '2026-08-30 review batch: skills historical block + validate 5/5 supersession'
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/quinn/profile.md
+notes:
+  minted_by: 'carol-mint 1.0.0 @ 2026-08-30T15:53:41Z — re-mint 619dd9f1c103… -> d6e3f0fc8798… — F2/A1: correction chains flattened to current truth'

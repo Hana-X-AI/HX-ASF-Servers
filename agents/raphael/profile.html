@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Generated from agents/raphael/profile.md (sha256 5cce0c0760eb5aa6c98d23f3dddb11244675183e4969955ab2e36ccb21c9f8fa) by scripts/wiki/render.py on 2026-08-30T11:21Z.
+<!-- Generated from agents/raphael/profile.md (sha256 fc6bd838225386d175018350d9902f4a9239ca9fba18c8d8772c35889c4c63cf) by scripts/wiki/render.py on 2026-08-30T15:53Z.
      Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
 <html lang="en">
 <head>
@@ -72,7 +72,7 @@ LIGHTRAG_MCP_API_KEY=&lt;same as LIGHTRAG_API_KEY&gt;</code></pre>
 <h3 id="7-3-lightragmcp-mcp-server-v1-0-0-suryan">7.3 lightragmcp MCP server (v1.0.0, Suryan)</h3>
 <ul><li><strong>Install:</strong> <code>npm install -g @g99/lightrag-mcp-server</code> (or <code>npx</code>)</li><li><strong>Tools:</strong> 30 (document management 10, query 3, knowledge graph 8, system management 9)</li><li><strong>Config:</strong> <code>LIGHTRAG_SERVER_URL=http://192.168.50.203:9621</code>, <code>LIGHTRAG_API_KEY=&lt;same as server&gt;</code></li><li><strong>Service:</strong> systemd unit <code>lightrag-mcp.service</code></li></ul>
 <h2 id="8-verification-and-completion-gates">8. Verification and completion gates</h2>
-<p>Confirm the requested LightRAG result; record the commands used (never credential values); record service status, API health, query results, test output. Run <code>python3 scripts/validate.py</code> — must be 4/4 PASS after any repo write. Render any manifest-listed .md changed. [AMENDMENT 2026-08-30, labeled: validator now runs 5 checks — the governance-path check (SY-2) was added; this requirement reads 5/5 PASS effective 2026-08-30. Original 4/4 wording preserved above.]</p>
+<p>Confirm the requested LightRAG result; record the commands used (never credential values); record service status, API health, query results, test output. Run <code>python3 scripts/validate.py</code> — must be <strong>5/5 PASS</strong> after any repo write. Render any manifest-listed .md changed.</p>
 <p><strong>Validation suite (V0–V6 pattern):</strong></p>
 <ul><li>V0: pre-state (no LightRAG running, no 9621 listener)</li><li>V1: install + version (lightrag-hku v1.5.7, service active)</li><li>V2: config posture (bind address, port, API key, Qdrant backend, LLM binding)</li><li>V3: API probe (health endpoint, Web UI served)</li><li>V4: document lifecycle (insert, query, delete — clean)</li><li>V5: knowledge graph (entity extraction, relation query)</li><li>V6: health monitoring (timer + script active, exit 0)</li></ul>
 <p><strong>Test suites:</strong></p>
@@ -86,7 +86,7 @@ LIGHTRAG_MCP_API_KEY=&lt;same as LIGHTRAG_API_KEY&gt;</code></pre>
 <h2 id="11-provenance">11. Provenance</h2>
 <p>Original record — no external source document. Created per owner directive 2026-08-29. Knowledge base: <code>/opt/tkv-local/LightRAG-main/</code> (v1.5.7), <code>/opt/tkv-local/lightragmcp-main/</code> (v1.0.0), <code>/opt/tkv-local/daniel-lightrag-mcp-main/</code> (v0.1.0), <code>/home/hxsa/opt/local-tkv/agent-zero-docs/lightrag/</code>. Target host: hxs-4 per <code>governace/goals/2026-08-29-lightrag-hxs4.md</code>. Model lane: Qwen-X via OmniRoute, provider hxs-1.</p>
 </main>
-<footer>Source of truth: <code>agents/raphael/profile.md</code> (sha256 <code>5cce0c0760eb5aa6c98d23f3dddb11244675183e4969955ab2e36ccb21c9f8fa</code>) · rendered 2026-08-30T11:21Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+<footer>Source of truth: <code>agents/raphael/profile.md</code> (sha256 <code>fc6bd838225386d175018350d9902f4a9239ca9fba18c8d8772c35889c4c63cf</code>) · rendered 2026-08-30T15:53Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
 
 </body>
 </html>

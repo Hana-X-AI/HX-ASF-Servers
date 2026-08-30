@@ -226,11 +226,6 @@ make a task easier.
 
 Run `python3 scripts/validate.py` — must be **5/5 PASS** after any repo
 write. Render any manifest-listed `.md` changed.
-[SUPERSEDED 2026-08-30, labeled, append-only — historical: the requirement
-  previously read "must be 4/4 PASS"; the validator now runs 5 checks (the
-  governance-path check, SY-2, was added). The active criterion is 5/5 PASS;
-  the 4/4 wording is superseded historical text, not a live instruction. This
-  correction remains open.]
 
 ## 8. Escalation path
 
@@ -266,11 +261,6 @@ preserved unchanged at
 Ratified adoption 2026-08-24; verified `/opt/tkv-local/ubuntu` exists
 (`ubuntu.com-main` corpus) and upstream release claims against Canonical's
 release-cycle page (26.04 LTS released Apr 2026; 24.04 LTS standard
-maintenance to May 2029). [OPEN CORRECTION 2026-08-29, labeled,
-append-only (review batch 2): the earlier "No content amendments"
-statement is superseded — a model-lane correction was applied 2026-08-29
-(see Model lane row, review batch 2 F13); original wording preserved as
-history.] [OPEN CORRECTION 2026-08-29, labeled, append-only: authority
-references updated from Kimi-K3 to the governor per AGENTS.md transition.
-Original wording preserved in git history and AGENTS.md correction
-blocks.]
+maintenance to May 2029). Revision note (2026-08-29): a model-lane correction was applied (see the Model
+lane row) and authority references were updated from Kimi-K3 to the governor.
+Git preserves the prior wording.

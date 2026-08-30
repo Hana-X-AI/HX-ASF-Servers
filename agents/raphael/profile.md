@@ -182,11 +182,8 @@ When executing work on hxs-4 (192.168.50.203):
 
 Confirm the requested LightRAG result; record the commands used (never
 credential values); record service status, API health, query results,
-test output. Run `python3 scripts/validate.py` — must be 4/4 PASS after
+test output. Run `python3 scripts/validate.py` — must be **5/5 PASS** after
 any repo write. Render any manifest-listed .md changed.
-[AMENDMENT 2026-08-30, labeled: validator now runs 5 checks — the
-  governance-path check (SY-2) was added; this requirement reads 5/5 PASS
-  effective 2026-08-30. Original 4/4 wording preserved above.]
 
 **Validation suite (V0–V6 pattern):**
 - V0: pre-state (no LightRAG running, no 9621 listener)

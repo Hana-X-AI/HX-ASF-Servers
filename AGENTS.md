@@ -133,39 +133,13 @@ When the owner uses a trigger word, invoke the matching skill first and follow i
 workflow in full — do not partially apply it. Project agents and sub-agents working in
 this repository must honor these skills as well.
 
-[OPEN CORRECTION 2026-08-30, labeled, append-only — SKILL INVENTORY GROWTH 14 → 23:
-the inventory above grew from fourteen (14) to twenty-three (23) skills. The nine (9)
-additions are: **grill-me**, **ai-test-generation**, **test-planning**,
-**test-strategy**, **qa-project-context**, **test-environments**, **release-readiness**,
-**test-reliability**, and **ci-cd-integration** — the base fourteen (be-great through
-work-status) are preserved in the inventory above. Authority: owner directive
-2026-08-30 (grill-me limited to 5 questions) and owner ratification of the QA skill
-subset (KDD-0019); effective 2026-08-30. The prior fourteen-skill state is preserved as
-history above; the current inventory is authoritative.]
-
-[OPEN CORRECTION 2026-08-30, labeled, append-only — SKILL INVENTORY GROWTH
-23 → 30 AND CANONICAL LOCATION CHANGE: (a) COUNT — the inventory above grew from
-twenty-three (23) to thirty (30) skills. The seven (7) additions are:
-**handoff**, **writing-for-agents**, **triage**, **diagnosing-bugs**,
-**grill-with-docs**, **grilling**, and **domain-modeling** — the base
-twenty-three (be-great through ci-cd-integration) are preserved in the inventory
-above. (b) LOCATION — the canonical skill tree moved from `.kimi-code/skills/` to
-`.agents/skills/`; `.kimi-code/skills/` and `.claude/skills/` are now GENERATED
-mirrors rebuilt by `scripts/skills_sync.py --write` and enforced by `validate.py`
-SY-3. The prior location wording is superseded in the section opening above and
-preserved in this correction. `archify` is canonical-only, with a pointer stub in
-each mirror; it is a Node CLI invoked by path, not a prompt skill.
-(c) PRECEDENCE — `grill-me` remains the ONLY factory scope-lock gate. `grilling`
-and `grill-with-docs` never satisfy that gate, and the owner's 5-question limit
-(directive 2026-08-30) applies to every interview path in this repository, not
-only to `grill-me`; upstream's unbounded "relentless" form was corrected at
-intake rather than adopted. (d) PROVENANCE — the seven additions come from
-`mattpocock/skills` at upstream commit
-`6654f6b60cd9d5be8b54c6fafe44346dabeb3b76` (MIT, Copyright (c) 2026 Matt Pocock),
-recorded with per-skill correction notes in each SKILL.md and pinned in
-`skills-lock.json`. Authority: KDD-0020; effective 2026-08-30. The prior
-twenty-three-skill state and its location are preserved as history above; the
-current inventory is authoritative.]
+Provenance: this inventory grew 14 → 23 → 30 skills over 2026-08-30. The seven
+most recent additions come from `mattpocock/skills` @
+`6654f6b60cd9d5be8b54c6fafe44346dabeb3b76` (MIT), five of them adopted-as-corrected
+per §"Adoption of provided documents" with per-skill correction notes in each
+SKILL.md and pins in `skills-lock.json`. Ratified by KDD-0019 (QA subset) and
+KDD-0020 (canonical tree + mattpocock batch), both append-only and both carrying
+the full supersession history. Flattened here 2026-08-30 per audit item F2/A1.
 
 Default reporting voice: **corporate** (executive-summary tone). A voice trigger
 overrides the default for that reply; when style skills conflict, the owner's most
@@ -282,169 +256,75 @@ doubt, act reversibly and report rather than pause.
   Qwen-X deep reasoning/synthesis, Coder-X coding/source analysis, Meta-X
   tooling/structured contracts, Chat-X basic utility — with call-sign, endpoint,
   alias, identity, and role recorded per task. Controls: on backend failure the
-  session STOPS the affected branch and escalates to the meta-agent —
-  re-assignment control stays with KK3, no automatic substitution, cloud
-  substitution always prohibited; the verifying backend is always a different
-  host than the producing backend when one is available, deterministic checks
-  first regardless. Exception: KK3's own orchestration and governance runs on
-  the meta-agent model; subagent session substrates are orchestration
-  mechanics, not "the LLM for the work" — the rule governs model-inference
-  work products.
-- **Substrate exception RETRACTED** (owner directive 2026-08-28, labeled
-  correction — the exception sentence inside the rule above is VOID from this
-  date, original preserved there as history): "i dont want any sub-agents
-  running through moonshot-ai.. the only agent to run throug moonshot-ai is
-  you… no expections." Only Kimi-K3 runs on `moonshot-ai/kimi-k3`. Every other
-  agent's work sessions run on that agent's assigned model lane (KDD-0013),
-  executed as standalone `kimi` sessions bound at launch
+  session STOPS the affected branch and escalates to the governor —
+  re-assignment control stays with the governor, no automatic substitution,
+  cloud substitution always prohibited; the verifying backend is always a
+  different host than the producing backend when one is available,
+  deterministic checks first regardless. The rule governs model-inference work
+  products. (A substrate exception for the meta-agent's own orchestration was
+  retracted 2026-08-28 and is void — see the moonshot rule below.)
+- **No agent runs on moonshot-ai** (owner directive 2026-08-28: "i dont want any
+  sub-agents running through moonshot-ai… no expections"). The only
+  moonshot-bound lane was ever the Kimi-K3 identity, and that lane is retired
+  (2026-08-29), so **no moonshot execution path remains** — including for the
+  governor, who runs on DeepSeek V4 Flash via OmniRoute. Every agent's work
+  sessions run on that agent's assigned job-family lane below, launched as
+  standalone `kimi` sessions bound at launch
   (`kimi -m omniroute/<lane> --agent-file agents/<name>/profile.md`) or as dsh
   sessions on hxs-15 for harness-side work. Product fact of record: Kimi Code
-  sub-agents always inherit the main session's model (agent files have no
-  model field), so Agent-tool dispatches from the governor's moonshot session
-  are NO LONGER an execution path for agent work — the governor's own bounded
-  direct execution (KK3 itself) remains moonshot-legal.
-- **Per-agent model lanes** (owner-assigned 2026-08-28, KDD-0013; all local/GLM
-  lanes route via OmniRoute on hxs-8): kimi-k3 `moonshot-ai/kimi-k3` (meta-agent
-  exception) · morpheus Coder-X (hxs-2) · gordon Qwen-X (hxs-1) · rick Meta-X
-  (hxs-3) · john Meta-X (hxs-3) · carol Chat-X (hxs-4) · trinity GLM 5.3 Flash ·
-  rob GLM 5.3 Flash · mia GLM 5.3 Flash. [Correction 2026-08-28, labeled:
-  gordon's lane is now DeepSeek V4 Pro (`openrouter/deepseek/deepseek-v4-pro-0813`,
-  provider StreamLake, via OmniRoute) — owner directive same day, superseding
-  the Qwen-X assignment printed above, which is preserved as history.]
-  [Correction 2026-08-28, labeled: carol's lane is now OpenAI gpt-oss-120b
-  (`openrouter/openai/gpt-oss-120b`, provider AkashML, via OmniRoute) — owner
-  directive same day, superseding the Chat-X assignment printed above; she
-  remains frozen.]
-  [OPEN CORRECTION 2026-08-29, labeled, append-only: Carol is UNFROZEN to
-  background-class status (owner plan GO, state-log row 31) — she runs catalog
-  catch-up batches on her lane without blocking any gate, handoff, or lane;
-  the frozen wording above and in the Carol section below is preserved as
-  history. Authority: state-log row 31; owner: "run carol but not on the
-  critical path… does not block any work."] The three
-  GLM lanes plus gordon's DeepSeek lane ride the OD-14
-  OpenRouter exception of record (USD 100 cap, owner-lane allowlist, metered);
-  cloud substitution otherwise stays prohibited. New agents receive a lane at
-  registration.
-  [OPEN CORRECTION 2026-08-29, labeled, append-only: the GOVERNOR's lane is now
-  Z.ai GLM 5.2 (`openrouter/z-ai/glm-5.2`, provider Decart, via OmniRoute) —
-  owner directive same day, superseding the `moonshot-ai/kimi-k3` meta-agent
-  exception printed above, which is preserved as history. The
-  substrate-retraction rule (no moonshot sub-agents) stands unchanged. OD-14
-  scope: SEVEN cloud lanes — trinity, rob, mia, gordon, carol, chris, kimi-k3.
-  Authority: KDD-0013 Amendment 7.]
-  [OPEN CORRECTION 2026-08-29, labeled, append-only: the OD-14 owner-lane
-  allowlist and metering scope now covers all five cloud lanes: Trinity, Rob,
-  Mia, Gordon, and Carol. Authority: KDD-0013 Amendment 4 and
-  `pilots/PILOT-DSH-IMPL-001/01-state-log.md` row 30. The preceding four-lane
-  scope remains preserved as historical text.]
-  [OPEN CORRECTION 2026-08-29, labeled, append-only: the scope now covers SIX
-  cloud lanes — chris is registered (KDD-0014) with lane Qwen 3.8 Flash
-  (`openrouter/qwen/qwen3.8-flash`, provider Alibaba Cloud International, via
-  OmniRoute). Authority: KDD-0013 Amendment 6. The preceding five-lane note
-  remains preserved as historical text.]
-  [OPEN CORRECTION 2026-08-29, labeled, append-only: the GOVERNOR ROLE is now
-  held by **Flash** (owner/Agent Zero appointment, 2026-08-29), running on
-  **DeepSeek V4 Flash** via OmniRoute — superseding the GLM 5.2 governor lane
-  of Amendment 7 (preserved as history). Governing references to "Kimi-K3" as
-  the governor (Chief of Staff reporting line, Checkpoint routing, state-log
-  triage fields) read as the GOVERNOR role — currently Flash — not the
-  kimi-k3 identity. Authority: owner appointment reported by Flash
-  (work order 14, `pilots/PILOT-DSH-IMPL-001/`); RECORD OF THE APPOINTMENT IS
-  INTENT-LEVEL PENDING PRIMARY OWNER CONFIRMATION IN RECORDS.]
-  [OPEN CORRECTION 2026-08-29, labeled, append-only (review batch 2, F1):
-  morpheus's lane is now **Qwen 3.8 2.4T A95B** (`openrouter/qwen/qwen3.8-2.4t-a95b`,
-  provider DeepInfra, via OmniRoute hxs-8) — owner directive 2026-08-29,
-  superseding the Coder-X assignment printed above (preserved as history).
-  Reason: two consecutive Coder-X failures on the Phase C prep order
-  (state-log rows 34/40); recorded in the Morpheus profile amendment and
-  `agents/README.md`.]
-  [OPEN CORRECTION 2026-08-29, labeled, append-only (review batch 2, F2):
-  the substrate-retraction paragraph above describes the governor's bounded
-  direct execution as "(KK3 itself)". The GOVERNOR ROLE is now held by Flash
-  (see the governor correction above) — the moonshot-legal direct-execution
-  clause reads as the GOVERNOR ROLE, and the current governor runs on
-  DeepSeek V4 Flash via OmniRoute, not moonshot-ai. Kimi-K3 remains an
-  identity-specific model lane on `moonshot-ai/kimi-k3` per KDD-0013.
-  Original clause preserved above as history.]
-  [OPEN CORRECTION 2026-08-29, labeled, append-only (review batch 2, F3):
-  the OD-14 OpenRouter exception scope is now **EIGHT** metered cloud lanes —
-  trinity, rob, mia, gordon, carol, chris, kimi-k3, **wayne** (KDD-0015,
-  registered 2026-08-29, lane `openrouter/openai/gpt-oss-120b`) — superseding
-  the seven-lane scope of Amendment 7 (preserved as history) and matching
-  `agents/README.md`. Authority: KDD-0015 + owner registration 2026-08-29.]
-  [OPEN CORRECTION 2026-08-29, labeled, append-only (review batch 2, F6):
-  chris's lane is now **DeepSeek V4 Pro** (`openrouter/deepseek/deepseek-v4-pro`,
-  provider Baidu FP8, via OmniRoute hxs-8) — owner directive 2026-08-29,
-  superseding the Qwen 3.8 Flash lane of the six-lane note above (preserved
-  as history). Authority: KDD-0014 open correction, same date.]
-  [OPEN CORRECTION 2026-08-29, labeled, append-only (CodeRabbit review batch):
-  within the OD-14 allowlist above, the `moonshot-ai/kimi-k3` provider lane is
-  SUPERSEDED as an authoritative provider lane — the governor role runs on
-  GLM 5.2, then Flash/DeepSeek V4 Flash, via OmniRoute per the correction
-  blocks above. Kimi-K3 remains a registered identity-specific lane reference
-  but moonshot-ai is not the operative provider for the governor. Original
-  allowlist text preserved above as history.]
-  [OPEN CORRECTION 2026-08-29, labeled, append-only: quinn is registered
-  (KDD-0017) with lane NVIDIA Nemotron 3 Ultra
-  (`openrouter/nvidia/nemotron-3-ultra-550b-a55b:free`, provider NVIDIA, via
-  OmniRoute hxs-8) — owner-assigned 2026-08-29, CLI-verified live. Quinn's
-  lane is free-tier on OpenRouter (no metered spend); it rides the OD-14
-  exception unmetered as a zero-cost cloud lane. OD-14 scope: NINE cloud
-  lanes — trinity, rob, mia, gordon, carol, chris, kimi-k3, wayne, quinn
-  (quinn unmetered). Authority: KDD-0017.]
-  [OPEN CORRECTION 2026-08-29, labeled, append-only: raphael is registered
-  (KDD-0018) with lane Qwen-X (`ollama-local/hx-qwen3.8-27b-64k`, hxs-1,
-  via OmniRoute hxs-8) — owner-assigned 2026-08-29. Qwen-X is a local
-  lane (no OD-14 cloud metering). OD-14 scope unchanged (nine cloud lanes;
-  raphael is local). Authority: KDD-0018.]
-  [OPEN CORRECTION 2026-08-30, labeled, append-only — JOB-FAMILY LANE DEFAULTS
-  (owner decision, multi-agent alignment session; KDD-0013 Amendment 11): lane
-  defaults are now per JOB FAMILY. This supersedes the per-agent lanes above for
-  the affected agents (prior lanes preserved as history): Rob (Agentic SWE) →
-  Coder-X (hxs-2, local) · Rick (Infra/Ops) → Coder-X (hxs-2, local) · Platform
-  Systems (Trinity, Morpheus, John, Chris, Wayne, Quinn, Raphael, Erwin +
-  future SE) → Z.ai GLM 5.2 free (`z-ai/glm-5.2:free`, Decart), replacing their
-  prior per-agent lanes. Governor (James) → DeepSeek V4 Flash (pinned); PMO
-  (Mia, Carol) → GPT-OSS 120B; QA (Bailey, Gordon) → Qwen3.8 Flash. Per-agent
-  overrides within a family remain supported. Authority: owner decision
-  2026-08-30; KDD-0013 Amendment 11.] [Note: "Governor (James)" reads as the
-  GOVERNOR ROLE — the persona renamed from Flash to James (governor-rename
-  correction below, 2026-08-30); the model lane DeepSeek V4 Flash is unchanged.]
-  [OPEN CORRECTION 2026-08-30, labeled, append-only — BAILEY QA LANE ON OD-14
-  ALLOWLIST: Bailey's QA-family lane Qwen3.8 Flash
-  (`openrouter/qwen/qwen3.8-flash`, provider Alibaba Cloud International, via
-  OmniRoute hxs-8) is included in the OD-14 owner-lane allowlist and metering
-  scope. OD-14 scope is now TEN cloud lanes — trinity, rob, mia, gordon,
-  carol, chris, kimi-k3, wayne, quinn (unmetered), bailey (metered) —
-  superseding the nine-lane scope above for Bailey (preserved as history).
-  Activation-gated: not exercised until Bailey's activation gate clears
-  (KDD-0019); no metered spend before activation. Authority: owner decision
-  2026-08-30 (KDD-0013 Amendment 11) + KDD-0019; KDD-0013 Amendment 12.]
+  sub-agents always inherit the main session's model (agent files carry no model
+  field), so Agent-tool dispatch is not an execution path for agent work — a
+  bound standalone session is. History: this directive retracted an earlier
+  substrate exception; both are preserved in Git and KDD-0013.
+- **Model lanes by job family** (owner decision 2026-08-30; KDD-0013 Amendments
+  11–12). Lane defaults are assigned per JOB FAMILY. Per-agent overrides within a
+  family are supported and recorded in KDD-0013. Cloud lanes route via OmniRoute
+  on hxs-8.
+
+  | Job family | Members | Default lane | Model / provider |
+  | --- | --- | --- | --- |
+  | Governor (above all families) | James | DeepSeek V4 Flash | via OmniRoute — pinned |
+  | PMO | Mia, Carol | GPT-OSS 120B | `openai/gpt-oss-120b`, AkashML |
+  | QA | Bailey, Gordon | Qwen3.8 Flash | `qwen/qwen3.8-flash`, Alibaba Cloud International |
+  | Agentic SWE | Rob | Coder-X — **local** | `ollama-local/hx-qwen3.6-coderx-64k`, hxs-2 |
+  | Infra / Ops | Rick | Coder-X — **local** | `ollama-local/hx-qwen3.6-coderx-64k`, hxs-2 |
+  | Platform Systems | Trinity, Morpheus, John, Chris, Wayne, Quinn, Raphael, Erwin (pending registration) | Z.ai GLM 5.2 **free** | `z-ai/glm-5.2:free`, Decart |
+
+  **OD-14 OpenRouter exception of record** — USD 100 cap, owner-lane allowlist:
+
+  - **Metered — 5 lanes:** James, Mia, Carol, Gordon, Bailey. Bailey's lane is
+    activation-gated (KDD-0019, KDD-0013 Amendment 12): no metered spend before
+    her activation gate clears.
+  - **Zero-cost cloud — 8 lanes:** the Platform Systems family on
+    `z-ai/glm-5.2:free`. On the allowlist, no metered spend.
+  - **Local — 2 lanes, outside OD-14:** Rob and Rick on Coder-X (hxs-2).
+  - Cloud substitution outside this allowlist stays prohibited. New agents
+    receive a lane at registration.
+
+  **Kimi-K3 is retired as a live lane** (owner directive 2026-08-29,
+  "kimi-k3 that model is out of here"). The identity is preserved in KDD-0013 as
+  the historical governor-role template only.
+
+  Provenance: the table above is the current state, stated once. The full
+  supersession history — the original 2026-08-28 per-agent assignments, the
+  governor transitions (kimi-k3 → GLM 5.2 → DeepSeek V4 Flash), and every
+  intermediate lane change — is preserved in
+  `governace/decisions/KDD-0013-agent-model-lanes.md` (Amendments 1–12), which is
+  append-only. Flattened here 2026-08-30 per audit item F2/A1: a current-state
+  document presents one current instruction, and Git preserves the rest.
 - **Chief of Staff** (owner directive 2026-08-28, KDD-0012). **Mia**
   (`agents/mia/`) manages the work — planning, coordination, distribution to the
-  engineering lanes, breakage triage, and status reporting to Kimi-K3. The
+  engineering lanes, breakage triage, and status reporting to the governor. The
   Governor governs (goals, gates, acceptance, owner escalation); Mia manages.
-  Broken items go to Mia first: characterize, then coordinate or distribute
-  with evidence — she never mutates an engineering lane or issues repair
-  dispositions; repairs execute only under a Kimi-K3-issued work order.
-  [Corrected 2026-08-28, labeled: previously "characterize, repair in-lane, or
-  distribute with evidence" — overreach vs her management-only mandate;
-  original preserved here.] **Distribution and assignments execute only under a
-  Kimi-K3-issued work order** — this rule grants Mia coordination and triage,
-  NOT independent self-dispatch authority (consistent with
-  `agents/mia/charter.md` and `agents/mia/profile.md`).
-  [OPEN CORRECTION 2026-08-29, labeled, append-only (review batch 2, F4):
-  the issuer phrase "Kimi-K3-issued work order" in this rule reads as the
-  GOVERNOR-issued work order — the governor role is currently held by Flash
-  (see the governor correction above), under whose authority Kimi-K3's
-  original issuing rule was established. The Kimi-K3 wording is preserved
-  as history.]
-  [OPEN CORRECTION 2026-08-29, labeled, append-only (review batch 2, F5):
-  the governor-transition correction above records the Flash appointment as
-  "INTENT-LEVEL PENDING PRIMARY OWNER CONFIRMATION IN RECORDS" — that
-  qualifier stands: the appointment is not presented as owner-confirmed.
-  This entry changes no status; the pending qualifier remains the operative
-  record until the owner confirms in records.]
+  Broken items go to Mia first: characterize, then coordinate or distribute with
+  evidence. She never mutates an engineering lane and never issues repair
+  dispositions; repairs execute only under a **governor-issued work order**.
+  **Distribution and assignments execute only under a governor-issued work
+  order** — this rule grants Mia coordination and triage, NOT independent
+  self-dispatch authority (consistent with `agents/mia/charter.md` and
+  `agents/mia/profile.md`). History: the rule was written when Kimi-K3 held the
+  governor role and originally permitted "repair in-lane"; both are superseded
+  and preserved in Git and KDD-0012.
 
 ## Documentation governance and knowledge stewardship
 
@@ -532,15 +412,19 @@ identity and role; `servers/system-mapping.md` owns system placement.
 Both documents must stay reconciled — changes to one require a labeled
 correction in the other.
 
-## Governor rename (labeled correction, 2026-08-30)
+## Governor role
 
-[OPEN CORRECTION 2026-08-30, labeled, append-only — GOVERNOR PERSONA RENAMED
-FROM FLASH TO JAMES: the governor role is now referred to as **James**
-(owner decision 2026-08-30), superseding the "Flash" persona name for the
-governor role. The governor still runs on **DeepSeek V4 Flash** via OmniRoute
-(model lane unchanged — the model name is a factual third-party id, not the
-persona). All historical references to "Flash" as the governor persona in the
-correction blocks above are preserved as history and read as the governor
-role — currently James. Kimi-K3 references remain preserved as earlier
-governor-role history. Authority: owner decision 2026-08-30; recorded
-append-only; no governance scope change.]
+The governor role is held by **James**, running on **DeepSeek V4 Flash** via
+OmniRoute (KDD-0013 Amendment 11, owner decision 2026-08-30 — the lane is
+pinned). The governor governs: goals, gates, acceptance, and owner escalation.
+It sits above all four agent families and belongs to none of them.
+
+History, preserved in Git and in `governace/decisions/KDD-0013-agent-model-lanes.md`
+(append-only): the role passed from **Kimi-K3** to **Flash** (owner appointment
+2026-08-29, recorded at the time as intent-level pending owner confirmation in
+records), and the persona was renamed **Flash → James** on 2026-08-30. The
+pending qualifier is satisfied by KDD-0013 Amendment 11, an owner decision of
+record that names James as Governor with a pinned lane. "DeepSeek V4 Flash" is a
+third-party model id, not the persona name.
+
+Flattened 2026-08-30 per audit item F2/A1.
