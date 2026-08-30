@@ -78,3 +78,7 @@ Agents are currently instructed per session by the coordinator. When the project
 to executable sub-agents, their definition files will live in `.kimi-code/agents/`
 (Kimi Code's scanned location) and link back to these charters. The charter remains
 the authority on what the agent owns.
+
+[2026-08-30: the `.kimi-code/agents/` placeholder directory was removed as
+non-operational. Re-add it when the phase-transition KDD lands; see
+`knowledge/assessments/2026-08-27-second-brain-feature-review.md`.]

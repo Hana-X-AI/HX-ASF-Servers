@@ -33,4 +33,7 @@ current evidence with a date.
 
 Operational now: `goals/`, `knowledge/`, `agents/`, `scripts/`, `servers/`,
 `pilots/`.
-Future placeholders: `tests/`, `.kimi-code/agents/`.
+Future placeholders: `tests/`.
+[2026-08-30: the `.kimi-code/agents/` placeholder was removed — executable
+sub-agent definitions will be re-added here when the phase-transition KDD lands
+(see `agents/README.md`).]
