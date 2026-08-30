@@ -13,8 +13,9 @@ ROOT="/home/hxsa/opt/HX-ASF-Servers"
 LOG="$ROOT/governace/testing/test-log.md"
 
 # Relevant when a test/evidence artifact or the test log itself changed.
+# *test* covers */governace/testing/* and */tests/* (SC2221/SC2222-clean).
 case "$path" in
-  *test*|*evidence*|*/governace/testing/*|*/tests/*) ;;
+  *test*|*evidence*) ;;
   *) exit 0 ;;
 esac
 

@@ -73,11 +73,11 @@ grep -q "$AGENT_NAME" "$REPO_ROOT/AGENTS.md" 2>/dev/null || MISSING="$MISSING AG
 # Check system-mapping
 grep -q "$AGENT_NAME" "$REPO_ROOT/servers/system-mapping.md" 2>/dev/null || MISSING="$MISSING system-mapping"
 
-# Check KDD exists
-ls "$REPO_ROOT/governace/decisions/"KDD-*"$AGENT_NAME"*.md 2>/dev/null | head -1 >/dev/null 2>&1 || MISSING="$MISSING KDD"
+# Check KDD exists (compgen glob test — no ls; SC2012-clean)
+compgen -G "$REPO_ROOT/governace/decisions/KDD-*${AGENT_NAME}*.md" >/dev/null 2>&1 || MISSING="$MISSING KDD"
 
-# Check catalog records
-ls "$REPO_ROOT/knowledge/catalog/documents/"DOC-agent-"$AGENT_NAME"*.yaml 2>/dev/null | head -1 >/dev/null 2>&1 || MISSING="$MISSING catalog(DOC-agent)"
+# Check catalog records (compgen glob test — no ls; SC2012/SC2140-clean)
+compgen -G "$REPO_ROOT/knowledge/catalog/documents/DOC-agent-${AGENT_NAME}*.yaml" >/dev/null 2>&1 || MISSING="$MISSING catalog(DOC-agent)"
 
 if [ -n "$MISSING" ]; then
   echo "WARN: agent-creation-check: $AGENT_NAME may be missing:$MISSING" >&2
