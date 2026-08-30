@@ -18,6 +18,13 @@ reviews:
   path_filters:
     - "!**/*.html"
     - "!**/__pycache__/**"
+    # Generated mirrors of .agents/skills/ (KDD-0020). Byte-identical copies —
+    # reviewing them triples the payload and can only ever restate a finding
+    # already raised on the canonical file.
+    - "!.kimi-code/skills/**"
+    - "!.claude/skills/**"
+    # Vendored third-party project (MIT), not HX-authored code.
+    - "!**/skills/archify/**"
 
   path_instructions:
     # --- Append-only record classes (A3 artifact-class policy) ---
