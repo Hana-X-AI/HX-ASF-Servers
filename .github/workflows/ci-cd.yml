@@ -141,6 +141,10 @@ jobs:
         id: review
         env:
           CODERABBIT_API_KEY: ${{ secrets.CODERABBIT_API_KEY || secrets.CODERABBIT_API_KEY_2 }}
+          # Region for INLINE api-key auth (the CLI distinguishes this from a
+          # stored session). Account region verified US, 2026-08-30. Override
+          # with a repo variable if the org moves region.
+          CODERABBIT_REGION: ${{ vars.CODERABBIT_REGION || 'us' }}
           BEFORE: ${{ github.event.before }}
           BRANCH: ${{ github.ref_name }}
         run: |
@@ -157,10 +161,10 @@ jobs:
             BASE="$BEFORE"
             if [ -z "$BASE" ] || [ "$BASE" = "0000000000000000000000000000000000000000" ]; then BASE="HEAD~1"; fi
             echo "main push — reviewing pushed range $BASE..HEAD"
-            CMD=(coderabbit review --agent --light --committed --base-commit "$BASE" --api-key "$CODERABBIT_API_KEY")
+            CMD=(coderabbit review --agent --light --committed --base-commit "$BASE" --api-key "$CODERABBIT_API_KEY" --region "${CODERABBIT_REGION:-us}")
           else
             git fetch origin main --depth=1 >/dev/null 2>&1 || true
-            CMD=(coderabbit review --agent --light --base origin/main --api-key "$CODERABBIT_API_KEY")
+            CMD=(coderabbit review --agent --light --base origin/main --api-key "$CODERABBIT_API_KEY" --region "${CODERABBIT_REGION:-us}")
           fi
           # The org's included-review quota is shared between CI and local CLI
           # runs. A recoverable rate_limit gets bounded retries at the
