@@ -40,7 +40,7 @@ document:
     validated_at: "2026-08-29T11:50:00Z"
     freshness: "current"
     review_due: "on owner sign-off of charter change"
-  sha256: "be5244e76ae79de09171cdab2136aeb35ec918a437bbb12528c6ca51962e7b24"
+  sha256: "f1882e0984feff9c52c7b5070a3d4ec41314af0c50a32eea6678a7d5a9873603"
   hash_history:
     - sha256: "7f6188bac81c09ec0a60ee4cf54880dbea2ac91280779e9cfe9a0e63bc6aadf8"
       timestamp: "2026-08-25T04:50:00Z"
@@ -48,4 +48,7 @@ document:
     - sha256: "be5244e76ae79de09171cdab2136aeb35ec918a437bbb12528c6ca51962e7b24"
       timestamp: "2026-08-29T11:50:00Z"
       reason: "re-mint after 2026-08-29 authority + provenance corrections (review batch 2 F1/F2)"
+    - sha256: "f1882e0984feff9c52c7b5070a3d4ec41314af0c50a32eea6678a7d5a9873603"
+      timestamp: "2026-08-30T12:15:05Z"
+      reason: "2026-08-30 remediation register batch: sha256 refresh"
   canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/rick/charter.md"

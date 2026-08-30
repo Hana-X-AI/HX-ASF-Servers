@@ -27,7 +27,7 @@
 | Governing agent | The governor role (currently Flash; historically kimi-k3) — [AMENDMENT 2026-08-30, labeled: persona renamed Flash → James; reads "currently James" effective 2026-08-30. Original wording preserved.] |
 | Subject | Goal-based commissioning of operational agents |
 | Architectural plane | Control plane |
-| Durable work state | `governace/goals/` goal files (designated system of record, KDD-0002); GitHub Projects deferred as an optional later layer |
+| Durable work state | `governace/goals/` goal files (designated system of record, KDD-0002); GitHub Projects deferred as an optional later layer. [AMENDMENT 2026-08-30, labeled, open, append-only — GOALS DIRECTORY MIGRATION: the durable work state row previously read "`goals/` goal files (designated system of record, KDD-0002); GitHub Projects deferred as an optional later layer". As part of the governance alignment batch the durable goal tree moved `goals/` -> `governace/goals/` (KDD-0002 Amendment 1); all affected references, including this Durable work state entry and the goal-ID mapping notes below, now resolve under `governace/goals/`. Existing goal records created under the former `goals/` root map to the same file name under `governace/goals/`. The former path is preserved here as history; `governace/goals/` is the effective path.] |
 | Execution model | Fresh, bounded operational-agent sessions |
 | Validation model | Independent, evidence-based quality gates (mandatory verification-checklist) |
 | Prepared | 2026-08-24 (guidance); 2026-08-29 (governor-role attribution) |

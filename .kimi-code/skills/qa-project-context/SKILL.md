@@ -204,16 +204,30 @@ great quality."
 **Risk Areas.** Use the table — columns Area, Impact, Likelihood, Score, Notes — with
 every entry carrying explicit **Impact** and **Likelihood** ratings (each on a numeric
 1–5 scale) and a numeric **Score** calculated as **Score = Impact × Likelihood**. The
-score drives the risk-based tier, so test-strategy can reproduce the ranking:
+**Score is reporting data, not the classifier** — the tier comes from the impact ×
+likelihood **combination**, so test-strategy can reproduce the ranking deterministically:
 
-- **Critical (test first):** high impact + high likelihood (e.g. Impact 5 × Likelihood
-  5 = 25; payment flow with known edge cases).
-- **Important:** high impact + low likelihood (e.g. Impact 5 × Likelihood 2 = 10; auth —
-  catastrophic if broken, rarely changes).
-- **Monitor:** low impact + high likelihood (e.g. Impact 2 × Likelihood 5 = 10;
-  notification formatting — breaks often, low severity).
-- **Backlog:** low impact + low likelihood (e.g. Impact 2 × Likelihood 2 = 4; admin
-  settings — stable, rarely used).
+- **Critical (test first):** High impact (4–5) AND high likelihood (4–5) — e.g.
+  Impact 5 × Likelihood 5 = 25; payment flow with known edge cases.
+- **Important:** High impact (4–5) AND low likelihood (1–3) — e.g. Impact 5 ×
+  Likelihood 2 = 10; auth — catastrophic if broken, rarely changes. Never Critical.
+- **Monitor:** Low impact (1–3) AND high likelihood (4–5) — e.g. Impact 2 ×
+  Likelihood 5 = 10; notification formatting — breaks often, low severity. Never
+  Important.
+- **Backlog:** Low impact (1–3) AND low likelihood (1–3) — e.g. Impact 2 ×
+  Likelihood 2 = 4; admin settings — stable, rarely used.
+
+**Complete combination-to-tier mapping (authoritative, shared with `test-strategy`):**
+classify by the Impact band (High = 4–5, Low = 1–3) and the Likelihood band
+(High = 4–5, Low = 1–3), never by the raw Score alone:
+
+| Likelihood \ Impact | Impact High (4–5) | Impact Low (1–3) |
+| --- | --- | --- |
+| Likelihood High (4–5) | **Critical** | **Monitor** |
+| Likelihood Low (1–3) | **Important** | **Backlog** |
+
+This mapping is deterministic and identical across QA skills: any feature with the same
+Impact and Likelihood ratings lands in the same tier everywhere.
 
 At least 3 entries, each with Impact, Likelihood, and Score populated, never vague
 ("everything breaks").
@@ -288,16 +302,14 @@ F="governace/qa/$QA_DIR/qa-project-context.md"
 # the active-record check.
 ACTIVE_RECORD="$(sed '/^> \*\*\[\(HISTORICAL\|OPEN CORRECTION\|LABELED\)/,$d' "$F")"
 
-# Placeholder tokens are multi-word phrases (contain a space), e.g. `[user flow]`.
-# The valid [pytest] configuration header is single-word and is explicitly
-# excluded so it can never fail the check. grep -oE extracts each candidate,
-# grep -v drops the exact [pytest] token, and the final grep reports whether any
-# genuine placeholder remains: 0 = placeholders found (incomplete), 1 = none
-# (complete). Capture the last exit status so a read/scan error can never be
-# misreported as "context complete".
+# Placeholder tokens are multi-word phrases — the regex requires at least one
+# space inside the brackets (e.g. `[user flow]`), so single-word configuration
+# identifiers such as `[pytest]` are never flagged. grep -oE extracts each
+# candidate and the final grep reports whether any genuine placeholder remains:
+# 0 = placeholders found (incomplete), 1 = none (complete). Capture the last
+# exit status so a read/scan error can never be misreported as "context complete".
 printf '%s\n' "$ACTIVE_RECORD" \
-  | grep -oE '\[[a-z][a-z -]*\]' \
-  | grep -v '^\[pytest\]$' \
+  | grep -oE '\[[a-z][a-z -]* [a-z -]*\]' \
   | grep -q .
 gs=$?
 case "$gs" in
@@ -315,10 +327,14 @@ contains the valid `[pytest]` header and no genuine placeholder; the check must 
 F="governace/qa/$QA_DIR/qa-project-context.md"
 printf '## Test Stack\n- pytest is configured via `[pytest]` in pyproject.toml\n' > "$F"
 printf '%s\n' "$(sed '/^> \*\*\[\(HISTORICAL\|OPEN CORRECTION\|LABELED\)/,$d' "$F")" \
-  | grep -oE '\[[a-z][a-z -]*\]' \
-  | grep -v '^\[pytest\]$' \
-  | grep -q . && { echo "REGRESSION FAIL: [pytest] flagged as placeholder"; exit 1; } \
-  || echo "REGRESSION PASS: [pytest] is valid content"
+  | grep -oE '\[[a-z][a-z -]* [a-z -]*\]' \
+  | grep -q .
+gs=$?
+case "$gs" in
+  0) echo "REGRESSION FAIL: [pytest] flagged as placeholder"; exit 1 ;;
+  1) echo "REGRESSION PASS: [pytest] is valid content" ;;
+  *) echo "REGRESSION ERROR: placeholder scan failed (exit $gs)"; exit 1 ;;
+esac
 ```
 
 Exit 0 with the message means the file exists, is readable, and the ACTIVE record

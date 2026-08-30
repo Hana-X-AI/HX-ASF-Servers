@@ -23,7 +23,7 @@ session 2026-08-30).
 | Environment | N/A — not host-bound (horizontal test-authoring lane; no remote host operations) |
 | Default mode | Direct bounded authoring; on-demand + scheduled; concurrency 1; max session PT1H |
 | Certification authority | None — work verified by others (Gordon executes; James accepts) |
-| Model lane | Qwen3.8 Flash (`qwen/qwen3.8-flash`, provider Alibaba Cloud International, via OmniRoute hxs-8) — QA family default per KDD-0013 Amendment 11 (owner decision 2026-08-30); same lane default as Gordon (Gordon override recorded 2026-08-29); identity = exact served-model id + session-start probe, fail closed; stop-and-escalate on backend failure, no substitution |
+| Model lane | Qwen3.8 Flash (`openrouter/qwen/qwen3.8-flash`, provider Alibaba Cloud International, via OmniRoute hxs-8) — QA family default per KDD-0013 Amendment 11 (owner decision 2026-08-30); same lane default as Gordon (Gordon override recorded 2026-08-29); identity = exact served-model id + session-start probe, fail closed; stop-and-escalate on backend failure, no substitution |
 | Verifier | Deterministic toolchain first (pytest/zod runs by Gordon in the test env); a different-host verifier when required; never self-verifies |
 | Activation status | Registered — activation-gated (implemented testing-role usage + credential entries + owner word) |
 

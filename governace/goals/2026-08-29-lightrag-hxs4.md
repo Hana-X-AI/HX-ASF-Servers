@@ -41,7 +41,13 @@ entity extraction, and knowledge graph queries against ingested documents.
     the selected binding per owner decision 2026-08-29; the earlier "via
     OmniRoute (hxs-8)" requirement is superseded for the LLM binding (preserved
     as history)
-  - Embedding binding via Ollama on hxs-4 (Chat-X) or OmniRoute
+  - Embedding binding via Ollama on hxs-4 — model **bge-m3**, dimension **1024**
+    (owner-selected embedding config; no OmniRoute alternative). [LABELED
+    CORRECTION 2026-08-30, append-only: this entry previously read "Embedding
+    binding via Ollama on hxs-4 (Chat-X) or OmniRoute" — OmniRoute is NOT an
+    active embedding option. The active embedding path is Ollama on hxs-4 with
+    bge-m3/1024 only, consistent with SC-06; the OmniRoute wording is preserved
+    here as history.]
   - Credentials in `.local.env`
   - systemd services for LightRAG server and MCP server
   - Native deployment (no Docker, owner rule 2026-08-27)
@@ -155,7 +161,7 @@ tools, higher maturity, npm install. The daniel-lightrag-mcp is the fallback.
 | SC-10 | Document lifecycle | Insert test document, query it, delete it | Query returns relevant results; clean state after delete | API call sequence | governor |
 | SC-11 | Credentials stored | All LightRAG credentials in `.local.env`; verify the required variable NAMES exist without printing their values | QDRANT_URL, QDRANT_API_KEY, LIGHTRAG_API_KEY, LLM_BINDING (plus LLM_BINDING_HOST/LLM_MODEL) vars present; any missing entry is a validation failure | command: `set -a; . ./.local.env; set +a; for v in QDRANT_URL QDRANT_API_KEY LIGHTRAG_API_KEY LLM_BINDING LLM_BINDING_HOST LLM_MODEL; do [[ -v "$v" ]] \|\| { echo "MISSING: $v"; exit 1; }; done; echo "SC-11 OK: required vars present (values not printed)"` — run non-interactively with stdin closed so it cannot block | governor |
 | SC-12 | systemd units persist | `systemctl is-enabled lightrag lightrag-mcp` | both enabled | systemctl output | governor |
-| SC-13 | Repo validation | `python3 scripts/validate.py` | 4/4 PASS | validate output | governor |
+| SC-13 | Repo validation | `python3 scripts/validate.py` | 5/5 PASS (governance-path check SY-2 included) | validate output | governor |
 | SC-14 | LightRAG test suite | Run LightRAG core tests: `bash -o pipefail -c 'cd /opt/tkv-local/LightRAG-main && python3 -m pytest tests/ -x --timeout=60 2>&1 \| tail -5'` | Core tests pass (425 test files) | pytest output | governor |
 | SC-15 | lightragmcp test suite | Run MCP server tests: `bash -o pipefail -c 'cd /opt/tkv-local/lightragmcp-main && python3 -m pytest tests/ -x 2>&1 \| tail -5'` | MCP server tests pass (1 test file: test_server.py) | pytest output | governor |
 | SC-16 | bge-m3 model available on hxs-4 | `curl http://192.168.50.203:11434/api/tags \| grep bge-m3` | bge-m3 model listed (installed by john's lane) | curl output | governor |

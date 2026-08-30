@@ -40,7 +40,7 @@ document:
     validated_at: "2026-08-30T09:30:00Z"
     freshness: "current"
     review_due: "on owner amendment"
-  sha256: "e39ac9ffdacdb1ecd51fd479f21ca5c303c7e4690372fb2ecb349a792f650a4f"
+  sha256: "835b44ac898ac269f6ffe3783716b00c356f08f8a90bf860ea91b22db93ef32d"
   hash_history:
     - sha256: "92ab4f945caa72b797d4b0c45dfd593df81a5eb71266ba790fee31057bef626a"
       timestamp: "2026-08-30T08:11:53Z"
@@ -52,4 +52,7 @@ document:
       timestamp: "2026-08-30T09:45:00Z"
       reason: "2026-08-30 review batch: bailey create-agent removed from role-specific skills (global-inventory inheritance)"
 
+    - sha256: "835b44ac898ac269f6ffe3783716b00c356f08f8a90bf860ea91b22db93ef32d"
+      timestamp: "2026-08-30T12:15:05Z"
+      reason: "2026-08-30 remediation register batch: sha256 refresh"
   canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/bailey/profile.md"

@@ -11,10 +11,10 @@ labeled, dated correction line preserving the prior status verbatim.
 | --- | --- |
 | Date | <YYYY-MM-DD> |
 | Host | <host (IP)> |
-| Change type | <model replacement | deployment | configuration | ...> |
+| Change type | <model replacement / deployment / configuration / ...> |
 | Agent lane | <owner lane> |
 | Status | **PROPOSED** — NOT EXECUTED (until owner approval + execution evidence) |
-| Governing goal | <governace/goals/<file>.md — status: draft | approved | in-progress | blocked | done | abandoned> |
+| Governing goal | <governace/goals/<file>.md — status: draft / approved / in-progress / blocked / done / abandoned> |
 | Governing plan | <servers/<host>/<plan>.md — status: approved/not-approved> |
 | Execution evidence | <artifact path(s): ollama list, digests, state-log row, validate output> |
 

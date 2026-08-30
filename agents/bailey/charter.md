@@ -29,12 +29,18 @@ configuration, or accept work.
 
 ## Does not own
 
-- Test environment setup (Erwin installs the component — Erwin is the
-  roster-registered install/config lane, `agents/README.md` row 46, Platform
-  Systems; registered even though his LangGraph runtime is deferred).
+- Test environment setup — Erwin is the intended install/config lane
+  (`agents/README.md` row 46, Platform Systems) but is **pending registration /
+  deferred** (his LangGraph runtime is deferred), so setup duties are NOT active
+  until his registration completes. [LABELED CORRECTION 2026-08-30, append-only:
+  the prior wording called Erwin "roster-registered"; per `agents/README.md` he is
+  listed under "New agents pending registration," not the current roster. The
+  corrected position: setup duties are assigned to Erwin's lane but are gated on
+  his registration.]
 - Test execution and results (Gordon sets up env + executes; results land in
   `governace/testing/test-log.md`).
-- Configuration fixes and repairs (Erwin — same roster-registered lane).
+- Configuration fixes and repairs — Erwin's lane (same pending-registration
+  gate as setup above; not active until he is registered).
 - Acceptance of her own work (the governor, James — verification-checklist).
 - Orchestration and distribution (Mia); priorities and risk (Agent Zero).
 

@@ -78,7 +78,7 @@ decommissioned.
 
 | ID | Property | Measurement / procedure | Expected result | Evidence | Verifier |
 | --- | --- | --- | --- | --- | --- |
-| SC-01 | gpt-oss-20b pulled | `ollama list \| grep -E '(^| )gpt-oss:20b( |$)'` | Model listed with the exact canonical identifier `gpt-oss:20b` (any other gpt-oss model name is not a pass) | command output | governor |
+| SC-01 | gpt-oss-20b pulled | `ollama list \| grep -E '(^\| )gpt-oss:20b( \|$)'` | Model listed with the exact canonical identifier `gpt-oss:20b` (any other gpt-oss model name is not a pass) | command output | governor |
 | SC-02 | OAI-X Modelfile created | `ollama show hx-oai-x-64k` | Model config visible | command output | governor |
 | SC-03 | OAI-X serves via Ollama | `curl http://192.168.50.202:11434/api/generate -d '{"model":"hx-oai-x-64k","prompt":"Say hello"}'` | Response generated | curl output | governor |
 | SC-04 | OAI-X accessible via OmniRoute | `curl http://192.168.50.207:20128/v1/models -H "Authorization: Bearer <key>" \| grep oai-x` | Model in OmniRoute catalog | curl output | governor |

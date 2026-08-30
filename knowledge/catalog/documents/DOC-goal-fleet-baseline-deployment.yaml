@@ -45,10 +45,10 @@ document:
       target: "DOC-goal-omniroute-layer1-secure-core"
       note: "owner sequencing (OmniRoute pilot state log row 43, 2026-08-27T19:24Z): this goal FIRST — the L1-M3 gate (parity ×4 + the proven external route, restart ×2, cold reboot, backup/restore, rollback, configuration.md, owner ACCEPT) is sequenced AFTER baseline completion, superseding the coast-clear-only hold"
   validation:
-    validated_at: "2026-08-27T20:42:00Z"
+    validated_at: "2026-08-30T12:15:57Z"
     freshness: "current"
     review_due: "at goal completion — acceptance item 4 closes when this wave's receipt is cited in the fleet pilot state log (profile §7); then the L1-M3 closure unblocks per the owner sequencing"
-  sha256: "cbb6fa00aea8ee504e5f20ce8c3b125ecc63644e39e51bdc93f3a48af13b1317"
+  sha256: "9611a5dd057855506ad510d4afc09341735bafc6574f51d09bccd2befbaa00c1"
   canonical_location: "/home/hxsa/opt/HX-ASF-Servers/governace/goals/2026-08-27-fleet-baseline-deployment.md"
 notes:
   status_mapping: "The goal file carries no status line of the hxs-2/hxs-3 class; the governor's dispatch marks it ACTIVE: acceptance items 1-3 are MET per the wave evidence (item 1 — 12/12 in-scope hosts carry verdicts, 10 PASS + 2 REPORT with declared closing directions + 0 FAIL; item 2 — post-apply re-checks green on all 8 mutated hosts; item 3 — TKV pre-work records refreshed ×7 + the evidence doc delivered; fleet pilot state log rows 2-3), and item 4 is THIS catalog wave (zero secret values — rick's literal sweep 0 matches, evidence §8 seq 32; the catalog handoff closes with validate.py 4/4). The record flips to historical at goal completion per the terminal-closed precedent (DOC-goal-hxs3-muse-glimmer-tooling)."

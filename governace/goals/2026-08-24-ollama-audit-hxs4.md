@@ -37,8 +37,15 @@ PILOT-001 (hxs-5, FAIL — invalid target; lessons in
 
 ## Success conditions and evidence
 
-Same SC-01..SC-09 contract as `governace/goals/2026-08-24-ollama-audit-hxs5.md`, evaluated by
+Same SC-01..SC-09 contract as `goals/2026-08-24-ollama-audit-hxs5.md`, evaluated by
 the Kimi-K3 gate, with two additions:
+[OPEN CORRECTION 2026-08-30, labeled, append-only — GOALS DIRECTORY MOVE: the goal
+file reference above was originally `goals/2026-08-24-ollama-audit-hxs5.md`; as part
+of the governance alignment batch the goal directory was relocated to
+`governace/goals/`, so the corrected path is
+`governace/goals/2026-08-24-ollama-audit-hxs5.md`. The former path above is preserved
+as history; the corrected path is active. Authority: governance alignment batch,
+2026-08-30.]
 
 | ID | Property | Measurement / procedure | Expected result | Evidence | Verifier |
 | --- | --- | --- | --- | --- | --- |

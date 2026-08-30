@@ -49,6 +49,13 @@ under an owner-authorized exception.
 ## Inputs
 
 - Owner intent, `governace/goals/`, `AGENTS.md`, KDDs, `servers/SERVER-REGISTRY.md`.
+  [LABELED CORRECTION 2026-08-30, append-only — GOALS DIRECTORY MOVE: this Inputs
+  entry previously read "Owner intent, `goals/`, `AGENTS.md`, KDDs,
+  `servers/SERVER-REGISTRY.md`." As part of the governance alignment batch the
+  durable goal tree moved `goals/` -> `governace/goals/` (KDD-0002 Amendment 1);
+  the former path is preserved here as history and `governace/goals/` is the
+  effective path for existing goal records (including those created under the
+  former `goals/` root).]
 - Standing directive: survey `/opt/tkv-local` with the be-great skill at the
   start of every assignment.
 

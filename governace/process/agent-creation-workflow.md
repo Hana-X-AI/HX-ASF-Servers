@@ -18,7 +18,7 @@ flowchart TD
     N --> O[Add catalog records to index.yaml]
     O --> P[Verify model lane via OmniRoute]
     P --> Q[Run render.py]
-    Q --> R[Run validate.py — 5/5 PASS]
+    Q --> R[Run validate.py — 5/5 PASS (SY-2)]
     R --> S{All PASS?}
     S -->|Yes| T[Commit]
     S -->|No| U[Fix missing items]
@@ -27,9 +27,12 @@ flowchart TD
     V --> W[Done]
 ```
 
-Revision note (2026-08-30, A3 artifact-class policy): the gate reads 5/5 PASS
-(governance-path check SY-2 added to the suite). Prior 4/4 wording is retained in
-Git history.
+[AMENDMENT 2026-08-30, labeled, append-only — VALIDATION GATE UPDATED: the active
+gate in node R now reads "Run validate.py — 5/5 PASS (SY-2)" — the validator runs
+5 checks including the governance-path check SY-2, effective 2026-08-30. The prior
+wording is preserved verbatim here as history: "Run validate.py — 4/4 PASS". The
+4/4 wording lives only in this labeled append-only amendment; 5/5 PASS (with SY-2
+included) is the current rule. This correction remains open.]
 
 ## Deliverables created
 

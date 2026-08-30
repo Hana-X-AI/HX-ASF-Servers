@@ -28,7 +28,7 @@ document:
     validated_at: "2026-08-29T12:30:00Z"
     freshness: "current"
     review_due: "2026-09-28"
-  sha256: "e9e0de9bc701a8a20350d144956c606afd5534fa94529c55ef3b8f47358b4e2d"
+  sha256: "2aa7d950b92efd57d36bbc7e04b44b14542493546734bcb7ec99cc9cd06f4d57"
   hash_history:
     - sha256: "65ea14235b60f527832e7ee60ced5baff709de96807616e8eb7ec03f78bc0fc4"
       timestamp: "2026-08-29T12:30:00Z"
@@ -39,4 +39,7 @@ document:
     - sha256: "e9e0de9bc701a8a20350d144956c606afd5534fa94529c55ef3b8f47358b4e2d"
       timestamp: "2026-08-30T11:21:44Z"
       reason: "2026-08-30 review batch: sha256 refresh"
+    - sha256: "2aa7d950b92efd57d36bbc7e04b44b14542493546734bcb7ec99cc9cd06f4d57"
+      timestamp: "2026-08-30T12:15:05Z"
+      reason: "2026-08-30 remediation register batch: sha256 refresh"
   canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/rob/profile.md"

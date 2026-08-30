@@ -52,6 +52,12 @@ reproducible, evidence-backed, with administrative access and rollback preserved
   [CORRECTION 2026-08-29: authority references updated from Kimi-K3 to the
   governor per AGENTS.md transition. Original wording preserved in git history
   and AGENTS.md correction blocks.]
+  [LABELED CORRECTION 2026-08-30, append-only — GOALS DIRECTORY MOVE: this
+  governance-records list previously read "the governor work orders, `goals/`,
+  `servers/SERVER-REGISTRY.md`, host baselines, ..." As part of the governance
+  alignment batch the durable goal tree moved `goals/` -> `governace/goals/`
+  (KDD-0002 Amendment 1); the former `goals/` path is preserved here as history
+  and `governace/goals/` is the effective path for existing goal records.]
 - Standing directives: survey `/opt/tkv-local` with the be-great skill at
   assignment start; check the `agents/` roster before treating any referenced
   persona as a current teammate.

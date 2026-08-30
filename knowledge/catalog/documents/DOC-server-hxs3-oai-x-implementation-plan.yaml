@@ -1,0 +1,47 @@
+document:
+  id: "DOC-server-hxs3-oai-x-implementation-plan"
+  title: "servers/hxs-3/2026-08-29-oai-x-implementation-plan.md — hxs-3 OAI-X (gpt-oss:20b) implementation plan (Meta-X replacement)"
+  type: "plan"
+  declared_purpose: "Server implementation plan for replacing Meta-X (muse-glimmer:30b / hx-muse-glimmer-64k) with OAI-X (gpt-oss:20b) on hxs-3 via native Ollama. Covers registry availability check, digest/size recording, deterministic 64K-context feasibility probe (num_ctx 65536, stream false, prompt_eval_count >= TARGET_CTX), OIDC-free local lane, preload-pin ordering before any ollama rm, pre-deletion manifest+blob digest capture, and full rollback path. Executes the goal 2026-08-29-oai-x-replace-meta-x under the KDD-0013 lane model; Meta-X retained until all replacement gates pass (owner word required)."
+  source:
+    author: "governor (James)"
+    provided_by: "governor work order"
+    origin: "/home/hxsa/opt/HX-ASF-Servers/servers/hxs-3/2026-08-29-oai-x-implementation-plan.md"
+    section: "§whole-document"
+    ingestion_date: "2026-08-30T12:30:00Z"
+  owner: "Agent Zero (ratification); governor (James) author"
+  applies_to:
+    hosts: [hxs-3]
+    fqdns: []
+    services: [ollama, ollama-preload]
+    agents: [john, rick, trinity]
+    repositories: [HX-ASF-Servers]
+    environments: [fleet]
+  version: "2026-08-29 (initial); 2026-08-30 (64K probe executable + pre-deletion digest capture amendments)"
+  status: "active"
+  authority_level: "ratified-governance"
+  supersedes: []
+  superseded_by: []
+  security:
+    classification: "internal"
+    access_restrictions: "none beyond repository access"
+    contains_secret_values: false
+  relations:
+    - predicate: "references"
+      target: "governace/goals/2026-08-29-oai-x-replace-meta-x.md"
+      note: "governing goal (SC-01..SC-09) — raw-path target, goal not yet cataloged (uncataloged per CAT-08, explanatory note)"
+    - predicate: "references"
+      target: "DOC-kdd-0007-hxs3-muse-glimmer-tooling-adoption"
+      note: "superseded adoption context (Meta-X)"
+    - predicate: "references"
+      target: "DOC-system-mapping"
+      note: "S03 Meta-X -> OAI-X mapping"
+    - predicate: "references"
+      target: "DOC-server-registry"
+      note: "hxs-3 host row"
+  validation:
+    validated_at: "2026-08-30T12:45:00Z"
+    freshness: "current"
+    review_due: "on plan revision or goal status change"
+  sha256: "47eacbdac509a5cad6fd19cc09979a5abf4757f15b8d80264ae1b2d0b9bbd583"
+  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/servers/hxs-3/2026-08-29-oai-x-implementation-plan.md"

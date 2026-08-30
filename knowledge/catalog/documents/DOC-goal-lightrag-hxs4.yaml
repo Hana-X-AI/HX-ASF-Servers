@@ -40,7 +40,7 @@ document:
     validated_at: "2026-08-29T14:00:00Z"
     freshness: "current"
     review_due: "on owner approval"
-  sha256: "d96c7789c5c12f151507fc9005e7e27b0afc6d1c3e760ca42b75d5a4538b3c1a"
+  sha256: "39a20572d860878b4a934303b25d90b54623ab71f831895919c62b1486ede2fd"
   hash_history:
     - sha256: "3d076b4c0e5e91008e9a2f6846d0ca222f08bb8ee5e3346aecc65a5cdf34631e"
       timestamp: "2026-08-29T14:00:00Z"
@@ -48,4 +48,7 @@ document:
     - sha256: "d96c7789c5c12f151507fc9005e7e27b0afc6d1c3e760ca42b75d5a4538b3c1a"
       timestamp: "2026-08-30T11:21:44Z"
       reason: "2026-08-30 review batch: sha256 refresh"
+    - sha256: "39a20572d860878b4a934303b25d90b54623ab71f831895919c62b1486ede2fd"
+      timestamp: "2026-08-30T12:15:05Z"
+      reason: "2026-08-30 remediation register batch: sha256 refresh"
   canonical_location: "/home/hxsa/opt/HX-ASF-Servers/governace/goals/2026-08-29-lightrag-hxs4.md"

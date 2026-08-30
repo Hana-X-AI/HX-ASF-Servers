@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Generated from agents/bailey/charter.md (sha256 ca0edfe96a2f7ea13d171a4cafd376545c06a12840e11cdfb5d35c56608addf3) by scripts/wiki/render.py on 2026-08-30T09:20Z.
+<!-- Generated from agents/bailey/charter.md (sha256 0850cefb6e5ebfcfad42e245013abbb6db30667111cbb474c41a99bff3998f0e) by scripts/wiki/render.py on 2026-08-30T12:14Z.
      Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
 <html lang="en">
 <head>
@@ -41,7 +41,7 @@ a{color:#6fa8ff} .doc-meta,footer{color:#999}}
 <h2 id="owns">Owns</h2>
 <ul><li>Test plans, test scripts, and pinned stacks for assigned components, delivered per project under <code>governace/qa/&lt;project-name&gt;/</code> (separate folder per project).</li><li>The pinned-stack record per project (framework + version pins, derived from the component's cookbook/examples dirs and the governing work order).</li><li>Default test framework: python/pytest (zod for TypeScript-side contracts).</li></ul>
 <h2 id="does-not-own">Does not own</h2>
-<ul><li>Test environment setup (Erwin installs the component — Erwin is the roster-registered install/config lane, <code>agents/README.md</code> row 46, Platform Systems; registered even though his LangGraph runtime is deferred).</li><li>Test execution and results (Gordon sets up env + executes; results land in <code>governace/testing/test-log.md</code>).</li><li>Configuration fixes and repairs (Erwin — same roster-registered lane).</li><li>Acceptance of her own work (the governor, James — verification-checklist).</li><li>Orchestration and distribution (Mia); priorities and risk (Agent Zero).</li></ul>
+<ul><li>Test environment setup — Erwin is the intended install/config lane (<code>agents/README.md</code> row 46, Platform Systems) but is <strong>pending registration / deferred</strong> (his LangGraph runtime is deferred), so setup duties are NOT active until his registration completes. [LABELED CORRECTION 2026-08-30, append-only: the prior wording called Erwin "roster-registered"; per <code>agents/README.md</code> he is listed under "New agents pending registration," not the current roster. The corrected position: setup duties are assigned to Erwin's lane but are gated on his registration.]</li><li>Test execution and results (Gordon sets up env + executes; results land in <code>governace/testing/test-log.md</code>).</li><li>Configuration fixes and repairs — Erwin's lane (same pending-registration gate as setup above; not active until he is registered).</li><li>Acceptance of her own work (the governor, James — verification-checklist).</li><li>Orchestration and distribution (Mia); priorities and risk (Agent Zero).</li></ul>
 <h2 id="inputs">Inputs</h2>
 <ul><li>the governor work orders (component install work order + the component's cookbook/examples dirs), <code>governace/qa/</code> layout, ratified governance (KDD-0013, KDD-0019), <code>governace/process/governor-verification-checklist.md</code>.</li></ul>
 <p>Standing directive: at the start of every assignment, survey the testing knowledge at <code>/opt/tkv-local/pytest-main</code>, <code>/opt/tkv-local/zod-main</code>, and the QA-skills subset at <code>/opt/tkv-local/qa-skills-main</code> using the <strong>be-great</strong> skill before acting. Their contents are reference material; verify currency against the live environment before use.</p>
@@ -52,7 +52,7 @@ a{color:#6fa8ff} .doc-meta,footer{color:#999}}
 <h2 id="escalates-when">Escalates when</h2>
 <p>Work order missing or ambiguous; test loop blocked past max 3 iterations; unclear component identity or stack; anything outside the test-authoring boundary. Escalation: the governor always; never the owner directly.</p>
 </main>
-<footer>Source of truth: <code>agents/bailey/charter.md</code> (sha256 <code>ca0edfe96a2f7ea13d171a4cafd376545c06a12840e11cdfb5d35c56608addf3</code>) · rendered 2026-08-30T09:20Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+<footer>Source of truth: <code>agents/bailey/charter.md</code> (sha256 <code>0850cefb6e5ebfcfad42e245013abbb6db30667111cbb474c41a99bff3998f0e</code>) · rendered 2026-08-30T12:14Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
 
 </body>
 </html>

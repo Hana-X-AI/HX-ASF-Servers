@@ -37,9 +37,12 @@ document:
     validated_at: "2026-08-30T08:11:53Z"
     freshness: "current"
     review_due: "on owner sign-off of charter change"
-  sha256: "53f6410ac606257c9cd86b7e76d78f1c78f0410185fb274f8f8ed4298d0718f1"
+  sha256: "0850cefb6e5ebfcfad42e245013abbb6db30667111cbb474c41a99bff3998f0e"
   hash_history:
     - sha256: "53f6410ac606257c9cd86b7e76d78f1c78f0410185fb274f8f8ed4298d0718f1"
       timestamp: "2026-08-30T08:11:53Z"
       reason: "initial cataloging"
+    - sha256: "0850cefb6e5ebfcfad42e245013abbb6db30667111cbb474c41a99bff3998f0e"
+      timestamp: "2026-08-30T12:15:05Z"
+      reason: "2026-08-30 remediation register batch: sha256 refresh"
   canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/bailey/charter.md"

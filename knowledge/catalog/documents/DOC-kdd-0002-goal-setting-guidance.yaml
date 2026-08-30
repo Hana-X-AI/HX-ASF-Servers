@@ -37,10 +37,10 @@ document:
       target: "/home/hxsa/opt/local-tkv/agent-zero-docs/goals/codex_20260824_1112_kimi-k3_goal-setting-and-agent-invocation-guidance.md"
       note: "source (735 lines, SHA-256 8c7e1397…), unmodified historical input"
   validation:
-    validated_at: "2026-08-25T19:08:00Z"
+    validated_at: "2026-08-30T12:15:57Z"
     freshness: "current"
     review_due: "on owner decision to change work-state system"
-  sha256: "62d52e59c2eedee97b1cd3a4bd472e5b9e61ae1272327aea2cbf38b4d29e809c"
+  sha256: "675e6ad4f5ad93a8e62999bcd29e53c12ce98abcee0db87c9e2685d45a9ede96"
   canonical_location: "/home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0002-goal-setting-guidance-and-durable-state.md"
 notes:
   corrections_batch5: "2026-08-25 corrections batch 5: adopted artifact cataloged as DOC-kimi-k3-goal-setting-guidance; references relation repointed from raw path to the DOC id and the 'NOT cataloged — follow-up' language removed. The separate local-tkv source relation (external historical input) is unchanged. source.section backfilled (§whole-document); validated_at refreshed. Source file unchanged (sha256 stands from run 1)."

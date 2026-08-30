@@ -188,7 +188,7 @@ QA skill ranking identical combinations identically. High-impact, low-likelihood
 |-------------|--------|------------|-------|------|-----------------|
 | Payment processing | 5 - Catastrophic | 3 - Possible | 15 | Important | Automated E2E + unit + contract + monitoring |
 | User authentication | 5 - Catastrophic | 2 - Unlikely | 10 | Important | Automated E2E + security scan + unit |
-| Product search | 3 - Moderate | 3 - Possible | 9 | Monitor | Unit + integration + happy-path E2E |
+| Product search | 3 - Moderate | 3 - Possible | 9 | Backlog | Unit + integration + happy-path E2E |
 | Dashboard rendering | 2 - Minor | 3 - Possible | 6 | Backlog | Unit + visual regression |
 | Email preferences | 1 - Negligible | 2 - Unlikely | 2 | Backlog | Manual verification |
 

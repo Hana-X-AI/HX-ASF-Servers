@@ -50,6 +50,10 @@ Bring every in-scope fleet host to the declared baseline — verified identity/O
 2. NTP + mask post-apply re-checks green on every mutated host.
 3. `/opt/tkv-local/servers/<host>/pre-work-results.md` refreshed per fresh host; evidence doc `servers/2026-08-27-fleet-baseline-wave.md` delivered.
 4. Zero secret values in any artifact; catalog wave (Carol) closes the handoff with validate.py 4/4.
+   [LABELED CORRECTION 2026-08-30, append-only: the acceptance gate now reads
+   `validate.py 5/5 PASS` — the governance-path check SY-2 was added to the
+   validation suite. The 4/4 wording above is preserved as the completed record's
+   original acceptance text.]
 
 ## Boundaries
 

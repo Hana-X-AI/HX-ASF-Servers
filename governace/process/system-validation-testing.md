@@ -25,9 +25,11 @@ flowchart TD
     P --> Q[Done]
 ```
 
-Revision note (2026-08-30, A3 artifact-class policy): the gate reads 5/5 PASS
-(governance-path check SY-2 added to the suite). Prior 4/4 wording is retained in
-Git history.
+Revision note (2026-08-30, A3 artifact-class policy): the gate previously read
+"Run validate.py — 4/4 PASS"; it is preserved verbatim here as history.
+[LABELED CORRECTION 2026-08-30, append-only: the gate now reads "Run validate.py
+— 5/5 PASS" — the governance-path check SY-2 was added to the validation suite.
+Prior 4/4 wording is retained above as history, not moved solely to Git history.]
 
 ## Deliverables updated
 

@@ -500,6 +500,11 @@ SPEC="${1:-$SPEC}"
 
 # Reproduce the flake — it must fail at least once before you trust any fix.
 ./node_modules/.bin/playwright test "$SPEC" --repeat-each=20 --workers=4 --trace=on
+rc=$?
+if [ "$rc" -eq 0 ]; then
+  echo "flake not reproduced: 20/20 repeats passed — cannot verify a fix against a passing baseline"
+  exit 1
+fi
 
 # After fixing, prove stability — require 50/50 passes, in CI conditions too.
 ./node_modules/.bin/playwright test "$SPEC" --repeat-each=50 --workers=4

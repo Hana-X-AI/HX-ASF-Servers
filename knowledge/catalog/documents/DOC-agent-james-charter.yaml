@@ -37,9 +37,12 @@ document:
     validated_at: "2026-08-30T09:00:00Z"
     freshness: "current"
     review_due: "on owner sign-off of charter change"
-  sha256: "57ea453cc49378c1de95287fda7355da13ff7ff63087affcf443cf68cfc3bfd9"
+  sha256: "2fc68b3c64c0c4f3dd95a965062c06dc044a4be87a2464ff812795721510bc9e"
   hash_history:
     - sha256: "57ea453cc49378c1de95287fda7355da13ff7ff63087affcf443cf68cfc3bfd9"
       timestamp: "2026-08-30T09:00:00Z"
       reason: "initial cataloging"
+    - sha256: "2fc68b3c64c0c4f3dd95a965062c06dc044a4be87a2464ff812795721510bc9e"
+      timestamp: "2026-08-30T12:15:05Z"
+      reason: "2026-08-30 remediation register batch: sha256 refresh"
   canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/james/charter.md"

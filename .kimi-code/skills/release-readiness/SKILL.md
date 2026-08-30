@@ -494,13 +494,18 @@ captures the HTTP status and elapsed time, then **fails explicitly** unless the 
 criteria are met — a printed number alone is not a pass.
 
 ```bash
-# Health endpoint: finite timeout, fail on HTTP errors, assert HTTP 200 AND the
-# expected healthy body (no curl hang on a stuck endpoint). The probe exits
-# non-zero unless the status is exactly 200 and the body matches.
-health_body="$(curl --max-time 10 --fail-with-body -s https://your-app.com/health)" \
-  && printf '%s' "$health_body" | jq -e '.status == "healthy" or .status == "ok"' >/dev/null \
+# Health endpoint: finite timeout, fail on HTTP errors, capture the HTTP status
+# explicitly, and require EXACTLY 200 before validating the healthy body — other
+# successful 2xx responses must NOT pass. The probe exits non-zero otherwise.
+health_status_time="$(curl --max-time 10 --fail-with-body -s \
+  -w ' %{http_code}' https://your-app.com/health)" \
+  || { echo "HEALTH FAIL: curl error"; exit 1; }
+health_http="${health_status_time##* }"
+health_body="${health_status_time% *}"
+[ "$health_http" = "200" ] || { echo "HEALTH FAIL: HTTP $health_http (expected 200)"; exit 1; }
+printf '%s' "$health_body" | jq -e '.status == "healthy" or .status == "ok"' >/dev/null \
   && echo "health OK: HTTP 200 with healthy body" \
-  || { echo "HEALTH FAIL: not HTTP 200 with healthy body"; exit 1; }
+  || { echo "HEALTH FAIL: not a healthy body"; exit 1; }
 
 # Response time + status in one shot — finite timeout, fail on HTTP error, and
 # ENFORCE the documented latency budget (fail the gate if the response is slower

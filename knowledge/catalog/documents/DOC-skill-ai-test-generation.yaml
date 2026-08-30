@@ -37,7 +37,7 @@ document:
       target: "DOC-agent-gordon-profile"
       note: "execution/qualification review"
   validation:
-    validated_at: "2026-08-30T08:45:00Z"
+    validated_at: "2026-08-30T11:21:44Z"
     freshness: "current"
     review_due: "on skill revision"
   sha256: "666fc41b6b31fe3facdec0393484401c3cb2be6df360e7329ff9c4f4e658466d"
@@ -48,6 +48,9 @@ document:
     - sha256: "7e7e036cff2618dc42911baa168120c8fccb32b26b76795e5602b109a51bafa5"
       timestamp: "2026-08-30T08:45:00Z"
       reason: "CodeRabbit batch fixes to SKILL.md (guardrails, model selection, verification, selector roots)"
+    - sha256: "666fc41b6b31fe3facdec0393484401c3cb2be6df360e7329ff9c4f4e658466d"
+      timestamp: "2026-08-30T11:21:44Z"
+      reason: "2026-08-30 review batch: sha256 refresh (grep hardening, offline tsc, literal forms)"
     - sha256: "666fc41b6b31fe3facdec0393484401c3cb2be6df360e7329ff9c4f4e658466d"
       timestamp: "2026-08-30T11:21:44Z"
       reason: "2026-08-30 review batch: sha256 refresh"

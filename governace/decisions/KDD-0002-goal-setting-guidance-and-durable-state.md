@@ -38,12 +38,22 @@ Adopt option 3.
   status correction, goal-ID mapping, Appendix A provenance note).
 - `goals/` goal files are the designated durable work-state system. GitHub Projects
   is a deferred optional layer, introducible only by owner decision with a new KDD.
+  [HISTORICAL 2026-08-30, labeled: this `goals/` system-of-record designation is
+  superseded by Amendment 1 below — the durable goal tree relocated to
+  `governace/goals/` (2026-08-30). Read this designation as the relocated tree; do
+  not treat the removed root `goals/` path as current.]
 - `goals/_template.md` is upgraded to the contract subset; the goal file name
   (`<YYYY-MM-DD>-<slug>.md`) is the Goal ID.
+  [HISTORICAL 2026-08-30, labeled: `goals/_template.md` now lives at
+  `governace/goals/_template.md` (Amendment 1, 2026-08-30). The former path is
+  preserved here as history.]
 
 ## Consequences
 
 - One work-state authority exists: `goals/`. No board tooling is introduced now.
+  [HISTORICAL 2026-08-30, labeled: the work-state authority now lives under
+  `governace/goals/` per Amendment 1 (2026-08-30); this sentence is preserved as
+  the original consequence wording.]
 - In Phase M, a "fresh operational session" means a sub-agent dispatch, or bounded
   direct execution by Kimi-K3 under profile section 2.3 with the charter check
   recorded; owner review is the verifier fallback (profile section 11).

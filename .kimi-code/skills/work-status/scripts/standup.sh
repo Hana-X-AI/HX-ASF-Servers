@@ -41,7 +41,7 @@ for gf in "$GOALS_DIR"/*.md; do
   base=$(basename "$gf")
   [ "$base" = "README.md" ] && continue
   [ "$base" = "_template.md" ] && continue
-  status=$(grep -m1 -E '^-\s*Status:\s*' "$gf" | sed -E 's/^-\s*Status:\s*//' | tr -d '[:space:]')
+  status=$(status_of "$gf")
   if [ "$status" = "in-progress" ]; then
     gid=$(grep -m1 -E '^\-\s*Goal ID:\s*' "$gf" | sed -E 's/^\-\s*Goal ID:\s*//' | sed -E 's/[[:space:]].*$//')
     [ -z "$gid" ] && gid="$base"

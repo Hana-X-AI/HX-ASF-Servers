@@ -1,8 +1,8 @@
 index:
   schema_version: 1
   initialized: 2026-08-25 (Carol instantiation, owner amendment)
-  updated: '2026-08-30T09:00:00Z (James governor catalog records + Codex-review batch reconciliation)'
-  document_count: 336
+  updated: '2026-08-30T12:31:00Z (James governor catalog records + Codex-review batch reconciliation + CodeRabbit batch sha256 refresh + remediation-register batch + DOC-server-hxs3-oai-x-implementation-plan registration — after the latest record write)'
+  document_count: 337
   documents:
   - id: DOC-a01-origin-codex-20260824-2125
     title: codex_20260824_2125_hx-1-ollama-pilot-qwen3.8-amendment.md — original source of Amendment A01 (agent-zero-docs)
@@ -1168,6 +1168,12 @@ index:
     authority_level: ratified-governance
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/scripts/wiki/render.py
+  - id: DOC-server-hxs3-oai-x-implementation-plan
+    title: 'servers/hxs-3/2026-08-29-oai-x-implementation-plan.md — hxs-3 OAI-X (gpt-oss:20b) implementation plan (Meta-X replacement)'
+    type: plan
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/servers/hxs-3/2026-08-29-oai-x-implementation-plan.md
   - id: DOC-server-registry
     title: servers/SERVER-REGISTRY.md — HX fleet registry, REPO copy (source of truth for discovery lifecycle + manual role assignment; 17 rows (hxs-1..hxs-15 + hxs-20 + hxs-21 added 2026-08-28, baseline-green); amended 2026-08-27/28; living document mirrored at /opt/tkv-local/servers/SERVER-REGISTRY.md)
     type: registry

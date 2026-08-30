@@ -28,8 +28,10 @@ for gf in "$GOALS_DIR"/*.md; do
   [ "$base" = "_template.md" ] && continue
 
   status=$(status_of "$gf")
-  # Ready = approved (scope-lock confirmed, awaiting dispatch) or no status set
-  if [ "$status" = "approved" ] || [ -z "$status" ]; then
+  # Ready = status exactly "approved" (scope-lock confirmed, awaiting dispatch).
+  # Goals with no status are NOT emitted here — they are reported by the
+  # separate validation/reporting path, not silently treated as ready.
+  if [ "$status" = "approved" ]; then
     gid=$(grep -m1 -E '^\-\s*Goal ID:\s*' "$gf" | sed -E 's/^\-\s*Goal ID:\s*//' | sed -E 's/[[:space:]].*$//')
     [ -z "$gid" ] && gid="$base"
     lane=$(grep -m1 -E '^-\s*Agent lane\(s\):' "$gf" | sed -E 's/^-\s*Agent lane\(s\):\s*//' | sed 's/^[[:space:]]*//')

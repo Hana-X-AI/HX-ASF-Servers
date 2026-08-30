@@ -61,3 +61,23 @@ catalog disposition** in `knowledge/catalog/` (DOC record + index entry + receip
 so no produced artifact is left uncataloged. Catalog verification and its receipt or
 disposition are mandatory before the goal is considered complete. The full contract
 model lives in `agents/kimi-k3/goal-setting-guidance.md` (KDD-0002).
+
+Deferred success-condition exception: a goal MAY be marked COMPLETE while one or more
+success conditions remain unpassed ONLY when all of the following are recorded in the
+goal's status block as a labeled, dated, append-only `[LABELED COMPLETION EXCEPTION]`
+entry:
+- **Owner approval** — the deferral is a documented owner decision (date + authority,
+  e.g. a state-log row or explicit owner word), never an agent's unilateral call.
+- **Rationale** — why the condition is deferred rather than failing (e.g. capability
+  gap, owner-scoped future work window, dependency not yet authorized).
+- **Scope** — exactly which success condition(s) are deferred and what remains
+  in-scope for the current completion claim.
+- **Tracked reopen** — the deferred condition is recorded in
+  `governace/issue-tracking/issues.md` (or an equivalent owner-visible tracker) and
+  reopens as owner work when its gating window arrives.
+The `COMPLETE — PASS` status is only consistent under this rule when the exception
+entry above is present; without it, a goal with an unpassed success condition must
+remain incomplete. This exception clause is the governing authority for the
+`[LABELED COMPLETION EXCEPTION]` blocks used by goals such as
+`2026-08-24-hx1-ollama-qwen38-27b.md` (SC-05/AC-008/AC-016) and
+`2026-08-26-hxs3-muse-glimmer-tooling.md` (SC-06).
