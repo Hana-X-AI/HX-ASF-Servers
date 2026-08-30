@@ -1,7 +1,7 @@
 index:
   schema_version: 1
   initialized: 2026-08-25 (Carol instantiation, owner amendment)
-  updated: 2026-08-30T1625Z (carol-mint 1.0.0 — KDD-0021 work-state engine [titles preserved])
+  updated: '2026-08-30T1849Z (carol-mint 1.0.0 — 20-step ci-cd reconciliation: DOC-ci-cd-workflow + DOC-cicd-pipeline-doc titles and metadata [titles preserved])'
   document_count: 341
   documents:
   - id: DOC-a01-origin-codex-20260824-2125

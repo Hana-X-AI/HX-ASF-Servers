@@ -73,13 +73,18 @@ def inline(t):
     t = re.sub(r"\x00(\d+)\x00", lambda m: f"<code>{spans[int(m.group(1))]}</code>", t)
     return t
 
-def _emit_list(tag, list_items):
-    """Emit one list level; item children nest inside their parent <li>."""
-    h = [f"<{tag}>"]
+def _emit_list(tag, list_items, start=1):
+    """Emit one list level; item children nest inside their parent <li>.
+
+    An ordered list carries start= when its first marker is not 1: prose between
+    numbered items closes the <ol> and opens a new one, and without start= the
+    browser restarts at 1 (docs/cicd-pipeline.md steps 17-20 rendered as 1-3).
+    """
+    h = [f"<{tag} start=\"{start}\">" if tag == "ol" and start != 1 else f"<{tag}>"]
     for _ord, text, children in list_items:
         h.append(f"<li>{inline(text)}")
-        for ctag, citems in children:
-            h.append(_emit_list(ctag, citems))
+        for ctag, citems, cstart in children:
+            h.append(_emit_list(ctag, citems, cstart))
         h.append("</li>")
     h.append(f"</{tag}>")
     return "".join(h)
@@ -145,7 +150,9 @@ def render_md(text):
             while i < len(lines):
                 mm = re.match(r"^(\s*)([-*+]|\d+\.)\s+(.*)$", lines[i])
                 if mm:
-                    items.append((len(mm.group(1)), mm.group(2)[0].isdigit(), [mm.group(3)]))
+                    _marker = mm.group(2)
+                    _num = int(_marker[:-1]) if _marker[0].isdigit() else 1
+                    items.append((len(mm.group(1)), _marker[0].isdigit(), [mm.group(3)], _num))
                     i += 1; continue
                 if items and re.match(r"^\s*$", lines[i]):
                     j = i + 1
@@ -158,20 +165,20 @@ def render_md(text):
                     items[-1][2].append(lines[i].strip()); i += 1; continue
                 break
             root, stack = [], []  # stack of (indent, items-of-open-list)
-            for ind, ordered, parts in items:
+            for ind, ordered, parts, num in items:
                 while stack and ind < stack[-1][0]:
                     stack.pop()
                 if (not stack or ind > stack[-1][0]
                         or (ind == stack[-1][0] and ordered != stack[-1][1][0][0])):
                     new_list = []
-                    node = (("ol" if ordered else "ul"), new_list)
+                    node = (("ol" if ordered else "ul"), new_list, num)
                     if stack:
                         stack[-1][1][-1][2].append(node)
                     else:
                         root.append(node)
                     stack.append((ind, new_list))
                 stack[-1][1].append((ordered, " ".join(parts), []))
-            out.append("".join(_emit_list(tag, list_items) for tag, list_items in root))
+            out.append("".join(_emit_list(tag, li, st) for tag, li, st in root))
             continue
         buf = [ln.strip()]  # paragraph
         i += 1

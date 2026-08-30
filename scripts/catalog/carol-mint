@@ -442,7 +442,11 @@ def main(argv):
     if cmd == "consolidate":
         return cmd_consolidate()
     if cmd == "gate":
-        id_list = opt["ids"].split(",") if "ids" in opt else pos
+        # Accept both --ids A,B and --ids A B: the space-separated form landed
+        # in pos and was silently dropped, so the gate reported PASS having
+        # checked only the first record.
+        id_list = (opt["ids"].split(",") + pos) if "ids" in opt else pos
+        id_list = [x for x in (s.strip() for s in id_list) if x]
         return cmd_gate(id_list)
     print(USAGE)
     return 2
