@@ -65,7 +65,7 @@ COMPLETE    - consolidation is complete and verified
 | hxs-5 | hxs-5.hx.local.arpa | 192.168.50.204 | Intel Core i5-7500, 4c/4t | 32 GB DDR4 non-ECC | none, Intel HD 630 integrated only | 238.5 GB NVMe root, sole device | COMPLETE | Control plane (replaced hxs-cp per owner advisory 2026-08-27) | HX factory control plane (Kimi-K3 governor host) | READY |
 | hxs-6 | hxs-6.hx.local.arpa | 192.168.50.205 | Intel Core i5-8500T, 6c/6t | 15.9 GB DDR4 non-ECC | none, Intel UHD 630 integrated only | 238.5 GB NVMe root + 238.5 GB NVMe data (ext4 hxs-6-data @ /srv/data; added 2026-08-28 WO-01/PILOT-HXS6-STORAGE-001 — supersedes as-found "238.5 GB NVMe root, sole device") | COMPLETE | Ingestion — crawling | Crawl4AI (+ MCP) | READY |
 | hxs-7 | hxs-7.hx.local.arpa | 192.168.50.206 | Intel Core i5-8500T, 6c/6t | 15.9 GB DDR4 non-ECC, single channel | none, Intel UHD 630 integrated only | 238.5 GB NVMe root, sole device | COMPLETE | MCP services (REPLACED BY hxs-20 per owner advisory 2026-08-27 — hxs-20 ONLINE 2026-08-28, baseline-green) | FastMCP runtime + custom HX MCP servers | READY |
-| hxs-8 | hxs-8.hx.local.arpa | 192.168.50.207 | Intel Core i5-9400T, 6c/6t | 16 GB DDR4 non-ECC, single channel | none, Intel UHD 630 integrated only | 476.9 GB NVMe root, sole device | COMPLETE | API gateway & control | LiteLLM gateway, PostgreSQL-backed on hxs-9 | READY |
+| hxs-8 | hxs-8.hx.local.arpa | 192.168.50.207 | Intel Core i5-9400T, 6c/6t | CURRENT-STATE: 48 GB DDR4 (32 GB Samsung + 16 GB Micron SODIMM, both channels, 2666 MT/s; 46 GiB visible to Linux) per the `servers/hxs-8/discovery.md` addendum 2026-08-27 — RAM was upgraded after the 2026-08-13 baseline; supersedes "16 GB DDR4 non-ECC, single channel" recorded 2026-08-13, preserved as history | none, Intel UHD 630 integrated only | 476.9 GB NVMe root, sole device | COMPLETE | API gateway & control | LiteLLM gateway, PostgreSQL-backed on hxs-9 | READY |
 | hxs-9 | hxs-9.hx.local.arpa | 192.168.50.208 | Intel Core i5-7500, 4c/4t | 32 GB DDR4 non-ECC | none, Intel HD 630 integrated only | 238.5 GB NVMe root, sole device | COMPLETE | State services | PostgreSQL + Redis; LiteLLM database; LangGraph checkpoints | READY |
 | hxs-10 | hxs-10.hx.local.arpa | 192.168.50.209 | Intel Core i5-7500, 4c/4t | 16 GB DDR4 non-ECC (owner disposition 2026-08-27 #5: current state is 16 GB, OS reads 15 GiB ≈ nominal 16 GB; supersedes the 32 GB recorded 2026-08-13 — two independent readings found 1×16 GB; DIMM topology not inferred; preserved as history) | none, Intel HD 630 integrated only | 238.5 GB NVMe root, sole device | COMPLETE | Web application | Open WebUI; CopilotKit / AG-UI | READY |
 | hxs-11 | hxs-11.hx.local.arpa | 192.168.50.210 | Intel Core i5-7500, 4c/4t | 32 GB DDR4 non-ECC | none, Intel HD 630 integrated only | 238.5 GB NVMe root, sole device, aftermarket | COMPLETE | Agent runtime | LangGraph; Mem0 — separate virtualenvs | READY |
@@ -84,6 +84,15 @@ was already replaced by hxs-20 (owner advisory 2026-08-27; ONLINE 2026-08-28,
 baseline-green). The row above is preserved unchanged as the as-found and
 as-assigned record; THIS correction is the operative lifecycle state. Fleet
 active count: 16.
+
+**Reconciliation note (2026-08-30, audit F1).** `servers/system-mapping.md` was
+corrected the same day for three items that disagreed with this registry and with
+primary evidence: the S06/S07 rows no longer read as owner-accepted (PostgreSQL
+V6 timer-fired activation is still pending), the `(+MCP)` suffix is defined as a
+placement contract rather than a deployment claim (MCP is on HOLD), and S17's LLM
+binding is corrected from Meta-X/OmniRoute to local Ollama Chat-X. The hxs-8
+memory cell in the table above was corrected here in the same pass. Both
+documents are reconciled as of 2026-08-30.
 
 **Open correction — hxs-8/hxs-9 stale target-state (2026-08-29, labeled per the
 append-only governance rule).** The hxs-8 row's "LiteLLM gateway" and the hxs-9

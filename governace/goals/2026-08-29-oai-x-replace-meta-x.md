@@ -87,6 +87,12 @@ decommissioned.
 | SC-06 | Meta-X decommissioned | Verify ALL THREE: (a) `ollama list \| grep muse-glimmer` shows NO muse-glimmer alias; (b) the manifest no longer references muse-glimmer (no `muse-glimmer` in `/usr/share/ollama/.ollama/models/manifests/`); and (c) the **complete frozen artifact digest** is absent from the blob store. Derive the full digest from recorded baseline metadata (the frozen identity's digest recorded at baseline) or from current local model metadata (`ollama show muse-glimmer:30b` digest field before removal, or the manifest in `/usr/share/ollama/.ollama/models/manifests/…`), then verify that exact full digest is NOT present in `/usr/share/ollama/.ollama/models/blobs` and is not referenced by `ollama list`. Alias absence or an `ollama show` failure ALONE is NOT sufficient — the full digest must be proven absent | No alias, no manifest reference, and the full frozen digest absent from the blob store | command output (alias + manifest grep + full-digest blob check) | governor |
 | SC-07 | Records updated | AGENTS.md, README.md, KDD-0013, agent profiles carry OAI-X lane | All references updated | grep output | governor |
 | SC-08 | Repo validation | `python3 scripts/validate.py` | 4/4 PASS | validate output | governor |
+
+[LABELED CORRECTION 2026-08-30, append-only: SC-08 now reads **5/5 PASS** — the
+governance-path check was added to the validation suite (SY-2, 2026-08-29; SY-3
+skill-mirror drift, 2026-08-30, KDD-0020). The 4/4 wording in the table above is
+preserved as the goal's original acceptance text. Authority: audit item A1/F3,
+owner-authorized 2026-08-30.]
 | SC-09 | Replacement-quality gate (added 2026-08-30) | (a) **64K-context feasibility:** serve a request with the operating 64K context window (Modelfile num_ctx + prompt at 64K) and confirm the model responds within the latency budget without OOM/refusal; (b) **same-basis A/B performance vs Meta-X:** run the same representative tooling/context workload on OAI-X (hx-oai-x-64k) and on Meta-X (before decommission), compare response quality, latency, and error behavior on the same prompts | 64K context served successfully; OAI-X meets or beats Meta-X on the measured basis (or the owner documents an accepted trade-off); measurable expected results recorded (latency, tool-call success, output validity); **SC-06 (Meta-X decommissioning) is CONTINGENT on this gate passing** | A/B evidence, context-feasibility run, metrics record | governor |
 
 ## Execution controls

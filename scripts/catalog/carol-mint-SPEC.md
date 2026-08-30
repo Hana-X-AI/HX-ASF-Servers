@@ -47,7 +47,7 @@ carol-mint gate [--ids <ids...>]                        # write-set validation l
 ### 3.5 Validation ladder (replaces full-battery-per-wave)
 
 - `carol-mint gate --ids ...` — write-set gate: YAML parse + required fields + freshness enum + index 1:1 for the touched records + their relation targets resolve. Target: seconds. Default for T-micro/T-standard waves.
-- `scripts/validate.py` (full 4/4) runs at consolidation, arc close, and owner call — not per micro wave. (Carol profile §12/§T-micro updated to match at implementation.)
+- `scripts/validate.py` (full 5/5; 4/4 when this SPEC was written 2026-08-28 — SY-2/SY-3 added since) runs at consolidation, arc close, and owner call — not per micro wave. (Carol profile §12/§T-micro updated to match at implementation.)
 
 ### 3.6 Receipts
 
@@ -56,7 +56,7 @@ carol-mint gate [--ids <ids...>]                        # write-set validation l
 ## 4. Acceptance
 
 1. A 5-record wave's mechanical work completes in < 2 minutes end-to-end (vs 30–60 today); agent time is spent on judgment only.
-2. `validate.py` 4/4 PASS after every tool-driven wave; write-set gate output reproducible.
+2. `validate.py` 5/5 PASS after every tool-driven wave; write-set gate output reproducible.
 3. No direct-write bypass: `documents/` + `index.yaml` mutations provably carry the tool stamp (spot-auditable).
 4. Living consolidation is one command and produces a receipt the owner can read without interpretation.
 
