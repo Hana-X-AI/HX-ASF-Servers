@@ -53,10 +53,10 @@ document:
     target: HX-ASF-Servers change flow (all branches; PR merges into main)
     note: required checks gates + coderabbit-review on PRs; gitleaks over the pushed range; auto-merge squash on green; bootstrap applied via API (hxs-2 state log row 33)
   validation:
-    validated_at: '2026-08-30T17:11:10Z'
+    validated_at: '2026-08-30T17:27:42Z'
     freshness: current
     review_due: on any workflow edit (re-ingest), or at the CODERABBIT_API_KEY secret activation (review leg goes live — owner action pending per hxs-2 row 33)
-  sha256: e3b0abbba82c42a2b9f377df9787af534c45d6d69916602c18a0fa7350b15214
+  sha256: f045e82615169082480e7a149e3b3a4274b793413ccf2545e42990748afcfb74
   canonical_location: /home/hxsa/opt/HX-ASF-Servers/.github/workflows/ci-cd.yml
   hash_history:
   - sha256: 9dbe6070ac81
@@ -71,8 +71,11 @@ document:
   - sha256: e3b0abbba82c42a2b9f377df9787af534c45d6d69916602c18a0fa7350b15214
     timestamp: '2026-08-30T17:11:10Z'
     reason: work-state suite ordered after PyYAML install
+  - sha256: f045e82615169082480e7a149e3b3a4274b793413ccf2545e42990748afcfb74
+    timestamp: '2026-08-30T17:27:42Z'
+    reason: 'KDD-0022: review the pushed range'
 notes:
   pending_items: 'Per hxs-2 state log row 33 (2026-08-26T20:00Z): (1) CODERABBIT_API_KEY web-UI add pending owner (repo Settings -> Secrets -> Actions; the coderabbit-review job skips cleanly by design until then); (2) smoke-merge + full green CI pending the owner decision on the Alert-2 uncommitted-tree commit wave (5 wiki-manifest docs exist only in that tree: BLUEPRINT, both hxs-2/3 goal files, KDD-0006/7 — render --check reports them MISSING on GitHub).'
   protected_reference: The workflow consumes the CODERABBIT_API_KEY GitHub Actions secret and the GITHUB_TOKEN; no secret value is present in the file or in this record (profile §6 — existence and mechanism only).
   typing_judgment: 'Typed contract (governor brief: contract/config class at Carol''s schema judgment): the workflow IS the ratified, machine-enforced quality-gate contract binding how changes enter the repository — the DOC-blueprint-llm-server class (binds deployments AND consumers), not a how-to. The companion human-facing doc is typed runbook (DOC-cicd-pipeline-doc).'
-  minted_by: carol-mint 1.0.0 @ 2026-08-30T17:11:10Z — re-mint 7750c13838aa… -> e3b0abbba82c… — work-state suite ordered after PyYAML install
+  minted_by: 'carol-mint 1.0.0 @ 2026-08-30T17:27:42Z — re-mint e3b0abbba82c… -> f045e8261516… — KDD-0022: review the pushed range'

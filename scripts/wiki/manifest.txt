@@ -87,3 +87,4 @@ governace/process/system-validation-testing.md
 governace/decisions/KDD-0020-canonical-skill-tree-and-mattpocock-batch.md
 CLAUDE.md
 governace/decisions/KDD-0021-work-state-engine.md
+governace/decisions/KDD-0022-coderabbit-review-scope.md

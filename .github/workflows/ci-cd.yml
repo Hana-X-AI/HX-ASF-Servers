@@ -165,7 +165,22 @@ jobs:
             CMD=(coderabbit review --agent --light --committed --base-commit "$BASE" --api-key "$CODERABBIT_API_KEY" --region "${CODERABBIT_REGION:-us}")
           else
             git fetch origin main --depth=1 >/dev/null 2>&1 || true
-            CMD=(coderabbit review --agent --light --base origin/main --api-key "$CODERABBIT_API_KEY" --region "${CODERABBIT_REGION:-us}")
+            # Review the PUSHED RANGE, not the whole accumulated branch diff.
+            # KDD-0022: --base origin/main grows the payload with every push and
+            # the service drops the socket once it is large (proven: a 2-file
+            # diff reviews normally; a 417-file diff closes the WebSocket in ~2s,
+            # same key, account and machine). BEFORE is all-zeros on the first
+            # push of a branch, and may be unresolvable after a force-push, so
+            # fall back to origin/main in both cases.
+            BASE="$BEFORE"
+            if [ -z "$BASE" ] || [ "$BASE" = "0000000000000000000000000000000000000000" ] \
+               || ! git cat-file -e "${BASE}^{commit}" 2>/dev/null; then
+              echo "::notice::no usable pushed-range base — reviewing against origin/main"
+              CMD=(coderabbit review --agent --light --base origin/main --api-key "$CODERABBIT_API_KEY" --region "${CODERABBIT_REGION:-us}")
+            else
+              echo "::notice::reviewing pushed range ${BASE}..HEAD ($(git diff --name-only "$BASE"..HEAD | wc -l) files)"
+              CMD=(coderabbit review --agent --light --committed --base-commit "$BASE" --api-key "$CODERABBIT_API_KEY" --region "${CODERABBIT_REGION:-us}")
+            fi
           fi
           # The org's included-review quota is shared between CI and local CLI
           # runs. A recoverable rate_limit gets bounded retries at the
