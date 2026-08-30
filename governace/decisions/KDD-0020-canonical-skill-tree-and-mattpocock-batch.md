@@ -166,3 +166,55 @@ were applied to the three skills whose defects were found by inspection, while
 The gate caught what the adoption pass missed. Per-skill provenance blocks now
 exist for all five. `skills-lock.json` marks five of seven `hxCorrected`.
 Authority: CodeRabbit CI gate (run 33316342207) + owner direction 2026-08-30.]
+
+## Amendment 2 (2026-08-30, labeled, append-only) — Codex audit disposition
+
+[OPEN CORRECTION 2026-08-30, labeled, append-only — EXTERNAL AUDIT F7/A5
+REVIEWED AND SUPERSEDED BY THIS KDD: the full-repository audit
+`codex_20260830_1510_hx-asf-servers-full-repository-audit.md` raises **F7**
+("the open skills branch creates a second skills authority plane") and
+recommends **A5** ("adopt each selected skill into `.kimi-code/skills/` … and
+reject the `.agents/skills/` parallel root"). Owner decision 2026-08-30: **keep
+KDD-0020; A5 is not actioned as written.**
+
+**Why the audit reads that way.** Its provenance records `Open skills branch
+head: fdbe905` and a clean clone synchronized with `origin/main`. It therefore
+evaluated the branch BEFORE the KDD-0020 commit (`e8fc5c2`). At `fdbe905` the
+finding was correct and is the same defect this KDD opens with as F1.
+
+**Why the finding no longer holds.** F7's stated objection is a second root
+"that current inventory, catalog, triggers, and validation do not govern." All
+four are now governed: the `AGENTS.md` inventory is amended and reconciled at
+30/30/30 with trigger words per skill (D4); `KDD-0020` ratifies the batch;
+catalog records, provenance, and a Carol receipt exist; and `validate.py`
+sub-check SY-3 enforces the canonical tree and its mirrors mechanically (D2).
+The audit's reasoning is satisfied even though its remedy is not followed.
+
+**Binding instruction for audit item A2 (semantic validators).** A2 proposes two
+skill clauses that CONTRADICT this KDD and must not be implemented verbatim:
+"23-skill inventory equals canonical skill directories" and "no unexpected skill
+roots such as `.agents/skills/`". Restated against KDD-0020, the correct checks
+are:
+
+1. the `AGENTS.md` inventory count equals the number of directories in
+   `.agents/skills/` (currently 30, not 23);
+2. no skill root exists outside `.agents/skills/` and its two DECLARED mirrors
+   `.kimi-code/skills/` and `.claude/skills/`;
+3. every mirror matches canonical byte-for-byte.
+
+Items 2 and 3 are already implemented as SY-3 (`scripts/skills_sync.py`, called
+from `check_governance_path`). Item 1 is NOT yet mechanized — the 30/30/30
+reconciliation was performed manually in this change and is a candidate for the
+A2 branch.
+
+**Unaffected audit items.** F1 (registry/system-map contradictions), F2
+(correction chains in current-state files), F3 (stale `4/4 PASS` requirements),
+F4–F6, and recommendations A1/A3/A4 stand and are NOT addressed by this KDD.
+Two were independently spot-verified while reviewing the audit: hxs-8 RAM is
+16 GB in `servers/SERVER-REGISTRY.md` and 48 GB in `servers/system-mapping.md`
+(F1 confirmed), and 17 live files still reference `4/4 PASS` (F3 confirmed,
+larger than the six the audit lists). They belong to the narrow
+semantic-reconciliation branch the audit recommends, not to this one.
+
+Authority: owner decision 2026-08-30 ("Keep KDD-0020 … i agree"); audit
+reviewed, not rejected.]

@@ -36,9 +36,9 @@ document:
     note: SY-3 drift gate lives in the governance-path check
   authority_level: ratified-governance
   validation:
-    validated_at: '2026-08-30T15:31:38Z'
+    validated_at: '2026-08-30T15:36:16Z'
     freshness: current
-  sha256: ae1d09e9619432041b861ca1fe9fcbcd2f16d63f04bfcbeead91b4b0a7c92c71
+  sha256: 807690a24c23aa678ceb7b8866d69e0aa2d7f52be64d0958f660e42eb0e7ab33
   canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0020-canonical-skill-tree-and-mattpocock-batch.md
 notes:
-  minted_by: 'carol-mint 1.0.0 @ 2026-08-30T15:31:38Z — re-mint 94c9defbaa5b… -> ae1d09e96194… — Amendment 1: adoption pass extended to five corrected skills (CodeRabbit gate findings)'
+  minted_by: 'carol-mint 1.0.0 @ 2026-08-30T15:36:16Z — re-mint ae1d09e96194… -> 807690a24c23… — Amendment 2: Codex audit F7/A5 disposition; A2 skill clauses restated against KDD-0020'
