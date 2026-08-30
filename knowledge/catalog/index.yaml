@@ -281,7 +281,7 @@ index:
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/catalog/receipts/2026-08-29-batchB-carol-statelog-registry.md
   - id: DOC-ci-cd-workflow
-    title: .github/workflows/ci-cd.yml — p8 CI/CD pipeline definition (owner-ratified 2026-08-26; 18 steps across gates / coderabbit-review / pr-manage; trigger every push to any branch)
+    title: .github/workflows/ci-cd.yml — p8 CI/CD pipeline definition (owner-ratified 2026-08-26; 20 steps across gates / coderabbit-review / pr-manage; trigger every push to any branch)
     type: contract
     authority_level: ratified-governance
     freshness: current

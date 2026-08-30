@@ -1,7 +1,7 @@
 # CI/CD pipeline — HX-ASF-Servers
 
 Owner-ratified 2026-08-26 (p8, plan `argent-groot-ant-man`). Trigger: **every push to
-any branch**. 18 steps across three jobs. Happy path (push to `main`, gates only)
+any branch**. 20 steps across three jobs. Happy path (push to `main`, gates only)
 completes in about 3 minutes.
 
 The pipeline's own gates are the repo's existing quality discipline — the same
@@ -24,11 +24,14 @@ anywhere.
 5. Unit tests — fixtures regression suite (`fixtures/test_fixtures.py`).
 6. Unit tests — wiki renderer suite (`scripts/wiki/test_render.py`).
 7. Build validation — wiki HTML in sync (`scripts/wiki/render.py --check`).
-8. Catalog validation (`scripts/validate.py --ci` — portable mode: every catalog
+8. Install PyYAML (`validate.py` dependency).
+9. Unit tests — work-state engine (`scripts/test_work_state.py`, O1). Ordered
+   after the PyYAML install because `work_state.py` imports `yaml`.
+10. Catalog validation (`scripts/validate.py --ci` — portable mode: every catalog
    check runs, except CAT-07's canonical_location *existence* probe, which is
    anchored to the governor host by design — repo home plus `/opt/tkv-local` —
    and stays a local-only check in the full mode).
-9. Security scan — gitleaks over the pushed commit range, redacted.
+11. Security scan — gitleaks over the pushed commit range, redacted.
    [OPEN CORRECTION 2026-08-30, labeled: the scan above is now pinned to
    `v8.24.3` (immutable, not `latest` — supply-chain hardening). Prior
    behavior: latest tag resolved at run time. Current behavior: pinned
@@ -39,9 +42,9 @@ anywhere.
 post-merge re-review of the merged commit produced a red run after a completed
 merge):
 
-10. Checkout (full history for the base diff).
-11. Install the CodeRabbit CLI.
-12. Review: the job runs only on non-`main` pushes, so the review always compares
+12. Checkout (full history for the base diff).
+13. Install the CodeRabbit CLI.
+14. Review: the job runs only on non-`main` pushes, so the review always compares
     against `origin/main` — `coderabbit review --agent --light --base origin/main`
     with the Agentic API key. (The former `main`-push path that reviewed the
     pushed range `BEFORE..HEAD` is no longer reached because the job skips on
@@ -51,16 +54,26 @@ merge):
     missing `CODERABBIT_API_KEY` now FAILS the job (cannot pass vacuously).
     Prior behavior: skip with a notice. Current behavior: fail closed. Original
     wording preserved above.]
-13. Parse the JSON event stream; the gate **fails on critical+major+minor
+    [OPEN CORRECTION 2026-08-30, labeled, append-only — REVIEW BASE: the review no
+    longer "always compares against `origin/main`". Per KDD-0022 it reviews the
+    PUSHED RANGE — `coderabbit review --agent --light --committed --base-commit
+    <BEFORE>` — because a whole-branch `--base origin/main` payload grows with
+    every push and the service drops the WebSocket once it is large (a 2-file diff
+    reviews normally; a 417-file diff closes the socket in ~2s). `--base
+    origin/main` remains the FALLBACK, used only when `BEFORE` is empty,
+    all-zeros, unresolvable, or not an ancestor of `HEAD` (force-push). `--region`
+    is stated explicitly for inline api-key authentication. The original wording
+    above is preserved as history. Authority: KDD-0022.]
+15. Parse the JSON event stream; the gate **fails on critical+major+minor
     findings (zero-tolerance, owner directive 2026-08-28)** and on any review
     that ends without a `complete` event (fail-closed on auth/service failure);
     trivial/info findings are reported, not blocking.
-14. Comment the review summary on the PR.
+16. Comment the review summary on the PR.
 
 **Job `pr-manage`** — non-`main` pushes only (runs regardless of other jobs, so the
 PR always exists for the fix loop):
 
-15. Ensure a PR exists for the branch (create targeting `main` on first push).
+17. Ensure a PR exists for the branch (create targeting `main` on first push).
 
 **Permissions** — the workflow defaults to `contents: read` + `pull-requests:
 read`; only the `pr-manage` job escalates to write (auto-PR/label/merge),
@@ -68,9 +81,9 @@ hardening per Codex audit 2026-08-30. A separate scheduled workflow
 (`full-history-secret-scan.yml`, weekly + manual) runs gitleaks over **all
 history** so pre-existing leaked credentials surface for owner triage
 (no auto-rewrite).
-16. Auto-label by branch prefix (`feature/`, `fix/`, `chore/`; labels auto-created).
-17. Enable auto-merge (squash) on the PR.
-18. Comment the pipeline state on the PR (notification surface).
+18. Auto-label by branch prefix (`feature/`, `fix/`, `chore/`; labels auto-created).
+19. Enable auto-merge (squash) on the PR.
+20. Comment the pipeline state on the PR (notification surface).
 
 ## Lifecycle
 

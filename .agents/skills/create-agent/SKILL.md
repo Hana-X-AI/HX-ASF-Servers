@@ -1,3 +1,8 @@
+---
+name: create-agent
+description: "Guide the creation of a new HX factory agent: reads governace/templates/agent-checklist.md and walks each step, validating after each. Use when the user says 'create agent', 'new agent', or 'register agent'."
+---
+
 # Create Agent
 
 Trigger: 'create agent', 'new agent', 'register agent'
