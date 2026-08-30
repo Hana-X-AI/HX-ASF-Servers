@@ -2,12 +2,12 @@ document:
   id: DOC-kdd-0021-work-state-engine
   title: governace/decisions/KDD-0021-work-state-engine.md — one work-state engine (O1)
   type: decision
-  declared_purpose: "Ratified decision (2026-08-30) establishing a single machine-readable work-state block per goal (governace/goals/work-state.schema.yaml) and one engine that reads it (scripts/work_state.py), replacing prose-grep status derivation in the work-status and goal-decompose skills. Implements O1 of the Codex process-optimization review and the goal-decompose half of its F6. Records that conflicts between a goal file and downstream evidence are surfaced via a required reconcile field rather than auto-resolved, because declaring a goal complete is a governor determination. Enforced as validate.py sub-check SY-4; check count stays 5/5."
+  declared_purpose: 'Ratified decision (2026-08-30) establishing a single machine-readable work-state block per goal (governace/goals/work-state.schema.yaml) and one engine that reads it (scripts/work_state.py), replacing prose-grep status derivation in the work-status and goal-decompose skills. Implements O1 of the Codex process-optimization review and the goal-decompose half of its F6. Records that conflicts between a goal file and downstream evidence are surfaced via a required reconcile field rather than auto-resolved, because declaring a goal complete is a governor determination. Enforced as validate.py sub-check SY-4; check count stays 5/5. Amendment 1 (2026-08-30, append-only) records three defects in the shipped implementation and their fixes, the decision above unchanged: (A1-1) every --json command raised TypeError on datetime.date because status_date is unquoted in goal files — now normalized once at parse(), so the state dict the O2/O3/O8 consumers read is JSON-safe by construction; (A1-2) standup had no group for pre_dispatch_statuses and listed 8 of 10 goals under a ''10 goals'' header — fixed, plus an accounting invariant that surfaces any ungrouped status rather than dropping it; (A1-3) the byte-identical mirrors resolved the engine four levels up from their own location, so the out-of-repo runtime mirror at ~/.kimi-code/skills/ resolved to $HOME and had never run this engine at all — it still held the pre-consolidation prose parser. Resolution is now HX_REPO_ROOT, then an upward search, then a loud exit 2. Common root cause: the CLI layer had zero test coverage (the 11 D5 fixtures all exercised load_all()); the suite now covers it at 17 tests, each fix verified by reverting it.'
   source:
-    author: "Agent-Zero (owner decision 2026-08-30)"
-    provided_by: "Claude Code session — process-optimization Phase 1"
+    author: Agent-Zero (owner decision 2026-08-30)
+    provided_by: Claude Code session — process-optimization Phase 1
     origin: /home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0021-work-state-engine.md
-    section: "§whole-document"
+    section: §whole-document
     ingestion_date: '2026-08-30T16:25:08Z'
   owner: Agent Zero
   applies_to:
@@ -22,20 +22,27 @@ document:
     classification: internal
     contains_secret_values: false
   relations:
-    - predicate: "governs"
-      target: "DOC-agents-roster-readme"
-      note: "goal status consumed by the work-status skill"
-    - predicate: "references"
-      target: "DOC-scripts-validate-py"
-      note: "enforced as sub-check SY-4"
-    - predicate: "references"
-      target: "DOC-kdd-0020-canonical-skill-tree"
-      note: "the consolidated skills live under the canonical tree"
-  authority_level: "ratified-governance"
+  - predicate: governs
+    target: DOC-agents-roster-readme
+    note: goal status consumed by the work-status skill
+  - predicate: references
+    target: DOC-scripts-validate-py
+    note: enforced as sub-check SY-4
+  - predicate: references
+    target: DOC-kdd-0020-canonical-skill-tree
+    note: the consolidated skills live under the canonical tree
+  authority_level: ratified-governance
   validation:
-    validated_at: '2026-08-30T16:25:08Z'
+    validated_at: '2026-08-30T19:34:44Z'
     freshness: current
-  sha256: 32d3dfd02beeb4ab86d9af39dacc3d68549f0732fd4ce832cf4ba76e5cbbf5e0
+  sha256: 0a1a483eee0396b00225adeabe94335a311eb40fd3895f0495ba7b0909c18a79
   canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0021-work-state-engine.md
+  hash_history:
+  - sha256: 32d3dfd02beeb4ab86d9af39dacc3d68549f0732fd4ce832cf4ba76e5cbbf5e0
+    timestamp: unrecorded
+    reason: predecessor state restored by carol-mint (re-mint events before 2026-08-30T19:34:44Z did not record history)
+  - sha256: 0a1a483eee0396b00225adeabe94335a311eb40fd3895f0495ba7b0909c18a79
+    timestamp: '2026-08-30T19:34:44Z'
+    reason: 'Amendment 1: three shipped-engine defects (--json date crash, standup dropped drafts, mirrors could not resolve the engine outside the repo)'
 notes:
-  minted_by: carol-mint 1.0.0 @ 2026-08-30T16:25:08Z — scaffold
+  minted_by: 'carol-mint 1.0.0 @ 2026-08-30T19:34:44Z — re-mint 32d3dfd02bee… -> 0a1a483eee03… — Amendment 1: three shipped-engine defects (--json date crash, standup dropped drafts, mirrors could not resolve the engine outside the repo)'
