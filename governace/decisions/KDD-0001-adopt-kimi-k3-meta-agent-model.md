@@ -108,3 +108,12 @@ template; `agents/kimi-k3/verification-checklist.md` remains the standing
 mandatory governor evidence gate. No new work is dispatched to the
 kimi-k3 identity. Authority: AGENTS.md governor-transition corrections;
 state-log row 46; QA-audit remediation 2026-08-29.]
+
+[OPEN CORRECTION 2026-08-30, labeled, append-only — GOVERNOR PERSONA RENAMED
+TO JAMES: the governor role's persona name is now **James** (owner decision
+2026-08-30), superseding the "Flash" persona referenced above. The governor
+still runs on DeepSeek V4 Flash via OmniRoute (model lane unchanged — a
+factual third-party id). References to the current governor read as James;
+references to `agents/flash/*` above read as `agents/james/*`. All prior
+corrections above are preserved as history. Authority: owner decision
+2026-08-30; AGENTS.md governor-rename correction; no governance scope change.]

@@ -371,3 +371,16 @@ assignments for each system. `servers/SERVER-REGISTRY.md` owns durable host
 identity and role; `servers/system-mapping.md` owns system placement.
 Both documents must stay reconciled — changes to one require a labeled
 correction in the other.
+
+## Governor rename (labeled correction, 2026-08-30)
+
+[OPEN CORRECTION 2026-08-30, labeled, append-only — GOVERNOR PERSONA RENAMED
+FROM FLASH TO JAMES: the governor role is now referred to as **James**
+(owner decision 2026-08-30), superseding the "Flash" persona name for the
+governor role. The governor still runs on **DeepSeek V4 Flash** via OmniRoute
+(model lane unchanged — the model name is a factual third-party id, not the
+persona). All historical references to "Flash" as the governor persona in the
+correction blocks above are preserved as history and read as the governor
+role — currently James. Kimi-K3 references remain preserved as earlier
+governor-role history. Authority: owner decision 2026-08-30; recorded
+append-only; no governance scope change.]

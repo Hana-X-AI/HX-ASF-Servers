@@ -1,6 +1,6 @@
 ---
 name: kimi-k3
-description: "Identity-specific model lane on moonshot-ai/kimi-k3 per KDD-0013. Not the factory meta-agent or governor — the governor role is a separate role held by Flash (DeepSeek V4 Flash via OmniRoute). This profile documents the original meta-agent operating contract preserved as the governor-role template; see AGENTS.md for the current governor assignment."
+description: "Identity-specific model lane on moonshot-ai/kimi-k3 per KDD-0013. Not the factory meta-agent or governor — the governor role is a separate role held by James (DeepSeek V4 Flash via OmniRoute). This profile documents the original meta-agent operating contract preserved as the governor-role template; see AGENTS.md for the current governor assignment."
 ---
 
 # Kimi-K3 — Agentic Software Factory Meta-Agent

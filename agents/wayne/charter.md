@@ -83,4 +83,4 @@ Redis outage, suspected data loss/corruption, failed recovery with no
 valid persistence artifact, broad cache inconsistency, destructive
 operation proposed, credential or service-account conflict, anything
 outside the single-instance Redis boundary. Escalation: the governor
-(Flash) always; never the owner directly.
+(James) always; never the owner directly.

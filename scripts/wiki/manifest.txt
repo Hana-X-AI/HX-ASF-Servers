@@ -11,8 +11,8 @@ agents/john/charter.md
 agents/john/profile.md
 agents/kimi-k3/charter.md
 agents/kimi-k3/profile.md
-agents/flash/charter.md
-agents/flash/profile.md
+agents/james/charter.md
+agents/james/profile.md
 agents/carol/charter.md
 agents/carol/profile.md
 goals/README.md

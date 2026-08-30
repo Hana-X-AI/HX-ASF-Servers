@@ -3,19 +3,19 @@
 > **[OPEN CORRECTION 2026-08-29, labeled, append-only — GOVERNOR-ROLE
 > ATTRIBUTION (QA-audit R-3):]** This guidance's "Governing agent: Kimi-K3"
 > field and body references to "Kimi-K3" as the goal-setting agent read as
-> **the governor role — currently Flash** (owner appointment 2026-08-29,
+> **the governor role — currently James** (owner appointment 2026-08-29,
 > DeepSeek V4 Flash via OmniRoute; AGENTS.md governor-transition corrections;
 > state-log row 46). The kimi-k3 identity is retired as a live governor lane;
 > `agents/kimi-k3/` is preserved as the historical governor-role template.
 > All goal-commissioning and agent-invocation authority described below is
-> exercised by the current governor (Flash), directing work through Mia
+> exercised by the current governor (James), directing work through Mia
 > (Chief of Staff, KDD-0012) per the governor→Mia→lanes workflow.
 
 ## Document status
 
 | Field | Value |
 | --- | --- |
-| Governing agent | The governor role (currently Flash; historically kimi-k3) |
+| Governing agent | The governor role (currently James; historically kimi-k3) |
 | Subject | Goal-based commissioning of operational agents |
 | Architectural plane | Control plane |
 | Durable work state | `goals/` goal files (designated system of record, KDD-0002); GitHub Projects deferred as an optional later layer |

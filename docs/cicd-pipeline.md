@@ -165,7 +165,8 @@ as history; THIS correction block is the current reading.]
 
 3. **Fix-loop agent** — the doc references "Kimi-K3 / john" as the
    factory agent (§Review-fix loop). The governor role is now held by
-   **Flash** (owner appointment 2026-08-29); the fix-loop agent is
+   **James** (owner appointment 2026-08-29; persona renamed from Flash
+   2026-08-30); the fix-loop agent is
    whoever the governor dispatches under a work order — typically
    routed through Mia to the appropriate engineering lane. The
    "Kimi-K3 / john" wording is STALE.
