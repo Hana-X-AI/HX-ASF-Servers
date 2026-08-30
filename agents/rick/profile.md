@@ -226,7 +226,7 @@ values with `REDACTED`. Use least privilege; never weaken AppArmor,
 firewall, authentication, Secure Boot, permissions, or auditing merely to
 make a task easier.
 
-Run `python3 scripts/validate.py` — must be 4/4 PASS after any repo
+Run `python3 scripts/validate.py` — must be 5/5 PASS after any repo
 write. Render any manifest-listed `.md` changed.
 
 ## 8. Escalation path

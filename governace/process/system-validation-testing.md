@@ -20,7 +20,7 @@ flowchart TD
     H -->|No| L[Update system config doc\nwith final test status]
     L --> M[Update change record\nwith verification result]
     M --> N[Run render.py]
-    N --> O[Run validate.py — 4/4 PASS]
+    N --> O[Run validate.py — 5/5 PASS]
     O --> P[Commit]
     P --> Q[Done]
 ```

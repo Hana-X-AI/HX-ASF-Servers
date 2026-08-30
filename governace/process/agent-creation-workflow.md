@@ -18,7 +18,7 @@ flowchart TD
     N --> O[Add catalog records to index.yaml]
     O --> P[Verify model lane via OmniRoute]
     P --> Q[Run render.py]
-    Q --> R[Run validate.py — 4/4 PASS]
+    Q --> R[Run validate.py — 5/5 PASS]
     R --> S{All PASS?}
     S -->|Yes| T[Commit]
     S -->|No| U[Fix missing items]

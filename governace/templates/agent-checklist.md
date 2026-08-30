@@ -13,7 +13,7 @@ This checklist is MANDATORY for every new agent. Do not skip steps. Validate aft
 
 - [ ] 5. Create agents/<name>/ directory
 - [ ] 6. Create charter.md from template (governace/templates/agent/charter.md)
-- [ ] 7. Create profile.md from template (governance/templates/agent/profile.md)
+- [ ] 7. Create profile.md from template (governace/templates/agent/profile.md)
 
 ## Profile mandatory sections
 
@@ -21,7 +21,7 @@ This checklist is MANDATORY for every new agent. Do not skip steps. Validate aft
 - [ ] 9. TKV knowledge directory pointer (specific /opt/tkv-local/ path, NOT generic)
 - [ ] 10. be-great standing directive (mandatory: 'survey TKV before acting')
 - [ ] 11. SSH credential handling section (grep-only extraction, askpass pattern, never source/eval, never Read tool on .local.env)
-- [ ] 12. Skills available section (be-great, eli5, bro, wait-what, quick, human, corp, copy)
+- [ ] 12. Skills available section (be-great, eli5, bro, wait-what, quick, human, corp, copy, create-agent)
 - [ ] 13. Provenance section
 
 ## Registration
@@ -41,7 +41,7 @@ This checklist is MANDATORY for every new agent. Do not skip steps. Validate aft
 
 - [ ] 24. Verify model lane via OmniRoute (if cloud lane: curl models endpoint, confirm model in catalog; if local lane: confirm Ollama serving)
 - [ ] 25. Run python3 scripts/wiki/render.py — all manifest docs in sync
-- [ ] 26. Run python3 scripts/validate.py — must be 4/4 PASS
+- [ ] 26. Run python3 scripts/validate.py — must be 5/5 PASS
 - [ ] 27. Commit
 
 ## Post-creation hook

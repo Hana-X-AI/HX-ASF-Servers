@@ -24,7 +24,7 @@ flowchart TD
     Q --> R[Write system config doc\nservers/host/system-config.md]
     R --> S[Update test log\ngovernace/testing/test-log.md]
     S --> T[Run render.py]
-    T --> U[Run validate.py — 4/4 PASS]
+    T --> U[Run validate.py — 5/5 PASS]
     U --> V{All PASS?}
     V -->|Yes| W[Commit]
     V -->|No| X[Fix issues]

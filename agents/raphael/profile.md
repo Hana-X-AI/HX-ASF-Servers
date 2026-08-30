@@ -179,7 +179,7 @@ When executing work on hxs-4 (192.168.50.203):
 
 Confirm the requested LightRAG result; record the commands used (never
 credential values); record service status, API health, query results,
-test output. Run `python3 scripts/validate.py` — must be 4/4 PASS after
+test output. Run `python3 scripts/validate.py` — must be 5/5 PASS after
 any repo write. Render any manifest-listed .md changed.
 
 **Validation suite (V0–V6 pattern):**

@@ -54,7 +54,7 @@ verify currency against live state before use.
 - Updated `knowledge/catalog/index.yaml` (one line per record).
 - `knowledge/catalog/receipts/` receipts (one per catalog action).
 - `knowledge/catalog/retrieval-packages/` focused knowledge packets.
-- Pasted `scripts/validate.py` 4/4 PASS output in every receipt.
+- Pasted `scripts/validate.py` 5/5 PASS output in every receipt.
 
 ## Escalates when
 

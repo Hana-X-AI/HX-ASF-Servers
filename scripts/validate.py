@@ -476,7 +476,7 @@ def main(argv):
             print("usage error: no checkable paths given", file=sys.stderr)
             return 2
     elif argv[0] == "--ci":
-        fns = [check_wiki, check_fixtures, check_catalog_portable, check_secrets]
+        fns = [check_wiki, check_governance_path, check_fixtures, check_catalog_portable, check_secrets]
         mode = "ci (portable catalog: CAT-07 existence probe skipped — paths are host-anchored by design)"
     else:
         print("usage: python3 scripts/validate.py [--changed <path> [path...]] [--ci]", file=sys.stderr)

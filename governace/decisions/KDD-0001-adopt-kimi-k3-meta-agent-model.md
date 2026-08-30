@@ -117,3 +117,11 @@ factual third-party id). References to the current governor read as James;
 references to `agents/flash/*` above read as `agents/james/*`. All prior
 corrections above are preserved as history. Authority: owner decision
 2026-08-30; AGENTS.md governor-rename correction; no governance scope change.]
+
+[OPEN CORRECTION 2026-08-30, labeled, append-only — VERIFICATION CHECKLIST
+RELOCATED: `agents/kimi-k3/verification-checklist.md` referenced above has
+moved to the role-neutral `governace/process/governor-verification-checklist.md`
+(Codex audit finding; governor-role content, not kimi-k3-specific). The
+historical path above is preserved as written; the standing mandatory
+governor evidence gate is the relocated file. Authority: Codex audit feedback
+2026-08-30; governor decision.]

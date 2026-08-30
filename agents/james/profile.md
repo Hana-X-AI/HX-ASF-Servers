@@ -114,8 +114,8 @@ interpretation.
 
 Before ANY producer deliverable is accepted, run the full evidence-verification
 checklist (ratified 2026-08-25, UD5/U7; the checklist lives at
-`agents/kimi-k3/verification-checklist.md`, preserved as the standing
-governor checklist). Every step is mandatory and non-skippable:
+`governace/process/governor-verification-checklist.md`, the standing
+role-neutral governor checklist). Every step is mandatory and non-skippable:
 
 1. **Artifact exists** — non-empty, at the path the work order named.
 2. **Receipt line present** — PASS marker, exactly once, in producer language.

@@ -19,8 +19,8 @@ on:
     branches: ["**"]
 
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
+  pull-requests: read
 
 concurrency:
   group: ci-${{ github.ref }}
@@ -66,12 +66,13 @@ jobs:
       - name: Security scan — secrets in the pushed range
         env:
           BEFORE: ${{ github.event.before }}
+          GITLEAKS_VERSION: v8.24.3
         run: |
           set -e
-          VER=$(curl -sSf https://api.github.com/repos/gitleaks/gitleaks/releases/latest \
-            | python3 -c "import json,sys; print(json.load(sys.stdin)['tag_name'].lstrip('v'))")
+          # Pinned gitleaks version (immutable, not 'latest') — supply-chain
+          # hardening per Codex audit feedback 2026-08-30.
           curl -sSfL -o /tmp/gitleaks.tar.gz \
-            "https://github.com/gitleaks/gitleaks/releases/download/v${VER}/gitleaks_${VER}_linux_x64.tar.gz"
+            "https://github.com/gitleaks/gitleaks/releases/download/${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION#v}_linux_x64.tar.gz"
           tar -xzf /tmp/gitleaks.tar.gz -C /tmp gitleaks
           RANGE="HEAD~1..HEAD"
           if [ "$BEFORE" != "0000000000000000000000000000000000000000" ]; then
@@ -103,9 +104,12 @@ jobs:
           BRANCH: ${{ github.ref_name }}
         run: |
           if [ -z "${CODERABBIT_API_KEY:-}" ]; then
-            echo "::notice::CODERABBIT_API_KEY not configured — review skipped (see docs/cicd-pipeline.md setup)"
-            echo "skipped=true" >> "$GITHUB_OUTPUT"
-            exit 0
+            # Fail-closed: CodeRabbit is a required check (owner directive
+            # 2026-08-28: run on every commit; zero-tolerance). A missing key
+            # means the gate cannot run — fail rather than pass vacuously.
+            # Hardening per Codex audit feedback 2026-08-30.
+            echo "::error::CODERABBIT_API_KEY not configured — CodeRabbit is a required check and cannot run; set the secret (see docs/cicd-pipeline.md setup)"
+            exit 1
           fi
           echo "skipped=false" >> "$GITHUB_OUTPUT"
           if [ "$BRANCH" = "main" ]; then
@@ -233,6 +237,9 @@ jobs:
     if: github.ref_name != 'main' && always()
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
       - name: Ensure PR exists
         id: pr

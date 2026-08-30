@@ -28,7 +28,8 @@ description: "Factory meta-agent: decomposes authorized goals into bounded execu
   (`agents/flash/`, DeepSeek V4 Flash via OmniRoute). This directory is
   preserved as the **historical governor-role template** — its `profile.md`
   body is the ratified operating contract that Flash's profile adapts, and
-  `verification-checklist.md` remains the standing mandatory governor gate.
+  `governace/process/governor-verification-checklist.md` (moved here from
+  this directory 2026-08-30) remains the standing mandatory governor gate.
   The moonshot-ai/kimi-k3 lane reference in KDD-0013 is preserved as
   history; no new work is dispatched to the kimi-k3 identity. The directory
   stays in-tree (append-only governance; template + checklist are

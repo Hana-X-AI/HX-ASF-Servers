@@ -47,11 +47,11 @@ index:
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/kimi-k3/profile.md
   - id: DOC-agent-kimi-k3-verification-checklist
-    title: agents/kimi-k3/verification-checklist.md — governor evidence-verification checklist (receipt-check, ratified UD5/U7)
+    title: governace/process/governor-verification-checklist.md — governor evidence-verification checklist (receipt-check, ratified UD5/U7)
     type: runbook
     authority_level: ratified-governance
     freshness: current
-    canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/kimi-k3/verification-checklist.md
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/process/governor-verification-checklist.md
   - id: DOC-agent-rick-charter
     title: Agent charter — rick (Ubuntu Server engineer, vertical lane)
     type: charter

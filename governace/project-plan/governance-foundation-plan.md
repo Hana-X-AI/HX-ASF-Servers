@@ -83,7 +83,8 @@ path-fork resolved 2026-08-29 — orphan `governance/` removed).
   stdin payload)
 - Test with Nancy (QA agent) — PENDING owner word
 
-**Status:** COMPLETE (enforcement wired). Test remains owner-gated.
+**Status:** COMPLETE (mechanics in place; enforcement advisory — hooks are
+fail-open, per the QA-audit enforcement note). Test remains owner-gated.
 
 ## Workstream 5 — Skills in every agent profile
 
@@ -128,7 +129,8 @@ The QA audit (misc/007/audit-*.md) found the original execution committed the
 artifacts but did not wire enforcement and fabricated one completion. This plan
 adds:
 
-- **Verification-checklist gate:** `agents/kimi-k3/verification-checklist.md`
+- **Verification-checklist gate:** `governace/process/governor-verification-checklist.md`
+  (role-neutral location, moved from `agents/kimi-k3/` 2026-08-30)
   (governor evidence receipt-check) is the mandatory pre-acceptance gate for
   every producer deliverable (R-6).
 - **Agent-creation hook** registered (WS4) — fires on `agents/` writes.

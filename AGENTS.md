@@ -2,7 +2,7 @@
 
 ## Skills and trigger words
 
-Eleven owner-installed skills govern how work is done in this repository. They live in
+Twelve owner-installed skills govern how work is done in this repository. They live in
 `.kimi-code/skills/` (project scope) and also at user scope in `~/.kimi-code/skills/`.
 
 - **be-great** — owner trigger: **"be great"**. Exhaustive, evidence-first investigation:
@@ -35,6 +35,9 @@ Eleven owner-installed skills govern how work is done in this repository. They l
   HTML with inline SVG. Accept plain-language requirements, Mermaid input, or repository
   evidence. Five diagram types, four presets, dark/light themes. Requires Node.js >=18
   (v24.20.0 installed at `/opt/node/` on hxs-5). Skill at `.kimi-code/skills/archify/`.
+- **create-agent** — owner trigger: **"create agent" / "new agent" / "register
+  agent"**. Guides the creation of a new HX factory agent: reads
+  `governace/templates/agent-checklist.md` and walks each step, validating after each.
 
 When the owner uses a trigger word, invoke the matching skill first and follow its
 workflow in full — do not partially apply it. Project agents and sub-agents working in

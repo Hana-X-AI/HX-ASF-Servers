@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!-- Generated from governace/templates/agent-checklist.md (sha256 f39347e996356349c45271a6a5b0b1850ea631d669a721d6a759f11a4cf9b4bb) by scripts/wiki/render.py on 2026-08-30T04:58Z.
+     Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent Creation Checklist</title>
+<style>
+:root{color-scheme:light dark}
+body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.55;
+max-width:62rem;margin:0 auto;padding:1.5rem 2rem;color:#1a1a1a;background:#fff}
+h1,h2,h3,h4,h5,h6{line-height:1.25;margin-top:1.6em}
+h1{border-bottom:2px solid #444;padding-bottom:.3em}
+h2{border-bottom:1px solid #ccc;padding-bottom:.2em}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+code{background:#f0f0f0;padding:.1em .3em;border-radius:3px}
+pre{background:#f6f8fa;border:1px solid #ddd;border-radius:6px;padding:.8em;overflow-x:auto}
+pre code{background:none;padding:0}
+table{border-collapse:collapse;margin:1em 0;width:100%}
+th,td{border:1px solid #ccc;padding:.35em .6em;text-align:left;vertical-align:top}
+th{background:#f0f0f0}
+blockquote{border-left:4px solid #bbb;margin:1em 0;padding:.2em 1em;color:#444;background:#fafafa}
+a{color:#0645ad}
+.doc-meta{color:#666;font-size:.85em;border-bottom:1px dashed #bbb;padding-bottom:.6em;margin-bottom:1.2em}
+footer{margin-top:2.5em;border-top:1px solid #ccc;color:#666;font-size:.8em;padding-top:.8em}
+pre.mermaid{background:#fff;border:1px dashed #999}
+@media (prefers-color-scheme:dark){
+body{color:#ddd;background:#111} h1{border-color:#888} h2{border-color:#555}
+code{background:#2a2a2a} pre{background:#1b1b1b;border-color:#444}
+th{background:#222} th,td{border-color:#555} blockquote{color:#bbb;background:#191919;border-color:#666}
+a{color:#6fa8ff} .doc-meta,footer{color:#999}}
+</style>
+</head>
+<body>
+<main class="doc">
+<h1 id="agent-creation-checklist">Agent Creation Checklist</h1>
+<p>This checklist is MANDATORY for every new agent. Do not skip steps. Validate after each step. Fail closed if a step cannot be completed.</p>
+<h2 id="pre-creation">Pre-creation</h2>
+<ul><li>[ ] 1. Survey TKV knowledge directory using be-great skill (identify the specific /opt/tkv-local/ path for this agent's domain)</li><li>[ ] 2. Confirm owner directive or governor work order authorizes the agent</li><li>[ ] 3. Confirm model lane assignment (owner decision)</li><li>[ ] 4. Confirm target host and system assignment from system-mapping</li></ul>
+<h2 id="file-creation">File creation</h2>
+<ul><li>[ ] 5. Create agents/&lt;name&gt;/ directory</li><li>[ ] 6. Create charter.md from template (governace/templates/agent/charter.md)</li><li>[ ] 7. Create profile.md from template (governace/templates/agent/profile.md)</li></ul>
+<h2 id="profile-mandatory-sections">Profile mandatory sections</h2>
+<ul><li>[ ] 8. Identity table includes: Name, Role, Family, Class, Reports to, Ultimate owner, Environment, Default mode, Certification authority, Model lane, Verifier, Activation status</li><li>[ ] 9. TKV knowledge directory pointer (specific /opt/tkv-local/ path, NOT generic)</li><li>[ ] 10. be-great standing directive (mandatory: 'survey TKV before acting')</li><li>[ ] 11. SSH credential handling section (grep-only extraction, askpass pattern, never source/eval, never Read tool on .local.env)</li><li>[ ] 12. Skills available section (be-great, eli5, bro, wait-what, quick, human, corp, copy, create-agent)</li><li>[ ] 13. Provenance section</li></ul>
+<h2 id="registration">Registration</h2>
+<ul><li>[ ] 14. Add to agents/README.md roster table</li><li>[ ] 15. Add to AGENTS.md family taxonomy table</li><li>[ ] 16. Add to AGENTS.md per-agent model lanes (labeled correction if existing lane is superseded)</li><li>[ ] 17. Add to servers/system-mapping.md (S&lt;N&gt; row in target-state table + new agents table)</li><li>[ ] 18. Add to servers/SERVER-REGISTRY.md if host-bound (with labeled correction if stale)</li><li>[ ] 19. Create KDD registration document at governace/decisions/KDD-&lt;NNNN&gt;-&lt;name&gt;-registration.md</li><li>[ ] 20. Add KDD to scripts/wiki/manifest.txt</li><li>[ ] 21. Create catalog records: knowledge/catalog/documents/DOC-agent-&lt;name&gt;-charter.yaml and DOC-agent-&lt;name&gt;-profile.yaml</li><li>[ ] 22. Create catalog record: knowledge/catalog/documents/DOC-kdd-&lt;NNNN&gt;-&lt;name&gt;-registration.yaml</li><li>[ ] 23. Add all 3 catalog records to knowledge/catalog/index.yaml</li></ul>
+<h2 id="verification">Verification</h2>
+<ul><li>[ ] 24. Verify model lane via OmniRoute (if cloud lane: curl models endpoint, confirm model in catalog; if local lane: confirm Ollama serving)</li><li>[ ] 25. Run python3 scripts/wiki/render.py — all manifest docs in sync</li><li>[ ] 26. Run python3 scripts/validate.py — must be 5/5 PASS</li><li>[ ] 27. Commit</li></ul>
+<h2 id="post-creation-hook">Post-creation hook</h2>
+<p>The agent-creation-check.sh hook (scripts/hooks/) fires automatically on Write|Edit to agents/ and warns if any checklist items are missing.</p>
+</main>
+<footer>Source of truth: <code>governace/templates/agent-checklist.md</code> (sha256 <code>f39347e996356349c45271a6a5b0b1850ea631d669a721d6a759f11a4cf9b4bb</code>) · rendered 2026-08-30T04:58Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+
+</body>
+</html>
