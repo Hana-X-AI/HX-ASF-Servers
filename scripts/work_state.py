@@ -209,20 +209,35 @@ def main(argv):
     if cmd == "standup":
         term = set(sch["terminal_statuses"])
         pre = set(sch["pre_dispatch_statuses"])
-        groups = [
+        defs = [
             ("In progress", lambda r: r["status"] == "in-progress"),
             ("Blocked",     lambda r: r["status"] == "blocked"),
             ("Ready",       lambda r: r["status"] == "approved"),
             ("Draft",       lambda r: r["status"] in pre),
             ("Closed",      lambda r: r["status"] in term),
         ]
+        # Compute ONCE and render twice. When the two views were computed
+        # separately the JSON silently lost both the ungrouped rows and the
+        # reconcile queue — the same "visible in one view, invisible in
+        # another" defect this command was just fixed for. A consumer building
+        # a standup from --json must see exactly what a reader sees.
+        groups = [(name, [r for r in rows if pred(r)]) for name, pred in defs]
+        seen = {r["id"] for _, g in groups for r in g}
+        ungrouped = [r for r in rows if r["id"] not in seen]
+        rec = [r for r in rows if str(r.get("reconcile", "none")).lower() != "none"]
+
         if as_json:
-            return _dump({g: [r for r in rows if pred(r)] for g, pred in groups})
+            return _dump({
+                "total": len(rows),
+                "groups": dict(groups),
+                # Always present, even when empty: a consumer must not have to
+                # infer that a key's absence means "none".
+                "ungrouped": ungrouped,
+                "reconcile": rec,
+            })
+
         print("Daily standup — %d goals\n" % len(rows))
-        seen = set()
-        for group, pred in groups:
-            g = [r for r in rows if pred(r)]
-            seen.update(r["id"] for r in g)
+        for group, g in groups:
             print("%s (%d)" % (group, len(g)))
             for r in g:
                 print("   %-46s %s" % (r["id"], r["status"]))
@@ -232,13 +247,11 @@ def main(argv):
         # same "goal invisible to a status report" defect KDD-0021 was written
         # to end. Any status the groups above do not cover surfaces here rather
         # than vanishing.
-        missed = [r for r in rows if r["id"] not in seen]
-        if missed:
-            print("Ungrouped (%d) — status not covered by any standup group:" % len(missed))
-            for r in missed:
+        if ungrouped:
+            print("Ungrouped (%d) — status not covered by any standup group:" % len(ungrouped))
+            for r in ungrouped:
                 print("   %-46s %s" % (r["id"], r["status"]))
             print("")
-        rec = [r for r in rows if str(r.get("reconcile", "none")).lower() != "none"]
         if rec:
             print("Open reconcile items (%d):" % len(rec))
             for r in rec:

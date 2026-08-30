@@ -211,6 +211,28 @@ class WorkStateCLI(_GoalTree):
         finally:
             work_state._schema = orig
 
+    def test_standup_json_shows_everything_the_text_view_shows(self):
+        """Parity, not just correctness. The first fix repaired the TEXT view and
+        was tested only there, so the JSON branch kept both defects: it dropped
+        ungrouped rows AND the reconcile queue. A consumer rendering a standup
+        from --json would have silently lost the governor's decision items —
+        the same "visible in one view, invisible in another" failure the text
+        fix addressed. Both views are computed once and must agree."""
+        self.seed()
+        gid = "2026-08-31-needs-a-call"
+        self.write(gid, "# Goal\n\n" + block(gid, status="in-progress",
+                                             reconcile="pilot log says complete; governor to decide"))
+        _, out = self.run_cmd("standup", "--json")
+        d = json.loads(out)
+        grouped = sum(len(v) for v in d["groups"].values())
+        self.assertEqual(grouped + len(d["ungrouped"]), d["total"])
+        self.assertEqual(d["total"], 8)
+        # the reconcile queue reaches JSON consumers, not only readers
+        self.assertEqual([r["id"] for r in d["reconcile"]], [gid])
+        # empty keys are present, so absence never has to be inferred
+        _, out2 = self.run_cmd("standup", "--json")
+        self.assertIn("ungrouped", json.loads(out2))
+
     def test_unknown_command_exits_2(self):
         rc, _ = self.run_cmd("nonsense")
         self.assertEqual(rc, 2)
