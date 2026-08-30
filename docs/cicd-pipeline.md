@@ -6,7 +6,9 @@ completes in about 3 minutes.
 
 The pipeline's own gates are the repo's existing quality discipline — the same
 commands the factory runs locally. CodeRabbit supplies the automated review gate on
-all pushes (incl. main); the **factory agent applies fixes** (CodeRabbit's own
+feature-branch/PR validation (owner directive 2026-08-30 supersedes running it on
+post-merge `main` pushes — the merged commit was already reviewed as part of the
+PR); the **factory agent applies fixes** (CodeRabbit's own
 supported loop: it detects, the coding agent fixes, ≤2 passes); GitHub platform
 auto-merge merges when the required checks are green. No manual approval gates
 anywhere.
@@ -32,15 +34,19 @@ anywhere.
    behavior: latest tag resolved at run time. Current behavior: pinned
    version. Original wording preserved above.]
 
-**Job `coderabbit-review`** — ALL pushes incl. main (owner directive 2026-08-28:
-"coderabbit should run on every commit regardless of the type"):
+**Job `coderabbit-review`** — feature-branch/PR pushes only (owner directive
+2026-08-30 supersedes the prior all-pushes-incl.-main scope — see amendment log; a
+post-merge re-review of the merged commit produced a red run after a completed
+merge):
 
 10. Checkout (full history for the base diff).
 11. Install the CodeRabbit CLI.
-12. Review: main pushes review the pushed range `BEFORE..HEAD`; branch pushes
-    review vs `origin/main` — `coderabbit review --agent --light --committed`
-    (main) / `--base origin/main` (branches) with the Agentic API key — skips
-    with a notice when `CODERABBIT_API_KEY` is not configured.
+12. Review: the job runs only on non-`main` pushes, so the review always compares
+    against `origin/main` — `coderabbit review --agent --light --base origin/main`
+    with the Agentic API key. (The former `main`-push path that reviewed the
+    pushed range `BEFORE..HEAD` is no longer reached because the job skips on
+    `main`; prior wording preserved as history.) The job is fail-closed on a
+    missing `CODERABBIT_API_KEY`.
     [OPEN CORRECTION 2026-08-30, labeled: CodeRabbit is a required check — a
     missing `CODERABBIT_API_KEY` now FAILS the job (cannot pass vacuously).
     Prior behavior: skip with a notice. Current behavior: fail closed. Original
@@ -71,7 +77,7 @@ history** so pre-existing leaked credentials surface for owner triage
 ```mermaid
 flowchart LR
     A[push to any branch] --> B[gates: lint, tests, build-sync, catalog, secrets]
-    A -->|all pushes incl. main| C[CodeRabbit CLI review]
+    A -->|non-main pushes| C[CodeRabbit CLI review]
     A -->|non-main| D[pr-manage: PR + label + auto-merge + comment]
     B -->|green| E{required checks}
     C -->|no critical/major/minor| E
@@ -82,7 +88,8 @@ flowchart LR
 
 ## The review-fix loop
 
-CodeRabbit CLI reviews the pushed range (main) or the branch diff against `main`
+CodeRabbit CLI reviews the branch diff against `main` (feature-branch/PR
+validation only; the job skips post-merge `main` pushes)
 and emits structured findings. Blocking findings (critical/major/minor —
 zero-tolerance per owner directive 2026-08-28) fail the `coderabbit-review` check,
 which blocks auto-merge. The factory agent (current fixing agent per the roster;
@@ -199,3 +206,18 @@ the "**Flash**" governor reference in the amendment above (fix-loop agent,
 unchanged. The amendment text above is preserved as written; the current
 governor is James. Authority: AGENTS.md governor-rename correction; owner
 decision 2026-08-30.]
+
+[OPEN CORRECTION 2026-08-30, labeled, append-only — CODERABBIT-REVIEW SCOPE:
+the `coderabbit-review` job now runs on **feature-branch/PR pushes only** and
+**skips post-merge pushes to `main`** (owner directive 2026-08-30). The body
+above (§Intro, §Step list steps 10/12, §Lifecycle diagram, §Review-fix loop)
+now reflects this scope. The prior all-pushes-incl.-main wording (owner
+directive 2026-08-28: "coderabbit should run on every commit regardless of the
+type") is preserved as history in the 2026-08-28 amendment block above and in
+the `main`-push `BEFORE..HEAD` review path (no longer reached). Rationale: a
+post-merge re-review of the merged commit re-flagged the same findings and
+produced a red run (ci-cd #61) after a completed merge — the merged commit was
+already reviewed as part of the PR. Deterministic `gates` still run on every
+push including `main`; `coderabbit-review` stays a required check on
+feature-branch/PR validation. Authority: owner decision 2026-08-30; workflow
+`ci-cd.yml` `if: github.ref_name != 'main'` on the `coderabbit-review` job.]

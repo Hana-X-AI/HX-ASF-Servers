@@ -1,13 +1,17 @@
 # ci-cd.yml — HX-ASF-Servers (p8, owner-ratified 2026-08-26; amended 2026-08-28)
 # Trigger: every push to any branch. 18 steps total across three jobs.
 #   gates             — deterministic quality gates (all pushes; happy path ≈3 min)
-#   coderabbit-review — CodeRabbit CLI review gate (ALL pushes incl. main — owner
-#                       directive 2026-08-28: "coderabbit should run on every commit
-#                       regardless of the type"; main pushes review the pushed range
-#                       BEFORE..HEAD, branch pushes review vs origin/main; skips
-#                       cleanly until the API key secret is configured; blocking =
-#                       critical+major+minor per owner directive 2026-08-28 — ALL
-#                       issues block, zero-tolerance)
+#   coderabbit-review — CodeRabbit CLI review gate (feature-branch/PR pushes only;
+#                       owner directive 2026-08-30 supersedes for post-merge main
+#                       pushes — the blocking review no longer runs on main, because
+#                       a post-merge re-review of the merged commit produced a red
+#                       run (ci-cd #61) after a completed merge; it stays a required
+#                       check on feature-branch/PR validation. Prior directive
+#                       2026-08-28 "run on every commit regardless of type" retained
+#                       as history: branch pushes review vs origin/main, main pushes
+#                       used to review BEFORE..HEAD; skips cleanly until the API key
+#                       secret is configured; blocking = critical+major+minor per
+#                       owner directive 2026-08-28 — ALL issues block, zero-tolerance)
 #   pr-manage         — auto-PR, auto-label, auto-merge, PR-comment notifications
 #                         (non-main pushes)
 # Auto-merge is the GitHub platform feature: it fires only when the required checks
@@ -91,6 +95,12 @@ jobs:
 
   coderabbit-review:
     name: coderabbit-review
+    # Owner directive 2026-08-30: run on feature-branch/PR validation only.
+    # Skip post-merge pushes to main — the merged commit was already reviewed
+    # as part of the PR; a post-merge re-review just re-flags the same findings
+    # (red run ci-cd #61 after a completed merge). Required-check status for
+    # PR validation is unchanged. Gates still run on every push incl. main.
+    if: github.ref_name != 'main'
     runs-on: ubuntu-latest
     timeout-minutes: 45
     permissions:
