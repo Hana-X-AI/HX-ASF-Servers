@@ -42,10 +42,10 @@ document:
       target: "automated review criteria for HX-ASF-Servers (stdlib-only scripts; versioned alias-parameterized fixtures; append-only governance Markdown)"
       note: "the three path_instructions are standing repo rules restated as reviewer instructions"
   validation:
-    validated_at: "2026-08-26T20:08:00Z"
+    validated_at: "2026-08-30T15:05:00Z"
     freshness: "current"
     review_due: "on any config edit (re-ingest), or when the CodeRabbit GitHub App is installed (finishing_touches/autofix surface activates)"
-  sha256: "c958d82cd483eec56055d37fe6325c4b9ca2bd4577a474da4c09981e36c26297"
+  sha256: "21d9dcb95f0b91cfc94c68f8dcd75a21eb8336719a7d26fc94eedcd084394b27"
   canonical_location: "/home/hxsa/opt/HX-ASF-Servers/.coderabbit.yaml"
 notes:
   typing_judgment: "Typed contract (governor brief: contract/config class at Carol's schema judgment): a normative, ratified review-policy configuration that binds automated review behavior on the repo — the policy half of the DOC-ci-cd-workflow gate contract; not operational documentation (runbook class rejected)."

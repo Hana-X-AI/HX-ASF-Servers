@@ -98,8 +98,8 @@ This correction remains open.]
   The checklist has 27 steps (items 1-27, validating after each step, fail
   closed). The 22-step wording is preserved here as history; 27 is the active
   count. This correction remains open.]
-- `.kimi-code/skills/create-agent/SKILL.md` — agent-creation skill (DONE;
-  installed to user scope 2026-08-29)
+- `.agents/skills/create-agent/SKILL.md` — agent-creation skill (DONE;
+  installed to user scope 2026-08-29; canonical path per KDD-0020, 2026-08-30)
 - `scripts/hooks/agent-creation-check.sh` — PostToolUse hook, fail-open (DONE;
   registered in `~/.kimi-code/config.toml` 2026-08-29, interface fixed to read
   stdin payload)

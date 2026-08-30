@@ -24,10 +24,16 @@ verified**. Delivery process:
 1. **Hook:** add the `[[hooks]]` block to `~/.kimi-code/config.toml`
    (event, matcher, command, timeout).
 2. **Verify registration:** `grep -c '<hook-name>' ~/.kimi-code/config.toml` → ≥ 1.
-3. **Skill (repo):** create `.kimi-code/skills/<name>/SKILL.md`.
-4. **Skill (user scope):** copy to `~/.kimi-code/skills/<name>/SKILL.md`
-   (`cp -a .kimi-code/skills/<name> ~/.kimi-code/skills/`).
-5. **Verify skill loadable:** `ls ~/.kimi-code/skills/<name>/SKILL.md`.
+3. **Skill (repo, canonical):** create `.agents/skills/<name>/SKILL.md`.
+   `.agents/skills/` is the canonical skill tree (KDD-0020, 2026-08-30); never
+   author or edit a skill inside a mirror.
+4. **Mirror to the tool scopes:** `python3 scripts/skills_sync.py --write`,
+   which rebuilds `.kimi-code/skills/` (Kimi Code) and `.claude/skills/`
+   (Claude Code) from the canonical tree. Verify with
+   `python3 scripts/skills_sync.py --check`; `validate.py` enforces it as SY-3.
+5. **Skill (user scope):** copy to `~/.kimi-code/skills/<name>/SKILL.md`
+   (`cp -a .agents/skills/<name> ~/.kimi-code/skills/`), then verify it is
+   loadable: `ls ~/.kimi-code/skills/<name>/SKILL.md`.
 6. **Reference it:** add to the agent template skills section
    (`governace/templates/agent/profile.md`) and this README table.
 7. **Functional smoke:** test the hook with a stdin-payload pipe AND a direct
