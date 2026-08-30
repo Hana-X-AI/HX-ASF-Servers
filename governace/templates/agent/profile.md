@@ -58,17 +58,24 @@ copies of repo files.
 
 ## 4.5 Skills available
 
-This agent has access to the following skills. Use them as directed:
-- **be-great** — exhaustive evidence-first investigation before acting
-- **eli5** — plain ASD-STE100-style English reporting
-- **bro** — plain language restatement
-- **wait-what** — re-pitch with missing context
-- **quick** — fast answer, action first
-- **human** — casual conversational tone
-- **corp** — formal business English
-- **copy** — ad copy style
-- **create-agent** — for creating/registering new factory agents (reads
-  `governace/templates/agent-checklist.md`, fails closed on missing items)
+**Do not enumerate the common skills here.** `AGENTS.md` §"Skills and trigger
+words" IS the global skill inventory (KDD-0020 D3 / Option A, ratified
+2026-08-30), and every agent inherits ALL of it by default. This section lists
+only the skills that are role-specific ADDITIONS beyond that inventory — for
+most agents that is nothing, and the section reads "None beyond the global
+inventory."
+
+This template previously listed nine skills, which is how the contradiction
+arose: a per-profile list is a second copy of a ratified inventory, it goes
+stale the moment the inventory changes, and `validate.py` sub-check SY-6
+reconciles the inventory against `.agents/skills/` — it cannot reconcile a copy
+scattered across every profile.
+
+Examples of a legitimate entry: `create-agent` for an agent authorised to
+register new agents; the QA subset (`test-planning`, `test-strategy`, …) for
+Bailey and Gordon.
+
+- *(role-specific additions, or "None beyond the global inventory")*
 
 Agent-creation guard: the `scripts/hooks/agent-creation-check.sh` hook
 fires on writes to `agents/` and warns if a new agent directory is missing
