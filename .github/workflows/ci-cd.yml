@@ -61,14 +61,15 @@ jobs:
       - name: Unit tests — wiki renderer suite
         run: python3 scripts/wiki/test_render.py
 
-      - name: Unit tests — work-state engine (O1)
-        run: python3 scripts/test_work_state.py
-
       - name: Build validation — wiki HTML in sync
         run: python3 scripts/wiki/render.py --check
 
       - name: Install PyYAML (validate.py dependency)
         run: python3 -m pip install -q pyyaml
+
+      - name: Unit tests — work-state engine (O1)
+        # After the PyYAML install: work_state.py imports yaml.
+        run: python3 scripts/test_work_state.py
 
       - name: Catalog validation
         run: python3 scripts/validate.py --ci
