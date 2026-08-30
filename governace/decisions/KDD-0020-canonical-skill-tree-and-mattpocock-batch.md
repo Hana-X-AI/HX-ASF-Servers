@@ -135,3 +135,34 @@ names `.kimi-code/skills/` in four places. It is a dated point-in-time
 assessment that was accurate on 2026-08-25 and is left as historical record,
 not rewritten. `KDD-0019` received a labeled append-only correction rather than
 an edit, since ratified KDDs are append-only.
+
+## Amendment 1 (2026-08-30, labeled, append-only)
+
+[OPEN CORRECTION 2026-08-30, labeled, append-only — ADOPTION PASS EXTENDED FROM
+THREE SKILLS TO FIVE: decision **D5** above records `grilling`,
+`domain-modeling`, and `grill-with-docs` as adopted-as-corrected. The CI
+CodeRabbit gate on commit `fdbe905` returned three blocking findings against two
+skills that this KDD had reviewed only for the dangling-dependency defect (F2),
+not against the full standard required by AGENTS.md §"Adoption of provided
+documents". All three were verified against the files before being actioned;
+all three were real. D5 is extended, and the corrected set is now FIVE:
+
+1. `triage` — step 5 did not repeat the mandatory AI disclaimer, so the
+   `ready-for-human` and `wontfix` posting paths could violate the rule stated
+   at the top of that same skill (CodeRabbit major).
+2. `triage` — step 1(a) treated any domain-concept match as an
+   already-implemented `wontfix`, closing requests whose implementation is only
+   partial or adjacent (CodeRabbit major).
+3. `diagnosing-bugs` — `hitl-loop.template.sh` captured every answer with a
+   single-line `read`, so a pasted stack trace silently lost everything after
+   the first newline (CodeRabbit minor). A `capture_multi` helper was added and
+   the error-message prompt switched to it; `sanitize` still collapses newlines,
+   so the documented KEY=VALUE contract is unchanged. Verified by injecting a
+   three-line stack trace: three lines captured, one KEY=VALUE line emitted.
+
+Process finding of record: the intake review in D5 was incomplete. Corrections
+were applied to the three skills whose defects were found by inspection, while
+`triage` and `diagnosing-bugs` were reviewed only for the dependency problem.
+The gate caught what the adoption pass missed. Per-skill provenance blocks now
+exist for all five. `skills-lock.json` marks five of seven `hxCorrected`.
+Authority: CodeRabbit CI gate (run 33316342207) + owner direction 2026-08-30.]

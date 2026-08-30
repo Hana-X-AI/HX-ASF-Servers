@@ -15,22 +15,23 @@
       "upstreamPath": "skills/engineering/diagnosing-bugs/SKILL.md",
       "upstreamSha256": "77f3cf31bc99b2f49af943222526531fcc9fc41d047626d3640e875e85af3e84",
       "installPath": ".agents/skills/diagnosing-bugs/SKILL.md",
-      "hxCorrected": false,
-      "installerComputedHash": "37b5e9c624513551da790b52864dc8c84bff996a6d03a380cc6facdcc0a88354"
+      "hxCorrected": true,
+      "installerComputedHash": "37b5e9c624513551da790b52864dc8c84bff996a6d03a380cc6facdcc0a88354",
+      "correctionsRecordedIn": ".agents/skills/diagnosing-bugs/scripts/hitl-loop.template.sh (header provenance block)"
     },
     "domain-modeling": {
       "upstreamPath": "skills/engineering/domain-modeling/SKILL.md",
       "upstreamSha256": "327a2b50620e2fd70abc6893cd6965e76b20f8d0adb0dc2c8d5eb3845efb643e",
       "installPath": ".agents/skills/domain-modeling/SKILL.md",
       "hxCorrected": true,
-      "correctionsRecordedIn": ".agents/skills/domain-modeling/SKILL.md \u00a7Provenance and corrections"
+      "correctionsRecordedIn": ".agents/skills/domain-modeling/SKILL.md §Provenance and corrections"
     },
     "grill-with-docs": {
       "upstreamPath": "skills/engineering/grill-with-docs/SKILL.md",
       "upstreamSha256": "7de372c13488f1ee96cc11cd8907b56b6809cc93eef776eeddd37de6b6cbe3fe",
       "installPath": ".agents/skills/grill-with-docs/SKILL.md",
       "hxCorrected": true,
-      "correctionsRecordedIn": ".agents/skills/grill-with-docs/SKILL.md \u00a7Provenance and corrections",
+      "correctionsRecordedIn": ".agents/skills/grill-with-docs/SKILL.md §Provenance and corrections",
       "installerComputedHash": "35e62aa423aaeab6a414bcac273f56dfb17802ef2334b41b6a3b00f28196c8cf"
     },
     "grilling": {
@@ -38,7 +39,7 @@
       "upstreamSha256": "10ff989e7498b23b5acb49d5048f11dcd906757d2f79c5cdf8a00001381296f2",
       "installPath": ".agents/skills/grilling/SKILL.md",
       "hxCorrected": true,
-      "correctionsRecordedIn": ".agents/skills/grilling/SKILL.md \u00a7Provenance and corrections"
+      "correctionsRecordedIn": ".agents/skills/grilling/SKILL.md §Provenance and corrections"
     },
     "handoff": {
       "upstreamPath": "skills/productivity/handoff/SKILL.md",
@@ -51,8 +52,9 @@
       "upstreamPath": "skills/engineering/triage/SKILL.md",
       "upstreamSha256": "623a2ed692bdc77d2090e2a3dea3b627dd722ad3bbaca0be83aada75292c8fc4",
       "installPath": ".agents/skills/triage/SKILL.md",
-      "hxCorrected": false,
-      "installerComputedHash": "b954d74c219c805bf353d6642251a713c9b2e9cfdb11babfe588bcfe7dfd16d5"
+      "hxCorrected": true,
+      "installerComputedHash": "b954d74c219c805bf353d6642251a713c9b2e9cfdb11babfe588bcfe7dfd16d5",
+      "correctionsRecordedIn": ".agents/skills/triage/SKILL.md §Provenance and corrections"
     },
     "writing-for-agents": {
       "upstreamPath": "skills/productivity/writing-for-agents/SKILL.md",
