@@ -175,8 +175,7 @@ as history; THIS correction block is the current reading.]
 
 3. **Fix-loop agent** — the doc references "Kimi-K3 / john" as the
    factory agent (§Review-fix loop). The governor role is now held by
-   **James** (owner appointment 2026-08-29; persona renamed from Flash
-   2026-08-30); the fix-loop agent is
+   **Flash** (owner appointment 2026-08-29); the fix-loop agent is
    whoever the governor dispatches under a work order — typically
    routed through Mia to the appropriate engineering lane. The
    "Kimi-K3 / john" wording is STALE.
@@ -187,3 +186,11 @@ now APPLIED to the document body — the `coderabbit-review` job (§Step list,
 threshold reads "critical+major+minor (zero-tolerance)", and the fix-loop
 agent reference no longer names "Kimi-K3 / john". The 2026-08-28 amendment
 text above is preserved as history; the body is the current reading.]
+
+[OPEN CORRECTION 2026-08-30, labeled, append-only — GOVERNOR PERSONA RENAME:
+the "**Flash**" governor reference in the amendment above (fix-loop agent,
+2026-08-28) reads as the governor role — the persona was renamed to
+**James** on 2026-08-30 (owner decision); the model lane DeepSeek V4 Flash is
+unchanged. The amendment text above is preserved as written; the current
+governor is James. Authority: AGENTS.md governor-rename correction; owner
+decision 2026-08-30.]
