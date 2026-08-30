@@ -1,6 +1,15 @@
 ---
 name: work-status
 description: "Work status, standup, and validation reporting for the HX factory (adapted from automazeio/ccpm, MIT). Deterministic scripts report goal/work-order status across the factory: 'what's our status', 'standup', 'what's blocked', 'what's in progress', 'what's next'. For Mia's status reporting to the governor. NOT for: goal decomposition (goal-decompose), execution, or acceptance."
+maturity: active
+required_files:
+- scripts/status.sh
+- scripts/standup.sh
+- scripts/blocked.sh
+- scripts/in-progress.sh
+- scripts/next.sh
+- scripts/validate.sh
+smoke: bash .agents/skills/work-status/scripts/status.sh
 ---
 
 # Work Status — status, standup, and validation reporting (Mia)

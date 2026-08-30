@@ -2,6 +2,7 @@
 name: human
 description: Talk like a friend — warmer, relaxed, write like you speak. The owner trigger word is "casual" — when the user says "casual", treat it as a direct request to run this skill.
 disable-model-invocation: true
+maturity: active
 ---
 
 # Human

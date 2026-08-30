@@ -96,8 +96,11 @@ inventory — do not add skills silently.
 
 ## Hooks
 
-`.claude/settings.json` registers five repo hooks. They are the same governed
-scripts Kimi Code uses, so they are single-sourced in `scripts/hooks/`:
+`.claude/settings.json` registers six repo hooks. They are the same governed
+scripts Kimi Code uses, so they are single-sourced in `scripts/hooks/`.
+`governace/hooks/manifest.yaml` is the authoritative declaration and
+`validate.py` sub-check SY-5 verifies it against the live registrations —
+this table is a reader's summary, not the source of truth:
 
 | Hook | Event | Mode |
 |---|---|---|
@@ -108,7 +111,7 @@ scripts Kimi Code uses, so they are single-sourced in `scripts/hooks/`:
 | `test-log-append.sh` | PostToolUse `Write\|Edit` | advisory |
 | `governor-gate.sh` | PostToolUse `Write\|Edit` | advisory |
 
-The four advisory hooks read the edited path from the JSON key `path` (the Kimi
+The five advisory hooks read the edited path from the JSON key `path` (the Kimi
 Code payload shape). Claude Code sends `tool_input.file_path` instead, so they
 are wrapped in `scripts/hooks/claude-payload-shim.sh`, which translates one
 shape into the other. `secret-boundary.sh` is registered **without** the shim —

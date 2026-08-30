@@ -1,6 +1,7 @@
 ---
 name: test-environments
 description: "Design and stand up test environments for the HX factory's QA lane (Gordon): environment tiers (dev/CI/preview/staging/prod), parity auditing against production, seed-data lifecycle, and external-dependency stubbing at the HTTP boundary. Use when: 'set up test environment', 'staging parity', 'environment tiers', 'spin up test infra'. NOT for: choosing mock-vs-stub per dependency, factory/fixture data patterns, or authoring the test plan/scripts (Bailey's lane). Adapted from petrkindlmann/qa-skills v3.0.0 (MIT)."
+maturity: active
 ---
 
 # Test Environments — environment strategy and setup (Gordon)

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Generated from CLAUDE.md (sha256 f232870b97e9d4d198f7d65f54b9cb780d967eb1b900e1ac277905d719f35eef) by scripts/wiki/render.py on 2026-08-30T15:03Z.
+<!-- Generated from CLAUDE.md (sha256 8518f5f307734015069b16ddb95bae63d9dbe7e464c968c0a1e224d777faa8de) by scripts/wiki/render.py on 2026-08-30T20:50Z.
      Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
 <html lang="en">
 <head>
@@ -63,14 +63,14 @@ python3 scripts/skills_sync.py --check   # verify; validate.py SY-3 enforces it<
 <p>Editing a mirror is always wrong — the next sync overwrites it and SY-3 fails until then. <code>archify</code> is canonical-only (a Node CLI, not a prompt skill); the mirrors carry a pointer stub.</p>
 <p><code>AGENTS.md</code> §"Skills and trigger words" is the authoritative inventory and lists each skill's owner trigger word. To change the effective set, amend that inventory — do not add skills silently.</p>
 <h2 id="hooks">Hooks</h2>
-<p><code>.claude/settings.json</code> registers five repo hooks. They are the same governed scripts Kimi Code uses, so they are single-sourced in <code>scripts/hooks/</code>:</p>
+<p><code>.claude/settings.json</code> registers six repo hooks. They are the same governed scripts Kimi Code uses, so they are single-sourced in <code>scripts/hooks/</code>. <code>governace/hooks/manifest.yaml</code> is the authoritative declaration and <code>validate.py</code> sub-check SY-5 verifies it against the live registrations — this table is a reader's summary, not the source of truth:</p>
 <table><thead><tr><th>Hook</th><th>Event</th><th>Mode</th></tr></thead><tbody><tr><td><code>secret-boundary.sh</code></td><td>PreToolUse `Write\</td><td>Edit\</td><td>Bash`</td><td>mode file; <code>warn</code> today, <code>block</code> on graduation</td></tr><tr><td><code>validate-changed.sh</code></td><td>PostToolUse `Write\</td><td>Edit`</td><td>advisory</td></tr><tr><td><code>agent-creation-check.sh</code></td><td>PostToolUse `Write\</td><td>Edit`</td><td>advisory</td></tr><tr><td><code>render-sync.sh</code></td><td>PostToolUse `Write\</td><td>Edit`</td><td>advisory</td></tr><tr><td><code>test-log-append.sh</code></td><td>PostToolUse `Write\</td><td>Edit`</td><td>advisory</td></tr><tr><td><code>governor-gate.sh</code></td><td>PostToolUse `Write\</td><td>Edit`</td><td>advisory</td></tr></tbody></table>
-<p>The four advisory hooks read the edited path from the JSON key <code>path</code> (the Kimi Code payload shape). Claude Code sends <code>tool_input.file_path</code> instead, so they are wrapped in <code>scripts/hooks/claude-payload-shim.sh</code>, which translates one shape into the other. <code>secret-boundary.sh</code> is registered <strong>without</strong> the shim — it greps the whole payload for secret patterns and needs it unmodified.</p>
+<p>The five advisory hooks read the edited path from the JSON key <code>path</code> (the Kimi Code payload shape). Claude Code sends <code>tool_input.file_path</code> instead, so they are wrapped in <code>scripts/hooks/claude-payload-shim.sh</code>, which translates one shape into the other. <code>secret-boundary.sh</code> is registered <strong>without</strong> the shim — it greps the whole payload for secret patterns and needs it unmodified.</p>
 <p>Advisory hooks always exit 0; they are feedback, not gates. The hard gate is CI's <code>gates</code> job plus <code>validate.py</code>.</p>
 <h2 id="approval-discipline">Approval discipline</h2>
 <p>Proceed when the ratified rules, process, and audit trail for a step are in place — approval is pre-granted. Halt and escalate only for potential serious harm: destructive or irreversible actions, governance changes, new external shared state, or scope expansion. When in doubt, act reversibly and report rather than pause.</p>
 </main>
-<footer>Source of truth: <code>CLAUDE.md</code> (sha256 <code>f232870b97e9d4d198f7d65f54b9cb780d967eb1b900e1ac277905d719f35eef</code>) · rendered 2026-08-30T15:03Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+<footer>Source of truth: <code>CLAUDE.md</code> (sha256 <code>8518f5f307734015069b16ddb95bae63d9dbe7e464c968c0a1e224d777faa8de</code>) · rendered 2026-08-30T20:50Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
 
 </body>
 </html>

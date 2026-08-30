@@ -2,6 +2,9 @@
 name: grill-with-docs
 description: "An interview to sharpen a plan or design, which also records decisions and vocabulary as we go. Calls grilling (HX: capped at 5 questions per round) and domain-modeling (HX: decisions are KDDs under governace/decisions/). Not the factory scope-lock gate — that is grill-me."
 disable-model-invocation: true
+maturity: active
+required_files:
+- agents/openai.yaml
 ---
 
 Call the Skill tool twice, for "grilling" and "domain-modeling".

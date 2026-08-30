@@ -54,8 +54,11 @@ jobs:
       - name: Lint — byte-compile all Python
         run: python3 -m compileall -q scripts pilots/PILOT-HX1-OLLAMA-QWEN27B-001/fixtures
 
-      - name: Lint — shellcheck repo hooks
-        run: shellcheck scripts/hooks/*.sh
+      - name: Lint — shellcheck repo hooks and skill scripts
+        # Skill scripts were unlinted until 2026-08-30. The work-status wrappers
+        # locate the engine by searching upward, which is exactly the kind of
+        # shell that wants a linter watching it.
+        run: shellcheck scripts/hooks/*.sh .agents/skills/*/scripts/*.sh
 
       - name: Unit tests — fixtures regression suite
         run: python3 pilots/PILOT-HX1-OLLAMA-QWEN27B-001/fixtures/test_fixtures.py
@@ -72,6 +75,14 @@ jobs:
       - name: Unit tests — work-state engine (O1)
         # After the PyYAML install: work_state.py imports yaml.
         run: python3 scripts/test_work_state.py
+
+      - name: Unit tests — hook manifest verifier (O5)
+        run: python3 scripts/test_hooks_verify.py
+
+      - name: Skill registry — smoke every active skill (O7)
+        # validate.py runs the STATIC half as SY-6. Smokes execute skill
+        # commands, so they run here rather than inside the read-only validator.
+        run: python3 scripts/skills_registry.py --smoke
 
       - name: Catalog validation
         run: python3 scripts/validate.py --ci

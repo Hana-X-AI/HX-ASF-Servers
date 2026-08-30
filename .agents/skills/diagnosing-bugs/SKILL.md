@@ -1,6 +1,14 @@
 ---
 name: diagnosing-bugs
 description: Diagnosis loop for hard bugs and performance regressions. Use when the user says "diagnose"/"debug this", or reports something broken/throwing/failing/slow.
+maturity: active
+required_files:
+- scripts/hitl-loop.template.sh
+- agents/openai.yaml
+smoke: null
+smoke_skip_reason: The .sh it ships is a TEMPLATE, not a runnable script — it is
+  copied and edited per investigation, and its steps block waiting on human input. Running it
+  unedited would hang, so CI syntax-checks it via shellcheck instead.
 ---
 
 # Diagnosing Bugs

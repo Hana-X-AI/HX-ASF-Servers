@@ -1,6 +1,9 @@
 ---
 name: grilling
 description: "Design-tree interview that stress-tests a plan, decision, or idea in rounds. HX adaptation of mattpocock/skills grilling (MIT): question rounds are capped at 5 per round per owner directive 2026-08-30. NOT the factory scope-lock gate — that is grill-me. Use for design and product stress-testing, typically under grill-with-docs or triage."
+maturity: active
+required_files:
+- agents/openai.yaml
 ---
 
 # Grilling — design-tree interview (HX, ≤5 questions per round)

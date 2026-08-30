@@ -1,6 +1,7 @@
 ---
 name: ci-cd-integration
 description: "Wire the HX factory's pipelines to run test suites correctly (Gordon): trigger-to-suite mapping, parallelism and sharding, artifact/evidence storage, flaky-test quarantine, coverage quality gates, and keyless deployment. Use when: 'CI/CD', 'pipeline', 'test in CI', 'continuous integration', 'test automation pipeline', 'shard tests in CI'. NOT for: per-test flaky healing at runtime (test-reliability), go/no-go release decisions (release-readiness), or authoring the tests themselves (Bailey's lane). Adapted from petrkindlmann/qa-skills v3.0.0 (MIT)."
+maturity: active
 ---
 
 # CI/CD Integration — pipelines that run the tests (Gordon)

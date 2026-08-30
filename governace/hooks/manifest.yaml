@@ -1,0 +1,127 @@
+# manifest.yaml — the declared hook set (O5, 2026-08-30)
+#
+# WHY THIS EXISTS
+# Hooks were declared in three prose tables that all disagreed. On 2026-08-30
+# `CLAUDE.md` said "five repo hooks" above a six-row table and "the four
+# advisory hooks" when there were five; `scripts/README.md` listed two;
+# `DOC-scripts-hooks.yaml` recorded two and carried a stale component hash.
+# Nothing compared any of them to what is actually registered, so a hook could
+# be renamed, unregistered, or silently no-op and no check would notice.
+#
+# This file is the single declaration. `scripts/hooks_verify.py` compares it to
+# the live registrations; `validate.py` runs that as sub-check SY-5.
+#
+# TWO REGISTRATION SCOPES, DELIBERATELY DIFFERENT
+#   claude  — .claude/settings.json, in Git, deterministic, checked in CI.
+#   kimi    — ~/.kimi-code/config.toml, user scope, OUTSIDE Git. Advisory and
+#             local-only: CI has no such file and must never claim it verified
+#             user-scope state.
+#
+# The shim is the reason they differ. The five PostToolUse hooks were written
+# for Kimi Code, whose payload names the edited file `path`. Claude Code sends
+# `tool_input.file_path`, and the literal string `"path"` never appears in
+# `"file_path"`, so an unshimmed hook matches nothing and exits 0 — a silent
+# no-op, the worst failure mode for a guardrail. So Claude registrations wrap
+# each one in claude-payload-shim.sh, and Kimi registrations do not.
+#
+# secret-boundary.sh is registered WITHOUT the shim in both scopes: it greps the
+# whole raw payload for secret patterns and must receive it unmodified.
+#
+# SECRET BOUNDARY FOR THE VERIFIER ITSELF
+# ~/.kimi-code/config.toml holds live provider credentials alongside the hook
+# blocks. hooks_verify.py extracts [[hooks]] entries only and never echoes,
+# stores, or reports any other line of that file. See its module docstring.
+
+version: 1
+
+# Minimum seconds each hook needs. Timeouts are operational tuning and the two
+# scopes legitimately differ, so equality is NOT required — but a timeout below
+# the floor silently kills the hook mid-run, which looks identical to a hook
+# that found nothing. Values are the lower of the two currently-registered
+# settings, so today's config passes and a future reduction fails.
+hooks:
+  - name: secret-boundary
+    script: scripts/hooks/secret-boundary.sh
+    event: PreToolUse
+    matcher: Write|Edit|Bash
+    enforcement: enforcing        # the only hook that can block; exit 2 when mode=block
+    shim: never                   # greps the raw payload; must not be rewritten
+    min_timeout: 10
+    sha256: 34df958144a51934472f69adda0b5cfefd63119b2e595606b70298cec5e198bf
+    scopes: [claude, kimi]
+    note: >-
+      Mode is read from scripts/hooks/secret-boundary.mode at run time. Today
+      that file reads `warn`, so the hook reports and exits 0. Graduation to
+      `block` is O6 and is gated on a false-positive regression corpus.
+
+  - name: validate-changed
+    script: scripts/hooks/validate-changed.sh
+    event: PostToolUse
+    matcher: Write|Edit
+    enforcement: advisory         # always exit 0; the hard gate is CI + validate.py
+    shim: claude-only
+    min_timeout: 30
+    sha256: ee219c06afb521aeb904f4e014f0bb7d670bb64198b92b3d83faf61f2b6b25c5
+    scopes: [claude, kimi]
+
+  - name: agent-creation-check
+    script: scripts/hooks/agent-creation-check.sh
+    event: PostToolUse
+    matcher: Write|Edit
+    enforcement: advisory
+    shim: claude-only
+    min_timeout: 15
+    sha256: 748539d34d7e4a302ed25c4e9a2cfd6ab136bd351996796d54601223086432a0
+    scopes: [claude, kimi]
+
+  - name: render-sync
+    script: scripts/hooks/render-sync.sh
+    event: PostToolUse
+    matcher: Write|Edit
+    enforcement: advisory
+    shim: claude-only
+    min_timeout: 60
+    sha256: 4501991ab8fef118ffc3e3fa015644633d51903083df8e59db4f4f91092de7a5
+    scopes: [claude, kimi]
+
+  - name: test-log-append
+    script: scripts/hooks/test-log-append.sh
+    event: PostToolUse
+    matcher: Write|Edit
+    enforcement: advisory
+    shim: claude-only
+    min_timeout: 15
+    sha256: 5cd359a45b6189315f9fb3830094146b9ebeeb1bd1cd71d58b3d9beeb2488a91
+    scopes: [claude, kimi]
+
+  - name: governor-gate
+    script: scripts/hooks/governor-gate.sh
+    event: PostToolUse
+    matcher: Write|Edit
+    enforcement: advisory
+    shim: claude-only
+    min_timeout: 15
+    sha256: 289660ae83106e9a19b0a357124ad8e22e73e1bdd10d818a83708da265aafd8e
+    scopes: [claude, kimi]
+
+# Not a hook: a payload translator invoked BY the claude registrations. Listed
+# so its digest is governed and it cannot be swapped silently — it sits between
+# the runtime and every advisory hook, and a broken shim turns all five into
+# silent no-ops without changing any hook itself.
+helpers:
+  - name: claude-payload-shim
+    script: scripts/hooks/claude-payload-shim.sh
+    sha256: aed63fba35f87bc624f401f6f8d1ad533a15f6f1df096fd53910c25754c69dfd
+
+# The enforcement switch. It is a tracked file whose single word decides whether
+# the one enforcing hook can block, so its content and digest are declared here.
+# It was group-writable and ungoverned until this manifest existed.
+mode_files:
+  - path: scripts/hooks/secret-boundary.mode
+    expected: warn
+    sha256: 7597e6b3a37792a557b9f88f3a8ed8a8eac0714b587cd1ffa321af61493d141e
+    note: >-
+      `expected` is the ratified current mode, not a preference. Changing it is
+      the O6 graduation decision and must land with the regression corpus that
+      justifies it — editing this line alone is the change, so it cannot happen
+      unnoticed.

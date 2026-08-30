@@ -1,6 +1,7 @@
 ---
 name: test-strategy
 description: "Produce a multi-quarter QA strategy document for the HX factory's QA lane (Bailey): scope, risk-based prioritization, test levels (unit/integration/E2E), pyramid analysis, entry/exit criteria, quality KPIs, tool selection rationale, CI scaling levers, and a phased timeline. Use when: 'test strategy', 'QA strategy doc', 'testing approach', 'QA roadmap', 'multi-quarter QA direction'. NOT for: a single-sprint or single-release plan (test-planning), or identifying which areas carry the most risk (risk-based-testing first). Adapted from petrkindlmann/qa-skills v3.0.0 (MIT)."
+maturity: active
 ---
 
 # Test Strategy — multi-quarter QA direction (Bailey)

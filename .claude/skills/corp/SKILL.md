@@ -2,6 +2,7 @@
 name: corp
 description: Executive-summary tone — formal business English, boardroom register. The owner trigger word is "formal" — when the user says "formal", treat it as a direct request to run this skill.
 disable-model-invocation: true
+maturity: active
 ---
 
 # Corp

@@ -21,7 +21,10 @@ This checklist is MANDATORY for every new agent. Do not skip steps. Validate aft
 - [ ] 9. TKV knowledge directory pointer (specific /opt/tkv-local/ path, NOT generic)
 - [ ] 10. be-great standing directive (mandatory: 'survey TKV before acting')
 - [ ] 11. SSH credential handling section (grep-only extraction, askpass pattern, never source/eval, never Read tool on .local.env)
-- [ ] 12. Skills available section (be-great, eli5, bro, wait-what, quick, human, corp, copy, create-agent)
+- [ ] 12. Skills available section lists ONLY role-specific additions beyond the global
+      inventory in `AGENTS.md` §"Skills and trigger words" (KDD-0020 D3) — or states
+      "None beyond the global inventory". Enumerating the common skills here is a
+      defect: it duplicates a ratified inventory that SY-6 reconciles mechanically.
 - [ ] 13. Provenance section
 
 ## Registration

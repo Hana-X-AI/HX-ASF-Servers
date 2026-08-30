@@ -1,6 +1,7 @@
 ---
 name: be-great
 description: Perform exhaustive, evidence-first investigation and review for requests such as "be great," "go deep," "deep dive," "turn over every rock," "review thoroughly," or equivalent requests for the best defensible answer rather than a quick analysis. Inspect all materially relevant user-provided, local, project, historical, private, connected, and public sources available; identify authority; verify current facts; reconcile contradictions; challenge assumptions; follow downstream implications; pressure-test alternatives; and produce a clear verdict, recommendations, and durable Markdown and/or HTML artifacts when warranted.
+maturity: active
 ---
 
 # Be Great

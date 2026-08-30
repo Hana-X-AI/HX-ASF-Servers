@@ -97,6 +97,8 @@ if [ "${1:-}" = "--selftest" ]; then
   t "csi-sgr"       "red"         "$(sanitize "$(printf '\033[31mred\033[0m')")"
   t "csi-cursor"    "moved"       "$(sanitize "$(printf '\033[2J\033[10;10Hmoved')")"
   t "osc-title"     "title"       "$(sanitize "$(printf '\033]0;title\atitle')")"
+  # shellcheck disable=SC1003  # `\\` is a literal backslash in the printf format:
+  # ESC \ is the OSC-8 string terminator this case must inject. Not a quote escape.
   t "osc-hyperlink" "Click"       "$(sanitize "$(printf '\033]8;;https://evil\x1b\\Click\x1b]8;;\x1b\\')")"
   t "c1-csi"        "c1clean"     "$(sanitize "$(printf '\23331m\220c1clean')")"
   t "c1-osc"        "osc"         "$(sanitize "$(printf '\2350;title\007osc')")"

@@ -6,6 +6,14 @@ metadata:
   version: "2.16"
   author: tt-a1i
   based_on: Cocoon-AI/architecture-diagram-generator (MIT, v1.0)
+maturity: active
+required_files:
+- bin/archify.mjs
+- package.json
+smoke: null
+smoke_skip_reason: Vendored Node CLI. Its 83-test suite resolves ../docs/index.html and ../README.md relative
+  to a parent directory that has never existed in this repository (see tests/README.md); repairing the
+  vendored suite is out of scope for the registry.
 ---
 
 # Archify

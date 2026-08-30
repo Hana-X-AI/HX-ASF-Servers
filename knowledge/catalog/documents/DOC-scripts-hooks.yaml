@@ -1,55 +1,70 @@
 document:
-  id: "DOC-scripts-hooks"
-  title: "scripts/hooks/ — Kimi Code hook script system (secret-boundary U5/UD4 pilot; validate-changed U3/UD3 advisory; README placement convention)"
-  type: "runbook"
-  declared_purpose: "Repo home of the factory's Kimi Code hook scripts (owner decisions UD3/UD4 2026-08-25, state log row 60; README is the placement convention answering assessment question Q-C). Convention: hook SCRIPTS live here, repo-versioned and reviewed like any code; hook REGISTRATIONS live in the user-scope ~/.kimi-code/config.toml [[hooks]] array — personal config, never committed, NOT repo content (external registration; see notes). Registered hooks: (1) secret-boundary.sh — PreToolUse, matcher Write|Edit|Bash, mode from secret-boundary.mode ('warn' for the pilot week, then 'block' after measured pilot and owner graduation); intercepts secret-shaped content before it lands in a file or command via THREE detection layers: generic credential patterns (PEM blocks, cloud/chat tokens, live-looking password assignments; explicit REDACTED/withheld allowance), the literal credential READ AT EXECUTION from the protected source's credential-record table row (awk; never printed, logged, stored, or copied — askpass discipline; unreadable file = layer skipped silently, fail-open), and protected-source copy-verb references (cat|cp|dd|tee|scp|rsync|tar + ssh-info.md — read-at-execution patterns awk/sed/grep/head explicitly allowed). (2) validate-changed.sh — PostToolUse, matcher Write|Edit, advisory only (exit 0 always): runs scripts/validate.py --changed <edited file> and surfaces failures into context with the reproduction command (the U3 pilot). Rules for every hook: repo-reviewed, stdlib/POSIX, no network, no host access, no sudo, no MCP; never reads protected credential files except the documented execution-time read in secret-boundary.sh; fail-open philosophy (hook errors must never break work — interception layers, not sole barriers); blocking (exit 2) only after a measured warn-mode pilot and owner graduation; the validation hook calls the single validator command — hooks never reimplement checks."
-  inferred_value: "INFERENCE: layer 2 makes this the first pre-hoc consumer of the protected credential resource — it strengthens the boundary but, being fail-open by design, can never be cited as the sole barrier; CAT-05, the protected-resource convention, and owner attestation remain the secret boundary (carried forward from the O1 narrowed guarantee and the assessments-wave follow-up)."
+  id: DOC-scripts-hooks
+  title: scripts/hooks/ — repo hook script system (6 registered hooks + payload shim; declared in governace/hooks/manifest.yaml, verified by validate.py SY-5)
+  type: runbook
+  declared_purpose: 'Repo home of the factory''s Kimi Code hook scripts (owner decisions UD3/UD4 2026-08-25, state log row 60; README is the placement convention answering assessment question Q-C). Convention: hook SCRIPTS live here, repo-versioned and reviewed like any code; hook REGISTRATIONS live in TWO scopes: .claude/settings.json (in Git, deterministic, verified in CI) and the user-scope ~/.kimi-code/config.toml [[hooks]] array (personal config, never committed). Both are now compared against a single declaration — governace/hooks/manifest.yaml, added 2026-08-30 (O5) — by scripts/hooks_verify.py, run as validate.py sub-check SY-5. The manifest declares per hook the event, matcher, advisory-vs-enforcing class, shim requirement, minimum timeout and sha256, plus the digest of claude-payload-shim.sh and the content AND digest of secret-boundary.mode (the enforcement switch, previously group-writable and ungoverned). Before SY-5 nothing compared any declaration to the live registrations, and three prose tables that claimed to list the hooks all disagreed. The in-Git scope failing to exist is a hard failure; the user scope is advisory because CI has no such file and must never claim it verified user-scope state. hooks_verify.py reads [[hooks]] entries ONLY from the user config, which also holds live provider credentials. Registered hooks: (1) secret-boundary.sh — PreToolUse, matcher Write|Edit|Bash, mode from secret-boundary.mode (''warn'' for the pilot week, then ''block'' after measured pilot and owner graduation); intercepts secret-shaped content before it lands in a file or command via THREE detection layers: generic credential patterns (PEM blocks, cloud/chat tokens, live-looking password assignments; explicit REDACTED/withheld allowance), the literal credential READ AT EXECUTION from the protected source''s credential-record table row (awk; never printed, logged, stored, or copied — askpass discipline; unreadable file = layer skipped silently, fail-open), and protected-source copy-verb references (cat|cp|dd|tee|scp|rsync|tar + ssh-info.md — read-at-execution patterns awk/sed/grep/head explicitly allowed). (2) validate-changed.sh — PostToolUse, matcher Write|Edit, advisory only (exit 0 always): runs scripts/validate.py --changed <edited file> and surfaces failures into context with the reproduction command (the U3 pilot). Rules for every hook: repo-reviewed, stdlib/POSIX, no network, no host access, no sudo, no MCP; never reads protected credential files except the documented execution-time read in secret-boundary.sh; fail-open philosophy (hook errors must never break work — interception layers, not sole barriers); blocking (exit 2) only after a measured warn-mode pilot and owner graduation; the validation hook calls the single validator command — hooks never reimplement checks. FULL REGISTERED SET (6, reconciled 2026-08-30 against .claude/settings.json and the manifest): secret-boundary.sh (PreToolUse Write|Edit|Bash — the ONLY enforcing hook, exit 2 when the mode file reads ''block''; never shimmed, it greps the raw payload); and five advisory PostToolUse Write|Edit hooks that always exit 0 — validate-changed.sh, agent-creation-check.sh, render-sync.sh, test-log-append.sh, governor-gate.sh. claude-payload-shim.sh is NOT a hook: it is a payload translator the Claude registrations wrap the five advisory hooks in, because Claude Code sends tool_input.file_path where the hooks read the Kimi key ''path'' — unshimmed they match nothing and exit 0, a silent no-op. Its digest is governed in the manifest for that reason: a broken shim disables all five without touching any hook.'
+  inferred_value: 'INFERENCE: layer 2 makes this the first pre-hoc consumer of the protected credential resource — it strengthens the boundary but, being fail-open by design, can never be cited as the sole barrier; CAT-05, the protected-resource convention, and owner attestation remain the secret boundary (carried forward from the O1 narrowed guarantee and the assessments-wave follow-up).'
   source:
-    author: "Kimi-K3 (governor; U5 script + README per owner decisions UD3/UD4)"
-    provided_by: "Kimi-K3"
-    origin: "/home/hxsa/opt/HX-ASF-Servers/scripts/hooks/README.md"
-    section: "§whole-document"
-    ingestion_date: "2026-08-26T00:25:00Z"
-  owner: "Kimi-K3"
+    author: Kimi-K3 (governor; U5 script + README per owner decisions UD3/UD4)
+    provided_by: Kimi-K3
+    origin: /home/hxsa/opt/HX-ASF-Servers/scripts/hooks/README.md
+    section: §whole-document
+    ingestion_date: '2026-08-26T00:25:00Z'
+  owner: Kimi-K3
   applies_to:
     hosts: []
     fqdns: []
     services: []
-    agents: [kimi-k3]
-    repositories: [HX-ASF-Servers]
-    environments: [fleet, pilot]
-  version: ""
-  status: "active"
-  authority_level: "ratified-governance"
+    agents:
+    - kimi-k3
+    repositories:
+    - HX-ASF-Servers
+    environments:
+    - fleet
+    - pilot
+  version: ''
+  status: active
+  authority_level: ratified-governance
   supersedes: []
   superseded_by: []
   security:
-    classification: "internal"
-    access_restrictions: "none beyond repository access"
+    classification: internal
+    access_restrictions: none beyond repository access
     contains_secret_values: false
   relations:
-    - predicate: "references"
-      target: "DOC-protected-ssh-info-hxs1"
-      note: "secret-boundary.sh layer 2 reads the literal credential AT EXECUTION from the credential-record table row (awk on the protected source; never printed/stored/copied — ratified read-at-execution pattern); layer 3 guards the protected source against copy-verb references"
-    - predicate: "references"
-      target: "DOC-scripts-validate-py"
-      note: "validate-changed.sh implements the hook rule: it calls the single ratified validator (validate.py --changed) instead of reimplementing checks; advisory only, exit 0 always"
-    - predicate: "references"
-      target: "DOC-assessment-capability-read-only"
-      note: "O1 origin (corrected 2026-08-26): detection guarantee narrowed to the payload boundary — the hook sees only matched Write/Edit/Bash payloads; not a guarantee against channels outside the matcher, encoded content, unnamed copy verbs, or the human editor channel"
-    - predicate: "references"
-      target: "DOC-assessment-unified-capability-recommendations"
-      note: "U3 (advisory validation hook) and U5 (secret-boundary hook, highest-value single item) ratified as UD3/UD4 pilots; hooks never mutate (no-mutating-hooks model); fail-open semantics mean hooks never replace CAT-05 / the protected-resource convention / owner attestation"
-    - predicate: "produced_by"
-      target: "kimi-k3"
-      note: "state log row 60 (2026-08-25T23:47Z): UD3 approved the U3 advisory hook pilot (registration queued behind U2), UD4 approved the U5 secret-boundary pilot (script + config registration that wave, warn -> block graduation)"
+  - predicate: references
+    target: DOC-protected-ssh-info-hxs1
+    note: secret-boundary.sh layer 2 reads the literal credential AT EXECUTION from the credential-record table row (awk on the protected source; never printed/stored/copied — ratified read-at-execution pattern); layer 3 guards the protected source against copy-verb references
+  - predicate: references
+    target: DOC-scripts-validate-py
+    note: 'validate-changed.sh implements the hook rule: it calls the single ratified validator (validate.py --changed) instead of reimplementing checks; advisory only, exit 0 always'
+  - predicate: references
+    target: DOC-assessment-capability-read-only
+    note: 'O1 origin (corrected 2026-08-26): detection guarantee narrowed to the payload boundary — the hook sees only matched Write/Edit/Bash payloads; not a guarantee against channels outside the matcher, encoded content, unnamed copy verbs, or the human editor channel'
+  - predicate: references
+    target: DOC-assessment-unified-capability-recommendations
+    note: U3 (advisory validation hook) and U5 (secret-boundary hook, highest-value single item) ratified as UD3/UD4 pilots; hooks never mutate (no-mutating-hooks model); fail-open semantics mean hooks never replace CAT-05 / the protected-resource convention / owner attestation
+  - predicate: produced_by
+    target: kimi-k3
+    note: 'state log row 60 (2026-08-25T23:47Z): UD3 approved the U3 advisory hook pilot (registration queued behind U2), UD4 approved the U5 secret-boundary pilot (script + config registration that wave, warn -> block graduation)'
   validation:
-    validated_at: "2026-08-30T15:05:00Z"
-    freshness: "current"
-    review_due: "on hook script/mode change (re-hash components), on warn -> block graduation, or on pilot-week outcome review"
-  sha256: "8954004f92fd549cdfc83fe7c9e2a5429c72ef857328cab5066f7458ac68b262"
-  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/scripts/hooks/README.md"
+    validated_at: '2026-08-30T20:55:30Z'
+    freshness: current
+    review_due: on hook script/mode change (re-hash components), on warn -> block graduation, or on pilot-week outcome review
+  sha256: 7472dced92a9108f4abee51d390cd978090c28e3a9435dcd5767e804316b1b52
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/scripts/hooks/README.md
+  hash_history:
+  - sha256: 8954004f92fd549cdfc83fe7c9e2a5429c72ef857328cab5066f7458ac68b262
+    timestamp: unrecorded
+    reason: predecessor state restored by carol-mint (re-mint events before 2026-08-30T20:50:22Z did not record history)
+  - sha256: 73511cfa9674b040ccb0364610b42ffe36b48671f244639f21a44d77174a2c67
+    timestamp: '2026-08-30T20:50:22Z'
+    reason: README records both registration scopes + the manifest/SY-5 authority (O5)
+  - sha256: 7472dced92a9108f4abee51d390cd978090c28e3a9435dcd5767e804316b1b52
+    timestamp: '2026-08-30T20:55:30Z'
+    reason: registration checklist covers both scopes and hooks_verify.py replaces the grep check
 notes:
-  record_checksum_scope: "The record sha256 is the checksum of scripts/hooks/README.md (the system's canonical convention document). Component checksums at ingestion: secret-boundary.sh sha256 34df958144a51934472f69adda0b5cfefd63119b2e595606b70298cec5e198bf; validate-changed.sh sha256 e57143306eeb7037646a93ed8bdab305268454d3c46dd197a2a9834f9835d922; secret-boundary.mode content 'warn' (pilot mode, 5 bytes — one-word graduation to 'block')."
-  external_registration: "Hook REGISTRATIONS are EXTERNAL to the repository: they live in the user-scope ~/.kimi-code/config.toml [[hooks]] array — personal config, never committed, NOT repo content (assessment Q-C answered 2026-08-25; README lines 3-6). The catalog records the convention and existence only; the registration file itself is not cataloged, not read, and not verified from this lane (owner/user-scope state, outside repo provenance)."
-  cataloging_context: "One record for the whole hook system per the DOC-scripts-wiki-dual-format-render precedent (system record, components hashed in notes). Type runbook (operational procedure + convention), authority ratified-governance (UD3/UD4). Mode file state at ingestion: warn (pilot week per UD4; graduation to block is a one-word edit after a measured pilot and owner word)."
+  record_checksum_scope: 'The record sha256 is the checksum of scripts/hooks/README.md (the system''s canonical convention document). Component checksums are NO LONGER duplicated here: they drifted (validate-changed.sh carried an ingestion-time hash that no longer matched) and they now live in governace/hooks/manifest.yaml, which validate.py sub-check SY-5 verifies against the live files on every run. One place, mechanically checked, instead of a second copy in prose that nothing compared.'
+  external_registration: 'Hook REGISTRATIONS live in two scopes: .claude/settings.json (in Git, deterministic, CI-verified) and the user-scope ~/.kimi-code/config.toml [[hooks]] array (personal config, never committed). The 2026-08-25 record of this note predated the Claude scope and said registrations were wholly external; that is superseded. SY-5 verifies both — the in-Git scope as a hard failure if absent, the user scope advisory. hooks_verify.py reads [[hooks]] entries only from the user config, which also holds live provider credentials; no other line of it is parsed, echoed or stored.'
+  cataloging_context: 'One record for the whole hook system per the DOC-scripts-wiki-dual-format-render precedent (system record, components hashed in notes). Type runbook (operational procedure + convention), authority ratified-governance (UD3/UD4). Mode file state at ingestion: warn (pilot week per UD4; graduation to block is a one-word edit after a measured pilot and owner word).'
+  minted_by: carol-mint 1.0.0 @ 2026-08-30T20:55:30Z — re-mint 73511cfa9674… -> 7472dced92a9… — registration checklist covers both scopes and hooks_verify.py replaces the grep check

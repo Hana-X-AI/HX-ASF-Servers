@@ -1,6 +1,7 @@
 ---
 name: qa-project-context
 description: "Create and fill the QA project context file at governace/qa/<project-name>/qa-project-context.md — the single file every other QA skill reads first for the project's tech stack, test frameworks, environments, quality goals, risk areas, and conventions (Bailey authors it). Use when: 'set up QA context', 'configure testing', first use of any QA skill on a project. NOT for: bootstrapping a brand-new project's QA end-to-end, or setting up/executing test environments (Gordon's lane). Adapted from petrkindlmann/qa-skills v3.0.0 (MIT)."
+maturity: active
 ---
 
 # QA Project Context — the one file every QA skill reads (Bailey)

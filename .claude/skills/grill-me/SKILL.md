@@ -1,6 +1,7 @@
 ---
 name: grill-me
 description: "Scope-lock interview for the HX factory (adapted from mattpocock/skills grill-me/grilling, MIT). James interviews Zero before a work order dispatches: clarifies the objective, target, boundaries, exclusions, acceptance, and assigned lane. LIMITED to 5 questions per owner directive — not relentless. Use at the scope-lock stage before goal decomposition. NOT for: decomposition (goal-decompose), status (work-status), or execution."
+maturity: active
 ---
 
 # Grill-Me — scope-lock interview (James, ≤5 questions)
