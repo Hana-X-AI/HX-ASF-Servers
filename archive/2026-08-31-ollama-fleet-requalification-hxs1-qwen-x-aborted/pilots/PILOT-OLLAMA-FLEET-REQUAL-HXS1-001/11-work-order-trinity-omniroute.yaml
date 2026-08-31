@@ -1,0 +1,41 @@
+work_order:
+  schema_version: 1
+  task_id: "WO-REQUAL-HX1-TRINITY-B3-001"
+  parent_goal: "2026-08-31-ollama-fleet-requalification-hxs1-qwen-x"
+  goal_file: "governace/goals/2026-08-31-ollama-fleet-requalification-hxs1-qwen-x.md"
+  milestone: "M8 — OmniRoute / service routing registration (if in scope)"
+  assigned_agent: "trinity (profile-briefed sub-agent)"
+  objective: >-
+    If Gate A places Qwen-X in the OmniRoute/routing surface, register the
+    service FQDN and endpoint as an OmniRoute route so authorized consumers
+    discover and use Qwen-X by call-sign. Acceptance: discovery/use proof through
+    the approved route. If out of scope, record the disposition and do not mutate.
+    Concrete change set FINALIZED AT GATE A.
+  owner_authorizations:
+    - "Gate A decision (pending) — OmniRoute registration only if explicitly in scope; no routing mutation before Gate A"
+    - "NOT authorized until Gate A: any OmniRoute/routing/registry mutation"
+  boundaries:
+    - "Files/systems touched: FINALIZED AT GATE A (OmniRoute route/registry only; no Ollama/DNS/OS mutation)"
+    - "Execution path: per Trinity lane; verify hostname + peer IP before mutation"
+    - "Stop conditions: target mismatch, authority conflict, off-LAN exposure, secret exposure, evidence-integrity failure"
+  context_budget:
+    max_tokens: "131072 context (lane ceiling confirmed at dispatch capability probe)"
+    max_output_size_override: "none"
+    read_discipline: "index-navigated; targeted reads; incremental writes"
+  capability_probe:
+    required: "yes"
+    procedure: "4-token probe session on the lane BEFORE mutation; record served-model id + session-start answer in the receipt"
+    fail_action: "stop the branch and escalate to the governor — NO automatic lane substitution"
+  rollback: "Remove the OmniRoute route/registry entry; restore pre-change routing state."
+  controlling_sources:
+    - "Gate A findings register (15-gate-a-findings-register.md); M7 completion + a successful DNS/FQDN registration record from Work Order 10 (10-rick-dns-fqdn-record.md) - route registration requires M7, never Gate A alone"
+    - "servers/system-mapping.md; OmniRoute deployment records"
+  deliverable: "11-trinity-omniroute-record.md: route registration evidence, discovery/use proof by an authorized consumer, or an explicit out-of-scope disposition, rollback inverse, Task May Proceed receipt"
+  deliverable_destination:
+    - "pilots/PILOT-OLLAMA-FLEET-REQUAL-HXS1-001/11-trinity-omniroute-record.md"
+    - "verify: ls <destination> shows the artifact before acceptance"
+  second_brain_evaluation:
+    opportunity_identified: "yes"
+    roadmap_capability_or_pattern: "call-sign/service-FQDN routing registration as reusable discovery state"
+    disposition: "implemented — consistent discovery across catalog and routing"
+    evidence_and_reasoning: "discovery/catalog/routing must use the call-sign and service FQDN consistently (SC-12)"

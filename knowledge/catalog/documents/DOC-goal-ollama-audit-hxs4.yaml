@@ -1,0 +1,30 @@
+document:
+  id: DOC-goal-ollama-audit-hxs4
+  title: 'Goal: Read-only Ollama audit on hxs-4'
+  type: goal
+  declared_purpose: Read-only audit of the live Ollama runtime on hxs-4 (2026-08-24); owner-accepted 2026-08-24T12:50Z (PILOT-KK3-JOHN-OLLAMA-AUDIT-002).
+  source:
+    origin: /home/hxsa/opt/HX-ASF-Servers/governace/goals/ollama/2026-08-24-ollama-audit-hxs4.md
+    ingestion_date: '2026-08-31T21:33:17Z'
+    section: §whole-document
+  owner: Agent Zero
+  authority_level: ratified-governance
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: []
+    repositories: []
+    environments: []
+  status: adopted
+  security:
+    classification: internal
+    contains_secret_values: false
+  relations: []
+  validation:
+    validated_at: '2026-08-31T21:33:17Z'
+    freshness: current
+  sha256: 3e438aef93d8938108f74d658bdb72c6731f3a633e0089d05bfa266d85aabae9
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/goals/ollama/2026-08-24-ollama-audit-hxs4.md
+notes:
+  minted_by: carol-mint 1.0.0 @ 2026-08-31T21:33:17Z — scaffold

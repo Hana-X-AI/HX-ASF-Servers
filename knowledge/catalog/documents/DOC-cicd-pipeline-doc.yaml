@@ -42,10 +42,10 @@ document:
     target: kimi-k3
     note: p8 pipeline wave, owner-ratified 2026-08-26 (hxs-2 state log row 33)
   validation:
-    validated_at: '2026-08-30T18:49:32Z'
+    validated_at: '2026-08-31T21:36:14Z'
     freshness: current
     review_due: on any pipeline behavior change (doc + record re-ingest); wiki --check guards the .html sibling continuously
-  sha256: c206f6089a0adb5d89fe41403c4cacbe83d8500125b4ed698613cb98150a778d
+  sha256: b8f17fb29b92a97b1103e297ee94aa0ec6ab4231f73af68ecd60076c290a9bf8
   canonical_location: /home/hxsa/opt/HX-ASF-Servers/docs/cicd-pipeline.md
   hash_history:
   - sha256: 6b99bae481a2655906c20737eaa3928bc9b66839ca4d12bfcba265f59673434c
@@ -57,7 +57,13 @@ document:
   - sha256: c206f6089a0adb5d89fe41403c4cacbe83d8500125b4ed698613cb98150a778d
     timestamp: '2026-08-30T18:49:32Z'
     reason: 'body reconciled to as-built: pushed-range review base (KDD-0022), 20-step list, gitleaks v8.30.1 pin, vacuous-pass exception; corrections moved to the amendment log'
+  - sha256: f615d588e9248fe4a299e2e79784868f8feead4dfb53d1ad0fb85388f0cc153d
+    timestamp: '2026-08-31T20:33:51Z'
+    reason: re-mint from source
+  - sha256: b8f17fb29b92a97b1103e297ee94aa0ec6ab4231f73af68ecd60076c290a9bf8
+    timestamp: '2026-08-31T21:36:14Z'
+    reason: re-mint from source
 notes:
   dual_format: 'Per the dual-format convention (owner-ratified Q2, AGENTS.md): ONE record for the Markdown source of truth; the rendered sibling docs/cicd-pipeline.html exists (render.py-managed, in scripts/wiki/manifest.txt line 42 — never hand-edit HTML) and is not separately cataloged.'
   protected_reference: The setup section names the CODERABBIT_API_KEY repo secret and references the local credential store (fine-grained PAT 401 note) — existence and retrieval mechanism only; no secret value in the document or in this record (profile §6).
-  minted_by: 'carol-mint 1.0.0 @ 2026-08-30T18:49:32Z — re-mint 0b550b16dc56… -> c206f6089a0a… — body reconciled to as-built: pushed-range review base (KDD-0022), 20-step list, gitleaks v8.30.1 pin, vacuous-pass exception; corrections moved to the amendment log'
+  minted_by: carol-mint 1.0.0 @ 2026-08-31T21:36:14Z — re-mint f615d588e924… -> b8f17fb29b92…

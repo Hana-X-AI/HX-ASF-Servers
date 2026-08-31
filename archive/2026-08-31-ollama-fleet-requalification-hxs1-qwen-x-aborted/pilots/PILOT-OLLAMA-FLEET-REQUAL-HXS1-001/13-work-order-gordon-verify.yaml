@@ -1,0 +1,42 @@
+work_order:
+  schema_version: 1
+  task_id: "WO-REQUAL-HX1-GORDON-B5-001"
+  parent_goal: "2026-08-31-ollama-fleet-requalification-hxs1-qwen-x"
+  goal_file: "governace/goals/2026-08-31-ollama-fleet-requalification-hxs1-qwen-x.md"
+  milestone: "M10 — independent live-state verification + reliability (three full reboots + one performance run)"
+  assigned_agent: "gordon (profile-briefed sub-agent)"
+  objective: >-
+    Independently verify claims against live state from a different host (hxs-15),
+    then run the three full reboots and one performance run (owner D3; no 24-hour
+    soak). Acceptance: no unexplained restart, Xid, OOM, CPU fallback, digest
+    drift, or critical regression, and the performance run meets the Bailey-defined
+    thresholds. Concrete window FINALIZED AT GATE A.
+  owner_authorizations:
+    - "Owner D3 (2026-08-31) — three full reboots + one performance run; 24-hour soak removed (overkill)"
+    - "NOT authorized until Gate A: any reboot or state-changing test"
+  boundaries:
+    - "Target lock: independently verify hxs-1 (192.168.50.200), call-sign Qwen-X, from the hxs-15 verifier host; reconcile with servers/SERVER-REGISTRY.md hxs-1 row; NOT hxs-4 or hxs-5; any mismatch aborts"
+    - "Files/systems touched: FINALIZED AT GATE A (three authorized full reboots + one performance run; no unapproved mutation)"
+    - "Execution path: hxs-15 as verifier (different host); each cold reboot individually authorized"
+    - "Stop conditions: target mismatch, secret exposure, Xid/OOM/wedge, digest drift, CPU fallback, evidence-integrity failure, test result outside the authorized safety envelope"
+  context_budget:
+    max_tokens: "131072 context (lane ceiling confirmed at dispatch capability probe)"
+    max_output_size_override: "none"
+    read_discipline: "index-navigated; periodic capture; incremental writes"
+  capability_probe:
+    required: "yes"
+    procedure: "4-token probe session on the lane BEFORE verification; record served-model id + session-start answer in the receipt"
+    fail_action: "stop the branch and escalate to the governor — NO automatic lane substitution"
+  rollback: "Rollback capability remains available for any remediation change (pre/post hashes retained); no separate rollback drill is scheduled (D3)."
+  controlling_sources:
+    - "Gate A findings register (15-gate-a-findings-register.md); 09-john-remediation-record.md; 12-bailey-qualification-report.md"
+    - "governace/process/governor-verification-checklist.md"
+  deliverable: "13-gordon-verification-report.md: independent live-state verification, three full-reboot cycles with recovery SLO, performance-run results, Task May Proceed receipt"
+  deliverable_destination:
+    - "pilots/PILOT-OLLAMA-FLEET-REQUAL-HXS1-001/13-gordon-verification-report.md"
+    - "verify: ls <destination> shows the artifact before acceptance"
+  second_brain_evaluation:
+    opportunity_identified: "yes"
+    roadmap_capability_or_pattern: "independent different-host verification + reboot/performance-run acceptance as the reusable QA gate"
+    disposition: "implemented — the verification gate is reused across all four host orders"
+    evidence_and_reasoning: "independent live-state verification plus the owner-approved reboot + performance-run window (D3) is the acceptance backbone; the prior soak deferral is superseded"

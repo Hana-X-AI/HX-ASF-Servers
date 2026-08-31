@@ -38,10 +38,10 @@ document:
     target: /home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0015-wayne-registration.md
     note: registration decision (KDD-0015)
   validation:
-    validated_at: '2026-08-31T01:08:31Z'
+    validated_at: '2026-08-31T21:36:14Z'
     freshness: current
     review_due: on owner sign-off of charter change
-  sha256: 064b0ef4ca74b9e77b5740c59a04bf0882e669bae1ae792ae1b187753fe1de63
+  sha256: f3fce16b8d87bef2d3d5fd388acb2ca8bd3d0d0b003ad09a57a3623355e3f9fb
   hash_history:
   - sha256: 8119a0a39d8d08abc1ecd67e053aa79d92bfb0f072333f9f031b431d66deb364
     timestamp: '2026-08-29T12:30:00Z'
@@ -49,6 +49,12 @@ document:
   - sha256: 064b0ef4ca74b9e77b5740c59a04bf0882e669bae1ae792ae1b187753fe1de63
     timestamp: '2026-08-31T01:08:31Z'
     reason: '2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'
+  - sha256: b11f22a9d43537df646cf66070bfbf6ba23ec9cecf7d9970f2d7f26e8a19ba58
+    timestamp: '2026-08-31T21:08:51Z'
+    reason: re-mint from source
+  - sha256: f3fce16b8d87bef2d3d5fd388acb2ca8bd3d0d0b003ad09a57a3623355e3f9fb
+    timestamp: '2026-08-31T21:36:14Z'
+    reason: re-mint from source
   canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/wayne/charter.md
 notes:
-  minted_by: 'carol-mint 1.0.0 @ 2026-08-31T01:08:31Z — re-mint 8119a0a39d8d… -> 064b0ef4ca74… — 2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'
+  minted_by: carol-mint 1.0.0 @ 2026-08-31T21:36:14Z — re-mint b11f22a9d435… -> f3fce16b8d87…

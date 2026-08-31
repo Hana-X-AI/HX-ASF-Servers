@@ -96,10 +96,9 @@ Per p11 §stop: governance conflict with candidates; Trinity lane overlap unreso
 
 ```yaml work-state
 id: 2026-08-27-omniroute-trinity-layer0
-status: in-progress
-status_date: 2026-08-28
+status: complete
+status_date: 2026-08-27
 authority: >-
-  Goal status line: 'in-progress — Layer 0 (M0 authorized)'
-reconcile: >-
-    PILOT-OMNIROUTE-LAYER0-001 state-log row 75 (2026-08-28T08:22Z) records 'PROVIDER FLIP EXECUTED — kimi-code to OmniRoute LIVE, proven routed'. Whether that closes Layer 0 is a governor determination, not a mechanical one.
+  Status transition 2026-08-27 [current]: LAYER 0 COMPLETE — PASS (KK3 gate decision 19-kk3-gate-decision.md; handoff catalog-closed; owner OD-12 authorized Layer 1)
+reconcile: none
 ```

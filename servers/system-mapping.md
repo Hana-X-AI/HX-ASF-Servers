@@ -43,8 +43,8 @@ Consumer (app/LLM)
        └── proxy: cloud/remote MCP servers, or single-endpoint fallback
 ```
 
-All MCP deployment is on HOLD per owner directive 2026-08-29. No MCP
-deployment until the owner lifts the hold.
+All MCP deployment was on HOLD per owner directive 2026-08-29; the hold is LIFTED per owner directive 2026-08-31. MCP
+deployment is no longer blocked.
 
 ---
 
@@ -54,9 +54,10 @@ deployment until the owner lifts the hold.
 
 **(+MCP) notation (clarified 2026-08-30, audit F1).** `(+MCP)` records the
 PLACEMENT contract — the system's MCP server is co-located on that host when MCP
-deployment is authorized. It is NOT a deployment claim. All MCP deployment is on
-HOLD per the owner directive of 2026-08-29 stated above, so **no MCP server in
-this document is deployed**, including on rows in this table.
+deployment is authorized. It is NOT a deployment claim. The 2026-08-29 MCP hold
+is LIFTED per owner directive 2026-08-31 (deployment authorized but not yet
+performed), so **no MCP server in this document is deployed**, including on rows
+in this table.
 
 | # | System | Server | Agent | Notes |
 |---|---|---|---|---|
@@ -154,8 +155,8 @@ this document is deployed**, including on rows in this table.
 7. **No host firewalls.** The LAN (192.168.50.0/24) is the boundary (owner
    rule 2026-08-26). Services bind to the LAN interface as authorized.
 8. **Model weights never enter Git.**
-9. **MCP surfaces on HOLD** per owner directive 2026-08-29 — no MCP
-   deployment until the owner lifts the hold.
+9. **MCP surfaces unblocked** per owner directive 2026-08-31 — MCP
+   deployment is no longer blocked.
 10. **MCP servers are co-located** with their systems. FastMCP is the
     discovery and routing layer, not a proxy for local MCP traffic.
     FastMCP proxies cloud/remote MCP servers and provides single-endpoint

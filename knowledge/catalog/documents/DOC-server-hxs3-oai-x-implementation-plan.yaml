@@ -36,7 +36,7 @@ document:
     contains_secret_values: false
   relations:
   - predicate: references
-    target: governace/goals/2026-08-29-oai-x-replace-meta-x.md
+    target: DOC-goal-oai-x-replace-meta-x
     note: governing goal (SC-01..SC-09) — raw-path target, goal not yet cataloged (uncataloged per CAT-08, explanatory note)
   - predicate: references
     target: DOC-kdd-0007-hxs3-muse-glimmer-tooling-adoption

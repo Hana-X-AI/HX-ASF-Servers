@@ -1,0 +1,31 @@
+context_packet:
+  goal_id: "2026-08-31-ollama-fleet-requalification-hxs1-qwen-x"
+  goal_version: 1
+  work_order_id: "WO-REQUAL-HX1-BAILEY-A4-001"
+  session_id: "bailey-test-design-20260831-01"
+  role: "producer (test design: bailey)"
+  milestone: "M4 — test/capability design before mutation"
+  objective: >-
+    Author the versioned test, benchmark, capability-matrix, RAG/tool,
+    web-search, and reliability/reboot design with expected results before any
+    mutation.
+  current_state:
+    host: "hxs-1 (target); design on hxs-5"
+    key_identities: "exact Qwen-X artifact to be frozen at M2; capability statuses are for the exact installed Ollama version + exact Qwen-X artifact"
+    relevant_config: "optimization questions §8 are open; the plan must specify how each is answered empirically"
+    units_or_services: "none mutated; design only"
+  owner_decisions:
+    - "D3 (2026-08-31): three full reboots + one performance run, no 24-hour soak; D4: full current-RAG-pipeline access, no new systems; D5: web search ON, test and verify"
+  constraints:
+    - "DESIGN-ONLY; no mutation; no test execution that mutates state"
+    - "Unsupported/non-applicable features recorded honestly, not simulated"
+  evidence_requirements:
+    - "capability matrix with per-row classification and acceptance intent"
+    - "benchmark schema (prompt/input/output sizes, TTFT, tokens/sec, latency, VRAM/RAM/CPU, power/temp, errors, repeat count, variance)"
+    - "RAG and agent-tool suite designs; web-search verification; reliability/reboot procedures (three reboots + one performance run) with expected results"
+  consulted_records:
+    - "Intake brief §7, §8, §10; upstream Ollama capability docs (tool calling, embeddings, structured outputs, thinking, vision, OpenAI compatibility)"
+  handoff:
+    - "Deliverable 08-bailey-test-capability-plan.md reaches execution_accepted on evidence + deterministic gates; feeds Gate A"
+    - "Deliverable goes to Carol for catalog receipt (reusable-platform knowledge — synchronous at Gate B)"
+  second_brain_evaluation: "See the governing work order — the packet does not re-decide it"

@@ -94,6 +94,9 @@ binding is corrected from Meta-X/OmniRoute to local Ollama Chat-X. The hxs-8
 memory cell in the table above was corrected here in the same pass. Both
 documents are reconciled as of 2026-08-30.
 
+**Current-state note (2026-08-31).** The MCP hold is LIFTED per owner directive
+2026-08-31; MCP deployment is no longer blocked (see `servers/system-mapping.md`).
+
 **Open correction — hxs-8/hxs-9 stale target-state (2026-08-29, labeled per the
 append-only governance rule).** The hxs-8 row's "LiteLLM gateway" and the hxs-9
 row's "LiteLLM database; LangGraph checkpoints" are the 2026-08-13 target-state

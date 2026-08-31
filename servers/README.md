@@ -1,8 +1,10 @@
 # Servers
 
-One directory per fleet server: `servers/hxs-N/`. The fleet has 15 servers at
-192.168.50.200–214, plus `hxs-cp` (192.168.50.215), the control plane, which holds no
-registry row.
+One directory per fleet server: `servers/hxs-N/`. The fleet registry records 17
+host rows (hxs-1 through hxs-15, plus hxs-20 and hxs-21); 16 are active — hxs-7 is
+replaced by hxs-20 (owner advisory 2026-08-27). The control plane is hxs-5
+(192.168.50.204), which replaced `hxs-cp`; hxs-21 is the designated standby
+control-plane machine.
 
 - `SERVER-REGISTRY.md` — fleet-level source of truth for discovery status and
   owner-assigned roles.

@@ -6,7 +6,7 @@ document:
   source:
     author: Flash (governor)
     provided_by: Agent Zero
-    origin: /home/hxsa/opt/HX-ASF-Servers/governace/goals/2026-08-29-lightrag-hxs4.md
+    origin: /home/hxsa/opt/HX-ASF-Servers/governace/goals/lightrag/2026-08-29-lightrag-hxs4.md
     section: §whole-document
     ingestion_date: '2026-08-29T14:00:00Z'
   owner: Agent Zero (ratification); Flash (author)
@@ -43,10 +43,10 @@ document:
     target: DOC-system-mapping
     note: S17 LightRAG placement
   validation:
-    validated_at: '2026-08-31T03:51:22Z'
+    validated_at: '2026-08-31T21:36:14Z'
     freshness: current
     review_due: on owner approval
-  sha256: 9c101549f53a61de3d8645849f1e0aeb21fc83844222baf5a4d810c176631062
+  sha256: 7c59e2e39a0309ed46a8653a8edc3d4d489a123ea0944e850aca9acc534a20ce
   hash_history:
   - sha256: 3d076b4c0e5e91008e9a2f6846d0ca222f08bb8ee5e3346aecc65a5cdf34631e
     timestamp: '2026-08-29T14:00:00Z'
@@ -63,7 +63,13 @@ document:
   - sha256: 9c101549f53a61de3d8645849f1e0aeb21fc83844222baf5a4d810c176631062
     timestamp: '2026-08-31T03:51:22Z'
     reason: 'CodeRabbit PR #8 semantic finding verified against source and corrected'
-  canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/goals/2026-08-29-lightrag-hxs4.md
+  - sha256: 60f427b6c02fdea09736e9507941d241e821d963d027d9d0c456b535eb7cf261
+    timestamp: '2026-08-31T20:31:40Z'
+    reason: re-mint from source
+  - sha256: 7c59e2e39a0309ed46a8653a8edc3d4d489a123ea0944e850aca9acc534a20ce
+    timestamp: '2026-08-31T21:36:14Z'
+    reason: re-mint from source
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/goals/lightrag/2026-08-29-lightrag-hxs4.md
 notes:
   semantic_reconciliation_20260831: 'Read against the current source and operative work-state block: status=draft as of 2026-08-29. The source also records executed LightRAG/Qdrant install evidence, so the draft-versus-execution inconsistency remains explicitly queued for governor reconciliation; this record does not infer closure.'
-  minted_by: 'carol-mint 1.0.0 @ 2026-08-31T03:51:22Z — re-mint freshness-only — CodeRabbit PR #8 semantic finding verified against source and corrected'
+  minted_by: carol-mint 1.0.0 @ 2026-08-31T21:36:14Z — re-mint 60f427b6c02f… -> 7c59e2e39a03…

@@ -123,6 +123,5 @@ status: complete
 status_date: 2026-08-27
 authority: >-
   PILOT-HXS3-MUSE-GLIMMER-TOOLING-001 state log: 'goal COMPLETE — PASS (governor edit + re-render)'; 'PILOT-HXS3-MUSE-GLIMMER-TOOLING-001 is COMPLETE and CLOSED'
-reconcile: >-
-    Goal prose still reads 'in-progress — M0 authorized (2026-08-26; historical — see transition)'. The pilot state log records completion; the goal's own status line was never advanced. Governor to align the prose (append-only) — this block is the operative state.
+reconcile: none
 ```

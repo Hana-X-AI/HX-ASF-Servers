@@ -53,12 +53,12 @@ authorities:
 # --------------------------------------------------------------------------
 mcp:
   owner_hold:
-    active: true
-    directive: owner directive 2026-08-29
-    source: servers/system-mapping.md lines 46-47 and 157-158
+    active: false
+    directive: owner directive 2026-08-31 (LIFTED — supersedes the 2026-08-29 hold)
+    source: owner word 2026-08-31
     text: >-
-      All MCP deployment is on HOLD per owner directive 2026-08-29. No MCP
-      deployment until the owner lifts the hold.
+      The owner-wide MCP HOLD is LIFTED per owner directive 2026-08-31. MCP
+      deployment is no longer blocked; the prior 2026-08-29 hold is superseded.
     note: >-
       system-mapping.md:56-59 further clarifies that the `(+MCP)` notation in its
       tables records a PLACEMENT contract and is not a deployment claim, so no
@@ -70,7 +70,7 @@ mcp:
       service_active: false
       advertised_to_agents: false
       approved_for_use: false
-      owner_hold: true
+      owner_hold: false
       transport: unknown
       host: workstation
       security_review: not-started
@@ -82,7 +82,7 @@ mcp:
       service_active: false
       advertised_to_agents: false
       approved_for_use: false
-      owner_hold: true
+      owner_hold: false
       transport: stdio
       host: hxs-4
       security_review: not-started
@@ -108,7 +108,7 @@ mcp:
       service_active: false
       advertised_to_agents: false
       approved_for_use: false
-      owner_hold: true
+      owner_hold: false
       transport: unknown
       host: hxs-4
       security_review: not-started
@@ -125,7 +125,7 @@ mcp:
       service_active: false
       advertised_to_agents: false
       approved_for_use: false
-      owner_hold: true
+      owner_hold: false
       transport: unknown
       host: hxs-9
       security_review: not-started
@@ -138,9 +138,9 @@ mcp:
       service_active: false
       advertised_to_agents: false
       approved_for_use: false
-      owner_hold: true
+      owner_hold: false
       transport: unknown
-      host: hxs-10
+      host: hxs-9
       security_review: not-started
       owning_agent: wayne
       evidence: agents/wayne/charter.md defers it explicitly under the hold.
@@ -151,7 +151,7 @@ mcp:
       service_active: false
       advertised_to_agents: false
       approved_for_use: false
-      owner_hold: true
+      owner_hold: false
       transport: unknown
       host: hxs-20
       security_review: not-started

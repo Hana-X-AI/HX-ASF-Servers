@@ -17,7 +17,7 @@ candidate profile `agent-zero-docs/agent-profiles/chris/chris-profile.yaml`
 preserved unchanged) was reviewed on request 2026-08-29 and dispositioned by
 owner directive the same day: authority chain to fit the current operating
 model, roster registration, implementation plan via Mia, model lane assigned,
-MCP on hold.
+MCP on hold. [LABELED CORRECTION 2026-08-31, append-only: the MCP hold is LIFTED per owner directive 2026-08-31; the 2026-08-29 hold is superseded.]
 
 ## Options considered
 
@@ -39,7 +39,7 @@ never the owner directly; work distributes via Mia under Kimi-K3-issued work
 orders. (b) Model lane: **Qwen 3.8 Flash** (`openrouter/qwen/qwen3.8-flash`,
 upstream Alibaba Cloud International, via OmniRoute, route probed live
 2026-08-29) — KDD-0013 amendment 6. (c) **MCP surface on HOLD** (owner
-directive) — `postgres-mcp-mai` deferred entirely. (d) Scope pin: PostgreSQL
+directive) — `postgres-mcp-mai` deferred entirely. [LABELED CORRECTION 2026-08-31, append-only: the MCP hold is LIFTED per owner directive 2026-08-31; the 2026-08-29 hold is superseded.] (d) Scope pin: PostgreSQL
 only on hxs-9; Redis is explicitly outside his lane. Activation is gated
 (profile §10): instance implemented + credential entries + owner word.
 [OPEN CORRECTION 2026-08-29, labeled, append-only — Mia per Flash work order

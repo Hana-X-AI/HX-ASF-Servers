@@ -1,0 +1,33 @@
+context_packet:
+  goal_id: "2026-08-31-ollama-fleet-requalification-hxs1-qwen-x"
+  goal_version: 1
+  work_order_id: "WO-REQUAL-HX1-JOHN-A1-001"
+  session_id: "john-tkv-review-20260831-01"
+  role: "producer (Ollama specialist: john / Esme)"
+  milestone: "M1 — live TKV knowledge review before probes"
+  objective: >-
+    Survey /opt/tkv-local/ollama/ollama-main read-only and produce a knowledge
+    receipt with snapshot identity, version delta, per-audit-vector sources, and
+    a Task May Proceed line.
+  current_state:
+    host: "hxs-5 (control plane) — local read of /opt/tkv-local"
+    key_identities: "TKV tree confirmed present; /opt/tkv-local/ollama/ollama-main is a git-less source snapshot with version/version.go placeholder 0.0.0 (verified 2026-08-31)"
+    relevant_config: "snapshot version must be derived by feature/commit inspection, not a tag"
+    units_or_services: "none — no service interaction in this milestone"
+  owner_decisions:
+    - "Intake §5: John must begin with the live TKV review before probes (DRAFT — approved via M0 scope-lock)"
+  constraints:
+    - "READ-ONLY; no hxs-1 host probe; no mutation of TKV or repository target state"
+    - "No guessed version/commit identity; unknown is recorded as unknown"
+  evidence_requirements:
+    - "filesystem type and mount/source identity; directory and file counts"
+    - "snapshot/commit identity or an explicit 'none determinable' with reason"
+    - "local snapshot version vs installed hxs-1 version vs current upstream, with source"
+    - "per-audit-vector source file list; contradictions/stale/archived/unknown register"
+    - "Task May Proceed: YES/NO line"
+  consulted_records:
+    - "agents/john/profile.md §4; intake brief §16 evidence basis; upstream Ollama releases"
+  handoff:
+    - "Deliverable 02-john-tkv-review-receipt.md reaches execution_accepted when the receipt is produced and the deterministic gates pass; M2 may then dispatch"
+    - "Deliverable goes to Carol for catalog receipt; catalog_pending until cited in the state log (does NOT gate closure — reusable-platform knowledge, treated synchronous at Gate B)"
+  second_brain_evaluation: "See the governing work order — the packet does not re-decide it"
