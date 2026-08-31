@@ -3,7 +3,7 @@
 - Wave: pr8-three-finding-corrective-action
 - Window: 2026-08-31T04:25:46Z
 - Starting commit: `efadc93accb7585ceebe94fcc206a0bd4458fb9f`
-- Result: LOCAL GATES PASS; HOSTED CODERABBIT REVIEW PENDING
+- Result: LOCAL GATES PASS; FIRST HOSTED REVIEW BLOCKED — one major receipt-wording finding; follow-up review pending
 
 ## Corrections
 
@@ -17,10 +17,12 @@
    Qwen-X via OmniRoute remains historical agent-lane provenance; Meta-X via
    OmniRoute remains historical application-binding provenance. Qdrant remains
    installed but pending acceptance for Raphael activation.
-3. The immutable `2026-08-31T0112Z-carol-sy8-baseline-reconciliation.md`
-   receipt was restored exactly to its pre-`efadc93` state. The later 03:54:33Z
-   local 21-finding reconciliation and the subsequent hosted three-major result
-   now live in `2026-08-31T0354Z-carol-pr8-coderabbit-followup.md`.
+3. Receipt chronology is separated by event window. The canonical
+  `2026-08-31T0112Z-carol-sy8-baseline-reconciliation.md` blob has SHA-256
+  `653710f9fe6c864bf236003a39be317f46683eba691873d9138cefa1af374cc6`
+  and contains only its original 01:12 reconciliation window. The later
+  03:54:33Z reconciliation and subsequent hosted three-major result are
+  recorded in `2026-08-31T0354Z-carol-pr8-coderabbit-followup.md`.
 
 ## Mechanical catalog actions
 
@@ -47,13 +49,18 @@
 
 ## Hosted and manual gates
 
-- Hosted CodeRabbit review: PENDING for the corrective commit produced by this
-  action. This receipt does not claim hosted acceptance.
+- First hosted review of this corrective action: GitHub Actions run
+  `33357235886`; `gates` and `pr-manage` passed, while
+  `coderabbit-review` reported one major finding about ambiguous receipt
+  wording. The underlying receipt SHA evidence confirms that the canonical
+  `0112Z` content is unchanged.
+- Follow-up hosted review: PENDING for this wording-only correction.
 - Protected literal-credential sweep: NOT RUN. The protected ssh-info resource
   was not read. The generic repository secret-boundary scan passed with zero
   findings across 1,391 files.
-- CB-01 write set: the two authorized catalog records, the rebuilt document
-  index, the exact `0112Z` restoration, and the two event-specific receipts.
+- CB-01 write set for this follow-up: this current dated receipt only.
+  No catalog record, index, prior receipt, validator, workflow, or source
+  document changed.
 
 ## Second-brain disposition
 
