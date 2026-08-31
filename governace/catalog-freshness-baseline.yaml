@@ -1,60 +1,185 @@
-# catalog-freshness-baseline.yaml — the drift that already existed (SY-8)
+# catalog-freshness-baseline.yaml — hash-pinned known drift (SY-8)
 #
-# SY-8 compares each catalog record's recorded sha256 to its live source. On the
-# day the check was written, 35 in-repo records had already drifted while
-# `validate.py` reported 5/5 PASS — the catalog check had never compared a
-# record to its source.
+# Every entry pins both sides of the pre-existing mismatch plus the catalog
+# record file itself. Unchanged known debt reports without failing. Any later
+# source change, record change, path change, malformed pin, or reconciled record
+# left on this list fails. The list is shrink-only: reconcile semantics first,
+# re-mint the record, then remove its entry.
 #
-# Failing all 35 at once would have made the validator red until someone
-# re-minted every one of them, and a re-mint updates the hash WITHOUT reviewing
-# whether the record's prose still describes the file. That would produce
-# records that look current and are not, which is worse than the drift.
-#
-# So the check binds immediately on NEW drift and carries these as a declared
-# backlog. The list only shrinks: removing an id means the record was genuinely
-# reconciled. Adding one is a visible diff that has to be argued for.
-#
-# To clear an entry: read the record against its source, correct the prose if it
-# has gone stale, `carol-mint re-mint <id>`, then delete the line here.
+# This ledger is temporary. A zero-entry ledger is the target state.
 
-baseline_date: 2026-08-30
-count: 35
-grading: >-
-  Records listed here are REPORTED by SY-8, not failed. Any in-repo drift NOT
-  listed here fails the check.
-ids:
-  - DOC-agent-kimi-k3-verification-checklist
-  - DOC-agent-wayne-charter
-  - DOC-assessment-capability-read-only
-  - DOC-assessment-second-brain-feature-review
-  - DOC-backend-chat-x
-  - DOC-backend-qwen-x
-  - DOC-catalog-receipt-2026-08-29-batch-b
-  - DOC-fleet-baseline-wave-2026-08-27
-  - DOC-goal-fleet-baseline-deployment
-  - DOC-goal-hx1-ollama-qwen38-27b
-  - DOC-goal-hxs2-qwen36-coderx-backend
-  - DOC-goal-hxs3-muse-glimmer-tooling
-  - DOC-goal-lightrag-hxs4
-  - DOC-goal-ollama-audit-hxs5
-  - DOC-goal-omniroute-layer1-secure-core
-  - DOC-goal-omniroute-trinity-layer0
-  - DOC-hxs3-configuration
-  - DOC-kdd-0001-kimi-k3-meta-agent
-  - DOC-kdd-0013-agent-model-lanes
-  - DOC-kdd-0018-raphael-registration
-  - DOC-knowledge-agent-performance
-  - DOC-knowledge-issues
-  - DOC-knowledge-network
-  - DOC-pilot-dsh-impl-001-state-log
-  - DOC-pilot-hx1-decision-36-m8-acceptance
-  - DOC-pilot-hx1-state-log
-  - DOC-pilot-hxs3-ev-12-esme-m5-validation
-  - DOC-pilot-hxs3-ev-15-esme-m8-signoff
-  - DOC-pilot-omniroute-19-kimi-code-provider-setup
-  - DOC-pilot-omniroute-control-manifest
-  - DOC-pilot-omniroute-intent-authority-source-register
-  - DOC-pilot-omniroute-trinity-adoption-assessment
-  - DOC-server-hxs3-oai-x-implementation-plan
-  - DOC-server-registry
-  - DOC-system-mapping
+schema_version: 1
+baseline_date: '2026-08-30'
+count: 34
+grading: Unchanged pinned drift is reported. Any change after baselining fails.
+entries:
+- id: DOC-agent-wayne-charter
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/wayne/charter.md
+  recorded_source_sha256: 8119a0a39d8d08abc1ecd67e053aa79d92bfb0f072333f9f031b431d66deb364
+  source_sha256_at_baseline: 064b0ef4ca74b9e77b5740c59a04bf0882e669bae1ae792ae1b187753fe1de63
+  catalog_record_sha256: 2da09b1fa895639ec132b3aa83732a027fa59aaf89803675a1947ddd9b33dc00
+- id: DOC-assessment-capability-read-only
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/assessments/2026-08-25-capability-assessment-read-only.md
+  recorded_source_sha256: e4a369e4d9f558dd2ba4019a224487d00527ce33e8759ec25f2bb3b22fe6f772
+  source_sha256_at_baseline: 8e57fcaa8ef7866b2fef9cad4e9086d1d309fd698ecf6c6a0ac64959474fc574
+  catalog_record_sha256: 88c2601499699b82f0cb093ab8c5cb21a68f58375ca9b9a6d3b0e935c7805c8c
+- id: DOC-assessment-second-brain-feature-review
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/assessments/2026-08-27-second-brain-feature-review.md
+  recorded_source_sha256: a69f2696a2d4a6d2f41ab873f845ca2e0a8001c83d10da19fd0f03672981979e
+  source_sha256_at_baseline: 99e3f82cfe643e9f466550a5506c042a60f8b05be0047dce60ac4acba5ee5268
+  catalog_record_sha256: 76409a989f0fb3f6a333bdf7ee789d4f252ad82a64cf7bc725ed03d92cd4cda5
+- id: DOC-backend-chat-x
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/servers/BLUEPRINT-llm-server.md
+  recorded_source_sha256: df59d340a44cb25a588535b30f33220ae6453d32272419f920a3527facac9103
+  source_sha256_at_baseline: e11110d12a3a51a8a1f5015d01ec983364a5eb7626a2a2aee77e57deaba50606
+  catalog_record_sha256: 0b5e3ec3b72f1a40707119f4286a132bf1e7d3104b98118b84167e168f7052b3
+- id: DOC-backend-qwen-x
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/servers/BLUEPRINT-llm-server.md
+  recorded_source_sha256: 51ec3d533a4bd09137fe9c2d419871d68b759fe8f48e3cbf451f2a89afe7dce1
+  source_sha256_at_baseline: e11110d12a3a51a8a1f5015d01ec983364a5eb7626a2a2aee77e57deaba50606
+  catalog_record_sha256: 74cbabac2b3c9bf19d4e074d40dbfcb18b998a54a53eb84725ddd5c9bae3dc62
+- id: DOC-catalog-receipt-2026-08-29-batch-b
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/catalog/receipts/2026-08-29-batchB-carol-statelog-registry.md
+  recorded_source_sha256: 0bfd532b709f48a79838661ed488a03ec44bb705d201a4d57d651aa953f845ab
+  source_sha256_at_baseline: b0005ffa8266de955e0f26e08f85a2e3797427409adf6bc379352df3e0fb07b2
+  catalog_record_sha256: 55f5a3a8429eabb6e2e3091ff230d43b390861183d1eb12753702660c738c38e
+- id: DOC-fleet-baseline-wave-2026-08-27
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/servers/2026-08-27-fleet-baseline-wave.md
+  recorded_source_sha256: 6013d6421248f930331f944feadba1976c18a44f1dc72f524de242eaa2cd9428
+  source_sha256_at_baseline: 69f13f12bc219a7ce9c8ee37a43ed1e5559aa9c4614c0659424415669e9b861d
+  catalog_record_sha256: 0e6937dcbe9dbc7a70763591b343e48c222582f5c4306f76816011d70bb8678b
+- id: DOC-goal-fleet-baseline-deployment
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/goals/2026-08-27-fleet-baseline-deployment.md
+  recorded_source_sha256: 9611a5dd057855506ad510d4afc09341735bafc6574f51d09bccd2befbaa00c1
+  source_sha256_at_baseline: f0d1e7880f1f735d30a20f2599b272389b5f50d60d2b96536682a5af1eb38331
+  catalog_record_sha256: 711cdc5c8b8962b4731b9674265fa17b6574f265de67d9325f0d466350950b4f
+- id: DOC-goal-hx1-ollama-qwen38-27b
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/goals/2026-08-24-hx1-ollama-qwen38-27b.md
+  recorded_source_sha256: 3ad285bd464193e9a5d6a4cae2eca4544b4ff1f0e336f29c1918a77204168d32
+  source_sha256_at_baseline: 70568f4cbb5904cb6b212046f95896ebf0d1ec0d9ffbb6f8470a5f8386628ced
+  catalog_record_sha256: 4bf989df56753912dc5c714f568aac5425464ba9732811e30700bdebf3eadc41
+- id: DOC-goal-hxs2-qwen36-coderx-backend
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/goals/2026-08-26-hxs2-qwen36-coderx-backend.md
+  recorded_source_sha256: d14cf1fdfbe25e5d0ed44e6dcb691bf4189f67154c0e5aaf43c7e3c8fff22a0c
+  source_sha256_at_baseline: ea90f280717c4f3c08d2cc720f1c22264f7896dc92177854ee69e18a87c9b92f
+  catalog_record_sha256: 18b7434ec6ae0e0beb8dbfad78d947cfda90ce615609d81f2f260822544864fb
+- id: DOC-goal-hxs3-muse-glimmer-tooling
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/goals/2026-08-26-hxs3-muse-glimmer-tooling.md
+  recorded_source_sha256: 13d6aeeb91692170197527a26d704b11729fe99b4e5793c9e6591eb429b5f495
+  source_sha256_at_baseline: 7af8f8a1de2a3d596e03c8c3a6f1dc8f1115e2ccf08a77a41a2905867eb96410
+  catalog_record_sha256: 456b6f8504c256d05fc8a59682d4fc4cb7b6fef735b6da1a192f1b6e8f0b835e
+- id: DOC-goal-lightrag-hxs4
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/goals/2026-08-29-lightrag-hxs4.md
+  recorded_source_sha256: 39a20572d860878b4a934303b25d90b54623ab71f831895919c62b1486ede2fd
+  source_sha256_at_baseline: 9c101549f53a61de3d8645849f1e0aeb21fc83844222baf5a4d810c176631062
+  catalog_record_sha256: b149e52865d6d82eb329fbbc91927e067c12824867e9fab6630d19853d792833
+- id: DOC-goal-ollama-audit-hxs5
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/goals/2026-08-24-ollama-audit-hxs5.md
+  recorded_source_sha256: 5df8ccd2120bbb1eb8929d8d511e3e2238e2f14bd8795a02043f8194babf51fd
+  source_sha256_at_baseline: 58abc600ccebb63ee936a280041804163f94a41841423dca3a6927768a61d1cb
+  catalog_record_sha256: 04fe60884e95b03a9d13c5ff77dd94fed9a7443e4b2676dc944d78953cecb7d2
+- id: DOC-goal-omniroute-layer1-secure-core
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/goals/2026-08-27-omniroute-layer1-secure-core.md
+  recorded_source_sha256: 33dabbfd66d861dcbf7b634ef3992e8b4aeea49403a374bc13e30d94bd3cbcab
+  source_sha256_at_baseline: 30e61197306654fa96409659cc0eba461bbeaaf0b117996a14d90d626345bf59
+  catalog_record_sha256: 85758b77f701aa2a6a24a85eef482b2eca19aa56328f756e61528961b4caf58c
+- id: DOC-goal-omniroute-trinity-layer0
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/goals/2026-08-27-omniroute-trinity-layer0.md
+  recorded_source_sha256: 95cc8722112f2d75560ed8f7b4713c6db883f6c03199a5799a53cedaaa0049db
+  source_sha256_at_baseline: d2bd404e77fc340302e58fa6e6616b75f96805429d026dc00be59252fb4860b1
+  catalog_record_sha256: d36bd40d3fc02d8a9a3f68b4ba272df398ecae57cfbabb37929cab8d3cacab29
+- id: DOC-hxs3-configuration
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/servers/hxs-3/configuration.md
+  recorded_source_sha256: 6ce8d2910d751c2051e5ffd48a534bf612bc9753b23dab0afbf07ef60d0af329
+  source_sha256_at_baseline: fb0c3bd951cad77adb3d42740ce5ad00d3ab236e087387f4e906da3a1b1db58c
+  catalog_record_sha256: 5f8b3b3cf643115f423c29c468912f2f9eb4eeb11f53e98cd1ae910c6b78727b
+- id: DOC-kdd-0001-kimi-k3-meta-agent
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0001-adopt-kimi-k3-meta-agent-model.md
+  recorded_source_sha256: 3d54dc081b71c4f4c5495af898b2bb52c5ffd64d333ed099e83b1df7532b8ca7
+  source_sha256_at_baseline: f4275ac46bc78e8b9c659839144e0ebc197837c4683bdc9cd9ca5dab697c4c8e
+  catalog_record_sha256: 04191594a7d9627fe16939f9b33ca8bdfbed66767347a75c00a56ac00010d859
+- id: DOC-kdd-0013-agent-model-lanes
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0013-agent-model-lanes.md
+  recorded_source_sha256: 71144186008e837897747575269529cb44332b67ac64400d3f789ebe3745b1cd
+  source_sha256_at_baseline: b12e525bd1e448337a2752596ae0147081d01007b1bc18a163c29ec431d77130
+  catalog_record_sha256: d920a78446ad32457106aaaa6258b24f976ce49249cac1eaef7968bd599c0a75
+- id: DOC-kdd-0018-raphael-registration
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0018-raphael-registration.md
+  recorded_source_sha256: 2b0be0c316f67aa6b302add447374804fbf4858bc0c1e0c6b688105902104ed5
+  source_sha256_at_baseline: b128deb293cec3283697ad4387f6a58f9694a75ce944afa72363b2f34a5249c2
+  catalog_record_sha256: e043ec561fb8bdb01072d32c91f50f636d29cce8b39ef47d2541d1c4a2e3ebab
+- id: DOC-knowledge-agent-performance
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/agent-performance.md
+  recorded_source_sha256: f5966ea5ad6d997863e9eab7f7bd9d641a542e147fb13d01331921f152e0b2d5
+  source_sha256_at_baseline: d37632d31e513c39053e9657eb44f5daaa5ffd7a9d5ce8a8f3f0bc35edcb61fd
+  catalog_record_sha256: aa8878c64d4c6dbeff8c35eaa55e8ba73c9f4a2ff1ac15571d4dcde900728b99
+- id: DOC-knowledge-issues
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/issue-tracking/issues.md
+  recorded_source_sha256: 9a7db8518996395ef98bc01e8c1c4e0da81410d31f7aff07540825c322d06981
+  source_sha256_at_baseline: 4508e1d8d631047d77a7297899aae5f1cc2b17e03bb577e7b602ba27f5ffd5a3
+  catalog_record_sha256: 51d16c4de1df51b8fc98c89cc05478360c906bcd4cf83219106586114596f474
+- id: DOC-knowledge-network
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/network.md
+  recorded_source_sha256: 067e7cdb265088904922b2c3f80de136261318ebc1272c1e7b848095731acda3
+  source_sha256_at_baseline: 3b79dd98c0faccbd244582ce8d8e34a2a005d10af8801adb4dd0100589921923
+  catalog_record_sha256: 35cbb2d2b4fee51ee8f2533f1d66c5b9ab229dcdc6c80ab1e3ff7e2a194afb1d
+- id: DOC-pilot-dsh-impl-001-state-log
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-DSH-IMPL-001/01-state-log.md
+  recorded_source_sha256: 4a08ab1889b1a6a774793c76f6e946e203ec03c62e36d97d335713f97c8f7e9b
+  source_sha256_at_baseline: ed7c13f8861ce5e41bf72d78532be3f904ba1d171f5ee46dc70c601bc9e5c782
+  catalog_record_sha256: 849fdcf49a13d51bd76a990efa178a43ae7c0bc66478f8862afc2da379cb32c2
+- id: DOC-pilot-hx1-decision-36-m8-acceptance
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/36-kk3-m8-acceptance-reconciliation.md
+  recorded_source_sha256: 41d5f9de16349c41fc80066e9dfd077396ad62cfdbf2d2b2a5ce8802a3e13a52
+  source_sha256_at_baseline: 78821063728d0a36aef29676b60351d37cab36dc1334bf5d5f5ddec9365f3c7c
+  catalog_record_sha256: 1a128b8b32a777984155c3ce2abc6a7bb00f111cb59c999984474b7c84457126
+- id: DOC-pilot-hx1-state-log
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/09-state-log.md
+  recorded_source_sha256: cb5068999f1a5396f1ad63c88d3925cfd9c5f42ba0a2dcd477fabd4e2dc2fd2b
+  source_sha256_at_baseline: b8b9e0c9e5124fc6f06a8dd5bc47bcf55a0d05c6bbe75e3ca52bb0a3ac3ca857
+  catalog_record_sha256: 78b7559fb4d11256ebe926e705cbee5c59e7122f2fb3d63622f92f9c241695fd
+- id: DOC-pilot-hxs3-ev-12-esme-m5-validation
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/12-esme-m5-validation.md
+  recorded_source_sha256: 2ef342045aa6a44ca8aa51e68b0a4a64667f3c04ae5cacee815450e8dc12462f
+  source_sha256_at_baseline: cfbe117f6438061f64be217ee7f66fc3a06050da0f9e6a21ad18ef5aecd595e6
+  catalog_record_sha256: dde724f4b93242336e21c02b74bf4b4a3dd480b1aeb29dc02cbc7bf19a46577e
+- id: DOC-pilot-hxs3-ev-15-esme-m8-signoff
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/15-esme-m8-signoff.md
+  recorded_source_sha256: 1b315b7b90c1cc9cac84ed60e6844a25765333489d9279a020d9a993a42545f3
+  source_sha256_at_baseline: 8ce6774299cdcefe60bcddb99d6ed721f5140fc7d1a7e18a9e42a093af3de67c
+  catalog_record_sha256: e0a2031f6efe99d29beb3a9e50b0626035e9529b2645803ef4d38a6e396ccf0c
+- id: DOC-pilot-omniroute-19-kimi-code-provider-setup
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/19-kimi-code-omniroute-provider-setup.md
+  recorded_source_sha256: 35d5d3f8921d4e4046c1a8964a7d78b2493e75b397a203fe407ca70fb58bfc74
+  source_sha256_at_baseline: 94e9a89c9cc7850c3742025e71bdd5a7139d34cb51b9bf91d087d40fd86eb0fa
+  catalog_record_sha256: ca1b99ddb281bb7131f6a32d4a98a946def6bcd7c09dc4174213f613d3743499
+- id: DOC-pilot-omniroute-control-manifest
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/10-control-manifest.yaml
+  recorded_source_sha256: 493b32e78e993dfb2685c99becd9ae16d621c822db59ea38ddb0fa05cb1c9453
+  source_sha256_at_baseline: f16c0f3293c70a8749b5e6d9d053b13878a0869e0cf446ac8e364e48b64873fa
+  catalog_record_sha256: 5f05095dfc9bfd7c57f7a799d75267a1474d6a4973b26a2dca846f8841f49071
+- id: DOC-pilot-omniroute-intent-authority-source-register
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/02-intent-authority-source-register.md
+  recorded_source_sha256: 4b93f88fab7f55afdc22e6bcddd1139893af5109252b8ac6a2d713fbde37094e
+  source_sha256_at_baseline: b47477dcae3f3435dfde90b2b9fd95cb586dc279aae068883e6b14f1694a9b8f
+  catalog_record_sha256: bf072e470110611519da0565f431ed1f386f005b08c5ca84e8b98658859e02b9
+- id: DOC-pilot-omniroute-trinity-adoption-assessment
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/03-trinity-adoption-assessment.md
+  recorded_source_sha256: f73bb7171d7c707e625fb058fa0a18416f54c54a8b7cfe0bf180f411cb8e48f7
+  source_sha256_at_baseline: a053495f7939ceb483dfe174b792c72fb669599bfe46de72657b449677540fbc
+  catalog_record_sha256: aca4e7f9e70269868b724d212ac4bf8dd16b6f88ffe91c52b3a12d11da7518bb
+- id: DOC-server-hxs3-oai-x-implementation-plan
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/servers/hxs-3/2026-08-29-oai-x-implementation-plan.md
+  recorded_source_sha256: 47eacbdac509a5cad6fd19cc09979a5abf4757f15b8d80264ae1b2d0b9bbd583
+  source_sha256_at_baseline: b28391816e8d9573d20c6a175acf9bbf6e9df5aeea240bd3b6b7af5a075c5c4a
+  catalog_record_sha256: 9f7554d44f1e2d8fd49f67b20236de4415aa9ca279144cfa931bc9dc7eb36570
+- id: DOC-server-registry
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/servers/SERVER-REGISTRY.md
+  recorded_source_sha256: fd05c4a15c55362675f9ec878e7cc3826075ab975baa796182f427ee19e693ae
+  source_sha256_at_baseline: e2278d095c5b381145f54c268b113bbe4f75588e2d33411ca0b07abc6ae7b7f0
+  catalog_record_sha256: 45a0e93a05552af12c5c1ccfcfd85685b41b576194aad9200ea8b7307829df0d
+- id: DOC-system-mapping
+  canonical_location: servers/system-mapping.md
+  recorded_source_sha256: 63fdc175a18e4d70304ac59f917fc4bef63fb0178d47536f727ede1300cf349e
+  source_sha256_at_baseline: 93f617748cf822af4cc39781719b7096f9db7bb5467dc93d61364d69394fe50d
+  catalog_record_sha256: 2b6dc0a109b83b0110309c9ccbb65dbef5bd9878b83793b4068a75dd54489b59

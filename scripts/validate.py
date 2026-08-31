@@ -41,7 +41,8 @@ Usage
                                                paths:
       wiki manifest member  -> wiki-sync check
       pilot fixtures file   -> fixture-suite check
-      knowledge/catalog/**  -> catalog-mechanical check
+      knowledge/catalog/**  -> catalog-mechanical + SY-8 freshness checks
+      cataloged source      -> SY-8 freshness check
       anything else         -> secret-boundary sweep on that file
 
 Hook rule
@@ -659,6 +660,18 @@ def _wiki_manifest_members():
 def scoped_checks(changed):
     """Map --changed paths to checks; returns (check_fns, sweep_files)."""
     wiki_members = _wiki_manifest_members()
+    try:
+        sys.path.insert(0, os.path.join(ROOT, "scripts"))
+        import catalog_freshness
+        catalog_sources = catalog_freshness.tracked_repo_sources()
+    except Exception:
+        # The full governance-path check will report a broken SY-8 loader when
+        # one of its own inputs changes; never let discovery fail vacuously.
+        catalog_sources = set()
+    finally:
+        if sys.path and sys.path[0] == os.path.join(ROOT, "scripts"):
+            sys.path.pop(0)
+    baseline_rel = os.path.normpath(os.path.join("governace", "catalog-freshness-baseline.yaml"))
     want = {"wiki": False, "layout": False, "fixtures": False, "catalog": False}
     sweep = []
     for p in changed:
@@ -667,6 +680,9 @@ def scoped_checks(changed):
             raise ValueError("path outside repository: %s" % p)
         if not os.path.exists(os.path.join(ROOT, rel)):
             raise ValueError("path does not exist: %s" % p)
+        if rel in catalog_sources or rel == baseline_rel or \
+                rel.startswith(os.path.normpath(CATALOG_DIR) + os.sep):
+            want["layout"] = True
         if rel == os.path.normpath(WIKI_MANIFEST) or rel in wiki_members or \
                 os.path.splitext(rel)[0] + ".md" in wiki_members:
             want["wiki"] = True                      # render.py --check covers all; it is fast

@@ -114,6 +114,9 @@ jobs:
       - name: Unit tests — capability registry (O8)
         run: python3 scripts/test_capability.py
 
+      - name: Unit tests — catalog freshness baseline (SY-8)
+        run: python3 scripts/test_catalog_freshness.py
+
       - name: Skill registry — smoke every active skill (O7)
         # validate.py runs the STATIC half as SY-6. Smokes execute skill
         # commands, so they run here rather than inside the read-only validator.

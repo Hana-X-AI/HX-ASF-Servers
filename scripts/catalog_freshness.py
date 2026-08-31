@@ -44,9 +44,11 @@ skills_registry and work_order.
 Read-only. No network.
 """
 
-import importlib.util
+from importlib.machinery import SourceFileLoader
+from importlib.util import module_from_spec, spec_from_loader
 import json
 import os
+import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -54,38 +56,107 @@ MINT = os.path.join(ROOT, "scripts", "catalog", "carol-mint")
 BASELINE = os.path.join(ROOT, "governace", "catalog-freshness-baseline.yaml")
 
 
+HASH_RE = re.compile(r"^[0-9a-f]{64}$")
+
+
 def baseline():
-    """Ids whose drift predates this check. Reported, not failed — see the
-    file's own header for why re-minting all of them would be worse."""
+    """Return ({id: pinned entry}, problems) for the known-drift ledger."""
+    problems = []
     if not os.path.isfile(BASELINE):
-        return set()
+        return {}, ["[CF-05] catalog freshness baseline missing: %s" % BASELINE]
     import yaml
-    with open(BASELINE, encoding="utf-8") as fh:
-        return set(yaml.safe_load(fh).get("ids") or [])
+    try:
+        with open(BASELINE, encoding="utf-8") as fh:
+            data = yaml.safe_load(fh) or {}
+    except Exception as e:
+        return {}, ["[CF-05] baseline unreadable: %s" % e]
+    if data.get("schema_version") != 1:
+        problems.append("[CF-05] baseline schema_version must be 1")
+    rows = data.get("entries") or []
+    if not isinstance(rows, list):
+        return {}, problems + ["[CF-05] baseline entries must be a list"]
+    if data.get("count") != len(rows):
+        problems.append("[CF-05] baseline count %r != %d entries" %
+                        (data.get("count"), len(rows)))
+    entries = {}
+    required = ("id", "canonical_location", "recorded_source_sha256",
+                "source_sha256_at_baseline", "catalog_record_sha256")
+    for i, row in enumerate(rows):
+        if not isinstance(row, dict):
+            problems.append("[CF-05] baseline entry %d is not a mapping" % i)
+            continue
+        missing = [key for key in required if not row.get(key)]
+        if missing:
+            problems.append("[CF-05] baseline entry %d missing: %s" %
+                            (i, ", ".join(missing)))
+            continue
+        doc_id = str(row["id"])
+        if doc_id in entries:
+            problems.append("[CF-05] duplicate baseline id: %s" % doc_id)
+            continue
+        for key in required[2:]:
+            if not HASH_RE.match(str(row[key])):
+                problems.append("[CF-05] %s: %s is not a full sha256" %
+                                (doc_id, key))
+        entries[doc_id] = row
+    return entries, problems
 
 
 def _carol_mint():
     """Import carol-mint, which has no .py extension. Module-level code is
     constants and defs behind a __main__ guard, so importing runs nothing."""
-    spec = importlib.util.spec_from_loader(
-        "carol_mint", importlib.machinery.SourceFileLoader("carol_mint", MINT))
-    mod = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(mod)
+    # carol-mint's historical default is the governor-host checkout. A clean CI
+    # runner has no /home/hxsa tree, so bind this imported instance to the
+    # checkout being validated unless a test deliberately supplies an override.
+    catalog_root = os.environ.get(
+        "CAROL_MINT_ROOT", os.path.join(ROOT, "knowledge", "catalog"))
+    prior_root = os.environ.get("CAROL_MINT_ROOT")
+    os.environ["CAROL_MINT_ROOT"] = catalog_root
+    try:
+        loader = SourceFileLoader("carol_mint", MINT)
+        spec = spec_from_loader("carol_mint", loader)
+        mod = module_from_spec(spec)
+        loader.exec_module(mod)
+    finally:
+        if prior_root is None:
+            os.environ.pop("CAROL_MINT_ROOT", None)
+        else:
+            os.environ["CAROL_MINT_ROOT"] = prior_root
     return mod
+
+
+def tracked_repo_sources():
+    """Return repo-relative source paths whose records SY-8 grades."""
+    cm = _carol_mint()
+    paths = set()
+    for _doc_id, record_path in cm.iter_records():
+        try:
+            doc = cm.load_yaml(record_path)["document"]
+        except Exception:
+            continue
+        source = doc.get("canonical_location")
+        if not source or not cm.is_repo_source(source):
+            continue
+        probe = os.path.abspath(cm.resolve_source(source))
+        paths.add(os.path.normpath(os.path.relpath(probe, ROOT)))
+    return paths
 
 
 def plan():
     """Return (summary, problems)."""
     problems, notes = [], {"drift": 0, "gone": 0, "offhost": 0, "living": 0,
                             "dir": 0, "baselined": 0, "total": 0}
-    known = baseline()
+    known, baseline_problems = baseline()
+    problems.extend(baseline_problems)
     try:
         cm = _carol_mint()
     except Exception as e:
         return "catalog-freshness: carol-mint unavailable", ["[CF-00] %s" % e]
 
-    for doc_id, _path in cm.iter_records():
+    seen = set()
+    for doc_id, record_path in cm.iter_records():
         notes["total"] += 1
+        seen.add(doc_id)
         try:
             doc = cm.load_record(doc_id)["document"]
         except SystemExit:
@@ -96,14 +167,17 @@ def plan():
             problems.append("[CF-02] %s: no canonical_location" % doc_id)
             continue
 
-        probe = src if os.path.isabs(src) else os.path.join(ROOT, src)
-        in_repo = os.path.abspath(probe).startswith(ROOT + os.sep)
+        probe = cm.resolve_source(src)
+        in_repo = cm.is_repo_source(src)
 
         if not in_repo:
             # Host-anchored. Its hash is only meaningful on the governor host,
             # so it is counted and never graded — the same reasoning that makes
             # CAT-07 skip its existence probe under --ci.
             notes["offhost"] += 1
+            if doc_id in known:
+                problems.append("[CF-05] %s: baseline entries must reference an "
+                                "in-repo file" % doc_id)
             continue
 
         if os.path.isdir(probe):
@@ -112,6 +186,9 @@ def plan():
             # directory has no content hash, so it is counted, not graded.
             # Checking isfile alone reported all ten as missing sources.
             notes["dir"] += 1
+            if doc_id in known:
+                problems.append("[CF-05] %s: baseline entries cannot reference a "
+                                "directory" % doc_id)
             continue
 
         if not os.path.exists(probe):
@@ -125,17 +202,40 @@ def plan():
 
         live = cm.sha256_file(probe)
         if live == doc.get("sha256", ""):
+            if doc_id in known:
+                problems.append("[CF-05] %s: record is reconciled; remove its stale "
+                                "baseline entry" % doc_id)
             continue
         if (doc.get("validation") or {}).get("freshness") == "living":
             notes["living"] += 1
             continue
         if doc_id in known:
-            notes["baselined"] += 1
+            entry = known[doc_id]
+            pin_problems = []
+            checks = (
+                ("canonical_location", str(src)),
+                ("recorded_source_sha256", str(doc.get("sha256", ""))),
+                ("source_sha256_at_baseline", live),
+                ("catalog_record_sha256", cm.sha256_file(record_path)),
+            )
+            for key, actual in checks:
+                if str(entry.get(key, "")) != actual:
+                    pin_problems.append("%s changed" % key)
+            if pin_problems:
+                notes["drift"] += 1
+                problems.append("[CF-01] %s: changed after baselining (%s) — reconcile "
+                                "the record and remove its baseline entry" %
+                                (doc_id, ", ".join(pin_problems)))
+            else:
+                notes["baselined"] += 1
             continue
         notes["drift"] += 1
         problems.append("[CF-01] %s: record sha256 %s… does not match %s (%s…) — "
                         "re-mint: python3 scripts/catalog/carol-mint re-mint %s"
                         % (doc_id, str(doc.get("sha256", ""))[:12], src, live[:12], doc_id))
+
+    for doc_id in sorted(set(known) - seen):
+        problems.append("[CF-05] %s: baseline id has no catalog record" % doc_id)
 
     summary = ("catalog-freshness: %d records — %d in-repo drift, %d in-repo source "
                "missing; not graded: %d off-host, %d directory, %d living, "
