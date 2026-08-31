@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Generated from pilots/PILOT-DSH-IMPL-001/02-gordon-phase-a-testplan.md (sha256 54ade88dae3bdac404a8e68df4de90285d4b7d41b137ef1e45286f2ee2bc2abe) by scripts/wiki/render.py on 2026-08-31T21:35Z.
+<!-- Generated from pilots/PILOT-DSH-IMPL-001/02-gordon-phase-a-testplan.md (sha256 54ade88dae3bdac404a8e68df4de90285d4b7d41b137ef1e45286f2ee2bc2abe) by scripts/wiki/render.py on 2026-08-31T21:58Z.
      Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
 <html lang="en">
 <head>
@@ -95,7 +95,7 @@ a{color:#6fa8ff} .doc-meta,footer{color:#999}}
 <ul><li><code>run-phase-a.sh</code> — orchestrator: preflight (tools, identity, env census), per-gate pytest invocation, verdict aggregation, evidence pack assembly.</li><li><code>conftest.py</code> + <code>gordon_util.py</code> — environment contract, run-as-dsh wrapper (<code>env -i</code> inside the privilege prefix), scratch homes, fixture rendering, frame-wise zstd decode (candidate Node <code>node:zlib</code> per receipt §9, <code>zstd</code> CLI fallback), session-log parser, evidence recorder (test ID, candidate identity, environment, command, observed, oracle, disposition, artifact pointer per §13 of my profile).</li><li><code>test_g0_identity.py</code>, <code>test_g1_static.py</code>, <code>test_g2_entry.py</code>, <code>test_g3_providers.py</code>, <code>test_g4_sessions.py</code>, <code>test_g5_containment.py</code>.</li><li><code>fixtures/</code> — patch-overlay templates (<code>pi-ai</code> route with the landed compat switches, <code>deepseek</code> comparison route), the frame-wise zstd decoder, and the marker workspace file (AGENTS.md instruction probe). The malformed-YAML and schema-violation patches for G5-11 are generated inline by the test.</li><li><code>README.md</code> — execution runbook: prerequisites, env contract, governor inputs, per-gate commands, stop conditions.</li></ul>
 <p>Completion language at execution: <code>[GATE VERDICT — &lt;gate&gt; — &lt;verdict&gt;]</code> per gate, <code>[CAMPAIGN COMPLETE — &lt;verdict&gt;]</code> when the ledger closes, and <code>[STOP CONDITION — ESCALATION TO KK3]</code> on any §12.2 condition.</p>
 </main>
-<footer>Source of truth: <code>pilots/PILOT-DSH-IMPL-001/02-gordon-phase-a-testplan.md</code> (sha256 <code>54ade88dae3bdac404a8e68df4de90285d4b7d41b137ef1e45286f2ee2bc2abe</code>) · rendered 2026-08-31T21:35Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+<footer>Source of truth: <code>pilots/PILOT-DSH-IMPL-001/02-gordon-phase-a-testplan.md</code> (sha256 <code>54ade88dae3bdac404a8e68df4de90285d4b7d41b137ef1e45286f2ee2bc2abe</code>) · rendered 2026-08-31T21:58Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
 
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';

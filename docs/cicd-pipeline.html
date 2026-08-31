@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Generated from docs/cicd-pipeline.md (sha256 b8f17fb29b92a97b1103e297ee94aa0ec6ab4231f73af68ecd60076c290a9bf8) by scripts/wiki/render.py on 2026-08-31T21:35Z.
+<!-- Generated from docs/cicd-pipeline.md (sha256 b8f17fb29b92a97b1103e297ee94aa0ec6ab4231f73af68ecd60076c290a9bf8) by scripts/wiki/render.py on 2026-08-31T21:58Z.
      Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
 <html lang="en">
 <head>
@@ -80,7 +80,7 @@ a{color:#6fa8ff} .doc-meta,footer{color:#999}}
 <p>[OPEN CORRECTION 2026-08-30, labeled, append-only — STEP COUNT AND GITLEAKS PIN: two counts in the body were reconciled against <code>.github/workflows/ci-cd.yml</code>. (1) The pipeline has <strong>20 steps</strong> (gates 11 + coderabbit-review 5 + pr-manage 4), not 18: the <code>Install PyYAML</code> and <code>Unit tests — work-state engine (O1)</code> gates steps were added with the work-state engine and had never been documented. They are now steps 8-9 and the list is renumbered 10-20. The prior "18" in §Intro and the §Step list heading is preserved here as history. (2) The gitleaks pin in the step-11 correction block read <code>v8.24.3</code>; the workflow pins <strong><code>v8.30.1</code></strong> with a verified archive SHA-256. The <code>v8.24.3</code> figure is preserved here as history. Authority: <code>.github/workflows/ci-cd.yml</code> as-built, read 2026-08-30.]</p>
 <p>[OPEN CORRECTION 2026-08-31, labeled, append-only — STEP COUNT 20 → 26: six gates steps were added to the <code>gates</code> job (hook manifest verifier O5, work-order engine O2, secret-boundary corpus O6, capability registry O8, catalog freshness baseline SY-8, skill registry smoke O7), bringing the pipeline to <strong>26 steps</strong> (gates 17 + coderabbit-review 5 + pr-manage 4). The §Intro count and §Step list heading now read 26, and the list is renumbered 1-26. The prior 20-step figure above is preserved as history. Authority: <code>.github/workflows/ci-cd.yml</code> as-built, read 2026-08-31.]</p>
 </main>
-<footer>Source of truth: <code>docs/cicd-pipeline.md</code> (sha256 <code>b8f17fb29b92a97b1103e297ee94aa0ec6ab4231f73af68ecd60076c290a9bf8</code>) · rendered 2026-08-31T21:35Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+<footer>Source of truth: <code>docs/cicd-pipeline.md</code> (sha256 <code>b8f17fb29b92a97b1103e297ee94aa0ec6ab4231f73af68ecd60076c290a9bf8</code>) · rendered 2026-08-31T21:58Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
 
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';

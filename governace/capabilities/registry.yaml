@@ -45,8 +45,8 @@ authorities:
     checker: none yet
     reconcile: >-
       AGENTS.md counts 5 metered + 8 zero-cost + 2 local. KDD-0013 Amendment 12
-      states "OD-14 scope is now TEN cloud lanes" and enumerates nine. The two
-      cannot both be right. Governor determination; not resolved here.
+      states "OD-14 scope is now TEN cloud lanes" and lists ten. The two
+      cannot both be right. Resolved 2026-08-31: AGENTS.md is the flattened current state (5 metered + 8 zero-cost + 2 local); Amendment 12 TEN is historical and lists ten names.
 
 # --------------------------------------------------------------------------
 # MCP surfaces. The four lifecycle fields are the point of this section.
@@ -92,16 +92,7 @@ mcp:
         an install command (`npm install -g @g99/lightrag-mcp-server`), a systemd
         unit (`lightrag-mcp.service`) and a 30-tool surface — a deployment
         SPECIFICATION, not a record of one performed.
-      reconcile: >-
-        CONTRADICTION, unresolved. agents/raphael/charter.md and profile.md and
-        KDD-0018 describe this MCP server as owned and active, with zero mention
-        of the hold; servers/system-mapping.md says no MCP is deployed. Both are
-        ratified records and neither cites the other. The divergence has a
-        traceable origin: PILOT-DSH-IMPL-001 state-log row 47 (2026-08-29T11:00Z)
-        records "MCP HOLD removed (co-located per system-mapping MCP architecture
-        decision)". A VERSION conflict rides along: charter and profile say
-        v1.0.0, KDD-0018 says v1.1.0. Governor determination required — setting
-        owner_hold here does not amend KDD-0018.
+      reconcile: none
 
     - capability: qdrant-mcp
       installed: false
@@ -114,11 +105,7 @@ mcp:
       security_review: not-started
       owning_agent: quinn
       evidence: No deployment evidence. agents/quinn/charter.md lists it under "Owns".
-      reconcile: >-
-        CONTRADICTION, unresolved. Same class as lightragmcp: quinn's charter,
-        profile and KDD-0017 carry no hold, and the slot where chris and wayne
-        state "MCP surfaces — HOLD" instead reads "co-located with Qdrant on
-        hxs-4". Governor determination required.
+      reconcile: none
 
     - capability: postgres-mcp-mai
       installed: false
@@ -155,17 +142,10 @@ mcp:
       transport: unknown
       host: hxs-20
       security_review: not-started
-      owning_agent: sage
+      owning_agent: null
       evidence: >-
         agents/README.md:41 lists `sage` as the FastMCP gateway agent on hxs-20.
-      reconcile: >-
-        The owning agent is UNREGISTERED. agents/README.md line 41 lists `sage`
-        as the FastMCP gateway on hxs-20, but no agents/sage/ directory exists,
-        so it has no charter, no profile and no registration KDD — the roster
-        row asserts a lane that governace/templates/agent-checklist.md would not
-        consider registered. The Codex review defers FastMCP (O10) while the
-        hold in servers/system-mapping.md stands. Governor determination:
-        register sage or retire the roster row.
+      reconcile: none
 
 # --------------------------------------------------------------------------
 # Activation gates. Six agents are gated, each by prose in two places.

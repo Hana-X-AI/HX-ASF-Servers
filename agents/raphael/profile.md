@@ -46,7 +46,7 @@ Role-specific additions: none beyond the global inventory.
 
 Install, configure, operate, and maintain the HX-ASF LightRAG stack on
 hxs-4 — the LightRAG server (v1.5.7), Web UI, and lightragmcp MCP server
-(v1.0.0) — as standalone, native systemd services. LightRAG provides
+(v1.1.0) — as standalone, native systemd services. LightRAG provides
 graph-based retrieval-augmented generation: it combines knowledge graphs
 with vector search for dual-level retrieval, using Qdrant as its vector
 storage backend and **Chat-X (`hx-qwen3.5-9b-64k`) via local Ollama on hxs-4**
@@ -88,7 +88,7 @@ All repo paths below are relative to this directory.
   Apache-2.0). Core library, API server, Web UI, env.example config
   reference, qdrant_impl.py (Qdrant storage backend), systemd service
   template, 480 test files, docs. Install from PyPI (`lightrag-hku[api]`).
-- `/opt/tkv-local/lightragmcp-main/` — lightragmcp MCP server v1.0.0
+- `/opt/tkv-local/lightragmcp-main/` — lightragmcp MCP server v1.1.0
   (MIT, Suryan). 30 tools: document management (10), query (3), knowledge
   graph (8), system management (9). TOOLS_SUMMARY.md, API_REFERENCE.md.
   Install via npx or npm.
@@ -169,7 +169,7 @@ When executing work on hxs-4 (192.168.50.203):
 - Bundled with `lightrag-hku[api]` — served at `http://192.168.50.203:9621/`
 - No separate install needed
 
-### 7.3 lightragmcp MCP server (v1.0.0, Suryan)
+### 7.3 lightragmcp MCP server (v1.1.0, Suryan)
 
 - **Install:** `npm install -g @g99/lightrag-mcp-server` (or `npx`)
 - **Tools:** 30 (document management 10, query 3, knowledge graph 8,
@@ -223,7 +223,7 @@ The gate covers post-install activation for ongoing operational duties.
 
 Original record — no external source document. Created per owner
 directive 2026-08-29. Knowledge base: `/opt/tkv-local/LightRAG-main/`
-(v1.5.7), `/opt/tkv-local/lightragmcp-main/` (v1.0.0),
+(v1.5.7), `/opt/tkv-local/lightragmcp-main/` (v1.1.0),
 `/opt/tkv-local/daniel-lightrag-mcp-main/` (v0.1.0),
 `/home/hxsa/opt/local-tkv/agent-zero-docs/lightrag/`. Target host: hxs-4
 per `governace/goals/2026-08-29-lightrag-hxs4.md`. Model lane: Qwen-X via OmniRoute,

@@ -22,7 +22,7 @@ generation using Qdrant as its vector storage backend.
 - The single HX-ASF LightRAG server instance on hxs-4: its configuration,
   ingestion pipeline, query endpoints, and operational evidence.
 - LightRAG Web UI (bundled with lightrag-hku[api]).
-- The lightragmcp MCP server (Suryan v1.0.0, 30 tools) — co-located on hxs-4.
+- The lightragmcp MCP server (Suryan v1.1.0, 30 tools) — co-located on hxs-4.
 - LightRAG credential entries in
   `/home/hxsa/opt/local-tkv/agent-zero-docs/.local.env` — LightRAG entries
   only, variable references only, never values.
@@ -56,7 +56,7 @@ generation using Qdrant as its vector storage backend.
   `agents/raphael/profile.md`.]
   `/opt/tkv-local/LightRAG-main/` (v1.5.7 source, env.example, qdrant_impl.py,
   systemd template, docs);
-  `/opt/tkv-local/lightragmcp-main/` (MCP server v1.0.0, TOOLS_SUMMARY.md,
+  `/opt/tkv-local/lightragmcp-main/` (MCP server v1.1.0, TOOLS_SUMMARY.md,
   API_REFERENCE.md);
   `/opt/tkv-local/daniel-lightrag-mcp-main/` (fallback MCP v0.1.0);
   `/home/hxsa/opt/local-tkv/agent-zero-docs/lightrag/` (HX reference docs);
