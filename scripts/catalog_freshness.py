@@ -72,7 +72,7 @@ def baseline():
         return {}, ["[CF-05] baseline unreadable: %s" % e]
     if data.get("schema_version") != 1:
         problems.append("[CF-05] baseline schema_version must be 1")
-    rows = data.get("entries") or []
+    rows = data.get("entries")
     if not isinstance(rows, list):
         return {}, problems + ["[CF-05] baseline entries must be a list"]
     if data.get("count") != len(rows):

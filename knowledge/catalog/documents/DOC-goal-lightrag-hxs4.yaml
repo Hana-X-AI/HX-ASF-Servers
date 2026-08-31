@@ -2,7 +2,7 @@ document:
   id: DOC-goal-lightrag-hxs4
   title: 'Goal: Implement LightRAG and LightRAG MCP server on hxs-4'
   type: goal
-  declared_purpose: 'Implementation goal for LightRAG v1.5.7 server, Web UI, and lightragmcp v1.1.0 MCP server on hxs-4. Qdrant vector backend (Quinn), Meta-X LLM via OmniRoute, bge-m3 embeddings via Ollama (john). Agent: raphael (KDD-0018, Qwen-X lane). 16 success conditions.'
+  declared_purpose: 'Implementation goal for LightRAG v1.5.7 server, Web UI, and lightragmcp v1.1.0 MCP server on hxs-4. Qdrant vector backend (Quinn), local Chat-X LLM through Ollama on hxs-4, and bge-m3 embeddings through Ollama (john). The earlier Meta-X/OmniRoute LLM binding is preserved as historical context and is not the current binding. Agent: raphael (KDD-0018, Qwen-X lane). 16 success conditions.'
   source:
     author: Flash (governor)
     provided_by: Agent Zero
@@ -43,7 +43,7 @@ document:
     target: DOC-system-mapping
     note: S17 LightRAG placement
   validation:
-    validated_at: '2026-08-31T01:08:32Z'
+    validated_at: '2026-08-31T03:51:22Z'
     freshness: current
     review_due: on owner approval
   sha256: 9c101549f53a61de3d8645849f1e0aeb21fc83844222baf5a4d810c176631062
@@ -63,4 +63,4 @@ document:
   canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/goals/2026-08-29-lightrag-hxs4.md
 notes:
   semantic_reconciliation_20260831: 'Read against the current source and operative work-state block: status=draft as of 2026-08-29. The source also records executed LightRAG/Qdrant install evidence, so the draft-versus-execution inconsistency remains explicitly queued for governor reconciliation; this record does not infer closure.'
-  minted_by: 'carol-mint 1.0.0 @ 2026-08-31T01:08:32Z — re-mint 39a20572d860… -> 9c101549f53a… — 2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'
+  minted_by: 'carol-mint 1.0.0 @ 2026-08-31T03:51:22Z — re-mint freshness-only — CodeRabbit PR #8 semantic finding verified against source and corrected'

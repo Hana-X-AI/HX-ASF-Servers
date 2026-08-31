@@ -660,6 +660,7 @@ def _wiki_manifest_members():
 def scoped_checks(changed):
     """Map --changed paths to checks; returns (check_fns, sweep_files)."""
     wiki_members = _wiki_manifest_members()
+    catalog_source_discovery_failed = False
     try:
         sys.path.insert(0, os.path.join(ROOT, "scripts"))
         import catalog_freshness
@@ -668,11 +669,13 @@ def scoped_checks(changed):
         # The full governance-path check will report a broken SY-8 loader when
         # one of its own inputs changes; never let discovery fail vacuously.
         catalog_sources = set()
+        catalog_source_discovery_failed = True
     finally:
         if sys.path and sys.path[0] == os.path.join(ROOT, "scripts"):
             sys.path.pop(0)
     baseline_rel = os.path.normpath(os.path.join("governace", "catalog-freshness-baseline.yaml"))
-    want = {"wiki": False, "layout": False, "fixtures": False, "catalog": False}
+    want = {"wiki": False, "layout": catalog_source_discovery_failed,
+            "fixtures": False, "catalog": False}
     sweep = []
     for p in changed:
         rel = os.path.normpath(os.path.relpath(p, ROOT)) if os.path.isabs(p) else os.path.normpath(p)

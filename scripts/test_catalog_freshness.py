@@ -16,6 +16,7 @@ import yaml
 HERE = Path(__file__).resolve().parent
 SCRIPT = HERE / "catalog_freshness.py"
 MINT = HERE / "catalog" / "carol-mint"
+VALIDATE = HERE / "validate.py"
 
 
 def sha(path):
@@ -24,6 +25,13 @@ def sha(path):
 
 def load_module():
     spec = importlib.util.spec_from_file_location("catalog_freshness_tested", SCRIPT)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def load_validate():
+    spec = importlib.util.spec_from_file_location("validate_tested", VALIDATE)
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
     return mod
@@ -82,8 +90,39 @@ class CatalogFreshnessTests(unittest.TestCase):
         proc = subprocess.run(
             [sys.executable, "-I", str(SCRIPT), "--json"],
             cwd=HERE.parent, text=True, capture_output=True)
+        self.assertEqual(0, proc.returncode, proc.stdout + proc.stderr)
         self.assertNotIn("importlib", proc.stdout + proc.stderr)
         self.assertNotIn("carol-mint unavailable", proc.stdout + proc.stderr)
+
+    def test_baseline_entries_rejects_missing_null_and_non_lists(self):
+        invalid_values = (None, {}, "", 0)
+        for value in invalid_values:
+            with self.subTest(entries=value):
+                data = {"schema_version": 1, "baseline_date": "2026-08-30",
+                        "count": 0, "entries": value}
+                self.baseline_path.write_text(
+                    yaml.safe_dump(data, sort_keys=False), encoding="utf-8")
+                _summary, problems = self.plan()
+                self.assertTrue(any("entries must be a list" in p for p in problems))
+
+        data = {"schema_version": 1, "baseline_date": "2026-08-30", "count": 0}
+        self.baseline_path.write_text(
+            yaml.safe_dump(data, sort_keys=False), encoding="utf-8")
+        _summary, problems = self.plan()
+        self.assertTrue(any("entries must be a list" in p for p in problems))
+
+    def test_changed_scope_forces_governance_when_source_discovery_fails(self):
+        mod = load_validate()
+        real_import = __import__
+
+        def fail_catalog_import(name, *args, **kwargs):
+            if name == "catalog_freshness":
+                raise ImportError("synthetic catalog discovery failure")
+            return real_import(name, *args, **kwargs)
+
+        with mock.patch("builtins.__import__", side_effect=fail_catalog_import):
+            checks = mod.scoped_checks([str(VALIDATE)])
+        self.assertIn(mod.check_governance_path, checks)
 
     def test_unchanged_known_drift_is_reported_not_failed(self):
         old = "0" * 64

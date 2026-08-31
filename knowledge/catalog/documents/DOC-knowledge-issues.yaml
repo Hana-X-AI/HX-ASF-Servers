@@ -32,14 +32,11 @@ document:
     access_restrictions: none beyond repository access
     contains_secret_values: false
   relations:
-  - predicate: risks
-    target: hxs-4 Ollama network exposure
-    note: D1 must be decided before any exposure of hxs-4 Ollama (PILOT-002 lineage)
   - predicate: references
     target: DOC-pilot-hx1-plan
     note: D3 context-contract issue is cited by plan §4.2 rule 2 (Modelfile num_ctx is the contract)
   validation:
-    validated_at: '2026-08-31T01:08:33Z'
+    validated_at: '2026-08-31T03:51:22Z'
     freshness: current
     review_due: 2026-09-01 or on item change
   sha256: 4508e1d8d631047d77a7297899aae5f1cc2b17e03bb577e7b602ba27f5ffd5a3
@@ -52,6 +49,7 @@ document:
     timestamp: '2026-08-31T01:08:33Z'
     reason: '2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'
 notes:
+  closed_risk_history_20260831: The former active risks relation for D1/hxs-4 Ollama network exposure is closed. D1 was resolved 2026-08-29 when OmniRoute became the accepted remote-consumption mechanism; the relation was removed from current metadata and remains preserved here as history.
   semantic_reconciliation_20260831: Read against the current register. Only the HX file-naming convention remains open. D1 OmniRoute remote consumption, D2 hxs-4 Ollama baseline, D3 default-context contract, and the M7b soak item are listed under Closed with dated resolutions. The declared_purpose's 'Open at ingestion' enumeration is a historical snapshot, not current open-state.
   corrections_batch8: 'M7b-backlog re-validation (2026-08-25T22:15Z): drift traced to the governor''s owner-directed register addition (state log row 53, verified at source line 14): new open item ''2026-08-25 | M7b 24-hour soak (AC-008/AC-016) — deferred to backlog by owner directive; soak evidence absent = deferred, not waived; M8 acceptance scope adjusted accordingly | Agent-Zero | Owner''s word to schedule; do not raise proactively''. Legitimate governor edit. Re-hashed 6b22c6a6… -> 9a7db851…. declared_purpose ''Open at ingestion'' list left as-ingested (dated snapshot); the M7b item is the register''s newest open entry and is now recorded here. All other fields re-checked — unchanged.'
-  minted_by: 'carol-mint 1.0.0 @ 2026-08-31T01:08:33Z — re-mint 9a7db8518996… -> 4508e1d8d631… — 2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'
+  minted_by: 'carol-mint 1.0.0 @ 2026-08-31T03:51:22Z — re-mint freshness-only — CodeRabbit PR #8 semantic finding verified against source and corrected'

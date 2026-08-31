@@ -73,9 +73,9 @@ document:
     target: F-M5-3/F-M5-4 (prompt-dependent discipline; /v1 multi-call capability)
     note: with the KDD rule removed the model emitted a multi-call response under bait (OC07), and the /v1 path emitted 2 calls under parallel_tool_calls:true + bait (PTC03R) — any KK3 adapter on ANY serving path must carry the harness gate; the flag is a probe, never enforcement
   validation:
-    validated_at: '2026-08-31T01:08:33Z'
+    validated_at: '2026-08-31T03:51:22Z'
     freshness: current
-    review_due: at the M8 sign-off gate (this record is the quality grounds) and at the owner D8 reasoning_strength operating decision; F-M5-1's /tmp boot-clear mechanism is queued to rick's plane
+    review_due: M8 sign-off review completed 2026-08-27; next review at the owner D8 reasoning_strength operating decision or on evidence amendment; F-M5-1 boot-clear mechanism remains in rick's plane
   sha256: cfbe117f6438061f64be217ee7f66fc3a06050da0f9e6a21ad18ef5aecd595e6
   canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HXS3-MUSE-GLIMMER-TOOLING-001/12-esme-m5-validation.md
   hash_history:
@@ -91,4 +91,4 @@ notes:
   sanitization: No secrets, tokens, cookies, private prompts, user data, or thinking content in the source (thinking stripped at receipt, presence/character counts only); all prompts synthetic; both transcript-only disclosures contained with the value in no file or artifact; askpass helpers + wrappers + pinned known_hosts deleted at each session's task end; hxs-3 scratch removed; transient sanitized evidence at hxs-5:/tmp/esme-m5-hxs3/ (volatile — the source document carries the record). This record quotes no credential material (profile §6; cf. DOC-protected-ssh-info-hxs1).
   addendum_a_verification: 'Session -02 (fresh instance, commissioned 2026-08-26T23:40Z) found the deliverable already complete on disk (mtime 23:50:41Z) and — per the records contract — did not rewrite it: it independently re-derived every suite outcome from the 24 raw evidence artifacts BEFORE reading the document (exact agreement on every number, A.1 table), re-verified fixtures 10/10 + harness hashes + the RESTART_AUTH allowlist from versioned source, ran fresh close-out guards at 23:54Z and 00:02Z (identity EXACT, zero Xid/OOM, zero err-level lines, NRestarts=0, boot 23:17Z continuous, pin never evicted), and resolved the ''-- No entries --'' wc/grep artifact the same way as §4.8. -01 completion verdict stands verified: PASS — TASK COMPLETE.'
   handoff: Per the context packet, the M5 handoff stays OPEN until this run's catalog receipt is cited in the hxs-3 state log (profile §7); the receipt is receipts/2026-08-27T0047Z-carol-metax-m5-wave.md — citation by the governor CLOSES the Meta-X M5 handoff.
-  minted_by: 'carol-mint 1.0.0 @ 2026-08-31T01:08:33Z — re-mint 2ef342045aa6… -> cfbe117f6438… — 2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'
+  minted_by: 'carol-mint 1.0.0 @ 2026-08-31T03:51:22Z — re-mint freshness-only — CodeRabbit PR #8 semantic finding verified against source and corrected'

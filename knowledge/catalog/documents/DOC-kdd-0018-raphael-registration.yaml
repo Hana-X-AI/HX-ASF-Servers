@@ -40,7 +40,7 @@ document:
     target: DOC-system-mapping
     note: S17 LightRAG placement on hxs-4
   validation:
-    validated_at: '2026-08-31T01:08:32Z'
+    validated_at: '2026-08-31T03:51:22Z'
     freshness: current
     review_due: on owner amendment
   sha256: b128deb293cec3283697ad4387f6a58f9694a75ce944afa72363b2f34a5249c2
@@ -53,5 +53,5 @@ document:
     reason: '2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'
   canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0018-raphael-registration.md
 notes:
-  semantic_reconciliation_20260831: Read against the full current KDD. Raphael remains registered and activation-gated on Qwen-X via OmniRoute. The declared_purpose's Meta-X dependency is superseded by the source's owner-selected local Chat-X binding. Qdrant v1.19.0 is installed but NOT accepted for LightRAG; acceptance evidence plus Quinn's activation word remain required.
-  minted_by: 'carol-mint 1.0.0 @ 2026-08-31T01:08:32Z — re-mint 2b0be0c316f6… -> b128deb293ce… — 2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'
+  semantic_reconciliation_20260831: Read against the full current KDD. Raphael remains registered and activation-gated on Qwen-X via OmniRoute. The source's historical Context and original LLM-binding fields named Meta-X; the owner-selected current LightRAG binding is local Chat-X. Qdrant v1.19.0 is installed but NOT accepted for LightRAG; acceptance evidence plus Quinn's activation word remain required.
+  minted_by: 'carol-mint 1.0.0 @ 2026-08-31T03:51:22Z — re-mint freshness-only — CodeRabbit PR #8 semantic finding verified against source and corrected'

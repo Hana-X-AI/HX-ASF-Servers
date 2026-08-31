@@ -70,9 +70,9 @@ document:
     target: DOC-fleet-time-and-mask-pass
     note: 'material-change row 2026-08-26T23:52:40Z: Etc/UTC + NTP synchronized per the owner''s one-source directive (rick fleet pass); named source time.cloudflare.com'
   validation:
-    validated_at: '2026-08-31T01:08:32Z'
+    validated_at: '2026-08-31T03:51:22Z'
     freshness: current
-    review_due: on any material change to hxs-3 configured state (its Material Change Record must grow with the change), on registry status change, and at the owner's M8 ACCEPT verdict (Meta-X candidate -> active)
+    review_due: on any material change to hxs-3 configured state (its Material Change Record must grow with the change) or on registry-status change; the owner M8 ACCEPT trigger completed 2026-08-27
   sha256: fb0c3bd951cad77adb3d42740ce5ad00d3ab236e087387f4e906da3a1b1db58c
   canonical_location: /home/hxsa/opt/HX-ASF-Servers/servers/hxs-3/configuration.md
   hash_history:
@@ -89,4 +89,4 @@ notes:
   no_secrets: 'Per the records contract no credentials, keys, or secret values are placed in server records — verified at ingestion (the F-M8-1 sanitization sweep at the gate covered this file: credential value ABSENT, match-status checked without printing it); contains_secret_values false.'
   hash_crosscheck: sha256 6ce8d2910d751c2051e5ffd48a534bf612bc9753b23dab0afbf07ef60d0af329 computed at ingestion (2026-08-27T02:35Z); 161 lines. Not yet cited in the hxs-3 state log (row 25 records the deliverable's creation without a hash) — the catalog hash is the first recorded value, same class as the M7/M5/M8 WO-CP first-hash convention.
   registry_alignment_20260827: 'REGISTRY ALIGNMENT RESOLVED (review-batch follow-up wave; OmniRoute state log row 44 queue item ''DOC-hxs3-configuration — registry divergence recast historical''): SERVER-REGISTRY.md now records Meta-X tooling specialist as hxs-3''s workload (the governor''s F-REG-1 fix on the owner''s ''fix it'' directive — hxs-2 state log row 60, 2026-08-27T17:05Z — plus the dated superseded-assignment note at the 20:49Z review batch, both copies: repo line 53 + note line 77, tkv line 40 + note line 88 — the 2026-08-13 gpt-oss/LightRAG mapping preserved as labeled history). declared_purpose + inferred_value + the DOC-tkv-server-registry relation note recast from ''divergence labeled openly, not resolved'' to the resolved aligned state (the former wording kept here as the record of what the record said at the M8 gate); the DOC-goal-hxs3 relation note''s SC-06 clause updated to the owner''s formal deferral (row 30) in the same pass. SOURCE UNCHANGED — sha256 6ce8d291… re-verified == live this run (the row-44 queue item was record-side only); validated_at refreshed.'
-  minted_by: 'carol-mint 1.0.0 @ 2026-08-31T01:08:32Z — re-mint 6ce8d2910d75… -> fb0c3bd951ca… — 2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'
+  minted_by: 'carol-mint 1.0.0 @ 2026-08-31T03:51:22Z — re-mint freshness-only — CodeRabbit PR #8 semantic finding verified against source and corrected'

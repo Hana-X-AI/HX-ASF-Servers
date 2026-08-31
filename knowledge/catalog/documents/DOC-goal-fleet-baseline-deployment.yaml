@@ -17,7 +17,6 @@ document:
     - hxs-2
     - hxs-3
     - hxs-4
-    - hxs-5
     - hxs-6
     - hxs-8
     - hxs-9
@@ -66,7 +65,7 @@ document:
     target: DOC-goal-omniroute-layer1-secure-core
     note: 'owner sequencing (OmniRoute pilot state log row 43, 2026-08-27T19:24Z): this goal FIRST — the L1-M3 gate (parity ×4 + the proven external route, restart ×2, cold reboot, backup/restore, rollback, configuration.md, owner ACCEPT) is sequenced AFTER baseline completion, superseding the coast-clear-only hold'
   validation:
-    validated_at: '2026-08-31T01:08:32Z'
+    validated_at: '2026-08-31T03:51:21Z'
     freshness: current
     review_due: at goal completion — acceptance item 4 closes when this wave's receipt is cited in the fleet pilot state log (profile §7); then the L1-M3 closure unblocks per the owner sequencing
   sha256: f0d1e7880f1f735d30a20f2599b272389b5f50d60d2b96536682a5af1eb38331
@@ -84,4 +83,4 @@ notes:
   authority_note: 'ratified-governance per the two-goal convention (F-AUTH-1 resolution): governor-authored durable state record ratified through the owner directive (''complete the baseline platform deployment'' — GO 2026-08-27, fleet pilot state log row 1) and the owner''s explicit sequencing (OmniRoute pilot state log row 43: baseline FIRST, OmniRoute closure after).'
   dual_format: The goal is registered in scripts/wiki/manifest.txt (line 52, VERIFIED PRESENT at ingestion) and rendered dual-format — sibling goals/2026-08-27-fleet-baseline-deployment.html exists at ingestion; the .md stays the source of truth per the dual-format convention.
   protected_reference: The execution's credential discipline is recorded as mechanism only (execution-time askpass from the credential record, helper 0700 deleted at end, BatchMode probe ×12 confirms the password path closed) — no secret value appears in the goal file or this record (profile §6).
-  minted_by: 'carol-mint 1.0.0 @ 2026-08-31T01:08:32Z — re-mint 9611a5dd0578… -> f0d1e7880f1f… — 2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'
+  minted_by: 'carol-mint 1.0.0 @ 2026-08-31T03:51:21Z — re-mint freshness-only — CodeRabbit PR #8 semantic finding verified against source and corrected'
