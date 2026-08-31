@@ -10,7 +10,7 @@ document:
     origin: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/19-kimi-code-omniroute-provider-setup.md
     section: §whole-document
     ingestion_date: '2026-08-27T21:20:00Z'
-  owner: Kimi-K3
+  owner: James (current governor maintainer)
   applies_to:
     hosts:
     - hxs-8
@@ -73,6 +73,9 @@ document:
   - sha256: 94e9a89c9cc7850c3742025e71bdd5a7139d34cb51b9bf91d087d40fd86eb0fa
     timestamp: '2026-08-31T01:08:33Z'
     reason: '2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'
+  - sha256: 94e9a89c9cc7850c3742025e71bdd5a7139d34cb51b9bf91d087d40fd86eb0fa
+    timestamp: '2026-08-31T03:55:30Z'
+    reason: 'CodeRabbit follow-up: implemented state and historical governor context'
 notes:
   semantic_reconciliation_20260831: 'Read against the source status: IMPLEMENTED 2026-08-28, block live in /home/hxsa/.kimi-code/config.toml with routed proof FLIP-PROOF-42 via qwen-x. This supersedes the declared_purpose and deferred_implementation note''s pre-implementation posture. Secret values remain excluded; the runbook''s placeholder and rollback instructions remain applicable.'
   typing_judgment: Type runbook per the setup-guide class (a bounded, reversible procedure with an explicit rollback line), status adopted as an owner-approved reference; authority_level ratified-governance per the owner approval recorded in the document status line (owner-approved 2026-08-27 — OmniRoute state log row 43).

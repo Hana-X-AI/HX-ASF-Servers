@@ -111,6 +111,17 @@ class CatalogFreshnessTests(unittest.TestCase):
         _summary, problems = self.plan()
         self.assertTrue(any("entries must be a list" in p for p in problems))
 
+    def test_baseline_rejects_non_mapping_top_level(self):
+        for value in (None, [], "scalar", 0):
+            with self.subTest(value=value):
+                self.baseline_path.write_text(
+                    yaml.safe_dump(value, sort_keys=False), encoding="utf-8")
+                _summary, problems = self.plan()
+                self.assertTrue(any(
+                    problem.startswith("[CF-05]")
+                    and "top level must be a mapping" in problem
+                    for problem in problems))
+
     def test_changed_scope_forces_governance_when_source_discovery_fails(self):
         mod = load_validate()
         real_import = __import__
@@ -123,6 +134,23 @@ class CatalogFreshnessTests(unittest.TestCase):
         with mock.patch("builtins.__import__", side_effect=fail_catalog_import):
             checks = mod.scoped_checks([str(VALIDATE)])
         self.assertIn(mod.check_governance_path, checks)
+
+    def test_changed_scope_forces_governance_when_catalog_record_unreadable(self):
+        self.record.write_text("document: [\n", encoding="utf-8")
+        freshness = load_module()
+        validate = load_validate()
+        env = {"CAROL_MINT_ROOT": str(self.root / "knowledge" / "catalog"),
+               "CAROL_MINT_REPO_ROOT": str(self.root)}
+        with mock.patch.object(freshness, "ROOT", str(self.root)), \
+             mock.patch.object(freshness, "MINT", str(MINT)), \
+               mock.patch.object(validate, "ROOT", str(self.root)), \
+               mock.patch.object(validate, "_wiki_manifest_members", return_value=set()), \
+             mock.patch.dict(os.environ, env, clear=False), \
+             mock.patch.dict(sys.modules, {"catalog_freshness": freshness}):
+            with self.assertRaisesRegex(RuntimeError, "DOC-one unreadable"):
+                freshness.tracked_repo_sources()
+            checks = validate.scoped_checks([str(self.source)])
+        self.assertIn(validate.check_governance_path, checks)
 
     def test_unchanged_known_drift_is_reported_not_failed(self):
         old = "0" * 64

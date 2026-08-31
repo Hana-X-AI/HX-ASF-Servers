@@ -65,6 +65,9 @@ document:
   - sha256: b8b9e0c9e5124fc6f06a8dd5bc47bcf55a0d05c6bbe75e3ca52bb0a3ac3ca857
     timestamp: '2026-08-31T01:08:33Z'
     reason: '2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'
+  - sha256: b8b9e0c9e5124fc6f06a8dd5bc47bcf55a0d05c6bbe75e3ca52bb0a3ac3ca857
+    timestamp: '2026-08-31T03:51:22Z'
+    reason: 'CodeRabbit PR #8 semantic finding verified against source and corrected'
 notes:
   semantic_reconciliation_20260831: Metadata now consistently covers rows 1-78 through M8 acceptance, post-closure fleet exposure, capability call-sign registration, and the owner decision enabling Ollama web search. The prior M7a/row-42 scope remains preserved in the source log and hash history.
   living_document: 'This log is appended to continuously during the active pilot. Hash captured 2026-08-25T08:35Z at rows 1–44; earlier hashes: 1c821971… (rows 1–29, 04:41Z), 04984ccf… (rows 1–33, 05:00Z), 16b8fe64… (rows 1–34, 05:25Z), 76993c21… (rows 1–37, 05:45Z), 464b7934… (rows 1–42, 07:10Z). Re-hash on every re-ingestion. Expected next append: governor row citing this run''s batch-34 corrections receipt.'

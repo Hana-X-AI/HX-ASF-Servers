@@ -57,6 +57,9 @@ document:
   - sha256: ed7c13f8861ce5e41bf72d78532be3f904ba1d171f5ee46dc70c601bc9e5c782
     timestamp: '2026-08-31T01:08:33Z'
     reason: '2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'
+  - sha256: ed7c13f8861ce5e41bf72d78532be3f904ba1d171f5ee46dc70c601bc9e5c782
+    timestamp: '2026-08-31T04:25:10Z'
+    reason: 'PR #8 finding: source scope corrected to whole document; rows 17-34 retained as historical ingestion provenance'
 notes:
   prior_ingestion_scope: rows 17-34 at initial ingestion; superseded as current scope by the 2026-08-31 rows 1-47 reconciliation
   semantic_reconciliation_20260831: Read through row 47. The prior title/purpose/relations scoped only rows 17-34 and were stale; the current source covers the full arc from commissioning through the Flash governor transition and the Gate 7/test-harness finding at row 47. declared_purpose and the describes relation retain the older scope as ingestion history; this note and version are controlling.

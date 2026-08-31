@@ -15,6 +15,7 @@ document:
     - james
     - kimi-k3
     - morpheus
+    - bailey
     - gordon
     - rick
     - john
@@ -48,6 +49,9 @@ document:
   - sha256: b12e525bd1e448337a2752596ae0147081d01007b1bc18a163c29ec431d77130
     timestamp: '2026-08-31T01:08:32Z'
     reason: '2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'
+  - sha256: b12e525bd1e448337a2752596ae0147081d01007b1bc18a163c29ec431d77130
+    timestamp: '2026-08-31T03:51:22Z'
+    reason: 'CodeRabbit PR #8 semantic finding verified against source and corrected'
 notes:
   semantic_reconciliation_20260831: Read through Amendment 12. The operative assignment is the owner-locked job-family table in Amendment 11, with James on DeepSeek V4 Flash, PMO on GPT-OSS 120B, QA on Qwen3.8 Flash, Rob/Rick on local Coder-X, and Platform Systems on GLM 5.2 free; Amendment 12 adds Bailey to OD-14. Earlier per-agent lanes remain append-only history. The record's former one-line purpose is accurate only at a high level; this note identifies the current controlling section.
   minted_by: 'carol-mint 1.0.0 @ 2026-08-31T03:51:22Z — re-mint freshness-only — CodeRabbit PR #8 semantic finding verified against source and corrected'

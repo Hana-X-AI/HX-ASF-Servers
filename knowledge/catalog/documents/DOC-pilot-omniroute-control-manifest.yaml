@@ -73,6 +73,9 @@ document:
   - sha256: f16c0f3293c70a8749b5e6d9d053b13878a0869e0cf446ac8e364e48b64873fa
     timestamp: '2026-08-31T01:08:33Z'
     reason: '2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'
+  - sha256: f16c0f3293c70a8749b5e6d9d053b13878a0869e0cf446ac8e364e48b64873fa
+    timestamp: '2026-08-31T03:54:24Z'
+    reason: 'CodeRabbit follow-up: current L1/L2 boundary'
 notes:
   layer_map: Layer 0 COMPLETE; Layer 1 COMPLETE by owner ACCEPT on 2026-08-28; Layer 2 is the active authorization boundary and remains frozen until explicit owner authorization. The former Layer-1 entry condition (OD-12 + OD-03 + Node) is preserved in amendment_batch22 as historical transition context.
   semantic_reconciliation_20260831: Read against the current machine-form source. Layer 0 remains COMPLETE; Layer 1 is now COMPLETE by owner ACCEPT 2026-08-28, with exit requiring owner review and explicit Layer 2 authorization (not granted). This supersedes declared_purpose's older Layer-1 entry-only summary and the amendment_batch22 note's pre-OD-12 state; all other authority, allowed-state, and non-negotiable controls remain represented.

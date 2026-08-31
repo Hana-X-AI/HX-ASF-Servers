@@ -10,7 +10,7 @@ document:
     origin: /home/hxsa/opt/HX-ASF-Servers/knowledge/agent-performance.md
     section: §whole-document
     ingestion_date: '2026-08-26T02:01:37Z'
-  owner: Kimi-K3 (governor-maintained); Agent Zero (ratification)
+  owner: James (current governor maintainer); Agent Zero (ratification)
   applies_to:
     hosts: []
     fqdns: []
@@ -58,7 +58,11 @@ document:
   - sha256: d37632d31e513c39053e9657eb44f5daaa5ffd7a9d5ce8a8f3f0bc35edcb61fd
     timestamp: '2026-08-31T01:08:33Z'
     reason: '2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'
+  - sha256: d37632d31e513c39053e9657eb44f5daaa5ffd7a9d5ce8a8f3f0bc35edcb61fd
+    timestamp: '2026-08-31T03:51:22Z'
+    reason: 'CodeRabbit PR #8 semantic finding verified against source and corrected'
 notes:
+  governor_maintenance_history: Kimi-K3 seeded and maintained the earlier ledger as the historical governor; James is the current governor maintainer.
   semantic_reconciliation_20260831: Read through the current score table and review log. The ledger now includes Carol batch A/B sub-95% escalations, Morpheus's zero-delivery driver failure, the Flash-to-James governor rename, and T-micro calibration evidence through the 2026-08-27 runs. The declared_purpose's seed counts and applies_to list are historical MVP scope; the source's current rows govern eligibility.
   cataloging_context: 'Type registry per schema judgment: a governor-maintained living register of agent/task accuracy scores consulted at triage time — nearest enum fit (''evidence'' rejected: the ledger is derived maintained state, not one run''s as-produced evidence; ''other'' available but less specific). Authority ratified-governance: owner-ratified 2026-08-26 under the governor''s Option A disposition. Cataloged in T-micro pilot run 1 (receipt 2026-08-26T0202Z-carol-tmicro-pilot1.md); first ingestion under the ratified run-tier rules (profile §10).'
   pilot1_outcome: 'T-micro pilot-2 re-validation (2026-08-26T02:14Z): drift traced to the governor''s review-log update — the 2026-08-26 pilot-1 row now present in the Review log (verified: items since last = 1 (pilot-1: 3-record T-micro); false neg 0; false pos 0; boundary change: T-micro cycle 8m57s > 3 min target — cause: full-contract startup reads; fix: profile §10 tier-scoped startup + pre-cited briefs (pilot-2 measures); state-log ref rows 65-67). This cause+fix is finding F-TM1-1 — the code is cited in profile §10 (''T-micro session scope'' paragraph header); the ledger row carries the substance without the F-TM1-1 label (noted, not blocking). Legitimate governor edit. Re-hashed 80a01e3f… -> 95528dc6….'

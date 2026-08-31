@@ -83,6 +83,9 @@ document:
   - sha256: 3b79dd98c0faccbd244582ce8d8e34a2a005d10af8801adb4dd0100589921923
     timestamp: '2026-08-31T01:08:33Z'
     reason: '2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'
+  - sha256: 3b79dd98c0faccbd244582ce8d8e34a2a005d10af8801adb4dd0100589921923
+    timestamp: '2026-08-31T03:51:22Z'
+    reason: 'CodeRabbit PR #8 DNS metadata reconciled; scheduled recheck pending'
 notes:
   semantic_reconciliation_20260831: 'Current fields now reflect the labeled 2026-08-29 corrections: DNS restored for 16 active fleet FQDNs, hxs-7 decommissioned/NXDOMAIN, hxs-20 at .220, and hxs-21 at .21. The superseded .200-.215 allocation, first-free-.216 statement, hxs-7, and hxs-cp remain only in source/history context. Freshness is aging pending the scheduled 2026-09-01 recheck.'
   corrections_batch6: references relation repointed from the raw path /opt/tkv-local/dns-fqdn/hx-local-dns-and-fqdn-access.md to the existing record DOC-tkv-dns-fqdn-hx-local-dns (batch 6, T2); 'not cataloged' wording dropped — the source is cataloged. Source document unchanged (originals are sacred); record sha256 re-verified 2026-08-25T20:15Z. Freshness stays aging per the standing FQDN recheck (review_due 2026-09-01).

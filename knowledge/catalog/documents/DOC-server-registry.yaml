@@ -102,6 +102,9 @@ document:
   - sha256: e2278d095c5b381145f54c268b113bbe4f75588e2d33411ca0b07abc6ae7b7f0
     timestamp: '2026-08-31T01:08:33Z'
     reason: '2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'
+  - sha256: e2278d095c5b381145f54c268b113bbe4f75588e2d33411ca0b07abc6ae7b7f0
+    timestamp: '2026-08-31T03:51:22Z'
+    reason: 'CodeRabbit PR #8 semantic finding verified against source and corrected'
 notes:
   semantic_reconciliation_20260831: Read through the current append-only correction blocks. The table preserves 17 rows, but hxs-7 is decommissioned and the active fleet count is 16. Current corrections also supersede stale target-state text for hxs-8/hxs-9/hxs-11/hxs-14 and reconcile PostgreSQL/Redis acceptance, MCP hold semantics, LightRAG binding, and hxs-8 memory against system-mapping as of 2026-08-30. The long declared_purpose remains provenance for the earlier 17-row baseline; this note and current source corrections control.
   mint_provenance: Minted in the M2-handoff wave per the governor's dispatch — closes the F-6 flag of receipt 2026-08-27T1735Z-carol-prework-registry.md ('the REPO servers/SERVER-REGISTRY.md has NO catalog record — mint candidate'), itself carried from DOC-tkv-server-registry notes.f_reg_1_row60_disposition. File verified on disk (92 lines, 15 registry rows) at ingestion.

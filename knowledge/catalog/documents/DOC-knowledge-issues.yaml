@@ -48,6 +48,9 @@ document:
   - sha256: 4508e1d8d631047d77a7297899aae5f1cc2b17e03bb577e7b602ba27f5ffd5a3
     timestamp: '2026-08-31T01:08:33Z'
     reason: '2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'
+  - sha256: 4508e1d8d631047d77a7297899aae5f1cc2b17e03bb577e7b602ba27f5ffd5a3
+    timestamp: '2026-08-31T03:51:22Z'
+    reason: 'CodeRabbit PR #8 semantic finding verified against source and corrected'
 notes:
   closed_risk_history_20260831: The former active risks relation for D1/hxs-4 Ollama network exposure is closed. D1 was resolved 2026-08-29 when OmniRoute became the accepted remote-consumption mechanism; the relation was removed from current metadata and remains preserved here as history.
   semantic_reconciliation_20260831: Read against the current register. Only the HX file-naming convention remains open. D1 OmniRoute remote consumption, D2 hxs-4 Ollama baseline, D3 default-context contract, and the M7b soak item are listed under Closed with dated resolutions. The declared_purpose's 'Open at ingestion' enumeration is a historical snapshot, not current open-state.

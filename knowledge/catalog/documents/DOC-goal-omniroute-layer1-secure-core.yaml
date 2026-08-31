@@ -83,6 +83,9 @@ document:
   - sha256: 30e61197306654fa96409659cc0eba461bbeaaf0b117996a14d90d626345bf59
     timestamp: '2026-08-31T01:08:32Z'
     reason: '2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'
+  - sha256: 30e61197306654fa96409659cc0eba461bbeaaf0b117996a14d90d626345bf59
+    timestamp: '2026-08-31T03:51:22Z'
+    reason: 'CodeRabbit PR #8 semantic finding verified against source and corrected'
 notes:
   semantic_reconciliation_20260831: 'Read against the current source and operative work-state block: Layer 1 is COMPLETE as of 2026-08-28 by owner ACCEPT; Layer 2+ remains frozen. The declared_purpose''s ''status in-progress'' and pre-gate review_due are historical and superseded by this reconciliation. The source''s 2026-08-30 root:root/0640-or-0600 secret-drop-in clarification is included in the re-minted source identity.'
   status_mapping: 'status historical is the current terminal mapping: Layer 1 COMPLETE 2026-08-28 by owner ACCEPT. The source''s former in-progress/M0 status is preserved as historical context; Layer 2+ remains frozen pending explicit owner authorization.'

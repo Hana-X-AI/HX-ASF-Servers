@@ -82,6 +82,9 @@ document:
   - sha256: fb0c3bd951cad77adb3d42740ce5ad00d3ab236e087387f4e906da3a1b1db58c
     timestamp: '2026-08-31T01:08:32Z'
     reason: '2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'
+  - sha256: fb0c3bd951cad77adb3d42740ce5ad00d3ab236e087387f4e906da3a1b1db58c
+    timestamp: '2026-08-31T03:51:22Z'
+    reason: 'CodeRabbit PR #8 semantic finding verified against source and corrected'
 notes:
   authority_basis: 'authority_level ratified-governance per the record''s evidence basis (DOC-tkv-hxs1-configuration precedent): creation owner-authorized at the M8 approval (hxs-3 state log row 23 — an owner-gated phase per the records contract), the assigned role copied from the owner-maintained registry, and every material configuration decision owner-ratified (D1 model store, D4 rfkill, D5 64K operating, the 2026-08-26 web-search enablement, the no-firewall and Secure-Boot standing rules). Content assembled from pilot agent evidence, which remains cited as Sources.'
   typing_judgment: 'Type contract + status active follow the only prior configuration.md record in the catalog (DOC-tkv-hxs1-configuration, hxs-1''s Phase-2 record, type contract per the blank-template precedent DOC-tkv-servers-template-configuration): a configuration record is the per-server configured-state contract and stays active as the living configured-state record. This is the FIRST configuration.md under HX-ASF-Servers servers/ (the hxs-1 record''s canonical location is the tkv-local copy).'

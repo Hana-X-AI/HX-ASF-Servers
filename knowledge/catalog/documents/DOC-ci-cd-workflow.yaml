@@ -101,6 +101,9 @@ document:
   - sha256: f1676a51fa5ef765e05a944859bfc2036f0d58142491ed21d00579073658b346
     timestamp: '2026-08-31T00:57:08Z'
     reason: SY-8 regression suite added; pipeline now 25 steps
+  - sha256: f1676a51fa5ef765e05a944859bfc2036f0d58142491ed21d00579073658b346
+    timestamp: '2026-08-31T03:51:21Z'
+    reason: 'CodeRabbit PR #8 semantic finding verified against source and corrected'
 notes:
   pending_items: 'None open as of 2026-08-30. Both items carried from hxs-2 state log row 33 (2026-08-26T20:00Z) are closed: (1) the CODERABBIT_API_KEY secret is configured and the coderabbit-review job runs and returns findings (it no longer skips — it is fail-closed on a missing key); (2) the five wiki-manifest documents that existed only in the Alert-2 uncommitted tree (BLUEPRINT, the hxs-2/hxs-3 goal files, KDD-0006/0007) are committed — render.py --check reports 86/86 in sync.'
   protected_reference: The workflow consumes the CODERABBIT_API_KEY GitHub Actions secret and the GITHUB_TOKEN; no secret value is present in the file or in this record (profile §6 — existence and mechanism only).

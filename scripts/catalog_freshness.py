@@ -44,6 +44,7 @@ skills_registry and work_order.
 Read-only. No network.
 """
 
+from collections.abc import Mapping
 from importlib.machinery import SourceFileLoader
 from importlib.util import module_from_spec, spec_from_loader
 import json
@@ -67,9 +68,11 @@ def baseline():
     import yaml
     try:
         with open(BASELINE, encoding="utf-8") as fh:
-            data = yaml.safe_load(fh) or {}
+            data = yaml.safe_load(fh)
     except Exception as e:
         return {}, ["[CF-05] baseline unreadable: %s" % e]
+    if not isinstance(data, Mapping):
+        return {}, ["[CF-05] baseline top level must be a mapping"]
     if data.get("schema_version") != 1:
         problems.append("[CF-05] baseline schema_version must be 1")
     rows = data.get("entries")
@@ -82,7 +85,7 @@ def baseline():
     required = ("id", "canonical_location", "recorded_source_sha256",
                 "source_sha256_at_baseline", "catalog_record_sha256")
     for i, row in enumerate(rows):
-        if not isinstance(row, dict):
+        if not isinstance(row, Mapping):
             problems.append("[CF-05] baseline entry %d is not a mapping" % i)
             continue
         missing = [key for key in required if not row.get(key)]
@@ -129,11 +132,14 @@ def tracked_repo_sources():
     """Return repo-relative source paths whose records SY-8 grades."""
     cm = _carol_mint()
     paths = set()
-    for _doc_id, record_path in cm.iter_records():
+    for doc_id, record_path in cm.iter_records():
         try:
-            doc = cm.load_yaml(record_path)["document"]
-        except Exception:
-            continue
+            record = cm.load_yaml(record_path)
+            if not isinstance(record, Mapping) or not isinstance(record.get("document"), Mapping):
+                raise ValueError("catalog document mapping missing")
+            doc = record["document"]
+        except Exception as e:
+            raise RuntimeError("catalog record %s unreadable: %s" % (doc_id, e)) from e
         source = doc.get("canonical_location")
         if not source or not cm.is_repo_source(source):
             continue
