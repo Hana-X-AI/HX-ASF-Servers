@@ -1,8 +1,8 @@
 index:
   schema_version: 1
   initialized: 2026-08-25 (Carol instantiation, owner amendment)
-  updated: 2026-08-31T2158Z (carol-mint 1.0.0 [titles preserved])
-  document_count: 346
+  updated: 2026-08-31T2351Z (carol-mint 1.0.0 [titles preserved])
+  document_count: 347
   documents:
   - id: DOC-a01-origin-codex-20260824-2125
     title: codex_20260824_2125_hx-1-ollama-pilot-qwen3.8-amendment.md — original source of Amendment A01 (agent-zero-docs)
@@ -394,6 +394,12 @@ index:
     authority_level: ratified-governance
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/goals/ollama/2026-08-24-ollama-audit-hxs5.md
+  - id: DOC-goal-ollama-fleet-requalification-hxs1-qwen-x
+    title: 'Goal: Ollama Fleet Requalification — Wave 1 — hxs-1 / Qwen-X'
+    type: goal
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/goals/ollama/2026-08-31-ollama-fleet-requalification-hxs1-qwen-x.md
   - id: DOC-goal-omniroute-layer1-secure-core
     title: Goal 2026-08-27-omniroute-layer1-secure-core — OmniRoute Layer 1 secure core gateway on hxs-8 (native, owner-authorized OD-12; all four backends OD-08 amended; OD-13 secrets; LAN-only OD-07; local-model-only; the Layer-1 gate)
     type: goal

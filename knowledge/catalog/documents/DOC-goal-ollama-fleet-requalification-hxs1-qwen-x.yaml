@@ -1,0 +1,37 @@
+document:
+  id: DOC-goal-ollama-fleet-requalification-hxs1-qwen-x
+  title: 'Goal: Ollama Fleet Requalification — Wave 1 — hxs-1 / Qwen-X'
+  type: goal
+  declared_purpose: Requalify hxs-1/Qwen-X Ollama service from zero against current live state (Wave 1 of 4); establish the reusable audit method, capability schema, evidence package, and acceptance gates for hxs-2/3/4.
+  source:
+    origin: /home/hxsa/opt/HX-ASF-Servers/governace/goals/ollama/2026-08-31-ollama-fleet-requalification-hxs1-qwen-x.md
+    ingestion_date: '2026-08-31T23:51:10Z'
+    section: §whole-document
+  owner: Agent Zero
+  authority_level: ratified-governance
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: []
+    repositories: []
+    environments: []
+  status: adopted
+  security:
+    classification: internal
+    contains_secret_values: false
+  relations: []
+  validation:
+    validated_at: '2026-08-31T23:58:18Z'
+    freshness: current
+  sha256: f673fcf49bad64448bc48ce75a4bc8a06c660e21ed2b997e17ad1e77160d2cf9
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/goals/ollama/2026-08-31-ollama-fleet-requalification-hxs1-qwen-x.md
+  hash_history:
+  - sha256: 8ccb9685b3a7a3902dffc1296fa0fef8cc43cd8fac0531e8c802819bf2555f5e
+    timestamp: unrecorded
+    reason: predecessor state restored by carol-mint (re-mint events before 2026-08-31T23:58:18Z did not record history)
+  - sha256: f673fcf49bad64448bc48ce75a4bc8a06c660e21ed2b997e17ad1e77160d2cf9
+    timestamp: '2026-08-31T23:58:18Z'
+    reason: re-mint from source
+notes:
+  minted_by: carol-mint 1.0.0 @ 2026-08-31T23:58:18Z — re-mint 8ccb9685b3a7… -> f673fcf49bad…

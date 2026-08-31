@@ -1,0 +1,46 @@
+work_order:
+  schema_version: 1
+  task_id: "WO-REQUAL-HX1-RICK-A3-001"
+  parent_goal: "2026-08-31-ollama-fleet-requalification-hxs1-qwen-x"
+  goal_file: "governace/goals/ollama/2026-08-31-ollama-fleet-requalification-hxs1-qwen-x.md"
+  milestone: "M3 — DNS / network / service-FQDN read-only discovery and design"
+  assigned_agent: "rick (profile-briefed sub-agent)"
+  objective: >-
+    Establish read-only the current DNS and network state for hxs-1 (host FQDN
+    `hxs-1.hx.local.arpa` and the proposed service FQDN
+    `qwen-x.hx.local.arpa`), confirm the registry/DNS contradiction (registry
+    claims FQDN, fleet evidence records NXDOMAIN), and produce a DNS/service-FQDN
+    design and change plan for Gate A. No DNS, router, host, or network mutation
+    in this milestone. Acceptance: a discovery record plus a design that names
+    the exact records, owner of each change, verification procedure, and rollback
+    for the service FQDN.
+  owner_authorizations:
+    - "Intake brief §6 (DNS and discovery vector) and §9 (service naming and routing) — DNS work belongs to Rick"
+    - "NOT authorized: any DNS/router/host/network mutation, hostname/domain-suffix change, or reboot in this milestone"
+  boundaries:
+    - "Files/systems touched: NONE on hxs-1/router (read-only DNS queries and network discovery: nslookup/dig against 192.168.50.1, /etc/hosts and resolved state reads, listener checks)"
+    - "Execution path: session on hxs-5; read-only queries; no router config access unless separately authorized"
+    - "Stop conditions: target mismatch, DNS contradiction that cannot be characterized, or evidence-integrity failure"
+  context_budget:
+    max_tokens: "131072 context (lane ceiling confirmed at dispatch capability probe)"
+    max_output_size_override: "none"
+    read_discipline: "index-navigated; targeted queries; incremental writes"
+  capability_probe:
+    required: "yes"
+    procedure: "4-token probe session on the lane BEFORE the design; record served-model id + session-start answer in the receipt"
+    fail_action: "stop the branch and escalate to the governor — NO automatic lane substitution"
+  rollback: "No mutation in this milestone; rollback not applicable. The design must include the deterministic rollback for the proposed FQDN change (to be executed only post Gate A)."
+  controlling_sources:
+    - "06-context-packet-rick-dns-design.yaml (this package)"
+    - "servers/SERVER-REGISTRY.md hxs-1 row + DNS status notes (NXDOMAIN evidence)"
+    - "servers/2026-08-27-fleet-baseline-wave.md and 2026-08-28-fleet-baseline-hxs11-20-21.md (fleet DNS evidence)"
+    - "servers/BLUEPRINT-llm-server.md §8 (endpoint contract)"
+  deliverable: "06-rick-dns-fqdn-design.md: current DNS/network discovery record, the registry-vs-live contradiction stated, and a service-FQDN design with exact records, change owners, verification, and rollback"
+  deliverable_destination:
+    - "pilots/PILOT-OLLAMA-FLEET-REQUAL-HXS1-001/06-rick-dns-fqdn-design.md"
+    - "verify: ls <destination> shows the artifact before acceptance"
+  second_brain_evaluation:
+    opportunity_identified: "yes"
+    roadmap_capability_or_pattern: "service-FQDN consumer contract (call-sign identity vs machine identity) as a reusable discovery pattern"
+    disposition: "implemented — the design establishes the service-FQDN contract reused by the whole fleet"
+    evidence_and_reasoning: "the catalog currently records a raw IP endpoint; the service-FQDN pattern is the documented consumer contract the requalification closes"

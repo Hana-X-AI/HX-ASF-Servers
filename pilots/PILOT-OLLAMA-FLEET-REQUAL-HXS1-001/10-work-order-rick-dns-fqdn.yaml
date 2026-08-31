@@ -1,0 +1,42 @@
+work_order:
+  schema_version: 1
+  task_id: "WO-REQUAL-HX1-RICK-B2-001"
+  parent_goal: "2026-08-31-ollama-fleet-requalification-hxs1-qwen-x"
+  goal_file: "governace/goals/ollama/2026-08-31-ollama-fleet-requalification-hxs1-qwen-x.md"
+  milestone: "M7 — service FQDN / DNS alias registration (Gate-A approved)"
+  assigned_agent: "rick (profile-briefed sub-agent)"
+  objective: >-
+    Register the Gate-A-approved service FQDN (recommended `qwen-x.hx.local.arpa`)
+    and reconcile the host FQDN so the consumer contract resolves by service name
+    from the development/control host and at least two fleet consumers, with no
+    raw host IP remaining in consumer configuration. Acceptance: DNS probes and
+    endpoint tests prove resolution and reachability through the service FQDN.
+    Concrete change set FINALIZED AT GATE A.
+  owner_authorizations:
+    - "Owner decision D1 (APPROVED 2026-08-31: service FQDN qwen-x.hx.local.arpa) + Gate A — the approved service FQDN and DNS change set; no DNS/router mutation before Gate A"
+    - "NOT authorized until Gate A: any DNS/router/host/network mutation"
+  boundaries:
+    - "Files/systems touched: FINALIZED AT GATE A (DNS/router record + hostname/domain-suffix as approved; no host firewall, no public route)"
+    - "Execution path: per Rick lane; verify hostname + peer IP before mutation; sudo -n only"
+    - "Stop conditions: target mismatch, DNS contradiction, off-LAN exposure, secret exposure, evidence-integrity failure"
+  context_budget:
+    max_tokens: "131072 context (lane ceiling confirmed at dispatch capability probe)"
+    max_output_size_override: "none"
+    read_discipline: "index-navigated; targeted queries; incremental writes"
+  capability_probe:
+    required: "yes"
+    procedure: "4-token probe session on the lane BEFORE mutation; record served-model id + session-start answer in the receipt"
+    fail_action: "stop the branch and escalate to the governor — NO automatic lane substitution"
+  rollback: "Remove/restore the DNS record(s) and any hostname/domain-suffix change to the pre-change value (byte-copies retained)."
+  controlling_sources:
+    - "06-rick-dns-fqdn-design.md; Gate A findings register (15-gate-a-findings-register.md)"
+    - "servers/SERVER-REGISTRY.md; servers/system-mapping.md"
+  deliverable: "10-rick-dns-fqdn-record.md: applied DNS records, before/after resolution from control host + two consumers, consumer-config search showing no raw IP, rollback inverse, Task May Proceed receipt"
+  deliverable_destination:
+    - "pilots/PILOT-OLLAMA-FLEET-REQUAL-HXS1-001/10-rick-dns-fqdn-record.md"
+    - "verify: ls <destination> shows the artifact before acceptance"
+  second_brain_evaluation:
+    opportunity_identified: "yes"
+    roadmap_capability_or_pattern: "service-FQDN consumer contract registration as reusable discovery state"
+    disposition: "implemented — closes the raw-IP endpoint gap in the catalog"
+    evidence_and_reasoning: "the catalog currently records a raw IP endpoint for Qwen-X; the service FQDN is the documented consumer contract"

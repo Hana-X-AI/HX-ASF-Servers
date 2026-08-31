@@ -43,6 +43,7 @@ servers/hxs-9/2026-08-29-postgresql-cache-integration-plan.md
 servers/hxs-9/2026-08-29-redis-implementation-plan.md
 governace/goals/ollama/2026-08-26-hxs2-qwen36-coderx-backend.md
 governace/goals/ollama/2026-08-26-hxs3-muse-glimmer-tooling.md
+governace/goals/ollama/2026-08-31-ollama-fleet-requalification-hxs1-qwen-x.md
 governace/decisions/KDD-0006-hxs2-coderx-backend-adoption.md
 governace/decisions/KDD-0007-hxs3-muse-glimmer-tooling-adoption.md
 docs/cicd-pipeline.md

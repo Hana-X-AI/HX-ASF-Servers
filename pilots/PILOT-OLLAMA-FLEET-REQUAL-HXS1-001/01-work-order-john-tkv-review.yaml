@@ -1,0 +1,51 @@
+work_order:
+  schema_version: 1
+  task_id: "WO-REQUAL-HX1-JOHN-A1-001"
+  parent_goal: "2026-08-31-ollama-fleet-requalification-hxs1-qwen-x"
+  goal_file: "governace/goals/ollama/2026-08-31-ollama-fleet-requalification-hxs1-qwen-x.md"
+  milestone: "M1 — live TKV knowledge review of /opt/tkv-local/ollama/ollama-main before probes"
+  assigned_agent: "john (profile-briefed sub-agent)"
+  objective: >-
+    Perform the mandated live knowledge review of /opt/tkv-local/ollama/ and
+    /opt/tkv-local/ollama/ollama-main/ (descending all materially relevant
+    subdirectories: runtime/server, API adapters, discovery, agent/tool,
+    integration fixtures, thinking, model management, docs, launch/runtime
+    config, GPU/cache logic, archived HX evidence) and produce a knowledge
+    receipt that identifies filesystem type and mount/source identity, total
+    directory/file counts, snapshot/commit identity when present, the local
+    snapshot Ollama version and its difference from both the installed hxs-1
+    version and current official upstream, the specific files used to derive
+    each audit vector, and all contradictions, stale, archived, and unknown
+    material. Acceptance: the receipt carries an explicit `Task May Proceed:
+    YES/NO` line backed by the survey evidence. READ-ONLY — no host probes, no
+    mutation.
+  owner_authorizations:
+    - "Intake brief 2026-08-31 §5 Phase A — John must begin with the live knowledge review of /opt/tkv-local/ollama/ollama-main before any host probe"
+    - "NOT authorized: any hxs-1 host probe, service/model/DNS/OS/repository mutation, or modification of the TKV tree"
+  boundaries:
+    - "Files/systems touched: NONE — read-only traversal of /opt/tkv-local/ollama/ and /opt/tkv-local/ollama/ollama-main/"
+    - "Execution path: session on hxs-5; local filesystem read only; no SSH to hxs-1 in this milestone"
+    - "Stop conditions: TKV tree absent or unreadable, evidence-integrity failure, or a version/commit identity that cannot be determined without guessing"
+  context_budget:
+    max_tokens: "131072 context (lane ceiling confirmed at dispatch capability probe)"
+    max_output_size_override: "none"
+    read_discipline: "index-navigated; line-range/grep for large source files; no whole-file dumps of large docs"
+  capability_probe:
+    required: "yes"
+    procedure: "4-token probe session on the lane BEFORE authoring the full receipt; record served-model id + session-start answer in the receipt"
+    fail_action: "stop the branch and escalate to the governor — NO automatic lane substitution"
+  rollback: "No mutation; rollback not applicable. A corrective re-run may replace the receipt within the bounded-correction budget."
+  controlling_sources:
+    - "02-context-packet-john-tkv-review.yaml (this package)"
+    - "Intake brief §3, §5, §6 (identity/authority vectors), §16 (evidence basis)"
+    - "/opt/tkv-local/ollama/ (the live corpus being reviewed)"
+    - "agents/john/profile.md §4 startup protocol"
+  deliverable: "02-john-tkv-review-receipt.md: filesystem/mount identity, directory/file counts, snapshot/commit identity, local-vs-installed-vs-upstream version delta, per-audit-vector source file list, contradictions/stale/archived/unknowns, and the `Task May Proceed: YES/NO` line"
+  deliverable_destination:
+    - "pilots/PILOT-OLLAMA-FLEET-REQUAL-HXS1-001/02-john-tkv-review-receipt.md"
+    - "verify: ls <destination> shows the artifact before acceptance"
+  second_brain_evaluation:
+    opportunity_identified: "yes"
+    roadmap_capability_or_pattern: "current-source knowledge ledger (Ollama snapshot identity + per-audit-vector provenance) reusable across the four-order program"
+    disposition: "implemented — the receipt is the reusable audit-vector source map for hxs-2/3/4"
+    evidence_and_reasoning: "one authoritative snapshot-identity + source-map record reused by four host orders avoids four re-derivations of the same corpus"

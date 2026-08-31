@@ -1,0 +1,45 @@
+work_order:
+  schema_version: 1
+  task_id: "WO-REQUAL-HX1-BAILEY-A4-001"
+  parent_goal: "2026-08-31-ollama-fleet-requalification-hxs1-qwen-x"
+  goal_file: "governace/goals/ollama/2026-08-31-ollama-fleet-requalification-hxs1-qwen-x.md"
+  milestone: "M4 — test, benchmark, capability-matrix, RAG/tool/web-search/reliability design (before mutation)"
+  assigned_agent: "bailey (profile-briefed sub-agent)"
+  objective: >-
+    Define tests and expected results before any active qualification: the
+    capability qualification contract (§7) with per-capability status
+    classification, the benchmark schema and machine-readable dataset, the real
+    RAG (full access to the current pipeline, no new systems — D4) and agent-tool
+    integration suites, web-search verification (D5), and the reliability/reboot
+    procedures (three full reboots + one performance run — D3). Acceptance: a
+    versioned test/capability plan with expected results and evidence schema for
+    every row, authored before any mutation.
+  owner_authorizations:
+    - "Intake brief §5 Phase A — Bailey defines tests and expected results before active qualification"
+    - "NOT authorized: any hxs-1 mutation, test execution that mutates state, or relaxation of a capability requirement"
+  boundaries:
+    - "Files/systems touched: NONE on hxs-1 (design-only); plan and fixture documents under this pilot directory"
+    - "Execution path: session on hxs-5; no hxs-1 host access required for design"
+    - "Stop conditions: a capability requirement that cannot be specified unambiguously, or scope drift into test execution"
+  context_budget:
+    max_tokens: "131072 context (lane ceiling confirmed at dispatch capability probe)"
+    max_output_size_override: "none"
+    read_discipline: "index-navigated; incremental writes"
+  capability_probe:
+    required: "yes"
+    procedure: "4-token probe session on the lane BEFORE authoring the plan; record served-model id + session-start answer in the receipt"
+    fail_action: "stop the branch and escalate to the governor — NO automatic lane substitution"
+  rollback: "No mutation; rollback not applicable."
+  controlling_sources:
+    - "08-context-packet-bailey-test-design.yaml (this package)"
+    - "Intake brief §7 (capability contract), §8 (optimization questions), §10; owner decisions D1–D5 (goal file)"
+    - "02-john-tkv-review-receipt.md and 04-john-hxs1-audit-matrix.md (inputs, when available)"
+  deliverable: "08-bailey-test-capability-plan.md: versioned capability matrix with per-row REQUIRED/QUALIFIED/UNSUPPORTED/NOT APPLICABLE/OWNER-GATED classification, benchmark schema, RAG and agent-tool suite designs, web-search verification design, and reliability/reboot procedures with expected results"
+  deliverable_destination:
+    - "pilots/PILOT-OLLAMA-FLEET-REQUAL-HXS1-001/08-bailey-test-capability-plan.md"
+    - "verify: ls <destination> shows the artifact before acceptance"
+  second_brain_evaluation:
+    opportunity_identified: "yes"
+    roadmap_capability_or_pattern: "capability qualification contract as a reusable, model-by-model matrix (never inferred from runtime support)"
+    disposition: "implemented — the matrix is the reusable schema for hxs-2/3/4"
+    evidence_and_reasoning: "the intake mandates an explicit model-by-model capability matrix; making it versioned and reusable avoids re-derivation per host"
