@@ -1,63 +1,82 @@
 document:
-  id: "DOC-pilot-omniroute-19-kimi-code-provider-setup"
-  title: "PILOT-OMNIROUTE-LAYER0-001 19-kimi-code-omniroute-provider-setup.md — Kimi Code -> OmniRoute provider setup (reference, owner-approved 2026-08-27; implementation deferred until baseline completes — baseline now COMPLETE; the L1-M3 closure of the gateway itself remains owner-gated)"
-  type: "runbook"
-  declared_purpose: "Reference setup guide (status: reference, owner-approved 2026-08-27; implementation deferred until the baseline platform deployment completes — owner sequencing, OmniRoute state log row 43) to run Kimi Code sessions through the OmniRoute gateway (hxs-8) instead of a direct cloud provider — every call logged and metered in the gateway, local fleet models first-class, external models (OpenRouter) opt-in per session. §1 create a dedicated client key (owner, dashboard at http://192.168.50.207:20128 — do NOT reuse the root ops key /opt/omniroute/ops/.hx-client-key, the governor artifact; API Keys -> create 'kimi-code-hxsa', default scopes; shown once, becomes <HX_CLIENT_KEY>). §2 the exact config.toml block to append ([providers.omniroute] type openai, base_url http://192.168.50.207:20128/v1, api_key placeholder; four model entries — omniroute/qwen-x (ollama-local/hx-qwen3.8-27b-64k), omniroute/coder-x (ollama-local/hx-qwen3.6-coderx-64k), omniroute/meta-x (ollama-local/hx-muse-glimmer-64k) all at the 64K operating profile max_context 65536 with capabilities thinking + tool_use, and omniroute/glm-5.3-flash (openrouter/z-ai/glm-5.3-flash) capped 131072 with the cost caution; default_model UNTOUCHED — kimi-k3 stays the default, these are per-session opt-in; model ids verified against the live gateway catalog 2026-08-27, 1497 entries). §3 permissions (chmod 600 — the HX key can spend through the gateway, treated as equally sensitive). §4 use per session (/model picker; first test — a small bounded task, then confirm the calls appear in the gateway usage log; that proves the route). §5 rollback (/model back to moonshot-ai/kimi-k3 or remove the block; no other state touched). Notes and cautions: LAN-only (the provider only works on the HX network); cost — local models free to run, glm-5.3-flash bills against the owner's OpenRouter account if it is a paid model (set the OR spend cap before heavy agent use); data posture — local-model sessions stay on the fleet (local-first rule satisfied mechanically), glm-5.3-flash prompts leave the network and are retained by the provider (not used for training, per its terms); the governor exception STANDS — the owner's rule keeps Kimi-K3 as the governor brain; this setup is for worker sessions and post-baseline evaluation."
-  inferred_value: "INFERENCE: the first consumer-onboarding runbook for the governed traffic plane — it turns the L1-M2 gateway into an opt-in session provider with the metering story (usage log) as the proof-of-route, while keeping the governor exception and the local-first posture mechanically intact; its cost/data cautions are the row-42 findings converted into operator instructions (spend cap first, paid tiers visible, prompts leave the network for external models)."
+  id: DOC-pilot-omniroute-19-kimi-code-provider-setup
+  title: PILOT-OMNIROUTE-LAYER0-001 19-kimi-code-omniroute-provider-setup.md — IMPLEMENTED 2026-08-28; routed proof FLIP-PROOF-42 via Qwen-X
+  type: runbook
+  declared_purpose: 'Reference setup guide (status: reference, owner-approved 2026-08-27; implementation deferred until the baseline platform deployment completes — owner sequencing, OmniRoute state log row 43) to run Kimi Code sessions through the OmniRoute gateway (hxs-8) instead of a direct cloud provider — every call logged and metered in the gateway, local fleet models first-class, external models (OpenRouter) opt-in per session. §1 create a dedicated client key (owner, dashboard at http://192.168.50.207:20128 — do NOT reuse the root ops key /opt/omniroute/ops/.hx-client-key, the governor artifact; API Keys -> create ''kimi-code-hxsa'', default scopes; shown once, becomes <HX_CLIENT_KEY>). §2 the exact config.toml block to append ([providers.omniroute] type openai, base_url http://192.168.50.207:20128/v1, api_key placeholder; four model entries — omniroute/qwen-x (ollama-local/hx-qwen3.8-27b-64k), omniroute/coder-x (ollama-local/hx-qwen3.6-coderx-64k), omniroute/meta-x (ollama-local/hx-muse-glimmer-64k) all at the 64K operating profile max_context 65536 with capabilities thinking + tool_use, and omniroute/glm-5.3-flash (openrouter/z-ai/glm-5.3-flash) capped 131072 with the cost caution; default_model UNTOUCHED — kimi-k3 stays the default, these are per-session opt-in; model ids verified against the live gateway catalog 2026-08-27, 1497 entries). §3 permissions (chmod 600 — the HX key can spend through the gateway, treated as equally sensitive). §4 use per session (/model picker; first test — a small bounded task, then confirm the calls appear in the gateway usage log; that proves the route). §5 rollback (/model back to moonshot-ai/kimi-k3 or remove the block; no other state touched). Notes and cautions: LAN-only (the provider only works on the HX network); cost — local models free to run, glm-5.3-flash bills against the owner''s OpenRouter account if it is a paid model (set the OR spend cap before heavy agent use); data posture — local-model sessions stay on the fleet (local-first rule satisfied mechanically), glm-5.3-flash prompts leave the network and are retained by the provider (not used for training, per its terms); the governor exception STANDS — the owner''s rule keeps Kimi-K3 as the governor brain; this setup is for worker sessions and post-baseline evaluation.'
+  inferred_value: 'INFERENCE: the first consumer-onboarding runbook for the governed traffic plane — it turns the L1-M2 gateway into an opt-in session provider with the metering story (usage log) as the proof-of-route, while keeping the governor exception and the local-first posture mechanically intact; its cost/data cautions are the row-42 findings converted into operator instructions (spend cap first, paid tiers visible, prompts leave the network for external models).'
   source:
-    author: "Kimi-K3 (governor)"
-    provided_by: "Kimi-K3 (OmniRoute pilot state log row 43, 2026-08-27T19:24Z — documented for later; rides this Carol wave)"
-    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/19-kimi-code-omniroute-provider-setup.md"
-    section: "§whole-document"
-    ingestion_date: "2026-08-27T21:20:00Z"
-  owner: "Kimi-K3"
+    author: Kimi-K3 (governor)
+    provided_by: Kimi-K3 (OmniRoute pilot state log row 43, 2026-08-27T19:24Z — documented for later; rides this Carol wave)
+    origin: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/19-kimi-code-omniroute-provider-setup.md
+    section: §whole-document
+    ingestion_date: '2026-08-27T21:20:00Z'
+  owner: Kimi-K3
   applies_to:
-    hosts: [hxs-8, hxs-5]
+    hosts:
+    - hxs-8
+    - hxs-5
     fqdns: []
-    services: [omniroute.service]
-    agents: [kimi-k3]
-    repositories: [HX-ASF-Servers]
-    environments: [pilot, fleet]
-    models: [hx-qwen3.8-27b-64k, hx-qwen3.6-coderx-64k, hx-muse-glimmer-64k]
-  version: ""
-  status: "adopted"
-  authority_level: "ratified-governance"
+    services:
+    - omniroute.service
+    agents:
+    - kimi-k3
+    repositories:
+    - HX-ASF-Servers
+    environments:
+    - pilot
+    - fleet
+    models:
+    - hx-qwen3.8-27b-64k
+    - hx-qwen3.6-coderx-64k
+    - hx-muse-glimmer-64k
+  version: ''
+  status: adopted
+  authority_level: ratified-governance
   supersedes: []
   superseded_by: []
   security:
-    classification: "internal"
-    access_restrictions: "none beyond repository access"
+    classification: internal
+    access_restrictions: none beyond repository access
     contains_secret_values: false
   relations:
-    - predicate: "references"
-      target: "DOC-pilot-omniroute-state-log"
-      note: "governing log: documented + deferred at row 43 (2026-08-27T19:24Z — the owner sequencing: baseline FIRST, this setup documented for later); row 42 (OD-14 REALIZED) is the external-route evidence it builds on; this record mints the row-43 'new reference doc' per the follow-up dispatch"
-    - predicate: "depends_on"
-      target: "DOC-pilot-omniroute-ev-03-trinity-l1-install"
-      note: "the gateway it targets: OmniRoute live on hxs-8 (0.0.0.0:20128, HX client-key auth, usage metering) — the L1-M2 deliverable"
-    - predicate: "references"
-      target: "DOC-goal-omniroute-layer1-secure-core"
-      note: "the L1-M3 closure of the gateway itself remains OWNER-GATED (row 43 sequencing: after baseline completion, then the gate; owner ACCEPT) — this runbook's activation does not close L1-M3"
-    - predicate: "references"
-      target: "DOC-goal-fleet-baseline-deployment"
-      note: "the deferral condition: implementation was deferred until baseline completes — the baseline wave is COMPLETE (fleet pilot state log row 3, 2026-08-27T20:28Z; DOC-fleet-baseline-wave-2026-08-27), so the deferral is consumed; activation remains a per-session owner/governor choice"
-    - predicate: "references"
-      target: "DOC-backend-qwen-x"
-      note: "model entry 1 of 3 local: omniroute/qwen-x = ollama-local/hx-qwen3.8-27b-64k at max_context 65536 (the operating profile)"
-    - predicate: "references"
-      target: "DOC-backend-coder-x"
-      note: "model entry 2 of 3 local: omniroute/coder-x = ollama-local/hx-qwen3.6-coderx-64k at max_context 65536 (candidate backend until its M8 — the M8-backlog note stands; usable per owner designation)"
-    - predicate: "references"
-      target: "DOC-backend-meta-x"
-      note: "model entry 3 of 3 local: omniroute/meta-x = ollama-local/hx-muse-glimmer-64k at max_context 65536 (LIMIT parallel_tool_calling:false rides the connection)"
+  - predicate: references
+    target: DOC-pilot-omniroute-state-log
+    note: 'governing log: documented + deferred at row 43 (2026-08-27T19:24Z — the owner sequencing: baseline FIRST, this setup documented for later); row 42 (OD-14 REALIZED) is the external-route evidence it builds on; this record mints the row-43 ''new reference doc'' per the follow-up dispatch'
+  - predicate: depends_on
+    target: DOC-pilot-omniroute-ev-03-trinity-l1-install
+    note: 'the gateway it targets: OmniRoute live on hxs-8 (0.0.0.0:20128, HX client-key auth, usage metering) — the L1-M2 deliverable'
+  - predicate: references
+    target: DOC-goal-omniroute-layer1-secure-core
+    note: 'the L1-M3 closure of the gateway itself remains OWNER-GATED (row 43 sequencing: after baseline completion, then the gate; owner ACCEPT) — this runbook''s activation does not close L1-M3'
+  - predicate: references
+    target: DOC-goal-fleet-baseline-deployment
+    note: 'the deferral condition: implementation was deferred until baseline completes — the baseline wave is COMPLETE (fleet pilot state log row 3, 2026-08-27T20:28Z; DOC-fleet-baseline-wave-2026-08-27), so the deferral is consumed; activation remains a per-session owner/governor choice'
+  - predicate: references
+    target: DOC-backend-qwen-x
+    note: 'model entry 1 of 3 local: omniroute/qwen-x = ollama-local/hx-qwen3.8-27b-64k at max_context 65536 (the operating profile)'
+  - predicate: references
+    target: DOC-backend-coder-x
+    note: 'model entry 2 of 3 local: omniroute/coder-x = ollama-local/hx-qwen3.6-coderx-64k at max_context 65536 (candidate backend until its M8 — the M8-backlog note stands; usable per owner designation)'
+  - predicate: references
+    target: DOC-backend-meta-x
+    note: 'model entry 3 of 3 local: omniroute/meta-x = ollama-local/hx-muse-glimmer-64k at max_context 65536 (LIMIT parallel_tool_calling:false rides the connection)'
   validation:
-    validated_at: "2026-08-27T21:20:00Z"
-    freshness: "current"
-    review_due: "at implementation (post-baseline, owner/governor call — the deferral condition is consumed) and at the L1-M3 closure; re-hash on any gateway catalog or provider-config change"
-  sha256: "35d5d3f8921d4e4046c1a8964a7d78b2493e75b397a203fe407ca70fb58bfc74"
-  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/19-kimi-code-omniroute-provider-setup.md"
+    validated_at: '2026-08-31T01:08:33Z'
+    freshness: current
+    review_due: on any gateway catalog or Kimi Code provider-config change
+  sha256: 94e9a89c9cc7850c3742025e71bdd5a7139d34cb51b9bf91d087d40fd86eb0fa
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/19-kimi-code-omniroute-provider-setup.md
+  hash_history:
+  - sha256: 35d5d3f8921d4e4046c1a8964a7d78b2493e75b397a203fe407ca70fb58bfc74
+    timestamp: unrecorded
+    reason: predecessor state restored by carol-mint (re-mint events before 2026-08-31T01:08:33Z did not record history)
+  - sha256: 94e9a89c9cc7850c3742025e71bdd5a7139d34cb51b9bf91d087d40fd86eb0fa
+    timestamp: '2026-08-31T01:08:33Z'
+    reason: '2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'
 notes:
-  typing_judgment: "Type runbook per the setup-guide class (a bounded, reversible procedure with an explicit rollback line), status adopted as an owner-approved reference; authority_level ratified-governance per the owner approval recorded in the document status line (owner-approved 2026-08-27 — OmniRoute state log row 43)."
-  deferred_implementation: "Owner-approved 2026-08-27 with implementation DEFERRED until the baseline platform deployment completes (row 43 sequencing). The baseline wave is COMPLETE (2026-08-27T20:28Z, fleet pilot state log row 3) — the deferral condition is CONSUMED as of this mint; activation is still a per-session opt-in by design (default_model untouched; the owner creates the dedicated key kimi-code-hxsa at implementation — it does not exist at mint) and the L1-M3 closure of the gateway remains owner-gated per row 43 (parity ×4 + the proven external route, restart ×2, cold reboot, backup/restore, rollback, configuration.md, owner ACCEPT)."
-  cost_posture: "The OpenRouter cautions are the row-42 findings converted into operator instructions: the client plane exposes 1497 models INCLUDING PAID TIERS with no per-connection allowlist (the spend-cap and/or gateway-allowlist recommendation is queued to the owner — OPEN at mint); glm-5.3-flash bills the owner's OpenRouter account if paid; its prompts leave the network and are retained by the provider (not used for training, per its terms); local-model sessions stay on the fleet mechanically."
-  secrets_note: "No secret value appears in the document or this record: the config block carries the <HX_CLIENT_KEY> PLACEHOLDER; the root ops key is named by path as a do-not-reuse boundary (existence + mechanism only, profile §6; cf. the ev-03 record's credential-artifact note)."
+  semantic_reconciliation_20260831: 'Read against the source status: IMPLEMENTED 2026-08-28, block live in /home/hxsa/.kimi-code/config.toml with routed proof FLIP-PROOF-42 via qwen-x. This supersedes the declared_purpose and deferred_implementation note''s pre-implementation posture. Secret values remain excluded; the runbook''s placeholder and rollback instructions remain applicable.'
+  typing_judgment: Type runbook per the setup-guide class (a bounded, reversible procedure with an explicit rollback line), status adopted as an owner-approved reference; authority_level ratified-governance per the owner approval recorded in the document status line (owner-approved 2026-08-27 — OmniRoute state log row 43).
+  deferred_implementation: Owner-approved 2026-08-27 with implementation DEFERRED until the baseline platform deployment completes (row 43 sequencing). The baseline wave is COMPLETE (2026-08-27T20:28Z, fleet pilot state log row 3) — the deferral condition is CONSUMED as of this mint; activation is still a per-session opt-in by design (default_model untouched; the owner creates the dedicated key kimi-code-hxsa at implementation — it does not exist at mint) and the L1-M3 closure of the gateway remains owner-gated per row 43 (parity ×4 + the proven external route, restart ×2, cold reboot, backup/restore, rollback, configuration.md, owner ACCEPT).
+  cost_posture: 'The OpenRouter cautions are the row-42 findings converted into operator instructions: the client plane exposes 1497 models INCLUDING PAID TIERS with no per-connection allowlist (the spend-cap and/or gateway-allowlist recommendation is queued to the owner — OPEN at mint); glm-5.3-flash bills the owner''s OpenRouter account if paid; its prompts leave the network and are retained by the provider (not used for training, per its terms); local-model sessions stay on the fleet mechanically.'
+  secrets_note: 'No secret value appears in the document or this record: the config block carries the <HX_CLIENT_KEY> PLACEHOLDER; the root ops key is named by path as a do-not-reuse boundary (existence + mechanism only, profile §6; cf. the ev-03 record''s credential-artifact note).'
+  minted_by: 'carol-mint 1.0.0 @ 2026-08-31T01:08:33Z — re-mint 35d5d3f8921d… -> 94e9a89c9cc7… — 2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'

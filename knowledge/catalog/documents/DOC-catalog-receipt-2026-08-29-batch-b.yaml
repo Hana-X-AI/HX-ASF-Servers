@@ -1,47 +1,56 @@
 document:
   id: DOC-catalog-receipt-2026-08-29-batch-b
-  title: "Catalog receipt — Carol batch B (state-log rows 17-33 + registry hxs-7 decommission), 2026-08-29"
+  title: Catalog receipt — Carol batch B (state-log rows 17-33 + registry hxs-7 decommission), 2026-08-29
   type: evidence
-  declared_purpose: "Carol's batch B catch-up receipt for the state-log catalog record and the registry hxs-7 decommission corrections"
-  inferred_value: "INFERENCE: records the index hash before/after batch B's record additions/updates, closing the frozen-window catch-up."
+  declared_purpose: Carol's batch B catch-up receipt for the state-log catalog record and the registry hxs-7 decommission corrections
+  inferred_value: 'INFERENCE: records the index hash before/after batch B''s record additions/updates, closing the frozen-window catch-up.'
   source:
-    author: "Carol (documentation and knowledge steward)"
-    provided_by: "Kimi-K3 (governor acceptance, state-log rows 35/36)"
-    origin: "/home/hxsa/opt/HX-ASF-Servers/knowledge/catalog/receipts/2026-08-29-batchB-carol-statelog-registry.md"
-    section: "§Batch B receipt"
-    ingestion_date: "2026-08-29T00:00:00Z"
-  owner: "Carol"
+    author: Carol (documentation and knowledge steward)
+    provided_by: Kimi-K3 (governor acceptance, state-log rows 35/36)
+    origin: /home/hxsa/opt/HX-ASF-Servers/knowledge/catalog/receipts/2026-08-29-batchB-carol-statelog-registry.md
+    section: §Batch B receipt
+    ingestion_date: '2026-08-29T00:00:00Z'
+  owner: Carol
   applies_to:
     hosts:
-      - "hxs-7"
+    - hxs-7
     fqdns: []
     services: []
     agents:
-      - "carol"
+    - carol
     repositories:
-      - "HX-ASF-Servers"
+    - HX-ASF-Servers
     environments:
-      - "factory"
+    - factory
     models: []
-  version: "batch B, 2026-08-29"
-  status: "active"
-  authority_level: "agent-evidence"
+  version: batch B, 2026-08-29
+  status: active
+  authority_level: agent-evidence
   supersedes: []
   superseded_by: []
   security:
-    classification: "internal"
-    access_restrictions: "none beyond repository access"
+    classification: internal
+    access_restrictions: none beyond repository access
     contains_secret_values: false
   relations:
-    - predicate: "evidences"
-      target: "DOC-pilot-dsh-impl-001-state-log"
-      note: "batch B added the state-log catalog record"
-    - predicate: "describes"
-      target: "hxs-7 decommission correction in DOC-server-registry and DOC-tkv-server-registry"
-      note: "batch B updated both registry records"
+  - predicate: evidences
+    target: DOC-pilot-dsh-impl-001-state-log
+    note: batch B added the state-log catalog record
+  - predicate: describes
+    target: hxs-7 decommission correction in DOC-server-registry and DOC-tkv-server-registry
+    note: batch B updated both registry records
   validation:
-    validated_at: "2026-08-29T00:00:00Z"
-    freshness: "current"
-    review_due: "on any catalog amendment"
-  sha256: "0bfd532b709f48a79838661ed488a03ec44bb705d201a4d57d651aa953f845ab"
-  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/knowledge/catalog/receipts/2026-08-29-batchB-carol-statelog-registry.md"
+    validated_at: '2026-08-31T01:08:32Z'
+    freshness: current
+    review_due: on any catalog amendment
+  sha256: b0005ffa8266de955e0f26e08f85a2e3797427409adf6bc379352df3e0fb07b2
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/catalog/receipts/2026-08-29-batchB-carol-statelog-registry.md
+  hash_history:
+  - sha256: 0bfd532b709f48a79838661ed488a03ec44bb705d201a4d57d651aa953f845ab
+    timestamp: unrecorded
+    reason: predecessor state restored by carol-mint (re-mint events before 2026-08-31T01:08:32Z did not record history)
+  - sha256: b0005ffa8266de955e0f26e08f85a2e3797427409adf6bc379352df3e0fb07b2
+    timestamp: '2026-08-31T01:08:32Z'
+    reason: '2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'
+notes:
+  minted_by: 'carol-mint 1.0.0 @ 2026-08-31T01:08:32Z — re-mint 0bfd532b709f… -> b0005ffa8266… — 2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'

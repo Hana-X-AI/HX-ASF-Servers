@@ -1,43 +1,64 @@
 document:
-  id: "DOC-knowledge-network"
-  title: "knowledge/network.md — local DNS and FQDN access (hx.local.arpa)"
-  type: "runbook"
-  declared_purpose: "Condensed model and procedure for HX local DNS: HX-Router 192.168.50.1 dnsmasq, domain hx.local.arpa, persistent records in /jffs/hx-hosts, loader /jffs/hx-dns-load.sh, naming hxs-N.hx.local.arpa, allocation 192.168.50.200–215 in use (first free .216), router-reboot recovery procedure, and last-checked reachability state."
+  id: DOC-knowledge-network
+  title: knowledge/network.md — local DNS and FQDN access (hx.local.arpa)
+  type: runbook
+  declared_purpose: 'Condensed model and procedure for HX local DNS: HX-Router 192.168.50.1 dnsmasq, domain hx.local.arpa, persistent records in /jffs/hx-hosts, loader /jffs/hx-dns-load.sh, naming hxs-N.hx.local.arpa, allocation 192.168.50.200–215 in use (first free .216), router-reboot recovery procedure, and last-checked reachability state.'
   source:
-    author: "Kimi-K3 (condensation); source /opt/tkv-local/dns-fqdn/hx-local-dns-and-fqdn-access.md"
-    provided_by: "Agent Zero"
-    origin: "/home/hxsa/opt/HX-ASF-Servers/knowledge/network.md"
-    section: "§whole-document"
-    ingestion_date: "2026-08-25T04:50:00Z"
-  owner: "Kimi-K3"
+    author: Kimi-K3 (condensation); source /opt/tkv-local/dns-fqdn/hx-local-dns-and-fqdn-access.md
+    provided_by: Agent Zero
+    origin: /home/hxsa/opt/HX-ASF-Servers/knowledge/network.md
+    section: §whole-document
+    ingestion_date: '2026-08-25T04:50:00Z'
+  owner: Kimi-K3
   applies_to:
-    hosts: [HX-Router, hxs-1, hxs-5, hxs-6, hxs-7, hxs-cp]
-    fqdns: [hxs-1.hx.local.arpa, hxs-cp.hx.local.arpa, hx.local.arpa]
-    services: [dnsmasq]
+    hosts:
+    - HX-Router
+    - hxs-1
+    - hxs-5
+    - hxs-6
+    - hxs-7
+    - hxs-cp
+    fqdns:
+    - hxs-1.hx.local.arpa
+    - hxs-cp.hx.local.arpa
+    - hx.local.arpa
+    services:
+    - dnsmasq
     agents: []
-    repositories: [HX-ASF-Servers]
-    environments: [fleet]
-  version: "imported 2026-08-24"
-  status: "active"
-  authority_level: "agent-evidence"
+    repositories:
+    - HX-ASF-Servers
+    environments:
+    - fleet
+  version: imported 2026-08-24
+  status: active
+  authority_level: agent-evidence
   supersedes: []
   superseded_by: []
   security:
-    classification: "internal"
-    access_restrictions: "none beyond repository access"
+    classification: internal
+    access_restrictions: none beyond repository access
     contains_secret_values: false
   relations:
-    - predicate: "describes"
-      target: "HX-Router 192.168.50.1 dnsmasq / hx.local.arpa"
-      note: "TARGET-STATE model verified working 2026-08-13; loader must be re-run after router reboot"
-    - predicate: "references"
-      target: "DOC-tkv-dns-fqdn-hx-local-dns"
-      note: "full procedure source — cataloged since 2026-08-25T06:00Z as DOC-tkv-dns-fqdn-hx-local-dns; both records carry the same FQDN freshness caveat"
+  - predicate: describes
+    target: HX-Router 192.168.50.1 dnsmasq / hx.local.arpa
+    note: TARGET-STATE model verified working 2026-08-13; loader must be re-run after router reboot
+  - predicate: references
+    target: DOC-tkv-dns-fqdn-hx-local-dns
+    note: full procedure source — cataloged since 2026-08-25T06:00Z as DOC-tkv-dns-fqdn-hx-local-dns; both records carry the same FQDN freshness caveat
   validation:
-    validated_at: "2026-08-25T20:15:00Z"
-    freshness: "aging"
-    review_due: "2026-09-01 — FQDN 'current state' section is DISCOVERED 2026-08-24 (NXDOMAIN after router restart; fleet ping recovered by 06:55Z same day); unverified since"
-  sha256: "067e7cdb265088904922b2c3f80de136261318ebc1272c1e7b848095731acda3"
-  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/knowledge/network.md"
+    validated_at: '2026-08-31T01:08:33Z'
+    freshness: current
+    review_due: on router DNS, address allocation, or fleet roster change
+  sha256: 3b79dd98c0faccbd244582ce8d8e34a2a005d10af8801adb4dd0100589921923
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/network.md
+  hash_history:
+  - sha256: 067e7cdb265088904922b2c3f80de136261318ebc1272c1e7b848095731acda3
+    timestamp: unrecorded
+    reason: predecessor state restored by carol-mint (re-mint events before 2026-08-31T01:08:33Z did not record history)
+  - sha256: 3b79dd98c0faccbd244582ce8d8e34a2a005d10af8801adb4dd0100589921923
+    timestamp: '2026-08-31T01:08:33Z'
+    reason: '2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'
 notes:
-  corrections_batch6: "references relation repointed from the raw path /opt/tkv-local/dns-fqdn/hx-local-dns-and-fqdn-access.md to the existing record DOC-tkv-dns-fqdn-hx-local-dns (batch 6, T2); 'not cataloged' wording dropped — the source is cataloged. Source document unchanged (originals are sacred); record sha256 re-verified 2026-08-25T20:15Z. Freshness stays aging per the standing FQDN recheck (review_due 2026-09-01)."
+  semantic_reconciliation_20260831: Read against the labeled 2026-08-29 corrections. Router DNS was restored for 16 active fleet FQDNs; hxs-7 is decommissioned/NXDOMAIN; hxs-20 is .220 and hxs-21 is .21, so the historical .200-.215 allocation and 'first free .216' statement are superseded. applies_to retains historical hosts, while this note records the current roster meaning.
+  corrections_batch6: references relation repointed from the raw path /opt/tkv-local/dns-fqdn/hx-local-dns-and-fqdn-access.md to the existing record DOC-tkv-dns-fqdn-hx-local-dns (batch 6, T2); 'not cataloged' wording dropped — the source is cataloged. Source document unchanged (originals are sacred); record sha256 re-verified 2026-08-25T20:15Z. Freshness stays aging per the standing FQDN recheck (review_due 2026-09-01).
+  minted_by: 'carol-mint 1.0.0 @ 2026-08-31T01:08:33Z — re-mint 067e7cdb2650… -> 3b79dd98c0fa… — 2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'

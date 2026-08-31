@@ -1,79 +1,96 @@
 document:
-  id: "DOC-goal-omniroute-layer1-secure-core"
-  title: "Goal 2026-08-27-omniroute-layer1-secure-core — OmniRoute Layer 1 secure core gateway on hxs-8 (native, owner-authorized OD-12; all four backends OD-08 amended; OD-13 secrets; LAN-only OD-07; local-model-only; the Layer-1 gate)"
-  type: "goal"
-  declared_purpose: "Goal Contract for OmniRoute Layer 1 (Goal ID = file name, KDD-0002; version 1; status in-progress — M0 authorized 2026-08-27, OD-12 owner-authorized + OD-03 readiness acknowledged; owner Agent Zero; lanes kimi-k3 governor, trinity, rick, john, carol; parent program goals/2026-08-27-omniroute-trinity-layer0.md COMPLETE + the Layer-0 control manifest): install and qualify OmniRoute v3.8.51 on hxs-8 as the HX governed model-traffic plane — pinned runtime, encrypted-secrets deployment (OD-13), all four HX backends registered behind it with routing confirmed (OD-08 amended), LAN-only exposure with OmniRoute's own authN/authZ (OD-07), health and backup/rollback proven; native systemd service — never Docker (owner rule, 2026-08-27). Owner parameters (ratified 2026-08-27): OD-04 native Node systemd service, never Docker (runner-cli flavor BLOCKED, compose paths void); OD-08 AMENDED — register ALL FOUR HX backends (Qwen-X hxs-1, Coder-X hxs-2, Meta-X hxs-3, Chat-X hxs-4) behind the gateway from the start, routing confirmation across all four a first-class acceptance test (supersedes the governor's Qwen-X-first recommendation); OD-13 env-provision JWT_SECRET + API_KEY_SECRET (generated locally, provisioned via the service environment, never product defaults) AND set STORAGE_ENCRYPTION_KEY (activates the AES-256-GCM field encryption — the product ships plaintext-passthrough without it); OD-07 LAN bind only (192.168.50.0/24), management endpoints behind OmniRoute's own authN/authZ (its proven proxy.ts pipeline), NO host firewall (owner rule), O1 monitoring tripwire stands; local-model-only everywhere (no cloud providers, no cloud agent features; agent-like surfaces MCP/A2A/ACP/Conductor/copilot/tunnels/cloud agents stay disabled/blocked per the ledger register; skills execution and background jobs get explicit deployment settings — the ledger's not-code-enforced finding); OD-09 backup — plaintext SQLite snapshots to a managed directory plus our own encryption if required (the product's backup encryption is write-only and its cloud upload a dead endpoint, CAP-P8-905/906 — never rely on either). Layer-1 gate (7 acceptance criteria): (1) runtime within engines, systemd service up after reboot with no human action, native; (2) secrets — no plaintext secrets anywhere in the service environment or database (OD-13 verified: env-provisioned values + STORAGE_ENCRYPTION_KEY active, connection-row fields encrypted); (3) routing — all four backends registered with identity evidence + direct-vs-routed parity (known-answer task per backend, response-shape comparison, usage accounting visible); (4) health — the layered health surface answers with the documented auth split; (5) backup/rollback — a snapshot restores to a working state, rollback a documented rehearsed inverse; (6) restart — two service restarts + one cold reboot return to ready with four-backend routing intact; (7) no cloud models, no :cloud tags anywhere (O1 tripwire), no agent-like surfaces enabled. Out of scope: Layer 2+ (route combos, strategy characterization, quotas/budgets/sessions), Layer 3 (intelligence/memory/modalities), Layer 4 (agent/ecosystem surfaces), any Docker/container work, any host other than hxs-8, any cloud provider. AMENDMENTS 2026-08-27 (owner-pasted review batch, OmniRoute state log row 44 fixes 4+5 — matching the deployed L1-M2 reality): OD-08 — Chat-X on hxs-4 is loopback-only by standing security posture; its registration STANDS and its parity check is POSTURE-BLOCKED (an approved posture exception, NOT a failed acceptance test) unless the owner explicitly authorizes a scoped exposure change for hxs-4; all other backends carry full parity requirements; scope of the exception: hxs-8's view of hxs-4 only. OD-13 — approved injection mechanism + prohibited locations: values generated on-host and injected ONLY via a root-only 0640 systemd drop-in, recorded by sha256 never value; PROHIBITED at rest — repository files, world-readable unit files, logs/journals/receipts/artifacts, and the database (secrets namespace must hold 0 plaintext rows; connection fields must be enc:v1: ciphertext); ALLOWED — plaintext in process memory and the service's own runtime environment (inherent to env injection, not a violation); gate criterion 2 reworded to match (source lines 23-24 + 32, VERIFIED PRESENT this run)."
-  inferred_value: "INFERENCE: the authorization boundary and acceptance contract for the first mutating work on hxs-8 — it converts the Layer-0 gate's 7 carried conditions plus the owner's row-32 parameter rulings into one gate-checkable document, so every L1 work order (rick's runtime, Trinity's install, the L1-M3 gate) traces its authority and its done-state here."
+  id: DOC-goal-omniroute-layer1-secure-core
+  title: Goal 2026-08-27-omniroute-layer1-secure-core — OmniRoute Layer 1 secure core gateway on hxs-8 (native, owner-authorized OD-12; all four backends OD-08 amended; OD-13 secrets; LAN-only OD-07; local-model-only; the Layer-1 gate)
+  type: goal
+  declared_purpose: 'Goal Contract for OmniRoute Layer 1 (Goal ID = file name, KDD-0002; version 1; status in-progress — M0 authorized 2026-08-27, OD-12 owner-authorized + OD-03 readiness acknowledged; owner Agent Zero; lanes kimi-k3 governor, trinity, rick, john, carol; parent program goals/2026-08-27-omniroute-trinity-layer0.md COMPLETE + the Layer-0 control manifest): install and qualify OmniRoute v3.8.51 on hxs-8 as the HX governed model-traffic plane — pinned runtime, encrypted-secrets deployment (OD-13), all four HX backends registered behind it with routing confirmed (OD-08 amended), LAN-only exposure with OmniRoute''s own authN/authZ (OD-07), health and backup/rollback proven; native systemd service — never Docker (owner rule, 2026-08-27). Owner parameters (ratified 2026-08-27): OD-04 native Node systemd service, never Docker (runner-cli flavor BLOCKED, compose paths void); OD-08 AMENDED — register ALL FOUR HX backends (Qwen-X hxs-1, Coder-X hxs-2, Meta-X hxs-3, Chat-X hxs-4) behind the gateway from the start, routing confirmation across all four a first-class acceptance test (supersedes the governor''s Qwen-X-first recommendation); OD-13 env-provision JWT_SECRET + API_KEY_SECRET (generated locally, provisioned via the service environment, never product defaults) AND set STORAGE_ENCRYPTION_KEY (activates the AES-256-GCM field encryption — the product ships plaintext-passthrough without it); OD-07 LAN bind only (192.168.50.0/24), management endpoints behind OmniRoute''s own authN/authZ (its proven proxy.ts pipeline), NO host firewall (owner rule), O1 monitoring tripwire stands; local-model-only everywhere (no cloud providers, no cloud agent features; agent-like surfaces MCP/A2A/ACP/Conductor/copilot/tunnels/cloud agents stay disabled/blocked per the ledger register; skills execution and background jobs get explicit deployment settings — the ledger''s not-code-enforced finding); OD-09 backup — plaintext SQLite snapshots to a managed directory plus our own encryption if required (the product''s backup encryption is write-only and its cloud upload a dead endpoint, CAP-P8-905/906 — never rely on either). Layer-1 gate (7 acceptance criteria): (1) runtime within engines, systemd service up after reboot with no human action, native; (2) secrets — no plaintext secrets anywhere in the service environment or database (OD-13 verified: env-provisioned values + STORAGE_ENCRYPTION_KEY active, connection-row fields encrypted); (3) routing — all four backends registered with identity evidence + direct-vs-routed parity (known-answer task per backend, response-shape comparison, usage accounting visible); (4) health — the layered health surface answers with the documented auth split; (5) backup/rollback — a snapshot restores to a working state, rollback a documented rehearsed inverse; (6) restart — two service restarts + one cold reboot return to ready with four-backend routing intact; (7) no cloud models, no :cloud tags anywhere (O1 tripwire), no agent-like surfaces enabled. Out of scope: Layer 2+ (route combos, strategy characterization, quotas/budgets/sessions), Layer 3 (intelligence/memory/modalities), Layer 4 (agent/ecosystem surfaces), any Docker/container work, any host other than hxs-8, any cloud provider. AMENDMENTS 2026-08-27 (owner-pasted review batch, OmniRoute state log row 44 fixes 4+5 — matching the deployed L1-M2 reality): OD-08 — Chat-X on hxs-4 is loopback-only by standing security posture; its registration STANDS and its parity check is POSTURE-BLOCKED (an approved posture exception, NOT a failed acceptance test) unless the owner explicitly authorizes a scoped exposure change for hxs-4; all other backends carry full parity requirements; scope of the exception: hxs-8''s view of hxs-4 only. OD-13 — approved injection mechanism + prohibited locations: values generated on-host and injected ONLY via a root-only 0640 systemd drop-in, recorded by sha256 never value; PROHIBITED at rest — repository files, world-readable unit files, logs/journals/receipts/artifacts, and the database (secrets namespace must hold 0 plaintext rows; connection fields must be enc:v1: ciphertext); ALLOWED — plaintext in process memory and the service''s own runtime environment (inherent to env injection, not a violation); gate criterion 2 reworded to match (source lines 23-24 + 32, VERIFIED PRESENT this run).'
+  inferred_value: 'INFERENCE: the authorization boundary and acceptance contract for the first mutating work on hxs-8 — it converts the Layer-0 gate''s 7 carried conditions plus the owner''s row-32 parameter rulings into one gate-checkable document, so every L1 work order (rick''s runtime, Trinity''s install, the L1-M3 gate) traces its authority and its done-state here.'
   source:
-    author: "Kimi-K3 (goal record) / Agent Zero (owner parameters, OD-12 authorization)"
-    provided_by: "Kimi-K3 (governor, L1-commissions catalog dispatch)"
-    origin: "/home/hxsa/opt/HX-ASF-Servers/goals/2026-08-27-omniroute-layer1-secure-core.md"
-    section: "§whole-document"
-    ingestion_date: "2026-08-27T16:23:00Z"
-  owner: "Agent Zero (human authority); Kimi-K3 (governor)"
+    author: Kimi-K3 (goal record) / Agent Zero (owner parameters, OD-12 authorization)
+    provided_by: Kimi-K3 (governor, L1-commissions catalog dispatch)
+    origin: /home/hxsa/opt/HX-ASF-Servers/governace/goals/2026-08-27-omniroute-layer1-secure-core.md
+    section: §whole-document
+    ingestion_date: '2026-08-27T16:23:00Z'
+  owner: Agent Zero (human authority); Kimi-K3 (governor)
   applies_to:
-    hosts: [hxs-8]
+    hosts:
+    - hxs-8
     fqdns: []
     services: []
-    agents: [kimi-k3, trinity, rick, john, carol]
-    repositories: [HX-ASF-Servers]
-    environments: [pilot]
+    agents:
+    - kimi-k3
+    - trinity
+    - rick
+    - john
+    - carol
+    repositories:
+    - HX-ASF-Servers
+    environments:
+    - pilot
     models: []
-  version: "1"
-  status: "active"
-  authority_level: "ratified-governance"
+  version: '1'
+  status: historical
+  authority_level: ratified-governance
   supersedes: []
   superseded_by: []
   security:
-    classification: "internal"
-    access_restrictions: "none beyond repository access"
+    classification: internal
+    access_restrictions: none beyond repository access
     contains_secret_values: false
   relations:
-    - predicate: "governs"
-      target: "DOC-pilot-omniroute-state-log"
-      note: "Layer-1 phase of the pilot's living log: owner decisions row 32 (2026-08-27T15:54Z — OD-03 acknowledged, OD-12 AUTHORIZED with owner parameters, OD-04 native no-docker owner-rule class, OD-08 amended all-four, local-model-only re-confirmed), this goal written + L1-M1 commissioned row 33 (15:57Z), L1-M1 COMPLETE row 34 (16:12Z), L1-M2 commissioned row 35 (16:15Z), L1-commissions receipt cited (282) + the governor's F-L1-1/F-L1-2 fixes row 36 (16:55Z — incl. this goal's dual-format registration + render)"
-    - predicate: "depends_on"
-      target: "DOC-goal-omniroute-trinity-layer0"
-      note: "parent program (COMPLETE — KK3 gate PASS 2026-08-27T10:58Z, row 24; Layer-0 handoff CLOSED row 25); Layer 1 proceeds only on the owner's OD-12 word, given at row 32"
-    - predicate: "references"
-      target: "DOC-pilot-omniroute-decision-19-kk3-gate"
-      note: "the Layer-0 gate's 7 carried conditions are Layer-1 boundaries (OD-13 hard requirement, backup encryption/cloud treated as nonexistent, agent surfaces disabled, skills/jobs explicit settings, no ATEM assumption, OD-03 ack before host work — satisfied at row 32, Coder-X per-task verification mandatory until its M8)"
-    - predicate: "references"
-      target: "DOC-pilot-omniroute-owner-decision-packet"
-      note: "the OD register this goal's parameters resolve: OD-03/04/08/12 decided at row 32 (OD-08 AMENDED all-four — supersedes the packet's Qwen-X-first recommendation); unspecified items proceed on the packet's governor recommendations (OD-05 FQDN at install, OD-06 TLS at install, OD-07, OD-09) — owner may amend with one word"
-    - predicate: "references"
-      target: "DOC-pilot-omniroute-ev-08-capability-ledger"
-      note: "evidence basis for the parameters: OD-13 (plaintext-secrets findings CAP-P4-039/CAP-P5-030 + the STORAGE_ENCRYPTION_KEY activation), the agent-surface disable register, the not-code-enforced skills/jobs finding, CAP-P8-905/906 (backup encryption write-only, cloud endpoint dead), no-ATEM (zero adapter corpus-wide)"
-    - predicate: "references"
-      target: "DOC-backend-qwen-x"
-      note: "OD-08 amended backend 1 of 4: Qwen-X hxs-1:11434 (ACTIVE)"
-    - predicate: "references"
-      target: "DOC-backend-coder-x"
-      note: "OD-08 amended backend 2 of 4: Coder-X hxs-2:11434 (candidate until its M8 — usable per owner designation, per-task identity/health verification)"
-    - predicate: "references"
-      target: "DOC-backend-meta-x"
-      note: "OD-08 amended backend 3 of 4: Meta-X hxs-3:11434 (ACTIVE)"
-    - predicate: "references"
-      target: "DOC-backend-chat-x"
-      note: "OD-08 amended backend 4 of 4: Chat-X hxs-4:11434 — LOOPBACK-ONLY today; register it and record the posture (parity posture-blocked, not failed, unless its posture allows)"
-    - predicate: "references"
-      target: "DOC-tkv-corpus-omniroute"
-      note: "the pinned, identity-VERIFIED install source /opt/tkv-local/OmniRoute-release-v3.8.51 (READ-ONLY; copy to hxs-8 and build there, hash-witnessed before/after)"
-    - predicate: "references"
-      target: "DOC-pilot-omniroute-control-manifest"
-      note: "the Layer-0 control manifest v1.1.0 the goal header names as program manifest"
+  - predicate: governs
+    target: DOC-pilot-omniroute-state-log
+    note: 'Layer-1 phase of the pilot''s living log: owner decisions row 32 (2026-08-27T15:54Z — OD-03 acknowledged, OD-12 AUTHORIZED with owner parameters, OD-04 native no-docker owner-rule class, OD-08 amended all-four, local-model-only re-confirmed), this goal written + L1-M1 commissioned row 33 (15:57Z), L1-M1 COMPLETE row 34 (16:12Z), L1-M2 commissioned row 35 (16:15Z), L1-commissions receipt cited (282) + the governor''s F-L1-1/F-L1-2 fixes row 36 (16:55Z — incl. this goal''s dual-format registration + render)'
+  - predicate: depends_on
+    target: DOC-goal-omniroute-trinity-layer0
+    note: parent program (COMPLETE — KK3 gate PASS 2026-08-27T10:58Z, row 24; Layer-0 handoff CLOSED row 25); Layer 1 proceeds only on the owner's OD-12 word, given at row 32
+  - predicate: references
+    target: DOC-pilot-omniroute-decision-19-kk3-gate
+    note: the Layer-0 gate's 7 carried conditions are Layer-1 boundaries (OD-13 hard requirement, backup encryption/cloud treated as nonexistent, agent surfaces disabled, skills/jobs explicit settings, no ATEM assumption, OD-03 ack before host work — satisfied at row 32, Coder-X per-task verification mandatory until its M8)
+  - predicate: references
+    target: DOC-pilot-omniroute-owner-decision-packet
+    note: 'the OD register this goal''s parameters resolve: OD-03/04/08/12 decided at row 32 (OD-08 AMENDED all-four — supersedes the packet''s Qwen-X-first recommendation); unspecified items proceed on the packet''s governor recommendations (OD-05 FQDN at install, OD-06 TLS at install, OD-07, OD-09) — owner may amend with one word'
+  - predicate: references
+    target: DOC-pilot-omniroute-ev-08-capability-ledger
+    note: 'evidence basis for the parameters: OD-13 (plaintext-secrets findings CAP-P4-039/CAP-P5-030 + the STORAGE_ENCRYPTION_KEY activation), the agent-surface disable register, the not-code-enforced skills/jobs finding, CAP-P8-905/906 (backup encryption write-only, cloud endpoint dead), no-ATEM (zero adapter corpus-wide)'
+  - predicate: references
+    target: DOC-backend-qwen-x
+    note: 'OD-08 amended backend 1 of 4: Qwen-X hxs-1:11434 (ACTIVE)'
+  - predicate: references
+    target: DOC-backend-coder-x
+    note: 'OD-08 amended backend 2 of 4: Coder-X hxs-2:11434 (candidate until its M8 — usable per owner designation, per-task identity/health verification)'
+  - predicate: references
+    target: DOC-backend-meta-x
+    note: 'OD-08 amended backend 3 of 4: Meta-X hxs-3:11434 (ACTIVE)'
+  - predicate: references
+    target: DOC-backend-chat-x
+    note: 'OD-08 amended backend 4 of 4: Chat-X hxs-4:11434 — LOOPBACK-ONLY today; register it and record the posture (parity posture-blocked, not failed, unless its posture allows)'
+  - predicate: references
+    target: DOC-tkv-corpus-omniroute
+    note: the pinned, identity-VERIFIED install source /opt/tkv-local/OmniRoute-release-v3.8.51 (READ-ONLY; copy to hxs-8 and build there, hash-witnessed before/after)
+  - predicate: references
+    target: DOC-pilot-omniroute-control-manifest
+    note: the Layer-0 control manifest v1.1.0 the goal header names as program manifest
   validation:
-    validated_at: "2026-08-28T01:36:00Z"
-    freshness: "current"
-    review_due: "at the Layer-1 gate (L1-M3 acceptance); on any owner amendment of the ratified parameters"
-  sha256: "33dabbfd66d861dcbf7b634ef3992e8b4aeea49403a374bc13e30d94bd3cbcab"
-  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/governace/goals/2026-08-27-omniroute-layer1-secure-core.md"
+    validated_at: '2026-08-31T01:08:32Z'
+    freshness: current
+    review_due: 'terminal: COMPLETE 2026-08-28 by owner ACCEPT; review on any post-closure amendment'
+  sha256: 30e61197306654fa96409659cc0eba461bbeaaf0b117996a14d90d626345bf59
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/goals/2026-08-27-omniroute-layer1-secure-core.md
+  hash_history:
+  - sha256: 33dabbfd66d861dcbf7b634ef3992e8b4aeea49403a374bc13e30d94bd3cbcab
+    timestamp: unrecorded
+    reason: predecessor state restored by carol-mint (re-mint events before 2026-08-31T01:08:32Z did not record history)
+  - sha256: 30e61197306654fa96409659cc0eba461bbeaaf0b117996a14d90d626345bf59
+    timestamp: '2026-08-31T01:08:32Z'
+    reason: '2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'
 notes:
-  status_mapping: "The file's own status line reads 'in-progress — M0 authorized 2026-08-27 (OD-12 owner-authorized; OD-03 acknowledged)' (source line 5, VERIFIED PRESENT); mapped to status active per the in-progress-goal convention (DOC-goal-omniroute-trinity-layer0 precedent; the schema enum has no in-progress literal)."
-  authority_note: "ratified-governance per the two-goal convention (F-AUTH-1 resolution): governor-authored durable state record ratified through owner authorization — OD-12 Layer 1 AUTHORIZED 2026-08-27 with explicit owner parameters (state log row 32, 15:54Z: 'OWNER DECISIONS: OD-03 acknowledged; OD-12 LAYER 1 AUTHORIZED with owner parameters'; the same row records OD-04 decided as an owner rule class and OD-08 DECIDED AMENDED)."
-  provenance: "OmniRoute pilot state log rows 32-33 (cataloged as DOC-pilot-omniroute-state-log): row 32 (15:54Z) owner decisions + 'Layer-1 goal + work orders commissioned'; row 33 (15:57Z) this goal file written + L1-M1 commissioned (WO-07/CP-08 rick node)."
-  second_brain: "Second Brain evaluation recorded in-file (standing directive): opportunity YES (the first governed traffic plane joins the catalog; configuration.md for hxs-8 becomes the second of its class; the four-backend routing evidence becomes the fleet's routing-capability record); pattern — capability registration through the Second Brain catalog (backend records gain their first consumer-of-record; the OD-13 secrets pattern the reference for future deployments); disposition IMPLEMENTED — built into the gate criteria (identity evidence, parity records, configuration.md, catalog waves)."
-  dual_format_gap: "At ingestion this goal file has NO .html sibling and is NOT registered in scripts/wiki/manifest.txt — every other goal in goals/ (hx1, hxs2, hxs3, layer0) is dual-format per the documentation conventions (major documents delivered .md + .html). Registration/rendering is the governor's lane (scripts/wiki/render.py), outside Carol's write set — flagged in this run's receipt (F-L1-2), source untouched. RESOLVED 2026-08-27T16:55Z (OmniRoute pilot state log row 36 — governor fix F-L1-2, 'my original miss'): the goal is now REGISTERED in scripts/wiki/manifest.txt (line 44, VERIFIED PRESENT this run) and RENDERED dual-format — sibling goals/2026-08-27-omniroute-layer1-secure-core.html exists (7,569 bytes, rendered 2026-08-27T16:55Z; the .md stays the source of truth, never hand-edit the HTML per the dual-format convention). The source .md is unchanged — record hash 91abb96c… re-verified == live this run; the gap text above is preserved as the historical record of the finding. [scope correction 2026-08-27 (rr-47 wave, labeled): the 'source .md is unchanged — hash 91abb96c… re-verified == live this run' statement is scoped explicitly to the 2026-08-27T16:55Z F-L1-2 resolution wave — the source was amended LATER (the 20:49Z OD-08/OD-13 review-batch amendments -> 62d8cccc… at the follow-up wave, and the rr-47 criterion-3 waiver amendment -> 33dabbfd… at this wave; notes.od08_od13_amendments_20260827 and notes.rr47_20260827 carry the current chain); the original sentence is preserved as the historical record of that wave's verification.]"
-  protected_reference: "OD-13 is recorded as existence + mechanism only (env-provisioned, generated locally, never product defaults) — no secret value appears in the goal file or this record (profile §6)."
-  od08_od13_amendments_20260827: "REVIEW-BATCH AMENDMENTS MIRRORED 2026-08-27 (follow-up wave; OmniRoute state log row 44 fixes 4+5; declared_purpose carries the full amendment text): (a) OD-08 — Chat-X registration STANDS with its parity check POSTURE-BLOCKED (approved posture exception, NOT a failed acceptance test) unless the owner authorizes a scoped hxs-4 exposure change; other backends full parity; the exception's scope is hxs-8's view of hxs-4 only — this ratifies as goal text what the L1-M2 evidence recorded in fact (DOC-pilot-omniroute-ev-03-trinity-l1-install: Chat-X registered posture-blocked, not failed). (b) OD-13 — the approved injection mechanism (on-host generated, root-only 0640 drop-in, hash-only recording) + prohibited at-rest locations (repo files, world-readable unit files, logs/journals/receipts/artifacts, DB — secrets namespace 0 plaintext rows, connection fields enc:v1: ciphertext) with plaintext in process memory/runtime env EXPLICITLY ALLOWED (inherent to env injection); gate criterion 2 reworded to match — again matching the deployed L1-M2 reality. Both goal html files re-rendered by the governor (wiki-sync verified at this run's validate.py close). Hash chain: 91abb96c… (L1-commissions wave) -> 62d8cccc… (this record, 2026-08-27T21:2xZ)."
-  rr47_20260827: "RR-47 WAVE (2026-08-27T23:40Z [timestamp corrected 2026-08-28, F-2 sweep, labeled: the '23:4xZ' shorthand was invalid — exact value 2026-08-27T23:40Z per the rr-47 receipt's freshness line and this record's validated_at]; OmniRoute state log row 46 governor-lane fix — 'L1 goal criterion 3 hxs-4 waiver wording'): gate criterion 3 (Routing) now carries the labeled amendment — hxs-4/Chat-X registration and identity evidence remain MANDATORY, but its parity check is explicitly WAIVED as posture-blocked (the approved posture exception per the OD-08 amendment, not a failure) while its loopback-only posture stands; the waiver is recorded in the acceptance evidence; parity stays required for every reachable backend (source line 33, VERIFIED PRESENT this run). This sharpens the 20:49Z OD-08 amendment (posture-blocked not failed) into the acceptance criterion itself — consistent with the M2 evidence (Chat-X registered posture-blocked; parity ×3 reachable). notes.dual_format_gap's hash-verification sentence is scope-corrected to the 16:55Z F-L1-2 wave in the same pass (labeled addendum there; original preserved). Hash chain: … -> 62d8cccc… (follow-up wave) -> 33dabbfd… (this record)."
+  semantic_reconciliation_20260831: 'Read against the current source and operative work-state block: Layer 1 is COMPLETE as of 2026-08-28 by owner ACCEPT; Layer 2+ remains frozen. The declared_purpose''s ''status in-progress'' and pre-gate review_due are historical and superseded by this reconciliation. The source''s 2026-08-30 root:root/0640-or-0600 secret-drop-in clarification is included in the re-minted source identity.'
+  status_mapping: The file's own status line reads 'in-progress — M0 authorized 2026-08-27 (OD-12 owner-authorized; OD-03 acknowledged)' (source line 5, VERIFIED PRESENT); mapped to status active per the in-progress-goal convention (DOC-goal-omniroute-trinity-layer0 precedent; the schema enum has no in-progress literal).
+  authority_note: 'ratified-governance per the two-goal convention (F-AUTH-1 resolution): governor-authored durable state record ratified through owner authorization — OD-12 Layer 1 AUTHORIZED 2026-08-27 with explicit owner parameters (state log row 32, 15:54Z: ''OWNER DECISIONS: OD-03 acknowledged; OD-12 LAYER 1 AUTHORIZED with owner parameters''; the same row records OD-04 decided as an owner rule class and OD-08 DECIDED AMENDED).'
+  provenance: 'OmniRoute pilot state log rows 32-33 (cataloged as DOC-pilot-omniroute-state-log): row 32 (15:54Z) owner decisions + ''Layer-1 goal + work orders commissioned''; row 33 (15:57Z) this goal file written + L1-M1 commissioned (WO-07/CP-08 rick node).'
+  second_brain: 'Second Brain evaluation recorded in-file (standing directive): opportunity YES (the first governed traffic plane joins the catalog; configuration.md for hxs-8 becomes the second of its class; the four-backend routing evidence becomes the fleet''s routing-capability record); pattern — capability registration through the Second Brain catalog (backend records gain their first consumer-of-record; the OD-13 secrets pattern the reference for future deployments); disposition IMPLEMENTED — built into the gate criteria (identity evidence, parity records, configuration.md, catalog waves).'
+  dual_format_gap: 'At ingestion this goal file has NO .html sibling and is NOT registered in scripts/wiki/manifest.txt — every other goal in goals/ (hx1, hxs2, hxs3, layer0) is dual-format per the documentation conventions (major documents delivered .md + .html). Registration/rendering is the governor''s lane (scripts/wiki/render.py), outside Carol''s write set — flagged in this run''s receipt (F-L1-2), source untouched. RESOLVED 2026-08-27T16:55Z (OmniRoute pilot state log row 36 — governor fix F-L1-2, ''my original miss''): the goal is now REGISTERED in scripts/wiki/manifest.txt (line 44, VERIFIED PRESENT this run) and RENDERED dual-format — sibling goals/2026-08-27-omniroute-layer1-secure-core.html exists (7,569 bytes, rendered 2026-08-27T16:55Z; the .md stays the source of truth, never hand-edit the HTML per the dual-format convention). The source .md is unchanged — record hash 91abb96c… re-verified == live this run; the gap text above is preserved as the historical record of the finding. [scope correction 2026-08-27 (rr-47 wave, labeled): the ''source .md is unchanged — hash 91abb96c… re-verified == live this run'' statement is scoped explicitly to the 2026-08-27T16:55Z F-L1-2 resolution wave — the source was amended LATER (the 20:49Z OD-08/OD-13 review-batch amendments -> 62d8cccc… at the follow-up wave, and the rr-47 criterion-3 waiver amendment -> 33dabbfd… at this wave; notes.od08_od13_amendments_20260827 and notes.rr47_20260827 carry the current chain); the original sentence is preserved as the historical record of that wave''s verification.]'
+  protected_reference: OD-13 is recorded as existence + mechanism only (env-provisioned, generated locally, never product defaults) — no secret value appears in the goal file or this record (profile §6).
+  od08_od13_amendments_20260827: 'REVIEW-BATCH AMENDMENTS MIRRORED 2026-08-27 (follow-up wave; OmniRoute state log row 44 fixes 4+5; declared_purpose carries the full amendment text): (a) OD-08 — Chat-X registration STANDS with its parity check POSTURE-BLOCKED (approved posture exception, NOT a failed acceptance test) unless the owner authorizes a scoped hxs-4 exposure change; other backends full parity; the exception''s scope is hxs-8''s view of hxs-4 only — this ratifies as goal text what the L1-M2 evidence recorded in fact (DOC-pilot-omniroute-ev-03-trinity-l1-install: Chat-X registered posture-blocked, not failed). (b) OD-13 — the approved injection mechanism (on-host generated, root-only 0640 drop-in, hash-only recording) + prohibited at-rest locations (repo files, world-readable unit files, logs/journals/receipts/artifacts, DB — secrets namespace 0 plaintext rows, connection fields enc:v1: ciphertext) with plaintext in process memory/runtime env EXPLICITLY ALLOWED (inherent to env injection); gate criterion 2 reworded to match — again matching the deployed L1-M2 reality. Both goal html files re-rendered by the governor (wiki-sync verified at this run''s validate.py close). Hash chain: 91abb96c… (L1-commissions wave) -> 62d8cccc… (this record, 2026-08-27T21:2xZ).'
+  rr47_20260827: 'RR-47 WAVE (2026-08-27T23:40Z [timestamp corrected 2026-08-28, F-2 sweep, labeled: the ''23:4xZ'' shorthand was invalid — exact value 2026-08-27T23:40Z per the rr-47 receipt''s freshness line and this record''s validated_at]; OmniRoute state log row 46 governor-lane fix — ''L1 goal criterion 3 hxs-4 waiver wording''): gate criterion 3 (Routing) now carries the labeled amendment — hxs-4/Chat-X registration and identity evidence remain MANDATORY, but its parity check is explicitly WAIVED as posture-blocked (the approved posture exception per the OD-08 amendment, not a failure) while its loopback-only posture stands; the waiver is recorded in the acceptance evidence; parity stays required for every reachable backend (source line 33, VERIFIED PRESENT this run). This sharpens the 20:49Z OD-08 amendment (posture-blocked not failed) into the acceptance criterion itself — consistent with the M2 evidence (Chat-X registered posture-blocked; parity ×3 reachable). notes.dual_format_gap''s hash-verification sentence is scope-corrected to the 16:55Z F-L1-2 wave in the same pass (labeled addendum there; original preserved). Hash chain: … -> 62d8cccc… (follow-up wave) -> 33dabbfd… (this record).'
+  minted_by: 'carol-mint 1.0.0 @ 2026-08-31T01:08:32Z — re-mint 33dabbfd66d8… -> 30e611973066… — 2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'

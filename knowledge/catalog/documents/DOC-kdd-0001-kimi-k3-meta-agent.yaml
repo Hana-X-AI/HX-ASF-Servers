@@ -1,41 +1,56 @@
 document:
-  id: "DOC-kdd-0001-kimi-k3-meta-agent"
-  title: "KDD-0001 — Adopt the Kimi-K3 meta-agent control model with phased activation"
-  type: "decision"
-  declared_purpose: "Ratified decision (2026-08-24, decider Agent-Zero): adopt agents/kimi-k3/profile.md with the §2.3 phased-activation clause — Phase M (bounded direct execution with owner pre-approval for destructive actions), Phase A (prohibitions engage per capability as charters activate), Phase C (full control-plane-only with tool-level controls). Phase transitions require owner approval and a new KDD each."
+  id: DOC-kdd-0001-kimi-k3-meta-agent
+  title: KDD-0001 — Adopt the Kimi-K3 meta-agent control model with phased activation
+  type: decision
+  declared_purpose: 'Ratified decision (2026-08-24, decider Agent-Zero): adopt agents/kimi-k3/profile.md with the §2.3 phased-activation clause — Phase M (bounded direct execution with owner pre-approval for destructive actions), Phase A (prohibitions engage per capability as charters activate), Phase C (full control-plane-only with tool-level controls). Phase transitions require owner approval and a new KDD each.'
   source:
-    author: "Kimi-K3 (review and record); decider Agent-Zero"
-    provided_by: "Agent Zero"
-    origin: "/home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0001-adopt-kimi-k3-meta-agent-model.md"
-    section: "§whole-document"
-    ingestion_date: "2026-08-25T04:50:00Z"
-  owner: "Agent Zero"
+    author: Kimi-K3 (review and record); decider Agent-Zero
+    provided_by: Agent Zero
+    origin: /home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0001-adopt-kimi-k3-meta-agent-model.md
+    section: §whole-document
+    ingestion_date: '2026-08-25T04:50:00Z'
+  owner: Agent Zero
   applies_to:
     hosts: []
     fqdns: []
     services: []
-    agents: [kimi-k3, john, rick, carol]
-    repositories: [HX-ASF-Servers]
-    environments: [fleet]
-  version: ""
-  status: "active"
-  authority_level: "ratified-governance"
+    agents:
+    - kimi-k3
+    - john
+    - rick
+    - carol
+    repositories:
+    - HX-ASF-Servers
+    environments:
+    - fleet
+  version: ''
+  status: active
+  authority_level: ratified-governance
   supersedes: []
   superseded_by: []
   security:
-    classification: "internal"
-    access_restrictions: "none beyond repository access"
+    classification: internal
+    access_restrictions: none beyond repository access
     contains_secret_values: false
   relations:
-    - predicate: "decides"
-      target: "DOC-agent-kimi-k3-profile"
-      note: "ratified with §2.3 phased activation; six recorded corrections; source first pass codex_20260824_1050 (SHA-256 7c355b68…) remains unmodified as historical input"
-    - predicate: "governs"
-      target: "agents/ charters as delegation-activation mechanism"
-      note: "run records map to goals/ and governace/lesson-learned/lessons-learned.md; no second registry plane"
+  - predicate: decides
+    target: DOC-agent-kimi-k3-profile
+    note: ratified with §2.3 phased activation; six recorded corrections; source first pass codex_20260824_1050 (SHA-256 7c355b68…) remains unmodified as historical input
+  - predicate: governs
+    target: agents/ charters as delegation-activation mechanism
+    note: run records map to goals/ and governace/lesson-learned/lessons-learned.md; no second registry plane
   validation:
-    validated_at: "2026-08-25T04:50:00Z"
-    freshness: "current"
-    review_due: "on phase transition (requires new KDD)"
-  sha256: "3d54dc081b71c4f4c5495af898b2bb52c5ffd64d333ed099e83b1df7532b8ca7"
-  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0001-adopt-kimi-k3-meta-agent-model.md"
+    validated_at: '2026-08-31T01:08:32Z'
+    freshness: current
+    review_due: on phase transition (requires new KDD)
+  sha256: f4275ac46bc78e8b9c659839144e0ebc197837c4683bdc9cd9ca5dab697c4c8e
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0001-adopt-kimi-k3-meta-agent-model.md
+  hash_history:
+  - sha256: 3d54dc081b71c4f4c5495af898b2bb52c5ffd64d333ed099e83b1df7532b8ca7
+    timestamp: unrecorded
+    reason: predecessor state restored by carol-mint (re-mint events before 2026-08-31T01:08:32Z did not record history)
+  - sha256: f4275ac46bc78e8b9c659839144e0ebc197837c4683bdc9cd9ca5dab697c4c8e
+    timestamp: '2026-08-31T01:08:32Z'
+    reason: '2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'
+notes:
+  minted_by: 'carol-mint 1.0.0 @ 2026-08-31T01:08:32Z — re-mint 3d54dc081b71… -> f4275ac46bc7… — 2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'

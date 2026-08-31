@@ -1,45 +1,54 @@
 document:
-  id: "DOC-agent-wayne-charter"
-  title: "Agent charter — wayne (Redis engineer, vertical lane)"
-  type: "charter"
-  declared_purpose: "One-page authority on wayne's mission: installs, operates, and maintains HX's single Redis cache instance and the Redis side of the PostgreSQL cache contract. Registered 2026-08-29 (KDD-0015)."
+  id: DOC-agent-wayne-charter
+  title: Agent charter — wayne (Redis engineer, vertical lane)
+  type: charter
+  declared_purpose: 'One-page authority on wayne''s mission: installs, operates, and maintains HX''s single Redis cache instance and the Redis side of the PostgreSQL cache contract. Registered 2026-08-29 (KDD-0015).'
   source:
-    author: "Agent Zero / KDD-0015"
-    provided_by: "Agent Zero"
-    origin: "/home/hxsa/opt/HX-ASF-Servers/agents/wayne/charter.md"
-    section: "§whole-document"
-    ingestion_date: "2026-08-29T12:30:00Z"
-  owner: "wayne (lane); Agent Zero (ratification)"
+    author: Agent Zero / KDD-0015
+    provided_by: Agent Zero
+    origin: /home/hxsa/opt/HX-ASF-Servers/agents/wayne/charter.md
+    section: §whole-document
+    ingestion_date: '2026-08-29T12:30:00Z'
+  owner: wayne (lane); Agent Zero (ratification)
   applies_to:
-    hosts: [hxs-9]
+    hosts:
+    - hxs-9
     fqdns: []
     services: []
-    agents: [wayne]
-    repositories: [HX-ASF-Servers]
-    environments: [fleet]
-  version: ""
-  status: "adopted"
-  authority_level: "ratified-governance"
+    agents:
+    - wayne
+    repositories:
+    - HX-ASF-Servers
+    environments:
+    - fleet
+  version: ''
+  status: adopted
+  authority_level: ratified-governance
   supersedes: []
   superseded_by: []
   security:
-    classification: "internal"
-    access_restrictions: "none beyond repository access"
+    classification: internal
+    access_restrictions: none beyond repository access
     contains_secret_values: false
   relations:
-    - predicate: "references"
-      target: "DOC-agent-wayne-profile"
-      note: "full operating contract"
-    - predicate: "references"
-      target: "/home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0015-wayne-registration.md"
-      note: "registration decision (KDD-0015)"
+  - predicate: references
+    target: DOC-agent-wayne-profile
+    note: full operating contract
+  - predicate: references
+    target: /home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0015-wayne-registration.md
+    note: registration decision (KDD-0015)
   validation:
-    validated_at: "2026-08-29T12:30:00Z"
-    freshness: "current"
-    review_due: "on owner sign-off of charter change"
-  sha256: "8119a0a39d8d08abc1ecd67e053aa79d92bfb0f072333f9f031b431d66deb364"
+    validated_at: '2026-08-31T01:08:31Z'
+    freshness: current
+    review_due: on owner sign-off of charter change
+  sha256: 064b0ef4ca74b9e77b5740c59a04bf0882e669bae1ae792ae1b187753fe1de63
   hash_history:
-    - sha256: "8119a0a39d8d08abc1ecd67e053aa79d92bfb0f072333f9f031b431d66deb364"
-      timestamp: "2026-08-29T12:30:00Z"
-      reason: "initial cataloging"
-  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/wayne/charter.md"
+  - sha256: 8119a0a39d8d08abc1ecd67e053aa79d92bfb0f072333f9f031b431d66deb364
+    timestamp: '2026-08-29T12:30:00Z'
+    reason: initial cataloging
+  - sha256: 064b0ef4ca74b9e77b5740c59a04bf0882e669bae1ae792ae1b187753fe1de63
+    timestamp: '2026-08-31T01:08:31Z'
+    reason: '2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/wayne/charter.md
+notes:
+  minted_by: 'carol-mint 1.0.0 @ 2026-08-31T01:08:31Z — re-mint 8119a0a39d8d… -> 064b0ef4ca74… — 2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'

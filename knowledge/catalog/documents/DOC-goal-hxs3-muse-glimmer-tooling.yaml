@@ -1,75 +1,95 @@
 document:
-  id: "DOC-goal-hxs3-muse-glimmer-tooling"
-  title: "Goal 2026-08-26-hxs3-muse-glimmer-tooling — provision the hxs-3 tooling-inference backend (Muse Glimmer 30B via Ollama, mutating pilot)"
-  type: "goal"
-  declared_purpose: "Durable work-state record (Goal ID = file name, KDD-0002): intent (provision hxs-3 as a persistent local tooling-inference backend with the exact Ollama artifact muse-glimmer:30b — official library tag, ~18 GB, LM 27.9B Q4_K_M + 1.92B CLIP projector, Apache-2.0 — qualified end to end, exposed fleet-scoped (LAN, no host firewall — owner rule), and registered in the Second Brain catalog as the discoverable capability of record: the factory's primary tool agent for the RAG pipeline, a sequential one-tool-call-per-turn specialist — parallel tooling happens above the model in KK3's orchestration plane, never as a claimed model capability; the model proposes at most one tool call per turn and never authorizes or executes; KK3 retains orchestration, acceptance, and evidence), scope and target (hxs-3 192.168.50.202, registry role Agent intelligence; baseline from records — M1 re-verifies: i7-5960X 8c/16t, 66 GB RAM, 2x RTX 5060 Ti 16,311 MiB, driver 580.173.02 validated 2026-08-12, Ubuntu 24.04.4, NVMe root, no Ollama, Secure Boot disabled; in scope incl. OS readiness per the blueprint mask set, Ollama install/pin, exact-tag pull + FULL identity freeze (LM + projector digests, manifest, template/renderer, license), native Phase A baseline, system-policy preservation, prompt/reasoning compatibility + reasoning_strength mapping probes, tool contract suite + one-call-per-turn invariant + ATEM normalization gate, multimodal probes, context ladder 32K/64K/128K, persistence + reboot recovery, scoped endpoint + boundary proof, catalog registration, consumer-proof task; out of scope: DeepSeek Harness (verified nonexistent), a llama.cpp serving plane UNLESS the M4/M5 compatibility gate fires the drafted escape hatch, parallel tool calling (registered limit parallel_tool_calling: false), gpt-oss changes (retained as task-shaped control), LightRAG integration (consumer unbuilt), exposure beyond the LAN), owner decisions D1-D8 (D1 model store root ext4; D2 fleet 192.168.50.0/24 + no host firewall; D3 muse-glimmer:30b exact — manifest prefix de878ce33ad8 cross-check only, local full digest = frozen identity at M4; D4 Wi-Fi rfkill soft block boot-persisted; D5 operating context 65,536 (64K), ladder validates 32K/64K/128K first; D6 M8 cold reboots pre-approved per-cycle; D7 registration to the Second Brain catalog (Harness-free, KDD-0006 convention); D8 operating reasoning_strength default deferred to M5 mapping evidence — reasoning cannot be disabled, recorded; all ratified via plan approval), success conditions SC-01..SC-08 with evidence contracts and KK3 gates (SC-08 registration + process verified by Agent-Zero), execution controls (1 initial specialist run + 1 bounded correction per failed correctable gate; stop conditions incl. Ollama-Muse incompatibility with the drafted llama.cpp escape hatch; smallest-layer rollback; HITL checkpoints M0/Gate 0/each cold reboot/threshold confirmations/final sign-off; commits only with per-instance owner approval — Alert 2), notes and links. Status in file: in-progress — M0 authorized 2026-08-26 (plan approved; D-items ratified; M1 commissioned). Plan: session plan patriot-miles-morales-us-agent.md (approved 2026-08-26 — referenced, not supplied, not cataloged); authoritative source pilot v1.1 (Harness-free mapping per KDD-0006 convention)."
+  id: DOC-goal-hxs3-muse-glimmer-tooling
+  title: Goal 2026-08-26-hxs3-muse-glimmer-tooling — provision the hxs-3 tooling-inference backend (Muse Glimmer 30B via Ollama, mutating pilot)
+  type: goal
+  declared_purpose: 'Durable work-state record (Goal ID = file name, KDD-0002): intent (provision hxs-3 as a persistent local tooling-inference backend with the exact Ollama artifact muse-glimmer:30b — official library tag, ~18 GB, LM 27.9B Q4_K_M + 1.92B CLIP projector, Apache-2.0 — qualified end to end, exposed fleet-scoped (LAN, no host firewall — owner rule), and registered in the Second Brain catalog as the discoverable capability of record: the factory''s primary tool agent for the RAG pipeline, a sequential one-tool-call-per-turn specialist — parallel tooling happens above the model in KK3''s orchestration plane, never as a claimed model capability; the model proposes at most one tool call per turn and never authorizes or executes; KK3 retains orchestration, acceptance, and evidence), scope and target (hxs-3 192.168.50.202, registry role Agent intelligence; baseline from records — M1 re-verifies: i7-5960X 8c/16t, 66 GB RAM, 2x RTX 5060 Ti 16,311 MiB, driver 580.173.02 validated 2026-08-12, Ubuntu 24.04.4, NVMe root, no Ollama, Secure Boot disabled; in scope incl. OS readiness per the blueprint mask set, Ollama install/pin, exact-tag pull + FULL identity freeze (LM + projector digests, manifest, template/renderer, license), native Phase A baseline, system-policy preservation, prompt/reasoning compatibility + reasoning_strength mapping probes, tool contract suite + one-call-per-turn invariant + ATEM normalization gate, multimodal probes, context ladder 32K/64K/128K, persistence + reboot recovery, scoped endpoint + boundary proof, catalog registration, consumer-proof task; out of scope: DeepSeek Harness (verified nonexistent), a llama.cpp serving plane UNLESS the M4/M5 compatibility gate fires the drafted escape hatch, parallel tool calling (registered limit parallel_tool_calling: false), gpt-oss changes (retained as task-shaped control), LightRAG integration (consumer unbuilt), exposure beyond the LAN), owner decisions D1-D8 (D1 model store root ext4; D2 fleet 192.168.50.0/24 + no host firewall; D3 muse-glimmer:30b exact — manifest prefix de878ce33ad8 cross-check only, local full digest = frozen identity at M4; D4 Wi-Fi rfkill soft block boot-persisted; D5 operating context 65,536 (64K), ladder validates 32K/64K/128K first; D6 M8 cold reboots pre-approved per-cycle; D7 registration to the Second Brain catalog (Harness-free, KDD-0006 convention); D8 operating reasoning_strength default deferred to M5 mapping evidence — reasoning cannot be disabled, recorded; all ratified via plan approval), success conditions SC-01..SC-08 with evidence contracts and KK3 gates (SC-08 registration + process verified by Agent-Zero), execution controls (1 initial specialist run + 1 bounded correction per failed correctable gate; stop conditions incl. Ollama-Muse incompatibility with the drafted llama.cpp escape hatch; smallest-layer rollback; HITL checkpoints M0/Gate 0/each cold reboot/threshold confirmations/final sign-off; commits only with per-instance owner approval — Alert 2), notes and links. Status in file: in-progress — M0 authorized 2026-08-26 (plan approved; D-items ratified; M1 commissioned). Plan: session plan patriot-miles-morales-us-agent.md (approved 2026-08-26 — referenced, not supplied, not cataloged); authoritative source pilot v1.1 (Harness-free mapping per KDD-0006 convention).'
   source:
-    author: "Kimi-K3 (goal record) / Agent Zero (authorization)"
-    provided_by: "Agent Zero"
-    origin: "/home/hxsa/opt/HX-ASF-Servers/goals/2026-08-26-hxs3-muse-glimmer-tooling.md"
-    section: "§whole-document"
-    ingestion_date: "2026-08-26T05:05:00Z"
-  owner: "Agent Zero (human authority); Kimi-K3 (governor)"
+    author: Kimi-K3 (goal record) / Agent Zero (authorization)
+    provided_by: Agent Zero
+    origin: /home/hxsa/opt/HX-ASF-Servers/governace/goals/2026-08-26-hxs3-muse-glimmer-tooling.md
+    section: §whole-document
+    ingestion_date: '2026-08-26T05:05:00Z'
+  owner: Agent Zero (human authority); Kimi-K3 (governor)
   applies_to:
-    hosts: [hxs-3]
-    fqdns: [hxs-3.hx.local.arpa]
-    services: [ollama.service]
-    agents: [kimi-k3, rick, john, carol]
-    repositories: [HX-ASF-Servers]
-    environments: [pilot, fleet]
-    models: [muse-glimmer:30b]
-  version: "1"
-  status: "historical"
-  authority_level: "ratified-governance"
+    hosts:
+    - hxs-3
+    fqdns:
+    - hxs-3.hx.local.arpa
+    services:
+    - ollama.service
+    agents:
+    - kimi-k3
+    - rick
+    - john
+    - carol
+    repositories:
+    - HX-ASF-Servers
+    environments:
+    - pilot
+    - fleet
+    models:
+    - muse-glimmer:30b
+  version: '1'
+  status: historical
+  authority_level: ratified-governance
   supersedes: []
   superseded_by: []
   security:
-    classification: "internal"
-    access_restrictions: "none beyond repository access"
+    classification: internal
+    access_restrictions: none beyond repository access
     contains_secret_values: false
   relations:
-    - predicate: "depends_on"
-      target: "DOC-kdd-0007-hxs3-muse-glimmer-tooling-adoption"
-      note: "pilot adoption (goal Notes and links: 'KDDs: KDD-0007 (adoption)'); D-items D1-D8 ratified via plan approval 2026-08-26"
-    - predicate: "governs"
-      target: "DOC-pilot-hxs3-state-log"
-      note: "state log opened at M0 (row 1, 2026-08-26T04:45Z); execution per the approved session plan patriot-miles-morales-us-agent.md (2026-08-26 — not cataloged: not supplied)"
-    - predicate: "references"
-      target: "DOC-hxs3-muse-glimmer-pilot-v11"
-      note: "authoritative source pilot v1.1 named in the goal Plan line (agent-zero-docs/pilots/hxs-3/meta/, 886 lines); its Harness-era §7 registration framing maps to the Second Brain catalog per KDD-0006 convention (substrate verified nonexistent)"
-    - predicate: "references"
-      target: "DOC-meta-muse-glimmer-llama-cpp-guide"
-      note: "controlling source (goal Notes and links: 'Meta llama.cpp guide (doc-1.md)'); llama.cpp floor b10353 is diagnostic only — the drafted escape hatch reserved for the M4/M5 compatibility gate (out of scope unless it fires)"
-    - predicate: "references"
-      target: "DOC-hxs3-gpt-oss-regular-pilot"
-      note: "earlier hxs-3 pilot document (2026-08-25 22:59) — superseded-in-role as primary candidate by the v1.1; gpt-oss:20b retained as task-shaped control (v1.1 §3.3; goal out-of-scope: 'gpt-oss changes (retained as task-shaped control)')"
-    - predicate: "references"
-      target: "DOC-kdd-0006-hxs2-coderx-backend-adoption"
-      note: "Harness-free registration convention source (goal D7 + out-of-scope line: 'DeepSeek Harness (verified nonexistent)'; mapping per the KDD-0006 convention, restated in KDD-0007)"
-    - predicate: "references"
-      target: "DOC-goal-hxs2-qwen36-coderx-backend"
-      note: "parallel pilot (goal Notes: 'PILOT-HXS2-CODERX-BACKEND-001 (parallel pilot)'); playbook PILOT-HX1 is the pattern source — this is its third validated use (DOC-pilot-hx1-plan)"
-    - predicate: "references"
-      target: "DOC-blueprint-llm-server"
-      note: "LLM-server blueprint named in scope ('OS readiness (blueprint mask set incl. hybrid-sleep)') and controlling sources (D1 model store per blueprint)"
-    - predicate: "references"
-      target: "DOC-tkv-server-registry"
-      note: "target identity hxs-3 192.168.50.202, registry role Agent intelligence (registry workload line: gpt-oss-20b TP=2; LightRAG graph & retrieval)"
-    - predicate: "references"
-      target: "DOC-tkv-hxs3-discovery"
-      note: "pre-flight intake baseline (goal Pre-flight: baseline from /opt/tkv-local/servers/hxs-3/ + directive driver validation, records); historical as-found — live re-verification at M1"
+  - predicate: depends_on
+    target: DOC-kdd-0007-hxs3-muse-glimmer-tooling-adoption
+    note: 'pilot adoption (goal Notes and links: ''KDDs: KDD-0007 (adoption)''); D-items D1-D8 ratified via plan approval 2026-08-26'
+  - predicate: governs
+    target: DOC-pilot-hxs3-state-log
+    note: 'state log opened at M0 (row 1, 2026-08-26T04:45Z); execution per the approved session plan patriot-miles-morales-us-agent.md (2026-08-26 — not cataloged: not supplied)'
+  - predicate: references
+    target: DOC-hxs3-muse-glimmer-pilot-v11
+    note: authoritative source pilot v1.1 named in the goal Plan line (agent-zero-docs/pilots/hxs-3/meta/, 886 lines); its Harness-era §7 registration framing maps to the Second Brain catalog per KDD-0006 convention (substrate verified nonexistent)
+  - predicate: references
+    target: DOC-meta-muse-glimmer-llama-cpp-guide
+    note: 'controlling source (goal Notes and links: ''Meta llama.cpp guide (doc-1.md)''); llama.cpp floor b10353 is diagnostic only — the drafted escape hatch reserved for the M4/M5 compatibility gate (out of scope unless it fires)'
+  - predicate: references
+    target: DOC-hxs3-gpt-oss-regular-pilot
+    note: 'earlier hxs-3 pilot document (2026-08-25 22:59) — superseded-in-role as primary candidate by the v1.1; gpt-oss:20b retained as task-shaped control (v1.1 §3.3; goal out-of-scope: ''gpt-oss changes (retained as task-shaped control)'')'
+  - predicate: references
+    target: DOC-kdd-0006-hxs2-coderx-backend-adoption
+    note: 'Harness-free registration convention source (goal D7 + out-of-scope line: ''DeepSeek Harness (verified nonexistent)''; mapping per the KDD-0006 convention, restated in KDD-0007)'
+  - predicate: references
+    target: DOC-goal-hxs2-qwen36-coderx-backend
+    note: 'parallel pilot (goal Notes: ''PILOT-HXS2-CODERX-BACKEND-001 (parallel pilot)''); playbook PILOT-HX1 is the pattern source — this is its third validated use (DOC-pilot-hx1-plan)'
+  - predicate: references
+    target: DOC-blueprint-llm-server
+    note: LLM-server blueprint named in scope ('OS readiness (blueprint mask set incl. hybrid-sleep)') and controlling sources (D1 model store per blueprint)
+  - predicate: references
+    target: DOC-tkv-server-registry
+    note: 'target identity hxs-3 192.168.50.202, registry role Agent intelligence (registry workload line: gpt-oss-20b TP=2; LightRAG graph & retrieval)'
+  - predicate: references
+    target: DOC-tkv-hxs3-discovery
+    note: 'pre-flight intake baseline (goal Pre-flight: baseline from /opt/tkv-local/servers/hxs-3/ + directive driver validation, records); historical as-found — live re-verification at M1'
   validation:
-    validated_at: "2026-08-27T21:20:00Z"
-    freshness: "current"
-    review_due: "terminal-closed 2026-08-27 (owner ACCEPT, hxs-3 state log row 26); SC-06 multimodal FORMALLY DEFERRED 2026-08-27 (owner, hxs-3 log row 30 / hxs-2 log row 60 — hxs-1 SC-05 class, tracked, returns when the owner calls a vision-probes window); review on any post-closure amendment (hxs-1 SC-07a-class) only"
-  sha256: "13d6aeeb91692170197527a26d704b11729fe99b4e5793c9e6591eb429b5f495"
-  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/governace/goals/2026-08-26-hxs3-muse-glimmer-tooling.md"
+    validated_at: '2026-08-31T01:08:32Z'
+    freshness: current
+    review_due: terminal-closed 2026-08-27 (owner ACCEPT, hxs-3 state log row 26); SC-06 multimodal FORMALLY DEFERRED 2026-08-27 (owner, hxs-3 log row 30 / hxs-2 log row 60 — hxs-1 SC-05 class, tracked, returns when the owner calls a vision-probes window); review on any post-closure amendment (hxs-1 SC-07a-class) only
+  sha256: 7af8f8a1de2a3d596e03c8c3a6f1dc8f1115e2ccf08a77a41a2905867eb96410
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/goals/2026-08-26-hxs3-muse-glimmer-tooling.md
+  hash_history:
+  - sha256: 13d6aeeb91692170197527a26d704b11729fe99b4e5793c9e6591eb429b5f495
+    timestamp: unrecorded
+    reason: predecessor state restored by carol-mint (re-mint events before 2026-08-31T01:08:32Z did not record history)
+  - sha256: 7af8f8a1de2a3d596e03c8c3a6f1dc8f1115e2ccf08a77a41a2905867eb96410
+    timestamp: '2026-08-31T01:08:32Z'
+    reason: '2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'
 notes:
-  status_mapping: "status mapped active -> historical (2026-08-27, ACCEPT wave): historical is the terminal-closed enum value per the DOC-goal-hx1-ollama-qwen38-27b M8-closure precedent (not superseded, not rejected); freshness stays current — this record is the current final truth of the closed goal. History: status 'active' mapped the file's earlier 'in-progress — M0 authorized 2026-08-26' line (the schema enum has no in-progress literal; convention: DOC-goal-hxs2-qwen36-coderx-backend active during execution). Living-document churn (owner decision/status-line edits) handled by re-ingestion with hash history. UPDATED 2026-08-27 (review-batch follow-up wave; OmniRoute state log row 44 governor fix 1): the source now restores the original 'in-progress — M0 authorized' status as a HISTORICAL entry (source line 5: '**in-progress — M0 authorized** (2026-08-26; historical — see transition)') and records the closure as a DATED TRANSITION marked current (source line 6: 'Status transition 2026-08-27 **[current]**: **COMPLETE — PASS** — milestones M0/M1/M4/M5/M7/M8 all PASS; owner ACCEPT 2026-08-27 (\"Meta-X is accepted into production\", state log row 26); SC-06 multimodal **FORMALLY DEFERRED 2026-08-27** (hxs-1 SC-05 class — owner-decided, tracked, not forgotten; returns when the owner calls a vision-probes window)' with the open-correction label 'original status entry restored and the closure recorded as a dated transition per the append-only convention' — both lines VERIFIED PRESENT this run). The SC-06 disposition is the FORMAL DEFERRAL — current state; this note's prior version carried the ACCEPT-wave 'SC-06 disposition OPEN (owner, non-blocking)' phrasing as the current claim — removed per the row-44 disposition (the deferral had already landed at the M2 wave; see notes.sc06_deferral_20260827); notes.m8_closure keeps its ACCEPT-wave quote as the dated historical record. The terminal-closed mapping (status historical) + provenance stand unchanged. The governor re-rendered the goal HTML sibling (wiki-sync verified at this run's validate.py close)."
-  authority_note: "ratified-governance per the two-goal convention — dispatch brief wording matches the F-AUTH-1 resolution on the hxs-2 goal record (confirmed 2026-08-26, hxs-2 state log row 6): the goal file is the governor-authored durable state record ratified through KDD-0007 and owner M0 authorization; owner decisions D1-D8 preserved in declared_purpose."
-  capability_limit_convention: "The goal's Second Brain evaluation registers a capability LIMIT as first-class registry content (parallel_tool_calling: false; one tool call per model turn, proposed never authorized) so every future dispatch retrieves the limit — new catalog convention carried forward from this goal + KDD-0007; the SC-08 evidence contract requires the catalog capability record to carry it (registration milestone)."
-  plan_reference: "Session plan patriot-miles-morales-us-agent.md (approved 2026-08-26) is referenced by this goal and the state log but was not supplied; not cataloged (same treatment as the hxs-2 session plan, DOC-goal-hxs2-qwen36-coderx-backend)."
-  second_brain: "Second Brain evaluation recorded in-file (standing directive): capability limits become first-class registry content; the playbook earns its third validated host — formal LLM-backend-deployment pattern drafted at M8; retrieval package at M0/M1. DFlash/deep integrations deferred per evidence."
-  limit_enforcement_amendment: "MID-RUN AMENDMENT re-validated this run (2026-08-26T06:15Z; governor edit 05:48:44Z, 'Enforcement contract (2026-08-26, review finding)'): the intent section now states the harness enforces the one-call-per-turn limit at two levels — a model response containing more than one tool call is rejected, accepted calls execute serially with results returned before the next selection — and the request-level parallel_tool_calls: false flag is treated strictly as a compatibility probe, never enforcement; the SC-05 row carries the same ENFORCEMENT wording ('invariant proven with ENFORCEMENT…'). The LIMIT registration itself and D1–D8 are unchanged. Hash chain: 0ce2da45… (M0 ingestion 05:05Z) → 31cf8cb6… (this re-validation). Matching KDD-0007 amendment re-validated in DOC-kdd-0007-hxs3-muse-glimmer-tooling-adoption; the Meta-X capability record (DOC-backend-meta-x) carries the amended semantics."
-  m8_closure: "Goal closure 2026-08-27: the document's own status header is now COMPLETE — PASS (milestones M0/M1/M4/M5/M7/M8 all PASS; owner ACCEPT 2026-08-27 'Meta-X is accepted into production', hxs-3 state log row 26; SC-06 multimodal disposition OPEN with the owner, non-blocking — source line 5, VERIFIED PRESENT [dated historical context: this ACCEPT-wave OPEN value is superseded as the current claim by the FORMAL DEFERRAL 2026-08-27 recorded in notes.sc06_deferral_20260827 — SC-06 multimodal is FORMALLY DEFERRED 2026-08-27 (hxs-1 SC-05 class, owner-decided, tracked, returns on a vision-probes window), which is the current SC-06 state]; grep-verified the only 2026-08-27 marker in the file, so the status-line flip is the delta). status field mapped active -> historical (terminal-closed enum per the DOC-goal-hx1-ollama-qwen38-27b M8-closure precedent); authority_level ratified-governance and freshness current unchanged. Hash chain: 0ce2da45… (M0 ingestion 2026-08-26T05:05Z) → 31cf8cb6… (M0-wave re-validation 06:15Z, limit-enforcement amendment) → 12840658… (this ACCEPT wave). The backend registration flipped candidate -> active in the same wave (DOC-backend-meta-x, Qwen-X precedent); the blueprint §8 Meta-X row reads ACTIVE (DOC-blueprint-llm-server, eighth amendment); the governor re-rendered the goal HTML sibling."
-  sc06_deferral_20260827: "SC-06 multimodal FORMALLY DEFERRED 2026-08-27 (this run's re-hash): the owner formally deferred SC-06 per the hxs-1 SC-05 class — 'formally defer it the way we did on hxs-1, but it should not be forgotten' (hxs-3 state log row 30, 2026-08-27T17:03Z; hxs-2 state log row 60 disposition 1) — owner-decided, tracked, NOT a silent drop and NOT a pilot defect; it returns when the owner calls a vision-probes window. The governor updated the goal file's status line (source line 5) to carry the deferral — 'SC-06 multimodal **FORMALLY DEFERRED 2026-08-27** (hxs-1 SC-05 class — owner-decided, tracked, not forgotten; returns when the owner calls a vision-probes window)' VERIFIED PRESENT this run — and re-rendered the HTML sibling (dual-format sync verified at this run's validate.py close). The COMPLETE — PASS closure STANDS as current state: status historical, authority_level ratified-governance, freshness current — all unchanged; the SC-06-OPEN wording in notes.status_mapping and notes.m8_closure is preserved above as the historical record. Hash chain: 0ce2da45… (M0 ingestion 2026-08-26T05:05Z) → 31cf8cb6… (M0-wave re-validation 06:15Z) → 12840658… (ACCEPT wave 2026-08-27T03:20Z) → 355b837b… (this run, 2026-08-27T18:04Z). FOLLOW-UP (2026-08-27 review-batch wave, OmniRoute state log row 44 fix 1): the governor restored the original 'in-progress — M0 authorized' status as a historical entry and re-recorded the closure + this deferral as a DATED TRANSITION (source lines 5-6, both VERIFIED PRESENT this run; open-correction label per the append-only convention); notes.status_mapping was UPDATED to the new source shape — its ACCEPT-era 'SC-06 OPEN' current-claim sentence removed (this note and notes.m8_closure carry the history); the deferral STANDS as current state; the terminal historical mapping unchanged. Hash chain: … → 355b837b… (M2 wave) → 13d6aeeb… (this run, 2026-08-27T21:2xZ)."
+  semantic_reconciliation_20260831: 'Read against the current source and operative work-state block: status=complete, status_date=2026-08-27. The declared_purpose sentence saying ''in-progress — M0 authorized'' is historical and superseded by the dated COMPLETE — PASS transition plus the machine-readable block. SC-06 remains an owner-approved deferred exception; the separate OAI-X replacement plan is a reconciliation item, not a reversal of this goal''s recorded completion.'
+  status_mapping: 'status mapped active -> historical (2026-08-27, ACCEPT wave): historical is the terminal-closed enum value per the DOC-goal-hx1-ollama-qwen38-27b M8-closure precedent (not superseded, not rejected); freshness stays current — this record is the current final truth of the closed goal. History: status ''active'' mapped the file''s earlier ''in-progress — M0 authorized 2026-08-26'' line (the schema enum has no in-progress literal; convention: DOC-goal-hxs2-qwen36-coderx-backend active during execution). Living-document churn (owner decision/status-line edits) handled by re-ingestion with hash history. UPDATED 2026-08-27 (review-batch follow-up wave; OmniRoute state log row 44 governor fix 1): the source now restores the original ''in-progress — M0 authorized'' status as a HISTORICAL entry (source line 5: ''**in-progress — M0 authorized** (2026-08-26; historical — see transition)'') and records the closure as a DATED TRANSITION marked current (source line 6: ''Status transition 2026-08-27 **[current]**: **COMPLETE — PASS** — milestones M0/M1/M4/M5/M7/M8 all PASS; owner ACCEPT 2026-08-27 ("Meta-X is accepted into production", state log row 26); SC-06 multimodal **FORMALLY DEFERRED 2026-08-27** (hxs-1 SC-05 class — owner-decided, tracked, not forgotten; returns when the owner calls a vision-probes window)'' with the open-correction label ''original status entry restored and the closure recorded as a dated transition per the append-only convention'' — both lines VERIFIED PRESENT this run). The SC-06 disposition is the FORMAL DEFERRAL — current state; this note''s prior version carried the ACCEPT-wave ''SC-06 disposition OPEN (owner, non-blocking)'' phrasing as the current claim — removed per the row-44 disposition (the deferral had already landed at the M2 wave; see notes.sc06_deferral_20260827); notes.m8_closure keeps its ACCEPT-wave quote as the dated historical record. The terminal-closed mapping (status historical) + provenance stand unchanged. The governor re-rendered the goal HTML sibling (wiki-sync verified at this run''s validate.py close).'
+  authority_note: 'ratified-governance per the two-goal convention — dispatch brief wording matches the F-AUTH-1 resolution on the hxs-2 goal record (confirmed 2026-08-26, hxs-2 state log row 6): the goal file is the governor-authored durable state record ratified through KDD-0007 and owner M0 authorization; owner decisions D1-D8 preserved in declared_purpose.'
+  capability_limit_convention: 'The goal''s Second Brain evaluation registers a capability LIMIT as first-class registry content (parallel_tool_calling: false; one tool call per model turn, proposed never authorized) so every future dispatch retrieves the limit — new catalog convention carried forward from this goal + KDD-0007; the SC-08 evidence contract requires the catalog capability record to carry it (registration milestone).'
+  plan_reference: Session plan patriot-miles-morales-us-agent.md (approved 2026-08-26) is referenced by this goal and the state log but was not supplied; not cataloged (same treatment as the hxs-2 session plan, DOC-goal-hxs2-qwen36-coderx-backend).
+  second_brain: 'Second Brain evaluation recorded in-file (standing directive): capability limits become first-class registry content; the playbook earns its third validated host — formal LLM-backend-deployment pattern drafted at M8; retrieval package at M0/M1. DFlash/deep integrations deferred per evidence.'
+  limit_enforcement_amendment: 'MID-RUN AMENDMENT re-validated this run (2026-08-26T06:15Z; governor edit 05:48:44Z, ''Enforcement contract (2026-08-26, review finding)''): the intent section now states the harness enforces the one-call-per-turn limit at two levels — a model response containing more than one tool call is rejected, accepted calls execute serially with results returned before the next selection — and the request-level parallel_tool_calls: false flag is treated strictly as a compatibility probe, never enforcement; the SC-05 row carries the same ENFORCEMENT wording (''invariant proven with ENFORCEMENT…''). The LIMIT registration itself and D1–D8 are unchanged. Hash chain: 0ce2da45… (M0 ingestion 05:05Z) → 31cf8cb6… (this re-validation). Matching KDD-0007 amendment re-validated in DOC-kdd-0007-hxs3-muse-glimmer-tooling-adoption; the Meta-X capability record (DOC-backend-meta-x) carries the amended semantics.'
+  m8_closure: 'Goal closure 2026-08-27: the document''s own status header is now COMPLETE — PASS (milestones M0/M1/M4/M5/M7/M8 all PASS; owner ACCEPT 2026-08-27 ''Meta-X is accepted into production'', hxs-3 state log row 26; SC-06 multimodal disposition OPEN with the owner, non-blocking — source line 5, VERIFIED PRESENT [dated historical context: this ACCEPT-wave OPEN value is superseded as the current claim by the FORMAL DEFERRAL 2026-08-27 recorded in notes.sc06_deferral_20260827 — SC-06 multimodal is FORMALLY DEFERRED 2026-08-27 (hxs-1 SC-05 class, owner-decided, tracked, returns on a vision-probes window), which is the current SC-06 state]; grep-verified the only 2026-08-27 marker in the file, so the status-line flip is the delta). status field mapped active -> historical (terminal-closed enum per the DOC-goal-hx1-ollama-qwen38-27b M8-closure precedent); authority_level ratified-governance and freshness current unchanged. Hash chain: 0ce2da45… (M0 ingestion 2026-08-26T05:05Z) → 31cf8cb6… (M0-wave re-validation 06:15Z, limit-enforcement amendment) → 12840658… (this ACCEPT wave). The backend registration flipped candidate -> active in the same wave (DOC-backend-meta-x, Qwen-X precedent); the blueprint §8 Meta-X row reads ACTIVE (DOC-blueprint-llm-server, eighth amendment); the governor re-rendered the goal HTML sibling.'
+  sc06_deferral_20260827: 'SC-06 multimodal FORMALLY DEFERRED 2026-08-27 (this run''s re-hash): the owner formally deferred SC-06 per the hxs-1 SC-05 class — ''formally defer it the way we did on hxs-1, but it should not be forgotten'' (hxs-3 state log row 30, 2026-08-27T17:03Z; hxs-2 state log row 60 disposition 1) — owner-decided, tracked, NOT a silent drop and NOT a pilot defect; it returns when the owner calls a vision-probes window. The governor updated the goal file''s status line (source line 5) to carry the deferral — ''SC-06 multimodal **FORMALLY DEFERRED 2026-08-27** (hxs-1 SC-05 class — owner-decided, tracked, not forgotten; returns when the owner calls a vision-probes window)'' VERIFIED PRESENT this run — and re-rendered the HTML sibling (dual-format sync verified at this run''s validate.py close). The COMPLETE — PASS closure STANDS as current state: status historical, authority_level ratified-governance, freshness current — all unchanged; the SC-06-OPEN wording in notes.status_mapping and notes.m8_closure is preserved above as the historical record. Hash chain: 0ce2da45… (M0 ingestion 2026-08-26T05:05Z) → 31cf8cb6… (M0-wave re-validation 06:15Z) → 12840658… (ACCEPT wave 2026-08-27T03:20Z) → 355b837b… (this run, 2026-08-27T18:04Z). FOLLOW-UP (2026-08-27 review-batch wave, OmniRoute state log row 44 fix 1): the governor restored the original ''in-progress — M0 authorized'' status as a historical entry and re-recorded the closure + this deferral as a DATED TRANSITION (source lines 5-6, both VERIFIED PRESENT this run; open-correction label per the append-only convention); notes.status_mapping was UPDATED to the new source shape — its ACCEPT-era ''SC-06 OPEN'' current-claim sentence removed (this note and notes.m8_closure carry the history); the deferral STANDS as current state; the terminal historical mapping unchanged. Hash chain: … → 355b837b… (M2 wave) → 13d6aeeb… (this run, 2026-08-27T21:2xZ).'
+  minted_by: 'carol-mint 1.0.0 @ 2026-08-31T01:08:32Z — re-mint 13d6aeeb9169… -> 7af8f8a1de2a… — 2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'

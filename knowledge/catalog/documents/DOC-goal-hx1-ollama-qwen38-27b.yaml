@@ -1,54 +1,66 @@
 document:
-  id: "DOC-goal-hx1-ollama-qwen38-27b"
-  title: "Goal 2026-08-24-hx1-ollama-qwen38-27b — deploy and validate qwen3.8:27b on hxs-1 via Ollama (mutating pilot)"
-  type: "goal"
-  declared_purpose: "Durable work-state record (Goal ID = file name, KDD-0002): intent, scope, success conditions SC-01..SC-09 with evidence contracts, execution controls, HITL checkpoints, and links. Status in file (updated 2026-08-26): COMPLETE — PASS 2026-08-26 (M8 owner sign-off: Jarvis Richardson ACCEPT, verbatim 'I jarvis Richardson Accept M8'; package pilots/PILOT-HX1-OLLAMA-QWEN27B-001/36-kk3-m8-acceptance-reconciliation.md §9, state log rows 63-64). SC-05/AC-008/AC-016 deferred-by-owner to backlog (governace/issue-tracking/issues.md, state log row 53) — deferred, not waived. Post-closure amendment SC-07a (owner directive 2026-08-26, state log rows 71-73): SC-07's loopback-only exposure posture is SUPERSEDED for operations from 2026-08-26 — fleet-scoped LAN access is the current rule (OLLAMA_HOST=0.0.0.0 with loopback preserved; boundary = the private LAN itself, no host firewall per the owner rule 2026-08-26, superseding the brief same-day ufw enablement, reverted and verified); the M8 loopback evidence stands as the posture at sign-off (36-kk3 §SC-07 unchanged, historical); satisfaction evidence 37-work-order-john-exposure.yaml + 39-esme."
+  id: DOC-goal-hx1-ollama-qwen38-27b
+  title: Goal 2026-08-24-hx1-ollama-qwen38-27b — deploy and validate qwen3.8:27b on hxs-1 via Ollama (mutating pilot)
+  type: goal
+  declared_purpose: 'Durable work-state record (Goal ID = file name, KDD-0002): intent, scope, success conditions SC-01..SC-09 with evidence contracts, execution controls, HITL checkpoints, and links. Status in file (updated 2026-08-26): COMPLETE — PASS 2026-08-26 (M8 owner sign-off: Jarvis Richardson ACCEPT, verbatim ''I jarvis Richardson Accept M8''; package pilots/PILOT-HX1-OLLAMA-QWEN27B-001/36-kk3-m8-acceptance-reconciliation.md §9, state log rows 63-64). SC-05/AC-008/AC-016 deferred-by-owner to backlog (governace/issue-tracking/issues.md, state log row 53) — deferred, not waived. Post-closure amendment SC-07a (owner directive 2026-08-26, state log rows 71-73): SC-07''s loopback-only exposure posture is SUPERSEDED for operations from 2026-08-26 — fleet-scoped LAN access is the current rule (OLLAMA_HOST=0.0.0.0 with loopback preserved; boundary = the private LAN itself, no host firewall per the owner rule 2026-08-26, superseding the brief same-day ufw enablement, reverted and verified); the M8 loopback evidence stands as the posture at sign-off (36-kk3 §SC-07 unchanged, historical); satisfaction evidence 37-work-order-john-exposure.yaml + 39-esme.'
   source:
-    author: "Kimi-K3 (goal record) / Agent Zero (authorization)"
-    provided_by: "Agent Zero"
-    origin: "/home/hxsa/opt/HX-ASF-Servers/goals/2026-08-24-hx1-ollama-qwen38-27b.md"
-    section: "§whole-document"
-    ingestion_date: "2026-08-25T04:50:00Z"
-  owner: "Agent Zero (human authority); Kimi-K3 (governor)"
+    author: Kimi-K3 (goal record) / Agent Zero (authorization)
+    provided_by: Agent Zero
+    origin: /home/hxsa/opt/HX-ASF-Servers/governace/goals/2026-08-24-hx1-ollama-qwen38-27b.md
+    section: §whole-document
+    ingestion_date: '2026-08-25T04:50:00Z'
+  owner: Agent Zero (human authority); Kimi-K3 (governor)
   applies_to:
-    hosts: [hxs-1]
-    fqdns: [hxs-1.hx.local.arpa]
-    services: [ollama.service, ollama-preload.service]
-    agents: [kimi-k3, john, rick]
-    repositories: [HX-ASF-Servers]
-    environments: [pilot]
-    models: [qwen3.8:27b, hx-qwen3.8-27b-64k]
-  version: "1"
-  status: "historical"
-  authority_level: "ratified-governance"
+    hosts:
+    - hxs-1
+    fqdns:
+    - hxs-1.hx.local.arpa
+    services:
+    - ollama.service
+    - ollama-preload.service
+    agents:
+    - kimi-k3
+    - john
+    - rick
+    repositories:
+    - HX-ASF-Servers
+    environments:
+    - pilot
+    models:
+    - qwen3.8:27b
+    - hx-qwen3.8-27b-64k
+  version: '1'
+  status: historical
+  authority_level: ratified-governance
   supersedes: []
   superseded_by: []
   security:
-    classification: "internal"
-    access_restrictions: "none beyond repository access"
+    classification: internal
+    access_restrictions: none beyond repository access
     contains_secret_values: false
   relations:
-    - predicate: "governs"
-      target: "DOC-pilot-hx1-plan"
-      note: "full plan at pilots/PILOT-HX1-OLLAMA-QWEN27B-001/plan.md"
-    - predicate: "depends_on"
-      target: "DOC-kdd-0004-hx1-qwen-pilot-adoption"
-      note: "model baseline qwen3.8:27b (non-MLX, GGUF) ratified here; M3 model-identity HITL satisfied by KDD-0004"
-    - predicate: "references"
-      target: "DOC-pilot-hx1-amendment-a01"
-      note: "A01 adopted 2026-08-25 — plan §6.5 superseded; M5b conformance queued"
-    - predicate: "references"
-      target: "DOC-tkv-server-registry"
-      note: "target identity hxs-1 192.168.50.200, role Deep reasoning & synthesis"
+  - predicate: governs
+    target: DOC-pilot-hx1-plan
+    note: full plan at pilots/PILOT-HX1-OLLAMA-QWEN27B-001/plan.md
+  - predicate: depends_on
+    target: DOC-kdd-0004-hx1-qwen-pilot-adoption
+    note: model baseline qwen3.8:27b (non-MLX, GGUF) ratified here; M3 model-identity HITL satisfied by KDD-0004
+  - predicate: references
+    target: DOC-pilot-hx1-amendment-a01
+    note: A01 adopted 2026-08-25 — plan §6.5 superseded; M5b conformance queued
+  - predicate: references
+    target: DOC-tkv-server-registry
+    note: target identity hxs-1 192.168.50.200, role Deep reasoning & synthesis
   validation:
-    validated_at: "2026-08-30T12:15:57Z"
-    freshness: "current"
-    review_due: "fired 2026-08-26 — goal closed COMPLETE — PASS at M8 owner sign-off; terminal record, re-ingest only on a goal-file amendment"
-  sha256: "3ad285bd464193e9a5d6a4cae2eca4544b4ff1f0e336f29c1918a77204168d32"
-  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/governace/goals/2026-08-24-hx1-ollama-qwen38-27b.md"
+    validated_at: '2026-08-31T01:08:32Z'
+    freshness: current
+    review_due: fired 2026-08-26 — goal closed COMPLETE — PASS at M8 owner sign-off; terminal record, re-ingest only on a goal-file amendment
+  sha256: 70568f4cbb5904cb6b212046f95896ebf0d1ec0d9ffbb6f8470a5f8386628ced
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/goals/2026-08-24-hx1-ollama-qwen38-27b.md
 notes:
-  hash_history: "69f6193d… (2026-08-25T05:20Z, run 1) → 091daccd… (2026-08-25T05:45Z, run 2) → 7f85657f… (2026-08-25T07:10Z, M7a ingest run) → daba7e86… (2026-08-25T19:27Z, batch-5 re-validation) → 87187b16… (2026-08-25T22:15Z, M7b-deferral run) → 8bf0c1f4… (2026-08-26T01:37Z, M8 verdict closure run) → e978f4ce… (2026-08-26T04:12Z, SC-07a amendment re-validation) → 3ad285bd… (2026-08-30T12:15:57Z, remediation-register batch: SC-07 historical/superseded label + sha256 refresh). Previous change: governor edit per owner directive (state log row 53) — status line recorded M7b soak DEFERRED to backlog (governace/issue-tracking/issues.md), AC-008/AC-016 evidence absent = deferred not waived, M8 scope adjusted. Expected living-document churn flagged by CAT-02 (state log row 37). M8 change (8bf0c1f4…): status line flip to COMPLETE — PASS 2026-08-26. Latest change (e978f4ce…): governor post-closure amendment per owner directive 2026-08-26 — the SC-07a row added to the success-conditions table (state log rows 71-73)."
-  sc07a_amendment: "SC-07a re-validation (2026-08-26T04:12Z): drift traced to the governor's SC-table amendment, verified present at source (line 46): 'SC-07a (amendment) | Exposure posture change | owner directive 2026-08-26 (\"the entire fleet should have access, the same should be true on hxs-1 — if not fix it\") | SC-07's loopback-only posture is SUPERSEDED for operations from 2026-08-26: fleet-scoped LAN access becomes the current rule — OLLAMA_HOST=0.0.0.0 with loopback preserved; boundary = the private LAN itself, no host firewall (owner rule 2026-08-26, supersedes the brief ufw enablement same day — reverted and verified); the M8 loopback evidence stands as the posture at sign-off (36-kk3 §SC-07 unchanged, historical) | 37-work-order-john-exposure.yaml + 39-esme evidence; state log rows 71–73 | KK3 gate'. Legitimate governor edit per the owner directive, no unknown actor. Re-hashed 8bf0c1f4… -> e978f4ce…; declared_purpose updated to carry SC-07a; applies_to.models added (qwen3.8:27b + the frozen operating identity hx-qwen3.8-27b-64k — first-class applicability targets per the 2026-08-26 schema extension). status stays historical (terminal-closed) and freshness current: SC-07a is a living-record amendment with provenance on a closed goal, per its own pattern. Satisfaction evidence cataloged this run: DOC-pilot-hx1-wo-37-john-exposure / cp-38 / ev-39."
-  corrections_batch5: "F-B5-2 RESOLVED per governor disposition: drift is reference-additions only — the status line now cites evidence 30-esme-m7a-reboot-cycles.md and state log rows 40–42/47, and SC-03 now cites 23-kk3-m6-capacity-decision.md Revision 2 (three ratified profiles: 32K recovery baseline, 64K operating default, 128K qualified extended — selected). Verified against current file; declared_purpose paraphrase remains accurate."
-  corrections_batch8: "M7b-deferral re-validation (2026-08-25T22:15Z): drift traced to the governor's owner-directed status-line edit (state log row 53, verified at source line 5): 'M7b soak DEFERRED to backlog per owner directive 2026-08-25 (governace/issue-tracking/issues.md, state log row 53): AC-008/AC-016 evidence absent — deferred, not waived; M8 scope adjusted'. Legitimate governor edit, no unknown actor. Re-hashed daba7e86… -> 87187b16…; declared_purpose status phrase updated 'delayed per owner' -> 'DEFERRED to backlog … (deferred, not waived; M8 scope adjusted)'. All other fields re-checked — unchanged."
-  m8_closure: "Goal closure 2026-08-26: the document's own status header is now COMPLETE — PASS (M8 owner sign-off: Jarvis Richardson ACCEPT, no conditions — closure evidence at DOC-pilot-hx1-decision-36-m8-acceptance notes.m8_verdict). status field mapped active -> historical: the schema status enum has no 'complete' literal and the document's own status is the source (convention precedents: DOC-goal-ollama-audit-hxs5 'draft' recorded as stated; DOC-pilot-ollama-audit-plan 'pilot-ready' mapped to adopted) — historical is the terminal-closed enum value (not superseded, not rejected). authority_level ratified-governance and freshness current are unchanged: this record is the current final truth of the closed goal, not an as-found artifact. SC-05/AC-008/AC-016 stay deferred-by-owner in governace/issue-tracking/issues.md (deferred, not waived)."
+  hash_history: '69f6193d… (2026-08-25T05:20Z, run 1) → 091daccd… (2026-08-25T05:45Z, run 2) → 7f85657f… (2026-08-25T07:10Z, M7a ingest run) → daba7e86… (2026-08-25T19:27Z, batch-5 re-validation) → 87187b16… (2026-08-25T22:15Z, M7b-deferral run) → 8bf0c1f4… (2026-08-26T01:37Z, M8 verdict closure run) → e978f4ce… (2026-08-26T04:12Z, SC-07a amendment re-validation) → 3ad285bd… (2026-08-30T12:15:57Z, remediation-register batch: SC-07 historical/superseded label + sha256 refresh). Previous change: governor edit per owner directive (state log row 53) — status line recorded M7b soak DEFERRED to backlog (governace/issue-tracking/issues.md), AC-008/AC-016 evidence absent = deferred not waived, M8 scope adjusted. Expected living-document churn flagged by CAT-02 (state log row 37). M8 change (8bf0c1f4…): status line flip to COMPLETE — PASS 2026-08-26. Latest change (e978f4ce…): governor post-closure amendment per owner directive 2026-08-26 — the SC-07a row added to the success-conditions table (state log rows 71-73). → 70568f4c… (2026-08-31T01:08:32Z, 2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh)'
+  sc07a_amendment: 'SC-07a re-validation (2026-08-26T04:12Z): drift traced to the governor''s SC-table amendment, verified present at source (line 46): ''SC-07a (amendment) | Exposure posture change | owner directive 2026-08-26 ("the entire fleet should have access, the same should be true on hxs-1 — if not fix it") | SC-07''s loopback-only posture is SUPERSEDED for operations from 2026-08-26: fleet-scoped LAN access becomes the current rule — OLLAMA_HOST=0.0.0.0 with loopback preserved; boundary = the private LAN itself, no host firewall (owner rule 2026-08-26, supersedes the brief ufw enablement same day — reverted and verified); the M8 loopback evidence stands as the posture at sign-off (36-kk3 §SC-07 unchanged, historical) | 37-work-order-john-exposure.yaml + 39-esme evidence; state log rows 71–73 | KK3 gate''. Legitimate governor edit per the owner directive, no unknown actor. Re-hashed 8bf0c1f4… -> e978f4ce…; declared_purpose updated to carry SC-07a; applies_to.models added (qwen3.8:27b + the frozen operating identity hx-qwen3.8-27b-64k — first-class applicability targets per the 2026-08-26 schema extension). status stays historical (terminal-closed) and freshness current: SC-07a is a living-record amendment with provenance on a closed goal, per its own pattern. Satisfaction evidence cataloged this run: DOC-pilot-hx1-wo-37-john-exposure / cp-38 / ev-39.'
+  corrections_batch5: 'F-B5-2 RESOLVED per governor disposition: drift is reference-additions only — the status line now cites evidence 30-esme-m7a-reboot-cycles.md and state log rows 40–42/47, and SC-03 now cites 23-kk3-m6-capacity-decision.md Revision 2 (three ratified profiles: 32K recovery baseline, 64K operating default, 128K qualified extended — selected). Verified against current file; declared_purpose paraphrase remains accurate.'
+  corrections_batch8: 'M7b-deferral re-validation (2026-08-25T22:15Z): drift traced to the governor''s owner-directed status-line edit (state log row 53, verified at source line 5): ''M7b soak DEFERRED to backlog per owner directive 2026-08-25 (governace/issue-tracking/issues.md, state log row 53): AC-008/AC-016 evidence absent — deferred, not waived; M8 scope adjusted''. Legitimate governor edit, no unknown actor. Re-hashed daba7e86… -> 87187b16…; declared_purpose status phrase updated ''delayed per owner'' -> ''DEFERRED to backlog … (deferred, not waived; M8 scope adjusted)''. All other fields re-checked — unchanged.'
+  m8_closure: 'Goal closure 2026-08-26: the document''s own status header is now COMPLETE — PASS (M8 owner sign-off: Jarvis Richardson ACCEPT, no conditions — closure evidence at DOC-pilot-hx1-decision-36-m8-acceptance notes.m8_verdict). status field mapped active -> historical: the schema status enum has no ''complete'' literal and the document''s own status is the source (convention precedents: DOC-goal-ollama-audit-hxs5 ''draft'' recorded as stated; DOC-pilot-ollama-audit-plan ''pilot-ready'' mapped to adopted) — historical is the terminal-closed enum value (not superseded, not rejected). authority_level ratified-governance and freshness current are unchanged: this record is the current final truth of the closed goal, not an as-found artifact. SC-05/AC-008/AC-016 stay deferred-by-owner in governace/issue-tracking/issues.md (deferred, not waived).'
+  minted_by: 'carol-mint 1.0.0 @ 2026-08-31T01:08:32Z — re-mint 3ad285bd4641… -> 70568f4cbb59… — 2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'

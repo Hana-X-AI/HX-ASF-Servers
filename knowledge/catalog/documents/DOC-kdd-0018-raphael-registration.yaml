@@ -1,45 +1,57 @@
 document:
-  id: "DOC-kdd-0018-raphael-registration"
-  title: "KDD-0018: Raphael registration — LightRAG systems engineer"
-  type: "decision"
-  declared_purpose: "Owner-ratified registration of Raphael as the LightRAG systems engineer (KDD-0018, 2026-08-29). Lane: Qwen-X via OmniRoute (local). Target host: hxs-4. Scope: LightRAG server, Web UI, lightragmcp MCP server. Dependencies: Qdrant (Quinn), bge-m3 (john), OmniRoute (trinity)."
+  id: DOC-kdd-0018-raphael-registration
+  title: 'KDD-0018: Raphael registration — LightRAG systems engineer'
+  type: decision
+  declared_purpose: 'Owner-ratified registration of Raphael as the LightRAG systems engineer (KDD-0018, 2026-08-29). Lane: Qwen-X via OmniRoute (local). Target host: hxs-4. Scope: LightRAG server, Web UI, lightragmcp MCP server. Dependencies: Qdrant (Quinn), bge-m3 (john), OmniRoute (trinity).'
   source:
-    author: "Flash (governor)"
-    provided_by: "Agent Zero (ratification)"
-    origin: "/home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0018-raphael-registration.md"
-    section: "§whole-document"
-    ingestion_date: "2026-08-29T13:30:00Z"
-  owner: "Agent Zero (ratification); Flash (author)"
+    author: Flash (governor)
+    provided_by: Agent Zero (ratification)
+    origin: /home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0018-raphael-registration.md
+    section: §whole-document
+    ingestion_date: '2026-08-29T13:30:00Z'
+  owner: Agent Zero (ratification); Flash (author)
   applies_to:
-    hosts: [hxs-4]
+    hosts:
+    - hxs-4
     fqdns: []
-    services: [lightrag, lightragmcp]
-    agents: [raphael]
-    repositories: [HX-ASF-Servers]
-    environments: [fleet]
-  version: ""
-  status: "adopted"
-  authority_level: "ratified-governance"
+    services:
+    - lightrag
+    - lightragmcp
+    agents:
+    - raphael
+    repositories:
+    - HX-ASF-Servers
+    environments:
+    - fleet
+  version: ''
+  status: adopted
+  authority_level: ratified-governance
   supersedes: []
   superseded_by: []
   security:
-    classification: "internal"
-    access_restrictions: "none beyond repository access"
+    classification: internal
+    access_restrictions: none beyond repository access
     contains_secret_values: false
   relations:
-    - predicate: "references"
-      target: "DOC-kdd-0017-quinn-registration"
-      note: "Qdrant dependency (Quinn's lane)"
-    - predicate: "references"
-      target: "DOC-system-mapping"
-      note: "S17 LightRAG placement on hxs-4"
+  - predicate: references
+    target: DOC-kdd-0017-quinn-registration
+    note: Qdrant dependency (Quinn's lane)
+  - predicate: references
+    target: DOC-system-mapping
+    note: S17 LightRAG placement on hxs-4
   validation:
-    validated_at: "2026-08-29T13:30:00Z"
-    freshness: "current"
-    review_due: "on owner amendment"
-  sha256: "2b0be0c316f67aa6b302add447374804fbf4858bc0c1e0c6b688105902104ed5"
+    validated_at: '2026-08-31T01:08:32Z'
+    freshness: current
+    review_due: on owner amendment
+  sha256: b128deb293cec3283697ad4387f6a58f9694a75ce944afa72363b2f34a5249c2
   hash_history:
-    - sha256: "2b0be0c316f67aa6b302add447374804fbf4858bc0c1e0c6b688105902104ed5"
-      timestamp: "2026-08-29T13:30:00Z"
-      reason: "initial cataloging"
-  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0018-raphael-registration.md"
+  - sha256: 2b0be0c316f67aa6b302add447374804fbf4858bc0c1e0c6b688105902104ed5
+    timestamp: '2026-08-29T13:30:00Z'
+    reason: initial cataloging
+  - sha256: b128deb293cec3283697ad4387f6a58f9694a75ce944afa72363b2f34a5249c2
+    timestamp: '2026-08-31T01:08:32Z'
+    reason: '2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0018-raphael-registration.md
+notes:
+  semantic_reconciliation_20260831: Read against the full current KDD. Raphael remains registered and activation-gated on Qwen-X via OmniRoute. The declared_purpose's Meta-X dependency is superseded by the source's owner-selected local Chat-X binding. Qdrant v1.19.0 is installed but NOT accepted for LightRAG; acceptance evidence plus Quinn's activation word remain required.
+  minted_by: 'carol-mint 1.0.0 @ 2026-08-31T01:08:32Z — re-mint 2b0be0c316f6… -> b128deb293ce… — 2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'

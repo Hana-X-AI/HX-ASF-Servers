@@ -1,43 +1,57 @@
 document:
-  id: "DOC-knowledge-issues"
-  title: "governace/issue-tracking/issues.md — open issues and action items"
-  type: "other"
-  declared_purpose: "Single-file register of open issues/action items (newest first, dated, closed with resolution note). Open at ingestion: HX file-naming convention draft (Kimi-K3); D1 OmniRoute remote-consumption mechanism (Agent-Zero, open since 2026-08-14); D2 Ollama source baseline for hxs-4 (corpus 0.32.11 vs installed 0.32.9); D3 default-context contract (OLLAMA_CONTEXT_LENGTH inert vs num_ctx)."
+  id: DOC-knowledge-issues
+  title: governace/issue-tracking/issues.md — open issues and action items
+  type: other
+  declared_purpose: 'Single-file register of open issues/action items (newest first, dated, closed with resolution note). Open at ingestion: HX file-naming convention draft (Kimi-K3); D1 OmniRoute remote-consumption mechanism (Agent-Zero, open since 2026-08-14); D2 Ollama source baseline for hxs-4 (corpus 0.32.11 vs installed 0.32.9); D3 default-context contract (OLLAMA_CONTEXT_LENGTH inert vs num_ctx).'
   source:
-    author: "Kimi-K3 (register keeper)"
-    provided_by: "Agent Zero"
-    origin: "/home/hxsa/opt/HX-ASF-Servers/governace/issue-tracking/issues.md"
-    section: "§whole-document"
-    ingestion_date: "2026-08-25T04:50:00Z"
-  owner: "Kimi-K3"
+    author: Kimi-K3 (register keeper)
+    provided_by: Agent Zero
+    origin: /home/hxsa/opt/HX-ASF-Servers/governace/issue-tracking/issues.md
+    section: §whole-document
+    ingestion_date: '2026-08-25T04:50:00Z'
+  owner: Kimi-K3
   applies_to:
-    hosts: [hxs-4]
+    hosts:
+    - hxs-4
     fqdns: []
-    services: [ollama.service]
-    agents: [kimi-k3]
-    repositories: [HX-ASF-Servers]
-    environments: [fleet]
-  version: ""
-  status: "active"
-  authority_level: "agent-evidence"
+    services:
+    - ollama.service
+    agents:
+    - kimi-k3
+    repositories:
+    - HX-ASF-Servers
+    environments:
+    - fleet
+  version: ''
+  status: active
+  authority_level: agent-evidence
   supersedes: []
   superseded_by: []
   security:
-    classification: "internal"
-    access_restrictions: "none beyond repository access"
+    classification: internal
+    access_restrictions: none beyond repository access
     contains_secret_values: false
   relations:
-    - predicate: "risks"
-      target: "hxs-4 Ollama network exposure"
-      note: "D1 must be decided before any exposure of hxs-4 Ollama (PILOT-002 lineage)"
-    - predicate: "references"
-      target: "DOC-pilot-hx1-plan"
-      note: "D3 context-contract issue is cited by plan §4.2 rule 2 (Modelfile num_ctx is the contract)"
+  - predicate: risks
+    target: hxs-4 Ollama network exposure
+    note: D1 must be decided before any exposure of hxs-4 Ollama (PILOT-002 lineage)
+  - predicate: references
+    target: DOC-pilot-hx1-plan
+    note: D3 context-contract issue is cited by plan §4.2 rule 2 (Modelfile num_ctx is the contract)
   validation:
-    validated_at: "2026-08-25T22:15:00Z"
-    freshness: "current"
-    review_due: "2026-09-01 or on item change"
-  sha256: "9a7db8518996395ef98bc01e8c1c4e0da81410d31f7aff07540825c322d06981"
-  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/governace/issue-tracking/issues.md"
+    validated_at: '2026-08-31T01:08:33Z'
+    freshness: current
+    review_due: 2026-09-01 or on item change
+  sha256: 4508e1d8d631047d77a7297899aae5f1cc2b17e03bb577e7b602ba27f5ffd5a3
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/issue-tracking/issues.md
+  hash_history:
+  - sha256: 9a7db8518996395ef98bc01e8c1c4e0da81410d31f7aff07540825c322d06981
+    timestamp: unrecorded
+    reason: predecessor state restored by carol-mint (re-mint events before 2026-08-31T01:08:33Z did not record history)
+  - sha256: 4508e1d8d631047d77a7297899aae5f1cc2b17e03bb577e7b602ba27f5ffd5a3
+    timestamp: '2026-08-31T01:08:33Z'
+    reason: '2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'
 notes:
-  corrections_batch8: "M7b-backlog re-validation (2026-08-25T22:15Z): drift traced to the governor's owner-directed register addition (state log row 53, verified at source line 14): new open item '2026-08-25 | M7b 24-hour soak (AC-008/AC-016) — deferred to backlog by owner directive; soak evidence absent = deferred, not waived; M8 acceptance scope adjusted accordingly | Agent-Zero | Owner's word to schedule; do not raise proactively'. Legitimate governor edit. Re-hashed 6b22c6a6… -> 9a7db851…. declared_purpose 'Open at ingestion' list left as-ingested (dated snapshot); the M7b item is the register's newest open entry and is now recorded here. All other fields re-checked — unchanged."
+  semantic_reconciliation_20260831: Read against the current register. Only the HX file-naming convention remains open. D1 OmniRoute remote consumption, D2 hxs-4 Ollama baseline, D3 default-context contract, and the M7b soak item are listed under Closed with dated resolutions. The declared_purpose's 'Open at ingestion' enumeration is a historical snapshot, not current open-state.
+  corrections_batch8: 'M7b-backlog re-validation (2026-08-25T22:15Z): drift traced to the governor''s owner-directed register addition (state log row 53, verified at source line 14): new open item ''2026-08-25 | M7b 24-hour soak (AC-008/AC-016) — deferred to backlog by owner directive; soak evidence absent = deferred, not waived; M8 acceptance scope adjusted accordingly | Agent-Zero | Owner''s word to schedule; do not raise proactively''. Legitimate governor edit. Re-hashed 6b22c6a6… -> 9a7db851…. declared_purpose ''Open at ingestion'' list left as-ingested (dated snapshot); the M7b item is the register''s newest open entry and is now recorded here. All other fields re-checked — unchanged.'
+  minted_by: 'carol-mint 1.0.0 @ 2026-08-31T01:08:33Z — re-mint 9a7db8518996… -> 4508e1d8d631… — 2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'

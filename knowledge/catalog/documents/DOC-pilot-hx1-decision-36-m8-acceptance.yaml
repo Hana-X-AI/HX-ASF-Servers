@@ -1,66 +1,78 @@
 document:
-  id: "DOC-pilot-hx1-decision-36-m8-acceptance"
-  title: "36-kk3-m8-acceptance-reconciliation.md — M8 acceptance reconciliation + KK3 gate verdict (recommended ACCEPT); owner verdict ACCEPT 2026-08-26 — pilot closed as PASS (SC-09)"
-  type: "decision"
-  declared_purpose: "M8 sign-off package for PILOT-HX1-OLLAMA-QWEN27B-001 (2026-08-26, governor Kimi-K3, goal GOAL-HX1-QWEN38-001): the final evidence reconciliation, KK3 gate, and owner sign-off request (SC-09). Carries the SC-01..SC-09 acceptance matrix with principal-evidence citations (SC-01/02/03/04/06/07/08 PASS or PASS-as-ratified; SC-05 DEFERRED BY OWNER, not waived — soak backlogged in governace/issue-tracking/issues.md; SC-09 CLOSED — owner verdict ACCEPT 2026-08-26), the full deviation/incident register (F-M5-1 through review batches 1-8, all dispositioned), the accepted residual-risk register with controls, the rollback state as of sign-off, the 2026-08-26 final gate evidence (live hxs-1 verification; validate.py PASS 4/4; CAT-10..15 reaffirmed; governor literal-credential sweep CLEAN), the mandatory Second Brain disposition, the explicit non-authorizations (no SC-05 closure, no remote access, no 256K, no fleet rollout, no fine-tuning/MLX, no posture change), and the KK3 gate verdict: the governor recommends ACCEPT. Section 9 is the owner decision block (ACCEPT / ACCEPT WITH CONDITIONS / REJECT) — SIGNED 2026-08-26: [x] ACCEPT, no conditions, Jarvis Richardson (verbatim 'I jarvis Richardson Accept M8'); it was UNSIGNED at first ingestion (hash chain in notes.m8_verdict). Names /opt/tkv-local/servers/hxs-1/configuration.md as companion record (server records contract Phase 2, owner-ratified into M8 at state-log row 28)."
-  inferred_value: "INFERENCE: this is the single aggregation point for the whole pilot — any future 'why was the pilot accepted / under what conditions' question resolves here first, and the five cited evidence records (19/22/29/30/35) plus decision 23 Rev 2 are its load-bearing citations. Section 9 is now signed, so the pilot IS closed as PASS 2026-08-26: consumers must read SC-09 as CLOSED (owner ACCEPT, no conditions) and SC-05 as still deferred-by-owner (not waived), and must not treat closure as opening any §7 non-authorization."
+  id: DOC-pilot-hx1-decision-36-m8-acceptance
+  title: 36-kk3-m8-acceptance-reconciliation.md — M8 acceptance reconciliation + KK3 gate verdict (recommended ACCEPT); owner verdict ACCEPT 2026-08-26 — pilot closed as PASS (SC-09)
+  type: decision
+  declared_purpose: 'M8 sign-off package for PILOT-HX1-OLLAMA-QWEN27B-001 (2026-08-26, governor Kimi-K3, goal GOAL-HX1-QWEN38-001): the final evidence reconciliation, KK3 gate, and owner sign-off request (SC-09). Carries the SC-01..SC-09 acceptance matrix with principal-evidence citations (SC-01/02/03/04/06/07/08 PASS or PASS-as-ratified; SC-05 DEFERRED BY OWNER, not waived — soak backlogged in governace/issue-tracking/issues.md; SC-09 CLOSED — owner verdict ACCEPT 2026-08-26), the full deviation/incident register (F-M5-1 through review batches 1-8, all dispositioned), the accepted residual-risk register with controls, the rollback state as of sign-off, the 2026-08-26 final gate evidence (live hxs-1 verification; validate.py PASS 4/4; CAT-10..15 reaffirmed; governor literal-credential sweep CLEAN), the mandatory Second Brain disposition, the explicit non-authorizations (no SC-05 closure, no remote access, no 256K, no fleet rollout, no fine-tuning/MLX, no posture change), and the KK3 gate verdict: the governor recommends ACCEPT. Section 9 is the owner decision block (ACCEPT / ACCEPT WITH CONDITIONS / REJECT) — SIGNED 2026-08-26: [x] ACCEPT, no conditions, Jarvis Richardson (verbatim ''I jarvis Richardson Accept M8''); it was UNSIGNED at first ingestion (hash chain in notes.m8_verdict). Names /opt/tkv-local/servers/hxs-1/configuration.md as companion record (server records contract Phase 2, owner-ratified into M8 at state-log row 28).'
+  inferred_value: 'INFERENCE: this is the single aggregation point for the whole pilot — any future ''why was the pilot accepted / under what conditions'' question resolves here first, and the five cited evidence records (19/22/29/30/35) plus decision 23 Rev 2 are its load-bearing citations. Section 9 is now signed, so the pilot IS closed as PASS 2026-08-26: consumers must read SC-09 as CLOSED (owner ACCEPT, no conditions) and SC-05 as still deferred-by-owner (not waived), and must not treat closure as opening any §7 non-authorization.'
   source:
-    author: "Kimi-K3 (governor)"
-    provided_by: "Kimi-K3"
-    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/36-kk3-m8-acceptance-reconciliation.md"
-    section: "§whole-document"
-    ingestion_date: "2026-08-26T01:10:00Z"
-  owner: "Agent Zero (verdict authority); Kimi-K3 (gate governor, package author)"
+    author: Kimi-K3 (governor)
+    provided_by: Kimi-K3
+    origin: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/36-kk3-m8-acceptance-reconciliation.md
+    section: §whole-document
+    ingestion_date: '2026-08-26T01:10:00Z'
+  owner: Agent Zero (verdict authority); Kimi-K3 (gate governor, package author)
   applies_to:
-    hosts: [hxs-1]
+    hosts:
+    - hxs-1
     fqdns: []
     services: []
-    agents: [kimi-k3]
-    repositories: [HX-ASF-Servers]
-    environments: [pilot]
-  version: "2026-08-26 sign-off package (single delivery)"
-  status: "active"
-  authority_level: "agent-evidence"
+    agents:
+    - kimi-k3
+    repositories:
+    - HX-ASF-Servers
+    environments:
+    - pilot
+  version: 2026-08-26 sign-off package (single delivery)
+  status: active
+  authority_level: agent-evidence
   supersedes: []
   superseded_by: []
   security:
-    classification: "internal"
-    access_restrictions: "none beyond repository access"
+    classification: internal
+    access_restrictions: none beyond repository access
     contains_secret_values: false
   relations:
-    - predicate: "assesses"
-      target: "DOC-goal-hx1-ollama-qwen38-27b"
-      note: "§1 acceptance matrix verdicts against goal SC-01..SC-09: 7 PASS/PASS-as-ratified, SC-05 deferred-by-owner (not waived), SC-09 closed — owner ACCEPT 2026-08-26; KK3 recommended ACCEPT (§8)"
-    - predicate: "references"
-      target: "DOC-pilot-hx1-ev-19-esme-m5b-conformance"
-      note: "principal evidence for SC-01 (Phase A alias freeze, Modelfile sha256 4869ce80…3165e) and SC-06 (M5b suites at A01 native defaults; coding 9/10 parse_kv mismatch disclosed, not tuned)"
-    - predicate: "references"
-      target: "DOC-pilot-hx1-ev-22-esme-m6-capacity-ladder"
-      note: "principal evidence for SC-02 (100% VRAM every rung, zero CPU fallback) and SC-03 (capacity+quality ladder: needle 30,015 / 62,255 / 124,395 tokens; KV linear 45,056 B/token)"
-    - predicate: "references"
-      target: "DOC-pilot-hx1-ev-29-esme-m6b-profiles"
-      note: "principal evidence for SC-01/SC-03 (three owner-ratified profiles frozen with digest equality: 32k db2c6206…, 64k 766cd946…, 128k 94b83a1e…) and SC-08 (num_ctx effective per /api/ps context_length)"
-    - predicate: "references"
-      target: "DOC-pilot-hx1-ev-30-esme-m7a-reboot-cycles"
-      note: "principal evidence for SC-04 (AC-007 3/3 cold reboots, 60 s boot->ready deterministic, NRestarts=0, kernel 7.0.0-28->30 with DKMS re-proof; unplanned power-cut 56 s autonomous recovery 2026-08-25)"
-    - predicate: "references"
-      target: "DOC-pilot-hx1-ev-35-esme-preload-budget"
-      note: "deviation-register closure: preload budget fixed (TimeoutStartSec=600, 538 s worst-case script < 900 s D5) and governor-verified live; bounded-not-measured cold-load limitation carried in §3 residual risks"
-    - predicate: "references"
-      target: "DOC-tkv-hxs1-configuration"
-      note: "companion record named in the package header: Phase-2 server configuration record, owner-ratified into M8 at state-log row 28 — the configured-state half of the sign-off"
-    - predicate: "governs"
-      target: "owner verdict on M8 sign-off (ACCEPT 2026-08-26 — §9 decision block signed)"
-      note: "the package requested ACCEPT / ACCEPT WITH CONDITIONS / REJECT from the owner; verdict recorded 2026-08-26 — ACCEPT, no conditions (Jarvis Richardson, verbatim 'I jarvis Richardson Accept M8'); SC-05 deferral stands. Status flip executed per notes.unsigned_decision_convention."
+  - predicate: assesses
+    target: DOC-goal-hx1-ollama-qwen38-27b
+    note: '§1 acceptance matrix verdicts against goal SC-01..SC-09: 7 PASS/PASS-as-ratified, SC-05 deferred-by-owner (not waived), SC-09 closed — owner ACCEPT 2026-08-26; KK3 recommended ACCEPT (§8)'
+  - predicate: references
+    target: DOC-pilot-hx1-ev-19-esme-m5b-conformance
+    note: principal evidence for SC-01 (Phase A alias freeze, Modelfile sha256 4869ce80…3165e) and SC-06 (M5b suites at A01 native defaults; coding 9/10 parse_kv mismatch disclosed, not tuned)
+  - predicate: references
+    target: DOC-pilot-hx1-ev-22-esme-m6-capacity-ladder
+    note: 'principal evidence for SC-02 (100% VRAM every rung, zero CPU fallback) and SC-03 (capacity+quality ladder: needle 30,015 / 62,255 / 124,395 tokens; KV linear 45,056 B/token)'
+  - predicate: references
+    target: DOC-pilot-hx1-ev-29-esme-m6b-profiles
+    note: 'principal evidence for SC-01/SC-03 (three owner-ratified profiles frozen with digest equality: 32k db2c6206…, 64k 766cd946…, 128k 94b83a1e…) and SC-08 (num_ctx effective per /api/ps context_length)'
+  - predicate: references
+    target: DOC-pilot-hx1-ev-30-esme-m7a-reboot-cycles
+    note: principal evidence for SC-04 (AC-007 3/3 cold reboots, 60 s boot->ready deterministic, NRestarts=0, kernel 7.0.0-28->30 with DKMS re-proof; unplanned power-cut 56 s autonomous recovery 2026-08-25)
+  - predicate: references
+    target: DOC-pilot-hx1-ev-35-esme-preload-budget
+    note: 'deviation-register closure: preload budget fixed (TimeoutStartSec=600, 538 s worst-case script < 900 s D5) and governor-verified live; bounded-not-measured cold-load limitation carried in §3 residual risks'
+  - predicate: references
+    target: DOC-tkv-hxs1-configuration
+    note: 'companion record named in the package header: Phase-2 server configuration record, owner-ratified into M8 at state-log row 28 — the configured-state half of the sign-off'
+  - predicate: governs
+    target: owner verdict on M8 sign-off (ACCEPT 2026-08-26 — §9 decision block signed)
+    note: the package requested ACCEPT / ACCEPT WITH CONDITIONS / REJECT from the owner; verdict recorded 2026-08-26 — ACCEPT, no conditions (Jarvis Richardson, verbatim 'I jarvis Richardson Accept M8'); SC-05 deferral stands. Status flip executed per notes.unsigned_decision_convention.
   validation:
-    validated_at: "2026-08-26T01:37:39Z"
-    freshness: "current"
-    review_due: "fired 2026-08-26 — owner verdict ACCEPT ingested this run; record final at closure, re-ingest only on a package amendment"
-  sha256: "41d5f9de16349c41fc80066e9dfd077396ad62cfdbf2d2b2a5ce8802a3e13a52"
-  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/36-kk3-m8-acceptance-reconciliation.md"
+    validated_at: '2026-08-31T01:08:33Z'
+    freshness: current
+    review_due: fired 2026-08-26 — owner verdict ACCEPT ingested this run; record final at closure, re-ingest only on a package amendment
+  sha256: 78821063728d0a36aef29676b60351d37cab36dc1334bf5d5f5ddec9365f3c7c
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/36-kk3-m8-acceptance-reconciliation.md
+  hash_history:
+  - sha256: 41d5f9de16349c41fc80066e9dfd077396ad62cfdbf2d2b2a5ce8802a3e13a52
+    timestamp: unrecorded
+    reason: predecessor state restored by carol-mint (re-mint events before 2026-08-31T01:08:33Z did not record history)
+  - sha256: 78821063728d0a36aef29676b60351d37cab36dc1334bf5d5f5ddec9365f3c7c
+    timestamp: '2026-08-31T01:08:33Z'
+    reason: '2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'
 notes:
-  unsigned_decision_convention: "Carol convention for unsigned decision documents (set 2026-08-26, this record): a decision artifact whose decision block is delivered but unsigned is cataloged type decision, status draft, authority agent-evidence, freshness current, with review_due bound to the signature event. The status flips on owner verdict via re-ingestion — never by editing this record's history; the verdict itself becomes a new ingestion event with its own receipt. FIRED 2026-08-26: owner verdict ACCEPT (no conditions) — status flipped draft -> active in this re-ingestion; see notes.m8_verdict and receipt 2026-08-26T0137Z-carol-m8-verdict.md."
-  m8_verdict: "Owner verdict on M8, recorded 2026-08-26 (goal status line cites state-log rows 63-64): ACCEPT — pilot closed as PASS, no conditions. §9 signature block now carries [x] ACCEPT; Signed: Jarvis Richardson (verbatim owner verdict: 'I jarvis Richardson Accept M8'); Date: 2026-08-26. SC-05 stays DEFERRED BY OWNER (not waived; backlog governace/issue-tracking/issues.md); §7 non-authorizations unchanged. Hash chain: f334065b48bcc4f766af2f42613c0c831069eaa734919195785c7a82f2ab161b (unsigned package, ingested 2026-08-26T01:10Z) -> 41d5f9de16349c41fc80066e9dfd077396ad62cfdbf2d2b2a5ce8802a3e13a52 (signed package, this run); the signed region is §9, and full-document re-read this run shows no other drift against the cataloged fields (matrix, registers, §7, §8 all as ingested)."
-  deferred_sc05: "SC-05 (24 h soak) is DEFERRED BY OWNER 2026-08-25, not waived: backlogged in governace/issue-tracking/issues.md; AC-008/AC-016 evidence absent by decision. Any future acceptance-close claim must carry this deferral."
-  non_authorizations: "§7: sign-off does not close SC-05, open remote access (owner D1/OmniRoute is the gate), authorize 256K experiments, fleet rollout, fine-tuning, MLX work, any new host change, or any no-hardening posture change."
-  pilot_closure_state: "State-log rows 1-62 cited as the handoff chain; catalog cited at 180 records with index 2275606f… (superseded by this run's index — see receipt 2026-08-26T0110Z-carol-m8-package.md)."
+  unsigned_decision_convention: 'Carol convention for unsigned decision documents (set 2026-08-26, this record): a decision artifact whose decision block is delivered but unsigned is cataloged type decision, status draft, authority agent-evidence, freshness current, with review_due bound to the signature event. The status flips on owner verdict via re-ingestion — never by editing this record''s history; the verdict itself becomes a new ingestion event with its own receipt. FIRED 2026-08-26: owner verdict ACCEPT (no conditions) — status flipped draft -> active in this re-ingestion; see notes.m8_verdict and receipt 2026-08-26T0137Z-carol-m8-verdict.md.'
+  m8_verdict: 'Owner verdict on M8, recorded 2026-08-26 (goal status line cites state-log rows 63-64): ACCEPT — pilot closed as PASS, no conditions. §9 signature block now carries [x] ACCEPT; Signed: Jarvis Richardson (verbatim owner verdict: ''I jarvis Richardson Accept M8''); Date: 2026-08-26. SC-05 stays DEFERRED BY OWNER (not waived; backlog governace/issue-tracking/issues.md); §7 non-authorizations unchanged. Hash chain: f334065b48bcc4f766af2f42613c0c831069eaa734919195785c7a82f2ab161b (unsigned package, ingested 2026-08-26T01:10Z) -> 41d5f9de16349c41fc80066e9dfd077396ad62cfdbf2d2b2a5ce8802a3e13a52 (signed package, this run); the signed region is §9, and full-document re-read this run shows no other drift against the cataloged fields (matrix, registers, §7, §8 all as ingested).'
+  deferred_sc05: 'SC-05 (24 h soak) is DEFERRED BY OWNER 2026-08-25, not waived: backlogged in governace/issue-tracking/issues.md; AC-008/AC-016 evidence absent by decision. Any future acceptance-close claim must carry this deferral.'
+  non_authorizations: '§7: sign-off does not close SC-05, open remote access (owner D1/OmniRoute is the gate), authorize 256K experiments, fleet rollout, fine-tuning, MLX work, any new host change, or any no-hardening posture change.'
+  pilot_closure_state: State-log rows 1-62 cited as the handoff chain; catalog cited at 180 records with index 2275606f… (superseded by this run's index — see receipt 2026-08-26T0110Z-carol-m8-package.md).
+  minted_by: 'carol-mint 1.0.0 @ 2026-08-31T01:08:33Z — re-mint 41d5f9de1634… -> 78821063728d… — 2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'

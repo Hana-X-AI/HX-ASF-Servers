@@ -77,6 +77,7 @@ document:
     timestamp: '2026-08-31T00:58:35Z'
     reason: SY-8 pinned baseline and scoped source routing
 notes:
+  baseline_reconciliation_20260831: "Option 2 complete: all 34 records in the 2026-08-30 SY-8 pinned backlog were read against their current sources, semantically corrected where needed, re-minted, and removed. governace/catalog-freshness-baseline.yaml now has count: 0 and entries: []; the hash-pinned mechanism remains active for any future exceptional debt. The declared_purpose's 'initial 35 now 34' sentence is historical rollout context, superseded by this zero-debt state."
   cataloging_context: Type judged 'runbook' (executable operational procedure with a fixed invocation contract), authority ratified-governance (owner decisions UD1/UD2). Cataloged in the governor wave receipt 2026-08-26T0025Z together with the hooks system, WO/CP templates, and the governor verification checklist.
   dependency: Imports PyYAML (import yaml) — present and in proven CAT use (unified-list correction C-C2); stdlib otherwise.
   minted_by: carol-mint 1.0.0 @ 2026-08-31T00:58:35Z — re-mint b5dd9139487e… -> 9df869f5321e… — SY-8 pinned baseline and scoped source routing

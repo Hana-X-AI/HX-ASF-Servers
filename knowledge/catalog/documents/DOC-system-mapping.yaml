@@ -12,12 +12,63 @@ document:
     ingestion_date: '2026-08-29T10:04:01Z'
   owner: Agent Zero
   applies_to:
-    hosts: [hxs-1, hxs-2, hxs-3, hxs-4, hxs-5, hxs-6, hxs-8, hxs-9, hxs-10, hxs-11, hxs-12, hxs-13, hxs-14, hxs-15, hxs-20, hxs-21]
+    hosts:
+    - hxs-1
+    - hxs-2
+    - hxs-3
+    - hxs-4
+    - hxs-5
+    - hxs-6
+    - hxs-8
+    - hxs-9
+    - hxs-10
+    - hxs-11
+    - hxs-12
+    - hxs-13
+    - hxs-14
+    - hxs-15
+    - hxs-20
+    - hxs-21
     fqdns: []
-    services: [qdrant, lightrag, omniroute, postgresql, redis, dsh, fastmcp, open-webui, crawl4ai, docling, n8n, langgraph, nginx]
-    agents: [john, trinity, chris, wayne, morpheus, quinn, sage, iris, scout, piper, ripple, erwin, nexus, rick, rob, gordon, mia, carol]
-    repositories: [HX-ASF-Servers]
-    environments: [production, dev, test]
+    services:
+    - qdrant
+    - lightrag
+    - omniroute
+    - postgresql
+    - redis
+    - dsh
+    - fastmcp
+    - open-webui
+    - crawl4ai
+    - docling
+    - n8n
+    - langgraph
+    - nginx
+    agents:
+    - john
+    - trinity
+    - chris
+    - wayne
+    - morpheus
+    - quinn
+    - sage
+    - iris
+    - scout
+    - piper
+    - ripple
+    - erwin
+    - nexus
+    - rick
+    - rob
+    - gordon
+    - mia
+    - carol
+    repositories:
+    - HX-ASF-Servers
+    environments:
+    - production
+    - dev
+    - test
   version: '1.0'
   status: adopted
   authority_level: ratified-governance
@@ -29,18 +80,27 @@ document:
     access_restrictions: ''
     contains_secret_values: false
   relations:
-    - predicate: governs
-      target: DOC-server-registry
-      note: System-mapping owns placement; registry owns durable host identity
-    - predicate: references
-      target: AGENTS.md
-      note: AGENTS.md references system-mapping for fleet deployment map
-    - predicate: references
-      target: DOC-agents-roster-readme
-      note: agents/README.md references system-mapping for agent-to-system assignments
+  - predicate: governs
+    target: DOC-server-registry
+    note: System-mapping owns placement; registry owns durable host identity
+  - predicate: references
+    target: AGENTS.md
+    note: AGENTS.md references system-mapping for fleet deployment map
+  - predicate: references
+    target: DOC-agents-roster-readme
+    note: agents/README.md references system-mapping for agent-to-system assignments
   validation:
-    validated_at: '2026-08-29T10:04:01Z'
+    validated_at: '2026-08-31T01:08:33Z'
     freshness: current
     review_due: ''
-  sha256: 63fdc175a18e4d70304ac59f917fc4bef63fb0178d47536f727ede1300cf349e
+  sha256: 93f617748cf822af4cc39781719b7096f9db7bb5467dc93d61364d69394fe50d
   canonical_location: servers/system-mapping.md
+  hash_history:
+  - sha256: 63fdc175a18e4d70304ac59f917fc4bef63fb0178d47536f727ede1300cf349e
+    timestamp: unrecorded
+    reason: predecessor state restored by carol-mint (re-mint events before 2026-08-31T01:08:33Z did not record history)
+  - sha256: 93f617748cf822af4cc39781719b7096f9db7bb5467dc93d61364d69394fe50d
+    timestamp: '2026-08-31T01:08:33Z'
+    reason: '2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'
+notes:
+  minted_by: 'carol-mint 1.0.0 @ 2026-08-31T01:08:33Z — re-mint 63fdc175a18e… -> 93f617748cf8… — 2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'

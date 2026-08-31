@@ -1,81 +1,107 @@
 document:
-  id: "DOC-fleet-baseline-wave-2026-08-27"
-  title: "servers/2026-08-27-fleet-baseline-wave.md — rick fleet baseline wave (PASS — TASK COMPLETE: 12/12 in-scope hosts carry verdicts — 10 PASS, 2 REPORT with declared closing directions, 0 FAIL; one timezone Etc/UTC ×12, one NTP source ×12 — timesyncd.conf sha256 e2b94d4b… byte-identical ×12, NTPSynchronized ×12; proven 4-target sleep-mask set ×12; mutations only the two sanctioned classes — NTP pin ×7, mask align ×8, canary-first; selftest 42/42 at both gates; zero secret values)"
-  type: "evidence"
-  declared_purpose: "Rick's execution evidence for WO-02-fleet-baseline (PILOT-FLEET-BASELINE-001; goal goals/2026-08-27-fleet-baseline-deployment.md; session rick-fleet-baseline-20260827-01; commissioned by governor Kimi-K3 on owner GO 2026-08-27; executed from hxs-5 2026-08-27T19:55Z–20:21Z; result PASS — TASK COMPLETE). Targets FRESH (7) hxs-6/.205, hxs-9/.208, hxs-10/.209, hxs-12/.211, hxs-13/.212, hxs-14/.213, hxs-15/.214 + RE-VERIFY (5) hxs-1/.200, hxs-2/.201, hxs-3/.202, hxs-4/.203, hxs-8/.207; excluded hxs-5 (control plane), hxs-7 (replaced by hxs-20), hxs-20/hxs-21 (provisioning), hxs-11 (owner flag unreachable — not probed). §1 knowledge review receipt (/opt/tkv-local/ubuntu surveyed — release-matched refs incl. man1-timedatectl, man5-timesyncd.conf, man8-systemd-sleep; contradictions: one apparent — hxs-8 live NTP already pinned vs the 08-26 record — reconciled to L1-M1 authorization, no escalation; fleet-standard.yaml comment staleness recorded as F-4; Task May Proceed YES; local-model-first: not model-required — deterministic fleet administration, no model inference produced any work product). §2 authority + target confirmation: identities verified live 20:00-20:01Z — hostname + machine-id MATCH ×12 against TKV discovery; host keys pre-pinned, StrictHostKeyChecking=yes; credential via SSH_ASKPASS helper (0700) read at execution time only, sudo -S stdin passthrough, passwordless-sudo confirmed ×12, helpers deleted at end; hxs-8 NTP provenance reconciliation (live conf e2b94d4b…, mtime 16:06:00Z == the L1-M1 pin at 16:05:59Z). §3 test plan recorded before first mutation (T-ID-1 identity ×12, T-LIB-1 selftest both gates, T-VER-1 baseline matrix 0 FAIL, T-NTP-1 pin per drifted host, T-NTP-2 canary discipline hxs-6 first, T-MASK-1 4-target align, T-WL-1 workload caution hxs-9/10, T-REG-1 0 failed units, T-SB-1 hxs-6 SB recorded) with exact inverses. §4 baseline: all 12 Ubuntu 24.04.4 LTS kernel 7.0.0-30; Etc/UTC ×12 already; ufw ENABLED=no ×12; 0 failed units ×12; fresh hosts on ntp.ubuntu.com with static sleep targets; hxs-8 NTP pinned but masks diverged. §5 changes — exactly two mutation classes, one host at a time, hxs-6 canary first: identical staged two-line NTP diff ×7 fresh hosts (stock -> NTP=time.cloudflare.com, FallbackNTP= explicitly empty; mktemp staging, fail-closed awk guard, diff reviewed, install 0644 root, timesyncd restart, poll-verify — ~0 s server contact + NTPSynchronized=yes per host: hxs-6 20:04:39Z, hxs-12 20:06:36Z, hxs-13 20:06:39Z, hxs-14 20:07:05Z, hxs-15 20:07:08Z, hxs-9 20:09:00Z, hxs-10 20:09:03Z); mask align ×8 (hxs-8 20:03:42Z then hxs-6 20:04:59Z, hxs-12 20:06:37Z, hxs-13 20:06:40Z, hxs-14 20:07:06Z, hxs-15 20:07:09Z, hxs-9 20:09:01Z, hxs-10 20:09:04Z — exactly four /dev/null symlinks per host, no service restarts). §6 post-change verification: verify-baseline OVERALL hosts=12 hosts-with-FAIL=0; masks ALIGNED ×8; timesyncd.conf sha256 e2b94d4b… on ALL 12 in-scope hosts (the file-level one-source proof now covers the whole in-scope fleet); 0 failed units ×8 mutated; workload re-probe unchanged (hxs-9 postgresql/redis, hxs-10 open-webui — inactive before and after); hxs-6 SB enabled recorded; selftest 42/42 at session start AND end. §7 findings: F-1 hxs-6 storage drift, F-2 hxs-10 memory drift (the two REPORTs — see notes.owner_items_20260827), F-3 hxs-9 postgresql/redis + hxs-10 open-webui inactive (record-only, service owners' lane), F-4 standards-file staleness (governor lane — FIXED at state log row 3), F-5 hxs-6 Secure Boot ENABLED (record-only, owner BIOS decision), F-6 upgradable packages pending (hxs-6=21, hxs-9=18, hxs-10=18, hxs-12=18, hxs-13=21, hxs-14=18, hxs-15=21 — owner maintenance lane); hxs-11 skipped per owner flag; hxs-5/7/20/21 untouched. §8 sanitized sequential command log (34 seq; literal-credential sweep of all produced artifacts 0 matches; BatchMode probe ×12 confirms the password path closed). §9 validation summary: what changed (the two classes only), what did not (packages, firewall, SSH/network/PAM/sudo, timezones, hxs-1..4 read-only, hxs-8 conf byte-identical, SB, workloads, excluded hosts; no reboots), current target state (Etc/UTC ×12, one NTP source ×12 synchronized, proven 4-target mask set ×12 — hxs-2 additionally masks sleep.target, its documented harmless superset), tests all PASS, rollback readiness (stock [Time] file restore / unmask commands — none needed). Second Brain statement: no new capability — the wave consumes the already-implemented standards-as-data pattern (disposition: deferred, no new artifact class). Handoff note: the material handoff requires Carol's catalog receipt; dispatch is the governor's lane; no git commit (governor wave)."
-  inferred_value: "INFERENCE: the fleet's baseline truth of record — the one-source NTP posture is now file-level proven across the whole in-scope fleet (one timesyncd.conf sha256 ×12, up from ×5), so any future drift on any of the 12 hosts is detectable by a single re-hash; the canary-first one-at-a-time mutation discipline with post-apply re-checks is the proven fleet-wave shape; and the two REPORT verdicts convert hardware drift (hxs-6 second drive, hxs-10 missing DIMM) into named owner decisions instead of silent record divergence."
+  id: DOC-fleet-baseline-wave-2026-08-27
+  title: 'servers/2026-08-27-fleet-baseline-wave.md — rick fleet baseline wave (PASS — TASK COMPLETE: 12/12 in-scope hosts carry verdicts — 10 PASS, 2 REPORT with declared closing directions, 0 FAIL; one timezone Etc/UTC ×12, one NTP source ×12 — timesyncd.conf sha256 e2b94d4b… byte-identical ×12, NTPSynchronized ×12; proven 4-target sleep-mask set ×12; mutations only the two sanctioned classes — NTP pin ×7, mask align ×8, canary-first; selftest 42/42 at both gates; zero secret values)'
+  type: evidence
+  declared_purpose: 'Rick''s execution evidence for WO-02-fleet-baseline (PILOT-FLEET-BASELINE-001; goal goals/2026-08-27-fleet-baseline-deployment.md; session rick-fleet-baseline-20260827-01; commissioned by governor Kimi-K3 on owner GO 2026-08-27; executed from hxs-5 2026-08-27T19:55Z–20:21Z; result PASS — TASK COMPLETE). Targets FRESH (7) hxs-6/.205, hxs-9/.208, hxs-10/.209, hxs-12/.211, hxs-13/.212, hxs-14/.213, hxs-15/.214 + RE-VERIFY (5) hxs-1/.200, hxs-2/.201, hxs-3/.202, hxs-4/.203, hxs-8/.207; excluded hxs-5 (control plane), hxs-7 (replaced by hxs-20), hxs-20/hxs-21 (provisioning), hxs-11 (owner flag unreachable — not probed). §1 knowledge review receipt (/opt/tkv-local/ubuntu surveyed — release-matched refs incl. man1-timedatectl, man5-timesyncd.conf, man8-systemd-sleep; contradictions: one apparent — hxs-8 live NTP already pinned vs the 08-26 record — reconciled to L1-M1 authorization, no escalation; fleet-standard.yaml comment staleness recorded as F-4; Task May Proceed YES; local-model-first: not model-required — deterministic fleet administration, no model inference produced any work product). §2 authority + target confirmation: identities verified live 20:00-20:01Z — hostname + machine-id MATCH ×12 against TKV discovery; host keys pre-pinned, StrictHostKeyChecking=yes; credential via SSH_ASKPASS helper (0700) read at execution time only, sudo -S stdin passthrough, passwordless-sudo confirmed ×12, helpers deleted at end; hxs-8 NTP provenance reconciliation (live conf e2b94d4b…, mtime 16:06:00Z == the L1-M1 pin at 16:05:59Z). §3 test plan recorded before first mutation (T-ID-1 identity ×12, T-LIB-1 selftest both gates, T-VER-1 baseline matrix 0 FAIL, T-NTP-1 pin per drifted host, T-NTP-2 canary discipline hxs-6 first, T-MASK-1 4-target align, T-WL-1 workload caution hxs-9/10, T-REG-1 0 failed units, T-SB-1 hxs-6 SB recorded) with exact inverses. §4 baseline: all 12 Ubuntu 24.04.4 LTS kernel 7.0.0-30; Etc/UTC ×12 already; ufw ENABLED=no ×12; 0 failed units ×12; fresh hosts on ntp.ubuntu.com with static sleep targets; hxs-8 NTP pinned but masks diverged. §5 changes — exactly two mutation classes, one host at a time, hxs-6 canary first: identical staged two-line NTP diff ×7 fresh hosts (stock -> NTP=time.cloudflare.com, FallbackNTP= explicitly empty; mktemp staging, fail-closed awk guard, diff reviewed, install 0644 root, timesyncd restart, poll-verify — ~0 s server contact + NTPSynchronized=yes per host: hxs-6 20:04:39Z, hxs-12 20:06:36Z, hxs-13 20:06:39Z, hxs-14 20:07:05Z, hxs-15 20:07:08Z, hxs-9 20:09:00Z, hxs-10 20:09:03Z); mask align ×8 (hxs-8 20:03:42Z then hxs-6 20:04:59Z, hxs-12 20:06:37Z, hxs-13 20:06:40Z, hxs-14 20:07:06Z, hxs-15 20:07:09Z, hxs-9 20:09:01Z, hxs-10 20:09:04Z — exactly four /dev/null symlinks per host, no service restarts). §6 post-change verification: verify-baseline OVERALL hosts=12 hosts-with-FAIL=0; masks ALIGNED ×8; timesyncd.conf sha256 e2b94d4b… on ALL 12 in-scope hosts (the file-level one-source proof now covers the whole in-scope fleet); 0 failed units ×8 mutated; workload re-probe unchanged (hxs-9 postgresql/redis, hxs-10 open-webui — inactive before and after); hxs-6 SB enabled recorded; selftest 42/42 at session start AND end. §7 findings: F-1 hxs-6 storage drift, F-2 hxs-10 memory drift (the two REPORTs — see notes.owner_items_20260827), F-3 hxs-9 postgresql/redis + hxs-10 open-webui inactive (record-only, service owners'' lane), F-4 standards-file staleness (governor lane — FIXED at state log row 3), F-5 hxs-6 Secure Boot ENABLED (record-only, owner BIOS decision), F-6 upgradable packages pending (hxs-6=21, hxs-9=18, hxs-10=18, hxs-12=18, hxs-13=21, hxs-14=18, hxs-15=21 — owner maintenance lane); hxs-11 skipped per owner flag; hxs-5/7/20/21 untouched. §8 sanitized sequential command log (34 seq; literal-credential sweep of all produced artifacts 0 matches; BatchMode probe ×12 confirms the password path closed). §9 validation summary: what changed (the two classes only), what did not (packages, firewall, SSH/network/PAM/sudo, timezones, hxs-1..4 read-only, hxs-8 conf byte-identical, SB, workloads, excluded hosts; no reboots), current target state (Etc/UTC ×12, one NTP source ×12 synchronized, proven 4-target mask set ×12 — hxs-2 additionally masks sleep.target, its documented harmless superset), tests all PASS, rollback readiness (stock [Time] file restore / unmask commands — none needed). Second Brain statement: no new capability — the wave consumes the already-implemented standards-as-data pattern (disposition: deferred, no new artifact class). Handoff note: the material handoff requires Carol''s catalog receipt; dispatch is the governor''s lane; no git commit (governor wave).'
+  inferred_value: 'INFERENCE: the fleet''s baseline truth of record — the one-source NTP posture is now file-level proven across the whole in-scope fleet (one timesyncd.conf sha256 ×12, up from ×5), so any future drift on any of the 12 hosts is detectable by a single re-hash; the canary-first one-at-a-time mutation discipline with post-apply re-checks is the proven fleet-wave shape; and the two REPORT verdicts convert hardware drift (hxs-6 second drive, hxs-10 missing DIMM) into named owner decisions instead of silent record divergence.'
   source:
-    author: "rick (session rick-fleet-baseline-20260827-01)"
-    provided_by: "rick via Kimi-K3 (fleet pilot state log rows 2-3, 2026-08-27T20:19Z/20:28Z — COMPLETE + BASELINE COMPLETE)"
-    origin: "/home/hxsa/opt/HX-ASF-Servers/servers/2026-08-27-fleet-baseline-wave.md"
-    section: "§whole-document"
-    ingestion_date: "2026-08-27T20:42:00Z"
-  owner: "rick"
+    author: rick (session rick-fleet-baseline-20260827-01)
+    provided_by: rick via Kimi-K3 (fleet pilot state log rows 2-3, 2026-08-27T20:19Z/20:28Z — COMPLETE + BASELINE COMPLETE)
+    origin: /home/hxsa/opt/HX-ASF-Servers/servers/2026-08-27-fleet-baseline-wave.md
+    section: §whole-document
+    ingestion_date: '2026-08-27T20:42:00Z'
+  owner: rick
   applies_to:
-    hosts: [hxs-1, hxs-2, hxs-3, hxs-4, hxs-6, hxs-8, hxs-9, hxs-10, hxs-12, hxs-13, hxs-14, hxs-15]
+    hosts:
+    - hxs-1
+    - hxs-2
+    - hxs-3
+    - hxs-4
+    - hxs-6
+    - hxs-8
+    - hxs-9
+    - hxs-10
+    - hxs-12
+    - hxs-13
+    - hxs-14
+    - hxs-15
     fqdns: []
-    services: [systemd-timesyncd]
-    agents: [rick]
-    repositories: [HX-ASF-Servers, tkv-local]
-    environments: [fleet, pilot]
+    services:
+    - systemd-timesyncd
+    agents:
+    - rick
+    repositories:
+    - HX-ASF-Servers
+    - tkv-local
+    environments:
+    - fleet
+    - pilot
     models: []
-  version: ""
-  status: "adopted"
-  authority_level: "agent-evidence"
+  version: ''
+  status: adopted
+  authority_level: agent-evidence
   supersedes: []
   superseded_by: []
   security:
-    classification: "internal"
-    access_restrictions: "none beyond repository access"
+    classification: internal
+    access_restrictions: none beyond repository access
     contains_secret_values: false
   relations:
-    - predicate: "evidences"
-      target: "fleet baseline wave 2026-08-27 — 12/12 in-scope hosts at the declared baseline (goal goals/2026-08-27-fleet-baseline-deployment.md; fleet pilot state log rows 2-3)"
-      note: "10 PASS (hxs-1, hxs-2, hxs-3, hxs-4, hxs-8 — re-verify, hxs-8 masks aligned 20:03:42Z; hxs-9, hxs-12, hxs-13, hxs-14, hxs-15 — fresh, ntp + mask applied) + 2 REPORT (hxs-6 — baseline green, storage drift owner-confirmation closes; hxs-10 — baseline green, memory drift owner-inspection closes) + 0 FAIL; Etc/UTC ×12; one NTP source ×12 (timesyncd.conf sha256 e2b94d4b… byte-identical ×12, NTPSynchronized ×12); proven 4-target mask set ×12; 0 failed units ×8 mutated hosts; verify-baseline OVERALL hosts=12 hosts-with-FAIL=0; selftest 42/42 at both gates"
-    - predicate: "produced_by"
-      target: "rick"
-      note: "WO-02-fleet-baseline, session rick-fleet-baseline-20260827-01 (executor hxs-5; window 19:55Z-20:21Z); PASS — TASK COMPLETE"
-    - predicate: "depends_on"
-      target: "DOC-goal-fleet-baseline-deployment"
-      note: "governing goal — acceptance items 1-3 met by this evidence (verdicts ×12; post-apply re-checks green ×8 mutated; TKV records refreshed ×7 + this doc delivered); item 4 is THIS catalog wave — cataloged THIS wave"
-    - predicate: "references"
-      target: "DOC-pilot-fleet-baseline-wo-02-rick-baseline"
-      note: "the work order this deliverable DISCHARGES (minted THIS wave at the discharged state, wo-07 variant)"
-    - predicate: "references"
-      target: "DOC-pilot-fleet-baseline-cp-03-rick-baseline"
-      note: "the paired context packet (its output_contract is the verdict-line shape of §2/§9) — minted THIS wave at the discharged state"
-    - predicate: "references"
-      target: "DOC-pilot-fleet-baseline-state-log"
-      note: "governing log: commissioned row 1 (19:40Z), COMPLETE row 2 (20:19Z), receipt + F-4 amendment + re-verification row 3 (20:28Z); the handoff CLOSES when this run's receipt is cited there (profile §7/§8)"
-    - predicate: "references"
-      target: "DOC-fleet-script-library"
-      note: "the commissioned tooling: fleet-verify-baseline.sh against fleet-standard.yaml v0.1 at execution (the F-4 amendment landed at row 3 AFTER the wave — re-verification vs the amended standard green 12/12; the library record re-hashed THIS wave); fleet-ntp-pin.sh + fleet-sleepmasks.sh the two sanctioned mutation classes; fleet-selftest.sh 42/42 at both gates"
-    - predicate: "references"
-      target: "DOC-fleet-time-and-mask-pass"
-      note: "the proven pattern + doc shape (§1 pattern source; FallbackNTP deliberately empty per the one-source directive — the resilience note carries forward: a cloudflare outage leaves no fallback, directive-consistent)"
-    - predicate: "references"
-      target: "DOC-pilot-omniroute-ev-01-rick-l1-node-runtime"
-      note: "hxs-8 NTP provenance reconciled live (§2): the pin was applied under the L1-M1 work order at 16:05:59Z — live conf e2b94d4b… mtime 16:06:00Z matches its seq 10-11; the 08-26 'owner call pending' note was closed by that pass"
-    - predicate: "references"
-      target: "DOC-tkv-hxs6-pre-work-results"
-      note: "deliverable refresh family: the 7 TKV pre-work records (hxs-6, hxs-9, hxs-10, hxs-12, hxs-13, hxs-14, hxs-15) — second refresh-by-prepend layer (the baseline re-verification section); all seven records re-hashed + note-extended THIS wave"
-    - predicate: "risks"
-      target: "hxs-6"
-      note: "F-1 REPORT (owner-lane, OPEN): storage drift vs 08-13 discovery — second NVMe nvme1n1 238.5 GB with LVM2_member hosting ubuntu-vg/ubuntu-lv (100G ext4, not mounted) vs the recorded single 238.5 GB NVMe, no LVM; both values kept in the TKV record; owner confirmation closes. F-5 record-only: Secure Boot ENABLED — unchanged per owner directive (BIOS is an owner call)"
-    - predicate: "risks"
-      target: "hxs-10"
-      note: "F-2 REPORT (owner-lane, OPEN): memory drift — 1 DIMM populated (16 GB Hynix HMA82GS6CJR8N-VK, DIMM1), 15.5 GiB visible, vs 2×16 GB dual-channel recorded 08-13; second consistent reading (the 16:29Z refresh saw the same); one recorded module not detected; owner hardware inspection closes (physical lane — no OS action exists)"
+  - predicate: evidences
+    target: fleet baseline wave 2026-08-27 — 12/12 in-scope hosts at the declared baseline (goal goals/2026-08-27-fleet-baseline-deployment.md; fleet pilot state log rows 2-3)
+    note: 10 PASS (hxs-1, hxs-2, hxs-3, hxs-4, hxs-8 — re-verify, hxs-8 masks aligned 20:03:42Z; hxs-9, hxs-12, hxs-13, hxs-14, hxs-15 — fresh, ntp + mask applied) + 2 REPORT (hxs-6 — baseline green, storage drift owner-confirmation closes; hxs-10 — baseline green, memory drift owner-inspection closes) + 0 FAIL; Etc/UTC ×12; one NTP source ×12 (timesyncd.conf sha256 e2b94d4b… byte-identical ×12, NTPSynchronized ×12); proven 4-target mask set ×12; 0 failed units ×8 mutated hosts; verify-baseline OVERALL hosts=12 hosts-with-FAIL=0; selftest 42/42 at both gates
+  - predicate: produced_by
+    target: rick
+    note: WO-02-fleet-baseline, session rick-fleet-baseline-20260827-01 (executor hxs-5; window 19:55Z-20:21Z); PASS — TASK COMPLETE
+  - predicate: depends_on
+    target: DOC-goal-fleet-baseline-deployment
+    note: governing goal — acceptance items 1-3 met by this evidence (verdicts ×12; post-apply re-checks green ×8 mutated; TKV records refreshed ×7 + this doc delivered); item 4 is THIS catalog wave — cataloged THIS wave
+  - predicate: references
+    target: DOC-pilot-fleet-baseline-wo-02-rick-baseline
+    note: the work order this deliverable DISCHARGES (minted THIS wave at the discharged state, wo-07 variant)
+  - predicate: references
+    target: DOC-pilot-fleet-baseline-cp-03-rick-baseline
+    note: the paired context packet (its output_contract is the verdict-line shape of §2/§9) — minted THIS wave at the discharged state
+  - predicate: references
+    target: DOC-pilot-fleet-baseline-state-log
+    note: 'governing log: commissioned row 1 (19:40Z), COMPLETE row 2 (20:19Z), receipt + F-4 amendment + re-verification row 3 (20:28Z); the handoff CLOSES when this run''s receipt is cited there (profile §7/§8)'
+  - predicate: references
+    target: DOC-fleet-script-library
+    note: 'the commissioned tooling: fleet-verify-baseline.sh against fleet-standard.yaml v0.1 at execution (the F-4 amendment landed at row 3 AFTER the wave — re-verification vs the amended standard green 12/12; the library record re-hashed THIS wave); fleet-ntp-pin.sh + fleet-sleepmasks.sh the two sanctioned mutation classes; fleet-selftest.sh 42/42 at both gates'
+  - predicate: references
+    target: DOC-fleet-time-and-mask-pass
+    note: 'the proven pattern + doc shape (§1 pattern source; FallbackNTP deliberately empty per the one-source directive — the resilience note carries forward: a cloudflare outage leaves no fallback, directive-consistent)'
+  - predicate: references
+    target: DOC-pilot-omniroute-ev-01-rick-l1-node-runtime
+    note: 'hxs-8 NTP provenance reconciled live (§2): the pin was applied under the L1-M1 work order at 16:05:59Z — live conf e2b94d4b… mtime 16:06:00Z matches its seq 10-11; the 08-26 ''owner call pending'' note was closed by that pass'
+  - predicate: references
+    target: DOC-tkv-hxs6-pre-work-results
+    note: 'deliverable refresh family: the 7 TKV pre-work records (hxs-6, hxs-9, hxs-10, hxs-12, hxs-13, hxs-14, hxs-15) — second refresh-by-prepend layer (the baseline re-verification section); all seven records re-hashed + note-extended THIS wave'
+  - predicate: risks
+    target: hxs-6
+    note: 'F-1 REPORT (owner-lane, OPEN): storage drift vs 08-13 discovery — second NVMe nvme1n1 238.5 GB with LVM2_member hosting ubuntu-vg/ubuntu-lv (100G ext4, not mounted) vs the recorded single 238.5 GB NVMe, no LVM; both values kept in the TKV record; owner confirmation closes. F-5 record-only: Secure Boot ENABLED — unchanged per owner directive (BIOS is an owner call)'
+  - predicate: risks
+    target: hxs-10
+    note: 'F-2 REPORT (owner-lane, OPEN): memory drift — 1 DIMM populated (16 GB Hynix HMA82GS6CJR8N-VK, DIMM1), 15.5 GiB visible, vs 2×16 GB dual-channel recorded 08-13; second consistent reading (the 16:29Z refresh saw the same); one recorded module not detected; owner hardware inspection closes (physical lane — no OS action exists)'
   validation:
-    validated_at: "2026-08-28T01:36:00Z"
-    freshness: "current"
-    review_due: "at the next fleet wave or on any baseline drift (the one-source proof is re-hash detectable ×12); the 2 REPORTs close on the owner decisions (hxs-6 storage confirmation, hxs-10 hardware inspection); the handoff CLOSES when this run's receipt is cited in the fleet pilot state log (profile §7)"
-  sha256: "6013d6421248f930331f944feadba1976c18a44f1dc72f524de242eaa2cd9428"
-  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/servers/2026-08-27-fleet-baseline-wave.md"
+    validated_at: '2026-08-31T01:08:32Z'
+    freshness: current
+    review_due: at the next fleet wave or on any baseline drift (the one-source proof is re-hash detectable ×12); the 2 REPORTs close on the owner decisions (hxs-6 storage confirmation, hxs-10 hardware inspection); the handoff CLOSES when this run's receipt is cited in the fleet pilot state log (profile §7)
+  sha256: 69f13f12bc219a7ce9c8ee37a43ed1e5559aa9c4614c0659424415669e9b861d
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/servers/2026-08-27-fleet-baseline-wave.md
+  hash_history:
+  - sha256: 6013d6421248f930331f944feadba1976c18a44f1dc72f524de242eaa2cd9428
+    timestamp: unrecorded
+    reason: predecessor state restored by carol-mint (re-mint events before 2026-08-31T01:08:32Z did not record history)
+  - sha256: 69f13f12bc219a7ce9c8ee37a43ed1e5559aa9c4614c0659424415669e9b861d
+    timestamp: '2026-08-31T01:08:32Z'
+    reason: '2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'
 notes:
-  typing_convention: "Typed evidence per the rick execution-report precedent (DOC-fleet-time-and-mask-pass class: test plan + baseline + exact-change log + validation summary; status adopted — a completed point-in-time execution record, not a living runbook; its rollback table is a section of the evidence)."
-  credential_hygiene: "Source §2/§8 document the SSH_ASKPASS/sudo -S credential mechanism (helper 0700, read at execution time only, never printed/logged/stored/argv), prove helper deletion (seq 33) and the password-path closure (BatchMode probe ×12, seq 34), and the author's literal-credential sweep of all produced artifacts returned 0 matches (seq 32); this record quotes no credential value (profile §6; cf. DOC-protected-ssh-info-hxs1 — the access guide is named by existence only)."
-  owner_items_20260827: "OPEN OWNER-LANE ITEMS (the 2 REPORT verdicts, per the governor's dispatch — recorded here as the owner decision register for this wave): (1) hxs-6 storage drift (F-1): live shows a second NVMe nvme1n1 238.5 GB with an LVM2_member hosting ubuntu-vg/ubuntu-lv (100G ext4, not mounted) vs the 08-13 discovery's single 238.5 GB NVMe, no LVM — closing direction: owner confirms the second drive is expected; the discovery record catches up at the next authorized refresh. (2) hxs-10 memory drift (F-2): live (second consistent reading) shows 1 DIMM populated (16 GB Hynix HMA82GS6CJR8N-VK, DIMM1), 15.5 GiB visible, vs 2×16 GB dual-channel recorded 08-13 — closing direction: owner hardware inspection (physical lane; no OS action exists). CARRIED record-only lanes (not owner-blocking): F-3 hxs-9 postgresql/redis + hxs-10 open-webui inactive (service owners' lane); F-5 hxs-6 Secure Boot ENABLED (owner BIOS decision pending — the standing SB-disabled-always directive's only live exception class with hxs-7); F-6 pending package updates (hxs-6=21, hxs-9=18, hxs-10=18, hxs-12=18, hxs-13=21, hxs-14=18, hxs-15=21 — owner maintenance lane; apt update not run, read-only)."
-  f4_disposition: "F-4 (standards-file staleness, governor lane) is FIXED: fleet-standard.yaml AMENDED 2026-08-27 by the governor (fleet pilot state log row 3) — the stale 'hxs-8 on ntp.ubuntu.com / pending owner call' comment superseded (the L1-M1 pin 16:05:59Z + the baseline GO recorded with the evidence pointer), the server-default class gained ntp_enabled + ntp_synchronized enforce + the 4-target mask set enforce, ntp_server lifted report -> enforce, SB + firewall remain report-only by absence of rules; the governor re-verified the fleet against the amended standard (llm-host 10/10 ×4, server-default 8/8 ×8, OVERALL hosts=12 hosts-with-FAIL=0). The library record DOC-fleet-script-library is re-hashed THIS wave."
-  second_brain: "Second Brain statement carried from the source (standing directive): no new capability identified — the wave consumes the already-implemented standards-as-data verification pattern (cataloged 2026-08-27 as DOC-fleet-script-library); disposition deferred — no new artifact class beyond the commissioned evidence; executing an existing pattern is not a new Second Brain capability, and the wave's boundaries prohibited uncommissioned additions."
-  rr47_20260827: "RR-47 WAVE (2026-08-27T23:40Z [timestamp corrected 2026-08-28, F-2 sweep, labeled: the '23:4xZ' shorthand was invalid — exact value 2026-08-27T23:40Z per the rr-47 receipt's freshness line and this record's validated_at]; OmniRoute state log row 46 governor-lane fix — 'baseline-wave standards-digest correction'): the source gained the labeled append-only correction block (source line 133, VERIFIED PRESENT this run): the final sweep ran against fleet-standard.yaml v0.1 (server-default: timezone enforce + ntp_server contains-time.cloudflare.com at REPORT level, no mask rules — hence '1 PASS + 1 REPORT' per server-default host); the file was not yet committed at run time, so its pre-amendment digest was not recorded — provenance anchor: the library manifest digest including the pre-amendment file was 0c4474fd… (DOC-fleet-script-library, pre-wave). SEPARATE result against the CURRENT (F-4-amended) standard: server-default ntp_enabled/ntp_synchronized/4-target-mask enforce + ntp_server report -> enforce (sha256 4c298ea6…; the then-current library manifest digest 879c9a7c… — superseded at this rr-47 wave by 850eb038…, which post-dates the evidence's anchor; the anchor is correct for the amended-standard era); independent governor re-run 2026-08-27T20:2xZ — llm-host 10/10 ×4, server-default 8/8 ×8, OVERALL hosts=12 hosts-with-FAIL=0 (fleet pilot log row 3). The evidence's §6 sweep text is unchanged and stays accurate for the v0.1 standard it ran against. Hash chain: ce264c88… (mint, baseline wave) -> 6013d642… (this record)."
-  batch11_20260828: "BATCH-11 WAVE (2026-08-28T01:15Z; OmniRoute state log row 53 catalog item 1 — 'baseline-wave applies_to.hosts minus hxs-5'): applies_to.hosts corrected to exactly the 12 in-scope hosts (hxs-1, hxs-2, hxs-3, hxs-4, hxs-6, hxs-8, hxs-9, hxs-10, hxs-12, hxs-13, hxs-14, hxs-15) — hxs-5 removed (it was the EXECUTOR host, outside the wave's scope per the goal's exclusions; the title/declared_purpose already name exactly the 12). Record-side fix; source hash 6013d642… unchanged, re-verified == live this run."
+  typing_convention: 'Typed evidence per the rick execution-report precedent (DOC-fleet-time-and-mask-pass class: test plan + baseline + exact-change log + validation summary; status adopted — a completed point-in-time execution record, not a living runbook; its rollback table is a section of the evidence).'
+  credential_hygiene: Source §2/§8 document the SSH_ASKPASS/sudo -S credential mechanism (helper 0700, read at execution time only, never printed/logged/stored/argv), prove helper deletion (seq 33) and the password-path closure (BatchMode probe ×12, seq 34), and the author's literal-credential sweep of all produced artifacts returned 0 matches (seq 32); this record quotes no credential value (profile §6; cf. DOC-protected-ssh-info-hxs1 — the access guide is named by existence only).
+  owner_items_20260827: 'OPEN OWNER-LANE ITEMS (the 2 REPORT verdicts, per the governor''s dispatch — recorded here as the owner decision register for this wave): (1) hxs-6 storage drift (F-1): live shows a second NVMe nvme1n1 238.5 GB with an LVM2_member hosting ubuntu-vg/ubuntu-lv (100G ext4, not mounted) vs the 08-13 discovery''s single 238.5 GB NVMe, no LVM — closing direction: owner confirms the second drive is expected; the discovery record catches up at the next authorized refresh. (2) hxs-10 memory drift (F-2): live (second consistent reading) shows 1 DIMM populated (16 GB Hynix HMA82GS6CJR8N-VK, DIMM1), 15.5 GiB visible, vs 2×16 GB dual-channel recorded 08-13 — closing direction: owner hardware inspection (physical lane; no OS action exists). CARRIED record-only lanes (not owner-blocking): F-3 hxs-9 postgresql/redis + hxs-10 open-webui inactive (service owners'' lane); F-5 hxs-6 Secure Boot ENABLED (owner BIOS decision pending — the standing SB-disabled-always directive''s only live exception class with hxs-7); F-6 pending package updates (hxs-6=21, hxs-9=18, hxs-10=18, hxs-12=18, hxs-13=21, hxs-14=18, hxs-15=21 — owner maintenance lane; apt update not run, read-only).'
+  f4_disposition: 'F-4 (standards-file staleness, governor lane) is FIXED: fleet-standard.yaml AMENDED 2026-08-27 by the governor (fleet pilot state log row 3) — the stale ''hxs-8 on ntp.ubuntu.com / pending owner call'' comment superseded (the L1-M1 pin 16:05:59Z + the baseline GO recorded with the evidence pointer), the server-default class gained ntp_enabled + ntp_synchronized enforce + the 4-target mask set enforce, ntp_server lifted report -> enforce, SB + firewall remain report-only by absence of rules; the governor re-verified the fleet against the amended standard (llm-host 10/10 ×4, server-default 8/8 ×8, OVERALL hosts=12 hosts-with-FAIL=0). The library record DOC-fleet-script-library is re-hashed THIS wave.'
+  second_brain: 'Second Brain statement carried from the source (standing directive): no new capability identified — the wave consumes the already-implemented standards-as-data verification pattern (cataloged 2026-08-27 as DOC-fleet-script-library); disposition deferred — no new artifact class beyond the commissioned evidence; executing an existing pattern is not a new Second Brain capability, and the wave''s boundaries prohibited uncommissioned additions.'
+  rr47_20260827: 'RR-47 WAVE (2026-08-27T23:40Z [timestamp corrected 2026-08-28, F-2 sweep, labeled: the ''23:4xZ'' shorthand was invalid — exact value 2026-08-27T23:40Z per the rr-47 receipt''s freshness line and this record''s validated_at]; OmniRoute state log row 46 governor-lane fix — ''baseline-wave standards-digest correction''): the source gained the labeled append-only correction block (source line 133, VERIFIED PRESENT this run): the final sweep ran against fleet-standard.yaml v0.1 (server-default: timezone enforce + ntp_server contains-time.cloudflare.com at REPORT level, no mask rules — hence ''1 PASS + 1 REPORT'' per server-default host); the file was not yet committed at run time, so its pre-amendment digest was not recorded — provenance anchor: the library manifest digest including the pre-amendment file was 0c4474fd… (DOC-fleet-script-library, pre-wave). SEPARATE result against the CURRENT (F-4-amended) standard: server-default ntp_enabled/ntp_synchronized/4-target-mask enforce + ntp_server report -> enforce (sha256 4c298ea6…; the then-current library manifest digest 879c9a7c… — superseded at this rr-47 wave by 850eb038…, which post-dates the evidence''s anchor; the anchor is correct for the amended-standard era); independent governor re-run 2026-08-27T20:2xZ — llm-host 10/10 ×4, server-default 8/8 ×8, OVERALL hosts=12 hosts-with-FAIL=0 (fleet pilot log row 3). The evidence''s §6 sweep text is unchanged and stays accurate for the v0.1 standard it ran against. Hash chain: ce264c88… (mint, baseline wave) -> 6013d642… (this record).'
+  batch11_20260828: 'BATCH-11 WAVE (2026-08-28T01:15Z; OmniRoute state log row 53 catalog item 1 — ''baseline-wave applies_to.hosts minus hxs-5''): applies_to.hosts corrected to exactly the 12 in-scope hosts (hxs-1, hxs-2, hxs-3, hxs-4, hxs-6, hxs-8, hxs-9, hxs-10, hxs-12, hxs-13, hxs-14, hxs-15) — hxs-5 removed (it was the EXECUTOR host, outside the wave''s scope per the goal''s exclusions; the title/declared_purpose already name exactly the 12). Record-side fix; source hash 6013d642… unchanged, re-verified == live this run.'
+  minted_by: 'carol-mint 1.0.0 @ 2026-08-31T01:08:32Z — re-mint 6013d6421248… -> 69f13f12bc21… — 2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'
