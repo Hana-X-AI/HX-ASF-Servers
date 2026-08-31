@@ -2,7 +2,7 @@ document:
   id: DOC-kdd-0018-raphael-registration
   title: 'KDD-0018: Raphael registration — LightRAG systems engineer'
   type: decision
-  declared_purpose: 'Owner-ratified registration of Raphael as the LightRAG systems engineer (KDD-0018, 2026-08-29). Lane: Qwen-X via OmniRoute (local). Target host: hxs-4. Scope: LightRAG server, Web UI, lightragmcp MCP server. Dependencies: Qdrant (Quinn), bge-m3 (john), OmniRoute (trinity).'
+  declared_purpose: 'Owner-ratified registration of Raphael as the LightRAG systems engineer (KDD-0018, 2026-08-29). Current agent execution lane: Z.ai GLM 5.2 free via OmniRoute under KDD-0013 Amendment 11; the original Qwen-X via OmniRoute agent lane is historical provenance. LightRAG current application LLM binding: local Chat-X on hxs-4; the former Meta-X via OmniRoute binding is historical provenance. The agent execution lane and application LLM binding are distinct. Target host: hxs-4. Scope: LightRAG server, Web UI, lightragmcp MCP server. Qdrant is installed but remains pending acceptance for Raphael activation.'
   source:
     author: Flash (governor)
     provided_by: Agent Zero (ratification)
@@ -40,7 +40,7 @@ document:
     target: DOC-system-mapping
     note: S17 LightRAG placement on hxs-4
   validation:
-    validated_at: '2026-08-31T03:51:22Z'
+    validated_at: '2026-08-31T04:25:10Z'
     freshness: current
     review_due: on owner amendment
   sha256: b128deb293cec3283697ad4387f6a58f9694a75ce944afa72363b2f34a5249c2
@@ -53,5 +53,5 @@ document:
     reason: '2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'
   canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0018-raphael-registration.md
 notes:
-  semantic_reconciliation_20260831: Read against the full current KDD. Raphael remains registered and activation-gated on Qwen-X via OmniRoute. The source's historical Context and original LLM-binding fields named Meta-X; the owner-selected current LightRAG binding is local Chat-X. Qdrant v1.19.0 is installed but NOT accepted for LightRAG; acceptance evidence plus Quinn's activation word remain required.
-  minted_by: 'carol-mint 1.0.0 @ 2026-08-31T03:51:22Z — re-mint freshness-only — CodeRabbit PR #8 semantic finding verified against source and corrected'
+  semantic_reconciliation_20260831: Read against the full current KDD, KDD-0013 Amendment 11, and the current LightRAG goal. Raphael remains registered; his current agent execution lane is Z.ai GLM 5.2 free via OmniRoute, while Qwen-X via OmniRoute is the historical KDD-0018 agent lane. Separately, LightRAG's current application LLM binding is local Chat-X on hxs-4, while Meta-X via OmniRoute is the historical application binding. These two bindings are not interchangeable. Qdrant v1.19.0 is installed but NOT accepted for LightRAG; acceptance evidence plus Quinn's activation word remain required before Raphael activation.
+  minted_by: 'carol-mint 1.0.0 @ 2026-08-31T04:25:10Z — re-mint freshness-only — PR #8 finding: agent lane and LightRAG application binding separated under current authority; Qdrant pending acceptance preserved'
