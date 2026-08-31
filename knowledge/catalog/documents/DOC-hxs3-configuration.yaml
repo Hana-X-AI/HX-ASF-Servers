@@ -1,74 +1,95 @@
 document:
-  id: "DOC-hxs3-configuration"
-  title: "servers/hxs-3/configuration.md — hxs-3 configured state (owner-authorized server implementation, server records contract; FIRST configuration.md in HX-ASF-Servers; pilot M1/M4/web-search/M7/fleet-time/M8)"
-  type: "contract"
-  declared_purpose: "Server configuration record per the server records contract (servers/AGENTS.md — 'What did HX configure this server to become?'), the FIRST of its class in this repository, written 2026-08-27T02:11Z at the M8 sign-off gate (owner-authorized by the M8 approval, hxs-3 state log row 23) from servers/_templates/configuration.md. Records hxs-3's assigned role (Agent intelligence — copied from SERVER-REGISTRY.md, owner-ratified 2026-08-13; the record does not assign it) and primary workload (Meta-X tooling-inference backend: Ollama muse-glimmer:30b frozen digest de878ce33ad8…64c1, operating profile alias hx-muse-glimmer-64k digest 9dffb015db40…e7da, ctx 65536, resident Forever, per GOAL-HXS3-MUSE-GLIMMER-001 + KDD-0007), approved by Agent-Zero (goal 2026-08-26; M8 gate 2026-08-27, row 23). Registry alignment RESOLVED 2026-08-27: SERVER-REGISTRY.md now records Meta-X as hxs-3's workload (the governor's F-REG-1 fix on the owner's 'fix it' directive — hxs-2 state log row 60 — plus the dated superseded-assignment note preserving the 2026-08-13 gpt-oss/LightRAG mapping as history, OmniRoute state log rows 38/44; the current aligned state); the former registry Workload/Model divergence ('gpt-oss-20b TP=2; LightRAG graph & retrieval' vs the owner-commissioned Muse Glimmer pilot's configured workload) and the 'registry is owner-maintained and was not edited' wording are recast as historical context — correct as written at the M8 gate; gpt-oss remains a task-shaped control per KDD-0007. Discovery reference: servers/hxs-3/discovery.md (as-found 2026-08-12) preserved unchanged (sha256 93bc5634…79d3 verified at writing, cited in 15-esme §7). Role objective: the factory's primary tooling-inference backend (fleet call-sign Meta-X, blueprint §8) for the RAG pipeline — a sequential one-tool-call-per-turn specialist per KDD-0007 (the model proposes, never authorizes or executes; KK3 retains orchestration; parallel_tool_calling: false a first-class capability LIMIT in DOC-backend-meta-x, candidate until the owner's M8 ACCEPT). Final configuration captured: Ubuntu 24.04.4 LTS kernel 7.0.0-30-generic (DKMS nvidia/580.173.02 for -28/-30), suspend targets masked ×4 (blueprint set, verified at M8), Secure Boot disabled (standing directive), Wi-Fi rfkill soft-blocked with boot persistence (D4), Etc/UTC + NTP time.cloudflare.com (fleet pass 2026-08-26T23:52:40Z); network 192.168.50.202/24 eno1 static gw .1, listeners *:11434 (loopback preserved) + :22 + loopback stub DNS only, NO firewall (owner rule — ufw inactive, nft/iptables empty), the /24 LAN itself the exposure boundary (blueprint §5) with the O1 :cloud-scan tripwire as named residual; storage root ext4 3.6 TB NVMe (3.4 TB free) with the model store on root per D1 (17 GB across the frozen artifact + aliases), 1.8 TB SATA unallocated; 2× PNY RTX 5060 Ti 16,311 MiB each, driver 580.173.02 retain-and-validate, zero Xid across all pilot evidence, both cards x8-wired against x16 max (Gen3 8.0 GT/s under load — the x8 width is the hard ceiling, measured M4/M7); Ollama 0.32.15 pinned (binary == server; 0.33.0 deliberately not taken, F-J4); frozen artifact dense 27.9B 52 blocks Q4_K_M max ctx 131,072, renderer/parser glimmer with ATEM, CLIP 'Muse Glimmer Hf' 1.92B, Apache-2.0 (publisher-declared); four aliases FROM the frozen artifact with manifest layer-equality proofs (hx-muse-glimmer 472ad84e…, -32k 09c4f825…, -64k 9dffb015… the D5 operating profile resident, -128k 17fe5b80… qualified extended), baked sampling temperature 1 / top_k 64 / top_p 0.95 everywhere (the A01 rule); configuration paths with hashes — ollama.service 11758d46…1dbd3, hx3.conf 07824e4e…e7d5 (OLLAMA_HOST=0.0.0.0 loopback preserved, NUM_PARALLEL=1, MAX_LOADED_MODELS=1, CONTEXT_LENGTH=65536; NO_CLOUD removed 2026-08-26 by the ratified fleet web-search enablement), hx-ollama-preload b1798130…fe08 (bounded phases 208+300+30 = 538 s worst case, keep_alive=-1), ollama-preload.service 3b0e00b6…a5f6 (oneshot, TimeoutStartSec=600, enabled — 300 s under the 900 s D5 recovery SLO); web search ACTIVE (owner 2026-08-26), 0 :cloud tags. Services table: both units enabled+active, NRestarts=0, preload Result=success. Validation checklist all boxes ticked with milestone citations (M1 13/13; M8 boundary; storage across 3 cold reboots; M4 19/19 + M7 3 rungs; services ×3 boots; assigned workload M4/M7/M5/M8) plus the open gap recorded honestly: goal SC-06 multimodal probes have no executed evidence in the pilot record — reconciled OPEN at M8 §8, owner disposition required, not a defect of the configured state. Material Change Record: M1 OS readiness (05:13Z) -> M4 install+freeze (06:28Z) -> fleet web-search enablement NO_CLOUD removed (07:19Z) -> M7 rungs + preload/hx3.conf repoint to -64k (07:58Z) -> fleet time pass Etc/UTC (2026-08-26T23:52:40Z) -> M8 sign-off gate (2026-08-27T02:10Z: persistence 3/3 cold reboots 98 s deterministic, boundary proof, consumer-proof, this record — nothing to roll back, no baseline change in M8), each row with validation + rollback + unresolved issues. Sources cite discovery.md, the pilot package (01-state-log rows 1–23, 04/07/09/12(+A)/15), the goal file (D1–D8, SC-01…08), KDD-0007, blueprint §2–§6 + §8, SERVER-REGISTRY.md, and the fleet-time pass."
-  inferred_value: "INFERENCE: this is now the first-stop answer to 'what is hxs-3 supposed to be' — the fleet-level complement to the pilot's evidence corpus, and the record future work orders on hxs-3 should cite for configured-state truth (its validation checklist points back into the pilot evidence chain rather than restating it). Same class role as DOC-tkv-hxs1-configuration for hxs-1. Freshness risk: it is a point-in-time M8 snapshot — any post-M8 host change must grow its Material Change Record or this record goes stale; the registry workload-field divergence (owner-side, F-REG-1 class) is RESOLVED 2026-08-27 (SERVER-REGISTRY.md now records Meta-X as hxs-3's workload; the dated superseded-assignment note preserves the 2026-08-13 mapping as history)."
+  id: DOC-hxs3-configuration
+  title: servers/hxs-3/configuration.md — hxs-3 configured state (owner-authorized server implementation, server records contract; FIRST configuration.md in HX-ASF-Servers; pilot M1/M4/web-search/M7/fleet-time/M8)
+  type: contract
+  declared_purpose: 'Server configuration record per the server records contract (servers/AGENTS.md — ''What did HX configure this server to become?''), the FIRST of its class in this repository, written 2026-08-27T02:11Z at the M8 sign-off gate (owner-authorized by the M8 approval, hxs-3 state log row 23) from servers/_templates/configuration.md. Records hxs-3''s assigned role (Agent intelligence — copied from SERVER-REGISTRY.md, owner-ratified 2026-08-13; the record does not assign it) and primary workload (Meta-X tooling-inference backend: Ollama muse-glimmer:30b frozen digest de878ce33ad8…64c1, operating profile alias hx-muse-glimmer-64k digest 9dffb015db40…e7da, ctx 65536, resident Forever, per GOAL-HXS3-MUSE-GLIMMER-001 + KDD-0007), approved by Agent-Zero (goal 2026-08-26; M8 gate 2026-08-27, row 23). Registry alignment RESOLVED 2026-08-27: SERVER-REGISTRY.md now records Meta-X as hxs-3''s workload (the governor''s F-REG-1 fix on the owner''s ''fix it'' directive — hxs-2 state log row 60 — plus the dated superseded-assignment note preserving the 2026-08-13 gpt-oss/LightRAG mapping as history, OmniRoute state log rows 38/44; the current aligned state); the former registry Workload/Model divergence (''gpt-oss-20b TP=2; LightRAG graph & retrieval'' vs the owner-commissioned Muse Glimmer pilot''s configured workload) and the ''registry is owner-maintained and was not edited'' wording are recast as historical context — correct as written at the M8 gate; gpt-oss remains a task-shaped control per KDD-0007. Discovery reference: servers/hxs-3/discovery.md (as-found 2026-08-12) preserved unchanged (sha256 93bc5634…79d3 verified at writing, cited in 15-esme §7). Role objective: the factory''s primary tooling-inference backend (fleet call-sign Meta-X, blueprint §8) for the RAG pipeline — a sequential one-tool-call-per-turn specialist per KDD-0007 (the model proposes, never authorizes or executes; KK3 retains orchestration; parallel_tool_calling: false a first-class capability LIMIT in DOC-backend-meta-x, candidate until the owner''s M8 ACCEPT). Final configuration captured: Ubuntu 24.04.4 LTS kernel 7.0.0-30-generic (DKMS nvidia/580.173.02 for -28/-30), suspend targets masked ×4 (blueprint set, verified at M8), Secure Boot disabled (standing directive), Wi-Fi rfkill soft-blocked with boot persistence (D4), Etc/UTC + NTP time.cloudflare.com (fleet pass 2026-08-26T23:52:40Z); network 192.168.50.202/24 eno1 static gw .1, listeners *:11434 (loopback preserved) + :22 + loopback stub DNS only, NO firewall (owner rule — ufw inactive, nft/iptables empty), the /24 LAN itself the exposure boundary (blueprint §5) with the O1 :cloud-scan tripwire as named residual; storage root ext4 3.6 TB NVMe (3.4 TB free) with the model store on root per D1 (17 GB across the frozen artifact + aliases), 1.8 TB SATA unallocated; 2× PNY RTX 5060 Ti 16,311 MiB each, driver 580.173.02 retain-and-validate, zero Xid across all pilot evidence, both cards x8-wired against x16 max (Gen3 8.0 GT/s under load — the x8 width is the hard ceiling, measured M4/M7); Ollama 0.32.15 pinned (binary == server; 0.33.0 deliberately not taken, F-J4); frozen artifact dense 27.9B 52 blocks Q4_K_M max ctx 131,072, renderer/parser glimmer with ATEM, CLIP ''Muse Glimmer Hf'' 1.92B, Apache-2.0 (publisher-declared); four aliases FROM the frozen artifact with manifest layer-equality proofs (hx-muse-glimmer 472ad84e…, -32k 09c4f825…, -64k 9dffb015… the D5 operating profile resident, -128k 17fe5b80… qualified extended), baked sampling temperature 1 / top_k 64 / top_p 0.95 everywhere (the A01 rule); configuration paths with hashes — ollama.service 11758d46…1dbd3, hx3.conf 07824e4e…e7d5 (OLLAMA_HOST=0.0.0.0 loopback preserved, NUM_PARALLEL=1, MAX_LOADED_MODELS=1, CONTEXT_LENGTH=65536; NO_CLOUD removed 2026-08-26 by the ratified fleet web-search enablement), hx-ollama-preload b1798130…fe08 (bounded phases 208+300+30 = 538 s worst case, keep_alive=-1), ollama-preload.service 3b0e00b6…a5f6 (oneshot, TimeoutStartSec=600, enabled — 300 s under the 900 s D5 recovery SLO); web search ACTIVE (owner 2026-08-26), 0 :cloud tags. Services table: both units enabled+active, NRestarts=0, preload Result=success. Validation checklist all boxes ticked with milestone citations (M1 13/13; M8 boundary; storage across 3 cold reboots; M4 19/19 + M7 3 rungs; services ×3 boots; assigned workload M4/M7/M5/M8) plus the open gap recorded honestly: goal SC-06 multimodal probes have no executed evidence in the pilot record — reconciled OPEN at M8 §8, owner disposition required, not a defect of the configured state. Material Change Record: M1 OS readiness (05:13Z) -> M4 install+freeze (06:28Z) -> fleet web-search enablement NO_CLOUD removed (07:19Z) -> M7 rungs + preload/hx3.conf repoint to -64k (07:58Z) -> fleet time pass Etc/UTC (2026-08-26T23:52:40Z) -> M8 sign-off gate (2026-08-27T02:10Z: persistence 3/3 cold reboots 98 s deterministic, boundary proof, consumer-proof, this record — nothing to roll back, no baseline change in M8), each row with validation + rollback + unresolved issues. Sources cite discovery.md, the pilot package (01-state-log rows 1–23, 04/07/09/12(+A)/15), the goal file (D1–D8, SC-01…08), KDD-0007, blueprint §2–§6 + §8, SERVER-REGISTRY.md, and the fleet-time pass.'
+  inferred_value: 'INFERENCE: this is now the first-stop answer to ''what is hxs-3 supposed to be'' — the fleet-level complement to the pilot''s evidence corpus, and the record future work orders on hxs-3 should cite for configured-state truth (its validation checklist points back into the pilot evidence chain rather than restating it). Same class role as DOC-tkv-hxs1-configuration for hxs-1. Freshness risk: it is a point-in-time M8 snapshot — any post-M8 host change must grow its Material Change Record or this record goes stale; the registry workload-field divergence (owner-side, F-REG-1 class) is RESOLVED 2026-08-27 (SERVER-REGISTRY.md now records Meta-X as hxs-3''s workload; the dated superseded-assignment note preserves the 2026-08-13 mapping as history).'
   source:
-    author: "john / Esme (session john-m8-hxs3-20260827-01) per the server records contract implementation phase; approved by Agent-Zero (M8 approval, hxs-3 state log row 23)"
-    provided_by: "Kimi-K3 (governor T-standard dispatch brief — Meta-X M8 flip wave)"
-    origin: "/home/hxsa/opt/HX-ASF-Servers/servers/hxs-3/configuration.md"
-    section: "§whole-document"
-    ingestion_date: "2026-08-27T02:35:00Z"
-  owner: "Agent Zero"
+    author: john / Esme (session john-m8-hxs3-20260827-01) per the server records contract implementation phase; approved by Agent-Zero (M8 approval, hxs-3 state log row 23)
+    provided_by: Kimi-K3 (governor T-standard dispatch brief — Meta-X M8 flip wave)
+    origin: /home/hxsa/opt/HX-ASF-Servers/servers/hxs-3/configuration.md
+    section: §whole-document
+    ingestion_date: '2026-08-27T02:35:00Z'
+  owner: Agent Zero
   applies_to:
-    hosts: [hxs-3]
+    hosts:
+    - hxs-3
     fqdns: []
-    services: [ollama.service, ollama-preload.service]
-    agents: [john, kimi-k3]
-    repositories: [HX-ASF-Servers]
-    environments: [fleet, production]
-    models: [muse-glimmer:30b, hx-muse-glimmer-64k]
-  version: "Configuration date 2026-08-27 (implementation executed 2026-08-26 → 2026-08-27 across milestones M1/M4/M7/M5/M8)"
-  status: "active"
-  authority_level: "ratified-governance"
+    services:
+    - ollama.service
+    - ollama-preload.service
+    agents:
+    - john
+    - kimi-k3
+    repositories:
+    - HX-ASF-Servers
+    environments:
+    - fleet
+    - production
+    models:
+    - muse-glimmer:30b
+    - hx-muse-glimmer-64k
+  version: Configuration date 2026-08-27 (implementation executed 2026-08-26 → 2026-08-27 across milestones M1/M4/M7/M5/M8)
+  status: active
+  authority_level: ratified-governance
   supersedes: []
   superseded_by: []
   security:
-    classification: "internal"
-    access_restrictions: "none beyond repository access"
+    classification: internal
+    access_restrictions: none beyond repository access
     contains_secret_values: false
   relations:
-    - predicate: "configures"
-      target: "hxs-3"
-      note: "the configured-state record for the host: role, workload, OS/driver, network + no-firewall boundary, storage, GPU + x8 ceiling, frozen artifact + four aliases, preload contract with hashes, services, validation, and material-change history — answers 'what did HX configure this server to become'"
-    - predicate: "references"
-      target: "DOC-tkv-servers-records-contract"
-      note: "the server records contract (servers/AGENTS.md) owns this record class: no configuration.md until the owner authorizes the implementation phase — authorization = the M8 approval (hxs-3 state log row 23); approved role copied from the registry; discovery.md preserved; material changes + validation documented. FIRST record of its class in this repository"
-    - predicate: "references"
-      target: "DOC-tkv-hxs3-discovery"
-      note: "as-found discovery class record for hxs-3; the configuration.md preserves the repo copy servers/hxs-3/discovery.md untouched (sha256 93bc5634f41dceb7bad75977973e3945c16872649df16f9965e6a6884eb179d3 verified before and after writing, 15-esme §7/§10) — 'do not modify the discovery record'"
-    - predicate: "references"
-      target: "DOC-tkv-server-registry"
-      note: "role source: Assigned Role 'Agent intelligence' copied from SERVER-REGISTRY.md (owner-ratified 2026-08-13), not assigned by this record; the registry's 2026-08-13 workload-field divergence is RESOLVED 2026-08-27 (the F-REG-1 fix + dated superseded-assignment note, both copies — the registry now records Meta-X as hxs-3's workload; this record was marked SUPERSEDED at the same wave pointing consumers to DOC-server-registry as the authoritative registry record)"
-    - predicate: "references"
-      target: "DOC-backend-meta-x"
-      note: "the backend-capability record this configuration realizes: Meta-X (hxs-3, http://192.168.50.202:11434) operating hx-muse-glimmer-64k with parallel_tool_calling: false as a first-class LIMIT — status CANDIDATE until the owner's M8 ACCEPT, then active (governor wave, Qwen-X precedent)"
-    - predicate: "produced_by"
-      target: "DOC-pilot-hxs3-ev-15-esme-m8-signoff"
-      note: "written at the M8 sign-off gate (T-CONFIG-MD PASS, 15-esme §7, 2026-08-27T02:11Z) from live + pilot evidence; the gate's material-change row closes the record's M1 -> M8 chain"
-    - predicate: "references"
-      target: "DOC-goal-hxs3-muse-glimmer-tooling"
-      note: "workload authority: GOAL-HXS3-MUSE-GLIMMER-001 (owner decisions D1–D8; SC-01…SC-08 — SC-06 multimodal recorded as the open validation gap at the M8 gate; owner disposition given 2026-08-27: FORMALLY DEFERRED, hxs-1 SC-05 class — hxs-3 state log row 30)"
-    - predicate: "references"
-      target: "DOC-kdd-0007-hxs3-muse-glimmer-tooling-adoption"
-      note: "role objective: sequential one-tool-call-per-turn tooling specialist — the model proposes at most one call per turn and never authorizes or executes; KK3 retains orchestration; gpt-oss retained as task-shaped control"
-    - predicate: "references"
-      target: "DOC-blueprint-llm-server"
-      note: "§3 preload contract (bounded phases, exact alias+digest assertion), §5 exposure plane (/24 LAN boundary, no firewall, O1 tripwire residual), §6 D5 SLO (preload 300 s under the 900 s budget), §8 Meta-X call-sign row + consumer contract"
-    - predicate: "references"
-      target: "DOC-fleet-time-and-mask-pass"
-      note: "material-change row 2026-08-26T23:52:40Z: Etc/UTC + NTP synchronized per the owner's one-source directive (rick fleet pass); named source time.cloudflare.com"
+  - predicate: configures
+    target: hxs-3
+    note: 'the configured-state record for the host: role, workload, OS/driver, network + no-firewall boundary, storage, GPU + x8 ceiling, frozen artifact + four aliases, preload contract with hashes, services, validation, and material-change history — answers ''what did HX configure this server to become'''
+  - predicate: references
+    target: DOC-tkv-servers-records-contract
+    note: 'the server records contract (servers/AGENTS.md) owns this record class: no configuration.md until the owner authorizes the implementation phase — authorization = the M8 approval (hxs-3 state log row 23); approved role copied from the registry; discovery.md preserved; material changes + validation documented. FIRST record of its class in this repository'
+  - predicate: references
+    target: DOC-tkv-hxs3-discovery
+    note: as-found discovery class record for hxs-3; the configuration.md preserves the repo copy servers/hxs-3/discovery.md untouched (sha256 93bc5634f41dceb7bad75977973e3945c16872649df16f9965e6a6884eb179d3 verified before and after writing, 15-esme §7/§10) — 'do not modify the discovery record'
+  - predicate: references
+    target: DOC-tkv-server-registry
+    note: 'role source: Assigned Role ''Agent intelligence'' copied from SERVER-REGISTRY.md (owner-ratified 2026-08-13), not assigned by this record; the registry''s 2026-08-13 workload-field divergence is RESOLVED 2026-08-27 (the F-REG-1 fix + dated superseded-assignment note, both copies — the registry now records Meta-X as hxs-3''s workload; this record was marked SUPERSEDED at the same wave pointing consumers to DOC-server-registry as the authoritative registry record)'
+  - predicate: references
+    target: DOC-backend-meta-x
+    note: 'the backend-capability record this configuration realizes: Meta-X (hxs-3, http://192.168.50.202:11434) operating hx-muse-glimmer-64k with parallel_tool_calling: false as a first-class LIMIT — status CANDIDATE until the owner''s M8 ACCEPT, then active (governor wave, Qwen-X precedent)'
+  - predicate: produced_by
+    target: DOC-pilot-hxs3-ev-15-esme-m8-signoff
+    note: written at the M8 sign-off gate (T-CONFIG-MD PASS, 15-esme §7, 2026-08-27T02:11Z) from live + pilot evidence; the gate's material-change row closes the record's M1 -> M8 chain
+  - predicate: references
+    target: DOC-goal-hxs3-muse-glimmer-tooling
+    note: 'workload authority: GOAL-HXS3-MUSE-GLIMMER-001 (owner decisions D1–D8; SC-01…SC-08 — SC-06 multimodal recorded as the open validation gap at the M8 gate; owner disposition given 2026-08-27: FORMALLY DEFERRED, hxs-1 SC-05 class — hxs-3 state log row 30)'
+  - predicate: references
+    target: DOC-kdd-0007-hxs3-muse-glimmer-tooling-adoption
+    note: 'role objective: sequential one-tool-call-per-turn tooling specialist — the model proposes at most one call per turn and never authorizes or executes; KK3 retains orchestration; gpt-oss retained as task-shaped control'
+  - predicate: references
+    target: DOC-blueprint-llm-server
+    note: §3 preload contract (bounded phases, exact alias+digest assertion), §5 exposure plane (/24 LAN boundary, no firewall, O1 tripwire residual), §6 D5 SLO (preload 300 s under the 900 s budget), §8 Meta-X call-sign row + consumer contract
+  - predicate: references
+    target: DOC-fleet-time-and-mask-pass
+    note: 'material-change row 2026-08-26T23:52:40Z: Etc/UTC + NTP synchronized per the owner''s one-source directive (rick fleet pass); named source time.cloudflare.com'
   validation:
-    validated_at: "2026-08-27T21:20:00Z"
-    freshness: "current"
-    review_due: "on any material change to hxs-3 configured state (its Material Change Record must grow with the change), on registry status change, and at the owner's M8 ACCEPT verdict (Meta-X candidate -> active)"
-  sha256: "6ce8d2910d751c2051e5ffd48a534bf612bc9753b23dab0afbf07ef60d0af329"
-  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/servers/hxs-3/configuration.md"
+    validated_at: '2026-08-31T03:51:22Z'
+    freshness: current
+    review_due: on any material change to hxs-3 configured state (its Material Change Record must grow with the change) or on registry-status change; the owner M8 ACCEPT trigger completed 2026-08-27
+  sha256: fb0c3bd951cad77adb3d42740ce5ad00d3ab236e087387f4e906da3a1b1db58c
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/servers/hxs-3/configuration.md
+  hash_history:
+  - sha256: 6ce8d2910d751c2051e5ffd48a534bf612bc9753b23dab0afbf07ef60d0af329
+    timestamp: unrecorded
+    reason: predecessor state restored by carol-mint (re-mint events before 2026-08-31T01:08:32Z did not record history)
+  - sha256: fb0c3bd951cad77adb3d42740ce5ad00d3ab236e087387f4e906da3a1b1db58c
+    timestamp: '2026-08-31T01:08:32Z'
+    reason: '2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'
+  - sha256: fb0c3bd951cad77adb3d42740ce5ad00d3ab236e087387f4e906da3a1b1db58c
+    timestamp: '2026-08-31T03:51:22Z'
+    reason: 'CodeRabbit PR #8 semantic finding verified against source and corrected'
 notes:
-  authority_basis: "authority_level ratified-governance per the record's evidence basis (DOC-tkv-hxs1-configuration precedent): creation owner-authorized at the M8 approval (hxs-3 state log row 23 — an owner-gated phase per the records contract), the assigned role copied from the owner-maintained registry, and every material configuration decision owner-ratified (D1 model store, D4 rfkill, D5 64K operating, the 2026-08-26 web-search enablement, the no-firewall and Secure-Boot standing rules). Content assembled from pilot agent evidence, which remains cited as Sources."
-  typing_judgment: "Type contract + status active follow the only prior configuration.md record in the catalog (DOC-tkv-hxs1-configuration, hxs-1's Phase-2 record, type contract per the blank-template precedent DOC-tkv-servers-template-configuration): a configuration record is the per-server configured-state contract and stays active as the living configured-state record. This is the FIRST configuration.md under HX-ASF-Servers servers/ (the hxs-1 record's canonical location is the tkv-local copy)."
-  first_of_class: "FIRST configuration.md in the repository per the server records contract (servers/AGENTS.md 'owner-authorized server implementation — configuration'): the contract's implementation phase instantiated for the first time; owner-authorized by the M8 approval (hxs-3 state log row 23); written from servers/_templates/configuration.md; becomes the reference shape for the remaining fleet hosts (15-esme §13)."
-  no_secrets: "Per the records contract no credentials, keys, or secret values are placed in server records — verified at ingestion (the F-M8-1 sanitization sweep at the gate covered this file: credential value ABSENT, match-status checked without printing it); contains_secret_values false."
-  hash_crosscheck: "sha256 6ce8d2910d751c2051e5ffd48a534bf612bc9753b23dab0afbf07ef60d0af329 computed at ingestion (2026-08-27T02:35Z); 161 lines. Not yet cited in the hxs-3 state log (row 25 records the deliverable's creation without a hash) — the catalog hash is the first recorded value, same class as the M7/M5/M8 WO-CP first-hash convention."
-  registry_alignment_20260827: "REGISTRY ALIGNMENT RESOLVED (review-batch follow-up wave; OmniRoute state log row 44 queue item 'DOC-hxs3-configuration — registry divergence recast historical'): SERVER-REGISTRY.md now records Meta-X tooling specialist as hxs-3's workload (the governor's F-REG-1 fix on the owner's 'fix it' directive — hxs-2 state log row 60, 2026-08-27T17:05Z — plus the dated superseded-assignment note at the 20:49Z review batch, both copies: repo line 53 + note line 77, tkv line 40 + note line 88 — the 2026-08-13 gpt-oss/LightRAG mapping preserved as labeled history). declared_purpose + inferred_value + the DOC-tkv-server-registry relation note recast from 'divergence labeled openly, not resolved' to the resolved aligned state (the former wording kept here as the record of what the record said at the M8 gate); the DOC-goal-hxs3 relation note's SC-06 clause updated to the owner's formal deferral (row 30) in the same pass. SOURCE UNCHANGED — sha256 6ce8d291… re-verified == live this run (the row-44 queue item was record-side only); validated_at refreshed."
+  authority_basis: 'authority_level ratified-governance per the record''s evidence basis (DOC-tkv-hxs1-configuration precedent): creation owner-authorized at the M8 approval (hxs-3 state log row 23 — an owner-gated phase per the records contract), the assigned role copied from the owner-maintained registry, and every material configuration decision owner-ratified (D1 model store, D4 rfkill, D5 64K operating, the 2026-08-26 web-search enablement, the no-firewall and Secure-Boot standing rules). Content assembled from pilot agent evidence, which remains cited as Sources.'
+  typing_judgment: 'Type contract + status active follow the only prior configuration.md record in the catalog (DOC-tkv-hxs1-configuration, hxs-1''s Phase-2 record, type contract per the blank-template precedent DOC-tkv-servers-template-configuration): a configuration record is the per-server configured-state contract and stays active as the living configured-state record. This is the FIRST configuration.md under HX-ASF-Servers servers/ (the hxs-1 record''s canonical location is the tkv-local copy).'
+  first_of_class: 'FIRST configuration.md in the repository per the server records contract (servers/AGENTS.md ''owner-authorized server implementation — configuration''): the contract''s implementation phase instantiated for the first time; owner-authorized by the M8 approval (hxs-3 state log row 23); written from servers/_templates/configuration.md; becomes the reference shape for the remaining fleet hosts (15-esme §13).'
+  no_secrets: 'Per the records contract no credentials, keys, or secret values are placed in server records — verified at ingestion (the F-M8-1 sanitization sweep at the gate covered this file: credential value ABSENT, match-status checked without printing it); contains_secret_values false.'
+  hash_crosscheck: sha256 6ce8d2910d751c2051e5ffd48a534bf612bc9753b23dab0afbf07ef60d0af329 computed at ingestion (2026-08-27T02:35Z); 161 lines. Not yet cited in the hxs-3 state log (row 25 records the deliverable's creation without a hash) — the catalog hash is the first recorded value, same class as the M7/M5/M8 WO-CP first-hash convention.
+  registry_alignment_20260827: 'REGISTRY ALIGNMENT RESOLVED (review-batch follow-up wave; OmniRoute state log row 44 queue item ''DOC-hxs3-configuration — registry divergence recast historical''): SERVER-REGISTRY.md now records Meta-X tooling specialist as hxs-3''s workload (the governor''s F-REG-1 fix on the owner''s ''fix it'' directive — hxs-2 state log row 60, 2026-08-27T17:05Z — plus the dated superseded-assignment note at the 20:49Z review batch, both copies: repo line 53 + note line 77, tkv line 40 + note line 88 — the 2026-08-13 gpt-oss/LightRAG mapping preserved as labeled history). declared_purpose + inferred_value + the DOC-tkv-server-registry relation note recast from ''divergence labeled openly, not resolved'' to the resolved aligned state (the former wording kept here as the record of what the record said at the M8 gate); the DOC-goal-hxs3 relation note''s SC-06 clause updated to the owner''s formal deferral (row 30) in the same pass. SOURCE UNCHANGED — sha256 6ce8d291… re-verified == live this run (the row-44 queue item was record-side only); validated_at refreshed.'
+  minted_by: 'carol-mint 1.0.0 @ 2026-08-31T03:51:22Z — re-mint freshness-only — CodeRabbit PR #8 semantic finding verified against source and corrected'

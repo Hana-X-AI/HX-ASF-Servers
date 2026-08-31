@@ -1,0 +1,44 @@
+document:
+  id: DOC-kdd-0023-capability-manifests
+  title: KDD-0023 — Declare capabilities, then verify them (O5 hook manifest + SY-5; O7 skill registry + SY-6)
+  type: decision
+  declared_purpose: 'Ratified decision (2026-08-30) applying the declare-then-verify shape of KDD-0021 to two capability classes that were declared in prose and verified by nobody. D1: governace/hooks/manifest.yaml declares every hook — event, matcher, advisory-vs-enforcing, shim requirement, min_timeout, sha256 — plus the payload shim''s digest (a broken shim turns all five advisory hooks into silent no-ops without touching any hook) and the content AND digest of secret-boundary.mode, the five-byte file that decides whether the one enforcing hook can block. D2: scripts/hooks_verify.py checks both registration scopes asymmetrically — .claude/settings.json is in Git and its absence is a hard failure, because deleting it unregisters every hook at once; ~/.kimi-code/config.toml is user scope and its absence is reported, never failed, since CI has no such file and must not claim it verified user-scope state. D3: registration is verified structurally, not by substring — a hook path echoed or passed as data is not a hook that runs. D4: the user config holds live provider credentials beside its [[hooks]] blocks, so the parser is a deliberately narrow line scanner and two tests assert no credential can reach any output. D5: AGENTS.md remains the single authority for skill owners and trigger words; skills_registry.py reads and reconciles them rather than duplicating them into frontmatter — this OVERRIDES the source review''s O7 wording, because a second copy of a ratified inventory is a second authority plane. Frontmatter carries only maturity, required_files and smoke. D6: a skill shipping something runnable must smoke it or record why not. D7: enforced as SY-5 and SY-6 inside governance-path; the check count stays 5/5, and smokes run as their own CI step because they execute skill commands. Mechanizes KDD-0020 Amendment 2 item 1, which that amendment left explicitly unmechanized.'
+  source:
+    author: Agent-Zero (owner decision 2026-08-30)
+    provided_by: Claude Code session — process-optimization Phase 2
+    origin: /home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0023-capability-manifests.md
+    section: §whole-document
+    ingestion_date: '2026-08-30T21:05:00Z'
+  owner: Agent Zero
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: []
+    repositories: []
+    environments: []
+  status: active
+  security:
+    classification: internal
+    contains_secret_values: false
+  relations:
+  - predicate: references
+    target: DOC-scripts-validate-py
+    note: enforced as sub-checks SY-5 (hook manifest) and SY-6 (skill registry)
+  - predicate: references
+    target: DOC-scripts-hooks
+    note: the hook system this KDD declares and verifies
+  - predicate: references
+    target: DOC-kdd-0020-canonical-skill-tree
+    note: mechanizes its Amendment 2 item 1 — AGENTS.md inventory reconciled against .agents/skills/
+  - predicate: references
+    target: DOC-kdd-0021-work-state-engine
+    note: same declare-then-verify shape, applied to goal state first
+  validation:
+    validated_at: '2026-08-30T20:57:36Z'
+    freshness: current
+  sha256: a16331ae5e6bac7ee9bb20328fc0bde0a02a72cd575fa4fceb8443131a3b524e
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0023-capability-manifests.md
+  authority_level: ratified-governance
+notes:
+  minted_by: carol-mint 1.0.0 @ 2026-08-30T20:57:36Z — scaffold

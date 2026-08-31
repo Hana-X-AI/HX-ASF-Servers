@@ -1,50 +1,64 @@
 document:
-  id: "DOC-pilot-templates-work-order"
-  title: "pilots/_templates/work-order.yaml — ratified work-order template (UD5/U6; mandatory second_brain_evaluation block)"
-  type: "contract"
-  declared_purpose: "Ratified work-order template (2026-08-25, owner decision UD5 approving U6 authoring; state log row 60). Copied per milestone with section order kept; every field required unless marked optional. Fixes the work-order contract: task_id/parent_goal/milestone/assigned_agent identity, objective with single-line acceptance statement, explicit owner_authorizations (including NOT-authorized items), boundaries (files/systems allowlist; versioned-change pre/post sha256 + diff rule; execution path — session on hxs-5, SSH hxsa@<ip>, askpass helper READS the credential at execution time per the ratified pattern, no extracted secret copy, helper deleted at task end, verify hostname and peer IP before any mutation, sudo -n only; one bounded correction per failed correctable gate with explicit stop conditions), rollback (smallest affected layer + deterministic inverse), controlling_sources (context packet, plan/goal sections, /opt/tkv-local/servers/<host>/ as historical cross-check only, role TKV path per the AGENTS.md knowledge gate, knowledge/catalog retrieval cited by the governor packet), and deliverable contents (hashes, diffs, outputs, journal, receipt, Task May Proceed line). Carries the MANDATORY second_brain_evaluation block per the standing directive (owner 2026-08-25, AGENTS.md 'Second Brain roadmap integration'): opportunity_identified, roadmap_capability_or_pattern, disposition (implemented | recommended-for-future-iteration | deliberately-deferred), evidence_and_reasoning — all four required in every material work order."
-  inferred_value: "INFERENCE: this template converts two standing directives from memory into structure — the Second Brain evaluation is now un-omittable, and the askpass read-at-execution boundary is boilerplate the author must strike deliberately rather than forget."
+  id: DOC-pilot-templates-work-order
+  title: pilots/_templates/work-order.yaml — ratified work-order template (UD5/U6; mandatory second_brain_evaluation block)
+  type: contract
+  declared_purpose: 'Ratified work-order template (2026-08-25, owner decision UD5 approving U6 authoring; state log row 60). Copied per milestone with section order kept; every field required unless marked optional. Fixes the work-order contract: task_id/parent_goal/milestone/assigned_agent identity, objective with single-line acceptance statement, explicit owner_authorizations (including NOT-authorized items), boundaries (files/systems allowlist; versioned-change pre/post sha256 + diff rule; execution path — session on hxs-5, SSH hxsa@<ip>, askpass helper READS the credential at execution time per the ratified pattern, no extracted secret copy, helper deleted at task end, verify hostname and peer IP before any mutation, sudo -n only; one bounded correction per failed correctable gate with explicit stop conditions), rollback (smallest affected layer + deterministic inverse), controlling_sources (context packet, plan/goal sections, /opt/tkv-local/servers/<host>/ as historical cross-check only, role TKV path per the AGENTS.md knowledge gate, knowledge/catalog retrieval cited by the governor packet), and deliverable contents (hashes, diffs, outputs, journal, receipt, Task May Proceed line). Carries the MANDATORY second_brain_evaluation block per the standing directive (owner 2026-08-25, AGENTS.md ''Second Brain roadmap integration''): opportunity_identified, roadmap_capability_or_pattern, disposition (implemented | recommended-for-future-iteration | deliberately-deferred), evidence_and_reasoning — all four required in every material work order.'
+  inferred_value: 'INFERENCE: this template converts two standing directives from memory into structure — the Second Brain evaluation is now un-omittable, and the askpass read-at-execution boundary is boilerplate the author must strike deliberately rather than forget.'
   source:
-    author: "Kimi-K3 (governor; U6 authoring approved as UD5)"
-    provided_by: "Kimi-K3"
-    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/_templates/work-order.yaml"
-    section: "§whole-document"
-    ingestion_date: "2026-08-26T00:25:00Z"
-  owner: "Kimi-K3"
+    author: Kimi-K3 (governor; U6 authoring approved as UD5)
+    provided_by: Kimi-K3
+    origin: /home/hxsa/opt/HX-ASF-Servers/pilots/_templates/work-order.yaml
+    section: §whole-document
+    ingestion_date: '2026-08-26T00:25:00Z'
+  owner: Kimi-K3
   applies_to:
     hosts: []
     fqdns: []
     services: []
-    agents: [kimi-k3, rick, john]
-    repositories: [HX-ASF-Servers]
-    environments: [pilot, fleet]
-  version: ""
-  status: "active"
-  authority_level: "ratified-governance"
+    agents:
+    - kimi-k3
+    - rick
+    - john
+    repositories:
+    - HX-ASF-Servers
+    environments:
+    - pilot
+    - fleet
+  version: ''
+  status: active
+  authority_level: ratified-governance
   supersedes: []
   superseded_by: []
   security:
-    classification: "internal"
-    access_restrictions: "none beyond repository access"
+    classification: internal
+    access_restrictions: none beyond repository access
     contains_secret_values: false
   relations:
-    - predicate: "references"
-      target: "DOC-pilot-templates-context-packet"
-      note: "companion document: the template header names context-packet.yaml in this directory as the companion context packet"
-    - predicate: "references"
-      target: "DOC-repo-governance-agents-md"
-      note: "implements the 'Second Brain roadmap integration' standing directive (mandatory four-answer evaluation block) and the approval-discipline / knowledge-gate conventions it cites"
-    - predicate: "references"
-      target: "DOC-protected-ssh-info-hxs1"
-      note: "boundaries boilerplate encodes the ratified askpass read-at-execution pattern (no extracted secret copy, helper deleted at task end, never printed/logged/stored)"
-    - predicate: "references"
-      target: "DOC-assessment-unified-capability-recommendations"
-      note: "U6 origin: WO/CP template files with the standing directive's evaluation block built in; authoring approved as owner decision UD5 (state log row 60)"
+  - predicate: references
+    target: DOC-pilot-templates-context-packet
+    note: 'companion document: the template header names context-packet.yaml in this directory as the companion context packet'
+  - predicate: references
+    target: DOC-repo-governance-agents-md
+    note: implements the 'Second Brain roadmap integration' standing directive (mandatory four-answer evaluation block) and the approval-discipline / knowledge-gate conventions it cites
+  - predicate: references
+    target: DOC-protected-ssh-info-hxs1
+    note: boundaries boilerplate encodes the ratified askpass read-at-execution pattern (no extracted secret copy, helper deleted at task end, never printed/logged/stored)
+  - predicate: references
+    target: DOC-assessment-unified-capability-recommendations
+    note: 'U6 origin: WO/CP template files with the standing directive''s evaluation block built in; authoring approved as owner decision UD5 (state log row 60)'
   validation:
-    validated_at: "2026-08-26T00:25:00Z"
-    freshness: "current"
-    review_due: "on template revision (re-hash this record)"
-  sha256: "32b8d2e6fec881c4c2edc19f945fa4d89620568c7192ab8293c6a3178cb03a59"
-  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/_templates/work-order.yaml"
+    validated_at: '2026-08-30T21:57:30Z'
+    freshness: current
+    review_due: on template revision (re-hash this record)
+  sha256: 17116b65b2ab471b83749aa5425d60e046336cfd99b2ab5986c5e26f52757d3b
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/_templates/work-order.yaml
+  hash_history:
+  - sha256: 32b8d2e6fec881c4c2edc19f945fa4d89620568c7192ab8293c6a3178cb03a59
+    timestamp: unrecorded
+    reason: predecessor state restored by carol-mint (re-mint events before 2026-08-30T21:57:30Z did not record history)
+  - sha256: 17116b65b2ab471b83749aa5425d60e046336cfd99b2ab5986c5e26f52757d3b
+    timestamp: '2026-08-30T21:57:30Z'
+    reason: 'SY-8: re-minted after this session''s source change'
 notes:
-  cataloging_context: "Type judged 'contract' per the template-record precedent (DOC-tkv-servers-template-* are type contract: ratified shapes that bind future work products). Authority ratified-governance (UD5). Existing pilot work orders (DOC-pilot-hx1-wo-*) predate the template and are NOT superseded by it — it binds future authoring."
+  cataloging_context: 'Type judged ''contract'' per the template-record precedent (DOC-tkv-servers-template-* are type contract: ratified shapes that bind future work products). Authority ratified-governance (UD5). Existing pilot work orders (DOC-pilot-hx1-wo-*) predate the template and are NOT superseded by it — it binds future authoring.'
+  minted_by: 'carol-mint 1.0.0 @ 2026-08-30T21:57:30Z — re-mint 32b8d2e6fec8… -> 17116b65b2ab… — SY-8: re-minted after this session''s source change'

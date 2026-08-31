@@ -1,31 +1,57 @@
 document:
-  id: "DOC-kdd-0013-agent-model-lanes"
-  title: "KDD-0013: Per-agent model lane assignments"
-  type: "decision"
-  declared_purpose: "Record of decision assigning model lanes to each agent."
+  id: DOC-kdd-0013-agent-model-lanes
+  title: 'KDD-0013: Per-agent model lane assignments'
+  type: decision
+  declared_purpose: Record of decision assigning model lanes to each agent.
   source:
-    author: "KDD-0013"
-    provided_by: "Agent-Zero"
-    origin: "/home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0013-agent-model-lanes.md"
-    ingestion_date: "2026-08-28T00:00:00Z"
-    section: "§whole-document"
-  owner: "Kimi-K3"
+    author: KDD-0013
+    provided_by: Agent-Zero
+    origin: /home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0013-agent-model-lanes.md
+    ingestion_date: '2026-08-28T00:00:00Z'
+    section: §whole-document
+  owner: Agent Zero (owner decisions); James (current governor role)
   applies_to:
-    agents: [kimi-k3, morpheus, gordon, rick, john, carol, trinity, rob, mia, chris]
-    repositories: [HX-ASF-Servers]
-  version: ""
-  status: "adopted"
-  authority_level: "agent-evidence"
+    agents:
+    - james
+    - kimi-k3
+    - morpheus
+    - bailey
+    - gordon
+    - rick
+    - john
+    - carol
+    - trinity
+    - rob
+    - mia
+    - chris
+    repositories:
+    - HX-ASF-Servers
+  version: ''
+  status: adopted
+  authority_level: ratified-governance
   supersedes: []
   superseded_by: []
   security:
-    classification: "internal"
-    access_restrictions: "none"
+    classification: internal
+    access_restrictions: none
     contains_secret_values: false
   relations: []
   validation:
-    validated_at: "2026-08-29T01:25:00Z"
-    freshness: "current"
-    review_due: "2026-09-28"
-  sha256: "71144186008e837897747575269529cb44332b67ac64400d3f789ebe3745b1cd"
-  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0013-agent-model-lanes.md"
+    validated_at: '2026-08-31T03:51:22Z'
+    freshness: current
+    review_due: on any owner lane-default change, agent registration, or governor transition
+  sha256: b12e525bd1e448337a2752596ae0147081d01007b1bc18a163c29ec431d77130
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0013-agent-model-lanes.md
+  hash_history:
+  - sha256: 71144186008e837897747575269529cb44332b67ac64400d3f789ebe3745b1cd
+    timestamp: unrecorded
+    reason: predecessor state restored by carol-mint (re-mint events before 2026-08-31T01:08:32Z did not record history)
+  - sha256: b12e525bd1e448337a2752596ae0147081d01007b1bc18a163c29ec431d77130
+    timestamp: '2026-08-31T01:08:32Z'
+    reason: '2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'
+  - sha256: b12e525bd1e448337a2752596ae0147081d01007b1bc18a163c29ec431d77130
+    timestamp: '2026-08-31T03:51:22Z'
+    reason: 'CodeRabbit PR #8 semantic finding verified against source and corrected'
+notes:
+  semantic_reconciliation_20260831: Read through Amendment 12. The operative assignment is the owner-locked job-family table in Amendment 11, with James on DeepSeek V4 Flash, PMO on GPT-OSS 120B, QA on Qwen3.8 Flash, Rob/Rick on local Coder-X, and Platform Systems on GLM 5.2 free; Amendment 12 adds Bailey to OD-14. Earlier per-agent lanes remain append-only history. The record's former one-line purpose is accurate only at a high level; this note identifies the current controlling section.
+  minted_by: 'carol-mint 1.0.0 @ 2026-08-31T03:51:22Z — re-mint freshness-only — CodeRabbit PR #8 semantic finding verified against source and corrected'

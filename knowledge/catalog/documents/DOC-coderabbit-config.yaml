@@ -2,8 +2,8 @@ document:
   id: DOC-coderabbit-config
   title: .coderabbit.yaml — CodeRabbit review configuration (p8, owner-ratified 2026-08-26; keys verified against the live official schema.v2)
   type: contract
-  declared_purpose: 'CodeRabbit configuration for HX-ASF-Servers (p8, owner-ratified 2026-08-26), consumed by the CodeRabbit CLI review in the ci-cd workflow and governing the GitHub App if installed later. Keys verified 2026-08-26 against the live official schema (coderabbit.ai/integrations/schema.v2.json; configuration reference dated 2026-08-24). Policy content: language en-US, early_access false; reviews.profile chill (balanced feedback — assertive rejected as too noisy for a governance repo); request_changes_workflow true; path_filters exclude rendered HTML (artifact — Markdown is the source of truth) and __pycache__; path_instructions encode three repo rules for the reviewer — scripts/** is stdlib-only Python (flag any third-party import), pilots/**/fixtures/** are versioned and alias-parameterized (flag hard-coded model tags, missing alias recording, persisted thinking content), **/*.md governance records are append-only (flag silent rewrites of history — corrections must be open and labeled); auto_review enabled with auto_incremental_review on base branch main; finishing_touches.autofix enabled (inert — requires the GitHub App plus a Pro plan); tool integrations matched to the repo''s actual content: ruff, shellcheck, yamllint, actionlint, gitleaks; chat.auto_reply true.'
-  inferred_value: 'INFERENCE: this is the review-policy half of the p8 gate — the workflow decides WHEN review runs and what blocks a merge (critical/major), this file decides WHAT the reviewer looks for, and its path_instructions convert three standing repo rules (stdlib-only, fixture versioning, append-only governance) into enforced review criteria; the HTML exclusion keeps the dual-format artifact surface out of review scope per the Q2 convention.'
+  declared_purpose: 'CodeRabbit configuration for HX-ASF-Servers (p8, owner-ratified 2026-08-26), consumed by the CodeRabbit CLI review in the ci-cd workflow and governing the GitHub App if installed later. Keys verified 2026-08-26 against the live official schema (coderabbit.ai/integrations/schema.v2.json; configuration reference dated 2026-08-24). Policy content: language en-US, early_access false; reviews.profile chill (balanced feedback — assertive rejected as too noisy for a governance repo); request_changes_workflow true; path_filters exclude rendered HTML (artifact — Markdown is the source of truth) and __pycache__; path_instructions encode three repo rules for the reviewer — scripts/** carries a dependency envelope of Python stdlib PLUS PyYAML and nothing else (corrected 2026-08-30: the instruction previously read ''stdlib-only Python is a hard repository rule'', which contradicted the ratified implementation — validate.py under UD1/UD2 imports yaml at module scope, the ci-cd gates job installs PyYAML as an explicit step, and 13 of 16 scripts import it because every governance artifact here is YAML. The stale rule caused the reviewer to raise the same stdlib-migration finding three times, correctly applying a rule that was itself wrong. render.py, skills_sync.py and test_work_state.py remain stdlib-only by design and a new yaml import there is still a finding), pilots/**/fixtures/** are versioned and alias-parameterized (flag hard-coded model tags, missing alias recording, persisted thinking content), **/*.md governance records are append-only (flag silent rewrites of history — corrections must be open and labeled); auto_review enabled with auto_incremental_review on base branch main; finishing_touches.autofix enabled (inert — requires the GitHub App plus a Pro plan); tool integrations matched to the repo''s actual content: ruff, shellcheck, yamllint, actionlint, gitleaks; chat.auto_reply true.'
+  inferred_value: 'INFERENCE: this is the review-policy half of the p8 gate — the workflow decides WHEN review runs and what blocks a merge (critical/major), this file decides WHAT the reviewer looks for, and its path_instructions convert three standing repo rules (the stdlib + PyYAML dependency envelope, fixture versioning, append-only governance) into enforced review criteria — and the 2026-08-30 correction of the first of those shows the cost when an encoded rule goes stale: the reviewer enforces it faithfully, so a finding repeated three times was a symptom of this config, not of the code it flagged; the HTML exclusion keeps the dual-format artifact surface out of review scope per the Q2 convention.'
   source:
     author: Kimi-K3 (governor; plan p8 argent-groot-ant-man)
     provided_by: Kimi-K3
@@ -41,13 +41,13 @@ document:
     target: https://www.coderabbit.ai/integrations/schema.v2.json
     note: upstream official schema — keys verified against the live schema 2026-08-26 (configuration reference dated 2026-08-24); upstream reference, not cataloged
   - predicate: governs
-    target: automated review criteria for HX-ASF-Servers (stdlib-only scripts; versioned alias-parameterized fixtures; append-only governance Markdown)
+    target: automated review criteria for HX-ASF-Servers (scripts within the stdlib+PyYAML envelope; versioned alias-parameterized fixtures; append-only governance Markdown)
     note: the three path_instructions are standing repo rules restated as reviewer instructions
   validation:
-    validated_at: '2026-08-30T17:13:23Z'
+    validated_at: '2026-08-30T23:26:21Z'
     freshness: current
     review_due: on any config edit (re-ingest), or when the CodeRabbit GitHub App is installed (finishing_touches/autofix surface activates)
-  sha256: 79e1f5913368b09ea20cd8104b3c12a39b3feb3a0e5fc5864bdf7dd2e67a2cf9
+  sha256: 75d92c639190d08209bf6bbe87e7836c9f9b7ef953c170519722f81325cf7f51
   canonical_location: /home/hxsa/opt/HX-ASF-Servers/.coderabbit.yaml
   hash_history:
   - sha256: 21d9dcb95f0b91cfc94c68f8dcd75a21eb8336719a7d26fc94eedcd084394b27
@@ -56,6 +56,9 @@ document:
   - sha256: 79e1f5913368b09ea20cd8104b3c12a39b3feb3a0e5fc5864bdf7dd2e67a2cf9
     timestamp: '2026-08-30T17:13:23Z'
     reason: exclude generated mirrors + vendored archify from review payload
+  - sha256: 75d92c639190d08209bf6bbe87e7836c9f9b7ef953c170519722f81325cf7f51
+    timestamp: '2026-08-30T23:26:21Z'
+    reason: 'dependency envelope corrected: stdlib + PyYAML (the stdlib-only rule contradicted UD1/UD2)'
 notes:
   typing_judgment: 'Typed contract (governor brief: contract/config class at Carol''s schema judgment): a normative, ratified review-policy configuration that binds automated review behavior on the repo — the policy half of the DOC-ci-cd-workflow gate contract; not operational documentation (runbook class rejected).'
-  minted_by: carol-mint 1.0.0 @ 2026-08-30T17:13:23Z — re-mint 21d9dcb95f0b… -> 79e1f5913368… — exclude generated mirrors + vendored archify from review payload
+  minted_by: 'carol-mint 1.0.0 @ 2026-08-30T23:26:21Z — re-mint 79e1f5913368… -> 75d92c639190… — dependency envelope corrected: stdlib + PyYAML (the stdlib-only rule contradicted UD1/UD2)'

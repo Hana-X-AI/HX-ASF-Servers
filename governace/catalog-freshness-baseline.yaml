@@ -1,0 +1,11 @@
+# catalog-freshness-baseline.yaml — hash-pinned known drift (SY-8)
+#
+# The 2026-08-30 baseline is now fully reconciled. Keep the ledger and schema
+# in place so any future exceptional debt must be explicit, hash-pinned, and
+# shrink-only under scripts/catalog_freshness.py.
+
+schema_version: 1
+baseline_date: '2026-08-30'
+count: 0
+grading: Unchanged pinned drift is reported. Any change after baselining fails.
+entries: []

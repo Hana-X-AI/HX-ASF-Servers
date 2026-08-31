@@ -23,6 +23,9 @@ except ImportError:
 
 VERSION = "1.0.0"
 ROOT = os.environ.get("CAROL_MINT_ROOT", "/home/hxsa/opt/HX-ASF-Servers/knowledge/catalog")
+REPO_ROOT = os.environ.get(
+    "CAROL_MINT_REPO_ROOT", os.path.dirname(os.path.dirname(ROOT)))
+CANONICAL_REPO_ROOT = "/home/hxsa/opt/HX-ASF-Servers"
 DOCS = os.path.join(ROOT, "documents")
 INDEX = os.path.join(ROOT, "index.yaml")
 SCHEMA = os.path.join(ROOT, "schema.yaml")
@@ -51,6 +54,33 @@ def sha256_file(path):
         for chunk in iter(lambda: fh.read(65536), b""):
             h.update(chunk)
     return h.hexdigest()
+
+
+def resolve_source(path):
+    """Resolve a catalog source in this checkout.
+
+    Catalog records intentionally retain the governor-host canonical prefix.
+    A portable clone must map that prefix to its own checkout root before it
+    can verify the same bytes in CI or a disposable worktree.
+    """
+    path = str(path or "")
+    if path == CANONICAL_REPO_ROOT:
+        return REPO_ROOT
+    prefix = CANONICAL_REPO_ROOT + os.sep
+    if path.startswith(prefix):
+        return os.path.join(REPO_ROOT, path[len(prefix):])
+    if os.path.isabs(path):
+        return path
+    return os.path.join(REPO_ROOT, path)
+
+
+def is_repo_source(path):
+    """Whether a canonical source resolves inside this repository."""
+    probe = os.path.abspath(resolve_source(path))
+    try:
+        return os.path.commonpath((probe, os.path.abspath(REPO_ROOT))) == os.path.abspath(REPO_ROOT)
+    except ValueError:
+        return False
 
 
 def load_yaml(path):
@@ -114,8 +144,9 @@ def freshness_enum():
         fail("cannot read freshness enum from schema.yaml: %s" % e)
 
 
-def stamp(notes, what):
-    notes["minted_by"] = "carol-mint %s @ %s — %s" % (VERSION, utcnow(), what)
+def stamp(notes, what, timestamp=None):
+    notes["minted_by"] = "carol-mint %s @ %s — %s" % (
+        VERSION, timestamp or utcnow(), what)
     return notes
 
 
@@ -131,7 +162,7 @@ def living_consolidate_note(doc, live_hash):
     )
 
 
-def append_hash_history(data, before, after, reason):
+def append_hash_history(data, before, after, reason, timestamp=None):
     """Append a dated hash event, preserving prior history. Idempotent.
 
     Records carry hash_history in two shapes in this catalog: a list of
@@ -144,13 +175,14 @@ def append_hash_history(data, before, after, reason):
     that appeared nowhere in the history).
     """
     doc = data["document"]
-    now = utcnow()
+    now = timestamp or utcnow()
     hh = doc.get("hash_history")
 
     if isinstance(hh, str) or isinstance((data.get("notes") or {}).get("hash_history"), str):
         notes = data.setdefault("notes", {})
         chain = notes.get("hash_history") if isinstance(notes.get("hash_history"), str) else hh
-        if after[:8] in (chain or ""):
+        event = "%s… (%s, %s)" % (after[:8], now, reason)
+        if event in (chain or ""):
             return
         notes["hash_history"] = (chain or "").rstrip() + (
             " \u2192 %s\u2026 (%s, %s)" % (after[:8], now, reason))
@@ -162,15 +194,23 @@ def append_hash_history(data, before, after, reason):
         hh = []
         doc["hash_history"] = hh
 
-    def has(h):
+    def has_hash(h):
         return any(isinstance(e, dict) and str(e.get("sha256", "")) == h for e in hh)
 
-    if before and before != after and not has(before):
+    def has_event(h, event_timestamp, event_reason):
+        return any(
+            isinstance(e, dict)
+            and str(e.get("sha256", "")) == h
+            and str(e.get("timestamp", "")) == event_timestamp
+            and str(e.get("reason", "")) == event_reason
+            for e in hh)
+
+    if before and before != after and not has_hash(before):
         hh.append({"sha256": before,
                    "timestamp": "unrecorded",
                    "reason": "predecessor state restored by carol-mint "
                              "(re-mint events before %s did not record history)" % now})
-    if not has(after):
+    if not has_event(after, now, reason):
         hh.append({"sha256": after, "timestamp": now, "reason": reason})
 
 
@@ -178,28 +218,31 @@ def cmd_re_mint(doc_id, note, set_freshness=None):
     with MintLock():
         data = load_record(doc_id)
         doc = data["document"]
-        src = doc.get("canonical_location")
-        if not src or not os.path.isfile(src):
-            fail("source missing for %s: %s" % (doc_id, src))
+        source = doc.get("canonical_location")
+        src = resolve_source(source)
+        if not source or not os.path.isfile(src):
+            fail("source missing for %s: %s" % (doc_id, source))
         live = sha256_file(src)
         recorded = doc.get("sha256", "")
         if live == recorded and not set_freshness:
             print("%s: current (sha %s…)" % (doc_id, live[:12]))
             return 0
         before = recorded
+        now = utcnow()
         doc["sha256"] = live
-        doc.setdefault("validation", {})["validated_at"] = utcnow()
+        doc.setdefault("validation", {})["validated_at"] = now
         if set_freshness:
             if set_freshness not in freshness_enum():
                 fail("freshness %r not in schema enum" % set_freshness)
             doc["validation"]["freshness"] = set_freshness
         if doc["validation"].get("freshness") == "living":
             living_consolidate_note(data, live)
-        if before != live:
-            append_hash_history(data, before, live, note or "re-mint from source")
+        history_reason = note or (
+            "re-mint freshness-only" if before == live else "re-mint from source")
+        append_hash_history(data, before, live, history_reason, timestamp=now)
         stamp(data.setdefault("notes", {}), "re-mint %s%s" % (
             ("%s… -> %s…" % (before[:12], live[:12])) if before != live else "freshness-only",
-            (" — " + note) if note else ""))
+            (" — " + note) if note else ""), timestamp=now)
         dump_yaml_atomic(record_path(doc_id), data)
         print("%s: re-minted %s… -> %s…" % (doc_id, before[:12], live[:12]))
         return 0
@@ -288,9 +331,10 @@ def cmd_sweep_stale():
     for doc_id, _ in iter_records():
         data = load_record(doc_id)
         doc = data["document"]
-        src = doc.get("canonical_location")
-        if not src or not os.path.isfile(src):
-            print("%s: SOURCE-MISSING (%s)" % (doc_id, src))
+        source = doc.get("canonical_location")
+        src = resolve_source(source)
+        if not source or not os.path.isfile(src):
+            print("%s: SOURCE-MISSING (%s)" % (doc_id, source))
             stale += 1
             continue
         live = sha256_file(src)
@@ -310,8 +354,9 @@ def cmd_consolidate():
         doc = data["document"]
         if (doc.get("validation") or {}).get("freshness") != "living":
             continue
-        src = doc.get("canonical_location")
-        if not src or not os.path.isfile(src):
+        source = doc.get("canonical_location")
+        src = resolve_source(source)
+        if not source or not os.path.isfile(src):
             print("%s: SKIP (source missing)" % doc_id)
             continue
         if sha256_file(src) != doc.get("sha256", ""):
@@ -372,8 +417,9 @@ def cmd_gate(ids):
             problems.append("%s: freshness %r not in enum" % (doc_id, fr))
         if str(doc.get("declared_purpose", "")).startswith("PENDING-AGENT"):
             problems.append("%s: declared_purpose PENDING-AGENT (agent must fill)" % doc_id)
-        src = doc.get("canonical_location")
-        if not src or not os.path.isfile(src):
+        source = doc.get("canonical_location")
+        src = resolve_source(source)
+        if not source or not os.path.isfile(src):
             problems.append("%s: canonical_location missing on disk" % doc_id)
         elif sha256_file(src) != doc.get("sha256", "") and fr != "living":
             problems.append("%s: source hash drift (non-living record)" % doc_id)

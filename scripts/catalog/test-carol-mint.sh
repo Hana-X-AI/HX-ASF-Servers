@@ -55,6 +55,61 @@ if [ $rc -eq 0 ] && printf '%s' "$out" | grep -q "re-minted"; then ok "re-mint c
 out="$(python3 "$TOOL" re-mint DOC-fix-alpha 2>&1)"; rc=$?
 if [ $rc -eq 0 ] && printf '%s' "$out" | grep -q "current"; then ok "re-mint unchanged = current"; else bad "re-mint unchanged: rc=$rc out=[$out]"; fi
 
+# 2a. freshness-only re-mint records the same hash at the mint timestamp
+out="$(python3 "$TOOL" re-mint DOC-fix-alpha --set-freshness current --note "same-hash fixture" 2>&1)"; rc=$?
+if [ $rc -eq 0 ] && python3 - <<'PY'
+import os
+import re
+import yaml
+
+path = os.path.join(os.environ["CAROL_MINT_ROOT"], "documents", "DOC-fix-alpha.yaml")
+with open(path, encoding="utf-8") as fh:
+  data = yaml.safe_load(fh)
+doc = data["document"]
+minted = data["notes"]["minted_by"]
+timestamp = re.search(r" @ ([^ ]+) — ", minted).group(1)
+matches = [
+  event for event in doc["hash_history"]
+  if event.get("sha256") == doc["sha256"]
+  and event.get("timestamp") == timestamp
+  and event.get("reason") == "same-hash fixture"
+]
+assert doc["validation"]["validated_at"] == timestamp
+assert len(matches) == 1
+PY
+then ok "freshness-only re-mint records same-hash event"; else bad "freshness-only history: rc=$rc out=[$out]"; fi
+
+# 2b. only an identical SHA/timestamp/reason event is idempotent
+if CAROL_MINT_TOOL="$TOOL" python3 - <<'PY'
+import importlib.machinery
+import importlib.util
+import os
+
+loader = importlib.machinery.SourceFileLoader("carol_mint_tested", os.environ["CAROL_MINT_TOOL"])
+spec = importlib.util.spec_from_loader("carol_mint_tested", loader)
+module = importlib.util.module_from_spec(spec)
+loader.exec_module(module)
+
+digest = "a" * 64
+events = {"document": {"hash_history": []}, "notes": {}}
+module.append_hash_history(events, digest, digest, "reason one", "2026-08-31T05:00:00Z")
+module.append_hash_history(events, digest, digest, "reason one", "2026-08-31T05:00:00Z")
+module.append_hash_history(events, digest, digest, "reason two", "2026-08-31T05:00:00Z")
+module.append_hash_history(events, digest, digest, "reason one", "2026-08-31T05:00:01Z")
+assert len(events["document"]["hash_history"]) == 3
+
+prose = {"document": {}, "notes": {"hash_history": "seed"}}
+module.append_hash_history(prose, digest, digest, "reason one", "2026-08-31T05:00:00Z")
+module.append_hash_history(prose, digest, digest, "reason one", "2026-08-31T05:00:00Z")
+module.append_hash_history(prose, digest, digest, "reason two", "2026-08-31T05:00:00Z")
+module.append_hash_history(prose, digest, digest, "reason one", "2026-08-31T05:00:01Z")
+chain = prose["notes"]["hash_history"]
+assert chain.count("aaaaaaaa… (2026-08-31T05:00:00Z, reason one)") == 1
+assert chain.count("aaaaaaaa… (2026-08-31T05:00:00Z, reason two)") == 1
+assert chain.count("aaaaaaaa… (2026-08-31T05:00:01Z, reason one)") == 1
+PY
+then ok "hash-history exact-event idempotence: list + prose"; else bad "hash-history exact-event idempotence"; fi
+
 # 3. refusal: unknown record
 out="$(python3 "$TOOL" re-mint DOC-nope 2>&1)"; rc=$?
 if [ $rc -eq 1 ] && printf '%s' "$out" | grep -q "REFUSED"; then ok "refusal: unknown record"; else bad "refusal unknown: rc=$rc out=[$out]"; fi

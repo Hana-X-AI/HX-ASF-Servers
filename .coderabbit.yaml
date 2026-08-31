@@ -75,7 +75,7 @@ reviews:
     - path: "servers/**"
       instructions: "Operational configuration and implementation plans are current-state documents unless they explicitly identify themselves as historical evidence. Correct directly."
     - path: "scripts/**"
-      instructions: "Live operational source. Correct directly; stdlib-only Python is a hard repository rule — flag any third-party import."
+      instructions: "Live operational source. Correct directly. DEPENDENCY ENVELOPE: Python standard library plus PyYAML — nothing else. PyYAML is ratified, not tolerated: scripts/validate.py is the single validation command under owner decisions UD1/UD2 and imports it at module scope, the ci-cd gates job installs it as an explicit step, and every governance artifact this repository reads is YAML (catalog records, work-state.schema.yaml, the hook manifest, the pilot templates). Do NOT propose migrating these scripts to a stdlib-only data format or parser — that was assessed on 2026-08-30 and rejected, because it would make one governance file the only artifact a reader cannot open with the same expectations as its neighbours and would cost the manifests their comments. This instruction previously read 'stdlib-only Python is a hard repository rule', which contradicted the ratified implementation in 13 of 16 scripts and produced the same finding three times. DO flag: any import that is neither standard library nor PyYAML; and a new PyYAML import in scripts/wiki/render.py, scripts/skills_sync.py or scripts/test_work_state.py, which are stdlib-only by design because they consume no YAML."
     - path: ".github/**"
       instructions: "Live CI configuration. Correct directly."
     - path: "pilots/**/fixtures/**"

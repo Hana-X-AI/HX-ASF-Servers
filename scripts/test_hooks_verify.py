@@ -2,10 +2,10 @@
 """test_hooks_verify.py — regression fixtures for the hook manifest check (O5).
 
 A verifier that cannot fail is worth nothing, so every check here is proved by
-introducing the drift it is meant to catch. The shim and secret-boundary cases
-are the load-bearing ones: both failure modes are SILENT in production — an
-unshimmed advisory hook exits 0 having matched nothing, and a credential leak
-from the user-scope config would not announce itself.
+introducing the drift it is meant to catch. Test the shim and secret-boundary
+cases first: both failure modes are SILENT in production. An unshimmed advisory
+hook exits 0 having matched nothing, and a credential leak from the user-scope
+config would not announce itself.
 
 Run: python3 scripts/test_hooks_verify.py
 """

@@ -1,0 +1,51 @@
+document:
+  id: DOC-kdd-0024-two-stage-closure
+  title: 'KDD-0024 — Two-stage closure: cataloguing does not gate acceptance (O4)'
+  type: decision
+  declared_purpose: 'Ratified decision (2026-08-30) resolving a five-day contradiction between two ratified records that never cited each other: AGENTS.md (2026-08-25) made a material handoff "incomplete without Carol''s catalog receipt", while KDD-0013 Amendment 5 (2026-08-29) directed that "no gate, handoff, or lane blocks on her output". Owner directive 2026-08-30 — non-critical-path work must never block critical path, agents included — settles it for Amendment 5. D1: a handoff has two independent states, execution_accepted (evidence produced and deterministic gates passed; the acceptance row is written, goal status updates, and the next work order may dispatch) and catalog_pending/catalog_complete (knowledge projection, tracked separately, never gating). D2: Carol''s receipt is still required — this is a sequencing change, not a removal. D3: synchronous exception, deliberately narrow — authority, security, schema, agent-identity and reusable-platform-knowledge changes take the receipt before closure, and an unclear class is treated as synchronous. D4: the goal work-state schema is deliberately NOT extended; execution_accepted is a handoff state at work-order granularity, and adding it to the goal enum would conflate two levels — the state lives in the hx gate receipt (O3). D5 as originally written called all three amended documents append-only; Amendment 1 (2026-08-30) corrects that: AGENTS.md and governace/process/** are LIVE artifacts corrected in place per the CLAUDE.md artifact-class policy, and they were re-corrected accordingly, with the unclear-class fallback added to both context-packet templates. Evidence of record that the blocking rule was already failing: catalog receipt 2026-08-27T0030Z-carol-tmicro-fleet-time-pass.md parks a handoff OPEN because Carol''s write set was scoped elsewhere.'
+  source:
+    author: Agent-Zero (owner directive 2026-08-30)
+    provided_by: Claude Code session — process-optimization O4
+    origin: /home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0024-two-stage-closure.md
+    section: §whole-document
+    ingestion_date: '2026-08-30T23:05:00Z'
+  owner: Agent Zero
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: []
+    repositories: []
+    environments: []
+  status: active
+  security:
+    classification: internal
+    contains_secret_values: false
+  relations:
+  - predicate: references
+    target: DOC-repo-governance-agents-md
+    note: supersedes the 2026-08-25 documentation-governance blocking-handoff line for routine work
+  - predicate: references
+    target: DOC-agent-kimi-k3-verification-checklist
+    note: rewrites step 10 of the governor verification checklist
+  - predicate: references
+    target: DOC-pilot-templates-context-packet
+    note: replaces the blocking handoff constant shipped in every context packet
+  - predicate: references
+    target: DOC-agent-carol-profile
+    note: Carol is background-class (KDD-0013 Amendment 5); her receipt no longer holds a handoff open
+  validation:
+    validated_at: '2026-08-30T23:22:03Z'
+    freshness: current
+  sha256: f42e99ad493e3e795286699a0c6f6f3ec780d076acf0caebe657703b1489b091
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0024-two-stage-closure.md
+  authority_level: ratified-governance
+  hash_history:
+  - sha256: 41c902cabf01e7a6011872ffc18de466a549eea3f6c78e02fcd7a3ad3494be9d
+    timestamp: unrecorded
+    reason: predecessor state restored by carol-mint (re-mint events before 2026-08-30T23:22:03Z did not record history)
+  - sha256: f42e99ad493e3e795286699a0c6f6f3ec780d076acf0caebe657703b1489b091
+    timestamp: '2026-08-30T23:22:03Z'
+    reason: allowance applies to the value only; timeline and artifact-class corrections
+notes:
+  minted_by: carol-mint 1.0.0 @ 2026-08-30T23:22:03Z — re-mint 41c902cabf01… -> f42e99ad493e… — allowance applies to the value only; timeline and artifact-class corrections

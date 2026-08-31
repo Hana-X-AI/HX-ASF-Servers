@@ -1,8 +1,8 @@
 index:
   schema_version: 1
   initialized: 2026-08-25 (Carol instantiation, owner amendment)
-  updated: '2026-08-30T1849Z (carol-mint 1.0.0 — 20-step ci-cd reconciliation: DOC-ci-cd-workflow + DOC-cicd-pipeline-doc titles and metadata [titles preserved])'
-  document_count: 341
+  updated: 2026-08-31T0425Z (carol-mint 1.0.0 — PR 8 three-finding corrective action [titles preserved])
+  document_count: 344
   documents:
   - id: DOC-a01-origin-codex-20260824-2125
     title: codex_20260824_2125_hx-1-ollama-pilot-qwen3.8-amendment.md — original source of Amendment A01 (agent-zero-docs)
@@ -281,7 +281,7 @@ index:
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/knowledge/catalog/receipts/2026-08-29-batchB-carol-statelog-registry.md
   - id: DOC-ci-cd-workflow
-    title: .github/workflows/ci-cd.yml — p8 CI/CD pipeline definition (owner-ratified 2026-08-26; 20 steps across gates / coderabbit-review / pr-manage; trigger every push to any branch)
+    title: .github/workflows/ci-cd.yml — p8 CI/CD pipeline definition (owner-ratified 2026-08-26; 25 steps across gates / coderabbit-review / pr-manage; trigger every push to any branch)
     type: contract
     authority_level: ratified-governance
     freshness: current
@@ -341,7 +341,7 @@ index:
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/servers/2026-08-26-fleet-time-and-mask-pass.md
   - id: DOC-goal-fleet-baseline-deployment
-    title: Goal 2026-08-27-fleet-baseline-deployment — bring every in-scope fleet host to the declared baseline (owner directive GO 2026-08-27, owner-sequenced FIRST — OmniRoute L1-M3 closure follows; 7 fresh + 5 re-verify, two sanctioned mutation classes; ACTIVE — acceptance items 1-3 met per the wave evidence, item 4 is this catalog wave)
+    title: Goal 2026-08-27-fleet-baseline-deployment — COMPLETE 2026-08-28; 12/12 in-scope hosts reconciled under the two sanctioned mutation classes
     type: goal
     authority_level: ratified-governance
     freshness: current
@@ -541,7 +541,7 @@ index:
   - id: DOC-kdd-0013-agent-model-lanes
     title: 'KDD-0013: Per-agent model lane assignments'
     type: decision
-    authority_level: agent-evidence
+    authority_level: ratified-governance
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0013-agent-model-lanes.md
   - id: DOC-kdd-0017-quinn-registration
@@ -574,6 +574,24 @@ index:
     authority_level: ratified-governance
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0021-work-state-engine.md
+  - id: DOC-kdd-0023-capability-manifests
+    title: KDD-0023 — Declare capabilities, then verify them (O5 hook manifest + SY-5; O7 skill registry + SY-6)
+    type: decision
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0023-capability-manifests.md
+  - id: DOC-kdd-0024-two-stage-closure
+    title: 'KDD-0024 — Two-stage closure: cataloguing does not gate acceptance (O4)'
+    type: decision
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0024-two-stage-closure.md
+  - id: DOC-kdd-0025-secret-boundary-graduation
+    title: KDD-0025 — Secret-boundary graduation evidence; the warn→block flip stays an owner decision (O6)
+    type: decision
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0025-secret-boundary-graduation.md
   - id: DOC-kimi-k3-goal-setting-guidance
     title: agents/kimi-k3/goal-setting-guidance.md — Kimi-K3 goal-setting and agent invocation guidance (ratified adoption per KDD-0002)
     type: runbook
@@ -635,7 +653,7 @@ index:
     freshness: current
     canonical_location: /home/hxsa/opt/local-tkv/agent-zero-docs/pilots/hxs-3/meta/doc-1.md
   - id: DOC-pilot-dsh-impl-001-state-log
-    title: PILOT-DSH-IMPL-001 01-state-log.md — pilot state-log rows 17-34
+    title: PILOT-DSH-IMPL-001 01-state-log.md — append-only implementation state log, rows 1-47
     type: other
     authority_level: agent-evidence
     freshness: current
@@ -839,7 +857,7 @@ index:
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-HX1-OLLAMA-QWEN27B-001/plan.md
   - id: DOC-pilot-hx1-state-log
-    title: PILOT-HX1-OLLAMA-QWEN27B-001 09-state-log.md — governor state-transition log (rows 1–44 at re-validation)
+    title: PILOT-HX1-OLLAMA-QWEN27B-001 09-state-log.md — append-only governor state-transition log, rows 1-78
     type: other
     authority_level: agent-evidence
     freshness: current
@@ -1145,7 +1163,7 @@ index:
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-KK3-JOHN-OLLAMA-AUDIT-001/plan.md
   - id: DOC-pilot-omniroute-19-kimi-code-provider-setup
-    title: PILOT-OMNIROUTE-LAYER0-001 19-kimi-code-omniroute-provider-setup.md — Kimi Code -> OmniRoute provider setup (reference, owner-approved 2026-08-27; implementation deferred until baseline completes — baseline now COMPLETE; the L1-M3 closure of the gateway itself remains owner-gated)
+    title: PILOT-OMNIROUTE-LAYER0-001 19-kimi-code-omniroute-provider-setup.md — IMPLEMENTED 2026-08-28; routed proof FLIP-PROOF-42 via Qwen-X
     type: runbook
     authority_level: ratified-governance
     freshness: current
@@ -1385,7 +1403,7 @@ index:
     freshness: current
     canonical_location: /home/hxsa/opt/HX-ASF-Servers/servers/hxs-3/2026-08-29-oai-x-implementation-plan.md
   - id: DOC-server-registry
-    title: servers/SERVER-REGISTRY.md — HX fleet registry, REPO copy (source of truth for discovery lifecycle + manual role assignment; 17 rows (hxs-1..hxs-15 + hxs-20 + hxs-21 added 2026-08-28, baseline-green); amended 2026-08-27/28; living document mirrored at /opt/tkv-local/servers/SERVER-REGISTRY.md)
+    title: servers/SERVER-REGISTRY.md — HX fleet registry authority; 17 preserved rows, 16 active after hxs-7 decommission
     type: registry
     authority_level: ratified-governance
     freshness: current

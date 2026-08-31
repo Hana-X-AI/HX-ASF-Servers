@@ -1,58 +1,74 @@
 document:
-  id: "DOC-backend-qwen-x"
-  title: "Backend-capability record — Qwen-X (hxs-1, 192.168.50.200:11434; qwen3.8:27b Q4_K_M; status ACTIVE, M8-signed)"
-  type: "registry"
-  declared_purpose: "Fleet backend-capability registration per servers/BLUEPRINT-llm-server.md §8 (registration schema: endpoint, exact tag + digest, capabilities, runtime profile, health/evidence contracts, owner). call_sign 'Qwen-X' (owner fleet call-sign directive 2026-08-26; the X in a call-sign is ALWAYS capital) = hxs-1 (192.168.50.200), the fleet Deep reasoning & synthesis backend (Qwen 3.8 27B). Endpoint http://192.168.50.200:11434 (Ollama API: /api/generate, /api/chat, /api/ps, /api/tags; reachable only from 192.168.50.0/24 with no service-layer auth — the private LAN is the boundary, loopback preserved; exposure posture per the hxs-1 SC-07a amendment and blueprint §5). Model qwen3.8:27b GGUF Q4_K_M, frozen digest 766cd9469fb47c42890616880772f2647fcfe4656b7550e5cc37ab186cc99d8a (M6b freeze — the hx-qwen3.8-27b-64k operating/resident profile manifest; see notes.identity_semantics). Profile aliases: hx-qwen3.8-27b-32k (recovery baseline, digest db2c6206…), hx-qwen3.8-27b-64k (operating default, resident), hx-qwen3.8-27b-128k (qualified extended, 94b83a1e…); model reference is alias-only — never upstream tags, never :latest. Capabilities: completion; tool calling (native, validated on hxs-1); thinking ON by default; vision NOT in baseline. Runtime profile: ctx 65536 operating (hx1.conf; clients do NOT send num_ctx — the server profile governs). Health/evidence contracts: ollama-preload.service with the bounded-phase preload script (TimeoutStartSec=600; script worst case ≤538 s = 208 s probes + 300 s single-attempt load + 30 s /api/ps assertion of exact alias + frozen digest; 900 s D5 recovery SLO); both units enabled/active; identity + residency proven across three cold reboots (M7a). Limits: serialized admission (OLLAMA_NUM_PARALLEL=1, OLLAMA_MAX_LOADED_MODELS=1) — consumers MUST serialize requests; native-defaults baseline sampling (A01 rule — no overrides). Owner: Agent-Zero. Status ACTIVE — hxs-1 is M8-signed (pilot M0–M8 closed PASS 2026-08-26)."
-  inferred_value: "INFERENCE: this is the resolve target behind the Qwen-X call-sign — blueprint §8 makes consumers configure from §8 AND the live catalog record, so this entry is a runtime dependency for every gateway, router, agent preset, and client that addresses the reasoning backend; its freshness requirement is therefore operational, not archival."
+  id: DOC-backend-qwen-x
+  title: Backend-capability record — Qwen-X (hxs-1, 192.168.50.200:11434; qwen3.8:27b Q4_K_M; status ACTIVE, M8-signed)
+  type: registry
+  declared_purpose: 'Fleet backend-capability registration per servers/BLUEPRINT-llm-server.md §8 (registration schema: endpoint, exact tag + digest, capabilities, runtime profile, health/evidence contracts, owner). call_sign ''Qwen-X'' (owner fleet call-sign directive 2026-08-26; the X in a call-sign is ALWAYS capital) = hxs-1 (192.168.50.200), the fleet Deep reasoning & synthesis backend (Qwen 3.8 27B). Endpoint http://192.168.50.200:11434 (Ollama API: /api/generate, /api/chat, /api/ps, /api/tags; reachable only from 192.168.50.0/24 with no service-layer auth — the private LAN is the boundary, loopback preserved; exposure posture per the hxs-1 SC-07a amendment and blueprint §5). Model qwen3.8:27b GGUF Q4_K_M, frozen digest 766cd9469fb47c42890616880772f2647fcfe4656b7550e5cc37ab186cc99d8a (M6b freeze — the hx-qwen3.8-27b-64k operating/resident profile manifest; see notes.identity_semantics). Profile aliases: hx-qwen3.8-27b-32k (recovery baseline, digest db2c6206…), hx-qwen3.8-27b-64k (operating default, resident), hx-qwen3.8-27b-128k (qualified extended, 94b83a1e…); model reference is alias-only — never upstream tags, never :latest. Capabilities: completion; tool calling (native, validated on hxs-1); thinking ON by default; vision NOT in baseline. Runtime profile: ctx 65536 operating (hx1.conf; clients do NOT send num_ctx — the server profile governs). Health/evidence contracts: ollama-preload.service with the bounded-phase preload script (TimeoutStartSec=600; script worst case ≤538 s = 208 s probes + 300 s single-attempt load + 30 s /api/ps assertion of exact alias + frozen digest; 900 s D5 recovery SLO); both units enabled/active; identity + residency proven across three cold reboots (M7a). Limits: serialized admission (OLLAMA_NUM_PARALLEL=1, OLLAMA_MAX_LOADED_MODELS=1) — consumers MUST serialize requests; native-defaults baseline sampling (A01 rule — no overrides). Owner: Agent-Zero. Status ACTIVE — hxs-1 is M8-signed (pilot M0–M8 closed PASS 2026-08-26).'
+  inferred_value: 'INFERENCE: this is the resolve target behind the Qwen-X call-sign — blueprint §8 makes consumers configure from §8 AND the live catalog record, so this entry is a runtime dependency for every gateway, router, agent preset, and client that addresses the reasoning backend; its freshness requirement is therefore operational, not archival.'
   source:
-    author: "Agent Zero (fleet capability call-sign directive 2026-08-26); Carol (record synthesis per the blueprint §8 registration schema)"
-    provided_by: "Kimi-K3 (dispatch)"
-    origin: "servers/BLUEPRINT-llm-server.md §8 fleet capability call-signs (registration locus) + the hxs-1 evidence chain cited in relations"
-    section: "§8 fleet capability call-signs — alias table row Qwen-X"
-    ingestion_date: "2026-08-26T05:35:00Z"
-  owner: "Agent Zero"
+    author: Agent Zero (fleet capability call-sign directive 2026-08-26); Carol (record synthesis per the blueprint §8 registration schema)
+    provided_by: Kimi-K3 (dispatch)
+    origin: servers/BLUEPRINT-llm-server.md §8 fleet capability call-signs (registration locus) + the hxs-1 evidence chain cited in relations
+    section: §8 fleet capability call-signs — alias table row Qwen-X
+    ingestion_date: '2026-08-26T05:35:00Z'
+  owner: Agent Zero
   applies_to:
-    hosts: [hxs-1]
+    hosts:
+    - hxs-1
     fqdns: []
-    services: [ollama.service, ollama-preload.service]
+    services:
+    - ollama.service
+    - ollama-preload.service
     agents: []
-    repositories: [HX-ASF-Servers, tkv-local]
-    environments: [fleet, production]
-    models: [qwen3.8:27b]
-  version: "registered 2026-08-26 (blueprint §8 alias table)"
-  status: "active"
-  authority_level: "ratified-governance"
+    repositories:
+    - HX-ASF-Servers
+    - tkv-local
+    environments:
+    - fleet
+    - production
+    models:
+    - qwen3.8:27b
+  version: registered 2026-08-26 (blueprint §8 alias table)
+  status: active
+  authority_level: ratified-governance
   supersedes: []
   superseded_by: []
   security:
-    classification: "internal"
-    access_restrictions: "none beyond repository access"
+    classification: internal
+    access_restrictions: none beyond repository access
     contains_secret_values: false
   relations:
-    - predicate: "configures"
-      target: "hxs-1"
-      note: "registers hxs-1's ratified serving capability under the Qwen-X call-sign; the as-configured host record (Phase 2, server records contract) is DOC-tkv-hxs1-configuration"
-    - predicate: "references"
-      target: "DOC-tkv-hxs1-configuration"
-      note: "content basis (M8-signed, owner-ratified): the three profile aliases + digests, preload contract, exposure posture, services — verification chain hxs-1 pilot M0–M8"
-    - predicate: "references"
-      target: "DOC-blueprint-llm-server"
-      note: "registration locus (§8 alias table row Qwen-X) and the downstream-consumer contract that makes this record the resolve target for consumers"
-    - predicate: "references"
-      target: "DOC-goal-hx1-ollama-qwen38-27b"
-      note: "the hxs-1 goal record (GOAL-HX1-QWEN38-001; M0–M8 closed PASS 2026-08-26) — SC-07a exposure amendment embodied in the endpoint posture"
-    - predicate: "produced_by"
-      target: "owner fleet capability call-sign directive 2026-08-26"
-      note: "recorded in the hxs-2 state log (row 10) and hxs-3 state log (row 4) and materialized in the blueprint §8 alias table; convention: the X in a call-sign is always capital"
+  - predicate: configures
+    target: hxs-1
+    note: registers hxs-1's ratified serving capability under the Qwen-X call-sign; the as-configured host record (Phase 2, server records contract) is DOC-tkv-hxs1-configuration
+  - predicate: references
+    target: DOC-tkv-hxs1-configuration
+    note: 'content basis (M8-signed, owner-ratified): the three profile aliases + digests, preload contract, exposure posture, services — verification chain hxs-1 pilot M0–M8'
+  - predicate: references
+    target: DOC-blueprint-llm-server
+    note: registration locus (§8 alias table row Qwen-X) and the downstream-consumer contract that makes this record the resolve target for consumers
+  - predicate: references
+    target: DOC-goal-hx1-ollama-qwen38-27b
+    note: the hxs-1 goal record (GOAL-HX1-QWEN38-001; M0–M8 closed PASS 2026-08-26) — SC-07a exposure amendment embodied in the endpoint posture
+  - predicate: produced_by
+    target: owner fleet capability call-sign directive 2026-08-26
+    note: 'recorded in the hxs-2 state log (row 10) and hxs-3 state log (row 4) and materialized in the blueprint §8 alias table; convention: the X in a call-sign is always capital'
   validation:
-    validated_at: "2026-08-26T13:05:00Z"
-    freshness: "current"
-    review_due: "on any change to the hxs-1 serving capability (endpoint, alias set, digests, limits, service posture) or on blueprint §8 amendment"
-  sha256: "51ec3d533a4bd09137fe9c2d419871d68b759fe8f48e3cbf451f2a89afe7dce1"
-  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/servers/BLUEPRINT-llm-server.md"
+    validated_at: '2026-08-31T01:08:31Z'
+    freshness: current
+    review_due: on any change to the hxs-1 serving capability (endpoint, alias set, digests, limits, service posture) or on blueprint §8 amendment
+  sha256: e11110d12a3a51a8a1f5015d01ec983364a5eb7626a2a2aee77e57deaba50606
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/servers/BLUEPRINT-llm-server.md
+  hash_history:
+  - sha256: 51ec3d533a4bd09137fe9c2d419871d68b759fe8f48e3cbf451f2a89afe7dce1
+    timestamp: unrecorded
+    reason: predecessor state restored by carol-mint (re-mint events before 2026-08-31T01:08:31Z did not record history)
+  - sha256: e11110d12a3a51a8a1f5015d01ec983364a5eb7626a2a2aee77e57deaba50606
+    timestamp: '2026-08-31T01:08:31Z'
+    reason: '2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'
 notes:
-  record_class: "NEW RECORD CLASS — backend capability (typed registry per judgment): blueprint §8 and KDD-0005/0006 designate the catalog as the capability registry; each record of this class is one registry entry binding a fleet call-sign to endpoint + frozen identity + capabilities + limits + owner. The consumer-binding force lives in blueprint §8 (type contract) which these entries reference; parallel to DOC-tkv-server-registry holding fleet rows whose force is owner ratification. First materialization of the capability-registration convention flagged at the hxs-3 M0 run (capability LIMITs are first-class registry content — see DOC-backend-meta-x for the first LIMIT-carrying entry)."
-  callsign_convention: "Fleet capability call-signs (owner, 2026-08-26): every LLM backend carries a capability-level call-sign resolved through its Second Brain backend-capability record — never a bare Ollama tag (the hxs-1 bare-alias ambiguity lesson, retired on hxs-1). The X in a call-sign is ALWAYS capital. Status candidate until the host's M8 sign-off; Qwen-X is ACTIVE because hxs-1 is M8-signed."
-  identity_semantics: "The frozen digest cited (766cd9469fb4…) is the M6b-frozen hx-qwen3.8-27b-64k operating/resident profile manifest digest (evidence: 29-esme M6b profiles, 30-esme M7a reboot cycles, 38-cp exposure packet — resident hx-qwen3.8-27b-64k:latest, 20,463,789,012 B, 100% VRAM, ctx 65536, Forever). Each hxs-1 profile alias carries its own manifest digest per baked ctx (32k db2c6206…, 128k 94b83a1e…); identity = exact alias + its frozen digest, per blueprint §1."
-  checksum_method: "sha256 = servers/BLUEPRINT-llm-server.md at registration-close (chain: 1c22749a… at 2026-08-26T05:28Z → 51825990… at 06:02Z after the governor's mid-run §8 Chat-X row addition — this record's own §8 row unchanged → 5062b208… at 2026-08-26T07:47Z after the §8 record-ID column completion (Chat-X cell → DOC-backend-chat-x), the Meta-X cell update, and the batch-11 Provenance 'registered' line — intermediate states ce0cabf0…/88c1b85a… per the chat-x/meta-x chains; this record's own §8 row text unchanged → df59d340… at 2026-08-26T10:00Z (SIXTH amendment — §8 profile entries landed on the Coder-X/Meta-X/Chat-X rows; the Qwen-X row already carried its M6b profile set, row text unchanged) → 51ec3d53… at 2026-08-26T13:05Z re-validated (SEVENTH amendment — review batch-12 §5 'honest enforcement shape' block, landed 2026-08-26T09:55Z per the 1045Z receipt chain df59d340… → 51ec3d53…; Qwen-X row text unchanged) — F-LP-2 BASIS-REFRESH ONLY: the blueprint changed beneath this record multiple times since creation but its own §8 row text never did, so this touch is a checksum-chain extension + validated_at solely, no row-mirroring content change) — the §8 alias-table row is the registration locus of this catalog-native record; per-host capability facts trace to the evidence records in relations. Re-hash on blueprint drift (T-micro re-validation)."
-  status_mapping: "catalog status active = blueprint §8 'ACTIVE' for Qwen-X: hxs-1 M8-signed 2026-08-26 (DOC-pilot-hx1-decision-36-m8-acceptance); authority_level ratified-governance per the owner call-sign directive + the owner-ratified M8 chain."
+  record_class: 'NEW RECORD CLASS — backend capability (typed registry per judgment): blueprint §8 and KDD-0005/0006 designate the catalog as the capability registry; each record of this class is one registry entry binding a fleet call-sign to endpoint + frozen identity + capabilities + limits + owner. The consumer-binding force lives in blueprint §8 (type contract) which these entries reference; parallel to DOC-tkv-server-registry holding fleet rows whose force is owner ratification. First materialization of the capability-registration convention flagged at the hxs-3 M0 run (capability LIMITs are first-class registry content — see DOC-backend-meta-x for the first LIMIT-carrying entry).'
+  callsign_convention: 'Fleet capability call-signs (owner, 2026-08-26): every LLM backend carries a capability-level call-sign resolved through its Second Brain backend-capability record — never a bare Ollama tag (the hxs-1 bare-alias ambiguity lesson, retired on hxs-1). The X in a call-sign is ALWAYS capital. Status candidate until the host''s M8 sign-off; Qwen-X is ACTIVE because hxs-1 is M8-signed.'
+  identity_semantics: 'The frozen digest cited (766cd9469fb4…) is the M6b-frozen hx-qwen3.8-27b-64k operating/resident profile manifest digest (evidence: 29-esme M6b profiles, 30-esme M7a reboot cycles, 38-cp exposure packet — resident hx-qwen3.8-27b-64k:latest, 20,463,789,012 B, 100% VRAM, ctx 65536, Forever). Each hxs-1 profile alias carries its own manifest digest per baked ctx (32k db2c6206…, 128k 94b83a1e…); identity = exact alias + its frozen digest, per blueprint §1.'
+  checksum_method: 'sha256 = servers/BLUEPRINT-llm-server.md at registration-close (chain: 1c22749a… at 2026-08-26T05:28Z → 51825990… at 06:02Z after the governor''s mid-run §8 Chat-X row addition — this record''s own §8 row unchanged → 5062b208… at 2026-08-26T07:47Z after the §8 record-ID column completion (Chat-X cell → DOC-backend-chat-x), the Meta-X cell update, and the batch-11 Provenance ''registered'' line — intermediate states ce0cabf0…/88c1b85a… per the chat-x/meta-x chains; this record''s own §8 row text unchanged → df59d340… at 2026-08-26T10:00Z (SIXTH amendment — §8 profile entries landed on the Coder-X/Meta-X/Chat-X rows; the Qwen-X row already carried its M6b profile set, row text unchanged) → 51ec3d53… at 2026-08-26T13:05Z re-validated (SEVENTH amendment — review batch-12 §5 ''honest enforcement shape'' block, landed 2026-08-26T09:55Z per the 1045Z receipt chain df59d340… → 51ec3d53…; Qwen-X row text unchanged) — F-LP-2 BASIS-REFRESH ONLY: the blueprint changed beneath this record multiple times since creation but its own §8 row text never did, so this touch is a checksum-chain extension + validated_at solely, no row-mirroring content change) — the §8 alias-table row is the registration locus of this catalog-native record; per-host capability facts trace to the evidence records in relations. Re-hash on blueprint drift (T-micro re-validation).'
+  status_mapping: 'catalog status active = blueprint §8 ''ACTIVE'' for Qwen-X: hxs-1 M8-signed 2026-08-26 (DOC-pilot-hx1-decision-36-m8-acceptance); authority_level ratified-governance per the owner call-sign directive + the owner-ratified M8 chain.'
+  minted_by: 'carol-mint 1.0.0 @ 2026-08-31T01:08:31Z — re-mint 51ec3d533a4b… -> e11110d12a3a… — 2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'

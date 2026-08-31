@@ -1,52 +1,66 @@
 document:
   id: DOC-pilot-dsh-impl-001-state-log
-  title: "PILOT-DSH-IMPL-001 01-state-log.md — pilot state-log rows 17-34"
+  title: PILOT-DSH-IMPL-001 01-state-log.md — append-only implementation state log, rows 1-47
   type: other
-  declared_purpose: "Catalog entry for pilot state-log rows 17-34 of PILOT-DSH-IMPL-001"
-  inferred_value: "INFERENCE: state-log rows 17-34 capture governance actions for DSH implementation pilot."
+  declared_purpose: Catalog entry for the complete append-only implementation state log, rows 1-47 of PILOT-DSH-IMPL-001. The prior rows 17-34 ingestion scope is preserved in reconciliation history.
+  inferred_value: 'INFERENCE: state-log rows 1-47 capture the complete governance and implementation arc for DSH implementation pilot; rows 17-34 remain a historical ingestion scope.'
   source:
-    author: "Kimi-K3 (governor, main session)"
-    provided_by: "Kimi-K3"
-    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-DSH-IMPL-001/01-state-log.md"
-    section: "§17-34"
-    ingestion_date: "2026-08-29T00:00:00Z"
-  owner: "Carol"
+    author: Kimi-K3 (governor, main session)
+    provided_by: Kimi-K3
+    origin: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-DSH-IMPL-001/01-state-log.md
+    section: §whole-document
+    ingestion_date: '2026-08-29T00:00:00Z'
+  owner: governor role (currently James); append-only multi-agent evidence
   applies_to:
     hosts: []
     fqdns: []
     services: []
     agents:
-      - "carol"
+    - carol
     repositories:
-      - "HX-ASF-Servers"
+    - HX-ASF-Servers
     environments:
-      - "pilot"
+    - pilot
     models: []
-  version: "rows 17-34"
-  status: "active"
-  authority_level: "agent-evidence"
+  version: rows 1-47 at 2026-08-31 reconciliation
+  status: active
+  authority_level: agent-evidence
   supersedes: []
   superseded_by: []
   security:
-    classification: "internal"
-    access_restrictions: "none beyond repository access"
+    classification: internal
+    access_restrictions: none beyond repository access
     contains_secret_values: false
   relations:
-    - predicate: "describes"
-      target: "PILOT-DSH-IMPL-001 state-log rows 17-34"
-      note: "covers governance wave rows 17-34"
-    - predicate: "references"
-      target: "DOC-kdd-0011-rob-registration"
-      note: "links to Batch A agent registration"
-    - predicate: "references"
-      target: "DOC-kdd-0012-mia-chief-of-staff"
-      note: "links to Batch A chief-of-staff registration"
-    - predicate: "references"
-      target: "DOC-kdd-0013-agent-model-lanes"
-      note: "links to Batch A lane registration"
+  - predicate: describes
+    target: PILOT-DSH-IMPL-001 state-log rows 1-47
+    note: current full extent; the prior rows 17-34 ingestion scope is preserved in reconciliation history
+  - predicate: references
+    target: DOC-kdd-0011-rob-registration
+    note: links to Batch A agent registration
+  - predicate: references
+    target: DOC-kdd-0012-mia-chief-of-staff
+    note: links to Batch A chief-of-staff registration
+  - predicate: references
+    target: DOC-kdd-0013-agent-model-lanes
+    note: links to Batch A lane registration
   validation:
-    validated_at: "2026-08-29T00:00:00Z"
-    freshness: "current"
-    review_due: "on any catalog amendment"
-  sha256: "4a08ab1889b1a6a774793c76f6e946e203ec03c62e36d97d335713f97c8f7e9b"
-  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-DSH-IMPL-001/01-state-log.md"
+    validated_at: '2026-08-31T04:25:10Z'
+    freshness: current
+    review_due: on every appended state transition
+  sha256: ed7c13f8861ce5e41bf72d78532be3f904ba1d171f5ee46dc70c601bc9e5c782
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-DSH-IMPL-001/01-state-log.md
+  hash_history:
+  - sha256: 4a08ab1889b1a6a774793c76f6e946e203ec03c62e36d97d335713f97c8f7e9b
+    timestamp: unrecorded
+    reason: predecessor state restored by carol-mint (re-mint events before 2026-08-31T01:08:33Z did not record history)
+  - sha256: ed7c13f8861ce5e41bf72d78532be3f904ba1d171f5ee46dc70c601bc9e5c782
+    timestamp: '2026-08-31T01:08:33Z'
+    reason: '2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'
+  - sha256: ed7c13f8861ce5e41bf72d78532be3f904ba1d171f5ee46dc70c601bc9e5c782
+    timestamp: '2026-08-31T04:25:10Z'
+    reason: 'PR #8 finding: source scope corrected to whole document; rows 17-34 retained as historical ingestion provenance'
+notes:
+  prior_ingestion_scope: rows 17-34 at initial ingestion; superseded as current scope by the 2026-08-31 rows 1-47 reconciliation
+  semantic_reconciliation_20260831: Read through row 47. The prior title/purpose/relations scoped only rows 17-34 and were stale; the current source covers the full arc from commissioning through the Flash governor transition and the Gate 7/test-harness finding at row 47. declared_purpose and the describes relation retain the older scope as ingestion history; this note and version are controlling.
+  minted_by: 'carol-mint 1.0.0 @ 2026-08-31T04:25:10Z — re-mint freshness-only — PR #8 finding: source scope corrected to whole document; rows 17-34 retained as historical ingestion provenance'

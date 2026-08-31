@@ -1,72 +1,89 @@
 document:
-  id: "DOC-pilot-omniroute-trinity-adoption-assessment"
-  title: "PILOT-OMNIROUTE-LAYER0-001 03-trinity-adoption-assessment.md — Trinity adoption reconciliation report (verdict ADOPT-AS-CORRECTED; gate checklist G1-G12)"
-  type: "evidence"
-  declared_purpose: "Adoption reconciliation report for the Trinity candidate (Wave 0A, 2026-08-27, governor Kimi-K3; truth-state: roster/governance claims AUTHORITY, register corrections AUTHORITY governor-verified, candidate-document contents CANDIDATE, overlap judgements INFERENCE labeled). §1 verdict: ADOPT-AS-CORRECTED — Trinity fills an empty vertical lane (OmniRoute lifecycle engineering); every candidate-vs-authority conflict is documentation-level and resolved by the seven governor-verified corrections (§3 C1-C7); the candidate's operating discipline (source-pinned, rollback-first, evidence-backed, two-person integrity) survives correction intact; adoption reversible (documentation-only rollback); the decision is the owner's — OD-02 remains OPEN. §2 roster state: F1 Trinity ABSENT from the roster (agents/README.md lists kimi-k3, john, rick, carol; agents/ contains exactly carol/ john/ kimi-k3/ rick/ _template/, verified 2026-08-27; state log row 1 concurs); F2 roster + charters outrank any vault profile; F3 unrostered candidate roles (DeepSeek Harness, Neo, Cipher, Switch, Link, Relay, Oracle, Independent QA, John/Esme) mapped per C2/C3. §3 reconciliation register applied (candidate originals preserved unchanged; corrections live only in the produced drafts): C1 knowledge_root /opt/tkv-local/omniroute REJECTED — corpus is /opt/tkv-local/OmniRoute-release-v3.8.51 (DOC-tkv-corpus-omniroute), knowledge/catalog/ canonical (KDD-0005), Carol owns mutations; commit 42a13fedef8b… carried CANDIDATE-claimed, not verified identity; C2 DeepSeek Harness never existed (KDD-0006) — maps to KK3-orchestrated subagent sessions; C3 unrostered QA/Cipher roles map to the p11 verifier contract (deterministic -> Qwen-X -> owner); the five specialist cells NOT adopted, no subordinate agents; C4 no host firewalls (owner rule 2026-08-26) — LAN 192.168.50.0/24 + service authn/authz is the boundary; C5 target host hxs-8 DECIDED (OD-01; manifest OD-01 superseded, constraint set satisfied); C6 lane bounded to OmniRoute lifecycle engineering ONLY (no orchestration, no self-acceptance, no other lanes, no subordinate agents, no agent-like feature expansion); C7 Coder-X primary execution backend (per-task identity/health verification, stop-and-escalate, no cloud substitution ever) + Qwen-X independent verifier. §4 lane-overlap analysis vs all four roster agents (L1 kimi-k3: no overlap remaining — no cells, no spawning, escalation only; L2 rick: no overlap — OS/DNS/TLS/network/storage stay rick's, Trinity supplies port/bind/dependency requirements as design input; L3 john: no overlap — John/Esme roster-true, Ollama internals stay john's, backend selection is OD-08; L4 carol: largest candidate conflict RESOLVED by C1 — no second knowledge store, Trinity supplies metadata/relationship candidates, Carol catalogs and receipts; U1 unrostered roles: none enters the roster through this adoption). §5 adoption-gate checklist G1-G12: G1 roster state accurate SATISFIED; G2 candidates reconciled not copied SATISFIED; G3 no Trinity-active before the gate HELD; G4 charter draft in _template format SATISFIED; G5 corrected profile draft SATISFIED; G6 KDD proposal with exact owner decision SATISFIED; G7 lane overlap resolvable SATISFIED; G8 roster-true roles only SATISFIED; G9 no /opt/tkv-local/omniroute, catalog-canonical SATISFIED; G10 owner receives exact OD-02 decision READY; G11 zero secrets/mutations/cloud/host-contact HELD; G12 independent verification PENDING (Qwen-X review follows production in Wave 0A). No gate item failed or hidden. §6 recommendation O1 adopt-as-corrected (R1 lane empty, 13,098-file/102-API-domain surface should not be absorbed by the governor lane; R2 all conflicts documentation-level; R3 adoption reversible; R4 INFERENCE deferral buys no evidence); risks accepted under O1 recorded. §7 required action A1: Agent Zero decides OD-02 per KDD-0008 §Decision — until then Trinity remains a candidate: no roster entry, no work orders, no activation."
+  id: DOC-pilot-omniroute-trinity-adoption-assessment
+  title: PILOT-OMNIROUTE-LAYER0-001 03-trinity-adoption-assessment.md — Trinity adoption reconciliation report (verdict ADOPT-AS-CORRECTED; gate checklist G1-G12)
+  type: evidence
+  declared_purpose: 'Adoption reconciliation report for the Trinity candidate (Wave 0A, 2026-08-27, governor Kimi-K3; truth-state: roster/governance claims AUTHORITY, register corrections AUTHORITY governor-verified, candidate-document contents CANDIDATE, overlap judgements INFERENCE labeled). §1 verdict: ADOPT-AS-CORRECTED — Trinity fills an empty vertical lane (OmniRoute lifecycle engineering); every candidate-vs-authority conflict is documentation-level and resolved by the seven governor-verified corrections (§3 C1-C7); the candidate''s operating discipline (source-pinned, rollback-first, evidence-backed, two-person integrity) survives correction intact; adoption reversible (documentation-only rollback); the decision is the owner''s — OD-02 remains OPEN. §2 roster state: F1 Trinity ABSENT from the roster (agents/README.md lists kimi-k3, john, rick, carol; agents/ contains exactly carol/ john/ kimi-k3/ rick/ _template/, verified 2026-08-27; state log row 1 concurs); F2 roster + charters outrank any vault profile; F3 unrostered candidate roles (DeepSeek Harness, Neo, Cipher, Switch, Link, Relay, Oracle, Independent QA, John/Esme) mapped per C2/C3. §3 reconciliation register applied (candidate originals preserved unchanged; corrections live only in the produced drafts): C1 knowledge_root /opt/tkv-local/omniroute REJECTED — corpus is /opt/tkv-local/OmniRoute-release-v3.8.51 (DOC-tkv-corpus-omniroute), knowledge/catalog/ canonical (KDD-0005), Carol owns mutations; commit 42a13fedef8b… carried CANDIDATE-claimed, not verified identity; C2 DeepSeek Harness never existed (KDD-0006) — maps to KK3-orchestrated subagent sessions; C3 unrostered QA/Cipher roles map to the p11 verifier contract (deterministic -> Qwen-X -> owner); the five specialist cells NOT adopted, no subordinate agents; C4 no host firewalls (owner rule 2026-08-26) — LAN 192.168.50.0/24 + service authn/authz is the boundary; C5 target host hxs-8 DECIDED (OD-01; manifest OD-01 superseded, constraint set satisfied); C6 lane bounded to OmniRoute lifecycle engineering ONLY (no orchestration, no self-acceptance, no other lanes, no subordinate agents, no agent-like feature expansion); C7 Coder-X primary execution backend (per-task identity/health verification, stop-and-escalate, no cloud substitution ever) + Qwen-X independent verifier. §4 lane-overlap analysis vs all four roster agents (L1 kimi-k3: no overlap remaining — no cells, no spawning, escalation only; L2 rick: no overlap — OS/DNS/TLS/network/storage stay rick''s, Trinity supplies port/bind/dependency requirements as design input; L3 john: no overlap — John/Esme roster-true, Ollama internals stay john''s, backend selection is OD-08; L4 carol: largest candidate conflict RESOLVED by C1 — no second knowledge store, Trinity supplies metadata/relationship candidates, Carol catalogs and receipts; U1 unrostered roles: none enters the roster through this adoption). §5 adoption-gate checklist G1-G12: G1 roster state accurate SATISFIED; G2 candidates reconciled not copied SATISFIED; G3 no Trinity-active before the gate HELD; G4 charter draft in _template format SATISFIED; G5 corrected profile draft SATISFIED; G6 KDD proposal with exact owner decision SATISFIED; G7 lane overlap resolvable SATISFIED; G8 roster-true roles only SATISFIED; G9 no /opt/tkv-local/omniroute, catalog-canonical SATISFIED; G10 owner receives exact OD-02 decision READY; G11 zero secrets/mutations/cloud/host-contact HELD; G12 independent verification PENDING (Qwen-X review follows production in Wave 0A). No gate item failed or hidden. §6 recommendation O1 adopt-as-corrected (R1 lane empty, 13,098-file/102-API-domain surface should not be absorbed by the governor lane; R2 all conflicts documentation-level; R3 adoption reversible; R4 INFERENCE deferral buys no evidence); risks accepted under O1 recorded. §7 required action A1: Agent Zero decides OD-02 per KDD-0008 §Decision — until then Trinity remains a candidate: no roster entry, no work orders, no activation.'
   source:
-    author: "Kimi-K3 (governor-briefed drafting session, fresh Wave 0A session)"
-    provided_by: "Kimi-K3"
-    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/03-trinity-adoption-assessment.md"
-    section: "§whole-document"
-    ingestion_date: "2026-08-27T04:06:00Z"
-  owner: "Kimi-K3"
+    author: Kimi-K3 (governor-briefed drafting session, fresh Wave 0A session)
+    provided_by: Kimi-K3
+    origin: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/03-trinity-adoption-assessment.md
+    section: §whole-document
+    ingestion_date: '2026-08-27T04:06:00Z'
+  owner: Kimi-K3
   applies_to:
-    hosts: [hxs-8]
+    hosts:
+    - hxs-8
     fqdns: []
     services: []
-    agents: [trinity, kimi-k3, rick, john, carol]
-    repositories: [HX-ASF-Servers, tkv-local]
-    environments: [pilot]
+    agents:
+    - trinity
+    - kimi-k3
+    - rick
+    - john
+    - carol
+    repositories:
+    - HX-ASF-Servers
+    - tkv-local
+    environments:
+    - pilot
     models: []
-  version: ""
-  status: "adopted"
-  authority_level: "agent-evidence"
+  version: ''
+  status: adopted
+  authority_level: agent-evidence
   supersedes: []
   superseded_by: []
   security:
-    classification: "internal"
-    access_restrictions: "none beyond repository access"
+    classification: internal
+    access_restrictions: none beyond repository access
     contains_secret_values: false
   relations:
-    - predicate: "assesses"
-      target: "DOC-agent-trinity-charter"
-      note: "§4/§5 G4: the charter draft this assessment produced and checked (one page, _template format, draft/candidate labels, correct lane bounds) — companion draft, candidate not ratified"
-    - predicate: "assesses"
-      target: "DOC-agent-trinity-profile"
-      note: "§5 G5: the corrected operating-profile DRAFT (307 lines, labeled candidate DRAFT with provenance) — companion draft, candidate not ratified"
-    - predicate: "references"
-      target: "DOC-kdd-0008-trinity-omniroute-adoption"
-      note: "§5 G6/G10 + §7 A1: the KDD carrying the exact OD-02 owner decision (ratify O1 / ratify O2 with amendments / defer / reject)"
-    - predicate: "references"
-      target: "DOC-pilot-omniroute-intent-authority-source-register"
-      note: "§3 register corrections C1-C7 are the register's items, governor-verified and applied not re-litigated"
-    - predicate: "references"
-      target: "DOC-agents-roster-readme"
-      note: "§2 F1/F2: roster table evidence (kimi-k3, john, rick, carol only — Trinity absent, verified 2026-08-27) and the roster-outranks-vault-profile precedence"
-    - predicate: "references"
-      target: "DOC-tkv-corpus-omniroute"
-      note: "§3 C1 + §6 R1: the pinned corpus (13,098 files, 102 API domains per the manifest expected_count) — the surface the empty lane owns"
-    - predicate: "references"
-      target: "DOC-backend-coder-x"
-      note: "§3 C7: Trinity's primary execution backend — owner-designated, candidate-status, per-task verification, stop-and-escalate, no cloud substitution ever"
-    - predicate: "references"
-      target: "DOC-backend-qwen-x"
-      note: "§3 C3/C7 + §5 G12: the independent local verifier (ACTIVE, M8-signed); never produces what it certifies"
-    - predicate: "references"
-      target: "DOC-kdd-0006-hxs2-coderx-backend-adoption"
-      note: "§3 C2: the Harness-never-existed authority (owner-confirmed 2026-08-26)"
-    - predicate: "produced_by"
-      target: "kimi-k3"
-      note: "governor-briefed Wave 0A drafting session under DOC-goal-omniroute-trinity-layer0; governor spot-check PASS (state log row 4)"
+  - predicate: assesses
+    target: DOC-agent-trinity-charter
+    note: '§4/§5 G4: the charter draft this assessment produced and checked (one page, _template format, draft/candidate labels, correct lane bounds) — companion draft, candidate not ratified'
+  - predicate: assesses
+    target: DOC-agent-trinity-profile
+    note: '§5 G5: the corrected operating-profile DRAFT (307 lines, labeled candidate DRAFT with provenance) — companion draft, candidate not ratified'
+  - predicate: references
+    target: DOC-kdd-0008-trinity-omniroute-adoption
+    note: '§5 G6/G10 + §7 A1: the KDD carrying the exact OD-02 owner decision (ratify O1 / ratify O2 with amendments / defer / reject)'
+  - predicate: references
+    target: DOC-pilot-omniroute-intent-authority-source-register
+    note: §3 register corrections C1-C7 are the register's items, governor-verified and applied not re-litigated
+  - predicate: references
+    target: DOC-agents-roster-readme
+    note: '§2 F1/F2: roster table evidence (kimi-k3, john, rick, carol only — Trinity absent, verified 2026-08-27) and the roster-outranks-vault-profile precedence'
+  - predicate: references
+    target: DOC-tkv-corpus-omniroute
+    note: '§3 C1 + §6 R1: the pinned corpus (13,098 files, 102 API domains per the manifest expected_count) — the surface the empty lane owns'
+  - predicate: references
+    target: DOC-backend-coder-x
+    note: '§3 C7: Trinity''s primary execution backend — owner-designated, candidate-status, per-task verification, stop-and-escalate, no cloud substitution ever'
+  - predicate: references
+    target: DOC-backend-qwen-x
+    note: '§3 C3/C7 + §5 G12: the independent local verifier (ACTIVE, M8-signed); never produces what it certifies'
+  - predicate: references
+    target: DOC-kdd-0006-hxs2-coderx-backend-adoption
+    note: '§3 C2: the Harness-never-existed authority (owner-confirmed 2026-08-26)'
+  - predicate: produced_by
+    target: kimi-k3
+    note: governor-briefed Wave 0A drafting session under DOC-goal-omniroute-trinity-layer0; governor spot-check PASS (state log row 4)
   validation:
-    validated_at: "2026-08-27T06:20:00Z"
-    freshness: "current"
-    review_due: "superseded-in-role as the decision basis (OD-02 decided O1, 2026-08-27T04:14Z); G12 closes when Qwen-X verification of the packet lands (Wave 0A)"
-  sha256: "f73bb7171d7c707e625fb058fa0a18416f54c54a8b7cfe0bf180f411cb8e48f7"
-  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/03-trinity-adoption-assessment.md"
+    validated_at: '2026-08-31T01:08:33Z'
+    freshness: current
+    review_due: superseded-in-role as the decision basis (OD-02 decided O1, 2026-08-27T04:14Z); G12 closes when Qwen-X verification of the packet lands (Wave 0A)
+  sha256: a053495f7939ceb483dfe174b792c72fb669599bfe46de72657b449677540fbc
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/PILOT-OMNIROUTE-LAYER0-001/03-trinity-adoption-assessment.md
+  hash_history:
+  - sha256: f73bb7171d7c707e625fb058fa0a18416f54c54a8b7cfe0bf180f411cb8e48f7
+    timestamp: unrecorded
+    reason: predecessor state restored by carol-mint (re-mint events before 2026-08-31T01:08:33Z did not record history)
+  - sha256: a053495f7939ceb483dfe174b792c72fb669599bfe46de72657b449677540fbc
+    timestamp: '2026-08-31T01:08:33Z'
+    reason: '2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'
 notes:
-  typing_judgment: "Typed evidence per the DOC-assessment-* precedent (DOC-assessment-capability-read-only: type evidence, authority agent-evidence): an assessment/report artifact evidencing the reconciliation verdict and gate states. status adopted = adopted into the knowledge base as the Wave 0A assessment of record; the ADOPT-AS-CORRECTED verdict itself remains a RECOMMENDATION — owner decision OD-02 is pending (KDD-0008 PROPOSED)."
-  roster_state_caveat: "The assessment's §2 F1 ('Trinity ABSENT from the roster') was verified at writing (2026-08-27, pre-04:14Z); MID-RUN UPDATE: the owner ratified O1 at 04:14Z and the roster row was ADDED (agents/README.md line 25; state log row 5) — Trinity is now rostered/active as a lane. The assessment's candidate-era statements are true of their writing time."
-  gate_state: "G1-G9 SATISFIED/HELD at the assessment's writing; G10 READY then DECIDED — owner ratified O1 2026-08-27T04:14Z (state log row 5; DOC-kdd-0008-trinity-omniroute-adoption RATIFIED); G11 HELD; G12 PENDING (Qwen-X verification follows production per the verifier contract). No gate item failed or hidden."
-  post_decision: "The assessment's verdict (ADOPT-AS-CORRECTED, O1) is exactly what the owner ratified at 04:14Z — this record's declared_purpose preserves the document's pre-decision wording ('OD-02 remains OPEN') as written; the decision outcome is recorded here, in the KDD record, and in the state-log record (row 5)."
-  addendum_2026_08_27: "RE-HASHED this wave (batch-16 refresh, governor-queued per OmniRoute state log row 8 and cited at row 9): the source gained an 'Addendum — OD-02 resolution (2026-08-27, review batch 16)' section after §7 — it labels §7's 'Required action' (source lines 239-243) as the pre-ratification Wave 0A state preserved as written, and records the dated resolution: owner ratified OD-02 on 2026-08-27 with decision O1 adopt-as-corrected ('if so I ratify as corrected (O1). You may proceed.'; gate executed at state log row 5 — roster row, charter/profile draft -> active, KDD-0008 ratified, all re-rendered; Trinity ACTIVE as a lane; Layer 1 still requires OD-12 + OD-03; the addendum itself names this catalog refresh). The pre-ratification body is NOT rewritten — the addendum convention for evidence docs per the row-8 living-document doctrine. VERIFIED at source this wave (file 259 lines, addendum tail VERIFIED PRESENT). Hash chain: 8abd6749… (Wave 0A mint) -> f73bb717… (OD-02-resolution addendum, this record). No field change beyond the hash and validated_at — declared_purpose already carries the pre-decision wording openly and notes.post_decision records the outcome."
+  typing_judgment: 'Typed evidence per the DOC-assessment-* precedent (DOC-assessment-capability-read-only: type evidence, authority agent-evidence): an assessment/report artifact evidencing the reconciliation verdict and gate states. status adopted = adopted into the knowledge base as the Wave 0A assessment of record; the ADOPT-AS-CORRECTED verdict itself remains a RECOMMENDATION — owner decision OD-02 is pending (KDD-0008 PROPOSED).'
+  roster_state_caveat: 'The assessment''s §2 F1 (''Trinity ABSENT from the roster'') was verified at writing (2026-08-27, pre-04:14Z); MID-RUN UPDATE: the owner ratified O1 at 04:14Z and the roster row was ADDED (agents/README.md line 25; state log row 5) — Trinity is now rostered/active as a lane. The assessment''s candidate-era statements are true of their writing time.'
+  gate_state: G1-G9 SATISFIED/HELD at the assessment's writing; G10 READY then DECIDED — owner ratified O1 2026-08-27T04:14Z (state log row 5; DOC-kdd-0008-trinity-omniroute-adoption RATIFIED); G11 HELD; G12 PENDING (Qwen-X verification follows production per the verifier contract). No gate item failed or hidden.
+  post_decision: The assessment's verdict (ADOPT-AS-CORRECTED, O1) is exactly what the owner ratified at 04:14Z — this record's declared_purpose preserves the document's pre-decision wording ('OD-02 remains OPEN') as written; the decision outcome is recorded here, in the KDD record, and in the state-log record (row 5).
+  addendum_2026_08_27: 'RE-HASHED this wave (batch-16 refresh, governor-queued per OmniRoute state log row 8 and cited at row 9): the source gained an ''Addendum — OD-02 resolution (2026-08-27, review batch 16)'' section after §7 — it labels §7''s ''Required action'' (source lines 239-243) as the pre-ratification Wave 0A state preserved as written, and records the dated resolution: owner ratified OD-02 on 2026-08-27 with decision O1 adopt-as-corrected (''if so I ratify as corrected (O1). You may proceed.''; gate executed at state log row 5 — roster row, charter/profile draft -> active, KDD-0008 ratified, all re-rendered; Trinity ACTIVE as a lane; Layer 1 still requires OD-12 + OD-03; the addendum itself names this catalog refresh). The pre-ratification body is NOT rewritten — the addendum convention for evidence docs per the row-8 living-document doctrine. VERIFIED at source this wave (file 259 lines, addendum tail VERIFIED PRESENT). Hash chain: 8abd6749… (Wave 0A mint) -> f73bb717… (OD-02-resolution addendum, this record). No field change beyond the hash and validated_at — declared_purpose already carries the pre-decision wording openly and notes.post_decision records the outcome.'
+  minted_by: 'carol-mint 1.0.0 @ 2026-08-31T01:08:33Z — re-mint f73bb7171d7c… -> a053495f7939… — 2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'

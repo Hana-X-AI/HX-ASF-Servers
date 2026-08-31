@@ -1,60 +1,69 @@
 document:
-  id: "DOC-skill-ai-test-generation"
-  title: ".agents/skills/ai-test-generation/SKILL.md — AI test-generation skill (Bailey)"
-  type: "other"
-  declared_purpose: "Project-scope skill (Bailey, QA lane) defining the staged pipeline from specs/PRDs/diffs/bugs/OpenAPI to traceable test code: requirements extraction, risk analysis, coverage matrix, oracles, then pytest (zod for TS contract tests); reviewed by Gordon before execution. Adapted from /opt/tkv-local/qa-skills-main v3.0.0 (MIT)."
+  id: DOC-skill-ai-test-generation
+  title: .agents/skills/ai-test-generation/SKILL.md — AI test-generation skill (Bailey)
+  type: other
+  declared_purpose: 'Project-scope skill (Bailey, QA lane) defining the staged pipeline from specs/PRDs/diffs/bugs/OpenAPI to traceable test code: requirements extraction, risk analysis, coverage matrix, oracles, then pytest (zod for TS contract tests); reviewed by Gordon before execution. Adapted from /opt/tkv-local/qa-skills-main v3.0.0 (MIT).'
   source:
-    author: "Bailey (QA lane) / James (governor)"
-    provided_by: "Agent Zero (alignment session 2026-08-30; qa-skills lift work item 4)"
-    origin: "/home/hxsa/opt/HX-ASF-Servers/.agents/skills/ai-test-generation/SKILL.md"
-    section: "§whole-document"
-    ingestion_date: "2026-08-30T08:30:00Z"
-  owner: "Bailey (QA lane)"
+    author: Bailey (QA lane) / James (governor)
+    provided_by: Agent Zero (alignment session 2026-08-30; qa-skills lift work item 4)
+    origin: /home/hxsa/opt/HX-ASF-Servers/.agents/skills/ai-test-generation/SKILL.md
+    section: §whole-document
+    ingestion_date: '2026-08-30T08:30:00Z'
+  owner: Bailey (QA lane)
   applies_to:
     hosts: []
     fqdns: []
     services: []
-    agents: [bailey, gordon]
-    repositories: [HX-ASF-Servers]
-    environments: [fleet]
-  version: ""
-  status: "active"
-  authority_level: "delegated-contract"
+    agents:
+    - bailey
+    - gordon
+    repositories:
+    - HX-ASF-Servers
+    environments:
+    - fleet
+  version: ''
+  status: active
+  authority_level: delegated-contract
   supersedes: []
   superseded_by: []
   security:
-    classification: "internal"
-    access_restrictions: "none beyond repository access"
+    classification: internal
+    access_restrictions: none beyond repository access
     contains_secret_values: false
   relations:
-    - predicate: "references"
-      target: "DOC-kdd-0019-bailey-registration"
-      note: "skill available to Bailey"
-    - predicate: "references"
-      target: "DOC-qa-readme"
-      note: "deliverable home"
-    - predicate: "references"
-      target: "DOC-agent-gordon-profile"
-      note: "execution/qualification review"
+  - predicate: references
+    target: DOC-kdd-0019-bailey-registration
+    note: skill available to Bailey
+  - predicate: references
+    target: DOC-qa-readme
+    note: deliverable home
+  - predicate: references
+    target: DOC-agent-gordon-profile
+    note: execution/qualification review
   validation:
-    validated_at: "2026-08-30T15:05:00Z"
-    freshness: "current"
-    review_due: "on skill revision"
-  sha256: "666fc41b6b31fe3facdec0393484401c3cb2be6df360e7329ff9c4f4e658466d"
+    validated_at: '2026-08-30T21:57:30Z'
+    freshness: current
+    review_due: on skill revision
+  sha256: 4764c2d81a603436487a7ddcb101fefe4518d507e23e51b33c18a32a786597d0
   hash_history:
-    - sha256: "ec429c2cd10ef623972178a4ac876d54b3f7501537c695f50cb2bf5af4f9f9a7"
-      timestamp: "2026-08-30T08:30:00Z"
-      reason: "initial cataloging"
-    - sha256: "7e7e036cff2618dc42911baa168120c8fccb32b26b76795e5602b109a51bafa5"
-      timestamp: "2026-08-30T08:45:00Z"
-      reason: "CodeRabbit batch fixes to SKILL.md (guardrails, model selection, verification, selector roots)"
-    - sha256: "666fc41b6b31fe3facdec0393484401c3cb2be6df360e7329ff9c4f4e658466d"
-      timestamp: "2026-08-30T11:21:44Z"
-      reason: "2026-08-30 review batch: sha256 refresh (grep hardening, offline tsc, literal forms)"
-    - sha256: "666fc41b6b31fe3facdec0393484401c3cb2be6df360e7329ff9c4f4e658466d"
-      timestamp: "2026-08-30T11:21:44Z"
-      reason: "2026-08-30 review batch: sha256 refresh"
-    - sha256: "666fc41b6b31fe3facdec0393484401c3cb2be6df360e7329ff9c4f4e658466d"
-      timestamp: "2026-08-30T15:05:00Z"
-      reason: "KDD-0020: canonical path moved .kimi-code/skills/ -> .agents/skills/ (content unchanged; mirrors generated)"
-  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/.agents/skills/ai-test-generation/SKILL.md"
+  - sha256: ec429c2cd10ef623972178a4ac876d54b3f7501537c695f50cb2bf5af4f9f9a7
+    timestamp: '2026-08-30T08:30:00Z'
+    reason: initial cataloging
+  - sha256: 7e7e036cff2618dc42911baa168120c8fccb32b26b76795e5602b109a51bafa5
+    timestamp: '2026-08-30T08:45:00Z'
+    reason: CodeRabbit batch fixes to SKILL.md (guardrails, model selection, verification, selector roots)
+  - sha256: 666fc41b6b31fe3facdec0393484401c3cb2be6df360e7329ff9c4f4e658466d
+    timestamp: '2026-08-30T11:21:44Z'
+    reason: '2026-08-30 review batch: sha256 refresh (grep hardening, offline tsc, literal forms)'
+  - sha256: 666fc41b6b31fe3facdec0393484401c3cb2be6df360e7329ff9c4f4e658466d
+    timestamp: '2026-08-30T11:21:44Z'
+    reason: '2026-08-30 review batch: sha256 refresh'
+  - sha256: 666fc41b6b31fe3facdec0393484401c3cb2be6df360e7329ff9c4f4e658466d
+    timestamp: '2026-08-30T15:05:00Z'
+    reason: 'KDD-0020: canonical path moved .kimi-code/skills/ -> .agents/skills/ (content unchanged; mirrors generated)'
+  - sha256: 4764c2d81a603436487a7ddcb101fefe4518d507e23e51b33c18a32a786597d0
+    timestamp: '2026-08-30T21:57:30Z'
+    reason: 'SY-8: re-minted after this session''s source change'
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/.agents/skills/ai-test-generation/SKILL.md
+notes:
+  minted_by: 'carol-mint 1.0.0 @ 2026-08-30T21:57:30Z — re-mint 666fc41b6b31… -> 4764c2d81a60… — SY-8: re-minted after this session''s source change'

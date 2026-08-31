@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<!-- Generated from governace/decisions/KDD-0024-two-stage-closure.md (sha256 f42e99ad493e3e795286699a0c6f6f3ec780d076acf0caebe657703b1489b091) by scripts/wiki/render.py on 2026-08-30T23:21Z.
+     Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KDD-0024: Two-stage closure — cataloguing does not gate acceptance (O4)</title>
+<style>
+:root{color-scheme:light dark}
+body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.55;
+max-width:62rem;margin:0 auto;padding:1.5rem 2rem;color:#1a1a1a;background:#fff}
+h1,h2,h3,h4,h5,h6{line-height:1.25;margin-top:1.6em}
+h1{border-bottom:2px solid #444;padding-bottom:.3em}
+h2{border-bottom:1px solid #ccc;padding-bottom:.2em}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+code{background:#f0f0f0;padding:.1em .3em;border-radius:3px}
+pre{background:#f6f8fa;border:1px solid #ddd;border-radius:6px;padding:.8em;overflow-x:auto}
+pre code{background:none;padding:0}
+table{border-collapse:collapse;margin:1em 0;width:100%}
+th,td{border:1px solid #ccc;padding:.35em .6em;text-align:left;vertical-align:top}
+th{background:#f0f0f0}
+blockquote{border-left:4px solid #bbb;margin:1em 0;padding:.2em 1em;color:#444;background:#fafafa}
+a{color:#0645ad}
+.doc-meta{color:#666;font-size:.85em;border-bottom:1px dashed #bbb;padding-bottom:.6em;margin-bottom:1.2em}
+footer{margin-top:2.5em;border-top:1px solid #ccc;color:#666;font-size:.8em;padding-top:.8em}
+pre.mermaid{background:#fff;border:1px dashed #999}
+@media (prefers-color-scheme:dark){
+body{color:#ddd;background:#111} h1{border-color:#888} h2{border-color:#555}
+code{background:#2a2a2a} pre{background:#1b1b1b;border-color:#444}
+th{background:#222} th,td{border-color:#555} blockquote{color:#bbb;background:#191919;border-color:#666}
+a{color:#6fa8ff} .doc-meta,footer{color:#999}}
+</style>
+</head>
+<body>
+<main class="doc">
+<h1 id="kdd-0024-two-stage-closure-cataloguing-does-not-gate-acceptance-o4">KDD-0024: Two-stage closure — cataloguing does not gate acceptance (O4)</h1>
+<ul><li>Date: 2026-08-30</li><li>Status: ratified</li><li>Decider: Agent-Zero (owner directive 2026-08-30)</li><li>Related: <code>AGENTS.md</code> §Documentation governance, <code>governace/process/governor-verification-checklist.md</code> step 10, both <code>context-packet.yaml</code> templates, KDD-0013 Amendment 5, KDD-0021 (work-state engine), KDD-0023 (declare-then-verify), Codex process-optimization review <code>codex_20260830_1539</code> (O4, F3)</li></ul>
+<h2 id="context">Context</h2>
+<p>Two ratified directives contradicted each other for five days, and neither cited the other.</p>
+<p><strong>2026-08-25</strong> — <code>AGENTS.md</code>, documentation-governance amendment:</p>
+<blockquote><p>A material handoff is <strong>incomplete without Carol's catalog receipt</strong>, referenced in the governing log.</p></blockquote>
+<p>Restated as step 10 of the governor verification checklist ("the handoff stays OPEN until her catalog receipt is cited in the state log. Only then the acceptance row and goal-status update") and baked as a constant <code>handoff:</code> string into every context packet the factory issues.</p>
+<p><strong>2026-08-29</strong> — KDD-0013 Amendment 5, owner directive lifting Carol's freeze:</p>
+<blockquote><p>her gpt-oss-120b lane is ACTIVE for catalog catch-up, asynchronous — <strong>no gate, handoff, or lane blocks on her output</strong></p></blockquote>
+<p>The second uses the exact word — <em>handoff</em> — that the first makes conditional on Carol. <code>AGENTS.md</code> was never amended. The context-packet template kept shipping the blocking string. Step 10 kept gating the acceptance row.</p>
+<p><strong>The blocking rule was already failing in practice.</strong> Catalog receipt <code>2026-08-27T0030Z-carol-tmicro-fleet-time-pass.md</code> line 33 records: <em>"Row 20's M5 handoff is OPEN — cataloging 12-esme-m5-validation.md is queued to a future wave, outside this T-micro's write set."</em> A handoff parked open because a background agent's write set was scoped elsewhere — the exact stall this decision removes.</p>
+<p>One partial reconciliation existed: the checklist's Tier 0 row reads <em>"Accept after gate; T-micro Carol run (background)"</em>. It is scoped to one triage tier and sits three sections below the step 10 text it contradicts.</p>
+<h2 id="options-considered">Options considered</h2>
+<ol><li><strong>Keep the blocking rule and amend KDD-0013 Amendment 5.</strong> Rejected by the owner directive below.</li><li><strong>Drop the receipt requirement.</strong> Rejected: the catalog is the retrieval surface the whole factory reads before acting. Not requiring the receipt would trade a scheduling problem for a knowledge problem.</li><li><strong>Split the handoff into two independent states.</strong> <strong>Selected.</strong> The receipt stays required; waiting on it does not.</li><li><strong>Add the new states to the goal work-state enum.</strong> Rejected — see D4.</li></ol>
+<h2 id="decision">Decision</h2>
+<p><strong>Owner directive, 2026-08-30:</strong> <em>"do not let non critical path work block critical path this goes for agents also."</em> That settles the contradiction in favour of KDD-0013 Amendment 5. <code>AGENTS.md</code>'s 2026-08-25 line is superseded for routine work and preserved as written.</p>
+<p><strong>D1 — Two independent states.</strong> <code>execution_accepted</code>: evidence produced, deterministic gates passed. The work is done, the acceptance row is written, the goal status updates, and the next work order may dispatch. <code>catalog_pending</code> / <code>catalog_complete</code>: the knowledge projection, tracked separately, never gating.</p>
+<p><strong>D2 — The receipt is still required.</strong> This is a sequencing change, not a removal. A deliverable that never reaches <code>catalog_complete</code> is visible as an open catalog item; it is simply not holding a lane shut while it waits.</p>
+<p><strong>D3 — Synchronous exception, deliberately narrow.</strong> A change to <strong>authority, security, schemas, agent identities, or reusable platform knowledge</strong> takes the receipt before closure. Those are the classes where acting on a stale catalog does real harm rather than costing time. Everything else batches at merge or the scheduled consolidation window. Where the class is unclear, treat it as synchronous — the failure mode of over-including is a delay, and of under-including is a wrong decision made from a stale catalog.</p>
+<p><strong>D4 — The goal work-state schema is NOT extended.</strong> The plan for this phase proposed adding the new states to <code>work-state.schema.yaml</code> at <code>version: 2</code>. That is the wrong level. That schema carries GOAL status; <code>execution_accepted</code> is a HANDOFF state at work-order granularity. Adding it to the goal enum would conflate two levels and require renaming a ratified vocabulary — which the schema itself warns against. The handoff state lives where the handoff lives: the gate receipt emitted by <code>hx gate</code> (O3), which already returns <code>outcome: execution_accepted</code> with <code>catalog_state</code> as a separate field it never waits on.</p>
+<p><strong>D5 — Amended in all three places, append-only.</strong> <code>AGENTS.md</code>, checklist step 10, and the <code>handoff:</code> constant in both context-packet templates. Leaving any one of them would leave the blocking rule asserted somewhere after its retirement — the failure pattern this repository has had to correct repeatedly, most recently when a header was fixed and the procedure below it was not.</p>
+<h2 id="consequences">Consequences</h2>
+<p><strong>Enables.</strong> A lane closes when its work is done and its gates pass. Carol's queue depth stops determining factory throughput, which is what background-class was supposed to mean since 2026-08-29.</p>
+<p><strong>Immediate effect.</strong> The contradiction between two ratified records is resolved by owner directive rather than left for a reader to adjudicate. <code>hx gate</code> already emits both states, so no code change is required by this decision — the code was written to it and the governance now says the same thing.</p>
+<p><strong>Forecloses.</strong> Reading "catalog before closing" as "cataloguing blocks closing" for routine work.</p>
+<p><strong>Costs.</strong> The catalog trails execution for routine changes. Bounded by the consolidation window and visible as <code>catalog_pending</code>; SY-8 (catalog freshness) independently reports records that have drifted from their sources.</p>
+<p><strong>Must be revisited if.</strong> The synchronous exception list proves too narrow — a decision made from a stale catalog for a class not on it — or <code>catalog_pending</code> items accumulate faster than consolidation clears them.</p>
+<p><strong>Not addressed.</strong> O6 (secret-boundary warn → block) is the last open item from the review. It is unblocked — SY-5 declares the mode file's content and digest, so a flip is visible rather than a silent one-word edit — but the false-positive regression corpus that would justify graduating it does not exist yet.</p>
+<h2 id="amendment-1-2026-08-30-labeled-append-only-d5-named-the-wrong-artifact-class">Amendment 1 (2026-08-30, labeled, append-only) — D5 named the wrong artifact class</h2>
+<p>[OPEN CORRECTION 2026-08-30, labeled, append-only — D5 above reads "Amended in all three places, append-only." The requirement to amend all three places is correct and stands. <strong>The artifact class is wrong</strong>, and it was applied wrongly when this decision landed. The original D5 text is preserved above.]</p>
+<p><code>CLAUDE.md</code> and this repository's artifact-class policy (<code>.coderabbit.yaml</code> <code>path_instructions</code>) are explicit: <strong><code>AGENTS.md</code>, <code>governace/process/**</code>, <code>governace/templates/**</code>, <code>.agents/skills/**</code> and agent profiles are LIVE artifacts, corrected IN PLACE — Git preserves the history.</strong> Append-only applies to KDDs, dated goals, state logs, evidence, receipts and status reports.</p>
+<p><strong>All three places D5 names are live artifacts</strong> — <code>AGENTS.md</code>, <code>governace/process/**</code>, and <code>governace/templates/**</code> are each named in the policy above. Two of them, <code>AGENTS.md</code> and the governor verification checklist, were nonetheless amended with <code>[OPEN CORRECTION ...]</code> blocks that quoted the retired rule inline, so each asserted the retired procedure and its replacement in the same breath — the precise reading hazard this repository has had to fix repeatedly, and which this decision's own D5 cites as its reason for amending everywhere. The two context-packet templates were rewritten in place from the start, which was correct.</p>
+<p><strong>Corrected on 2026-08-30:</strong></p>
+<ul><li><code>AGENTS.md</code> — the retired line and its correction block are replaced by the two-stage rule stated directly, with a one-line revision note.</li><li><code>governace/process/governor-verification-checklist.md</code> step 10 — same treatment; the quoted "handoff stays OPEN" procedure is gone from the live step and survives in Git and in this KDD's Context section.</li><li>Both <code>context-packet.yaml</code> templates — these are also live artifacts and were already rewritten in place rather than annotated, which was correct.</li></ul>
+<p><strong>This KDD stays append-only</strong>, which is why this correction is an amendment rather than an edit to D5.</p>
+<p><strong>Also corrected here:</strong> the templates did not carry the unclear-class fallback that D3 and the checklist both state. Added to both copies — where the change class is unclear or arguable, treat it as synchronous.</p>
+<p>Authority: the <code>CLAUDE.md</code> artifact-class policy and the <code>.coderabbit.yaml</code> <code>path_instructions</code> that codify it — <code>AGENTS.md</code> carries the instruction "Correct directly; Git preserves history. Do not demand append-only amendments." The defect was surfaced by an automated review on 2026-08-30; a review tool finds, it does not ratify.</p>
+</main>
+<footer>Source of truth: <code>governace/decisions/KDD-0024-two-stage-closure.md</code> (sha256 <code>f42e99ad493e3e795286699a0c6f6f3ec780d076acf0caebe657703b1489b091</code>) · rendered 2026-08-30T23:21Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+
+</body>
+</html>

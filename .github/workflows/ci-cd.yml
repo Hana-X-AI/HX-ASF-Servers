@@ -1,5 +1,5 @@
 # ci-cd.yml — HX-ASF-Servers (p8, owner-ratified 2026-08-26; amended 2026-08-28)
-# Trigger: every push to any branch. 20 steps total across three jobs.
+# Trigger: every push to any branch. 24 steps total across three jobs.
 #   gates             — deterministic quality gates (all pushes; happy path ≈3 min)
 #   coderabbit-review — CodeRabbit CLI review gate (feature-branch/PR pushes only;
 #                       owner directive 2026-08-30 supersedes for post-merge main
@@ -28,9 +28,32 @@ permissions:
   contents: read
   pull-requests: read
 
+# Pushed-range reviews must SERIALIZE, never cancel.
+#
+# The review covers the PUSHED RANGE (BEFORE..HEAD, KDD-0022). Cancelling a run
+# therefore does not merely discard its output — it permanently destroys the
+# only review that range will ever get, because the next run computes a new
+# BEFORE and never looks back. That happened on 2026-08-30: two cancelled
+# reviews let 612 unreviewed insertions reach main through PR #7.
+#
+# `queue: max` retains up to 100 pending runs per group and cancels only beyond
+# that; the default `queue: single` keeps ONE pending run, so a third push
+# cancels the pending one. It cannot be combined with `cancel-in-progress: true`
+# (workflow validation error), which is consistent — the point is not to cancel.
+#
+# Two earlier attempts here are recorded because both were wrong:
+#   1. `cancel-in-progress: false` alone. Insufficient: the default queue depth
+#      is one, so rapid pushes still lost ranges.
+#   2. Adding github.sha to the group. Functional but wrong-headed: a per-commit
+#      group means nothing ever contends, which defeats the purpose of having a
+#      concurrency group and spends a concurrent runner per push.
+#
+# The remaining bound is honest and stated: beyond 100 pending runs in one
+# branch's group, GitHub cancels the excess. That is not reachable by hand.
 concurrency:
   group: ci-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
+  queue: max
 
 jobs:
   gates:
@@ -78,6 +101,21 @@ jobs:
 
       - name: Unit tests — hook manifest verifier (O5)
         run: python3 scripts/test_hooks_verify.py
+
+      - name: Unit tests — work-order engine (O2)
+        run: python3 scripts/test_work_order.py
+
+      - name: Unit tests — secret-boundary corpus (O6)
+        # Runs BOTH scanners against governace/secret-boundary-corpus.yaml. The
+        # hook and validate.py were written separately and disagreed on four of
+        # five patterns; this is what keeps them reconciled.
+        run: python3 scripts/test_secret_boundary.py
+
+      - name: Unit tests — capability registry (O8)
+        run: python3 scripts/test_capability.py
+
+      - name: Unit tests — catalog freshness baseline (SY-8)
+        run: python3 scripts/test_catalog_freshness.py
 
       - name: Skill registry — smoke every active skill (O7)
         # validate.py runs the STATIC half as SY-6. Smokes execute skill

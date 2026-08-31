@@ -29,9 +29,17 @@ a failed step.
    present: hashes, diffs, outputs, journal excerpts, arithmetic/checklists.
 9. **Honest limitations** — disclosed near-misses, unmeasured bounds, and
    substitutions are recorded in the deliverable itself, not discovered later.
-10. **Handoff rule** — deliverable goes to Carol; the handoff stays OPEN until
-    her catalog receipt is cited in the state log. Only then the acceptance row
-    and goal-status update.
+10. **Handoff rule** — record **`execution_accepted`** once steps 1-9 are
+    satisfied: the acceptance row and goal-status update proceed then, and the
+    next work order may dispatch. The deliverable goes to Carol; track
+    **`catalog_pending`** separately until her receipt is cited in the state log,
+    at which point it becomes **`catalog_complete`**. The receipt is required;
+    waiting on it is not.
+    STILL SYNCHRONOUS: authority, security, schema, agent-identity and
+    reusable-platform-knowledge changes take the receipt before closure. If in
+    doubt about which class a change is, treat it as synchronous.
+    *Revision note: replaced the "handoff stays OPEN until her catalog receipt is
+    cited" procedure on 2026-08-30 per KDD-0024. Prior wording is in Git.*
 
 ## Escalation
 

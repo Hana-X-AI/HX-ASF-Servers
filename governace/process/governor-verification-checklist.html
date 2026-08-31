@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!-- Generated from governace/process/governor-verification-checklist.md (sha256 b0f2ed3218f8ddbdfd0dcdd02e3c73ad2cd11930b03341d4deeaeb83b9cbf681) by scripts/wiki/render.py on 2026-08-30T22:56Z.
+     Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Governor evidence-verification checklist (receipt-check)</title>
+<style>
+:root{color-scheme:light dark}
+body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.55;
+max-width:62rem;margin:0 auto;padding:1.5rem 2rem;color:#1a1a1a;background:#fff}
+h1,h2,h3,h4,h5,h6{line-height:1.25;margin-top:1.6em}
+h1{border-bottom:2px solid #444;padding-bottom:.3em}
+h2{border-bottom:1px solid #ccc;padding-bottom:.2em}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+code{background:#f0f0f0;padding:.1em .3em;border-radius:3px}
+pre{background:#f6f8fa;border:1px solid #ddd;border-radius:6px;padding:.8em;overflow-x:auto}
+pre code{background:none;padding:0}
+table{border-collapse:collapse;margin:1em 0;width:100%}
+th,td{border:1px solid #ccc;padding:.35em .6em;text-align:left;vertical-align:top}
+th{background:#f0f0f0}
+blockquote{border-left:4px solid #bbb;margin:1em 0;padding:.2em 1em;color:#444;background:#fafafa}
+a{color:#0645ad}
+.doc-meta{color:#666;font-size:.85em;border-bottom:1px dashed #bbb;padding-bottom:.6em;margin-bottom:1.2em}
+footer{margin-top:2.5em;border-top:1px solid #ccc;color:#666;font-size:.8em;padding-top:.8em}
+pre.mermaid{background:#fff;border:1px dashed #999}
+@media (prefers-color-scheme:dark){
+body{color:#ddd;background:#111} h1{border-color:#888} h2{border-color:#555}
+code{background:#2a2a2a} pre{background:#1b1b1b;border-color:#444}
+th{background:#222} th,td{border-color:#555} blockquote{color:#bbb;background:#191919;border-color:#666}
+a{color:#6fa8ff} .doc-meta,footer{color:#999}}
+</style>
+</head>
+<body>
+<main class="doc">
+<h1 id="governor-evidence-verification-checklist-receipt-check">Governor evidence-verification checklist (receipt-check)</h1>
+<p>Ratified 2026-08-25 (UD5/U7). Run for every producer deliverable <strong>before</strong> any acceptance is logged. A deliverable that fails any step goes back with one bounded correction, or escalates per the approval discipline — it is never accepted around a failed step.</p>
+<h2 id="steps">Steps</h2>
+<ol><li><strong>Artifact exists</strong> — non-empty, at the path the work order named, timestamped inside the session window.</li><li><strong>Receipt line present</strong> — <code>Task May Proceed: YES/NO</code> or the profile's PASS marker, exactly once, in the producer's own completion language.</li><li><strong>Token context check</strong> — every <code>FAIL</code> / <code>BLOCKED</code> / <code>NOT RUN</code> token read in context. Benign summaries ("0 FAIL, 0 BLOCKED"), quoted script failure semantics, and rollback-trigger mappings are acceptable. A real failure token stops acceptance here.</li><li><strong>Secret sweep</strong> — <code>grep -F</code> the protected credential string plus generic patterns (PEM blocks, bearer tokens, <code>password[:=]</code> assignments) across the deliverable: zero hits, no exceptions.</li><li><strong>Governor-artifact integrity</strong> — the work order and context packet still hash to the state-log proof values; any drift means the contract moved mid-flight.</li><li><strong>Claims vs live state</strong> — material current-state claims (timeouts, versions, identities, resident model, unit states) spot-verified read-only against the live target. The document is never sole evidence for live state.</li><li><strong>Boundary conformance</strong> — the deliverable's own mutation disclosure matches the work-order allowlist; an undeclared mutation stops acceptance.</li><li><strong>Completeness</strong> — every evidence requirement from the context packet is present: hashes, diffs, outputs, journal excerpts, arithmetic/checklists.</li><li><strong>Honest limitations</strong> — disclosed near-misses, unmeasured bounds, and substitutions are recorded in the deliverable itself, not discovered later.</li><li><strong>Handoff rule</strong> — record <strong><code>execution_accepted</code></strong> once steps 1-9 are satisfied: the acceptance row and goal-status update proceed then, and the next work order may dispatch. The deliverable goes to Carol; track <strong><code>catalog_pending</code></strong> separately until her receipt is cited in the state log, at which point it becomes <strong><code>catalog_complete</code></strong>. The receipt is required; waiting on it is not. STILL SYNCHRONOUS: authority, security, schema, agent-identity and reusable-platform-knowledge changes take the receipt before closure. If in doubt about which class a change is, treat it as synchronous. <em>Revision note: replaced the "handoff stays OPEN until her catalog receipt is cited" procedure on 2026-08-30 per KDD-0024. Prior wording is in Git.</em></li></ol>
+<h2 id="escalation">Escalation</h2>
+<ul><li>Producer defect → one bounded correction with the finding stated exactly.</li><li>Authority, safety, or identity problem → stop and escalate to the owner.</li><li>Repeated failure class → lessons-learned entry plus a deterministic guard where one exists (test, check, or hook), not a memo.</li></ul>
+<h2 id="governor-edit-preflight-owner-directive-2026-08-28">Governor-edit preflight (owner directive 2026-08-28)</h2>
+<p>Added after two governor misses of record: the hxs-7 registry row rewritten in place (append-only breach, state-log row 22) and the unreconciled ×12 count. Run BEFORE any edit to a governance record (registry, KDDs, roster, AGENTS.md, state logs, standards files) — the <strong>be-great</strong> and <strong>recon</strong> skills are the mandatory instrument, not an option:</p>
+<ol><li><strong>Append-only check</strong> — if the record is append-only, nothing is rewritten in place; corrections land as labeled, dated, open corrections with the original text preserved verbatim.</li><li><strong>Claim reconciliation (recon)</strong> — every numeric or scope claim the edit touches (counts, host lists, hashes, dates) is reconciled against the source evidence BEFORE writing. A count that cannot be reconciled does not ship.</li><li><strong>Precedent sweep (be-great)</strong> — existing correction labels and prior rr dispositions on the same record are surveyed first; the new edit matches the established form instead of inventing one.</li></ol>
+<h2 id="triage-after-the-gate-owner-ratified-2026-08-26-p7-lite">Triage after the gate (owner-ratified 2026-08-26, p7-lite)</h2>
+<p>The mandatory gate above always runs first. Triage decides what happens AFTER it — it never skips a step, reduces evidence, or changes acceptance:</p>
+<table><thead><tr><th>Tier</th><th>Item class</th><th>Handling</th></tr></thead><tbody><tr><td><strong>0 — auto-approved</strong></td><td>Routine re-validations, status flips with verified provenance, drift re-hashes, receipt citations</td><td>Accept after gate; T-micro Carol run (background)</td></tr><tr><td><strong>1 — deferred</strong></td><td>Living-document re-validations, corpus form alignments</td><td>Accept; fold into the next T-standard run</td></tr><tr><td><strong>2 — active review</strong></td><td>Milestone evidence deliverables, governance changes, new agents/roles, novel task types</td><td>Full current review path</td></tr><tr><td><strong>3 — immediate escalation</strong></td><td>Secret hits, identity/hash drift, conflicts with ratified state, anomalies, low-confidence flags</td><td>Stop; escalate to owner</td></tr></tbody></table>
+<p>Escalation triggers (p7): accuracy &lt; 95% for the task type, critical class (security/governance/infrastructure/deployment), anomaly or partial evidence, novel task type, contradiction of approved state, incident-pattern correlation, producer-flagged uncertainty — any one moves the item to Tier 2/3.</p>
+<p>Record one triage line in the state-log row for the handoff: <code>triage: tier=&lt;0-3&gt; status=&lt;auto_approved|deferred|escalated|immediate&gt; agent=&lt;id&gt; task=&lt;type&gt; score=&lt;accuracy|n/a&gt; flags=&lt;list|none&gt;</code>. Evidence location and metadata are unchanged; the line is appended, never a replacement (p7 evidence rules). Accuracy scores come from <code>knowledge/agent-performance.md</code>; tier boundaries are reviewed at every milestone close.</p>
+</main>
+<footer>Source of truth: <code>governace/process/governor-verification-checklist.md</code> (sha256 <code>b0f2ed3218f8ddbdfd0dcdd02e3c73ad2cd11930b03341d4deeaeb83b9cbf681</code>) · rendered 2026-08-30T22:56Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+
+</body>
+</html>

@@ -1,54 +1,86 @@
 document:
-  id: "DOC-scripts-validate-py"
-  title: "scripts/validate.py — single local validation command (ratified UD1 validation contract; UD2 bounded implementation)"
-  type: "runbook"
-  declared_purpose: "The ratified single read-only repo-root validation command (owner decisions UD1/UD2 2026-08-25, state log row 60; unified recommendations U1/U2). One command runs every mechanized check the factory has ratified and honestly labels the checks that remain human judgment as MANUAL GATE lines. Consolidates four check families: wiki-sync (render.py --check hash synchronization), fixture-suite (pilot fixtures regression tests + sha256 manifest verify), catalog-mechanical (CAT-01/03/04/07/08 per knowledge/catalog/tests/cat-001-acceptance.md), and secret-boundary (generic high-signal secret patterns, tuned so prose does not match). MANUAL GATE lines (noted, never graded): CAT-10..15 golden questions, CAT-20..22 judgment checks, CB-01 write-set audit, and the literal-credential sweep against the protected ssh-info file (governor-only; the command NEVER reads protected credential material). Read-only contract: never writes/formats/renders/catalogs; child Python runs with -B and PYTHONDONTWRITEBYTECODE=1; sha256sum -c verify-only; catalog/YAML opened read-only. Exit codes: 0 all mechanized PASS, 1 any FAIL, 2 usage error. Usage: validate.py (full repo) | validate.py --changed PATH [PATH..] (scoped: wiki manifest member -> wiki-sync; fixtures file -> fixture-suite; knowledge/catalog/** -> catalog-mechanical; anything else -> secret sweep on that file). Hook rule: hooks (U3 advisory, U5 secret-boundary, any future gate) MUST call this command rather than reimplementing checks. Deterministic: same tree, same result."
-  inferred_value: "INFERENCE: this command is now the cheapest complete mechanical self-check for a Carol run (catalog-mechanical + secret-boundary cover CAT-01/03/04/07/08 and the generic half of CAT-05); the literal-credential half of CAT-05 and the CB-01 write-set audit stay governor judgment by design — the catalog cannot self-certify those."
+  id: DOC-scripts-validate-py
+  title: scripts/validate.py — single local validation command (ratified UD1 validation contract; UD2 bounded implementation)
+  type: runbook
+  declared_purpose: 'The ratified single read-only repo-root validation command (owner decisions UD1/UD2 2026-08-25, state log row 60; unified recommendations U1/U2). One command runs every mechanized check the factory has ratified and honestly labels the checks that remain human judgment as MANUAL GATE lines. Consolidates four check families: wiki-sync (render.py --check hash synchronization), fixture-suite (pilot fixtures regression tests + sha256 manifest verify), catalog-mechanical (CAT-01/03/04/07/08 per knowledge/catalog/tests/cat-001-acceptance.md), and secret-boundary (generic high-signal secret patterns, tuned so prose does not match). MANUAL GATE lines (noted, never graded): CAT-10..15 golden questions, CAT-20..22 judgment checks, CB-01 write-set audit, and the literal-credential sweep against the protected ssh-info file (governor-only; the command NEVER reads protected credential material). Read-only contract: never writes/formats/renders/catalogs; child Python runs with -B and PYTHONDONTWRITEBYTECODE=1; sha256sum -c verify-only; catalog/YAML opened read-only. Exit codes: 0 all mechanized PASS, 1 any FAIL, 2 usage error. Usage: validate.py (full repo) | validate.py --changed PATH [PATH..] (scoped: wiki manifest member -> wiki-sync; fixtures file -> fixture-suite; knowledge/catalog/** -> catalog-mechanical + SY-8; any cataloged source or the SY-8 baseline -> SY-8; anything else -> secret sweep on that file). Hook rule: hooks (U3 advisory, U5 secret-boundary, any future gate) MUST call this command rather than reimplementing checks. Deterministic: same tree, same result. Sub-checks added 2026-08-30 inside governance-path, keeping the top-level count at 5/5: SY-5 hook manifest vs live registrations (KDD-0023), SY-6 skill registry and AGENTS.md inventory reconciliation, SY-7 work-order schema and addressability (O2), and SY-8 catalog freshness — each record''s recorded sha256 compared to its live source. SY-8 closes a gap that had made 5/5 misleading: catalog-mechanical verified schema, index 1:1, relations and location existence but never compared a record to its source, so 40 in-repo records had drifted from their files while the validator reported PASS. SY-8 uses a hash-pinned, shrink-only backlog in governace/catalog-freshness-baseline.yaml. Each entry pins the canonical path, stale recorded source hash, source hash at baselining, and catalog-record file hash. Unchanged known debt reports; any later source, path, or record change fails. Reconciled records left on the baseline also fail so the list must shrink. The initial 35-entry list reduced to 34 during rollout and is now zero after the 2026-08-31 semantic reconciliation; the baseline has count 0 and entries []. Invalid, omitted, or non-list entries fail closed, and --changed forces governance-path validation if catalog-source discovery fails. SY-9 (O8) added the same day: capability lifecycle enforcement over governace/capabilities/registry.yaml, which keeps installed / service_active / advertised_to_agents / approved_for_use as four separate fields rather than one status. It fails on invariants inside the registry (a held capability advertised, a service active without being installed, an approval without a completed security review) and REPORTS contradictions with records outside it — an MCP hold that an owning agent''s charter never mentions, an owning agent with no registration — because choosing between two ratified records is a governor act, not a mechanical one. Secret patterns reconciled 2026-08-30 (O6) with scripts/hooks/secret-boundary.sh, which they had diverged from on four of five rules. This implementation was the broader one, is already blocking in CI, and produced ALL THREE recorded false positives — twice forcing an append-only state log to be edited in place to clear the gate (DSH row 5, OMNIROUTE row 40). Two narrowings, both proven against governace/secret-boundary-corpus.yaml: the Slack rule now requires a token body rather than matching the bare xox prefix, and the password rule is a separate check that judges the VALUE — a live-looking value carries a digit or punctuation or is at least 16 characters — with the sanitizing-word allowance tested against the VALUE ONLY. The allowance was briefly applied to the whole line during this change, which meant a real credential sharing a line with the word REDACTED went unreported — an allowance is a way to mark a value sanitized, never a way to exempt a line, and corpus case `live-password-beside-an-allowance-term` pins that. Repo-wide differential over 1384 files: the narrowing loses exactly two hits, both of them comments inside the two scanners describing the false-positive class, and the new scanner reports zero hits. Stated bound: an all-lowercase passphrase under 16 characters with no digit or punctuation is not caught by the generic net.'
+  inferred_value: 'INFERENCE: this command is now the cheapest complete mechanical self-check for a Carol run (catalog-mechanical + secret-boundary cover CAT-01/03/04/07/08 and the generic half of CAT-05); the literal-credential half of CAT-05 and the CB-01 write-set audit stay governor judgment by design — the catalog cannot self-certify those.'
   source:
-    author: "Kimi-K3 (governor; bounded implementation per owner decisions UD1/UD2)"
-    provided_by: "Kimi-K3"
-    origin: "/home/hxsa/opt/HX-ASF-Servers/scripts/validate.py"
-    section: "§whole-document"
-    ingestion_date: "2026-08-26T00:25:00Z"
-  owner: "Kimi-K3"
+    author: Kimi-K3 (governor; bounded implementation per owner decisions UD1/UD2)
+    provided_by: Kimi-K3
+    origin: /home/hxsa/opt/HX-ASF-Servers/scripts/validate.py
+    section: §whole-document
+    ingestion_date: '2026-08-26T00:25:00Z'
+  owner: Kimi-K3
   applies_to:
     hosts: []
     fqdns: []
     services: []
-    agents: [kimi-k3, carol]
-    repositories: [HX-ASF-Servers]
-    environments: [fleet, pilot]
-  version: ""
-  status: "active"
-  authority_level: "ratified-governance"
+    agents:
+    - kimi-k3
+    - carol
+    repositories:
+    - HX-ASF-Servers
+    environments:
+    - fleet
+    - pilot
+  version: ''
+  status: active
+  authority_level: ratified-governance
   supersedes: []
   superseded_by: []
   security:
-    classification: "internal"
-    access_restrictions: "none beyond repository access"
+    classification: internal
+    access_restrictions: none beyond repository access
     contains_secret_values: false
   relations:
-    - predicate: "references"
-      target: "DOC-cat-001-acceptance"
-      note: "mechanizes CAT-01/03/04/07/08 as the catalog-mechanical check; CAT-10..15 (owner-ratified golden-question corpus), CAT-20..22, and CB-01 are carried as honest MANUAL GATE labels — run by the governor, never graded by the command"
-    - predicate: "references"
-      target: "DOC-scripts-wiki-dual-format-render"
-      note: "consolidates render.py --check as the wiki-sync check family; hooks must call this command (one contract, one place to fix a check)"
-    - predicate: "references"
-      target: "DOC-pilot-hx1-fixtures-manifest"
-      note: "fixture-suite check runs the pilot fixtures regression tests and verifies the sha256 manifest (sha256sum -c, verify-only)"
-    - predicate: "references"
-      target: "DOC-protected-ssh-info-hxs1"
-      note: "boundary by design: the literal-credential sweep against the protected source is a governor-only MANUAL GATE, deliberately NOT part of this command — the command never reads protected credential material"
-    - predicate: "produced_by"
-      target: "kimi-k3"
-      note: "state log row 60 (2026-08-25T23:47Z): UD1 ratified the validation contract, UD2 approved the bounded implementation; U2 dispatched to a build session"
+  - predicate: references
+    target: DOC-cat-001-acceptance
+    note: mechanizes CAT-01/03/04/07/08 as the catalog-mechanical check; CAT-10..15 (owner-ratified golden-question corpus), CAT-20..22, and CB-01 are carried as honest MANUAL GATE labels — run by the governor, never graded by the command
+  - predicate: references
+    target: DOC-scripts-wiki-dual-format-render
+    note: consolidates render.py --check as the wiki-sync check family; hooks must call this command (one contract, one place to fix a check)
+  - predicate: references
+    target: DOC-pilot-hx1-fixtures-manifest
+    note: fixture-suite check runs the pilot fixtures regression tests and verifies the sha256 manifest (sha256sum -c, verify-only)
+  - predicate: references
+    target: DOC-protected-ssh-info-hxs1
+    note: 'boundary by design: the literal-credential sweep against the protected source is a governor-only MANUAL GATE, deliberately NOT part of this command — the command never reads protected credential material'
+  - predicate: produced_by
+    target: kimi-k3
+    note: 'state log row 60 (2026-08-25T23:47Z): UD1 ratified the validation contract, UD2 approved the bounded implementation; U2 dispatched to a build session'
   validation:
-    validated_at: "2026-08-30T15:05:00Z"
-    freshness: "current"
-    review_due: "on validate.py change (re-hash this record) or on CAT battery revision that changes the mechanized set"
-  sha256: "14a29288524dc58e8995325d4c772f776cfaa304a3402eeca1dce7d30ca629dd"
-  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/scripts/validate.py"
+    validated_at: '2026-08-31T03:51:23Z'
+    freshness: current
+    review_due: on validate.py change (re-hash this record) or on CAT battery revision that changes the mechanized set
+  sha256: 4622ec5f05f84f9ea27aa6e53f0f8fdb5205c50d75da2f1517e6028edbacc07d
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/scripts/validate.py
+  hash_history:
+  - sha256: 14a29288524dc58e8995325d4c772f776cfaa304a3402eeca1dce7d30ca629dd
+    timestamp: unrecorded
+    reason: predecessor state restored by carol-mint (re-mint events before 2026-08-30T21:57:30Z did not record history)
+  - sha256: 24f8cae7e401e2497e8ca6806957ce5690593c5943a29172ac813d6f44223744
+    timestamp: '2026-08-30T21:57:30Z'
+    reason: 'SY-8: re-minted after this session''s source change'
+  - sha256: 158e75c1c82f59cbabe41f15c80081a0b8669cc21c8103ba3a7b2919f45a4ba5
+    timestamp: '2026-08-30T21:58:47Z'
+    reason: SY-5..SY-8 sub-checks recorded
+  - sha256: 731e37fbe152656f7b261b10fd1db42f73b21624b71591dbb3282d4eaa35bd49
+    timestamp: '2026-08-30T22:16:05Z'
+    reason: SY-9 capability lifecycle (O8)
+  - sha256: 9171d30239c5a59939960e797b262963ee2066f1bcd571b0682e1ada4003248b
+    timestamp: '2026-08-30T23:09:35Z'
+    reason: 'O6: scanner reconciliation + corpus'
+  - sha256: b5dd9139487ec10a1f1263dfe665ae825ba26e881385ea3f00ce4aa2bbabb006
+    timestamp: '2026-08-30T23:22:03Z'
+    reason: allowance applies to the value only; timeline and artifact-class corrections
+  - sha256: 9df869f5321e548cab081132aefd196f5e8427b318da55ea84094b5fa89bf04c
+    timestamp: '2026-08-31T00:58:35Z'
+    reason: SY-8 pinned baseline and scoped source routing
+  - sha256: 4622ec5f05f84f9ea27aa6e53f0f8fdb5205c50d75da2f1517e6028edbacc07d
+    timestamp: '2026-08-31T03:51:23Z'
+    reason: 'CodeRabbit PR #8 fail-closed SY-8 fixes and regression tests'
 notes:
-  cataloging_context: "Type judged 'runbook' (executable operational procedure with a fixed invocation contract), authority ratified-governance (owner decisions UD1/UD2). Cataloged in the governor wave receipt 2026-08-26T0025Z together with the hooks system, WO/CP templates, and the governor verification checklist."
-  dependency: "Imports PyYAML (import yaml) — present and in proven CAT use (unified-list correction C-C2); stdlib otherwise."
+  baseline_reconciliation_20260831: 'Option 2 complete: all 34 records in the 2026-08-30 SY-8 pinned backlog were read against their current sources, semantically corrected where needed, re-minted, and removed. governace/catalog-freshness-baseline.yaml now has count: 0 and entries: []; the hash-pinned mechanism remains active for any future exceptional debt. The declared_purpose''s ''initial 35 now 34'' sentence is historical rollout context, superseded by this zero-debt state.'
+  cataloging_context: Type judged 'runbook' (executable operational procedure with a fixed invocation contract), authority ratified-governance (owner decisions UD1/UD2). Cataloged in the governor wave receipt 2026-08-26T0025Z together with the hooks system, WO/CP templates, and the governor verification checklist.
+  dependency: Imports PyYAML (import yaml) — present and in proven CAT use (unified-list correction C-C2); stdlib otherwise.
+  minted_by: 'carol-mint 1.0.0 @ 2026-08-31T03:51:23Z — re-mint 9df869f5321e… -> 4622ec5f05f8… — CodeRabbit PR #8 fail-closed SY-8 fixes and regression tests'
