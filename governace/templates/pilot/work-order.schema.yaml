@@ -1,0 +1,134 @@
+# work-order.schema.yaml — machine-readable work-order contract (O2, 2026-08-30)
+#
+# WHY THIS EXISTS
+# Work orders and context packets carry the same facts twice, by hand. Measured
+# against one real matched pair on 2026-08-30
+# (PILOT-HXS3-MUSE-GLIMMER-TOOLING-001 work order 10 / packet 11), of the
+# packet's 15 fields:
+#
+#   7 are pure copies      goal_id, work_order_id, milestone, role, objective,
+#                          owner_decisions, second_brain_evaluation
+#   3 are lossy restatements  constraints, consulted_records, handoff
+#   1 is a constant string    handoff — identical in every packet in the repo
+#   4 carry new information   goal_version, session_id, current_state,
+#                             evidence_requirements
+#
+# The work-order template says so itself: the packet's objective is
+# "<Restated from the work order, one paragraph.>" A restatement maintained by
+# hand is a copy that drifts, and it did — the same pair's `milestone` field
+# already differs between the two files.
+#
+# So the work order becomes the single source and the packet is GENERATED from
+# it. Only the four genuinely-new fields are authored.
+#
+# THREE REPRESENTATIONS, ONE ENFORCED
+# 30 work orders are structured YAML — 28 using the nested `work_order:` mapping
+# and 2 using an older flat `id:`/`executor:` convention. 31 more (all in
+# PILOT-DSH-IMPL-001) are free Markdown prose with no id of any kind. An earlier
+# draft of this comment said "two representations, 31 structured": it counted the
+# nested and prose forms and missed the flat one entirely, which would have read
+# two real work orders as unparseable. This schema governs the YAML forms.
+# The prose form is classed `legacy-prose`: reported, never failed, and never
+# rewritten — they are pilot records of work already done, and rewriting 31 of
+# them to satisfy a parser would be the append-only violation this repository
+# keeps having to correct. New work orders use the YAML form.
+
+schema:
+  version: 1
+
+  # The file glob this schema governs. Anything else under pilots/ that looks
+  # like a work order is legacy-prose.
+  governs: "pilots/**/*work-order*.yaml"
+  root_key: work_order
+
+  fields:
+    task_id:
+      required: true
+      pattern: "^WO-[A-Z0-9-]+$"
+      description: >-
+        Stable identifier, `WO-<PILOT>-<AGENT>-<MILESTONE>-NNN`. Required
+        because `hx gate <work-order-id>` (O3) has nothing to resolve without
+        it. Two YAML work orders carry `id:` at the top level instead, under
+        the older flat convention; both resolve.
+    parent_goal:
+      required: true
+      description: The GOAL- id this work order serves.
+    goal_file:
+      required: false
+      description: Repo-relative path to the goal file, when one exists.
+    milestone:
+      required: true
+      description: >-
+        Milestone id and short title. The generated packet copies this
+        VERBATIM; hand-maintained packets had already drifted from it.
+    assigned_agent:
+      required: true
+      description: Roster name / call sign of the executing agent.
+    objective:
+      required: true
+      description: >-
+        What changes where, plus the single-line acceptance statement. The
+        packet's `objective` is a projection of this field, not a restatement.
+    boundaries:
+      required: true
+      description: >-
+        Explicit allowlist of files/systems, execution path, and stop
+        conditions. Projected into the packet's `constraints`.
+    owner_authorizations:
+      required: false
+      description: Owner decisions granting scope. Projected into `owner_decisions`.
+    controlling_sources:
+      required: false
+      description: Refs consulted at dispatch. Projected into `consulted_records`.
+    rollback:
+      required: false
+      description: Smallest affected layer and its deterministic inverse.
+    deliverable:
+      required: true
+      description: The artifact and its required contents.
+    deliverable_destination:
+      required: true
+      description: >-
+        Exact repo-relative path(s) where each deliverable must land (QA-audit
+        SY-3). This is the ONLY field that makes governor-checklist step 1
+        ("artifact exists at the path the work order named") mechanizable, and
+        it existed in just one of the two forked template copies until
+        2026-08-30.
+    context_budget:
+      required: false
+      description: Lane token ceiling and read discipline (QA-audit ST-5).
+    capability_probe:
+      required: false
+      description: Pre-dispatch lane probe and its fail action (QA-audit ST-5).
+    second_brain_evaluation:
+      required: false
+      description: >-
+        The four-point standing directive. Projected into the packet as the
+        pointer string — the packet never re-decides it.
+
+  # work_order field -> context_packet field. These are GENERATED; authoring
+  # them by hand in the packet is what this schema removes.
+  projections:
+    parent_goal: goal_id
+    task_id: work_order_id
+    milestone: milestone
+    objective: objective
+    assigned_agent: role
+    owner_authorizations: owner_decisions
+    boundaries: constraints
+    controlling_sources: consulted_records
+
+  # Not derivable from the work order; authored in the packet.
+  packet_authored_fields:
+    - goal_version
+    - session_id
+    - current_state          # live host facts verified AT PACKET TIME
+    - evidence_requirements  # per-suite evidence tables
+
+  # Byte-identical copies. governace/templates/pilot/ is canonical; the
+  # pilots/_templates/ copy is a mirror. They had already forked: the canonical
+  # one carried context_budget, capability_probe, deliverable_destination and
+  # the R-6 acceptance-gate block, and the mirror carried none of them.
+  templates:
+    canonical: governace/templates/pilot/work-order.yaml
+    mirror: pilots/_templates/work-order.yaml

@@ -2,6 +2,10 @@
 # section order. Every field is required unless marked optional. The companion
 # context packet is context-packet.yaml in this directory.
 work_order:
+  # Opt in to governace/templates/pilot/work-order.schema.yaml. Orders that
+  # declare it are held to the full required-field set by SY-7; orders
+  # written before the schema existed are checked for a unique id only.
+  schema_version: 1
   task_id: "WO-<PILOT>-<AGENT>-<MILESTONE>-NNN"
   parent_goal: "GOAL-<id>"
   goal_file: "goals/<file>.md"

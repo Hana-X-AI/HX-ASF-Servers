@@ -47,12 +47,18 @@ hooks:
     enforcement: enforcing        # the only hook that can block; exit 2 when mode=block
     shim: never                   # greps the raw payload; must not be rewritten
     min_timeout: 10
-    sha256: 34df958144a51934472f69adda0b5cfefd63119b2e595606b70298cec5e198bf
+    sha256: 88a9b1d918324192c3ae6816c173ad064982aa0617644d005f7a0b974e601171
     scopes: [claude, kimi]
     note: >-
       Mode is read from scripts/hooks/secret-boundary.mode at run time. Today
       that file reads `warn`, so the hook reports and exits 0. Graduation to
-      `block` is O6 and is gated on a false-positive regression corpus.
+      `block` is O6 and is gated on the false-positive regression corpus at
+      governace/secret-boundary-corpus.yaml, which now exists and is green.
+      Digest updated 2026-08-30: the password rule now requires a live-LOOKING
+      value (digit, punctuation, or >=16 chars) and the sanitizing-word allowance
+      was moved off the matched fragment, where it almost never fired. Both
+      changes are proven against the corpus and lose no real detection
+      repo-wide.
 
   - name: validate-changed
     script: scripts/hooks/validate-changed.sh

@@ -1,0 +1,205 @@
+# registry.yaml — capability lifecycle states, kept separate (O8, 2026-08-30)
+#
+# WHY THIS EXISTS
+# "Installed", "enabled", "advertised to agents" and "approved for use" were one
+# status, or no status at all. MCP appears in 125 files; the repository
+# simultaneously records an owner-wide MCP HOLD and agent charters that claim MCP
+# ownership as active. Both statements are ratified. Neither cites the other.
+#
+# The review's rule, adopted here: those four never share one field.
+#
+# WHAT THIS REGISTRY DOES *NOT* CONTAIN, ON PURPOSE
+# Skills and hooks already have a machine-readable declaration and a checker:
+# AGENTS.md + SY-6, and governace/hooks/manifest.yaml + SY-5. Copying them here
+# would create a second authority plane for the same fact — the defect this whole
+# optimization set exists to remove. They are POINTED AT, not restated.
+#
+# Hosts likewise: servers/SERVER-REGISTRY.md owns durable host identity and
+# servers/system-mapping.md owns placement. This registry references them.
+#
+# CONFLICTS ARE RECORDED, NOT RESOLVED
+# Same rule as work-state's `reconcile` field. Where a capability's declared
+# state contradicts a ratified record, the contradiction is stated and named.
+# Setting `owner_hold: true` on a capability whose registration KDD says
+# otherwise would silently overwrite a ratified decision; that is a governor
+# determination, and a mechanical tool must not make it.
+
+version: 1
+
+authorities:
+  skills:
+    source: AGENTS.md §"Skills and trigger words"
+    checker: validate.py SY-6 (scripts/skills_registry.py)
+    note: 30 skills, reconciled 1:1 against .agents/skills/. Not restated here.
+  hooks:
+    source: governace/hooks/manifest.yaml
+    checker: validate.py SY-5 (scripts/hooks_verify.py)
+    note: 6 hooks + payload shim, verified against both registration scopes.
+  hosts:
+    source: servers/SERVER-REGISTRY.md (identity), servers/system-mapping.md (placement)
+    checker: none — prose authority
+    note: 16 active hosts; hxs-7 decommissioned 2026-08-28.
+  model_lanes:
+    source: AGENTS.md §"Model lanes by job family" (current state)
+    history: governace/decisions/KDD-0013-agent-model-lanes.md, Amendments 1-12
+    checker: none yet
+    reconcile: >-
+      AGENTS.md counts 5 metered + 8 zero-cost + 2 local. KDD-0013 Amendment 12
+      states "OD-14 scope is now TEN cloud lanes" and enumerates nine. The two
+      cannot both be right. Governor determination; not resolved here.
+
+# --------------------------------------------------------------------------
+# MCP surfaces. The four lifecycle fields are the point of this section.
+# --------------------------------------------------------------------------
+mcp:
+  owner_hold:
+    active: true
+    directive: owner directive 2026-08-29
+    source: servers/system-mapping.md lines 46-47 and 157-158
+    text: >-
+      All MCP deployment is on HOLD per owner directive 2026-08-29. No MCP
+      deployment until the owner lifts the hold.
+    note: >-
+      system-mapping.md:56-59 further clarifies that the `(+MCP)` notation in its
+      tables records a PLACEMENT contract and is not a deployment claim, so no
+      MCP server in that document is deployed, including on rows that carry it.
+
+  capabilities:
+    - capability: mobbin-mcp
+      installed: true
+      service_active: false
+      advertised_to_agents: false
+      approved_for_use: false
+      owner_hold: true
+      transport: unknown
+      host: workstation
+      security_review: not-started
+      evidence: '.kimi-code/mcp.json — one entry with enabled=false, staged 2026-08-24'
+      reconcile: none
+
+    - capability: lightragmcp
+      installed: false
+      service_active: false
+      advertised_to_agents: false
+      approved_for_use: false
+      owner_hold: true
+      transport: stdio
+      host: hxs-4
+      security_review: not-started
+      owning_agent: raphael
+      evidence: >-
+        No deployment evidence exists. agents/raphael/profile.md §7.3 specifies
+        an install command (`npm install -g @g99/lightrag-mcp-server`), a systemd
+        unit (`lightrag-mcp.service`) and a 30-tool surface — a deployment
+        SPECIFICATION, not a record of one performed.
+      reconcile: >-
+        CONTRADICTION, unresolved. agents/raphael/charter.md and profile.md and
+        KDD-0018 describe this MCP server as owned and active, with zero mention
+        of the hold; servers/system-mapping.md says no MCP is deployed. Both are
+        ratified records and neither cites the other. The divergence has a
+        traceable origin: PILOT-DSH-IMPL-001 state-log row 47 (2026-08-29T11:00Z)
+        records "MCP HOLD removed (co-located per system-mapping MCP architecture
+        decision)". A VERSION conflict rides along: charter and profile say
+        v1.0.0, KDD-0018 says v1.1.0. Governor determination required — setting
+        owner_hold here does not amend KDD-0018.
+
+    - capability: qdrant-mcp
+      installed: false
+      service_active: false
+      advertised_to_agents: false
+      approved_for_use: false
+      owner_hold: true
+      transport: unknown
+      host: hxs-4
+      security_review: not-started
+      owning_agent: quinn
+      evidence: No deployment evidence. agents/quinn/charter.md lists it under "Owns".
+      reconcile: >-
+        CONTRADICTION, unresolved. Same class as lightragmcp: quinn's charter,
+        profile and KDD-0017 carry no hold, and the slot where chris and wayne
+        state "MCP surfaces — HOLD" instead reads "co-located with Qdrant on
+        hxs-4". Governor determination required.
+
+    - capability: postgres-mcp-mai
+      installed: false
+      service_active: false
+      advertised_to_agents: false
+      approved_for_use: false
+      owner_hold: true
+      transport: unknown
+      host: hxs-9
+      security_review: not-started
+      owning_agent: chris
+      evidence: agents/chris/charter.md defers it explicitly under the hold.
+      reconcile: none
+
+    - capability: mcp-redis-main
+      installed: false
+      service_active: false
+      advertised_to_agents: false
+      approved_for_use: false
+      owner_hold: true
+      transport: unknown
+      host: hxs-10
+      security_review: not-started
+      owning_agent: wayne
+      evidence: agents/wayne/charter.md defers it explicitly under the hold.
+      reconcile: none
+
+    - capability: fastmcp-gateway
+      installed: false
+      service_active: false
+      advertised_to_agents: false
+      approved_for_use: false
+      owner_hold: true
+      transport: unknown
+      host: hxs-20
+      security_review: not-started
+      owning_agent: sage
+      evidence: >-
+        agents/README.md:41 lists `sage` as the FastMCP gateway agent on hxs-20.
+      reconcile: >-
+        The owning agent is UNREGISTERED. agents/README.md line 41 lists `sage`
+        as the FastMCP gateway on hxs-20, but no agents/sage/ directory exists,
+        so it has no charter, no profile and no registration KDD — the roster
+        row asserts a lane that governace/templates/agent-checklist.md would not
+        consider registered. The Codex review defers FastMCP (O10) while the
+        hold in servers/system-mapping.md stands. Governor determination:
+        register sage or retire the roster row.
+
+# --------------------------------------------------------------------------
+# Activation gates. Six agents are gated, each by prose in two places.
+# --------------------------------------------------------------------------
+activation_gates:
+  - agent: rob
+    activated: false
+    condition: Gate 7 PASS + Gate 10 + work order + owner word
+    source: agents/README.md, agents/rob/profile.md §Activation gate
+  - agent: chris
+    activated: false
+    condition: per roster row and profile activation gate
+    source: agents/README.md, agents/chris/profile.md
+  - agent: wayne
+    activated: false
+    condition: per roster row and profile activation gate
+    source: agents/README.md, agents/wayne/profile.md
+  - agent: quinn
+    activated: false
+    condition: per roster row and profile activation gate
+    source: agents/README.md, agents/quinn/profile.md
+  - agent: raphael
+    activated: false
+    condition: per roster row and profile activation gate
+    source: agents/README.md, agents/raphael/profile.md
+  - agent: bailey
+    activated: false
+    condition: per roster row and profile activation gate
+    source: agents/README.md, agents/bailey/profile.md
+
+# --------------------------------------------------------------------------
+plugins:
+  installed: []
+  note: >-
+    None installed. Linear, Jira/Rovo, Asana and monday.com were verified
+    available and not installed (Codex review provenance). O9 (Linear) is OUT OF
+    SCOPE by owner directive 2026-08-30.

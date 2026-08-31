@@ -31,9 +31,31 @@ hit=""
 if printf '%s' "$payload" | grep -Eq 'BEGIN [A-Z ]*PRIVATE KEY|AKIA[0-9A-Z]{16}|xox[baprs]-[A-Za-z0-9-]{10,}|ghp_[0-9A-Za-z]{36}'; then
   hit="generic credential pattern (key/token)"
 fi
+# The value must look like a CREDENTIAL, not like an English word. Every
+# recorded false positive was a word standing where a value would go — `field`,
+# `assignment`, `supplied`, `set` — and twice that forced an append-only state
+# log to be edited in place to clear the gate (DSH row 5, OMNIROUTE row 40).
+# A credential carries a digit or punctuation, or is long.
+#
+# The allowance applies to the VALUE ONLY, and candidates are extracted BEFORE
+# it runs. An earlier revision filtered the whole payload first: a tool payload
+# is a single JSON line, so one occurrence of `askpass` anywhere in a Write
+# would have disabled password detection for that entire write. That is a worse
+# failure than the one it was fixing, and it is why the order below matters —
+# extract, strip the key, then judge the value on its own.
+#
+# "password: supplied by the askpass helper" is not caught by the allowance at
+# all; it is caught because `supplied` is not a live-looking value. The
+# allowance exists only for explicit sanitizing values like REDACTED.
+#
+# STATED BOUND, matching scripts/validate.py: an all-lowercase passphrase under
+# 16 characters with no digit or punctuation is not caught here. Flagging prose
+# is the worse failure — layer 2 below is the backstop for the real credential.
 if [ -z "$hit" ] && printf '%s' "$payload" \
     | grep -Eo 'password[[:space:]]*[:=][[:space:]]*[A-Za-z0-9!@#$%^&*._-]{6,}' \
-    | grep -viE 'REDACTED|withheld|never printed|askpass' | grep -q .; then
+    | sed -E 's/^[Pp][Aa][Ss][Ss][Ww][Oo][Rr][Dd][[:space:]]*[:=][[:space:]]*//' \
+    | grep -viE '^(REDACTED|withheld|askpass)$' \
+    | grep -qE '[0-9]|[!@#$%^&*._-]|^.{16,}$'; then
   hit="password assignment with a live-looking value"
 fi
 

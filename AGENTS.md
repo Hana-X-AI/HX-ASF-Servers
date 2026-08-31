@@ -151,7 +151,7 @@ Always on, distilled from the **be-smart** skill (say "be smart" to load the ful
 contract with examples).
 
 - Banned phrases: "load-bearing", "worth stating plainly", "here's the honest truth",
-  "the real tension", "carry the argument".
+  "the real tension", "carry the argument", "that's on me".
 - No flattery, no decorative headings or emoji, no motivational language. State each
   idea once. No em-dash chaining. No analogies for what is in front of us.
 - Lead with the answer; end with the required action or next step.
@@ -356,10 +356,23 @@ a second brain for the whole HX team, humans and agents (owner, 2026-08-25).
   catalog (existence, owner, retrieval mechanism only).
 - Kimi-K3 consults the catalog before assigning work and cites consulted records in
   context packets. Agents return new reusable facts and artifacts after execution.
-- A material handoff is **incomplete without Carol's catalog receipt**, referenced
-  in the governing log.
+- **Handoff closure is two-stage** (owner directive 2026-08-30; KDD-0024).
+  **`execution_accepted`** — evidence produced and the deterministic gates passed.
+  The work is done: the acceptance row is written, goal status updates, and the
+  next work order may dispatch. **`catalog_pending` / `catalog_complete`** — the
+  knowledge projection, tracked separately and never gating. Carol's receipt is
+  still required; waiting on it is not, because non-critical-path work must never
+  block critical path and Carol is background-class (KDD-0013 Amendment 5).
+  SYNCHRONOUS EXCEPTION: a change to authority, security, schemas, agent
+  identities, or reusable platform knowledge takes the receipt before closure.
+  Where the class is unclear, treat it as synchronous. Everything else batches at
+  merge or the scheduled consolidation window.
+  History: this rule replaced the 2026-08-25 "a material handoff is incomplete
+  without Carol's catalog receipt" line on 2026-08-30; both are preserved in Git
+  and in KDD-0024.
 - Governing principle: retrieve before investigating; reuse before recomputing;
-  verify before trusting; catalog before closing.
+  verify before trusting; catalog before closing — cataloguing routine work does
+  not block closing it.
 
 ## Second Brain roadmap integration (standing directive)
 

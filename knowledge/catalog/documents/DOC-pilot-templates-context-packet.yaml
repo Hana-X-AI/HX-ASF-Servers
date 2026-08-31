@@ -1,50 +1,68 @@
 document:
-  id: "DOC-pilot-templates-context-packet"
-  title: "pilots/_templates/context-packet.yaml — ratified context-packet template (UD5/U6; consulted_records + Carol handoff rule)"
-  type: "contract"
-  declared_purpose: "Ratified context-packet template (2026-08-25, owner decision UD5 approving U6 authoring; state log row 60). Pairs with work-order.yaml in the same directory; 'everything the producer needs and nothing it does not'. Fixes the packet contract: goal/work-order/session identity, role (producer lane + call sign), restated objective, current_state (host with OS/kernel verified at packet time, key identities to preserve, relevant config with evidence dates, unit/service states that must hold at completion), owner_decisions with dates and state-log rows, constraints (loopback-only / read-only scope / no-secret rules / frozen-evidence rules, stop conditions, bounded-correction budget), evidence_requirements (pre/post hashes, diffs, outputs, journal excerpts, verification runs, budget/arithmetic tables where the milestone defines them), consulted_records (DOC ids / retrieval packages the governor consulted at dispatch per the AGENTS.md documentation-governance amendment, or 'none required'), and the handoff rule (deliverable goes to Carol for catalog receipt; the handoff is OPEN until the receipt is cited in the state log). The second_brain_evaluation is answered in the governing work order — the packet does not re-decide it."
-  inferred_value: "INFERENCE: the consulted_records field is the structural hook that makes 'Kimi-K3 consults the catalog before assigning work' auditable per dispatch — the amendment's cite-what-you-consulted rule becomes a required field, not a ritual."
+  id: DOC-pilot-templates-context-packet
+  title: pilots/_templates/context-packet.yaml — ratified context-packet template (UD5/U6; consulted_records + Carol handoff rule)
+  type: contract
+  declared_purpose: 'Ratified context-packet template (2026-08-25, owner decision UD5 approving U6 authoring; state log row 60). Pairs with work-order.yaml in the same directory; ''everything the producer needs and nothing it does not''. Fixes the packet contract: goal/work-order/session identity, role (producer lane + call sign), restated objective, current_state (host with OS/kernel verified at packet time, key identities to preserve, relevant config with evidence dates, unit/service states that must hold at completion), owner_decisions with dates and state-log rows, constraints (loopback-only / read-only scope / no-secret rules / frozen-evidence rules, stop conditions, bounded-correction budget), evidence_requirements (pre/post hashes, diffs, outputs, journal excerpts, verification runs, budget/arithmetic tables where the milestone defines them), consulted_records (DOC ids / retrieval packages the governor consulted at dispatch per the AGENTS.md documentation-governance amendment, or ''none required''), and the two-stage handoff rule (execution_accepted on evidence plus deterministic gate pass — the next work order may dispatch then; catalog_pending/catalog_complete tracked independently and never gating routine closure; Carol''s receipt required but not blocking; synchronous only for authority, security, schema, agent-identity and reusable-platform-knowledge changes, and for any class that is unclear). The second_brain_evaluation is answered in the governing work order — the packet does not re-decide it. Rewritten 2026-08-30 (O4, KDD-0024). The retired blocking wording is preserved in Git history and quoted in KDD-0024; hash_history here records the digest transition and the reason for it, not the superseded text.'
+  inferred_value: 'INFERENCE: the consulted_records field is the structural hook that makes ''Kimi-K3 consults the catalog before assigning work'' auditable per dispatch — the amendment''s cite-what-you-consulted rule becomes a required field, not a ritual.'
   source:
-    author: "Kimi-K3 (governor; U6 authoring approved as UD5)"
-    provided_by: "Kimi-K3"
-    origin: "/home/hxsa/opt/HX-ASF-Servers/pilots/_templates/context-packet.yaml"
-    section: "§whole-document"
-    ingestion_date: "2026-08-26T00:25:00Z"
-  owner: "Kimi-K3"
+    author: Kimi-K3 (governor; U6 authoring approved as UD5)
+    provided_by: Kimi-K3
+    origin: /home/hxsa/opt/HX-ASF-Servers/pilots/_templates/context-packet.yaml
+    section: §whole-document
+    ingestion_date: '2026-08-26T00:25:00Z'
+  owner: Kimi-K3
   applies_to:
     hosts: []
     fqdns: []
     services: []
-    agents: [kimi-k3, carol, rick, john]
-    repositories: [HX-ASF-Servers]
-    environments: [pilot, fleet]
-  version: ""
-  status: "active"
-  authority_level: "ratified-governance"
+    agents:
+    - kimi-k3
+    - carol
+    - rick
+    - john
+    repositories:
+    - HX-ASF-Servers
+    environments:
+    - pilot
+    - fleet
+  version: ''
+  status: active
+  authority_level: ratified-governance
   supersedes: []
   superseded_by: []
   security:
-    classification: "internal"
-    access_restrictions: "none beyond repository access"
+    classification: internal
+    access_restrictions: none beyond repository access
     contains_secret_values: false
   relations:
-    - predicate: "references"
-      target: "DOC-pilot-templates-work-order"
-      note: "pairs with work-order.yaml; the second_brain_evaluation is answered there and deliberately not re-decided in the packet"
-    - predicate: "references"
-      target: "DOC-agent-carol-profile"
-      note: "handoff field encodes the documentation-governance amendment: deliverable to Carol, handoff OPEN until the catalog receipt is cited in the state log (profile §7/§8)"
-    - predicate: "references"
-      target: "DOC-repo-governance-agents-md"
-      note: "consulted_records field implements the amendment rule that Kimi-K3 consults the catalog before assigning work and cites the consulted records in the context packet"
-    - predicate: "references"
-      target: "DOC-assessment-unified-capability-recommendations"
-      note: "U6 origin (with work-order.yaml); authoring approved as owner decision UD5 (state log row 60)"
+  - predicate: references
+    target: DOC-pilot-templates-work-order
+    note: pairs with work-order.yaml; the second_brain_evaluation is answered there and deliberately not re-decided in the packet
+  - predicate: references
+    target: DOC-agent-carol-profile
+    note: 'handoff field encodes the two-stage closure of KDD-0024: deliverable to Carol, execution_accepted on gate pass, catalog_pending until the receipt is cited — the receipt is required and does not gate routine closure (profile §7/§8; Carol is background-class per KDD-0013 Amendment 5)'
+  - predicate: references
+    target: DOC-repo-governance-agents-md
+    note: consulted_records field implements the amendment rule that Kimi-K3 consults the catalog before assigning work and cites the consulted records in the context packet
+  - predicate: references
+    target: DOC-assessment-unified-capability-recommendations
+    note: U6 origin (with work-order.yaml); authoring approved as owner decision UD5 (state log row 60)
   validation:
-    validated_at: "2026-08-26T00:25:00Z"
-    freshness: "current"
-    review_due: "on template revision (re-hash this record)"
-  sha256: "0f68c49ac4d0ace12f288e4443065065f2042c6b829c2f28db199b44375da62d"
-  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/pilots/_templates/context-packet.yaml"
+    validated_at: '2026-08-30T22:57:31Z'
+    freshness: current
+    review_due: on template revision (re-hash this record)
+  sha256: e1cdc72fad0c9948a1a401937d442e65dce0925088cfd771b272473690ef229f
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/_templates/context-packet.yaml
+  hash_history:
+  - sha256: 0f68c49ac4d0ace12f288e4443065065f2042c6b829c2f28db199b44375da62d
+    timestamp: unrecorded
+    reason: predecessor state restored by carol-mint (re-mint events before 2026-08-30T22:44:01Z did not record history)
+  - sha256: 5691a8b8688c135b672fb9143678b6ab4bf9995a19c9045865ecf5a86a563f32
+    timestamp: '2026-08-30T22:44:01Z'
+    reason: O4 two-stage closure (KDD-0024)
+  - sha256: e1cdc72fad0c9948a1a401937d442e65dce0925088cfd771b272473690ef229f
+    timestamp: '2026-08-30T22:57:31Z'
+    reason: 'O4 corrected in place: AGENTS.md and governace/process are live artifacts (KDD-0024 A1)'
 notes:
-  cataloging_context: "Type judged 'contract' per the template-record precedent (cf. DOC-pilot-templates-work-order). Authority ratified-governance (UD5). Existing pilot context packets (DOC-pilot-hx1-cp-*) predate the template and are NOT superseded by it."
+  cataloging_context: Type judged 'contract' per the template-record precedent (cf. DOC-pilot-templates-work-order). Authority ratified-governance (UD5). Existing pilot context packets (DOC-pilot-hx1-cp-*) predate the template and are NOT superseded by it.
+  minted_by: 'carol-mint 1.0.0 @ 2026-08-30T22:57:31Z — re-mint 5691a8b8688c… -> e1cdc72fad0c… — O4 corrected in place: AGENTS.md and governace/process are live artifacts (KDD-0024 A1)'

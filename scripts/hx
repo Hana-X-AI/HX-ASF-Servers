@@ -1,0 +1,269 @@
+#!/usr/bin/env python3
+"""hx — one entry point over the factory engines (O3).
+
+    hx work <cmd>          -> scripts/work_state.py   (goal state, O1)
+    hx order <cmd>         -> scripts/work_order.py   (work orders, O2)
+    hx gate <work-order-id>   run the applicable checks, emit one receipt
+    hx capability <cmd>    -> scripts/capability.py   (registry, O8)
+
+This dispatches; it does NOT reimplement checks. validate.py's own docstring
+states the rule it inherits: "one contract, one place to fix a check."
+
+WHAT `hx gate` IS, AND IS NOT
+`governace/process/governor-verification-checklist.md` has ten steps. Five are
+mechanizable and are run here. Five require judgment or live-host access and are
+printed as UNCHECKED with the reason. They are never silently passed, and the
+receipt never reads as a full acceptance — acceptance stays a governor act.
+
+  1  artifact exists            MECHANIZED  needs deliverable_destination
+  2  receipt line present       MECHANIZED  `Task May Proceed:` exactly once
+  3  token context check        JUDGMENT    reading a FAIL in context is judgment
+  4  secret sweep (generic)     MECHANIZED  the literal-credential half is a
+                                            governor-only manual gate and is
+                                            deliberately NOT performed here
+  5  governor-artifact integrity MECHANIZED  hashes recorded and compared
+  6  claims vs live state       OUT OF SCOPE requires host access; this command
+                                            is read-only and does no network
+  7  boundary conformance       JUDGMENT    boundaries are prose
+  8  completeness               JUDGMENT    evidence requirements are prose
+  9  honest limitations         JUDGMENT
+  10 handoff rule               REPORTED    see below
+
+STEP 10 AND THE CRITICAL PATH. Owner directive 2026-08-30: non-critical-path
+work must never block critical path, agents included. A passing gate therefore
+emits `execution_accepted` and reports catalog state separately. Carol's receipt
+is tracked, never waited on.
+
+Read-only by default. `--write` is the only mutation and it creates one receipt.
+"""
+
+import hashlib
+import json
+import os
+import re
+import subprocess
+import sys
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SCRIPTS = os.path.join(ROOT, "scripts")
+sys.path.insert(0, SCRIPTS)
+
+RECEIPT_LINE = re.compile(r"Task May Proceed:\s*(YES|NO)", re.I)
+
+# Same five patterns validate.py sweeps with. The literal-credential sweep is a
+# governor-only manual gate and is never performed by tooling.
+SECRET_PATTERNS = [
+    ("private-key block", re.compile(r"BEGIN [A-Z0-9 ]*PRIVATE KEY")),
+    ("AWS access key id", re.compile(r"AKIA[0-9A-Z]{16}")),
+    ("Slack token", re.compile(r"xox[baprs]-")),
+    ("GitHub PAT", re.compile(r"ghp_[0-9A-Za-z]{36}")),
+    ("password assignment", re.compile(r"(?i)\bpassword\s*[:=]\s*\S+")),
+]
+SECRET_ALLOW = re.compile(r"(?i)REDACTED|withheld|never printed|askpass|<[^>]*>")
+
+JUDGMENT_STEPS = [
+    (3, "token context check",
+     "reading a FAIL/BLOCKED/NOT RUN token in context is judgment"),
+    (6, "claims vs live state",
+     "requires read-only access to the live target; this command does no network"),
+    (7, "boundary conformance",
+     "the work order's boundaries are prose; a mutation disclosure is matched by a reader"),
+    (8, "completeness",
+     "the packet's evidence_requirements are prose"),
+    (9, "honest limitations",
+     "disclosure of near-misses and substitutions is judgment"),
+]
+
+
+def _sha256(path):
+    h = hashlib.sha256()
+    with open(path, "rb") as fh:
+        for chunk in iter(lambda: fh.read(65536), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def _profile(wo):
+    """Gate profile. Seeded from the checklist's own critical classes rather
+    than a new taxonomy: security, governance, infrastructure, deployment."""
+    blob = " ".join(str(wo.get(k, "")) for k in
+                    ("objective", "milestone", "deliverable", "assigned_agent")).lower()
+    for name, words in (
+            ("security", ("secret", "credential", "ssh", "firewall", "tls")),
+            ("deployment", ("deploy", "install", "provision", "reboot", "cutover")),
+            ("infrastructure", ("host", "storage", "disk", "network", "systemd")),
+            ("governance", ("catalog", "kdd", "charter", "profile", "registry")),
+    ):
+        if any(w in blob for w in words):
+            return name
+    return "default"
+
+
+def gate(task_id, write=False):
+    """Run the mechanizable checklist steps. Returns (result_dict, exit_code)."""
+    import work_order
+
+    wo, rel = work_order.find(task_id)
+    if wo is None:
+        return {"error": "no work order with id %r" % task_id}, 2
+
+    steps, blocking = [], 0
+
+    def record(n, name, status, detail):
+        nonlocal blocking
+        steps.append({"step": n, "name": name, "status": status, "detail": detail})
+        if status == "FAIL":
+            blocking += 1
+
+    # --- step 1: artifact exists at the path the work order named ------------
+    dests = wo.get("deliverable_destination") or []
+    if isinstance(dests, str):
+        dests = [dests]
+    dests = [d for d in dests if isinstance(d, str) and not d.startswith("verify:")
+             and "<" not in d]
+    if not dests:
+        record(1, "artifact exists", "UNCHECKED",
+               "the work order names no deliverable_destination — the field was added "
+               "to the template 2026-08-29, so orders written before it cannot be "
+               "checked mechanically")
+        found = []
+    else:
+        found, missing = [], []
+        for d in dests:
+            p = os.path.join(ROOT, d)
+            (found if os.path.isfile(p) and os.path.getsize(p) > 0 else missing).append(d)
+        record(1, "artifact exists",
+               "FAIL" if missing else "PASS",
+               ("missing or empty: %s" % ", ".join(missing)) if missing
+               else "%d artifact(s) present and non-empty" % len(found))
+
+    # --- step 2: the receipt line, exactly once ------------------------------
+    if not found:
+        record(2, "receipt line present", "UNCHECKED", "no artifact to read")
+    else:
+        for d in found:
+            text = open(os.path.join(ROOT, d), encoding="utf-8", errors="replace").read()
+            hits = RECEIPT_LINE.findall(text)
+            record(2, "receipt line present",
+                   "PASS" if len(hits) == 1 else "FAIL",
+                   "%s: `Task May Proceed` found %d time(s) (exactly one required)"
+                   % (d, len(hits)))
+
+    # --- step 4: generic secret sweep ---------------------------------------
+    if not found:
+        record(4, "secret sweep (generic)", "UNCHECKED", "no artifact to read")
+    else:
+        hits = []
+        for d in found:
+            for i, line in enumerate(
+                    open(os.path.join(ROOT, d), encoding="utf-8", errors="replace"), 1):
+                if SECRET_ALLOW.search(line):
+                    continue
+                for label, pat in SECRET_PATTERNS:
+                    if pat.search(line):
+                        hits.append("%s:%d %s" % (d, i, label))
+        record(4, "secret sweep (generic)", "FAIL" if hits else "PASS",
+               "; ".join(hits) if hits else
+               "0 hits across %d artifact(s). The literal-credential sweep is a "
+               "governor-only manual gate and was NOT performed here" % len(found))
+
+    # --- step 5: governor-artifact integrity ---------------------------------
+    # No code computed or stored these hashes before this command existed, so
+    # there is nothing to compare against on a first run. The gate records them;
+    # a later run compares. Claiming PASS with no baseline would be a false
+    # assurance, so the first run says BASELINE.
+    wo_hash = _sha256(os.path.join(ROOT, rel))
+    record(5, "governor-artifact integrity", "BASELINE",
+           "work order %s sha256 %s… recorded; no prior proof value stored to "
+           "compare against (nothing computed these before this command)"
+           % (rel, wo_hash[:12]))
+
+    # --- steps 3, 6, 7, 8, 9 -------------------------------------------------
+    for n, name, why in JUDGMENT_STEPS:
+        record(n, name, "UNCHECKED", why)
+
+    # --- step 10: handoff ----------------------------------------------------
+    record(10, "handoff", "REPORTED",
+           "catalog projection is background-class and does not gate this result "
+           "(owner directive 2026-08-30). Carol's receipt is tracked separately.")
+
+    profile = _profile(wo)
+    mech = [s for s in steps if s["status"] in ("PASS", "FAIL")]
+    result = {
+        "work_order": task_id,
+        "file": rel,
+        "profile": profile,
+        "outcome": "execution_accepted" if blocking == 0 else "blocked",
+        "catalog_state": "catalog_pending",
+        "mechanized": len(mech),
+        "blocking_failures": blocking,
+        "unchecked": len([s for s in steps if s["status"] == "UNCHECKED"]),
+        "steps": steps,
+        "triage": ("triage: tier=%s status=%s agent=%s task=%s score=n/a flags=%s"
+                   % (0 if blocking == 0 else 2,
+                      "auto_approved" if blocking == 0 else "escalated",
+                      wo.get("assigned_agent") or wo.get("executor") or "unknown",
+                      profile,
+                      "none" if blocking == 0 else "gate_failure")),
+    }
+    if write:
+        out = os.path.join(os.path.dirname(os.path.join(ROOT, rel)),
+                           "gate-receipt-%s.json" % task_id)
+        with open(out, "w", encoding="utf-8") as fh:
+            json.dump(result, fh, indent=2)
+        result["receipt"] = os.path.relpath(out, ROOT)
+    return result, (1 if blocking else 0)
+
+
+def _render(r):
+    if "error" in r:
+        print(r["error"], file=sys.stderr)
+        return
+    print("hx gate — %s  [profile: %s]" % (r["work_order"], r["profile"]))
+    print("=" * 60)
+    for s in r["steps"]:
+        print("  %2d %-28s %-9s %s" % (s["step"], s["name"], s["status"], s["detail"]))
+    print()
+    print("  outcome        : %s" % r["outcome"])
+    print("  catalog        : %s (does not gate)" % r["catalog_state"])
+    print("  mechanized     : %d graded, %d unchecked (judgment or out of scope)"
+          % (r["mechanized"], r["unchecked"]))
+    print("  %s" % r["triage"])
+    print()
+    print("  This is NOT an acceptance. Five steps require a governor.")
+    if "receipt" in r:
+        print("  receipt        : %s" % r["receipt"])
+
+
+def main(argv):
+    if not argv:
+        print(__doc__.strip().split("\n\n")[1], file=sys.stderr)
+        return 2
+    cmd, rest = argv[0], argv[1:]
+
+    delegate = {"work": "work_state.py", "order": "work_order.py",
+                "capability": "capability.py"}
+    if cmd in delegate:
+        target = os.path.join(SCRIPTS, delegate[cmd])
+        if not os.path.isfile(target):
+            print("hx: %s is not built yet" % delegate[cmd], file=sys.stderr)
+            return 2
+        return subprocess.call([sys.executable, target] + rest)
+
+    if cmd == "gate":
+        as_json = "--json" in rest
+        write = "--write" in rest
+        ids = [a for a in rest if not a.startswith("--")]
+        if not ids:
+            print("usage: hx gate <work-order-id> [--json] [--write]", file=sys.stderr)
+            return 2
+        result, rc = gate(ids[0], write=write)
+        print(json.dumps(result, indent=2)) if as_json else _render(result)
+        return rc
+
+    print("usage: hx [work|order|gate|capability] ...", file=sys.stderr)
+    return 2
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1:]))

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!-- Generated from governace/decisions/KDD-0023-capability-manifests.md (sha256 a16331ae5e6bac7ee9bb20328fc0bde0a02a72cd575fa4fceb8443131a3b524e) by scripts/wiki/render.py on 2026-08-30T22:42Z.
+     Markdown is the source of truth — edit the .md and re-render; never hand-edit this file. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KDD-0023: Declare capabilities, then verify them (O5, O7)</title>
+<style>
+:root{color-scheme:light dark}
+body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.55;
+max-width:62rem;margin:0 auto;padding:1.5rem 2rem;color:#1a1a1a;background:#fff}
+h1,h2,h3,h4,h5,h6{line-height:1.25;margin-top:1.6em}
+h1{border-bottom:2px solid #444;padding-bottom:.3em}
+h2{border-bottom:1px solid #ccc;padding-bottom:.2em}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+code{background:#f0f0f0;padding:.1em .3em;border-radius:3px}
+pre{background:#f6f8fa;border:1px solid #ddd;border-radius:6px;padding:.8em;overflow-x:auto}
+pre code{background:none;padding:0}
+table{border-collapse:collapse;margin:1em 0;width:100%}
+th,td{border:1px solid #ccc;padding:.35em .6em;text-align:left;vertical-align:top}
+th{background:#f0f0f0}
+blockquote{border-left:4px solid #bbb;margin:1em 0;padding:.2em 1em;color:#444;background:#fafafa}
+a{color:#0645ad}
+.doc-meta{color:#666;font-size:.85em;border-bottom:1px dashed #bbb;padding-bottom:.6em;margin-bottom:1.2em}
+footer{margin-top:2.5em;border-top:1px solid #ccc;color:#666;font-size:.8em;padding-top:.8em}
+pre.mermaid{background:#fff;border:1px dashed #999}
+@media (prefers-color-scheme:dark){
+body{color:#ddd;background:#111} h1{border-color:#888} h2{border-color:#555}
+code{background:#2a2a2a} pre{background:#1b1b1b;border-color:#444}
+th{background:#222} th,td{border-color:#555} blockquote{color:#bbb;background:#191919;border-color:#666}
+a{color:#6fa8ff} .doc-meta,footer{color:#999}}
+</style>
+</head>
+<body>
+<main class="doc">
+<h1 id="kdd-0023-declare-capabilities-then-verify-them-o5-o7">KDD-0023: Declare capabilities, then verify them (O5, O7)</h1>
+<ul><li>Date: 2026-08-30</li><li>Status: ratified</li><li>Decider: Agent-Zero</li><li>Related: <code>governace/hooks/manifest.yaml</code>, <code>scripts/hooks_verify.py</code>, <code>scripts/skills_registry.py</code>, KDD-0020 (canonical skill tree; this mechanizes its Amendment 2 item 1), KDD-0021 (the same declare-then-verify shape applied to goal state), Codex process-optimization review <code>codex_20260830_1539</code> (O5, O7, and F5/F6 of its defect list)</li></ul>
+<h2 id="context">Context</h2>
+<p>Two capability classes were declared in prose and verified by nobody.</p>
+<p><strong>Hooks.</strong> Three tables claimed to list them and all three were wrong on 2026-08-30. <code>CLAUDE.md</code> said "five repo hooks" above a six-row table and "the four advisory hooks" when there were five. <code>scripts/README.md</code> listed two. <code>DOC-scripts-hooks.yaml</code> recorded two and carried a component checksum for <code>validate-changed.sh</code> that no longer matched the file. Nothing compared any of them to the live registrations, in either scope.</p>
+<p>Three failure modes were reachable and none would have announced itself:</p>
+<ol><li><strong>The silent no-op.</strong> The five advisory hooks read the edited path from the Kimi payload key <code>path</code>. Claude Code sends <code>tool_input.file_path</code>, and the literal string <code>"path"</code> never appears inside <code>"file_path"</code>, so an unshimmed hook matches nothing and exits 0. A disabled guardrail and a clean run are the same observation.</li><li><strong>The blinded scanner.</strong> <code>secret-boundary.sh</code> greps the whole raw payload. Wrapping it in the shim — which rewrites the payload to a bare <code>{"path": ...}</code> — would blind it while leaving it registered and green.</li><li><strong>The ungoverned switch.</strong> <code>scripts/hooks/secret-boundary.mode</code> is a five-byte file whose single word decides whether the one enforcing hook can block. It was group-writable and its content was asserted nowhere.</li></ol>
+<p><strong>Skills.</strong> SY-3 proves the mirrors are byte-identical. It executes nothing and reads no frontmatter, which is exactly how <code>goal-decompose</code> shipped a SKILL.md documenting four scripts in a <code>scripts/</code> directory that was empty and always had been: every false claim was mirrored faithfully to both mirrors. Anyone following the skill got "No such file or directory". KDD-0020 Amendment 2 recorded that reconciling the <code>AGENTS.md</code> inventory against <code>.agents/skills/</code> was "NOT yet mechanized — performed manually"; nothing in the repository read <code>AGENTS.md</code> at all, so the 30/30 match was maintained by hand and true by coincidence.</p>
+<h2 id="options-considered">Options considered</h2>
+<ol><li><strong>More prose tables, better maintained.</strong> Rejected: three already existed and all three were wrong. The defect is not carelessness, it is that no reader and no check ever compared them to reality.</li><li><strong>Make the hooks enforcing so failures are loud.</strong> Rejected: it treats the symptom. A hook that is not registered cannot fail loudly, because it does not run at all.</li><li><strong>Declare each capability in one machine-readable file and verify the declaration against the live state.</strong> <strong>Selected.</strong> Same shape as KDD-0021: one declaration, one reader, enforced as a <code>validate.py</code> sub-check.</li><li><strong>A capability database or service.</strong> Rejected, and the source review says the same: not before the file-based approach is proven insufficient.</li></ol>
+<h2 id="decision">Decision</h2>
+<p><strong>D1 — One hook declaration.</strong> <code>governace/hooks/manifest.yaml</code> declares every hook: event, matcher, <code>enforcement</code> (advisory or enforcing), <code>shim</code> requirement, <code>min_timeout</code>, <code>sha256</code>, and the scopes it belongs to. It also governs the payload shim's digest — the shim is not a hook, but a broken shim turns all five advisory hooks into silent no-ops without touching any hook — and the content AND digest of the mode file.</p>
+<p><strong>D2 — Both registration scopes, asymmetrically.</strong> <code>scripts/hooks_verify.py</code> compares the manifest against <code>.claude/settings.json</code> (in Git, deterministic, CI-verified) and <code>~/.kimi-code/config.toml</code> (user scope, outside Git). A missing user-scope file is <strong>reported, never failed</strong>: CI has no such file and must not claim it verified user-scope state. A missing in-Git file is a <strong>hard failure</strong> — deleting it unregisters every hook at once and must never pass clean.</p>
+<p><strong>D3 — Registration is structural, not textual.</strong> A hook path that merely appears in a command string is not a hook that runs. The verifier tokenizes the command and requires the hook at <code>argv[0]</code>, or at <code>argv[1]</code> behind the shim. A hook echoed or passed as data is reported, not counted.</p>
+<p><strong>D4 — The user config is read narrowly, on purpose.</strong> <code>~/.kimi-code/config.toml</code> holds live provider credentials beside the <code>[[hooks]]</code> blocks. The parser is a line scanner that reads <code>event</code>, <code>matcher</code>, <code>command</code> and <code>timeout</code> inside <code>[[hooks]]</code> and nothing else. It is deliberately NOT a general TOML load, and two regression tests assert that no credential, <code>api_key</code> or <code>base_url</code> can reach a summary, a problem message, or the parsed registrations.</p>
+<p><strong>D5 — Skills declare only what the inventory cannot know.</strong> <code>AGENTS.md</code> §"Skills and trigger words" remains the single authority for owner and trigger words (KDD-0020 D3). <code>scripts/skills_registry.py</code> READS them from there and reconciles; it does not duplicate them into frontmatter. Frontmatter carries <code>maturity</code>, <code>required_files</code> and <code>smoke</code>.</p>
+<p>This overrides the source review's O7 wording, which proposed putting triggers and owners in the registry. A second copy of a ratified inventory needs its own sync check and becomes a second authority plane for the same fact — the defect this optimization set exists to remove. The registry is the <em>reconciler</em> of the inventory, not a rival to it.</p>
+<p><strong>D6 — A skill that ships something runnable must smoke it or say why not.</strong> Reference material has nothing to execute, so demanding a skip reason for a format document would be boilerplate that teaches a reader nothing. <code>archify</code> declines with its reason (its vendored suite resolves paths to a parent directory that has never existed in this repository); <code>diagnosing-bugs</code> declines because its <code>.sh</code> is a template that blocks on human input, and CI shellchecks it instead.</p>
+<p><strong>D7 — Enforced as SY-5 and SY-6.</strong> Both run inside the existing <code>governance-path</code> check. The check count stays <strong>5/5</strong> — the same reasoning as SY-3 and SY-4: a sixth top-level check would invalidate the count assertions scattered across the repository for no gain. Smokes execute skill commands, so they run as their own CI step rather than inside the read-only validator.</p>
+<h2 id="consequences">Consequences</h2>
+<p><strong>Enables.</strong> "Is this hook actually running?" and "does this skill actually work?" become answerable by a command instead of by reading three tables and trusting one. The prose tables survive as reader summaries and are now labelled as such: where a table and its manifest disagree, the table is the defect.</p>
+<p><strong>Immediate effect.</strong> Six hooks reconciled across both scopes. Thirty skills reconciled 1:1 against the <code>AGENTS.md</code> inventory, mechanizing KDD-0020 Amendment 2 item 1. <code>CLAUDE.md</code>, <code>scripts/README.md</code>, <code>tests/README.md</code>, <code>scripts/hooks/README.md</code> and <code>DOC-scripts-hooks.yaml</code> corrected against the new checks. The duplicated component checksums in the catalog record were removed rather than repaired: they now live in the manifest, where SY-5 verifies them against the real files on every run.</p>
+<p><strong>Forecloses.</strong> Adding a hook by editing one scope. Registering a Claude hook without the shim. Flipping the enforcement switch as an unnoticed one-word edit — graduation to <code>block</code> is O6 and must land with the regression corpus that justifies it. Shipping a skill that documents files it does not contain.</p>
+<p><strong>Costs.</strong> A hook or skill change now touches its declaration too. That is the point; it was previously possible to change either and have every check stay green.</p>
+<p><strong>Also delivered.</strong> CI shellcheck extended past <code>scripts/hooks/*.sh</code> to <code>.agents/skills/*/scripts/*.sh</code> — seven skill shell scripts were linted by nothing. It found a real flag on its first run: SC1003 in the terminal-escape sanitizer's own test, where <code>\\</code> is a literal backslash forming the OSC-8 string terminator. Correct as written, so a targeted suppression with the reason recorded, not a weakened test.</p>
+<p><strong>Must be revisited if.</strong> A third registration scope appears, or a runtime stops accepting <code>.claude/settings.json</code>. <code>min_timeout</code> is a floor, not an equality check, because the two scopes legitimately tune differently; if they ever must match, that is a schema change here.</p>
+<p><strong>Not addressed.</strong> O2 (context packets generated from work orders), O3 (<code>hx gate</code>), O4 (asynchronous catalog closure) and O8 (capability registry) remain open. O6 (secret-boundary warn → block) is unblocked but not taken: the mode file's content is now declared, so the flip is visible, but the false-positive regression corpus that justifies it does not exist yet.</p>
+</main>
+<footer>Source of truth: <code>governace/decisions/KDD-0023-capability-manifests.md</code> (sha256 <code>a16331ae5e6bac7ee9bb20328fc0bde0a02a72cd575fa4fceb8443131a3b524e</code>) · rendered 2026-08-30T22:42Z by <code>scripts/wiki/render.py</code> · HX-ASF-Servers</footer>
+
+</body>
+</html>

@@ -88,3 +88,6 @@ governace/decisions/KDD-0020-canonical-skill-tree-and-mattpocock-batch.md
 CLAUDE.md
 governace/decisions/KDD-0021-work-state-engine.md
 governace/decisions/KDD-0022-coderabbit-review-scope.md
+governace/decisions/KDD-0023-capability-manifests.md
+governace/decisions/KDD-0024-two-stage-closure.md
+governace/decisions/KDD-0025-secret-boundary-graduation.md

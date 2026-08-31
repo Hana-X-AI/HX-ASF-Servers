@@ -1,0 +1,60 @@
+# catalog-freshness-baseline.yaml — the drift that already existed (SY-8)
+#
+# SY-8 compares each catalog record's recorded sha256 to its live source. On the
+# day the check was written, 35 in-repo records had already drifted while
+# `validate.py` reported 5/5 PASS — the catalog check had never compared a
+# record to its source.
+#
+# Failing all 35 at once would have made the validator red until someone
+# re-minted every one of them, and a re-mint updates the hash WITHOUT reviewing
+# whether the record's prose still describes the file. That would produce
+# records that look current and are not, which is worse than the drift.
+#
+# So the check binds immediately on NEW drift and carries these as a declared
+# backlog. The list only shrinks: removing an id means the record was genuinely
+# reconciled. Adding one is a visible diff that has to be argued for.
+#
+# To clear an entry: read the record against its source, correct the prose if it
+# has gone stale, `carol-mint re-mint <id>`, then delete the line here.
+
+baseline_date: 2026-08-30
+count: 35
+grading: >-
+  Records listed here are REPORTED by SY-8, not failed. Any in-repo drift NOT
+  listed here fails the check.
+ids:
+  - DOC-agent-kimi-k3-verification-checklist
+  - DOC-agent-wayne-charter
+  - DOC-assessment-capability-read-only
+  - DOC-assessment-second-brain-feature-review
+  - DOC-backend-chat-x
+  - DOC-backend-qwen-x
+  - DOC-catalog-receipt-2026-08-29-batch-b
+  - DOC-fleet-baseline-wave-2026-08-27
+  - DOC-goal-fleet-baseline-deployment
+  - DOC-goal-hx1-ollama-qwen38-27b
+  - DOC-goal-hxs2-qwen36-coderx-backend
+  - DOC-goal-hxs3-muse-glimmer-tooling
+  - DOC-goal-lightrag-hxs4
+  - DOC-goal-ollama-audit-hxs5
+  - DOC-goal-omniroute-layer1-secure-core
+  - DOC-goal-omniroute-trinity-layer0
+  - DOC-hxs3-configuration
+  - DOC-kdd-0001-kimi-k3-meta-agent
+  - DOC-kdd-0013-agent-model-lanes
+  - DOC-kdd-0018-raphael-registration
+  - DOC-knowledge-agent-performance
+  - DOC-knowledge-issues
+  - DOC-knowledge-network
+  - DOC-pilot-dsh-impl-001-state-log
+  - DOC-pilot-hx1-decision-36-m8-acceptance
+  - DOC-pilot-hx1-state-log
+  - DOC-pilot-hxs3-ev-12-esme-m5-validation
+  - DOC-pilot-hxs3-ev-15-esme-m8-signoff
+  - DOC-pilot-omniroute-19-kimi-code-provider-setup
+  - DOC-pilot-omniroute-control-manifest
+  - DOC-pilot-omniroute-intent-authority-source-register
+  - DOC-pilot-omniroute-trinity-adoption-assessment
+  - DOC-server-hxs3-oai-x-implementation-plan
+  - DOC-server-registry
+  - DOC-system-mapping

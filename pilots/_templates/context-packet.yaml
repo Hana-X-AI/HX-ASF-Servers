@@ -25,6 +25,17 @@ context_packet:
   consulted_records:  # governor cites catalog knowledge consulted (AGENTS.md)
     - "<DOC-ids / retrieval packages consulted at dispatch, or 'none required'>"
   handoff:
-    - "Deliverable <NN-...> goes to Carol for catalog receipt; the handoff is OPEN
-      until the receipt is cited in the state log (documentation-governance amendment)"
+    # Two-stage closure (O4, KDD-0024). Carol is background-class: her receipt is
+    # required but does not hold the handoff open. Routine work reaches
+    # execution_accepted on gate pass; the catalog state is tracked separately.
+    - "Deliverable <NN-...> reaches execution_accepted when the evidence is produced
+      and the deterministic gates pass; the next work order may dispatch then"
+    - "Deliverable <NN-...> goes to Carol for catalog receipt; catalog_pending until
+      the receipt is cited in the state log, then catalog_complete — this does NOT
+      gate closure (owner directive 2026-08-30)"
+    - "SYNCHRONOUS EXCEPTION: if this deliverable changes authority, security, a
+      schema, an agent identity, or reusable platform knowledge, the receipt IS
+      required before closure. If the class is unclear or arguable, treat it as
+      synchronous — over-including costs a delay, under-including means a decision
+      made from a stale catalog"
   second_brain_evaluation: "See the governing work order — the packet does not re-decide it"

@@ -73,13 +73,48 @@ URL_RE = re.compile(r"^[a-zA-Z][a-zA-Z0-9+.-]*://")
 # Generic high-signal secret patterns only (UD1: no literal-credential sweep
 # here). Tuned so prose ("passwordless sudo", "a hash of a secret is...",
 # receipts' historical REDACTED mentions) does not match.
+# Reconciled with scripts/hooks/secret-boundary.sh on 2026-08-30 (O6). The two
+# implementations were written separately and disagreed on four of five
+# patterns. THIS one is the broader, is already blocking in CI, and produced ALL
+# THREE recorded false positives — twice forcing an edit to an append-only state
+# log to clear the gate (DSH row 5, OMNIROUTE row 40). Both narrowings below are
+# proven against governace/secret-boundary-corpus.yaml.
 SECRET_PATTERNS = [
     ("private-key block", re.compile(r"BEGIN [A-Z0-9 ]*PRIVATE KEY")),
     ("AWS access key id", re.compile(r"AKIA[0-9A-Z]{16}")),
-    ("Slack token", re.compile(r"xox[baprs]-")),
+    # `xox[baprs]-` matched the bare prefix, so prose naming it tripped the gate.
+    ("Slack token", re.compile(r"xox[baprs]-[A-Za-z0-9-]{10,}")),
     ("GitHub PAT", re.compile(r"ghp_[0-9A-Za-z]{36}")),
-    ("password assignment", re.compile(r"(?i)\bpassword\s*[:=]\s*\S+")),
 ]
+
+# The password rule is separate from the shape patterns above because it has to
+# judge a VALUE, not match a shape. Key material has a shape; the word
+# "password" in an English sentence does not.
+PASSWORD_ASSIGNMENT = re.compile(
+    r"(?i)\bpassword\s*[:=]\s*([A-Za-z0-9!@#$%^&*._-]{6,})")
+# Sanitized forms, the same list the hook honours.
+SECRET_ALLOWANCE = re.compile(r"(?i)REDACTED|withheld|never printed|askpass")
+
+
+def _live_looking_value(value):
+    """True when a password value looks like a credential rather than a word.
+
+    Every recorded false positive was an English word standing where a value
+    would go — `field`, `assignment`, `supplied`, `set`. A credential almost
+    always carries a digit or punctuation, or is long.
+
+    STATED BOUND: an all-lowercase passphrase under 16 characters with no digit
+    or punctuation is NOT caught here. That is deliberate. The alternative is
+    flagging prose, which is what forced two append-only records to be edited in
+    place. This pattern is a generic net; the hook's literal-credential layer
+    and the governor-only literal sweep are the backstops for the real HX
+    credential.
+    """
+    if SECRET_ALLOWANCE.search(value):
+        return False
+    return (any(c.isdigit() for c in value)
+            or any(c in "!@#$%^&*._-" for c in value)
+            or len(value) >= 16)
 SECRET_SKIP_DIRS = {".git", "__pycache__"}
 
 MANUAL_GATES = [
@@ -228,13 +263,67 @@ def check_governance_path():
     for sp in sk_problems:
         c.fail(sp)
 
+    wo_summary = "unavailable"
+    try:
+        sys.path.insert(0, os.path.join(ROOT, "scripts"))
+        import work_order
+        wo_orders, wo_buckets, wo_problems = work_order.load_all()
+        wo_summary = "%d addressable work orders (%s)" % (
+            len(wo_orders), ", ".join("%d %s" % (v, k)
+                                      for k, v in wo_buckets.items() if v))
+    except Exception as e:
+        c.fail("[SY-7] work_order unavailable: %s" % e)
+        wo_problems = []
+    finally:
+        if sys.path and sys.path[0] == os.path.join(ROOT, "scripts"):
+            sys.path.pop(0)
+    for wp in wo_problems:
+        c.fail(wp)
+
+    cf_summary = "unavailable"
+    try:
+        sys.path.insert(0, os.path.join(ROOT, "scripts"))
+        import catalog_freshness
+        cf_summary, cf_problems = catalog_freshness.plan()
+    except Exception as e:
+        c.fail("[SY-8] catalog_freshness unavailable: %s" % e)
+        cf_problems = []
+    finally:
+        if sys.path and sys.path[0] == os.path.join(ROOT, "scripts"):
+            sys.path.pop(0)
+    for cp in cf_problems:
+        c.fail(cp)
+
+    cap_summary = "unavailable"
+    try:
+        sys.path.insert(0, os.path.join(ROOT, "scripts"))
+        import capability
+        cap_summary, cap_problems = capability.plan()
+    except Exception as e:
+        c.fail("[SY-9] capability unavailable: %s" % e)
+        cap_problems = []
+    finally:
+        if sys.path and sys.path[0] == os.path.join(ROOT, "scripts"):
+            sys.path.pop(0)
+    # A contradiction the registry already states, naming the ratified record it
+    # collides with, is a governor decision item. It is surfaced on the detail
+    # line and does not fail — a tool must not settle a conflict between two
+    # ratified records by making the gate red until someone picks one.
+    cap_reported = [p for p in cap_problems if " REPORTED " in p]
+    for cp in [p for p in cap_problems if " REPORTED " not in p]:
+        c.fail(cp)
+    if cap_reported:
+        cap_summary += "; %d governor decision item(s) reported" % len(cap_reported)
+
     if c.ok:
         c.detail.append("SY-2 governace/ canonical, governance/ fork absent; "
                         "SY-3 %d skills canonical at .agents/skills/, %d tool-scope "
                         "mirrors in sync (%s stub-only); SY-4 %d goals carry a valid "
-                        "work-state block (%d open reconcile item%s); SY-5 %s; SY-6 %s"
+                        "work-state block (%d open reconcile item%s); SY-5 %s; SY-6 %s; SY-7 %s; "
+                        "SY-8 %s; SY-9 %s"
                         % (len(skills), len(mirrors), stub_only, ws_n, ws_rec,
-                           "" if ws_rec == 1 else "s", hk_summary, sk_summary))
+                           "" if ws_rec == 1 else "s", hk_summary, sk_summary,
+                           wo_summary, cf_summary, cap_summary))
     else:
         # Per-file findings are capped by MAX_FINDINGS_SHOWN, so name the
         # affected mirror roots here — this line always prints, and it is what
@@ -246,9 +335,12 @@ def check_governance_path():
                 by_mirror.append("%s (%d)" % (m, n))
         where = "; drifted: " + ", ".join(by_mirror) if by_mirror else ""
         c.detail.append("repo-layout invariants failed — SY-2 %s, SY-3 %d problem(s)%s, "
-                        "SY-4 %d problem(s), SY-5 %d problem(s), SY-6 %d problem(s)"
+                        "SY-4 %d problem(s), SY-5 %d problem(s), SY-6 %d problem(s), "
+                        "SY-7 %d problem(s), SY-8 %d problem(s), SY-9 %d problem(s)"
                         % ("OK" if sy2_ok else "FAIL", len(problems), where,
-                           len(ws_problems), len(hk_problems), len(sk_problems)))
+                           len(ws_problems), len(hk_problems), len(sk_problems),
+                           len(wo_problems), len(cf_problems),
+                           len([p for p in cap_problems if " REPORTED " not in p])))
         if problems:
             c.detail.append("skills repair: python3 scripts/skills_sync.py --write "
                             "(canonical .agents/skills/ is authoritative; mirrors are "
@@ -268,6 +360,15 @@ def check_governance_path():
             c.detail.append("skill-registry repair: python3 scripts/skills_registry.py "
                             "--smoke (AGENTS.md is the authoritative inventory; "
                             "frontmatter carries maturity/required_files/smoke)")
+        if wo_problems:
+            c.detail.append("work-order repair: python3 scripts/work_order.py --check "
+                            "(only orders declaring schema_version: 1 are held to the "
+                            "full field set; older shapes need a unique id only)")
+        if cf_problems:
+            c.detail.append("catalog repair: python3 scripts/catalog/carol-mint re-mint "
+                            "<id> — and READ the record against its source first; a "
+                            "re-mint updates the hash without checking that the prose "
+                            "still describes the file")
     return c
 
 
@@ -508,6 +609,16 @@ def _secret_scan(paths):
             for label, rx in SECRET_PATTERNS:
                 if rx.search(line):
                     hits.append("%s:%d: %s pattern" % (os.path.relpath(path, ROOT), lineno, label))
+            m = PASSWORD_ASSIGNMENT.search(line)
+            # The allowance is tested against the VALUE ONLY, inside
+            # _live_looking_value. An earlier revision tested the whole LINE,
+            # which meant a real credential sharing a line with the word
+            # REDACTED went unreported. "password: supplied by the askpass
+            # helper" is not saved by the allowance either — it is rejected
+            # because `supplied` is not a live-looking value.
+            if m and _live_looking_value(m.group(1)):
+                hits.append("%s:%d: password assignment pattern"
+                            % (os.path.relpath(path, ROOT), lineno))
     return hits, scanned
 
 
