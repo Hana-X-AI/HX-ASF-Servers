@@ -1,0 +1,30 @@
+context_packet:
+  goal_id: "2026-08-31-ollama-fleet-requalification-hxs1-qwen-x"
+  goal_version: 1
+  work_order_id: "WO-REQUAL-HX1-JOHN-A2-001"
+  session_id: "john-live-audit-20260831-01"
+  role: "producer (Ollama specialist: john / Esme)"
+  milestone: "M2 — live hxs-1 read-only audit"
+  objective: >-
+    Re-establish hxs-1 current state read-only across the full audit matrix and
+    reconcile every identity source against historical evidence and the registry.
+  current_state:
+    host: "hxs-1 (192.168.50.200), Ubuntu 24.04.4 LTS — to be re-verified live at audit time"
+    key_identities: "historical alias hx-qwen3.8-27b-64k, digest 766cd9469fb4…, ctx 65536 (to be re-verified; NOT accepted as current)"
+    relevant_config: "historical Ollama 0.32.15 (brief §8; to be re-verified); endpoint historically http://192.168.50.200:11434"
+    units_or_services: "ollama.service + ollama-preload.service (states to be re-verified live)"
+  owner_decisions:
+    - "Intake §2/§5: historical M8 PASS is precedent and regression baseline only; requalify from zero (DRAFT — approved via M0)"
+  constraints:
+    - "READ-ONLY; no service/model/DNS/OS/repository mutation; no reboot/restart/package install"
+    - "No historical PASS or catalog ACTIVE label accepted without current evidence"
+  evidence_requirements:
+    - "per-vector audit matrix: status + evidence + limitations for all §6 vectors"
+    - "identity matrix with hashes and source comparison; historical-to-live reconciliation table"
+    - "sanitized command log; no secrets; nvidia-smi + /api/ps + /api/version + /api/tags outputs"
+  consulted_records:
+    - "02-john-tkv-review-receipt.md; servers/hxs-1/discovery.md + configuration.md (historical); governace/goals/2026-08-24-hx1-ollama-qwen38-27b.md"
+  handoff:
+    - "Deliverable 04-john-hxs1-audit-matrix.md reaches execution_accepted on evidence + deterministic gates; feeds M5 findings register"
+    - "Deliverable goes to Carol for catalog receipt (reusable-platform knowledge — synchronous at Gate B)"
+  second_brain_evaluation: "See the governing work order — the packet does not re-decide it"

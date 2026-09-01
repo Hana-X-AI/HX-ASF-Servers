@@ -125,10 +125,9 @@ schema:
     - current_state          # live host facts verified AT PACKET TIME
     - evidence_requirements  # per-suite evidence tables
 
-  # Byte-identical copies. governace/templates/pilot/ is canonical; the
-  # pilots/_templates/ copy is a mirror. They had already forked: the canonical
-  # one carried context_budget, capability_probe, deliverable_destination and
-  # the R-6 acceptance-gate block, and the mirror carried none of them.
+  # governace/templates/pilot/ is the canonical (and now only) location. The
+  # pilots/_templates/ mirror was archived 2026-08-31 per owner template
+  # consolidation; it is no longer maintained.
   templates:
     canonical: governace/templates/pilot/work-order.yaml
-    mirror: pilots/_templates/work-order.yaml
+    mirror: retired 2026-08-31 (archived — canonical-only)

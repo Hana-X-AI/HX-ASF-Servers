@@ -1,7 +1,7 @@
 # CI/CD pipeline — HX-ASF-Servers
 
 Owner-ratified 2026-08-26 (p8, plan `argent-groot-ant-man`). Trigger: **every push to
-any branch**. 20 steps across three jobs. Happy path (push to `main`, gates only)
+any branch**. 26 steps across three jobs. Happy path (push to `main`, gates only)
 completes in about 3 minutes.
 
 The pipeline's own gates are the repo's existing quality discipline — the same
@@ -13,7 +13,7 @@ supported loop: it detects, the coding agent fixes, ≤2 passes); GitHub platfor
 auto-merge merges when the required checks are green. No manual approval gates
 anywhere.
 
-## Step list (20)
+## Step list (26)
 
 **Job `gates`** — all pushes:
 
@@ -27,11 +27,17 @@ anywhere.
 8. Install PyYAML (`validate.py` dependency).
 9. Unit tests — work-state engine (`scripts/test_work_state.py`, O1). Ordered
    after the PyYAML install because `work_state.py` imports `yaml`.
-10. Catalog validation (`scripts/validate.py --ci` — portable mode: every catalog
+10. Unit tests — hook manifest verifier (`scripts/test_hooks_verify.py`, O5).
+11. Unit tests — work-order engine (`scripts/test_work_order.py`, O2).
+12. Unit tests — secret-boundary corpus (`scripts/test_secret_boundary.py`, O6).
+13. Unit tests — capability registry (`scripts/test_capability.py`, O8).
+14. Unit tests — catalog freshness baseline (`scripts/test_catalog_freshness.py`, SY-8).
+15. Skill registry — smoke every active skill (`scripts/skills_registry.py`, O7).
+16. Catalog validation (`scripts/validate.py --ci` — portable mode: every catalog
    check runs, except CAT-07's canonical_location *existence* probe, which is
    anchored to the governor host by design — repo home plus `/opt/tkv-local` —
    and stays a local-only check in the full mode).
-11. Security scan — gitleaks over the pushed commit range, redacted.
+17. Security scan — gitleaks over the pushed commit range, redacted.
    [OPEN CORRECTION 2026-08-30, labeled: the scan above is now pinned to
    `v8.30.1` (immutable version AND a pinned archive SHA-256, verified
    against the official `checksums.txt` 2026-08-30 — supply-chain hardening;
@@ -44,9 +50,9 @@ anywhere.
 post-merge re-review of the merged commit produced a red run after a completed
 merge):
 
-12. Checkout (full history for the base diff).
-13. Install the CodeRabbit CLI.
-14. Review: the job reviews the **pushed range** — `coderabbit review --agent
+18. Checkout (full history for the base diff).
+19. Install the CodeRabbit CLI.
+20. Review: the job reviews the **pushed range** — `coderabbit review --agent
     --light --committed --base-commit <BEFORE>` with the Agentic API key and an
     explicit `--region` for inline api-key authentication. `--base origin/main`
     is the **fallback**, used only when `BEFORE` is empty, all-zeros,
@@ -59,16 +65,16 @@ merge):
     missing `CODERABBIT_API_KEY` now FAILS the job (cannot pass vacuously).
     Prior behavior: skip with a notice. Current behavior: fail closed. Original
     wording preserved above.]
-15. Parse the JSON event stream; the gate **fails on critical+major+minor
+21. Parse the JSON event stream; the gate **fails on critical+major+minor
     findings (zero-tolerance, owner directive 2026-08-28)** and on any review
     that ends without a `complete` event (fail-closed on auth/service failure);
     trivial/info findings are reported, not blocking.
-16. Comment the review summary on the PR.
+22. Comment the review summary on the PR.
 
 **Job `pr-manage`** — non-`main` pushes only (runs regardless of other jobs, so the
 PR always exists for the fix loop):
 
-17. Ensure a PR exists for the branch (create targeting `main` on first push).
+23. Ensure a PR exists for the branch (create targeting `main` on first push).
 
 **Permissions** — the workflow defaults to `contents: read` + `pull-requests:
 read`; only the `pr-manage` job escalates to write (auto-PR/label/merge),
@@ -76,9 +82,9 @@ hardening per Codex audit 2026-08-30. A separate scheduled workflow
 (`full-history-secret-scan.yml`, weekly + manual) runs gitleaks over **all
 history** so pre-existing leaked credentials surface for owner triage
 (no auto-rewrite).
-18. Auto-label by branch prefix (`feature/`, `fix/`, `chore/`; labels auto-created).
-19. Enable auto-merge (squash) on the PR.
-20. Comment the pipeline state on the PR (notification surface).
+24. Auto-label by branch prefix (`feature/`, `fix/`, `chore/`; labels auto-created).
+25. Enable auto-merge (squash) on the PR.
+26. Comment the pipeline state on the PR (notification surface).
 
 ## Lifecycle
 
@@ -263,3 +269,12 @@ the §Step list heading is preserved here as history. (2) The gitleaks pin in th
 step-11 correction block read `v8.24.3`; the workflow pins **`v8.30.1`** with a
 verified archive SHA-256. The `v8.24.3` figure is preserved here as history.
 Authority: `.github/workflows/ci-cd.yml` as-built, read 2026-08-30.]
+
+[OPEN CORRECTION 2026-08-31, labeled, append-only — STEP COUNT 20 → 26: six
+gates steps were added to the `gates` job (hook manifest verifier O5, work-order
+engine O2, secret-boundary corpus O6, capability registry O8, catalog freshness
+baseline SY-8, skill registry smoke O7), bringing the pipeline to **26 steps**
+(gates 17 + coderabbit-review 5 + pr-manage 4). The §Intro count and §Step list
+heading now read 26, and the list is renumbered 1-26. The prior 20-step figure
+above is preserved as history. Authority: `.github/workflows/ci-cd.yml` as-built,
+read 2026-08-31.]

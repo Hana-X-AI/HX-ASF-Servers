@@ -90,10 +90,10 @@ document:
     target: DOC-agents-roster-readme
     note: agents/README.md references system-mapping for agent-to-system assignments
   validation:
-    validated_at: '2026-08-31T01:08:33Z'
+    validated_at: '2026-08-31T21:36:15Z'
     freshness: current
     review_due: ''
-  sha256: 93f617748cf822af4cc39781719b7096f9db7bb5467dc93d61364d69394fe50d
+  sha256: 87e3040b6df1037e22d199500956171f151277f812b2ac2bf773268441f07a19
   canonical_location: servers/system-mapping.md
   hash_history:
   - sha256: 63fdc175a18e4d70304ac59f917fc4bef63fb0178d47536f727ede1300cf349e
@@ -102,5 +102,14 @@ document:
   - sha256: 93f617748cf822af4cc39781719b7096f9db7bb5467dc93d61364d69394fe50d
     timestamp: '2026-08-31T01:08:33Z'
     reason: '2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'
+  - sha256: 558a449898cb050a0bf2cfd363d5fb3d4b1ab483c0f922ff61c76ca60bd1099d
+    timestamp: '2026-08-31T21:08:51Z'
+    reason: re-mint from source
+  - sha256: ffb7c4d017b442f650e07077ac9d6e95276b4b23b40c7abcbda9d5527e8ec322
+    timestamp: '2026-08-31T21:09:53Z'
+    reason: re-mint from source
+  - sha256: 87e3040b6df1037e22d199500956171f151277f812b2ac2bf773268441f07a19
+    timestamp: '2026-08-31T21:36:15Z'
+    reason: re-mint from source
 notes:
-  minted_by: 'carol-mint 1.0.0 @ 2026-08-31T01:08:33Z — re-mint 63fdc175a18e… -> 93f617748cf8… — 2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'
+  minted_by: carol-mint 1.0.0 @ 2026-08-31T21:36:15Z — re-mint ffb7c4d017b4… -> 87e3040b6df1…

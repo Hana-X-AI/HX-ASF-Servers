@@ -1,8 +1,8 @@
 index:
   schema_version: 1
   initialized: 2026-08-25 (Carol instantiation, owner amendment)
-  updated: 2026-08-31T0425Z (carol-mint 1.0.0 — PR 8 three-finding corrective action [titles preserved])
-  document_count: 344
+  updated: 2026-08-31T2158Z (carol-mint 1.0.0 [titles preserved])
+  document_count: 346
   documents:
   - id: DOC-a01-origin-codex-20260824-2125
     title: codex_20260824_2125_hx-1-ollama-pilot-qwen3.8-amendment.md — original source of Amendment A01 (agent-zero-docs)
@@ -345,25 +345,25 @@ index:
     type: goal
     authority_level: ratified-governance
     freshness: current
-    canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/goals/2026-08-27-fleet-baseline-deployment.md
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/goals/fleet-baseline/2026-08-27-fleet-baseline-deployment.md
   - id: DOC-goal-hx1-ollama-qwen38-27b
     title: Goal 2026-08-24-hx1-ollama-qwen38-27b — deploy and validate qwen3.8:27b on hxs-1 via Ollama (mutating pilot)
     type: goal
     authority_level: ratified-governance
     freshness: current
-    canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/goals/2026-08-24-hx1-ollama-qwen38-27b.md
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/goals/ollama/2026-08-24-hx1-ollama-qwen38-27b.md
   - id: DOC-goal-hxs2-qwen36-coderx-backend
     title: Goal 2026-08-26-hxs2-qwen36-coderx-backend — provision the hxs-2 coding-inference backend (CoderX via Ollama, mutating pilot)
     type: goal
     authority_level: ratified-governance
     freshness: current
-    canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/goals/2026-08-26-hxs2-qwen36-coderx-backend.md
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/goals/ollama/2026-08-26-hxs2-qwen36-coderx-backend.md
   - id: DOC-goal-hxs3-muse-glimmer-tooling
     title: Goal 2026-08-26-hxs3-muse-glimmer-tooling — provision the hxs-3 tooling-inference backend (Muse Glimmer 30B via Ollama, mutating pilot)
     type: goal
     authority_level: ratified-governance
     freshness: current
-    canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/goals/2026-08-26-hxs3-muse-glimmer-tooling.md
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/goals/ollama/2026-08-26-hxs3-muse-glimmer-tooling.md
   - id: DOC-goal-hxs6-storage-provisioning
     title: 'Goal 2026-08-28-hxs6-storage-provisioning — hxs-6 additional-storage provisioning (owner disposition 2026-08-27 #4: reformat the additional drive and make it available, verify-first non-negotiable ordering; DRAFT-held at writing, then EXECUTED COMPLETE — GO row 2, discard ruling + dual gate row 4, phase 2 PASS row 5)'
     type: goal
@@ -375,25 +375,37 @@ index:
     type: goal
     authority_level: ratified-governance
     freshness: current
-    canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/goals/2026-08-29-lightrag-hxs4.md
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/goals/lightrag/2026-08-29-lightrag-hxs4.md
+  - id: DOC-goal-oai-x-replace-meta-x
+    title: 'Goal: Replace Meta-X with OAI-X on hxs-3'
+    type: goal
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/goals/oai-x/2026-08-29-oai-x-replace-meta-x.md
+  - id: DOC-goal-ollama-audit-hxs4
+    title: 'Goal: Read-only Ollama audit on hxs-4'
+    type: goal
+    authority_level: ratified-governance
+    freshness: current
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/goals/ollama/2026-08-24-ollama-audit-hxs4.md
   - id: DOC-goal-ollama-audit-hxs5
     title: Goal 2026-08-24-ollama-audit-hxs5 — read-only Ollama infrastructure and performance audit on hxs-5 (process pilot)
     type: goal
     authority_level: ratified-governance
     freshness: current
-    canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/goals/2026-08-24-ollama-audit-hxs5.md
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/goals/ollama/2026-08-24-ollama-audit-hxs5.md
   - id: DOC-goal-omniroute-layer1-secure-core
     title: Goal 2026-08-27-omniroute-layer1-secure-core — OmniRoute Layer 1 secure core gateway on hxs-8 (native, owner-authorized OD-12; all four backends OD-08 amended; OD-13 secrets; LAN-only OD-07; local-model-only; the Layer-1 gate)
     type: goal
     authority_level: ratified-governance
     freshness: current
-    canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/goals/2026-08-27-omniroute-layer1-secure-core.md
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/goals/omniroute/2026-08-27-omniroute-layer1-secure-core.md
   - id: DOC-goal-omniroute-trinity-layer0
     title: Goal 2026-08-27-omniroute-trinity-layer0 — Trinity adoption review + OmniRoute v3.8.51 Layer 0 program foundation (read-only, gated waves)
     type: goal
     authority_level: ratified-governance
     freshness: current
-    canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/goals/2026-08-27-omniroute-trinity-layer0.md
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/goals/omniroute/2026-08-27-omniroute-trinity-layer0.md
   - id: DOC-hx-second-brain-framework
     title: HX Second Brain Information Guidance and Implementation Framework (hx-second-brain-guidance-001, v1.0.0-draft)
     type: other
@@ -477,7 +489,7 @@ index:
     type: contract
     authority_level: ratified-governance
     freshness: current
-    canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/decisions/KDD-0000-template.md
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/templates/kdd.md
   - id: DOC-kdd-0001-kimi-k3-meta-agent
     title: KDD-0001 — Adopt the Kimi-K3 meta-agent control model with phased activation
     type: decision
@@ -1341,13 +1353,13 @@ index:
     type: contract
     authority_level: ratified-governance
     freshness: current
-    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/_templates/context-packet.yaml
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/templates/pilot/context-packet.yaml
   - id: DOC-pilot-templates-work-order
     title: pilots/_templates/work-order.yaml — ratified work-order template (UD5/U6; mandatory second_brain_evaluation block)
     type: contract
     authority_level: ratified-governance
     freshness: current
-    canonical_location: /home/hxsa/opt/HX-ASF-Servers/pilots/_templates/work-order.yaml
+    canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/templates/pilot/work-order.yaml
   - id: DOC-protected-ssh-info-hxs1
     title: keys.md/ssh-info.md (HX Fleet SSH Access Guide) — protected credential resource for SSH access to hxs-1 (existence, owner, retrieval mechanism only)
     type: protected-resource

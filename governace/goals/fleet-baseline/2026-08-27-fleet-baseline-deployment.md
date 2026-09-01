@@ -33,6 +33,11 @@ re-verified. The COMPLETE wording above is retained only as historical context;
 status consumers must read the current state as in-progress/partial, excluding
 hxs-6 from completion credit.**]**
 
+**[CURRENT STATUS 2026-08-31, labeled, append-only — COMPLETE:** owner confirmed
+2026-08-31 that hxs-6 is compliant; the hxs-6 Secure Boot non-compliance that
+held this goal in-progress/partial is resolved. The 2026-08-30 in-progress/partial
+status is superseded; the fleet baseline is counted COMPLETE.**]**
+
 ## Objective
 
 Bring every in-scope fleet host to the declared baseline — verified identity/OS, one timezone (Etc/UTC), one NTP source (time.cloudflare.com), the proven 4-target sleep-mask set, library selftest green — with per-host TKV records refreshed and evidence the owner can audit.
@@ -42,7 +47,7 @@ Bring every in-scope fleet host to the declared baseline — verified identity/O
 - **Fresh (7):** hxs-6, hxs-9, hxs-10, hxs-12, hxs-13, hxs-14, hxs-15 — full baseline pass (verify, pin, mask, selftest, records).
 - **Re-verify (5):** hxs-1, hxs-2, hxs-3, hxs-4, hxs-8 — confirm the proven posture holds; drift reported, fixed only within the two sanctioned classes.
 - **Excluded:** hxs-5 (control plane), hxs-7 (replaced by hxs-20), hxs-20/hxs-21 (provisioning), hxs-11 (owner flag unreachable).
-- hxs-6 Secure Boot ENABLED: record only — owner decision pending (BIOS).
+- hxs-6 Secure Boot ENABLED: record only — owner decision pending (BIOS). [LABELED CORRECTION 2026-08-31, append-only: hxs-6 is now COMPLIANT per owner confirmation 2026-08-31; the prior non-compliance and "owner decision pending" wording are historical — see the CURRENT STATUS 2026-08-31 block above.]
 
 ## Acceptance
 
@@ -66,8 +71,8 @@ Two sanctioned mutation classes only (NTP pin, sleep-mask align). Everything els
 ```yaml work-state
 id: 2026-08-27-fleet-baseline-deployment
 status: complete
-status_date: 2026-08-28
+status_date: 2026-08-31
 authority: >-
-  Labeled correction 2026-08-29 in this goal: 'Status: COMPLETE — 2026-08-28', three fleet evidence docs delivered
+  [CURRENT STATUS 2026-08-31] COMPLETE — owner confirmed 2026-08-31 hxs-6 is compliant; hxs-6 Secure Boot non-compliance resolved
 reconcile: none
 ```

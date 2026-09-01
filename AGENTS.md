@@ -288,6 +288,18 @@ doubt, act reversibly and report rather than pause.
   field), so Agent-tool dispatch is not an execution path for agent work — a
   bound standalone session is. History: this directive retracted an earlier
   substrate exception; both are preserved in Git and KDD-0013.
+- **Defined-agent dispatch — no substitution, no invented launch path (owner
+  directive 2026-08-31).** The `kimi`/`dsh` launch sentence in the moonshot rule
+  above describes the factory's bound production sessions on hxs-5/hxs-15; it is
+  NOT the launch path of a Codex/harness session. In a harness session the
+  owner-defined agents are the files under `agents/<name>/`, engaged by briefing
+  a worker with that agent's `profile.md` + `charter.md`. Never substitute an
+  ad-hoc worker, a different model lane, or a different launch mechanism for a
+  defined agent. If a defined agent's launch path is unavailable, STOP and
+  escalate to the owner — do not route around it. A goal or plan is marked
+  `approved` / `in-progress` / "dispatching" only after the assigned agent has
+  produced evidence of doing the work; status follows evidence, never intent or
+  a plan to dispatch.
 - **Model lanes by job family** (owner decision 2026-08-30; KDD-0013 Amendments
   11–12). Lane defaults are assigned per JOB FAMILY. Per-agent overrides within a
   family are supported and recorded in KDD-0013. Cloud lanes route via OmniRoute

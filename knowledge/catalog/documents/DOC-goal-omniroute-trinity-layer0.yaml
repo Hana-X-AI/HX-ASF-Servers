@@ -6,7 +6,7 @@ document:
   source:
     author: Kimi-K3 (goal record) / Agent Zero (authorization, p11)
     provided_by: Kimi-K3 (governor, Wave 0A catalog dispatch)
-    origin: /home/hxsa/opt/HX-ASF-Servers/governace/goals/2026-08-27-omniroute-trinity-layer0.md
+    origin: /home/hxsa/opt/HX-ASF-Servers/governace/goals/omniroute/2026-08-27-omniroute-trinity-layer0.md
     section: §whole-document
     ingestion_date: '2026-08-27T04:06:00Z'
   owner: Agent Zero (human authority); Kimi-K3 (governor)
@@ -57,11 +57,11 @@ document:
     target: DOC-blueprint-llm-server
     note: '§5 boundary convention carried into OD-07: no host firewalls (owner rule 2026-08-26); the /24 LAN + OmniRoute authn/authz governs exposure'
   validation:
-    validated_at: '2026-08-31T01:08:32Z'
+    validated_at: '2026-08-31T20:18:11Z'
     freshness: current
     review_due: LAYER 0 COMPLETE 2026-08-27 (KK3 gate PASS 10:58Z, state log row 24; handoff catalog-closed; OD-12 granted at row 32 — the Layer-1 goal DOC-goal-omniroute-layer1-secure-core carries the program forward); review on any post-closure amendment only
-  sha256: d2bd404e77fc340302e58fa6e6616b75f96805429d026dc00be59252fb4860b1
-  canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/goals/2026-08-27-omniroute-trinity-layer0.md
+  sha256: 67581569ebe571c768f384ed72b1de3e1d7303392bddbcd48c977376e58ef281
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/goals/omniroute/2026-08-27-omniroute-trinity-layer0.md
   hash_history:
   - sha256: 95cc8722112f2d75560ed8f7b4713c6db883f6c03199a5799a53cedaaa0049db
     timestamp: unrecorded
@@ -69,6 +69,9 @@ document:
   - sha256: d2bd404e77fc340302e58fa6e6616b75f96805429d026dc00be59252fb4860b1
     timestamp: '2026-08-31T01:08:32Z'
     reason: '2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'
+  - sha256: 67581569ebe571c768f384ed72b1de3e1d7303392bddbcd48c977376e58ef281
+    timestamp: '2026-08-31T20:18:11Z'
+    reason: re-mint from source
 notes:
   semantic_reconciliation_20260831: Read against the current source including its operative work-state block. The prose records Layer 0 COMPLETE, while the machine-readable block intentionally remains status=in-progress with a governor reconciliation note after the provider flip. Catalog lifecycle remains historical for the completed Layer-0 artifact, but consumers needing work-state MUST honor the block's in-progress state until the governor resolves the contradiction.
   status_mapping: 'The file''s own status line reads ''in-progress — Layer 0 (M0 authorized 2026-08-27 by p11 + approved plan red-star-stargirl-kamala-khan Option A)'' (source line 5, VERIFIED PRESENT); mapped to status active per the in-progress-goal convention (DOC-goal-hxs2-qwen36-coderx-backend active during execution; the schema enum has no in-progress literal). Terminal-closed goals map to historical per the DOC-goal-hx1/hxs3 M8-closure precedent — not applicable at ingestion. TERMINAL TRANSITION (rr-47 wave, 2026-08-27): the source now keeps the in-progress line as a HISTORICAL entry (source line 5: ''in-progress — Layer 0 (M0 authorized 2026-08-27 by p11 + approved plan `red-star-stargirl-kamala-khan` Option A)'') and records the dated transition marked current (source line 6: ''Status transition 2026-08-27 **[current]**: **LAYER 0 COMPLETE — PASS** (KK3 gate decision `19-kk3-gate-decision.md`; handoff catalog-closed; owner OD-12 then authorized Layer 1 — see goal `2026-08-27-omniroute-layer1-secure-core`)'' with the open-correction label — both lines VERIFIED PRESENT this run). Mapped active -> historical per the terminal-closed precedent (the Layer-0 program is complete; the Layer-1 goal carries the program forward); authority_level ratified-governance and freshness current unchanged.'
@@ -79,4 +82,4 @@ notes:
   provenance: 'Pilot provenance rows 1-4 of pilots/PILOT-OMNIROUTE-LAYER0-001/01-state-log.md (cataloged as DOC-pilot-omniroute-state-log): row 1 (03:38Z) M0 authorized + this Goal Contract named; row 2 (03:47Z) Goal Contract written + registered in the wiki manifest and rendered.'
   second_brain: 'Second Brain evaluation recorded in-file (standing directive): opportunity YES (new traffic-plane capability entering the governed catalog; Trinity a new candidate roster lane); patterns: the adoption-gate path (candidate -> charter/profile/KDD -> owner ratification -> catalog -> roster) and the backend-execution + independent-verifier contract; disposition: implemented in this contract — nothing extra commissioned.'
   revalidation_2026_08_27_followup: 'RE-VALIDATED this wave (governor''s row-7 cleanup): the only source change is the OD-02 register line OPEN -> DECIDED (source line 63 VERIFIED: ''| OD-02 | Trinity ratification (roster admission) | **DECIDED — ratified O1 (adopt as corrected) 2026-08-27; lane ACTIVE (row 5)** |''); status line unchanged (source line 5, VERIFIED PRESENT); re-rendered in sync (wiki-sync at this run''s validate.py close). Hash chain: b7c27dd9… (M0 content, Wave 0A mint) -> 0f187018… (OD-02 DECIDED, this record). The depends_on KDD-0008 relation note and review_due updated accordingly; declared_purpose''s owner-decision register now records OD-02 DECIDED. MID-RUN DRIFT (second governor edit, 2026-08-27T05:10Z — review batch 16 disposition per state log row 8): the authority-matrix Trinity row flipped candidate -> ''**active** 2026-08-27, KDD-0008 O1'' (source line 43, VERIFIED at re-verification 05:22Z; the owns text now reads ''bounded OmniRoute lifecycle engineering under issued work orders (source review, install/config DESIGN, conformance design, …)''). Hash chain: b7c27dd9… (M0 content, Wave 0A mint) -> 0f187018… (OD-02 DECIDED, transient mid-run state — cataloged ~30 min then superseded) -> b6a4afc4… (authority-matrix flip, this record). Observed remaining pre-gate wording (recorded openly, governor''s lane per the row-8 living-document doctrine): source line 9 still reads ''trinity (candidate — OmniRoute lifecycle steward, NOT active until the adoption gate)'' — the gate has fired (row 5); line 16''s ''charter/profile/KDD drafts, candidate state'' is the Layer-0 product description (accurate as scoped at M0). RESOLVED 2026-08-27 (governor''s row-9 remnant fix, VERIFIED this wave): source line 9 now reads ''trinity (**active** 2026-08-27 — OmniRoute lifecycle steward, owner-ratified KDD-0008 O1)'' in the Agent lane(s) header — the pre-gate candidate wording is gone; the lane line carries the dated ratified transition per the row-8 living-document doctrine (line 16''s product description untouched, still accurate as scoped at M0). Hash chain: b7c27dd9… (M0 content, Wave 0A mint) -> 0f187018… (OD-02 DECIDED, transient mid-run state — cataloged ~30 min then superseded) -> b6a4afc4… (authority-matrix flip, 0532Z wave) -> 7ead761d… (line-9 candidate remnant -> active, this record).'
-  minted_by: 'carol-mint 1.0.0 @ 2026-08-31T01:08:32Z — re-mint 95cc8722112f… -> d2bd404e77fc… — 2026-08-31 semantic reconciliation: current source read against title, purpose, authority, lifecycle state, and applicability; stale claims corrected or explicitly superseded before hash refresh'
+  minted_by: carol-mint 1.0.0 @ 2026-08-31T20:18:11Z — re-mint d2bd404e77fc… -> 67581569ebe5…

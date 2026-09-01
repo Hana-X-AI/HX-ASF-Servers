@@ -7,7 +7,7 @@
 - Created: 2026-08-27
 - Human authority: Agent Zero
 - Agent lane(s): kimi-k3 (governor), trinity (OmniRoute lifecycle engineer), rick (host OS plane), john (backend integration checks), carol (catalog)
-- Parent program: goals/2026-08-27-omniroute-trinity-layer0.md (COMPLETE); manifest `pilots/PILOT-OMNIROUTE-LAYER0-001/10-control-manifest.yaml`
+- Parent program: governace/goals/omniroute/2026-08-27-omniroute-trinity-layer0.md (COMPLETE); manifest `pilots/PILOT-OMNIROUTE-LAYER0-001/10-control-manifest.yaml`
 
 ## Intent
 

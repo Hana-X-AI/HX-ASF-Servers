@@ -74,9 +74,9 @@ assigned; replication/clustering/HA/failover/promotion (prohibited by
 design); security-hardening programs and recurring audit cycles (basic
 users/roles/passwords remain in scope); destructive production operations
 without owner approval AND a verified backup; credential exposure of any
-kind; **MCP surfaces — HOLD per owner directive 2026-08-29** (the
+kind; **MCP surfaces — deployment unblocked, use still gated (owner directive 2026-08-31)** (the
 `postgres-mcp-mai` read-only surface and its permitted operations are
-deferred entirely; no MCP usage until the owner lifts the hold).
+no longer deferred; the 2026-08-29 hold is lifted).
 
 ## 3. Operating discipline
 

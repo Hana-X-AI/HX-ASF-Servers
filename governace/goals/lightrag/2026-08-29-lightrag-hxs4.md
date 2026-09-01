@@ -3,6 +3,7 @@
 - Goal ID: 2026-08-29-lightrag-hxs4 (this file's name)
 - Version: 1
 - Status: draft
+  [Status transition 2026-08-31 [current]: in-progress — install V0-V6 ALL GATES PASS (servers/hxs-4/2026-08-29-lightrag-install-evidence.md); version alignment and full SC-09/SC-14/SC-15 qualification pending. Original draft status preserved as history.]
 - Owner: Agent-Zero
 - Created: 2026-08-29
 - Human authority: Agent-Zero
@@ -53,8 +54,8 @@ entity extraction, and knowledge graph queries against ingested documents.
   - Native deployment (no Docker, owner rule 2026-08-27)
 - Out of scope:
   - Qdrant server itself (already deployed, Quinn's lane)
-  - Embedding model serving infrastructure (TEI/Infinity) — use Ollama or
-    OmniRoute for embeddings, not a separate embedding server
+  - Embedding model serving infrastructure (TEI/Infinity) — use Ollama with bge-m3 exclusively
+    for embeddings, not a separate embedding server
   - Docling/Crawl4AI ingest pipelines (separate systems S12/S13, future)
   - Neo4j or PostgreSQL graph storage — graph storage stays on the default
     NetworkXStorage (file-persisted GraphML); no PostgreSQL/Neo4j graph backend
@@ -266,10 +267,9 @@ not when the work feels done. The full contract model lives in
 
 ```yaml work-state
 id: 2026-08-29-lightrag-hxs4
-status: draft
-status_date: 2026-08-29
+status: in-progress
+status_date: 2026-08-31
 authority: >-
-  Goal status line: 'draft'
-reconcile: >-
-    servers/hxs-4/2026-08-29-lightrag-install-evidence.md records an executed install (LightRAG v1.5.7 + Qdrant v1.19.0, V0-V6 PASS). A goal in 'draft' with completed install evidence is inconsistent; governor to set the real status.
+  Install evidence 2026-08-29 (servers/hxs-4/2026-08-29-lightrag-install-evidence.md): V0-V6 ALL GATES PASS (LightRAG v1.5.7 + Qdrant v1.19.0 operational). Version alignment (core_version 1.5.6 vs recorded 1.5.7) and full SC-09/SC-14/SC-15 qualification pending.
+reconcile: none
 ```

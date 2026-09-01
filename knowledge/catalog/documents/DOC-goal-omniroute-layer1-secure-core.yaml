@@ -7,7 +7,7 @@ document:
   source:
     author: Kimi-K3 (goal record) / Agent Zero (owner parameters, OD-12 authorization)
     provided_by: Kimi-K3 (governor, L1-commissions catalog dispatch)
-    origin: /home/hxsa/opt/HX-ASF-Servers/governace/goals/2026-08-27-omniroute-layer1-secure-core.md
+    origin: /home/hxsa/opt/HX-ASF-Servers/governace/goals/omniroute/2026-08-27-omniroute-layer1-secure-core.md
     section: §whole-document
     ingestion_date: '2026-08-27T16:23:00Z'
   owner: Agent Zero (human authority); Kimi-K3 (governor)
@@ -71,11 +71,11 @@ document:
     target: DOC-pilot-omniroute-control-manifest
     note: the Layer-0 control manifest v1.1.0 the goal header names as program manifest
   validation:
-    validated_at: '2026-08-31T03:51:22Z'
+    validated_at: '2026-08-31T21:36:14Z'
     freshness: current
     review_due: 'terminal: COMPLETE 2026-08-28 by owner ACCEPT; review on any post-closure amendment'
-  sha256: 30e61197306654fa96409659cc0eba461bbeaaf0b117996a14d90d626345bf59
-  canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/goals/2026-08-27-omniroute-layer1-secure-core.md
+  sha256: e3c3019f2dc02e0522663cdfaa46629c1c4b7281b0a6919cac7cba25b9b8c1e6
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/goals/omniroute/2026-08-27-omniroute-layer1-secure-core.md
   hash_history:
   - sha256: 33dabbfd66d861dcbf7b634ef3992e8b4aeea49403a374bc13e30d94bd3cbcab
     timestamp: unrecorded
@@ -86,6 +86,9 @@ document:
   - sha256: 30e61197306654fa96409659cc0eba461bbeaaf0b117996a14d90d626345bf59
     timestamp: '2026-08-31T03:51:22Z'
     reason: 'CodeRabbit PR #8 semantic finding verified against source and corrected'
+  - sha256: e3c3019f2dc02e0522663cdfaa46629c1c4b7281b0a6919cac7cba25b9b8c1e6
+    timestamp: '2026-08-31T21:36:14Z'
+    reason: re-mint from source
 notes:
   semantic_reconciliation_20260831: 'Read against the current source and operative work-state block: Layer 1 is COMPLETE as of 2026-08-28 by owner ACCEPT; Layer 2+ remains frozen. The declared_purpose''s ''status in-progress'' and pre-gate review_due are historical and superseded by this reconciliation. The source''s 2026-08-30 root:root/0640-or-0600 secret-drop-in clarification is included in the re-minted source identity.'
   status_mapping: 'status historical is the current terminal mapping: Layer 1 COMPLETE 2026-08-28 by owner ACCEPT. The source''s former in-progress/M0 status is preserved as historical context; Layer 2+ remains frozen pending explicit owner authorization.'
@@ -96,4 +99,4 @@ notes:
   protected_reference: OD-13 is recorded as existence + mechanism only (env-provisioned, generated locally, never product defaults) — no secret value appears in the goal file or this record (profile §6).
   od08_od13_amendments_20260827: 'REVIEW-BATCH AMENDMENTS MIRRORED 2026-08-27 (follow-up wave; OmniRoute state log row 44 fixes 4+5; declared_purpose carries the full amendment text): (a) OD-08 — Chat-X registration STANDS with its parity check POSTURE-BLOCKED (approved posture exception, NOT a failed acceptance test) unless the owner authorizes a scoped hxs-4 exposure change; other backends full parity; the exception''s scope is hxs-8''s view of hxs-4 only — this ratifies as goal text what the L1-M2 evidence recorded in fact (DOC-pilot-omniroute-ev-03-trinity-l1-install: Chat-X registered posture-blocked, not failed). (b) OD-13 — the approved injection mechanism (on-host generated, root-only 0640 drop-in, hash-only recording) + prohibited at-rest locations (repo files, world-readable unit files, logs/journals/receipts/artifacts, DB — secrets namespace 0 plaintext rows, connection fields enc:v1: ciphertext) with plaintext in process memory/runtime env EXPLICITLY ALLOWED (inherent to env injection); gate criterion 2 reworded to match — again matching the deployed L1-M2 reality. Both goal html files re-rendered by the governor (wiki-sync verified at this run''s validate.py close). Hash chain: 91abb96c… (L1-commissions wave) -> 62d8cccc… (this record, 2026-08-27T21:2xZ).'
   rr47_20260827: 'RR-47 WAVE (2026-08-27T23:40Z [timestamp corrected 2026-08-28, F-2 sweep, labeled: the ''23:4xZ'' shorthand was invalid — exact value 2026-08-27T23:40Z per the rr-47 receipt''s freshness line and this record''s validated_at]; OmniRoute state log row 46 governor-lane fix — ''L1 goal criterion 3 hxs-4 waiver wording''): gate criterion 3 (Routing) now carries the labeled amendment — hxs-4/Chat-X registration and identity evidence remain MANDATORY, but its parity check is explicitly WAIVED as posture-blocked (the approved posture exception per the OD-08 amendment, not a failure) while its loopback-only posture stands; the waiver is recorded in the acceptance evidence; parity stays required for every reachable backend (source line 33, VERIFIED PRESENT this run). This sharpens the 20:49Z OD-08 amendment (posture-blocked not failed) into the acceptance criterion itself — consistent with the M2 evidence (Chat-X registered posture-blocked; parity ×3 reachable). notes.dual_format_gap''s hash-verification sentence is scope-corrected to the 16:55Z F-L1-2 wave in the same pass (labeled addendum there; original preserved). Hash chain: … -> 62d8cccc… (follow-up wave) -> 33dabbfd… (this record).'
-  minted_by: 'carol-mint 1.0.0 @ 2026-08-31T03:51:22Z — re-mint freshness-only — CodeRabbit PR #8 semantic finding verified against source and corrected'
+  minted_by: carol-mint 1.0.0 @ 2026-08-31T21:36:14Z — re-mint 30e611973066… -> e3c3019f2dc0…

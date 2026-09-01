@@ -37,7 +37,7 @@ Register Wayne as the Redis systems engineer for HX-ASF.
    governor-issued work orders.
 2. **MCP surfaces — HOLD** (owner directive 2026-08-29): `mcp-redis-main`
    and `postgres-mcp-mai` are deferred. No MCP usage until the owner
-   lifts the hold. Same posture as Chris's MCP hold.
+   lifts the hold. Same posture as Chris's MCP hold. [LABELED CORRECTION 2026-08-31, append-only: the MCP hold is LIFTED per owner directive 2026-08-31; the 2026-08-29 hold is superseded.]
 3. **RAG/vector/stream integration — DEFERRED** (owner directive
    2026-08-29): vector indexes, semantic caching, agent memory, and
    stream-based work queues are out of the initial scope. Separate

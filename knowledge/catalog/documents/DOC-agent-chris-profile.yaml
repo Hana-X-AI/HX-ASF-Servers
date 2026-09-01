@@ -35,10 +35,10 @@ document:
     target: DOC-agent-chris-charter
     note: one-page lane charter
   validation:
-    validated_at: '2026-08-30T16:09:40Z'
+    validated_at: '2026-08-31T21:36:14Z'
     freshness: current
     review_due: on owner amendment
-  sha256: 05f41c12af94a944c84ee67bf6f469504ed41f1e365b6382b5098e2c4de6daef
+  sha256: f1501745e519252f208ef2695bd8fc4b17138b44e50f846951603b8d7ede6a9b
   hash_history:
   - sha256: 90e378a5e3a4e1c633e5740daa8395d65045d4b7594b18f751cd1db7f2e93af5
     timestamp: '2026-08-29T12:30:00Z'
@@ -52,6 +52,12 @@ document:
   - sha256: 05f41c12af94a944c84ee67bf6f469504ed41f1e365b6382b5098e2c4de6daef
     timestamp: '2026-08-30T16:10:52Z'
     reason: 're-mint 785b814eed7c… -> 05f41c12af94… — CodeRabbit batch: active lane refs synchronized; local/cloud rule reconciled; CI retry+pin'
+  - sha256: 6d56066d94e75c44a78394556b67c41663f7eb3682f6cdc377b1ffa1626488c4
+    timestamp: '2026-08-31T21:08:51Z'
+    reason: re-mint from source
+  - sha256: f1501745e519252f208ef2695bd8fc4b17138b44e50f846951603b8d7ede6a9b
+    timestamp: '2026-08-31T21:36:14Z'
+    reason: re-mint from source
   canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/chris/profile.md
 notes:
-  minted_by: 'carol-mint 1.0.0 @ 2026-08-30T16:09:40Z — re-mint 785b814eed7c… -> 05f41c12af94… — CodeRabbit batch: active lane refs synchronized; local/cloud rule reconciled; CI retry+pin'
+  minted_by: carol-mint 1.0.0 @ 2026-08-31T21:36:14Z — re-mint 6d56066d94e7… -> f1501745e519…

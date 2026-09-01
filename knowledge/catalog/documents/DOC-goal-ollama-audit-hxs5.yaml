@@ -6,7 +6,7 @@ document:
   source:
     author: Kimi-K3 (goal record) / Agent Zero (authorization)
     provided_by: Agent Zero
-    origin: /home/hxsa/opt/HX-ASF-Servers/governace/goals/2026-08-24-ollama-audit-hxs5.md
+    origin: /home/hxsa/opt/HX-ASF-Servers/governace/goals/ollama/2026-08-24-ollama-audit-hxs5.md
     section: §whole-document
     ingestion_date: '2026-08-25T19:08:00Z'
   owner: Agent Zero (human authority); Kimi-K3 (governor)
@@ -47,7 +47,7 @@ document:
     freshness: current
     review_due: 'terminal: abandoned/parked as no longer applicable; review only on owner reopening'
   sha256: 58abc600ccebb63ee936a280041804163f94a41841423dca3a6927768a61d1cb
-  canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/goals/2026-08-24-ollama-audit-hxs5.md
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/goals/ollama/2026-08-24-ollama-audit-hxs5.md
   hash_history:
   - sha256: 5df8ccd2120bbb1eb8929d8d511e3e2238e2f14bd8795a02043f8194babf51fd
     timestamp: unrecorded

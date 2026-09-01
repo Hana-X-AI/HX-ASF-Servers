@@ -79,6 +79,31 @@ class WorkStateFixtures(_GoalTree):
                    + block(gid, status="complete", date="2026-08-27", auth="pilot state log"))
         self.assertEqual(dict(work_state.load_all()[0])[gid]["status"], "complete")
 
+    def test_prose_current_status_newer_than_block_is_flagged(self):
+        """WS-07: a labeled [current] status declaration newer than the block's
+        status_date means the block was not advanced with the prose (the hxs-2
+        and fleet-baseline silent-drift shape, corrected 2026-08-31)."""
+        gid = "2026-08-31-stale-block-example"
+        self.write(gid,
+                   "# Goal\n\n"
+                   "[Status transition 2026-08-30 [current]: COMPLETE — done.]\n\n"
+                   + block(gid, status="in-progress", date="2026-08-27"))
+        states, problems = work_state.load_all()
+        self.assertIn(gid, dict(states))
+        self.assertTrue(any(p.startswith("[WS-07]") for p in problems))
+
+    def test_prose_current_status_not_newer_is_not_flagged(self):
+        """The block is fresh (status_date equals the latest prose declaration):
+        no WS-07."""
+        gid = "2026-08-31-fresh-block-example"
+        self.write(gid,
+                   "# Goal\n\n"
+                   "[Status transition 2026-08-30 [current]: COMPLETE — done.]\n\n"
+                   + block(gid, status="complete", date="2026-08-30"))
+        states, problems = work_state.load_all()
+        self.assertIn(gid, dict(states))
+        self.assertEqual(problems, [])
+
     # --- case 2: blocked ----------------------------------------------------
     def test_blocked_goal_is_selected_and_carries_its_reason(self):
         gid = "2026-08-30-blocked-example"

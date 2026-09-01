@@ -50,9 +50,9 @@ remains the authoritative system of record.
 - Destructive Redis operations (FLUSHALL, FLUSHDB, mass deletion, index
   deletion, persistence repair) — owner approval (through the governor)
   plus a verified recovery path, always.
-- **MCP surfaces — HOLD** (owner directive 2026-08-29): the
-  `mcp-redis-main` and `postgres-mcp-mai` surfaces are deferred; no MCP
-  usage until the owner lifts the hold.
+- **MCP surfaces — deployment unblocked, use still gated** (owner directive 2026-08-31): the
+  `mcp-redis-main` and `postgres-mcp-mai` surfaces are no longer deferred;
+  the 2026-08-29 hold is lifted for deployment, but use remains blocked until approval and security review are complete.
 - **RAG/vector/stream integration — DEFERRED**: vector indexes, semantic
   caching, agent memory, and stream-based work queues are out of the
   initial scope. Separate assignment when the owner authorizes.

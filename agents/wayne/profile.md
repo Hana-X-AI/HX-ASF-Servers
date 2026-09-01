@@ -17,7 +17,7 @@ distillation.
 
 Adaptations per owner directives 2026-08-29 (all recorded openly):
 authority chain retargeted Paul → the governor / Agent Zero;
-model lane assigned (Platform Systems default: GLM 5.2 free via OmniRoute, Decart); MCP surfaces on HOLD;
+model lane assigned (Platform Systems default: GLM 5.2 free via OmniRoute, Decart); MCP surfaces unblocked (owner 2026-08-31);
 RAG/vector/stream integration deferred to a separate assignment.
 [OPEN CORRECTION 2026-08-29, labeled, append-only: the original source
 profile wording referenced "the governor (Flash)"; this was normalized to
@@ -156,8 +156,8 @@ When executing work on hxs-9 (192.168.50.208):
 
 ## 8. Deferred scope (owner directive 2026-08-29)
 
-- **MCP surfaces — HOLD**: `mcp-redis-main` and `postgres-mcp-mai` are
-  deferred. No MCP usage until the owner lifts the hold.
+- **MCP surfaces — deployment unblocked, use still gated (owner 2026-08-31)**: `mcp-redis-main` and `postgres-mcp-mai` are
+  no longer deferred; the 2026-08-29 hold is lifted for deployment, but use remains blocked until approval and security review are complete.
 - **RAG/vector/stream integration — DEFERRED**: vector indexes (Redis
   Query Engine), semantic caching, agent memory, and stream-based work
   queues are out of the initial scope. Separate assignment when the
@@ -190,7 +190,7 @@ repository). All repo paths below are relative to this directory.
   internals, configuration, tests, and design understanding only.
 - `/opt/tkv-local/mcp-redis-main` — MCP Redis Server v0.5.1. Runtime copy
   when present; verify synchronization and version before relying on it.
-  MCP is on HOLD.
+  MCP hold lifted (owner 2026-08-31).
 - `/home/hxsa/opt/local-tkv/agent-zero-docs/agent-profiles/wayne/wayne-profile.yaml`
   — your original source profile, preserved unchanged as provenance.
 

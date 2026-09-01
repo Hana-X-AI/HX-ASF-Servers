@@ -7,7 +7,7 @@ document:
   source:
     author: Kimi-K3 (goal record) / Agent Zero (owner directive + sequencing)
     provided_by: Kimi-K3 (governor, baseline-wave catalog dispatch)
-    origin: /home/hxsa/opt/HX-ASF-Servers/governace/goals/2026-08-27-fleet-baseline-deployment.md
+    origin: /home/hxsa/opt/HX-ASF-Servers/governace/goals/fleet-baseline/2026-08-27-fleet-baseline-deployment.md
     section: §whole-document
     ingestion_date: '2026-08-27T20:42:00Z'
   owner: Agent Zero (human authority); Kimi-K3 (governor)
@@ -65,11 +65,11 @@ document:
     target: DOC-goal-omniroute-layer1-secure-core
     note: 'owner sequencing (OmniRoute pilot state log row 43, 2026-08-27T19:24Z): this goal FIRST — the L1-M3 gate (parity ×4 + the proven external route, restart ×2, cold reboot, backup/restore, rollback, configuration.md, owner ACCEPT) is sequenced AFTER baseline completion, superseding the coast-clear-only hold'
   validation:
-    validated_at: '2026-08-31T03:51:21Z'
+    validated_at: '2026-08-31T21:36:14Z'
     freshness: current
-    review_due: at goal completion — acceptance item 4 closes when this wave's receipt is cited in the fleet pilot state log (profile §7); then the L1-M3 closure unblocks per the owner sequencing
-  sha256: f0d1e7880f1f735d30a20f2599b272389b5f50d60d2b96536682a5af1eb38331
-  canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/goals/2026-08-27-fleet-baseline-deployment.md
+    review_due: terminal — goal complete 2026-08-31 (hxs-6 compliant per owner confirmation); historical post-goal review_due superseded by semantic_reconciliation_20260831
+  sha256: 2b45d7d235222e34eb33b01eda9c3e3c79dbbb14450ed4a2f763d400748da08d
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/goals/fleet-baseline/2026-08-27-fleet-baseline-deployment.md
   hash_history:
   - sha256: 9611a5dd057855506ad510d4afc09341735bafc6574f51d09bccd2befbaa00c1
     timestamp: unrecorded
@@ -80,10 +80,19 @@ document:
   - sha256: f0d1e7880f1f735d30a20f2599b272389b5f50d60d2b96536682a5af1eb38331
     timestamp: '2026-08-31T03:51:21Z'
     reason: 'CodeRabbit PR #8 semantic finding verified against source and corrected'
+  - sha256: 0ffdce3520ce37cffd0612550c24e5f8392fc6dc3c12894b06deb647fe04634e
+    timestamp: '2026-08-31T20:18:10Z'
+    reason: re-mint from source
+  - sha256: 29c392dd4242dba8e585e44ca8223fe20b501c27a20d7a09c11354e3a6c4da41
+    timestamp: '2026-08-31T20:31:39Z'
+    reason: re-mint from source
+  - sha256: 2b45d7d235222e34eb33b01eda9c3e3c79dbbb14450ed4a2f763d400748da08d
+    timestamp: '2026-08-31T21:36:14Z'
+    reason: re-mint from source
 notes:
   semantic_reconciliation_20260831: Read against the current source and its operative work-state block. The goal is complete as of 2026-08-28 with reconcile=none; this supersedes the older title/status_mapping language that described acceptance item 4 as still open. The original execution scope and evidence detail in declared_purpose remain accurate historical context.
   status_mapping: 'The goal file carries no status line of the hxs-2/hxs-3 class; the governor''s dispatch marks it ACTIVE: acceptance items 1-3 are MET per the wave evidence (item 1 — 12/12 in-scope hosts carry verdicts, 10 PASS + 2 REPORT with declared closing directions + 0 FAIL; item 2 — post-apply re-checks green on all 8 mutated hosts; item 3 — TKV pre-work records refreshed ×7 + the evidence doc delivered; fleet pilot state log rows 2-3), and item 4 is THIS catalog wave (zero secret values — rick''s literal sweep 0 matches, evidence §8 seq 32; the catalog handoff closes with validate.py 4/4). The record flips to historical at goal completion per the terminal-closed precedent (DOC-goal-hxs3-muse-glimmer-tooling).'
   authority_note: 'ratified-governance per the two-goal convention (F-AUTH-1 resolution): governor-authored durable state record ratified through the owner directive (''complete the baseline platform deployment'' — GO 2026-08-27, fleet pilot state log row 1) and the owner''s explicit sequencing (OmniRoute pilot state log row 43: baseline FIRST, OmniRoute closure after).'
   dual_format: The goal is registered in scripts/wiki/manifest.txt (line 52, VERIFIED PRESENT at ingestion) and rendered dual-format — sibling goals/2026-08-27-fleet-baseline-deployment.html exists at ingestion; the .md stays the source of truth per the dual-format convention.
   protected_reference: The execution's credential discipline is recorded as mechanism only (execution-time askpass from the credential record, helper 0700 deleted at end, BatchMode probe ×12 confirms the password path closed) — no secret value appears in the goal file or this record (profile §6).
-  minted_by: 'carol-mint 1.0.0 @ 2026-08-31T03:51:21Z — re-mint freshness-only — CodeRabbit PR #8 semantic finding verified against source and corrected'
+  minted_by: carol-mint 1.0.0 @ 2026-08-31T21:36:14Z — re-mint 29c392dd4242… -> 2b45d7d23522…

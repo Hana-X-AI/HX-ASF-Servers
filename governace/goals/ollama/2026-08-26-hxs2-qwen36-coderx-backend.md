@@ -129,9 +129,9 @@ artifact wording above is preserved as history.]
 
 ```yaml work-state
 id: 2026-08-26-hxs2-qwen36-coderx-backend
-status: in-progress
-status_date: 2026-08-27
+status: complete
+status_date: 2026-08-29
 authority: >-
-  PILOT-HXS2-CODERX-BACKEND-001 state-log row 60 (2026-08-27T17:05Z): 'Coder-X M8 -> BACKLOG (owner-delayed)'
+  Status transition 2026-08-29 [current]: COMPLETE — hxs-2 registry status READY; Coder-X (Qwen2.5-Coder-32B, AWQ Int4, TP=2) deployed and verified per SERVER-REGISTRY; M7b soak deferred per owner (issues.md)
 reconcile: none
 ```

@@ -53,8 +53,8 @@ bounds.
   [CORRECTION 2026-08-29: authority references updated from Kimi-K3 to the
   governor per AGENTS.md transition. Original wording preserved in git history
   and AGENTS.md correction blocks.]
-- **MCP surfaces — HOLD** (owner directive 2026-08-29): the `postgres-mcp-mai`
-  read-only surface is deferred; no MCP usage until the owner lifts the hold.
+- **MCP surfaces — deployment unblocked, use still gated** (owner directive 2026-08-31): the `postgres-mcp-mai`
+  read-only surface is no longer deferred; the 2026-08-29 hold is lifted for deployment, but use remains blocked until approval and security review are complete.
 - Orchestration, acceptance of his own work (the governor); planning/distribution
   management (Mia); priorities and risk (Agent Zero).
 

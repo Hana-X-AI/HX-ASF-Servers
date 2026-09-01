@@ -1,5 +1,5 @@
 # ci-cd.yml — HX-ASF-Servers (p8, owner-ratified 2026-08-26; amended 2026-08-28)
-# Trigger: every push to any branch. 24 steps total across three jobs.
+# Trigger: every push to any branch. 26 steps total across three jobs.
 #   gates             — deterministic quality gates (all pushes; happy path ≈3 min)
 #   coderabbit-review — CodeRabbit CLI review gate (feature-branch/PR pushes only;
 #                       owner directive 2026-08-30 supersedes for post-merge main

@@ -53,10 +53,10 @@ document:
     target: HX-ASF-Servers change flow (all branches; PR merges into main)
     note: required checks gates + coderabbit-review on PRs; gitleaks over the pushed range; auto-merge squash on green; bootstrap applied via API (hxs-2 state log row 33)
   validation:
-    validated_at: '2026-08-31T03:51:21Z'
+    validated_at: '2026-08-31T20:34:18Z'
     freshness: current
     review_due: on any workflow edit (re-ingest). The CODERABBIT_API_KEY secret is configured and the review leg is live as of 2026-08-30 — the earlier "pending owner action" condition is closed.
-  sha256: f1676a51fa5ef765e05a944859bfc2036f0d58142491ed21d00579073658b346
+  sha256: e11815ad9a04962711684cff01eed4b03d95011f64e88017bed71f8d4d7a6081
   canonical_location: /home/hxsa/opt/HX-ASF-Servers/.github/workflows/ci-cd.yml
   hash_history:
   - sha256: 9dbe6070ac81
@@ -104,8 +104,11 @@ document:
   - sha256: f1676a51fa5ef765e05a944859bfc2036f0d58142491ed21d00579073658b346
     timestamp: '2026-08-31T03:51:21Z'
     reason: 'CodeRabbit PR #8 semantic finding verified against source and corrected'
+  - sha256: e11815ad9a04962711684cff01eed4b03d95011f64e88017bed71f8d4d7a6081
+    timestamp: '2026-08-31T20:34:18Z'
+    reason: re-mint from source
 notes:
   pending_items: 'None open as of 2026-08-30. Both items carried from hxs-2 state log row 33 (2026-08-26T20:00Z) are closed: (1) the CODERABBIT_API_KEY secret is configured and the coderabbit-review job runs and returns findings (it no longer skips — it is fail-closed on a missing key); (2) the five wiki-manifest documents that existed only in the Alert-2 uncommitted tree (BLUEPRINT, the hxs-2/hxs-3 goal files, KDD-0006/0007) are committed — render.py --check reports 86/86 in sync.'
   protected_reference: The workflow consumes the CODERABBIT_API_KEY GitHub Actions secret and the GITHUB_TOKEN; no secret value is present in the file or in this record (profile §6 — existence and mechanism only).
   typing_judgment: 'Typed contract (governor brief: contract/config class at Carol''s schema judgment): the workflow IS the ratified, machine-enforced quality-gate contract binding how changes enter the repository — the DOC-blueprint-llm-server class (binds deployments AND consumers), not a how-to. The companion human-facing doc is typed runbook (DOC-cicd-pipeline-doc).'
-  minted_by: 'carol-mint 1.0.0 @ 2026-08-31T03:51:21Z — re-mint freshness-only — CodeRabbit PR #8 semantic finding verified against source and corrected'
+  minted_by: carol-mint 1.0.0 @ 2026-08-31T20:34:18Z — re-mint f1676a51fa5e… -> e11815ad9a04…

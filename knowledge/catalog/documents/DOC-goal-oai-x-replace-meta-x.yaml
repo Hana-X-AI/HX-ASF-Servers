@@ -1,0 +1,30 @@
+document:
+  id: DOC-goal-oai-x-replace-meta-x
+  title: 'Goal: Replace Meta-X with OAI-X on hxs-3'
+  type: goal
+  declared_purpose: Replace Meta-X with OAI-X (gpt-oss:20b) on hxs-3 via native Ollama (2026-08-29).
+  source:
+    origin: /home/hxsa/opt/HX-ASF-Servers/governace/goals/oai-x/2026-08-29-oai-x-replace-meta-x.md
+    ingestion_date: '2026-08-31T21:33:17Z'
+    section: §whole-document
+  owner: Agent Zero
+  authority_level: ratified-governance
+  applies_to:
+    hosts: []
+    fqdns: []
+    services: []
+    agents: []
+    repositories: []
+    environments: []
+  status: adopted
+  security:
+    classification: internal
+    contains_secret_values: false
+  relations: []
+  validation:
+    validated_at: '2026-08-31T21:33:17Z'
+    freshness: current
+  sha256: 5b5d870e3eb098e549e14e92a19819b8d3a511f590b3b3f36b3b793f7ca247f2
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/goals/oai-x/2026-08-29-oai-x-replace-meta-x.md
+notes:
+  minted_by: carol-mint 1.0.0 @ 2026-08-31T21:33:17Z — scaffold

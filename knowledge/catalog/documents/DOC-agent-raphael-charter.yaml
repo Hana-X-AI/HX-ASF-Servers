@@ -1,48 +1,59 @@
 document:
-  id: "DOC-agent-raphael-charter"
-  title: "Agent charter — raphael (LightRAG systems engineer, vertical lane)"
-  type: "charter"
-  declared_purpose: "One-page authority on raphael's mission, ownership (LightRAG server, Web UI, lightragmcp MCP server on hxs-4), non-ownership, inputs, outputs, and escalation triggers. Created 2026-08-29 per owner directive."
+  id: DOC-agent-raphael-charter
+  title: Agent charter — raphael (LightRAG systems engineer, vertical lane)
+  type: charter
+  declared_purpose: One-page authority on raphael's mission, ownership (LightRAG server, Web UI, lightragmcp MCP server on hxs-4), non-ownership, inputs, outputs, and escalation triggers. Created 2026-08-29 per owner directive.
   source:
-    author: "Flash (governor)"
-    provided_by: "Agent Zero"
-    origin: "/home/hxsa/opt/HX-ASF-Servers/agents/raphael/charter.md"
-    section: "§whole-document"
-    ingestion_date: "2026-08-29T13:30:00Z"
-  owner: "raphael (lane); Agent Zero (ratification)"
+    author: Flash (governor)
+    provided_by: Agent Zero
+    origin: /home/hxsa/opt/HX-ASF-Servers/agents/raphael/charter.md
+    section: §whole-document
+    ingestion_date: '2026-08-29T13:30:00Z'
+  owner: raphael (lane); Agent Zero (ratification)
   applies_to:
-    hosts: [hxs-4]
+    hosts:
+    - hxs-4
     fqdns: []
-    services: [lightrag, lightragmcp]
-    agents: [raphael]
-    repositories: [HX-ASF-Servers]
-    environments: [fleet]
-  version: ""
-  status: "adopted"
-  authority_level: "ratified-governance"
+    services:
+    - lightrag
+    - lightragmcp
+    agents:
+    - raphael
+    repositories:
+    - HX-ASF-Servers
+    environments:
+    - fleet
+  version: ''
+  status: adopted
+  authority_level: ratified-governance
   supersedes: []
   superseded_by: []
   security:
-    classification: "internal"
-    access_restrictions: "none beyond repository access"
+    classification: internal
+    access_restrictions: none beyond repository access
     contains_secret_values: false
   relations:
-    - predicate: "references"
-      target: "DOC-agent-raphael-profile"
-      note: "full operating contract"
-    - predicate: "references"
-      target: "DOC-kdd-0018-raphael-registration"
-      note: "registration decision"
+  - predicate: references
+    target: DOC-agent-raphael-profile
+    note: full operating contract
+  - predicate: references
+    target: DOC-kdd-0018-raphael-registration
+    note: registration decision
   validation:
-    validated_at: "2026-08-29T13:30:00Z"
-    freshness: "current"
-    review_due: "on owner sign-off of charter change"
-  sha256: "0b6996faa66305fa1167a887adf336cee96b09947e5a00aed4bb10e8db5e1423"
+    validated_at: '2026-08-31T21:58:18Z'
+    freshness: current
+    review_due: on owner sign-off of charter change
+  sha256: 53936a9c243fcce6799c19382a4b5573f4285efb305dbb585a83499cd959dbaf
   hash_history:
-    - sha256: "6f0edd7e57ba80c9bbeb200b2f2cf721700aa0b6d0580807b673385401499867"
-      timestamp: "2026-08-29T13:30:00Z"
-      reason: "initial cataloging"
-    - sha256: "0b6996faa66305fa1167a887adf336cee96b09947e5a00aed4bb10e8db5e1423"
-      timestamp: "2026-08-30T12:15:05Z"
-      reason: "2026-08-30 remediation register batch: sha256 refresh"
-  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/raphael/charter.md"
+  - sha256: 6f0edd7e57ba80c9bbeb200b2f2cf721700aa0b6d0580807b673385401499867
+    timestamp: '2026-08-29T13:30:00Z'
+    reason: initial cataloging
+  - sha256: 0b6996faa66305fa1167a887adf336cee96b09947e5a00aed4bb10e8db5e1423
+    timestamp: '2026-08-30T12:15:05Z'
+    reason: '2026-08-30 remediation register batch: sha256 refresh'
+  - sha256: 53936a9c243fcce6799c19382a4b5573f4285efb305dbb585a83499cd959dbaf
+    timestamp: '2026-08-31T21:58:18Z'
+    reason: re-mint from source
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/raphael/charter.md
+notes:
+  minted_by: carol-mint 1.0.0 @ 2026-08-31T21:58:18Z — re-mint 0b6996faa663… -> 53936a9c243f…

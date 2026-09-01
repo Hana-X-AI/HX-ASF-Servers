@@ -1,0 +1,45 @@
+work_order:
+  schema_version: 1
+  task_id: "WO-REQUAL-HX1-BAILEY-B4-001"
+  parent_goal: "2026-08-31-ollama-fleet-requalification-hxs1-qwen-x"
+  goal_file: "governace/goals/2026-08-31-ollama-fleet-requalification-hxs1-qwen-x.md"
+  milestone: "M9 — active qualification execution (capability, RAG, agent-tool, web search)"
+  assigned_agent: "bailey (profile-briefed sub-agent), john for Qwen-X behavior"
+  objective: >-
+    Execute the Gate-A-approved capability, RAG, agent-tool, and web-search suites
+    from the test plan against the remediated service. Acceptance: every capability
+    row carries an honest PASS/FAIL/BLOCKED/NOT RUN with evidence and limitations,
+    the real end-to-end RAG (full current-pipeline access, no new systems — D4) and
+    at least one real agent-tool loop complete with citations and containment cases,
+    and the current web-search posture is verified (D5). Concrete test/mutation set
+    FINALIZED AT GATE A.
+  owner_authorizations:
+    - "Owner D4 (2026-08-31) — full access to any system in the current RAG pipeline; no new systems installed"
+    - "Owner D5 (2026-08-31) — Ollama cloud ON, web search active; test and verify"
+    - "Gate A decision (pending) + intake §9 — end-to-end RAG validation against the current pipeline only"
+    - "NOT authorized until Gate A: test execution that mutates state beyond the approved window, installation of new RAG/vector/MCP systems, or cloud-model substitution"
+  boundaries:
+    - "Files/systems touched: FINALIZED AT GATE A (bounded active inference/test window; no NEW RAG/vector/MCP systems; no cloud-model substitution)"
+    - "Execution path: per Bailey lane with John for Qwen-X behavior; read-only tools first for the agent-tool loop"
+    - "Stop conditions: target mismatch, secret exposure, unsafe GPU/driver state, unplanned CPU fallback, off-LAN exposure, injection escape, runaway loop"
+  context_budget:
+    max_tokens: "131072 context (lane ceiling confirmed at dispatch capability probe)"
+    max_output_size_override: "none"
+    read_discipline: "index-navigated; incremental writes"
+  capability_probe:
+    required: "yes"
+    procedure: "4-token probe session on the lane BEFORE execution; record served-model id + session-start answer in the receipt"
+    fail_action: "stop the branch and escalate to the governor — NO automatic lane substitution"
+  rollback: "No persistent mutation; a test run is re-runnable. Any temporary state is removed or reverted to pre-test state."
+  controlling_sources:
+    - "08-bailey-test-capability-plan.md; Gate A findings register (15-gate-a-findings-register.md)"
+    - "Intake brief §7 (capability contract), §9 (RAG and agent tooling)"
+  deliverable: "12-bailey-qualification-report.md: capability matrix results, benchmark dataset + human summary, real RAG evidence package, real agent-tool transcript with containment cases, Task May Proceed receipt"
+  deliverable_destination:
+    - "pilots/PILOT-OLLAMA-FLEET-REQUAL-HXS1-001/12-bailey-qualification-report.md"
+    - "verify: ls <destination> shows the artifact before acceptance"
+  second_brain_evaluation:
+    opportunity_identified: "yes"
+    roadmap_capability_or_pattern: "versioned capability + real-integration qualification suite as reusable evidence schema"
+    disposition: "implemented — the suite and evidence schema are reused across hxs-2/3/4"
+    evidence_and_reasoning: "a canned tool-call JSON is a unit test, not end-to-end qualification; the real RAG/tool path is the reusable acceptance class"

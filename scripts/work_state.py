@@ -36,6 +36,17 @@ SCHEMA = os.path.join(GOALS_DIR, "work-state.schema.yaml")
 # a plain ```yaml block elsewhere in a goal must not be picked up.
 BLOCK_RE = re.compile(r"^```yaml\s+work-state\s*$(.*?)^```\s*$", re.M | re.S)
 
+# A "current" status declaration in goal prose. Two forms are in use:
+#   [Status transition 2026-08-29 [current]: COMPLETE ...
+#   [CURRENT STATUS 2026-08-30, labeled ... PARTIAL / IN-PROGRESS: ...
+# The block must not be older than the latest such declaration — a stale block
+# is the exact "block says in-progress, prose says COMPLETE" defect WS-07 catches.
+STATUS_MARKER_RE = re.compile(
+    r"\[\s*(?:Status transition\s+(\d{4}-\d{2}-\d{2})\s*\[current\]|"
+    r"CURRENT STATUS\s+(\d{4}-\d{2}-\d{2}))",
+    re.I,
+)
+
 SKIP = {"README.md", "_template.md"}
 
 
@@ -46,7 +57,8 @@ def _schema():
 
 def goal_files():
     out = []
-    for p in sorted(glob.glob(os.path.join(GOALS_DIR, "*.md"))):
+    for p in sorted(glob.glob(os.path.join(GOALS_DIR, "**", "*.md"),
+                              recursive=True)):
         if os.path.basename(p) not in SKIP:
             out.append(p)
     return out
@@ -117,7 +129,31 @@ def load_all():
         for ev in (data.get("evidence") or []):
             if not os.path.exists(os.path.join(ROOT, str(ev))):
                 problems.append("[WS-06] %s: evidence path does not resolve: %s" % (rel, ev))
+        # WS-07: a labeled "current" status declaration in the prose newer than
+        # the block's status_date means the block was not advanced when the
+        # prose was. This is the silent-drift class a `reconcile: none` let
+        # through (hxs2-coderx and fleet-baseline, corrected 2026-08-31).
+        try:
+            with open(p, encoding="utf-8") as fh:
+                prose = BLOCK_RE.sub("", fh.read())
+            if re.match(r"^\d{4}-\d{2}-\d{2}$", str(data.get("status_date", ""))):
+                block_date = datetime.date.fromisoformat(str(data["status_date"]))
+                marker_dates = {
+                    datetime.date.fromisoformat(d)
+                    for m in STATUS_MARKER_RE.finditer(prose)
+                    for d in m.groups() if d
+                }
+                if marker_dates:
+                    latest = max(marker_dates)
+                    if latest > block_date:
+                        problems.append(
+                            "[WS-07] %s: prose status declaration %s is newer than the "
+                            "work-state block status_date %s — reconcile the block"
+                            % (rel, latest.isoformat(), block_date.isoformat()))
+        except (OSError, ValueError):
+            pass
         states.append((expect_id, data))
+    states.sort(key=lambda t: t[0])
     return states, problems
 
 
