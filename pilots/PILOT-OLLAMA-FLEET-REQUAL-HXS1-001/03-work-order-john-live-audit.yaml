@@ -1,0 +1,51 @@
+work_order:
+  schema_version: 1
+  task_id: "WO-REQUAL-HX1-JOHN-A2-001"
+  parent_goal: "2026-08-31-ollama-fleet-requalification-hxs1-qwen-x"
+  goal_file: "governace/goals/ollama/2026-08-31-ollama-fleet-requalification-hxs1-qwen-x.md"
+  milestone: "M2 — live hxs-1 read-only audit across all audit vectors"
+  assigned_agent: "john (profile-briefed sub-agent)"
+  objective: >-
+    Establish current hxs-1 live state read-only across the full audit matrix
+    (authority/identity, service wiring, network boundary, DNS/discovery,
+    GPU/driver, model placement, context/memory, cache, concurrency/queue,
+    performance, reliability, observability, security/hygiene) and reconcile
+    every identity source against the historical M8 evidence and the registry.
+    No historical PASS, catalog ACTIVE label, or configuration claim is accepted
+    without current evidence. Acceptance: an audit matrix with every vector
+    carrying PASS/FAIL/BLOCKED/NOT RUN plus evidence and limitations, and an
+    explicit identity-reconciliation result. READ-ONLY.
+  owner_authorizations:
+    - "Intake brief §5 Phase A — John performs the live hxs-1 audit read-only; no mutation is permitted in Phase A"
+    - "NOT authorized: any service/model/DNS/OS/repository mutation, reboot, restart, package install, or config change on hxs-1"
+  preconditions:
+    - "M2 may proceed only when the M1 receipt states exactly `Task May Proceed: YES`. A NO, missing, malformed, or ambiguous M1 result stops this branch and escalates to the governor before any hxs-1 probe."
+  boundaries:
+    - "Target lock: hxs-1 (192.168.50.200), call-sign Qwen-X — verify hostname + machine-id + peer IP and reconcile with servers/SERVER-REGISTRY.md hxs-1 row BEFORE any probe; NOT hxs-4 or hxs-5; any mismatch aborts the session"
+    - "Files/systems touched: NONE on hxs-1 (read-only probes over SSH: systemctl status, /api/version, /api/tags, /api/ps, /v1/models, nvidia-smi, journalctl, ss/lsof listeners, config reads)"
+    - "Execution path: session on hxs-5; hxs-1 (192.168.50.200) via SSH hxsa@192.168.50.200; askpass helper READS the credential at execution time (no extracted copy, helper deleted at task end); verify hostname + machine-id + peer IP before any probe; sudo -n for privileged reads only; StrictHostKeyChecking=yes"
+    - "Stop conditions: target mismatch, unexpected service/binary, source/version contradiction, model digest drift, secret exposure, unsafe GPU/driver state, Xid/OOM, off-LAN exposure, evidence-integrity failure"
+  context_budget:
+    max_tokens: "131072 context (lane ceiling confirmed at dispatch capability probe)"
+    max_output_size_override: "none"
+    read_discipline: "index-navigated; line-range/grep for large logs; incremental writes to the audit matrix"
+  capability_probe:
+    required: "yes"
+    procedure: "4-token probe session on the lane BEFORE the audit; record served-model id + session-start answer in the receipt"
+    fail_action: "stop the branch and escalate to the governor — NO automatic lane substitution"
+  rollback: "No mutation on hxs-1; rollback not applicable. A corrective run must create versioned evidence or a dated amendment that preserves any completed receipt/evidence artifact, its original hash, and the explicit correction relationship; it must never replace a completed receipt."
+  controlling_sources:
+    - "04-context-packet-john-live-audit.yaml (this package)"
+    - "02-john-tkv-review-receipt.md (audit-vector source map)"
+    - "servers/hxs-1/discovery.md and configuration.md (historical, cross-check only — never current truth)"
+    - "governace/goals/ollama/2026-08-24-hx1-ollama-qwen38-27b.md (historical M8 precedent)"
+    - "servers/SERVER-REGISTRY.md hxs-1 row; servers/system-mapping.md S01"
+  deliverable: "04-john-hxs1-audit-matrix.md: per-vector status + evidence + limitations, identity-reconciliation table (historical-to-live), and explicit statement of which historical M8 claims are re-proven or superseded"
+  deliverable_destination:
+    - "pilots/PILOT-OLLAMA-FLEET-REQUAL-HXS1-001/04-john-hxs1-audit-matrix.md"
+    - "verify: ls <destination> shows the artifact before acceptance"
+  second_brain_evaluation:
+    opportunity_identified: "yes"
+    roadmap_capability_or_pattern: "live-state audit matrix + identity reconciliation as the reusable requalification schema for hxs-2/3/4"
+    disposition: "implemented — the matrix is the reference schema the other three host orders reuse"
+    evidence_and_reasoning: "the intake explicitly designates hxs-1 as the evidence-based reference implementation whose audit method and capability schema are reused"

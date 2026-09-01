@@ -278,36 +278,39 @@ doubt, act reversibly and report rather than pause.
 - **No agent runs on moonshot-ai** (owner directive 2026-08-28: "i dont want any
   sub-agents running through moonshot-ai… no expections"). The only
   moonshot-bound lane was ever the Kimi-K3 identity, and that lane is retired
-  (2026-08-29), so **no moonshot execution path remains** — including for the
-  governor, who runs on DeepSeek V4 Flash via OmniRoute. Every agent's work
-  sessions run on that agent's assigned job-family lane below, launched as
-  standalone `kimi` sessions bound at launch
-  (`kimi -m omniroute/<lane> --agent-file agents/<name>/profile.md`) or as dsh
-  sessions on hxs-15 for harness-side work. Product fact of record: Kimi Code
-  sub-agents always inherit the main session's model (agent files carry no model
-  field), so Agent-tool dispatch is not an execution path for agent work — a
-  bound standalone session is. History: this directive retracted an earlier
-  substrate exception; both are preserved in Git and KDD-0013.
+  (2026-08-29), so **no moonshot execution path remains**. Historical Kimi,
+  dsh, and DeepSeek references are preserved in Git and KDD-0013; they do not
+  define a current agent identity or authorize an execution mechanism.
 - **Defined-agent dispatch — no substitution, no invented launch path (owner
-  directive 2026-08-31).** The `kimi`/`dsh` launch sentence in the moonshot rule
-  above describes the factory's bound production sessions on hxs-5/hxs-15; it is
-  NOT the launch path of a Codex/harness session. In a harness session the
-  owner-defined agents are the files under `agents/<name>/`, engaged by briefing
-  a worker with that agent's `profile.md` + `charter.md`. Never substitute an
-  ad-hoc worker, a different model lane, or a different launch mechanism for a
-  defined agent. If a defined agent's launch path is unavailable, STOP and
-  escalate to the owner — do not route around it. A goal or plan is marked
-  `approved` / `in-progress` / "dispatching" only after the assigned agent has
-  produced evidence of doing the work; status follows evidence, never intent or
-  a plan to dispatch.
+  directive 2026-08-31).** A registered agent is identified by its
+  `agents/<name>/profile.md`, `agents/<name>/charter.md`, and governed work
+  order. Its execution mechanism is a separately qualified implementation
+  detail, not an identity requirement. Kimi, dsh, Codex, Qwen, or another
+  harness may be used only when owner-approved for the required lane and direct
+  evidence proves that it delivers the required clean context and execution
+  evidence. A named mechanism is not proof that payload, identity, working
+  directory, or task delivery succeeded.
+
+  Never silently substitute an ad-hoc agent, different model lane, or unverified
+  delivery mechanism. If the required lane or clean-delivery mechanism is
+  unavailable or unverified, STOP and escalate to the owner. Before work, the
+  named agent must read its own profile and charter. Workers receive clean,
+  self-contained context — identity + milestone + profile/charter paths + work
+  order + context packet + read/write boundaries + deliverable destination +
+  completion marker — never inherited conversation history. A goal or plan is
+  marked `approved` / `in-progress` / "dispatching" only after the assigned agent
+  has produced evidence of doing the work; status follows evidence, never intent
+  or a plan to dispatch. Completion requires the named, non-empty deliverable at
+  its exact destination plus applicable validation; turn completion is not
+  evidence.
 - **Model lanes by job family** (owner decision 2026-08-30; KDD-0013 Amendments
-  11–12). Lane defaults are assigned per JOB FAMILY. Per-agent overrides within a
+  11–13). Lane defaults are assigned per JOB FAMILY. Per-agent overrides within a
   family are supported and recorded in KDD-0013. Cloud lanes route via OmniRoute
   on hxs-8.
 
   | Job family | Members | Default lane | Model / provider |
   | --- | --- | --- | --- |
-  | Governor (above all families) | James | DeepSeek V4 Flash | via OmniRoute — pinned |
+  | Governor (above all families) | James | Replaceable owner-approved runtime binding | Current binding and historical assignments are recorded append-only in KDD-0013 |
   | PMO | Mia, Carol | GPT-OSS 120B | `openai/gpt-oss-120b`, AkashML |
   | QA | Bailey, Gordon | Qwen3.8 Flash | `qwen/qwen3.8-flash`, Alibaba Cloud International |
   | Agentic SWE | Rob | Coder-X — **local** | `ollama-local/hx-qwen3.6-coderx-64k`, hxs-2 |
@@ -316,9 +319,11 @@ doubt, act reversibly and report rather than pause.
 
   **OD-14 OpenRouter exception of record** — USD 100 cap, owner-lane allowlist:
 
-  - **Metered — 5 lanes:** James, Mia, Carol, Gordon, Bailey. Bailey's lane is
+  - **Metered — 4 lanes:** Mia, Carol, Gordon, Bailey. Bailey's lane is
     activation-gated (KDD-0019, KDD-0013 Amendment 12): no metered spend before
-    her activation gate clears.
+    her activation gate clears. James's Qwen3.8 Max binding is governed solely by
+    KDD-0013 Amendment 13; no provider, endpoint, served-model identifier, or
+    execution mechanism is inferred here.
   - **Zero-cost cloud — 8 lanes:** the Platform Systems family on
     `z-ai/glm-5.2:free`. On the allowlist, no metered spend.
   - **Local — 2 lanes, outside OD-14:** Rob and Rick on Coder-X (hxs-2).
@@ -331,11 +336,13 @@ doubt, act reversibly and report rather than pause.
 
   Provenance: the table above is the current state, stated once. The full
   supersession history — the original 2026-08-28 per-agent assignments, the
-  governor transitions (kimi-k3 → GLM 5.2 → DeepSeek V4 Flash), and every
-  intermediate lane change — is preserved in
-  `governace/decisions/KDD-0013-agent-model-lanes.md` (Amendments 1–12), which is
-  append-only. Flattened here 2026-08-30 per audit item F2/A1: a current-state
-  document presents one current instruction, and Git preserves the rest.
+  governor transitions (kimi-k3 → GLM 5.2 → DeepSeek V4 Flash → Qwen3.8 Max),
+  and every intermediate lane change — is preserved in
+  `governace/decisions/KDD-0013-agent-model-lanes.md` (Amendments 1–13), which is
+  append-only. DeepSeek V4 Flash is historical in that sequence; Qwen3.8 Max is
+  the current replaceable binding. Flattened here 2026-08-30 per audit item F2/A1:
+  a current-state document presents one current instruction, and Git preserves the
+  rest.
 - **Chief of Staff** (owner directive 2026-08-28, KDD-0012). **Mia**
   (`agents/mia/`) manages the work — planning, coordination, distribution to the
   engineering lanes, breakage triage, and status reporting to the governor. The
@@ -451,17 +458,21 @@ correction in the other.
 
 ## Governor role
 
-The governor role is held by **James**, running on **DeepSeek V4 Flash** via
-OmniRoute (KDD-0013 Amendment 11, owner decision 2026-08-30 — the lane is
-pinned). The governor governs: goals, gates, acceptance, and owner escalation.
-It sits above all four agent families and belongs to none of them.
+The governor role is held by **James**, the durable, model-independent governor
+identity. James governs goals, gates, acceptance, and owner escalation. It sits
+above all four agent families and belongs to none of them. The runtime model is
+a replaceable, owner-approved binding recorded append-only in KDD-0013; the
+current binding is **Qwen3.8 Max** under Amendment 13. The binding does not
+define James's identity, authority, duties, or acceptance responsibilities.
 
 History, preserved in Git and in `governace/decisions/KDD-0013-agent-model-lanes.md`
 (append-only): the role passed from **Kimi-K3** to **Flash** (owner appointment
 2026-08-29, recorded at the time as intent-level pending owner confirmation in
 records), and the persona was renamed **Flash → James** on 2026-08-30. The
 pending qualifier is satisfied by KDD-0013 Amendment 11, an owner decision of
-record that names James as Governor with a pinned lane. "DeepSeek V4 Flash" is a
+record that names James as Governor. The **DeepSeek V4 Flash** assignment in
+Amendments 8 and 11 remains preserved as historical context; Amendment 13
+supersedes it as the current runtime binding. "DeepSeek V4 Flash" is a
 third-party model id, not the persona name.
 
 Flattened 2026-08-30 per audit item F2/A1.

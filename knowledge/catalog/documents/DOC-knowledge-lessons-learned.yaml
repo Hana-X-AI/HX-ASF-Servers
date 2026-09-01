@@ -1,43 +1,58 @@
 document:
-  id: "DOC-knowledge-lessons-learned"
-  title: "governace/lesson-learned/lessons-learned.md — factory process learning record"
-  type: "other"
-  declared_purpose: "Chronological lessons register (newest first): ten 2026-08-25 review-batch lessons (fixture hardening at adoption, claims carry evidence refs, askpass read-at-execution codification, a hash of a secret is a secret-derived verifier, adoption-time scoped supersession marking, conservative truth-state labels, configured-budget SLO cross-checks, findings are untrusted input — verify first, canonical-path monitoring, monitor-pattern scoping), then the older register: secret-scan adoption gate (ox-alpha.md incident), roster-first rule ('craig' incident), knowledge-host vs workload-host distinction, pre-flight existence checks at intake, missing-baseline-is-BLOCKED rule, governor objective-fitness gate question, process metrics never compensate for failed technical objectives."
-  inferred_value: "INFERENCE: each entry already drove a convention change; high reuse value for future goal intake and adoption reviews."
+  id: DOC-knowledge-lessons-learned
+  title: governace/lesson-learned/lessons-learned.md — factory process learning record
+  type: other
+  declared_purpose: 'Chronological lessons register (newest first): ten 2026-08-25 review-batch lessons (fixture hardening at adoption, claims carry evidence refs, askpass read-at-execution codification, a hash of a secret is a secret-derived verifier, adoption-time scoped supersession marking, conservative truth-state labels, configured-budget SLO cross-checks, findings are untrusted input — verify first, canonical-path monitoring, monitor-pattern scoping), then the older register: secret-scan adoption gate (ox-alpha.md incident), roster-first rule (''craig'' incident), knowledge-host vs workload-host distinction, pre-flight existence checks at intake, missing-baseline-is-BLOCKED rule, governor objective-fitness gate question, process metrics never compensate for failed technical objectives.'
+  inferred_value: 'INFERENCE: each entry already drove a convention change; high reuse value for future goal intake and adoption reviews.'
   source:
-    author: "Kimi-K3 (process learning)"
-    provided_by: "Agent Zero"
-    origin: "/home/hxsa/opt/HX-ASF-Servers/governace/lesson-learned/lessons-learned.md"
-    section: "§whole-document"
-    ingestion_date: "2026-08-25T04:50:00Z"
-  owner: "Kimi-K3"
+    author: Kimi-K3 (process learning)
+    provided_by: Agent Zero
+    origin: /home/hxsa/opt/HX-ASF-Servers/governace/lesson-learned/lessons-learned.md
+    section: §whole-document
+    ingestion_date: '2026-08-25T04:50:00Z'
+  owner: Kimi-K3
   applies_to:
-    hosts: [hxs-5]
+    hosts:
+    - hxs-5
     fqdns: []
     services: []
-    agents: [kimi-k3, john]
-    repositories: [HX-ASF-Servers]
-    environments: [fleet]
-  version: ""
-  status: "active"
-  authority_level: "agent-evidence"
+    agents:
+    - kimi-k3
+    - john
+    repositories:
+    - HX-ASF-Servers
+    environments:
+    - fleet
+  version: ''
+  status: active
+  authority_level: agent-evidence
   supersedes: []
   superseded_by: []
   security:
-    classification: "internal"
-    access_restrictions: "none beyond repository access"
+    classification: internal
+    access_restrictions: none beyond repository access
     contains_secret_values: false
   relations:
-    - predicate: "governs"
-      target: "DOC-agents-roster-readme"
-      note: "roster-first rule added to agents/README.md from the 2026-08-24 'craig' lesson"
-    - predicate: "risks"
-      target: "provided documents carrying credentials"
-      note: "secret scan is part of the adoption gate; ox-alpha.md key flagged to owner for revocation (issue closed 2026-08-24)"
+  - predicate: governs
+    target: DOC-agents-roster-readme
+    note: roster-first rule added to agents/README.md from the 2026-08-24 'craig' lesson
+  - predicate: risks
+    target: provided documents carrying credentials
+    note: secret scan is part of the adoption gate; the canonical lesson records that the ox-alpha.md key was flagged to the owner for revocation and replacement. It provides no evidence that revocation, rotation, scrubbing, or incident closure occurred.
   validation:
-    validated_at: "2026-08-25T21:02:00Z"
-    freshness: "current"
-    review_due: "2026-09-01 or on new entry"
-  sha256: "73e4342bf579a04bdafdf9578567a0953474eade4b36a9183fc99d0b35f70216"
-  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/governace/lesson-learned/lessons-learned.md"
-  corrections_batch7: "F-B6-3 re-validation: the governor prepended ten 2026-08-25 entries (verified present, newest-first order intact). Re-hashed ae792555… -> 73e4342b…. declared_purpose enumeration extended to cover the new batch; no other field changes."
+    validated_at: '2026-09-01T03:52:21Z'
+    freshness: current
+    review_due: 2026-09-01 or on new entry
+  sha256: b0203e8df765f5ddef42dd187adccf8938647d2d3403f57c57d5c3342fd4ae22
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/governace/lesson-learned/lessons-learned.md
+  corrections_batch7: 'F-B6-3 re-validation: the governor prepended ten 2026-08-25 entries (verified present, newest-first order intact). Re-hashed ae792555… -> 73e4342b…. declared_purpose enumeration extended to cover the new batch; no other field changes.'
+  hash_history:
+  - sha256: 73e4342bf579a04bdafdf9578567a0953474eade4b36a9183fc99d0b35f70216
+    timestamp: unrecorded
+    reason: predecessor state restored by carol-mint (re-mint events before 2026-09-01T02:14:08Z did not record history)
+  - sha256: b0203e8df765f5ddef42dd187adccf8938647d2d3403f57c57d5c3342fd4ae22
+    timestamp: '2026-09-01T02:14:08Z'
+    reason: 2026-09-01 owner-authorized incident epistemic clarification
+notes:
+  semantic_correction_20260901: 'Source-grounded correction: the canonical lesson establishes credential detection and escalation only; it does not establish a completed credential-revocation outcome.'
+  minted_by: carol-mint 1.0.0 @ 2026-09-01T02:14:08Z — re-mint 73e4342bf579… -> b0203e8df765… — 2026-09-01 owner-authorized incident epistemic clarification

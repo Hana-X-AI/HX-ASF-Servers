@@ -1,0 +1,47 @@
+work_order:
+  schema_version: 1
+  task_id: "WO-REQUAL-HX1-JOHN-B1-001"
+  parent_goal: "2026-08-31-ollama-fleet-requalification-hxs1-qwen-x"
+  goal_file: "governace/goals/ollama/2026-08-31-ollama-fleet-requalification-hxs1-qwen-x.md"
+  milestone: "M6 — bounded remediation (only Gate-A-approved Ollama/model/config changes)"
+  assigned_agent: "john (profile-briefed sub-agent)"
+  objective: >-
+    Execute the Gate-A-approved Ollama binary/service/unit/drop-in/model-alias
+    mutations, including upgrade to the latest Ollama version if a newer release
+    exists (owner D2), with a pre/post sha256 + unified diff for every touched
+    file and a deterministic rollback. Acceptance: the approved write set is
+    applied, the frozen model identity and residency are re-proven, and the change
+    record shows every mutation is declared and within the Gate-A allowlist. The
+    concrete mutation allowlist is FINALIZED AT GATE A; this order does not
+    authorize any change before that gate.
+  owner_authorizations:
+    - "Owner D2 (2026-08-31) — auto-update approved: update to the latest Ollama version if a newer release exists, via John's safe-install protocol (download, authenticate, hash, inspect)"
+    - "Gate A decision (pending) — the approved write set is the only authority for mutation; no mutation before Gate A"
+    - "NOT authorized until Gate A: any service/model/DNS/OS/repository mutation, reboot, restart, package install, or config change outside the approved write set"
+  boundaries:
+    - "Target lock: hxs-1 (192.168.50.200), call-sign Qwen-X — verify hostname + machine-id + peer IP and reconcile with servers/SERVER-REGISTRY.md hxs-1 row BEFORE mutation; NOT hxs-4 or hxs-5; any mismatch aborts"
+    - "Files/systems touched: FINALIZED AT GATE A (Ollama binary/service/unit/drop-ins and model aliases in the approved write set only)"
+    - "Versioned change: pre/post sha256 + unified diff in evidence for every mutation"
+    - "Execution path: session on hxs-5; hxs-1 (192.168.50.200) via SSH hxsa@192.168.50.200; askpass helper reads credential at execution time (helper deleted at task end); verify hostname + machine-id + peer IP first; sudo -n only"
+    - "Stop conditions: target mismatch, authority conflict, model digest drift, secret exposure, unsafe GPU/driver state, Xid/OOM/wedge, unplanned CPU fallback, off-LAN exposure, missing rollback, undeclared mutation"
+  context_budget:
+    max_tokens: "131072 context (lane ceiling confirmed at dispatch capability probe)"
+    max_output_size_override: "none"
+    read_discipline: "index-navigated; line-range/grep; incremental writes"
+  capability_probe:
+    required: "yes"
+    procedure: "4-token probe session on the lane BEFORE mutation; record served-model id + session-start answer in the receipt"
+    fail_action: "stop the branch and escalate to the governor — NO automatic lane substitution"
+  rollback: "Smallest affected layer with deterministic inverse (byte-copies of pre-change files retained); upgrade rollback to the previously pinned signed version."
+  controlling_sources:
+    - "Gate A findings register (15-gate-a-findings-register.md) — the approved write set"
+    - "02-john-tkv-review-receipt.md; 04-john-hxs1-audit-matrix.md; 08-bailey-test-capability-plan.md"
+  deliverable: "09-john-remediation-record.md: applied changes with pre/post hashes and unified diffs, residency/identity re-proof, journal excerpt, rollback inverse, Task May Proceed receipt"
+  deliverable_destination:
+    - "pilots/PILOT-OLLAMA-FLEET-REQUAL-HXS1-001/09-john-remediation-record.md"
+    - "verify: ls <destination> shows the artifact before acceptance"
+  second_brain_evaluation:
+    opportunity_identified: "yes"
+    roadmap_capability_or_pattern: "Gate-A-bounded remediation with versioned write set as the reusable change pattern"
+    disposition: "implemented — the Gate-A write-set contract is reused across all four host orders"
+    evidence_and_reasoning: "bounded, evidenced remediation with a hard owner gate is the core requalification pattern the program requires"

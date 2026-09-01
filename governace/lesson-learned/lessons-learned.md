@@ -5,6 +5,28 @@ because of it (a convention, a checklist, a KDD, or nothing).
 
 ## Entries
 
+- 2026-09-01 — clarification of the dispatch incident entry below: the observed
+  behavior is that three workers answered that no task was active or provided and
+  produced no deliverable after the submitted payloads were recorded. The earlier
+  entry is preserved as the original incident record, not as proof of cause.
+  **UNVERIFIED:** conversation-history inheritance, caller payload dropping,
+  harness delivery loss, malformed delivery, and working-directory/context
+  explanations. Each remains a hypothesis until direct evidence establishes it.
+  Change: use only the observed behavior for gate decisions; keep causal claims
+  labeled and do not treat any harness mechanism as proven.
+- 2026-09-01 — Phase A worker dispatch gave sub-agents the full conversation
+  history; they re-described the intake instead of executing the work order and
+  wrote no deliverable — **a worker must receive clean, self-contained context by
+  default (identity, milestone, profile/charter paths, work order + context packet,
+  read/write boundaries, deliverable destination, completion marker), never inherited
+  conversation history; completion is the named non-empty deliverable at its exact
+  destination, never turn-end.** Change: AGENTS.md dispatch guard now requires
+  clean self-contained context; a worker's turn ending is not completion.
+  [UNVERIFIED ROOT CAUSE 2026-09-01, append-only: the claim that `fork_turns=none`
+  cannot deliver the message is NOT proven. The observed "no task" responses may
+  indicate an empty, malformed, caller-dropped, or harness-lost payload, not an
+  inherent fork_turns limitation. Evidence:
+  governace/status-reporting/2026-09-01-dispatch-defect-evidence.md.]
 - 2026-08-25 — review batches 1-7: the same defect appeared in up to 7 fixture files
   (stale /tmp sys.path, missing makedirs, hard-coded model alias) — **scratch
   scaffolding adopted into versioned fixtures must get a hardening pass: parameterize

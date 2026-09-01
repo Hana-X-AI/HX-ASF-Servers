@@ -1,0 +1,42 @@
+work_order:
+  schema_version: 1
+  task_id: "WO-REQUAL-HX1-CAROL-B6-001"
+  parent_goal: "2026-08-31-ollama-fleet-requalification-hxs1-qwen-x"
+  goal_file: "governace/goals/ollama/2026-08-31-ollama-fleet-requalification-hxs1-qwen-x.md"
+  milestone: "M11 — catalog reconciliation (authority/security/reusable-platform knowledge)"
+  assigned_agent: "carol (knowledge steward, bounded persistent role)"
+  objective: >-
+    Reconcile the knowledge catalog to live state: update the Qwen-X backend
+    endpoint/capability record to the service FQDN (removing the raw IP), record
+    the requalified capability matrix, and log catalog dispositions for every
+    supplied/produced document. Acceptance: catalog receipt cited in the state log
+    and `scripts/validate.py` passes. Synchronous — authority/security/reusable
+    platform knowledge changes take the receipt before closure.
+  owner_authorizations:
+    - "Intake §10 SC-12/SC-16 + §11 Carol lane — catalog disposition and reusable-platform reconciliation"
+    - "NOT authorized: any hxs-1 mutation, or catalog writes outside knowledge/catalog/"
+  boundaries:
+    - "Files/systems touched: knowledge/catalog/ only; no secret values in the catalog"
+    - "Execution path: catalog writes per Carol's bounded role; validate.py after writes"
+    - "Stop conditions: conflict preservation violation, secret exposure, catalog drift, evidence-integrity failure"
+  context_budget:
+    max_tokens: "131072 context (lane ceiling confirmed at dispatch capability probe; Carol 131k ceiling lesson of record)"
+    max_output_size_override: "none"
+    read_discipline: "index-navigated; targeted reads; incremental writes"
+  capability_probe:
+    required: "yes"
+    procedure: "4-token probe session on the lane BEFORE catalog writes; record served-model id + session-start answer in the receipt"
+    fail_action: "stop the branch and escalate to the governor — NO automatic lane substitution"
+  rollback: "Before catalog writes, record the pre-write commit SHA and exact affected-record list. On failure, restore only those listed records from that commit, run `python3 scripts/validate.py`, and record the corrective event with the restored record list and validation result."
+  controlling_sources:
+    - "All Phase A/B evidence documents in this pilot; governace/goals/ollama/2026-08-31-ollama-fleet-requalification-hxs1-qwen-x.md"
+    - "knowledge/catalog/documents/DOC-backend-qwen-x.yaml (current record to reconcile)"
+  deliverable: "14-carol-catalog-receipt.md: catalog dispositions for every produced document, the reconciled DOC-backend-qwen-x record (service FQDN + capability matrix), and validate.py output"
+  deliverable_destination:
+    - "pilots/PILOT-OLLAMA-FLEET-REQUAL-HXS1-001/14-carol-catalog-receipt.md"
+    - "verify: ls <destination> shows the artifact before acceptance"
+  second_brain_evaluation:
+    opportunity_identified: "yes"
+    roadmap_capability_or_pattern: "catalog reconciliation to service-FQDN + capability-matrix as reusable platform knowledge"
+    disposition: "implemented — the catalog becomes the discovery source of truth for the requalified service"
+    evidence_and_reasoning: "the catalog still records a raw IP endpoint; reconciling it closes SC-12 and SC-16 and makes Qwen-X discoverable by call-sign"
