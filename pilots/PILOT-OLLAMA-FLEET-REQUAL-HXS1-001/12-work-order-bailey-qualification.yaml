@@ -18,6 +18,10 @@ work_order:
     - "Owner D5 (2026-08-31) — Ollama cloud ON, web search active; test and verify"
     - "Gate A decision (pending) + intake §9 — end-to-end RAG validation against the current pipeline only"
     - "NOT authorized until Gate A: test execution that mutates state beyond the approved window, installation of new RAG/vector/MCP systems, or cloud-model substitution"
+  preconditions:
+    - "Accepted M4 deliverable `08-bailey-test-capability-plan.md` at its declared destination, with acceptance evidence, is required before M9 qualification begins."
+    - "Gate A approval, M6 completion evidence, and M7 service-FQDN registration evidence are required before M9 qualification begins."
+    - "When routing is in scope, M8 route-registration evidence is also required; Gate A alone never authorizes routing-dependent qualification."
   boundaries:
     - "Files/systems touched: FINALIZED AT GATE A (bounded active inference/test window; no NEW RAG/vector/MCP systems; no cloud-model substitution)"
     - "Execution path: per Bailey lane with John for Qwen-X behavior; read-only tools first for the agent-tool loop"

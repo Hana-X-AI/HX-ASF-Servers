@@ -23,7 +23,7 @@ context_packet:
     - "identity matrix with hashes and source comparison; historical-to-live reconciliation table"
     - "sanitized command log; no secrets; nvidia-smi + /api/ps + /api/version + /api/tags outputs"
   consulted_records:
-    - "02-john-tkv-review-receipt.md; servers/hxs-1/discovery.md + configuration.md (historical); governace/goals/2026-08-24-hx1-ollama-qwen38-27b.md"
+    - "02-john-tkv-review-receipt.md; servers/hxs-1/discovery.md + configuration.md (historical); governace/goals/ollama/2026-08-24-hx1-ollama-qwen38-27b.md"
   handoff:
     - "Deliverable 04-john-hxs1-audit-matrix.md reaches execution_accepted on evidence + deterministic gates; feeds M5 findings register"
     - "Deliverable goes to Carol for catalog receipt (reusable-platform knowledge — synchronous at Gate B)"

@@ -262,3 +262,17 @@ fail closed). Authority: owner decision 2026-08-30 (QA job-family lane default,
 KDD-0013 Amendment 11, LOCKED) + Bailey registration KDD-0019; recorded here
 append-only to keep the OD-14 authorization data authoritative and consistent
 with KDD-0019.]
+
+[Amendment 13 — 2026-09-01, labeled, append-only — JAMES DURABLE IDENTITY AND
+CURRENT RUNTIME BINDING: James remains the durable governor identity. His
+governance authority, gate decisions, and acceptance responsibilities are not
+defined by a model provider. Model selection is a replaceable, owner-approved
+runtime binding and every change to it requires a later append-only amendment.
+
+The historical DeepSeek V4 Flash assignment in Amendments 8 and 11 is preserved
+as a source-derived historical assignment. It is not rewritten or erased. The
+current owner-approved runtime binding for James is **Qwen3.8 Max**. No provider,
+endpoint, served-model identifier, or execution mechanism is inferred by this
+amendment; those facts require direct runtime evidence before use in a factory
+record. The binding does not authorize factory execution or alter the stopped
+hxs-1 intake state.]

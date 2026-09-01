@@ -34,7 +34,7 @@ work_order:
     required: "yes"
     procedure: "4-token probe session on the lane BEFORE authoring the full receipt; record served-model id + session-start answer in the receipt"
     fail_action: "stop the branch and escalate to the governor — NO automatic lane substitution"
-  rollback: "No mutation; rollback not applicable. A corrective re-run may replace the receipt within the bounded-correction budget."
+  rollback: "No mutation; rollback not applicable. A corrective re-run must create a versioned receipt or dated amendment that preserves any completed original receipt, its original hash, and the explicit relationship to the correction; it must never replace a completed receipt."
   controlling_sources:
     - "02-context-packet-john-tkv-review.yaml (this package)"
     - "Intake brief §3, §5, §6 (identity/authority vectors), §16 (evidence basis)"

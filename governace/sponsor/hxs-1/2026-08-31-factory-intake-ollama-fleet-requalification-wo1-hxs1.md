@@ -20,6 +20,14 @@ The factory will issue four separate host work orders with this common mission. 
 
 This document is an intake brief, not a mutation order. James must convert it into the governed goal, context packet, atomic work orders, state-log entries, and agent dispatches required by the repository contract.
 
+## Append-only supersession note — 2026-09-01
+
+The original 24-hour soak statements in this intake are preserved as the
+historical request. For this hxs-1 program, they are superseded by approved D3
+in `governace/goals/ollama/2026-08-31-ollama-fleet-requalification-hxs1-qwen-x.md`:
+three cold reboots plus one performance run. This note does not authorize a
+reboot, qualification, or any factory execution.
+
 ## 2. Executive finding
 
 The repository contains substantial historical evidence that hxs-1 passed a Qwen 3.8 27B pilot through M8. That evidence is valuable, but it is not proof of the present live state. The current hxs-1 configuration record explicitly derives from prior evidence rather than a fresh live probe, and the owner now reports that the installation is incomplete relative to the desired service standard.
@@ -219,6 +227,22 @@ A canned tool-call JSON response is a unit test, not end-to-end agent-tool quali
 
 No completion exception should be used for SC-11, SC-13, SC-14, or SC-15 unless Agent Zero makes a new, explicit, dated decision after reviewing the risk. The recommended default is that the 24-hour soak is mandatory for this requalification.
 
+### 2026-09-01 reconciliation — approved D1–D5 supersede stale intake requirements
+
+SC-14 and the preceding soak recommendation remain preserved as pre-decision
+intake history. For the approved hxs-1 requalification goal, the current owner
+decisions in `pilots/PILOT-OLLAMA-FLEET-REQUAL-HXS1-001/plan.md` control:
+
+- D1: service FQDN is `qwen-x.hx.local.arpa`.
+- D2: update to the latest Ollama release if a newer release exists.
+- D3: three full reboots plus one performance run; the 24-hour soak is removed.
+- D4: full access to systems already in the current RAG pipeline; install no new systems.
+- D5: Ollama cloud is on and web search is active; test and verify on hxs-1 only;
+  cloud-model substitution remains prohibited.
+
+This reconciliation changes no completed evidence, gate, or factory state. It
+only identifies the cited SC-14 text as superseded for this approved goal.
+
 ## 11. Agent lanes and responsibilities
 
 | Lane | Responsibility |
@@ -337,4 +361,3 @@ James should present these as explicit owner choices rather than filling them si
 ### Limitations
 
 This intake was prepared from the available repository evidence and current official Ollama documentation. This Work Mode session did **not** directly inspect the present hxs-1 host or the live `/opt/tkv-local/ollama/ollama-main` filesystem. The prior Claude-agent implementation described by Agent Zero was not recovered as a current authoritative artifact, so its claimed behavior is treated as the owner's acceptance benchmark, not copied configuration. These limitations are intentional inputs to the work order: live state, live TKV identity, and current integration behavior must be established by the factory before any remediation or acceptance claim.
-

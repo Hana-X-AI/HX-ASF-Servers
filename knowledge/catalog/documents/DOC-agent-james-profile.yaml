@@ -1,55 +1,63 @@
 document:
-  id: "DOC-agent-james-profile"
-  title: "Agent profile — james (full operating contract; governor of the HX agentic software factory)"
-  type: "profile"
-  declared_purpose: "Full operating contract for james as governor of the HX agentic software factory: governs (goals, gates, acceptance, owner escalation), does not belong to any KDD-0016 taxonomy family (sits above all families). Governor role transferred to Flash on 2026-08-29 (owner/Agent Zero appointment) and the Flash persona renamed to James on 2026-08-30; lane DeepSeek V4 Flash via OmniRoute. Directs work through Mia (Chief of Staff, KDD-0012) per the governor→Mia→lanes workflow."
+  id: DOC-agent-james-profile
+  title: Agent profile — james (full operating contract; governor of the HX agentic software factory)
+  type: profile
+  declared_purpose: 'Full operating contract for James as the durable, model-independent governor of the HX agentic software factory: governs goals, gates, acceptance, and owner escalation; does not belong to any KDD-0016 taxonomy family (sits above all families). Governor role transferred to Flash on 2026-08-29 (owner/Agent Zero appointment) and the Flash persona renamed to James on 2026-08-30. The current replaceable, owner-approved runtime binding is Qwen3.8 Max under KDD-0013 Amendment 13; the DeepSeek V4 Flash assignment is preserved only as historical context. Directs work through Mia (Chief of Staff, KDD-0012) per the governor→Mia→lanes workflow.'
   source:
-    author: "Agent Zero / governor transition (AGENTS.md governor corrections)"
-    provided_by: "Agent Zero"
-    origin: "/home/hxsa/opt/HX-ASF-Servers/agents/james/profile.md"
-    section: "§whole-document"
-    ingestion_date: "2026-08-30T09:00:00Z"
-  owner: "james (governor role); Agent Zero (ratification)"
+    author: Agent Zero / governor transition (AGENTS.md governor corrections)
+    provided_by: Agent Zero
+    origin: /home/hxsa/opt/HX-ASF-Servers/agents/james/profile.md
+    section: §whole-document
+    ingestion_date: '2026-08-30T09:00:00Z'
+  owner: james (governor role); Agent Zero (ratification)
   applies_to:
     hosts: []
     fqdns: []
     services: []
-    agents: [james]
-    repositories: [HX-ASF-Servers]
-    environments: [fleet]
-  version: ""
-  status: "adopted"
-  authority_level: "ratified-governance"
+    agents:
+    - james
+    repositories:
+    - HX-ASF-Servers
+    environments:
+    - fleet
+  version: ''
+  status: adopted
+  authority_level: ratified-governance
   supersedes: []
   superseded_by: []
   security:
-    classification: "internal"
-    access_restrictions: "none beyond repository access"
+    classification: internal
+    access_restrictions: none beyond repository access
     contains_secret_values: false
   relations:
-    - predicate: "references"
-      target: "DOC-agent-james-charter"
-      note: "charter (lane bounds)"
-    - predicate: "references"
-      target: "DOC-repo-governance-agents-md"
-      note: "governor role + persona rename corrections (AGENTS.md)"
-    - predicate: "references"
-      target: "DOC-kdd-0012-mia-chief-of-staff"
-      note: "Chief of Staff workflow"
+  - predicate: references
+    target: DOC-agent-james-charter
+    note: charter (lane bounds)
+  - predicate: references
+    target: DOC-repo-governance-agents-md
+    note: governor role + persona rename corrections (AGENTS.md)
+  - predicate: references
+    target: DOC-kdd-0012-mia-chief-of-staff
+    note: Chief of Staff workflow
   validation:
-    validated_at: "2026-08-30T09:30:00Z"
-    freshness: "current"
-    review_due: "on owner sign-off of profile change"
-  sha256: "133958ad7ebbcc6f2a911adc47c56850b2f8e93c7df66b450d0a29f6e5cec46e"
+    validated_at: '2026-09-01T03:14:17Z'
+    freshness: current
+    review_due: on owner sign-off of profile change
+  sha256: c4b837550d5a4cc9fcd682d5cd7aaca90046d5d1a2c6d2f43619b5be48edb6bb
   hash_history:
-    - sha256: "3a8600d30cf363599e225985ebe7df08708497d81972ec0d8d59e4a084b7751a"
-      timestamp: "2026-08-30T09:00:00Z"
-      reason: "initial cataloging"
-    - sha256: "a114f7d75f3e304109cdc0433deb1441ba96325472a20075c95ed7ed98876149"
-      timestamp: "2026-08-30T09:30:00Z"
-      reason: "D3 Option A: profile Skills available now references the global skill inventory (role-specific additions only)"
-    - sha256: "133958ad7ebbcc6f2a911adc47c56850b2f8e93c7df66b450d0a29f6e5cec46e"
-      timestamp: "2026-08-30T09:45:00Z"
-      reason: "2026-08-30 review batch: skills historical block (create-agent retained as role-specific)"
-
-  canonical_location: "/home/hxsa/opt/HX-ASF-Servers/agents/james/profile.md"
+  - sha256: 3a8600d30cf363599e225985ebe7df08708497d81972ec0d8d59e4a084b7751a
+    timestamp: '2026-08-30T09:00:00Z'
+    reason: initial cataloging
+  - sha256: a114f7d75f3e304109cdc0433deb1441ba96325472a20075c95ed7ed98876149
+    timestamp: '2026-08-30T09:30:00Z'
+    reason: 'D3 Option A: profile Skills available now references the global skill inventory (role-specific additions only)'
+  - sha256: 133958ad7ebbcc6f2a911adc47c56850b2f8e93c7df66b450d0a29f6e5cec46e
+    timestamp: '2026-08-30T09:45:00Z'
+    reason: '2026-08-30 review batch: skills historical block (create-agent retained as role-specific)'
+  - sha256: c4b837550d5a4cc9fcd682d5cd7aaca90046d5d1a2c6d2f43619b5be48edb6bb
+    timestamp: '2026-09-01T02:14:08Z'
+    reason: 2026-09-01 owner-authorized durable governor identity and runtime-binding correction
+  canonical_location: /home/hxsa/opt/HX-ASF-Servers/agents/james/profile.md
+notes:
+  semantic_correction_20260901: 'Current source re-read: James identity, authority, duties, and acceptance responsibilities are model-independent. Qwen3.8 Max is the current replaceable owner-approved runtime binding; DeepSeek V4 Flash is source-grounded historical context only.'
+  minted_by: carol-mint 1.0.0 @ 2026-09-01T02:14:08Z — re-mint 133958ad7ebb… -> c4b837550d5a… — 2026-09-01 owner-authorized durable governor identity and runtime-binding correction

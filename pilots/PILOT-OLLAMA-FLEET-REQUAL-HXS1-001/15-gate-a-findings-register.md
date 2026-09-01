@@ -1,6 +1,6 @@
 # Gate A — findings register and remediation plan (DRAFT template)
 
-Parent goal: `governace/goals/2026-08-31-ollama-fleet-requalification-hxs1-qwen-x.md`
+Parent goal: `governace/goals/ollama/2026-08-31-ollama-fleet-requalification-hxs1-qwen-x.md`
 Status: template only — populated from M1–M4 evidence and submitted to James + Agent Zero before Phase B.
 
 ## Required contents

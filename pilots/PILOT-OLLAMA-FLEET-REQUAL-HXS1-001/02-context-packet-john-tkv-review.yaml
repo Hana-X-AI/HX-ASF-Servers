@@ -28,6 +28,6 @@ context_packet:
   consulted_records:
     - "agents/john/profile.md §4; intake brief §16 evidence basis; upstream Ollama releases"
   handoff:
-    - "Deliverable 02-john-tkv-review-receipt.md reaches execution_accepted when the receipt is produced and the deterministic gates pass; M2 may then dispatch"
-    - "Deliverable goes to Carol for catalog receipt; catalog_pending until cited in the state log (does NOT gate closure — reusable-platform knowledge, treated synchronous at Gate B)"
+    - "M2 may dispatch only when 02-john-tkv-review-receipt.md states exactly `Task May Proceed: YES`; a NO, missing, malformed, or ambiguous result stops the M1/M2 branch and escalates to the governor before any hxs-1 probe."
+    - "Deliverable goes to Carol for catalog receipt; catalog_pending is tracked until cited in the state log. Because this is reusable-platform knowledge, Gate B cannot close without the required Carol receipt and the state-log/catalog citation."
   second_brain_evaluation: "See the governing work order — the packet does not re-decide it"

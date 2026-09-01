@@ -10,13 +10,28 @@ document:
   owner: Agent Zero
   authority_level: ratified-governance
   applies_to:
-    hosts: []
-    fqdns: []
-    services: []
-    agents: []
-    repositories: []
-    environments: []
-  status: adopted
+    hosts:
+    - hxs-1
+    fqdns:
+    - qwen-x.hx.local.arpa
+    services:
+    - ollama
+    agents:
+    - james
+    - mia
+    - john
+    - rick
+    - bailey
+    - gordon
+    - trinity
+    - raphael
+    - quinn
+    - carol
+    repositories:
+    - HX-ASF-Servers
+    environments:
+    - fleet
+  status: active
   security:
     classification: internal
     contains_secret_values: false
@@ -34,4 +49,5 @@ document:
     timestamp: '2026-08-31T23:58:18Z'
     reason: re-mint from source
 notes:
+  semantic_reconciliation_20260901: 'The approved, non-terminal goal is active. Applicability is populated only from the approved goal: hxs-1; qwen-x.hx.local.arpa; Ollama; and the named governor, management, specialist, QA, routing, RAG, and catalog agents. This catalog correction does not assert live service state or advance a factory phase.'
   minted_by: carol-mint 1.0.0 @ 2026-08-31T23:58:18Z — re-mint 8ccb9685b3a7… -> f673fcf49bad…

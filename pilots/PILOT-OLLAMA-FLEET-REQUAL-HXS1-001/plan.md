@@ -1,6 +1,6 @@
 # PILOT-OLLAMA-FLEET-REQUAL-HXS1-001 — Decomposition Plan (DRAFT)
 
-Parent goal: `governace/goals/2026-08-31-ollama-fleet-requalification-hxs1-qwen-x.md`
+Parent goal: `governace/goals/ollama/2026-08-31-ollama-fleet-requalification-hxs1-qwen-x.md`
 Intake source: `governace/sponsor/hxs-1/2026-08-31-factory-intake-ollama-fleet-requalification-wo1-hxs1.md`
 Status: goal APPROVED (2026-08-31) — Phase A dispatching; Phase B still gated on Gate A.
 
@@ -47,7 +47,7 @@ recur.
 | M9 | Active qualification execution (capability, RAG, tool, web search) | Bailey + John | approved only |
 | M10 | Independent verification + reliability (three full reboots + one performance run) | Gordon | approved only |
 | M11 | Catalog reconciliation (authority/security/reusable-platform changes) | Carol | approved only |
-| **Gate B** | Governor checklist + Gordon qualification + Carol receipt + owner acceptance | James + Gordon + Carol + Agent Zero | gate |
+| **Gate B** | Governor checklist + Gordon qualification + Carol receipt + required state-log/catalog citation + owner acceptance | James + Gordon + Carol + Agent Zero | gate |
 
 ## 3. Agent routing
 
@@ -81,7 +81,7 @@ marked "to be finalized at Gate A."
 | 07 | Bailey test/capability design | Bailey | A | M0 (parallel with M1/M2) |
 | 09 | John bounded remediation | John | B | Gate A |
 | 10 | Rick service FQDN registration | Rick | B | Gate A |
-| 11 | Trinity OmniRoute routing | Trinity | B | Gate A (if in scope) |
+| 11 | Trinity OmniRoute routing | Trinity | B | Gate A + M7 (if in scope) |
 | 12 | Bailey active qualification | Bailey | B | Gate A + M6 + M7 (+ M8 if OmniRoute routing in scope) |
 | 13 | Gordon independent verification | Gordon | B | Gate A + M9 |
 | 14 | Carol catalog reconciliation | Carol | B | Gate B pre-close |

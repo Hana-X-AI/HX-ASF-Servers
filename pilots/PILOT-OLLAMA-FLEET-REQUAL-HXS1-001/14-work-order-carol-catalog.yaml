@@ -27,9 +27,9 @@ work_order:
     required: "yes"
     procedure: "4-token probe session on the lane BEFORE catalog writes; record served-model id + session-start answer in the receipt"
     fail_action: "stop the branch and escalate to the governor — NO automatic lane substitution"
-  rollback: "Catalog edits are versioned in Git; a corrective re-run restores the prior record state."
+  rollback: "Before catalog writes, record the pre-write commit SHA and exact affected-record list. On failure, restore only those listed records from that commit, run `python3 scripts/validate.py`, and record the corrective event with the restored record list and validation result."
   controlling_sources:
-    - "All Phase A/B evidence documents in this pilot; governace/goals/2026-08-31-ollama-fleet-requalification-hxs1-qwen-x.md"
+    - "All Phase A/B evidence documents in this pilot; governace/goals/ollama/2026-08-31-ollama-fleet-requalification-hxs1-qwen-x.md"
     - "knowledge/catalog/documents/DOC-backend-qwen-x.yaml (current record to reconcile)"
   deliverable: "14-carol-catalog-receipt.md: catalog dispositions for every produced document, the reconciled DOC-backend-qwen-x record (service FQDN + capability matrix), and validate.py output"
   deliverable_destination:
